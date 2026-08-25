@@ -1,0 +1,4 @@
+- source: project
+  gh-pages:
+    - id: 43ffcafd-ef61-419f-bd49-2dc04e424eb9
+      url: 'https://pstat-126.github.io'
