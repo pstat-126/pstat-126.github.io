@@ -1,0 +1,299 @@
+[
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Course Schedule",
+    "section": "",
+    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nMaterials\nDue\n\n\n\n\nWeek 1 — Introduction & Simple Linear Regression\n\n\n\nMon, Sep 28\nWelcome & Course Overview What is regression? Motivation and examples\nSlides\n\n\n\n\nWed, Sep 30\nThe Simple Linear Regression Model Model assumptions, population vs. fitted line\nSlides Notes\n\n\n\n\nFri, Oct 2\nLeast Squares Estimation Deriving OLS estimators, interpreting coefficients\nSlides\nLab 1\n\n\nWeek 2 — Properties of OLS & Statistical Inference\n\n\n\nMon, Oct 5\nProperties of OLS Estimators Gauss-Markov theorem, unbiasedness, variance\nSlides Notes\n\n\n\n\nWed, Oct 7\nHypothesis Tests for β0 and β1 t-tests, standard errors, degrees of freedom\nSlides\n\n\n\n\nFri, Oct 9\nConfidence Intervals for Regression Coefficients CI for β1, inference for the mean response\nSlides\nHW 1 Lab 2\n\n\nWeek 3 — ANOVA, F-tests & Prediction\n\n\n\nMon, Oct 12\nPrediction Intervals PI for a new observation vs. CI for mean response\nSlides Notes\n\n\n\n\nWed, Oct 14\nANOVA Decomposition SST, SSR, SSE; coefficient of determination R²\nSlides\n\n\n\n\nFri, Oct 16\nF-test for Simple Linear Regression F-statistic, ANOVA table, connection to t-test\nSlides\nLab 3\n\n\nWeek 4 — Correlation, R² & Diagnostics\n\n\n\nMon, Oct 19\nCorrelation & R² Pearson correlation, relationship with R², limitations\nSlides Notes\n\n\n\n\nWed, Oct 21\nIntroduction to Regression Diagnostics Model assumptions, types of residuals\nSlides\n\n\n\n\nFri, Oct 23\nResidual Plots & Assumption Checking Residuals vs. fitted, Q-Q plots, scale-location\nSlides\nHW 2 Lab 4\n\n\nWeek 5 — Transformations & Midterm Review\n\n\n\nMon, Oct 26\nTransformations to Linearize Log, square root, Box-Cox transformations\nSlides Notes\n\n\n\n\nWed, Oct 28\nPolynomial Regression Adding quadratic terms, comparing models\nSlides\n\n\n\n\nFri, Oct 30\n📝 Midterm Exam Covers Weeks 1–4\n\nMidterm\n\n\nWeek 6 — Multiple Linear Regression\n\n\n\nMon, Nov 2\nIntroduction to MLR Model formulation, parameters, interpretation\nSlides Notes\n\n\n\n\nWed, Nov 4\nMLR in Matrix Notation Design matrix, OLS solution X'Xβ = X'Y\nSlides\n\n\n\n\nFri, Nov 6\nInference in MLR Individual t-tests, overall F-test, adjusted R²\nSlides\nHW 3 Lab 5\n\n\nWeek 7 — MLR Inference & Partial Tests\n\n\n\nMon, Nov 9\nConfidence & Prediction Intervals in MLR Joint CIs, simultaneous inference\nSlides Notes\n\n\n\n\nWed, Nov 11\nVeterans Day — No Class\n\n\n\n\n\nFri, Nov 13\nPartial F-tests & Extra Sum of Squares Testing subsets of predictors, reduced vs. full model\nSlides\nLab 6\n\n\nWeek 8 — Categorical Predictors & Interactions\n\n\n\nMon, Nov 16\nCategorical (Indicator) Variables Dummy coding, reference categories, interpretation\nSlides Notes\n\n\n\n\nWed, Nov 18\nInteraction Terms Continuous × categorical and continuous × continuous interactions\nSlides\n\n\n\n\nFri, Nov 20\nOutliers, Leverage & Influence Studentized residuals, hat matrix, Cook's distance\nSlides\nHW 4 Lab 7\n\n\nWeek 9 — Model Building & Variable Selection\n\n\n\nMon, Nov 23\nVariable Selection Methods AIC, BIC, adjusted R², stepwise procedures\nSlides Notes\n\n\n\n\nWed, Nov 25\nBest Subsets & Cross-Validation All-subsets regression, model comparison strategies\nSlides\n\n\n\n\nFri, Nov 27\nThanksgiving Recess — No Class\n\n\n\n\nWeek 10 — Collinearity, Regularization & Review\n\n\n\nMon, Nov 30\nMulticollinearity & VIF Detecting collinearity, variance inflation factors, remedies\nSlides Notes\n\n\n\n\nWed, Dec 2\nIntroduction to Regularization Ridge regression and LASSO (overview)\nSlides\n\n\n\n\nFri, Dec 4\nCourse Review & Final Exam Prep Key concepts, practice problems, Q&A\nSlides\nHW 5 Lab 8\n\n\nFinals Week — Dec 7–12\n\n\n\nTBD\n📝 Final Exam Comprehensive — covers full quarter\n\nFinal",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "quizzes/quiz-03.html",
+    "href": "quizzes/quiz-03.html",
+    "title": "Quiz 3",
+    "section": "",
+    "text": "Note\n\n\n\nThis quiz has not been released yet. Check back closer to the quiz date.",
+    "crumbs": [
+      "Syllabus",
+      "Quizzes",
+      "Quiz 3"
+    ]
+  },
+  {
+    "objectID": "quizzes/quiz-04.html",
+    "href": "quizzes/quiz-04.html",
+    "title": "Quiz 4",
+    "section": "",
+    "text": "Note\n\n\n\nThis quiz has not been released yet. Check back closer to the quiz date.",
+    "crumbs": [
+      "Syllabus",
+      "Quizzes",
+      "Quiz 4"
+    ]
+  },
+  {
+    "objectID": "exams/midterm.html",
+    "href": "exams/midterm.html",
+    "title": "Midterm Exam",
+    "section": "",
+    "text": "Date: Friday, October 30, 2026 (in class)\nCoverage: Weeks 1–4 — Simple Linear Regression, OLS estimation, statistical inference, ANOVA, R², diagnostics.\nFormat: In-class, 50 minutes. Open-note: one 8.5” × 11” sheet (both sides), handwritten or printed. No electronic devices.\nPractice materials and a review sheet will be posted here before the exam.",
+    "crumbs": [
+      "Syllabus",
+      "Exams",
+      "Midterm"
+    ]
+  },
+  {
+    "objectID": "office-hours.html",
+    "href": "office-hours.html",
+    "title": "Office Hours",
+    "section": "",
+    "text": "Office hours details will be posted here at the start of the quarter.\n\n\n\nPerson\nRole\nDay\nTime\nLocation\n\n\n\n\nAnnie Adams\nInstructor\nTuesday\n10 AM - 11 AM\nTBD\n\n\nTBD\nTA\nTBD\nTBD\nTBD\n\n\nTBD\nTA\nTBD\nTBD\nTBD\n\n\n\nOffice hours are also available by appointment — email the instructor to schedule.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Office Hours"
+    ]
+  },
+  {
+    "objectID": "hw/hw-02.html",
+    "href": "hw/hw-02.html",
+    "title": "Homework 2",
+    "section": "",
+    "text": "Note\n\n\n\nThis homework has not been released yet. Check back closer to the due date.",
+    "crumbs": [
+      "Syllabus",
+      "Homework",
+      "HW 2"
+    ]
+  },
+  {
+    "objectID": "hw/hw-01.html",
+    "href": "hw/hw-01.html",
+    "title": "Homework 1",
+    "section": "",
+    "text": "Note\n\n\n\nThis homework has not been released yet. Check back closer to the due date.",
+    "crumbs": [
+      "Syllabus",
+      "Homework",
+      "HW 1"
+    ]
+  },
+  {
+    "objectID": "hw/hw-04.html",
+    "href": "hw/hw-04.html",
+    "title": "Homework 4",
+    "section": "",
+    "text": "Note\n\n\n\nThis homework has not been released yet. Check back closer to the due date.",
+    "crumbs": [
+      "Syllabus",
+      "Homework",
+      "HW 4"
+    ]
+  },
+  {
+    "objectID": "hw/hw-03.html",
+    "href": "hw/hw-03.html",
+    "title": "Homework 3",
+    "section": "",
+    "text": "Note\n\n\n\nThis homework has not been released yet. Check back closer to the due date.",
+    "crumbs": [
+      "Syllabus",
+      "Homework",
+      "HW 3"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "PSTAT 126: Regression Analysis",
+    "section": "",
+    "text": "This course is an introduction to the theory and practice of linear regression — one of the most fundamental tools in statistics and data science. We start from scratch with simple linear regression, build up the statistical machinery for estimation and inference, and extend to multiple predictors, model diagnostics, and variable selection. All computing is done in R.\nBy the end of the quarter you’ll be able to take a real dataset, build and critique a regression model, check whether your assumptions hold, and communicate your findings clearly in a written report.\nWhat we cover: simple linear regression, OLS estimation, hypothesis tests and confidence intervals, ANOVA for regression, R², residual diagnostics, transformations, polynomial regression, multiple linear regression, partial F-tests, categorical predictors, interaction terms, outlier and influence detection, variable selection (AIC, BIC, best subsets), multicollinearity, and an introduction to Ridge regression and LASSO."
+  },
+  {
+    "objectID": "index.html#course-info",
+    "href": "index.html#course-info",
+    "title": "PSTAT 126: Regression Analysis",
+    "section": "Course Info",
+    "text": "Course Info\n\n\n\n\n\n\n\nTerm\nFall 2026\n\n\nInstructor\nAnnie Adams\n\n\nLectures\nMondays + Wednesdays 12:30 PM - 1:45 PM in TD-W 1701\n\n\nUnits\n4\n\n\nPrerequisites\nPSTAT 10 and PSTAT 120B\n\n\nTextbook\nFaraway, Linear Models with R (2nd ed.) — free PDF via UCSB library\n\n\nSoftware\nR ≥ 4.4.0 · RStudio ≥ 2024.04.02 (both free)"
+  },
+  {
+    "objectID": "index.html#teaching-team",
+    "href": "index.html#teaching-team",
+    "title": "PSTAT 126: Regression Analysis",
+    "section": "Teaching Team",
+    "text": "Teaching Team\n\n\nInstructor\nAnnie Adams\naradams@ucsb.edu\nOffice hours: Tuesday 10 AM - 11 AM — see the office hours page\n\n\nTeaching Assistants\nTBD\nta@ucsb.edu\nOffice hours: TBD — see the office hours page"
+  },
+  {
+    "objectID": "exams/final.html",
+    "href": "exams/final.html",
+    "title": "Final Exam",
+    "section": "",
+    "text": "Date: Finals Week, December 7–12, 2026 (time and room TBD)\nCoverage: Comprehensive — all material from Weeks 1–10.\nFormat: Open-note: one 8.5” × 11” sheet (both sides), handwritten or printed. No electronic devices.\nPractice materials and a review sheet will be posted here before the exam.",
+    "crumbs": [
+      "Syllabus",
+      "Exams",
+      "Final"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html",
+    "href": "course-syllabus.html",
+    "title": "Course Syllabus",
+    "section": "",
+    "text": "Instructor\n    Annie Adamsaradams@ucsb.edu\n  \n  \n    Lectures\n    Mon / Wed12:30 – 1:45 PM · TD-W 1701\n  \n  \n    Discussion Section\n    TBD\n  \n  \n    Office Hours\n    Tuesday 10 – 11 AMSee office hours page\n  \n  \n    Units\n    4 Units\n  \n  \n    Prerequisites\n    PSTAT 10 and PSTAT 120B\n  \n\nComputing requirements: R version 4.4.0 or higher · RStudio version 2024.04.02 or higher",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#course-information",
+    "href": "course-syllabus.html#course-information",
+    "title": "Course Syllabus",
+    "section": "",
+    "text": "Instructor\n    Annie Adamsaradams@ucsb.edu\n  \n  \n    Lectures\n    Mon / Wed12:30 – 1:45 PM · TD-W 1701\n  \n  \n    Discussion Section\n    TBD\n  \n  \n    Office Hours\n    Tuesday 10 – 11 AMSee office hours page\n  \n  \n    Units\n    4 Units\n  \n  \n    Prerequisites\n    PSTAT 10 and PSTAT 120B\n  \n\nComputing requirements: R version 4.4.0 or higher · RStudio version 2024.04.02 or higher",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#course-description",
+    "href": "course-syllabus.html#course-description",
+    "title": "Course Syllabus",
+    "section": "Course Description",
+    "text": "Course Description\nLinear and multiple regression, analysis of residuals, transformations, variable and model selection including stepwise regression, and analysis of covariance. The course will stress the use of computer packages to solve real-world problems.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#learning-objectives",
+    "href": "course-syllabus.html#learning-objectives",
+    "title": "Course Syllabus",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\nBy the end of this course, students will be able to:\n\nFormulate, fit, and interpret simple and multiple linear regression models\nConduct residual analysis and diagnose violations of model assumptions\nIdentify and handle outliers, leverage points, and multicollinearity\nApply transformations to linearize relationships and stabilize variance\nImplement variable selection methods\nPerform statistical inference and prediction in regression models\nUse R to perform exploratory data analysis, model fitting, diagnostic plotting, and visualization",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#grading",
+    "href": "course-syllabus.html#grading",
+    "title": "Course Syllabus",
+    "section": "Grading",
+    "text": "Grading\n\n\n\nComponent\nWeight\nNotes\n\n\n\n\nHomework (4)\n40%\n~2 weeks per assignment\n\n\nQuizzes (4)\n20%\nLowest score dropped\n\n\nMidterm\n20%\nWeek 6, closed book\n\n\nFinal Exam\n20%\nCumulative\n\n\n\n\nHomework\nThere will be four homework assignments. You will have approximately two weeks to complete each assignment. Assignments are due at 11:59 PM on the date listed.\nYou will have the opportunity to earn two late passes in this course. Each pass can be used for a 24-hour extension on a homework assignment. Late passes cannot be stacked.\nAll homework must be submitted through Gradescope. Assignments marked “Late” (within 24 hours of the original deadline) on Gradescope will automatically use one of your late passes. If your assignment says “Late” and you don’t have a pass remaining, you will receive a zero.\n\n\nQuizzes\nThere will be four in-person quizzes. Quizzes will take place at the beginning of class — refer to the assignment calendar below for dates. Your lowest quiz score will be dropped.\n\n\nMidterm\nThe midterm will take place in class on Monday of Week 6 (November 2nd). The exam will be closed book. A formula sheet will be provided.\n\n\nFinal Exam\nThe final exam will take place on Tuesday, December 8th from 12:00 – 3:00 PM. The exam is cumulative. A formula sheet will be provided.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#assignment-calendar",
+    "href": "course-syllabus.html#assignment-calendar",
+    "title": "Course Syllabus",
+    "section": "Assignment Calendar",
+    "text": "Assignment Calendar\n\n\n\nWeek Assigned\nAssignment\nDate Due\nWeek Due\n\n\n\n\n1\nOptional Self Reflection\n—\n1\n\n\n2\nHW 1\nSat, Oct 11\n3\n\n\n3\nQuiz 1\nThu, Oct 16\n3\n\n\n4\nHW 2\nSat, Oct 25\n5\n\n\n5\nQuiz 2\nMon, Nov 1\n5\n\n\n5\nOptional Self Reflection\n—\n5\n\n\n6\nMidterm\nMon, Nov 2\n6\n\n\n7\nHW 3\nSat, Nov 22\n8\n\n\n8\nQuiz 3\nThu, Nov 20\n8\n\n\n9\nHW 4\nSat, Dec 6\n10\n\n\n10\nQuiz 4\nThu, Dec 4\n10\n\n\nFinals\nFinal Exam\nTue, Dec 8 · 12–3 PM\nFinals",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#platforms",
+    "href": "course-syllabus.html#platforms",
+    "title": "Course Syllabus",
+    "section": "Platforms",
+    "text": "Platforms\nCanvas — Grades, course announcements, and file/resource distribution.\nCourse Website — All course materials live here: the week-by-week schedule, lecture slides, homework assignments, and resources.\nGradescope — Submitting assignments, viewing feedback, and viewing quiz/midterm/final scores.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#attendance",
+    "href": "course-syllabus.html#attendance",
+    "title": "Course Syllabus",
+    "section": "Attendance",
+    "text": "Attendance\nIn-person attendance to class and discussion section is crucial. It allows you to engage in hands-on activities, ask questions in real-time, and form connections with your peers and instructor. Regular attendance also mirrors professional expectations and helps you build relationships that can become valuable references.\nIf you miss a class:\n\nBe proactive — notify the instructor before it happens or within a day, with a brief explanation. Documentation is not required, but honesty and professionalism are expected.\nCatch up — work with the instructor to review any missed material.\nStay home when you are sick. If you are feeling unwell, prioritize your health.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#policy-on-generative-ai",
+    "href": "course-syllabus.html#policy-on-generative-ai",
+    "title": "Course Syllabus",
+    "section": "Policy on Generative AI",
+    "text": "Policy on Generative AI\n(Adapted from the policy for EDS 220, developed by Dr. Galaz Garcia)\nGenerative AI tools are increasingly used to assist with a wide variety of tasks, including developing code. While this can be beneficial, it should not substitute for understanding — including what you are trying to accomplish, why you select certain approaches, and how the code works. In this course, using generative AI tools such as ChatGPT is strongly discouraged for the following reasons:\n\nThe core competencies we are building require the ability to critically dissect programming challenges, which must be developed through practice.\nChatGPT is not a replacement for expert coding and in many cases requires advanced knowledge to debug its output. ChatGPT is also known to “hallucinate” false information.\nMany generative AI tools may become subscription-based and may not be accessible to all students.\n\nGuidelines:\n\nSpell check, grammar check, and synonym tools (e.g., Grammarly, Microsoft Word) are fine to use.\nBe prepared to explain each line of code in your assignments and exercises.\n\nUncritical use of generative AI in assignments will result in a lower score.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#access-accommodations-conduct",
+    "href": "course-syllabus.html#access-accommodations-conduct",
+    "title": "Course Syllabus",
+    "section": "Access, Accommodations & Conduct",
+    "text": "Access, Accommodations & Conduct\nCourse conduct: All students are expected to read and abide by the UCSB Code of Conduct. I am committed to creating an inclusive environment for all students and to eliminating any discrimination, harassment, or bullying — in person or online. Students are encouraged to share and/or update their name and pronouns by reaching out to me directly.\nAccommodations: Please submit requests for accommodations early — it is never too late to apply. If you have any disability, whether apparent or non-apparent, learning, emotional, physical, or cognitive, you may be eligible for formal accessibility services. Contact the Disabled Students Program (DSP) to arrange accommodations. DSP will initiate communication with faculty, so your specific condition does not need to be disclosed to me directly.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#student-resources",
+    "href": "course-syllabus.html#student-resources",
+    "title": "Course Syllabus",
+    "section": "Student Resources",
+    "text": "Student Resources\n\nCAPS (Counseling and Psychological Services) — caps.sa.ucsb.edu · 805.893.4411\nFood insecurity — food.ucsb.edu · AS Food Bank\nRCSGD (Resource Center for Sexual and Gender Diversity) — rcsgd.sa.ucsb.edu\nDream Scholars / Undocumented Student Services — sa.ucsb.edu/dreamscholars\nCLAS (Campus Learning Assistance Services) — clas.sa.ucsb.edu\nStudent Resource Building (SRB) — sa.ucsb.edu/student-resource-building\nMulticultural Center (MCC) — mcc.sa.ucsb.edu\nCARE (Campus Advocacy, Resources & Education) — 805.893.4613 · wgse.sa.ucsb.edu/care\nFinancial Crisis Response Team — financialcrisis@sa.ucsb.edu\nHealth and Wellness — wellbeing.ucsb.edu",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "quizzes/quiz-02.html",
+    "href": "quizzes/quiz-02.html",
+    "title": "Quiz 2",
+    "section": "",
+    "text": "Note\n\n\n\nThis quiz has not been released yet. Check back closer to the quiz date.",
+    "crumbs": [
+      "Syllabus",
+      "Quizzes",
+      "Quiz 2"
+    ]
+  },
+  {
+    "objectID": "quizzes/quiz-01.html",
+    "href": "quizzes/quiz-01.html",
+    "title": "Quiz 1",
+    "section": "",
+    "text": "Note\n\n\n\nThis quiz has not been released yet. Check back closer to the quiz date.",
+    "crumbs": [
+      "Syllabus",
+      "Quizzes",
+      "Quiz 1"
+    ]
+  }
+]
