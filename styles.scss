@@ -1,0 +1,146 @@
+/*-- scss:defaults --*/
+
+$primary:    #003660;
+$navbar-bg:  #003660;
+$navbar-fg:  white;
+$link-color: #1a5ca8;
+
+/*-- scss:rules --*/
+
+.navbar {
+  border-bottom: 3px solid #FEBC11;
+}
+
+// ---- Schedule table ----
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.schedule-table th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid #003660;
+  color: #003660;
+  font-size: 0.82rem;
+}
+
+.schedule-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #e8e8e8;
+  vertical-align: middle;
+}
+
+.schedule-table tr:hover td {
+  background: #f8f8f8;
+}
+
+.week-row td {
+  background: #f2f4f7 !important;
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: #333;
+  border-left: 3px solid #003660 !important;
+}
+
+.date-cell {
+  color: #777;
+  font-size: 0.84rem;
+  white-space: nowrap;
+}
+
+.sub-topic {
+  display: block;
+  font-size: 0.82rem;
+  color: #777;
+  font-weight: 400;
+  margin-top: 0.1rem;
+}
+
+.no-class-row td {
+  color: #aaa;
+  font-style: italic;
+}
+
+.exam-topic {
+  color: #b03020;
+  font-weight: 600;
+}
+
+// ---- Badges ----
+
+.badge-slide, .badge-note, .badge-hw, .badge-lab, .badge-exam {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-right: 3px;
+}
+
+.badge-slide { background: #ddeeff; color: #0055aa; }
+.badge-note  { background: #ddf0dd; color: #2a622a; }
+.badge-hw    { background: #fde8cc; color: #8b4500; }
+.badge-lab   { background: #ebe8ff; color: #4040bb; }
+.badge-exam  { background: #fde0e0; color: #990000; }
+
+// ---- Syllabus info cards ----
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-card {
+  background: #f6f8fa;
+  border: 1px solid #dde2e8;
+  border-radius: 5px;
+  padding: 0.85rem 1rem;
+}
+
+.info-card-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 0.2rem;
+}
+
+.info-card-value {
+  font-size: 0.9rem;
+  color: #222;
+  margin: 0;
+}
+
+// ---- Grading table ----
+
+.grading-table {
+  width: 100%;
+  max-width: 460px;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.grading-table th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid #003660;
+  color: #003660;
+  font-size: 0.82rem;
+}
+
+.grading-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.grading-table tbody tr:last-child td {
+  font-weight: 700;
+  border-top: 2px solid #ccc;
+  border-bottom: none;
+}

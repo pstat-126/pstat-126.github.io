@@ -1,0 +1,52 @@
+---
+title: "PSTAT 126: Regression Analysis"
+subtitle: "Fall 2026 · UC Santa Barbara · Department of Statistics & Applied Probability"
+---
+
+This course is an introduction to the theory and practice of linear regression — one of the most fundamental tools in statistics and data science. We start from scratch with simple linear regression, build up the statistical machinery for estimation and inference, and extend to multiple predictors, model diagnostics, and variable selection. All computing is done in R.
+
+By the end of the quarter you'll be able to take a real dataset, build and critique a regression model, check whether your assumptions hold, and communicate your findings clearly in a written report.
+
+**What we cover:** simple linear regression, OLS estimation, hypothesis tests and confidence intervals, ANOVA for regression, R², residual diagnostics, transformations, polynomial regression, multiple linear regression, partial F-tests, categorical predictors, interaction terms, outlier and influence detection, variable selection (AIC, BIC, best subsets), multicollinearity, and an introduction to Ridge regression and LASSO.
+
+## Course Info
+
+| | |
+|:---|:---|
+| **Term** | Fall 2026 |
+| **Instructor** | Annie Adams |
+| **Lectures** | Mondays + Wednesdays 12:30 PM - 1:45 PM in TD-W 1701  |
+| **Units** | 4 |
+| **Prerequisites** | PSTAT 10 and PSTAT 120B |
+| **Textbook** | Faraway, *Linear Models with R* (2nd ed.) — free PDF via UCSB library |
+| **Software** | R ≥ 4.4.0 · RStudio ≥ 2024.04.02 (both free) |
+
+## Teaching Team
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-sm-6}
+
+**Instructor**
+
+Annie Adams
+
+[aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+Office hours: Tuesday 10 AM - 11 AM — see the [office hours page](office-hours.html)
+
+:::
+
+::: {.g-col-12 .g-col-sm-6}
+
+**Teaching Assistants**
+
+TBD
+
+[ta\@ucsb.edu](mailto:ta@ucsb.edu)
+
+Office hours: TBD — see the [office hours page](office-hours.html)
+
+:::
+
+:::

@@ -1,0 +1,13 @@
+---
+title: "Office Hours"
+---
+
+Office hours details will be posted here at the start of the quarter.
+
+| Person | Role | Day | Time | Location |
+|---|---|---|---|---|
+| Annie Adams | Instructor | Tuesday | 10 AM - 11 AM  | TBD |
+| TBD | TA | TBD | TBD | TBD |
+| TBD | TA | TBD | TBD | TBD |
+
+Office hours are also available by appointment — email the instructor to schedule.

@@ -1,0 +1,153 @@
+---
+title: "Course Syllabus"
+subtitle: "PSTAT 126 — Linear Regression | Fall 2026 | UC Santa Barbara"
+---
+
+## Course Information
+
+```{=html}
+<div class="info-grid">
+  <div class="info-card">
+    <div class="info-card-label">Instructor</div>
+    <p class="info-card-value">Annie Adams<br><a href="mailto:aradams@ucsb.edu">aradams@ucsb.edu</a></p>
+  </div>
+  <div class="info-card">
+    <div class="info-card-label">Lectures</div>
+    <p class="info-card-value">Mon / Wed<br>12:30 – 1:45 PM · TD-W 1701</p>
+  </div>
+  <div class="info-card">
+    <div class="info-card-label">Discussion Section</div>
+    <p class="info-card-value">TBD</p>
+  </div>
+  <div class="info-card">
+    <div class="info-card-label">Office Hours</div>
+    <p class="info-card-value">Tuesday 10 – 11 AM<br>See <a href="office-hours.html">office hours page</a></p>
+  </div>
+  <div class="info-card">
+    <div class="info-card-label">Units</div>
+    <p class="info-card-value">4 Units</p>
+  </div>
+  <div class="info-card">
+    <div class="info-card-label">Prerequisites</div>
+    <p class="info-card-value">PSTAT 10 and PSTAT 120B</p>
+  </div>
+</div>
+```
+
+**Computing requirements:** R version 4.4.0 or higher · RStudio version 2024.04.02 or higher
+
+## Course Description
+
+Linear and multiple regression, analysis of residuals, transformations, variable and model selection including stepwise regression, and analysis of covariance. The course will stress the use of computer packages to solve real-world problems.
+
+## Learning Objectives
+
+By the end of this course, students will be able to:
+
+- Formulate, fit, and interpret simple and multiple linear regression models
+- Conduct residual analysis and diagnose violations of model assumptions
+- Identify and handle outliers, leverage points, and multicollinearity
+- Apply transformations to linearize relationships and stabilize variance
+- Implement variable selection methods
+- Perform statistical inference and prediction in regression models
+- Use R to perform exploratory data analysis, model fitting, diagnostic plotting, and visualization
+
+## Grading
+
+| Component | Weight | Notes |
+|:---|:---|:---|
+| Homework (4) | 40% | ~2 weeks per assignment |
+| Quizzes (4) | 20% | Lowest score dropped |
+| Midterm | 20% | Week 6, closed book |
+| Final Exam | 20% | Cumulative |
+
+### Homework
+
+There will be four homework assignments. You will have approximately two weeks to complete each assignment. Assignments are due at **11:59 PM** on the date listed.
+
+You will have the opportunity to earn **two late passes** in this course. Each pass can be used for a 24-hour extension on a homework assignment. Late passes cannot be stacked.
+
+All homework must be submitted through [Gradescope](https://www.gradescope.com). Assignments marked "Late" (within 24 hours of the original deadline) on Gradescope will automatically use one of your late passes. If your assignment says "Late" and you don't have a pass remaining, you will receive a zero.
+
+### Quizzes
+
+There will be four in-person quizzes. Quizzes will take place at the beginning of class — refer to the assignment calendar below for dates. Your **lowest quiz score will be dropped**.
+
+### Midterm
+
+The midterm will take place in class on **Monday of Week 6 (November 2nd)**. The exam will be closed book. A formula sheet will be provided.
+
+### Final Exam
+
+The final exam will take place on **Tuesday, December 8th from 12:00 – 3:00 PM**. The exam is cumulative. A formula sheet will be provided.
+
+## Assignment Calendar
+
+| Week Assigned | Assignment | Date Due | Week Due |
+|:---:|:---|:---:|:---:|
+| 1 | Optional Self Reflection | — | 1 |
+| 2 | HW 1 | Sat, Oct 11 | 3 |
+| 3 | Quiz 1 | Thu, Oct 16 | 3 |
+| 4 | HW 2 | Sat, Oct 25 | 5 |
+| 5 | Quiz 2 | Mon, Nov 1 | 5 |
+| 5 | Optional Self Reflection | — | 5 |
+| 6 | **Midterm** | Mon, Nov 2 | 6 |
+| 7 | HW 3 | Sat, Nov 22 | 8 |
+| 8 | Quiz 3 | Thu, Nov 20 | 8 |
+| 9 | HW 4 | Sat, Dec 6 | 10 |
+| 10 | Quiz 4 | Thu, Dec 4 | 10 |
+| Finals | **Final Exam** | Tue, Dec 8 · 12–3 PM | Finals |
+
+## Platforms
+
+**Canvas** — Grades, course announcements, and file/resource distribution.
+
+**[Course Website](https://pstat-126.github.io/)** — All course materials live here: the week-by-week schedule, lecture slides, homework assignments, and resources.
+
+**[Gradescope](https://www.gradescope.com)** — Submitting assignments, viewing feedback, and viewing quiz/midterm/final scores.
+
+## Attendance
+
+**In-person attendance to class and discussion section is crucial.** It allows you to engage in hands-on activities, ask questions in real-time, and form connections with your peers and instructor. Regular attendance also mirrors professional expectations and helps you build relationships that can become valuable references.
+
+If you miss a class:
+
+- **Be proactive** — notify the instructor before it happens or within a day, with a brief explanation. Documentation is not required, but honesty and professionalism are expected.
+- **Catch up** — work with the instructor to review any missed material.
+- **Stay home when you are sick.** If you are feeling unwell, prioritize your health.
+
+## Policy on Generative AI
+
+*(Adapted from the policy for EDS 220, developed by Dr. Galaz Garcia)*
+
+Generative AI tools are increasingly used to assist with a wide variety of tasks, including developing code. While this can be beneficial, it should not substitute for understanding — including what you are trying to accomplish, why you select certain approaches, and how the code works. In this course, using generative AI tools such as ChatGPT is **strongly discouraged** for the following reasons:
+
+- The core competencies we are building require the ability to critically dissect programming challenges, which must be developed through practice.
+- ChatGPT is not a replacement for expert coding and in many cases requires advanced knowledge to debug its output. ChatGPT is also known to "hallucinate" false information.
+- Many generative AI tools may become subscription-based and may not be accessible to all students.
+
+**Guidelines:**
+
+- Spell check, grammar check, and synonym tools (e.g., Grammarly, Microsoft Word) are fine to use.
+- Be prepared to explain each line of code in your assignments and exercises.
+
+Uncritical use of generative AI in assignments will result in a lower score.
+
+## Access, Accommodations & Conduct
+
+**Course conduct:** All students are expected to read and abide by the [UCSB Code of Conduct](https://www.sa.ucsb.edu/regulations/student-conduct-code/student-conduct-code). I am committed to creating an inclusive environment for all students and to eliminating any discrimination, harassment, or bullying — in person or online. Students are encouraged to share and/or update their name and pronouns by reaching out to me directly.
+
+**Accommodations:** Please submit requests for accommodations early — it is never too late to apply. If you have any disability, whether apparent or non-apparent, learning, emotional, physical, or cognitive, you may be eligible for formal accessibility services. Contact the [Disabled Students Program (DSP)](https://dsp.sa.ucsb.edu/) to arrange accommodations. DSP will initiate communication with faculty, so your specific condition does not need to be disclosed to me directly.
+
+## Student Resources
+
+- **CAPS** (Counseling and Psychological Services) — [caps.sa.ucsb.edu](http://caps.sa.ucsb.edu) · 805.893.4411
+- **Food insecurity** — [food.ucsb.edu](http://food.ucsb.edu) · [AS Food Bank](https://foodbank.as.ucsb.edu)
+- **RCSGD** (Resource Center for Sexual and Gender Diversity) — [rcsgd.sa.ucsb.edu](http://rcsgd.sa.ucsb.edu/)
+- **Dream Scholars / Undocumented Student Services** — [sa.ucsb.edu/dreamscholars](http://www.sa.ucsb.edu/dreamscholars/home)
+- **CLAS** (Campus Learning Assistance Services) — [clas.sa.ucsb.edu](http://clas.sa.ucsb.edu)
+- **Student Resource Building (SRB)** — [sa.ucsb.edu/student-resource-building](http://www.sa.ucsb.edu/student-resource-building/home)
+- **Multicultural Center (MCC)** — [mcc.sa.ucsb.edu](http://mcc.sa.ucsb.edu/)
+- **CARE** (Campus Advocacy, Resources & Education) — [805.893.4613](tel:8058934613) · [wgse.sa.ucsb.edu/care](http://wgse.sa.ucsb.edu/care/home)
+- **Financial Crisis Response Team** — [financialcrisis@sa.ucsb.edu](mailto:financialcrisis@sa.ucsb.edu)
+- **Health and Wellness** — [wellbeing.ucsb.edu](https://wellbeing.ucsb.edu/)

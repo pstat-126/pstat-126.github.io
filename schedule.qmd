@@ -1,0 +1,263 @@
+---
+title: "Course Schedule"
+subtitle: "PSTAT 126 — Fall 2026"
+toc: false
+---
+
+::: callout-note
+This schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.
+:::
+
+```{=html}
+<div style="overflow-x:auto">
+<table class="schedule-table">
+  <thead>
+    <tr>
+      <th style="width:80px">Week</th>
+      <th style="width:115px">Date</th>
+      <th>Topic</th>
+      <th style="width:155px">Materials</th>
+      <th style="width:170px">Due</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr class="week-row"><td colspan="5">Week 1 — Introduction &amp; Simple Linear Regression</td></tr>
+    <tr>
+      <td></td><td class="date-cell">Mon, Sep 28</td>
+      <td class="topic-cell">Welcome &amp; Course Overview
+        <span class="sub-topic">What is regression? Motivation and examples</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Wed, Sep 30</td>
+      <td class="topic-cell">The Simple Linear Regression Model
+        <span class="sub-topic">Model assumptions, population vs. fitted line</span></td>
+      <td><a class="badge-slide" href="#">Slides</a> <a class="badge-note" href="#">Notes</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Fri, Oct 2</td>
+      <td class="topic-cell">Least Squares Estimation
+        <span class="sub-topic">Deriving OLS estimators, interpreting coefficients</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td><a class="badge-lab" href="labs/lab-01.html">Lab 1</a></td>
+    </tr>
+
+    <tr class="week-row"><td colspan="5">Week 2 — Properties of OLS &amp; Statistical Inference</td></tr>
+    <tr>
+      <td></td><td class="date-cell">Mon, Oct 5</td>
+      <td class="topic-cell">Properties of OLS Estimators
+        <span class="sub-topic">Gauss-Markov theorem, unbiasedness, variance</span></td>
+      <td><a class="badge-slide" href="#">Slides</a> <a class="badge-note" href="#">Notes</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Wed, Oct 7</td>
+      <td class="topic-cell">Hypothesis Tests for &beta;<sub>0</sub> and &beta;<sub>1</sub>
+        <span class="sub-topic">t-tests, standard errors, degrees of freedom</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Fri, Oct 9</td>
+      <td class="topic-cell">Confidence Intervals for Regression Coefficients
+        <span class="sub-topic">CI for &beta;<sub>1</sub>, inference for the mean response</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td><a class="badge-hw" href="hw/hw-01.html">HW 1</a> <a class="badge-lab" href="labs/lab-02.html">Lab 2</a></td>
+    </tr>
+
+    <tr class="week-row"><td colspan="5">Week 3 — ANOVA, F-tests &amp; Prediction</td></tr>
+    <tr>
+      <td></td><td class="date-cell">Mon, Oct 12</td>
+      <td class="topic-cell">Prediction Intervals
+        <span class="sub-topic">PI for a new observation vs. CI for mean response</span></td>
+      <td><a class="badge-slide" href="#">Slides</a> <a class="badge-note" href="#">Notes</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Wed, Oct 14</td>
+      <td class="topic-cell">ANOVA Decomposition
+        <span class="sub-topic">SST, SSR, SSE; coefficient of determination R²</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Fri, Oct 16</td>
+      <td class="topic-cell">F-test for Simple Linear Regression
+        <span class="sub-topic">F-statistic, ANOVA table, connection to t-test</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td><a class="badge-lab" href="labs/lab-03.html">Lab 3</a></td>
+    </tr>
+
+    <tr class="week-row"><td colspan="5">Week 4 — Correlation, R² &amp; Diagnostics</td></tr>
+    <tr>
+      <td></td><td class="date-cell">Mon, Oct 19</td>
+      <td class="topic-cell">Correlation &amp; R²
+        <span class="sub-topic">Pearson correlation, relationship with R², limitations</span></td>
+      <td><a class="badge-slide" href="#">Slides</a> <a class="badge-note" href="#">Notes</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Wed, Oct 21</td>
+      <td class="topic-cell">Introduction to Regression Diagnostics
+        <span class="sub-topic">Model assumptions, types of residuals</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Fri, Oct 23</td>
+      <td class="topic-cell">Residual Plots &amp; Assumption Checking
+        <span class="sub-topic">Residuals vs. fitted, Q-Q plots, scale-location</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td><a class="badge-hw" href="hw/hw-02.html">HW 2</a> <a class="badge-lab" href="labs/lab-04.html">Lab 4</a></td>
+    </tr>
+
+    <tr class="week-row"><td colspan="5">Week 5 — Transformations &amp; Midterm Review</td></tr>
+    <tr>
+      <td></td><td class="date-cell">Mon, Oct 26</td>
+      <td class="topic-cell">Transformations to Linearize
+        <span class="sub-topic">Log, square root, Box-Cox transformations</span></td>
+      <td><a class="badge-slide" href="#">Slides</a> <a class="badge-note" href="#">Notes</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Wed, Oct 28</td>
+      <td class="topic-cell">Polynomial Regression
+        <span class="sub-topic">Adding quadratic terms, comparing models</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Fri, Oct 30</td>
+      <td class="topic-cell exam-topic">📝 Midterm Exam
+        <span class="sub-topic" style="color:#888;font-weight:400">Covers Weeks 1–4</span></td>
+      <td></td>
+      <td><span class="badge-exam">Midterm</span></td>
+    </tr>
+
+    <tr class="week-row"><td colspan="5">Week 6 — Multiple Linear Regression</td></tr>
+    <tr>
+      <td></td><td class="date-cell">Mon, Nov 2</td>
+      <td class="topic-cell">Introduction to MLR
+        <span class="sub-topic">Model formulation, parameters, interpretation</span></td>
+      <td><a class="badge-slide" href="#">Slides</a> <a class="badge-note" href="#">Notes</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Wed, Nov 4</td>
+      <td class="topic-cell">MLR in Matrix Notation
+        <span class="sub-topic">Design matrix, OLS solution X'X&beta; = X'Y</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Fri, Nov 6</td>
+      <td class="topic-cell">Inference in MLR
+        <span class="sub-topic">Individual t-tests, overall F-test, adjusted R²</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td><a class="badge-hw" href="hw/hw-03.html">HW 3</a> <a class="badge-lab" href="labs/lab-05.html">Lab 5</a></td>
+    </tr>
+
+    <tr class="week-row"><td colspan="5">Week 7 — MLR Inference &amp; Partial Tests</td></tr>
+    <tr>
+      <td></td><td class="date-cell">Mon, Nov 9</td>
+      <td class="topic-cell">Confidence &amp; Prediction Intervals in MLR
+        <span class="sub-topic">Joint CIs, simultaneous inference</span></td>
+      <td><a class="badge-slide" href="#">Slides</a> <a class="badge-note" href="#">Notes</a></td>
+      <td></td>
+    </tr>
+    <tr class="no-class-row">
+      <td></td><td class="date-cell">Wed, Nov 11</td>
+      <td>Veterans Day — No Class</td>
+      <td></td><td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Fri, Nov 13</td>
+      <td class="topic-cell">Partial F-tests &amp; Extra Sum of Squares
+        <span class="sub-topic">Testing subsets of predictors, reduced vs. full model</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td><a class="badge-lab" href="labs/lab-06.html">Lab 6</a></td>
+    </tr>
+
+    <tr class="week-row"><td colspan="5">Week 8 — Categorical Predictors &amp; Interactions</td></tr>
+    <tr>
+      <td></td><td class="date-cell">Mon, Nov 16</td>
+      <td class="topic-cell">Categorical (Indicator) Variables
+        <span class="sub-topic">Dummy coding, reference categories, interpretation</span></td>
+      <td><a class="badge-slide" href="#">Slides</a> <a class="badge-note" href="#">Notes</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Wed, Nov 18</td>
+      <td class="topic-cell">Interaction Terms
+        <span class="sub-topic">Continuous × categorical and continuous × continuous interactions</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Fri, Nov 20</td>
+      <td class="topic-cell">Outliers, Leverage &amp; Influence
+        <span class="sub-topic">Studentized residuals, hat matrix, Cook's distance</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td><a class="badge-hw" href="hw/hw-04.html">HW 4</a> <a class="badge-lab" href="labs/lab-07.html">Lab 7</a></td>
+    </tr>
+
+    <tr class="week-row"><td colspan="5">Week 9 — Model Building &amp; Variable Selection</td></tr>
+    <tr>
+      <td></td><td class="date-cell">Mon, Nov 23</td>
+      <td class="topic-cell">Variable Selection Methods
+        <span class="sub-topic">AIC, BIC, adjusted R², stepwise procedures</span></td>
+      <td><a class="badge-slide" href="#">Slides</a> <a class="badge-note" href="#">Notes</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Wed, Nov 25</td>
+      <td class="topic-cell">Best Subsets &amp; Cross-Validation
+        <span class="sub-topic">All-subsets regression, model comparison strategies</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td></td>
+    </tr>
+    <tr class="no-class-row">
+      <td></td><td class="date-cell">Fri, Nov 27</td>
+      <td>Thanksgiving Recess — No Class</td>
+      <td></td><td></td>
+    </tr>
+
+    <tr class="week-row"><td colspan="5">Week 10 — Collinearity, Regularization &amp; Review</td></tr>
+    <tr>
+      <td></td><td class="date-cell">Mon, Nov 30</td>
+      <td class="topic-cell">Multicollinearity &amp; VIF
+        <span class="sub-topic">Detecting collinearity, variance inflation factors, remedies</span></td>
+      <td><a class="badge-slide" href="#">Slides</a> <a class="badge-note" href="#">Notes</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Wed, Dec 2</td>
+      <td class="topic-cell">Introduction to Regularization
+        <span class="sub-topic">Ridge regression and LASSO (overview)</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td><td class="date-cell">Fri, Dec 4</td>
+      <td class="topic-cell">Course Review &amp; Final Exam Prep
+        <span class="sub-topic">Key concepts, practice problems, Q&amp;A</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td><a class="badge-hw" href="hw/hw-05.html">HW 5</a> <a class="badge-lab" href="labs/lab-08.html">Lab 8</a></td>
+    </tr>
+
+    <tr class="week-row"><td colspan="5">Finals Week — Dec 7–12</td></tr>
+    <tr>
+      <td></td><td class="date-cell">TBD</td>
+      <td class="topic-cell exam-topic">📝 Final Exam
+        <span class="sub-topic" style="color:#888;font-weight:400">Comprehensive — covers full quarter</span></td>
+      <td></td>
+      <td><span class="badge-exam">Final</span></td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+```

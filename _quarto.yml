@@ -1,0 +1,77 @@
+project:
+  type: website
+
+website:
+  title: "PSTAT 126"
+  description: "Regression Analysis — University of California, Santa Barbara"
+
+  navbar:
+    background: "#003660"
+    foreground: white
+    collapse-below: lg
+    left:
+      - text: "Syllabus"
+        href: course-syllabus.qmd
+      - text: "Schedule"
+        href: schedule.qmd
+    right:
+      - text: "Gradescope"
+        href: https://www.gradescope.com
+        target: _blank
+      - icon: github
+        href: https://github.com/pstat-126
+        target: _blank
+
+  sidebar:
+    style: docked
+    background: light
+    collapse-level: 1
+    contents:
+      - section: "Course Information"
+        contents:
+          - text: "Syllabus"
+            href: course-syllabus.qmd
+          - text: "Schedule"
+            href: schedule.qmd
+          - text: "Office Hours"
+            href: office-hours.qmd
+      - section: "Homework"
+        contents:
+          - text: "HW 1"
+            href: hw/hw-01.qmd
+          - text: "HW 2"
+            href: hw/hw-02.qmd
+          - text: "HW 3"
+            href: hw/hw-03.qmd
+          - text: "HW 4"
+            href: hw/hw-04.qmd
+      - section: "Quizzes"
+        contents:
+          - text: "Quiz 1"
+            href: quizzes/quiz-01.qmd
+          - text: "Quiz 2"
+            href: quizzes/quiz-02.qmd
+          - text: "Quiz 3"
+            href: quizzes/quiz-03.qmd
+          - text: "Quiz 4"
+            href: quizzes/quiz-04.qmd
+      - section: "Exams"
+        contents:
+          - text: "Midterm"
+            href: exams/midterm.qmd
+          - text: "Final"
+            href: exams/final.qmd
+
+  page-footer:
+    left: "© 2026, PSTAT 126 — University of California, Santa Barbara"
+    right: "Built with [Quarto](https://quarto.org)"
+
+format:
+  html:
+    theme:
+      - cosmo
+      - styles.scss
+    toc: true
+    toc-depth: 3
+    link-external-newpage: true
+    link-external-icon: true
