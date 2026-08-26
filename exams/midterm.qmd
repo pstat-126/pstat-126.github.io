@@ -2,10 +2,6 @@
 title: "Midterm Exam"
 ---
 
-**Date:** Friday, October 30, 2026 (in class)
-
-**Coverage:** Weeks 1–4 — Simple Linear Regression, OLS estimation, statistical inference, ANOVA, R², diagnostics.
-
-**Format:** In-class, 50 minutes. Open-note: one 8.5" × 11" sheet (both sides), handwritten or printed. No electronic devices.
-
-Practice materials and a review sheet will be posted here before the exam.
+::: callout-note
+Information on the midterm has not been released yet. Check back closer to the exam date.
+:::
