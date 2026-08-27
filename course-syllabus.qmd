@@ -16,10 +16,6 @@ subtitle: "PSTAT 126 — Linear Regression | Fall 2026 | UC Santa Barbara"
     <p class="info-card-value">Mon / Wed<br>12:30 – 1:45 PM · TD-W 1701</p>
   </div>
   <div class="info-card">
-    <div class="info-card-label">Discussion Section</div>
-    <p class="info-card-value">TBD</p>
-  </div>
-  <div class="info-card">
     <div class="info-card-label">Office Hours</div>
     <p class="info-card-value">Tuesday 10 – 11 AM<br>See <a href="office-hours.html">office hours page</a></p>
   </div>

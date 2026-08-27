@@ -16,9 +16,6 @@ format:
 
 ## Course Information {background-color="#003660"}
 
-:::: {.columns}
-
-::: {.column width="50%"}
 **Instructor**
 Annie Adams · [aradams@ucsb.edu](mailto:aradams@ucsb.edu)
 
@@ -33,23 +30,6 @@ Tuesday 10 – 11 AM
 
 **Prerequisites**
 PSTAT 10 and PSTAT 120B
-:::
-
-::: {.column width="50%"}
-**Discussion Sections:**
-Mondays: 
-
-  - 8 - 8:50 am
-  -  9 - 9:50 am
-  - 10 - 10:50 am
-  - 11 - 11:50 am
-  - 9 - 9:50 am
-  - 5 - 5:50 pm
-
-
-:::
-
-::::
 
 **Computing:** R ≥ 4.4.0 · RStudio ≥ 2024.04.02
 
