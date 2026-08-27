@@ -95,7 +95,7 @@ The final exam will take place on **Tuesday, December 8th from 12:00 – 3:00 PM
 | 6 | **Midterm** | Mon, Nov 2 | 6 |
 | 7 | HW 3 | Sat, Nov 14 | 8 |
 | 8 | Quiz 3 | Mon, Nov 16 | 8 |
-| 9 | HW 4 | Sat, Nov 28 | 9 |
+| 9 | HW 4 | Sat, Nov 28 | Finals |
 | 10 | Quiz 4 | Mon, Nov 30 | 10 |
 | Finals | **Final Exam** | Tue, Dec 8 · 12–3 PM | Finals |
 
@@ -119,20 +119,10 @@ If you miss a class:
 
 ## Policy on Generative AI
 
-*(Adapted from the policy for EDS 220, developed by Dr. Galaz Garcia)*
+AI tools (e.g., ChatGPT, Claude, Copilot, etc.) can be valuable for learning, but must be used responsibly. You are permitted to use AI for helping to understand statistical concepts or mathematical formulas, debugging your own code by asking why an error occurred or how to fix a specific line, or clarifying course material or lecture concepts. However, you are not permitted to use AI to write or complete assignments for you, generate code solutions, solve homework or exam problems, or use AI output without understanding what it does.
 
-Generative AI tools are increasingly used to assist with a wide variety of tasks, including developing code. While this can be beneficial, it should not substitute for understanding — including what you are trying to accomplish, why you select certain approaches, and how the code works. In this course, using generative AI tools such as ChatGPT is **strongly discouraged** for the following reasons:
+Uses of AI that do not follow the guidelines above will result in receiving a lower score on the assignment.
 
-- The core competencies we are building require the ability to critically dissect programming challenges, which must be developed through practice.
-- ChatGPT is not a replacement for expert coding and in many cases requires advanced knowledge to debug its output. ChatGPT is also known to "hallucinate" false information.
-- Many generative AI tools may become subscription-based and may not be accessible to all students.
-
-**Guidelines:**
-
-- Spell check, grammar check, and synonym tools (e.g., Grammarly, Microsoft Word) are fine to use.
-- Be prepared to explain each line of code in your assignments and exercises.
-
-Uncritical use of generative AI in assignments will result in a lower score.
 
 ## Access, Accommodations & Conduct
 
