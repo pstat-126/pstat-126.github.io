@@ -1,0 +1,479 @@
+[
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Course Schedule",
+    "section": "",
+    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nMaterials\nDue\n\n\n\n\nWeek 1 — Introduction & Simple Linear Regression\n\n\n\nMon, Sep 28\nWelcome & Course Overview What is regression? Motivation and examples\nSlides\n\n\n\n\nWed, Sep 30\nThe Simple Linear Regression Model Model assumptions, population vs. fitted line\nSlides Notes\n\n\n\n\nFri, Oct 2\nLeast Squares Estimation Deriving OLS estimators, interpreting coefficients\nSlides\nLab 1",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "quizzes/quiz-03.html",
+    "href": "quizzes/quiz-03.html",
+    "title": "Quiz 3",
+    "section": "",
+    "text": "Note\n\n\n\nThis quiz has not been released yet. Check back closer to the quiz date.",
+    "crumbs": [
+      "Syllabus",
+      "Quizzes",
+      "Quiz 3"
+    ]
+  },
+  {
+    "objectID": "quizzes/quiz-04.html",
+    "href": "quizzes/quiz-04.html",
+    "title": "Quiz 4",
+    "section": "",
+    "text": "Note\n\n\n\nThis quiz has not been released yet. Check back closer to the quiz date.",
+    "crumbs": [
+      "Syllabus",
+      "Quizzes",
+      "Quiz 4"
+    ]
+  },
+  {
+    "objectID": "exams/midterm.html",
+    "href": "exams/midterm.html",
+    "title": "Midterm Exam",
+    "section": "",
+    "text": "Note\n\n\n\nInformation on the midterm has not been released yet. Check back closer to the exam date.",
+    "crumbs": [
+      "Syllabus",
+      "Exams",
+      "Midterm"
+    ]
+  },
+  {
+    "objectID": "office-hours.html",
+    "href": "office-hours.html",
+    "title": "Office Hours",
+    "section": "",
+    "text": "Person\nRole\nDay\nTime\nLocation\n\n\n\n\nAnnie Adams\nInstructor\nTuesday\n10 AM - 11 AM\nTBD\n\n\nTBD\nTA\nTBD\nTBD\nTBD\n\n\nTBD\nTA\nTBD\nTBD\nTBD\n\n\n\nOffice hours are also available by appointment. Email the instructor to schedule.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Office Hours"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "PSTAT 126: Regression Analysis",
+    "section": "",
+    "text": "This course is an introduction to the theory and practice of linear regression — one of the most fundamental tools in statistics and data science. We start from scratch with simple linear regression, build up the statistical machinery for estimation and inference, and extend to multiple predictors, model diagnostics, and variable selection. All computing is done in R.\nBy the end of the quarter you’ll be able to take a real dataset, build and critique a regression model, check whether your assumptions hold, and communicate your findings clearly in a written report.\nWhat we cover: simple linear regression, OLS estimation, hypothesis tests and confidence intervals, ANOVA for regression, R², residual diagnostics, transformations, polynomial regression, multiple linear regression, partial F-tests, categorical predictors, interaction terms, outlier and influence detection, variable selection (AIC, BIC, best subsets), multicollinearity, and an introduction to Ridge regression and LASSO."
+  },
+  {
+    "objectID": "index.html#course-info",
+    "href": "index.html#course-info",
+    "title": "PSTAT 126: Regression Analysis",
+    "section": "Course Info",
+    "text": "Course Info\n\n\n\n\n\n\n\nTerm\nFall 2026\n\n\nInstructor\nAnnie Adams\n\n\nLectures\nMondays + Wednesdays 12:30 PM - 1:45 PM in TD-W 1701\n\n\nUnits\n4\n\n\nPrerequisites\nPSTAT 10 and PSTAT 120B\n\n\nTextbook\nFaraway, Linear Models with R (2nd ed.) — free PDF via UCSB library\n\n\nSoftware\nR ≥ 4.4.0 · RStudio ≥ 2024.04.02 (both free)"
+  },
+  {
+    "objectID": "index.html#teaching-team",
+    "href": "index.html#teaching-team",
+    "title": "PSTAT 126: Regression Analysis",
+    "section": "Teaching Team",
+    "text": "Teaching Team\n\n\nInstructor\nAnnie Adams\naradams@ucsb.edu\nOffice hours: Tuesday 10 AM - 11 AM — see the office hours page\n\n\nTeaching Assistants\nTBD\nta@ucsb.edu\nOffice hours: TBD — see the office hours page"
+  },
+  {
+    "objectID": "hw/hw-03.html",
+    "href": "hw/hw-03.html",
+    "title": "Homework 3",
+    "section": "",
+    "text": "Note\n\n\n\nThis homework has not been released yet. Check back closer to the due date.",
+    "crumbs": [
+      "Syllabus",
+      "Homework",
+      "HW 3"
+    ]
+  },
+  {
+    "objectID": "hw/hw-04.html",
+    "href": "hw/hw-04.html",
+    "title": "Homework 4",
+    "section": "",
+    "text": "Note\n\n\n\nThis homework has not been released yet. Check back closer to the due date.",
+    "crumbs": [
+      "Syllabus",
+      "Homework",
+      "HW 4"
+    ]
+  },
+  {
+    "objectID": "hw/hw-01.html",
+    "href": "hw/hw-01.html",
+    "title": "Homework 1",
+    "section": "",
+    "text": "Note\n\n\n\nThis homework has not been released yet. Check back closer to the due date.",
+    "crumbs": [
+      "Syllabus",
+      "Homework",
+      "HW 1"
+    ]
+  },
+  {
+    "objectID": "hw/hw-02.html",
+    "href": "hw/hw-02.html",
+    "title": "Homework 2",
+    "section": "",
+    "text": "Note\n\n\n\nThis homework has not been released yet. Check back closer to the due date.",
+    "crumbs": [
+      "Syllabus",
+      "Homework",
+      "HW 2"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#course-information",
+    "href": "slides/syllabus-slides.html#course-information",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Course Information",
+    "text": "Course Information\nInstructor Annie Adams · aradams@ucsb.edu\nLectures Mon / Wed · 12:30 – 1:45 PM · TD-W 1701\nUnits 4 Units\nOffice Hours Tuesday 10 – 11 AM\nPrerequisites PSTAT 10 and PSTAT 120B\nComputing: R ≥ 4.4.0 · RStudio ≥ 2024.04.02",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#course-description",
+    "href": "slides/syllabus-slides.html#course-description",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Course Description",
+    "text": "Course Description\nLinear and multiple regression with an emphasis on real-world application.\nTopics include:\n\nSimple and multiple linear regression\nResidual analysis and model diagnostics\nTransformations and variable selection\nAnalysis of covariance\nStepwise regression",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#learning-objectives",
+    "href": "slides/syllabus-slides.html#learning-objectives",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\nBy the end of this course, you will be able to:\n\nFormulate, fit, and interpret simple and multiple linear regression models\nConduct residual analysis and diagnose violations of model assumptions\nIdentify and handle outliers, leverage points, and multicollinearity\nApply transformations to linearize relationships and stabilize variance\nImplement variable selection methods\nPerform statistical inference and prediction in regression models\nUse R for exploratory data analysis, model fitting, and diagnostic plotting",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#grading",
+    "href": "slides/syllabus-slides.html#grading",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Grading",
+    "text": "Grading\n\n\n\nComponent\nWeight\nNotes\n\n\n\n\nHomework (4)\n40%\n~2 weeks per assignment\n\n\nQuizzes (4)\n10%\nLowest score dropped\n\n\nLabs (10)\n15%\nCompleted in weekly section\n\n\nMidterm\n15%\nWeek 6, closed book\n\n\nFinal Exam\n20%\nFinals Week, Cumulative",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#homework",
+    "href": "slides/syllabus-slides.html#homework",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Homework",
+    "text": "Homework\n\n4 assignments — approximately two weeks per assignment\nDue at 11:59 PM on the listed date\nSubmitted via Gradescope\n\nLate Passes\n\nYou can earn 2 late passes by completing 2 Optional Late Pass Questionnaires\nEach late pass grants a single 24-hour extension\nPasses cannot be stacked\nAssignments marked “Late” on Gradescope automatically use a pass\nNo pass remaining + late submission = zero",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#quizzes-labs",
+    "href": "slides/syllabus-slides.html#quizzes-labs",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Quizzes & Labs",
+    "text": "Quizzes & Labs\nQuizzes\n\n4 in-person quizzes, held at the start of class\nYour lowest score is dropped\nQuiz dates: Monday of Week 3, 5, 8, & 10\n\nLabs\n\n8 lab assignments total\nCompleted during your designated discussion section",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#exams",
+    "href": "slides/syllabus-slides.html#exams",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Exams",
+    "text": "Exams\nMidterm\n\nMonday of Week 6 — November 2nd\nIn class, closed book · Formula sheet provided\n\nFinal Exam\n\nTuesday, December 8th · 12:00 – 3:00 PM\nCumulative\nFormula sheet provided",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#assignment-calendar-first-half",
+    "href": "slides/syllabus-slides.html#assignment-calendar-first-half",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Assignment Calendar — First Half",
+    "text": "Assignment Calendar — First Half\n\n\n\nWeek\nAssignment\nDue Date\n\n\n\n\n1\nOptional Late Pass Questionnaire\nFri, Oct 3\n\n\n2\nHW 1\nSat, Oct 17\n\n\n3\nQuiz 1\nMon, Oct 12\n\n\n4\nHW 2\nSat, Oct 31\n\n\n5\nQuiz 2\nMon, Oct 26\n\n\n5\nOptional Late Pass Questionnaire\nSat, Oct 31\n\n\n6\nMidterm\nMon, Nov 2",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#assignment-calendar-second-half",
+    "href": "slides/syllabus-slides.html#assignment-calendar-second-half",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Assignment Calendar — Second Half",
+    "text": "Assignment Calendar — Second Half\n\n\n\nWeek\nAssignment\nDue Date\n\n\n\n\n7\nHW 3\nSat, Nov 14\n\n\n8\nQuiz 3\nMon, Nov 16\n\n\n9\nHW 4\nSat, Nov 28\n\n\n10\nQuiz 4\nMon, Nov 30\n\n\nFinals\nFinal Exam\nTue, Dec 8 · 12–3 PM",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#course-platforms",
+    "href": "slides/syllabus-slides.html#course-platforms",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Course Platforms",
+    "text": "Course Platforms\nCanvas Grades, announcements, and file/resource distribution\nCourse Website Week-by-week schedule, lecture slides, homework, and resources\nGradescope Assignment submission, feedback, and exam scores",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#attendance",
+    "href": "slides/syllabus-slides.html#attendance",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Attendance",
+    "text": "Attendance\nIn-person attendance is crucial. It allows you to engage in hands-on activities, ask questions in real time, and form connections with your peers and instructor.\nIf you miss a class:\n\nBe proactive — notify me before or within a day; no documentation required\nWork with me to review any missed material\nStay home when you are sick",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#policy-on-generative-ai",
+    "href": "slides/syllabus-slides.html#policy-on-generative-ai",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Policy on Generative AI",
+    "text": "Policy on Generative AI\nAI tools (e.g., ChatGPT, Claude, Copilot, etc.) can be valuable for learning, but must be used responsibly. You are permitted to use AI for helping to understand statistical concepts or mathematical formulas, debugging your own code by asking why an error occurred or how to fix a specific line, or clarifying course material or lecture concepts. However, you are not permitted to use AI to write or complete assignments for you, generate code solutions, solve homework or exam problems, or use AI output without understanding what it does.\nUses of AI that do not follow the guidelines above will result in receiving a lower score on the assignment.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#accommodations-conduct",
+    "href": "slides/syllabus-slides.html#accommodations-conduct",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Accommodations & Conduct",
+    "text": "Accommodations & Conduct\nCourse Conduct\nAll students are expected to follow the UCSB Code of Conduct. This is an inclusive environment — discrimination, harassment, and bullying are not tolerated. Reach out to share or update your name and pronouns.\nAccommodations\n\nContact the Disabled Students Program (DSP) to arrange formal accommodations\nSubmit requests early — it is never too late to apply\nDSP communicates with faculty directly; you do not need to disclose your condition to me",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#student-resources",
+    "href": "slides/syllabus-slides.html#student-resources",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Student Resources",
+    "text": "Student Resources\n\n\n\nResource\nContact\n\n\n\n\nCAPS (Counseling)\ncaps.sa.ucsb.edu · 805.893.4411\n\n\nFood Insecurity\nfood.ucsb.edu · AS Food Bank\n\n\nRCSGD\nrcsgd.sa.ucsb.edu\n\n\nDream Scholars\nsa.ucsb.edu/dreamscholars\n\n\nCLAS (Tutoring)\nclas.sa.ucsb.edu\n\n\nCARE\n805.893.4613 · wgse.sa.ucsb.edu/care\n\n\nHealth & Wellness\nwellbeing.ucsb.edu",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#questions",
+    "href": "slides/syllabus-slides.html#questions",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Questions?",
+    "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM\nCourse Website · Gradescope",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus Slides"
+    ]
+  },
+  {
+    "objectID": "exams/final.html",
+    "href": "exams/final.html",
+    "title": "Final Exam",
+    "section": "",
+    "text": "Note\n\n\n\nInformation on the final has not been released yet. Check back closer to the exam date.",
+    "crumbs": [
+      "Syllabus",
+      "Exams",
+      "Final"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html",
+    "href": "course-syllabus.html",
+    "title": "Course Syllabus",
+    "section": "",
+    "text": "Instructor\n    Annie Adamsaradams@ucsb.edu\n  \n  \n    Lectures\n    Mon / Wed12:30 – 1:45 PM · TD-W 1701\n  \n  \n    Office Hours\n    Tuesday 10 – 11 AMSee office hours page\n  \n  \n    Units\n    4 Units\n  \n  \n    Prerequisites\n    PSTAT 10 and PSTAT 120B\n  \n\nComputing requirements: R version 4.4.0 or higher · RStudio version 2024.04.02 or higher",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#course-information",
+    "href": "course-syllabus.html#course-information",
+    "title": "Course Syllabus",
+    "section": "",
+    "text": "Instructor\n    Annie Adamsaradams@ucsb.edu\n  \n  \n    Lectures\n    Mon / Wed12:30 – 1:45 PM · TD-W 1701\n  \n  \n    Office Hours\n    Tuesday 10 – 11 AMSee office hours page\n  \n  \n    Units\n    4 Units\n  \n  \n    Prerequisites\n    PSTAT 10 and PSTAT 120B\n  \n\nComputing requirements: R version 4.4.0 or higher · RStudio version 2024.04.02 or higher",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#course-description",
+    "href": "course-syllabus.html#course-description",
+    "title": "Course Syllabus",
+    "section": "Course Description",
+    "text": "Course Description\nLinear and multiple regression, analysis of residuals, transformations, variable and model selection including stepwise regression, and analysis of covariance. The course will stress the use of computer packages to solve real-world problems.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#learning-objectives",
+    "href": "course-syllabus.html#learning-objectives",
+    "title": "Course Syllabus",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\nBy the end of this course, students will be able to:\n\nFormulate, fit, and interpret simple and multiple linear regression models\nConduct residual analysis and diagnose violations of model assumptions\nIdentify and handle outliers, leverage points, and multicollinearity\nApply transformations to linearize relationships and stabilize variance\nImplement variable selection methods\nPerform statistical inference and prediction in regression models\nUse R to perform exploratory data analysis, model fitting, diagnostic plotting, and visualization",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#grading",
+    "href": "course-syllabus.html#grading",
+    "title": "Course Syllabus",
+    "section": "Grading",
+    "text": "Grading\n\n\n\nComponent\nWeight\nNotes\n\n\n\n\nHomework (4)\n40%\n~2 weeks per assignment\n\n\nQuizzes (4)\n10%\nLowest score dropped\n\n\nLabs (10)\n15%\nCompleted in your weekly section\n\n\nMidterm\n15%\nWeek 6, closed book\n\n\nFinal Exam\n20%\nCumulative\n\n\n\n\nHomework\nThere will be four homework assignments. You will have approximately two weeks to complete each assignment. Assignments are due at 11:59 PM on the date listed.\nYou will have the opportunity to earn two late passes in this course. Each pass can be used for a 24-hour extension on a homework assignment. Late passes cannot be stacked.\nAll homework must be submitted through Gradescope. Assignments marked “Late” (within 24 hours of the original deadline) on Gradescope will automatically use one of your late passes. If your assignment says “Late” and you don’t have a pass remaining, you will receive a zero.\n\n\nQuizzes\nThere will be four in-person quizzes. Quizzes will take place at the beginning of class — refer to the assignment calendar below for dates. Your lowest quiz score will be dropped.\n\n\nLabs\nThere will be 8 lab assignments to submit in the course. Labs will take place at your designated section time.\n\n\nMidterm\nThe midterm will take place in class on Monday of Week 6 (November 2nd). The exam will be closed book. A formula sheet will be provided.\n\n\nFinal Exam\nThe final exam will take place on Tuesday, December 8th from 12:00 – 3:00 PM. The exam is cumulative. A formula sheet will be provided.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#assignment-calendar",
+    "href": "course-syllabus.html#assignment-calendar",
+    "title": "Course Syllabus",
+    "section": "Assignment Calendar",
+    "text": "Assignment Calendar\n\n\n\nWeek Assigned\nAssignment\nDate Due\nWeek Due\n\n\n\n\n1\nOptional Late Pass Questionnaire\nFri, Oct 3\n1\n\n\n2\nHW 1\nSat, Oct 17\n3\n\n\n3\nQuiz 1\nMon, Oct 12\n3\n\n\n4\nHW 2\nSat, Oct 31\n5\n\n\n5\nQuiz 2\nMon, Oct 26\n5\n\n\n5\nOptional Late Pass Questionnaire\nSat, Oct 31\n5\n\n\n6\nMidterm\nMon, Nov 2\n6\n\n\n7\nHW 3\nSat, Nov 14\n8\n\n\n8\nQuiz 3\nMon, Nov 16\n8\n\n\n9\nHW 4\nSat, Nov 28\nFinals\n\n\n10\nQuiz 4\nMon, Nov 30\n10\n\n\nFinals\nFinal Exam\nTue, Dec 8 · 12–3 PM\nFinals",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#platforms",
+    "href": "course-syllabus.html#platforms",
+    "title": "Course Syllabus",
+    "section": "Platforms",
+    "text": "Platforms\nCanvas — Grades, course announcements, and file/resource distribution.\nCourse Website — All course materials live here: the week-by-week schedule, lecture slides, homework assignments, and resources.\nGradescope — Submitting assignments, viewing feedback, and viewing quiz/midterm/final scores.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#attendance",
+    "href": "course-syllabus.html#attendance",
+    "title": "Course Syllabus",
+    "section": "Attendance",
+    "text": "Attendance\nIn-person attendance to class and discussion section is crucial. It allows you to engage in hands-on activities, ask questions in real-time, and form connections with your peers and instructor. Regular attendance also mirrors professional expectations and helps you build relationships that can become valuable references.\nIf you miss a class:\n\nBe proactive — notify the instructor before it happens or within a day, with a brief explanation. Documentation is not required, but honesty and professionalism are expected.\nCatch up — work with the instructor to review any missed material.\nStay home when you are sick. If you are feeling unwell, prioritize your health.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#policy-on-generative-ai",
+    "href": "course-syllabus.html#policy-on-generative-ai",
+    "title": "Course Syllabus",
+    "section": "Policy on Generative AI",
+    "text": "Policy on Generative AI\nAI tools (e.g., ChatGPT, Claude, Copilot, etc.) can be valuable for learning, but must be used responsibly. You are permitted to use AI for helping to understand statistical concepts or mathematical formulas, debugging your own code by asking why an error occurred or how to fix a specific line, or clarifying course material or lecture concepts. However, you are not permitted to use AI to write or complete assignments for you, generate code solutions, solve homework or exam problems, or use AI output without understanding what it does.\nUses of AI that do not follow the guidelines above will result in receiving a lower score on the assignment.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#access-accommodations-conduct",
+    "href": "course-syllabus.html#access-accommodations-conduct",
+    "title": "Course Syllabus",
+    "section": "Access, Accommodations & Conduct",
+    "text": "Access, Accommodations & Conduct\nCourse conduct: All students are expected to read and abide by the UCSB Code of Conduct. I am committed to creating an inclusive environment for all students and to eliminating any discrimination, harassment, or bullying — in person or online. Students are encouraged to share and/or update their name and pronouns by reaching out to me directly.\nAccommodations: Please submit requests for accommodations early — it is never too late to apply. If you have any disability, whether apparent or non-apparent, learning, emotional, physical, or cognitive, you may be eligible for formal accessibility services. Contact the Disabled Students Program (DSP) to arrange accommodations. DSP will initiate communication with faculty, so your specific condition does not need to be disclosed to me directly.",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "course-syllabus.html#student-resources",
+    "href": "course-syllabus.html#student-resources",
+    "title": "Course Syllabus",
+    "section": "Student Resources",
+    "text": "Student Resources\n\nCAPS (Counseling and Psychological Services) — caps.sa.ucsb.edu · 805.893.4411\nFood insecurity — food.ucsb.edu · AS Food Bank\nRCSGD (Resource Center for Sexual and Gender Diversity) — rcsgd.sa.ucsb.edu\nDream Scholars / Undocumented Student Services — sa.ucsb.edu/dreamscholars\nCLAS (Campus Learning Assistance Services) — clas.sa.ucsb.edu\nStudent Resource Building (SRB) — sa.ucsb.edu/student-resource-building\nMulticultural Center (MCC) — mcc.sa.ucsb.edu\nCARE (Campus Advocacy, Resources & Education) — 805.893.4613 · wgse.sa.ucsb.edu/care\nFinancial Crisis Response Team — financialcrisis@sa.ucsb.edu\nHealth and Wellness — wellbeing.ucsb.edu",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
+    ]
+  },
+  {
+    "objectID": "quizzes/quiz-02.html",
+    "href": "quizzes/quiz-02.html",
+    "title": "Quiz 2",
+    "section": "",
+    "text": "Note\n\n\n\nThis quiz has not been released yet. Check back closer to the quiz date.",
+    "crumbs": [
+      "Syllabus",
+      "Quizzes",
+      "Quiz 2"
+    ]
+  },
+  {
+    "objectID": "quizzes/quiz-01.html",
+    "href": "quizzes/quiz-01.html",
+    "title": "Quiz 1",
+    "section": "",
+    "text": "Note\n\n\n\nThis quiz has not been released yet. Check back closer to the quiz date.",
+    "crumbs": [
+      "Syllabus",
+      "Quizzes",
+      "Quiz 1"
+    ]
+  }
+]
