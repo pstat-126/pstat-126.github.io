@@ -31,6 +31,8 @@ website:
         contents:
           - text: "Syllabus"
             href: course-syllabus.qmd
+          - text: "Syllabus Slides"
+            href: slides/syllabus-slides.qmd
           - text: "Schedule"
             href: schedule.qmd
           - text: "Office Hours"

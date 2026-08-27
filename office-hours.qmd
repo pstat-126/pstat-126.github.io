@@ -2,7 +2,6 @@
 title: "Office Hours"
 ---
 
-Office hours details will be posted here at the start of the quarter.
 
 | Person | Role | Day | Time | Location |
 |---|---|---|---|---|
@@ -10,4 +9,4 @@ Office hours details will be posted here at the start of the quarter.
 | TBD | TA | TBD | TBD | TBD |
 | TBD | TA | TBD | TBD | TBD |
 
-Office hours are also available by appointment — email the instructor to schedule.
+Office hours are also available by appointment. Email the instructor to schedule.

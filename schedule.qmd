@@ -27,7 +27,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td></td><td class="date-cell">Mon, Sep 28</td>
       <td class="topic-cell">Welcome &amp; Course Overview
         <span class="sub-topic">What is regression? Motivation and examples</span></td>
-      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td><a class="badge-slide" href="slides/syllabus-slides.html">Slides</a></td>
       <td></td>
     </tr>
     <tr>
@@ -45,6 +45,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td><a class="badge-lab" href="labs/lab-01.html">Lab 1</a></td>
     </tr>
 
+    <!--
     <tr class="week-row"><td colspan="5">Week 2 — Properties of OLS &amp; Statistical Inference</td></tr>
     <tr>
       <td></td><td class="date-cell">Mon, Oct 5</td>
@@ -65,7 +66,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td class="topic-cell">Confidence Intervals for Regression Coefficients
         <span class="sub-topic">CI for &beta;<sub>1</sub>, inference for the mean response</span></td>
       <td><a class="badge-slide" href="#">Slides</a></td>
-      <td><a class="badge-hw" href="hw/hw-01.html">HW 1</a> <a class="badge-lab" href="labs/lab-02.html">Lab 2</a></td>
+      <td><a class="badge-lab" href="labs/lab-02.html">Lab 2</a></td>
     </tr>
 
     <tr class="week-row"><td colspan="5">Week 3 — ANOVA, F-tests &amp; Prediction</td></tr>
@@ -88,7 +89,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td class="topic-cell">F-test for Simple Linear Regression
         <span class="sub-topic">F-statistic, ANOVA table, connection to t-test</span></td>
       <td><a class="badge-slide" href="#">Slides</a></td>
-      <td><a class="badge-lab" href="labs/lab-03.html">Lab 3</a></td>
+      <td><a class="badge-hw" href="hw/hw-01.html">HW 1</a> <a class="badge-lab" href="labs/lab-03.html">Lab 3</a></td>
     </tr>
 
     <tr class="week-row"><td colspan="5">Week 4 — Correlation, R² &amp; Diagnostics</td></tr>
@@ -111,7 +112,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td class="topic-cell">Residual Plots &amp; Assumption Checking
         <span class="sub-topic">Residuals vs. fitted, Q-Q plots, scale-location</span></td>
       <td><a class="badge-slide" href="#">Slides</a></td>
-      <td><a class="badge-hw" href="hw/hw-02.html">HW 2</a> <a class="badge-lab" href="labs/lab-04.html">Lab 4</a></td>
+      <td><a class="badge-lab" href="labs/lab-04.html">Lab 4</a></td>
     </tr>
 
     <tr class="week-row"><td colspan="5">Week 5 — Transformations &amp; Midterm Review</td></tr>
@@ -131,10 +132,10 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
     </tr>
     <tr>
       <td></td><td class="date-cell">Fri, Oct 30</td>
-      <td class="topic-cell exam-topic">📝 Midterm Exam
-        <span class="sub-topic" style="color:#888;font-weight:400">Covers Weeks 1–4</span></td>
-      <td></td>
-      <td><span class="badge-exam">Midterm</span></td>
+      <td class="topic-cell">Midterm Review
+        <span class="sub-topic">Key concepts, practice problems, Q&amp;A</span></td>
+      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td><a class="badge-hw" href="hw/hw-02.html">HW 2</a></td>
     </tr>
 
     <tr class="week-row"><td colspan="5">Week 6 — Multiple Linear Regression</td></tr>
@@ -157,7 +158,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td class="topic-cell">Inference in MLR
         <span class="sub-topic">Individual t-tests, overall F-test, adjusted R²</span></td>
       <td><a class="badge-slide" href="#">Slides</a></td>
-      <td><a class="badge-hw" href="hw/hw-03.html">HW 3</a> <a class="badge-lab" href="labs/lab-05.html">Lab 5</a></td>
+      <td><a class="badge-lab" href="labs/lab-05.html">Lab 5</a></td>
     </tr>
 
     <tr class="week-row"><td colspan="5">Week 7 — MLR Inference &amp; Partial Tests</td></tr>
@@ -178,7 +179,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td class="topic-cell">Partial F-tests &amp; Extra Sum of Squares
         <span class="sub-topic">Testing subsets of predictors, reduced vs. full model</span></td>
       <td><a class="badge-slide" href="#">Slides</a></td>
-      <td><a class="badge-lab" href="labs/lab-06.html">Lab 6</a></td>
+      <td><a class="badge-hw" href="hw/hw-03.html">HW 3</a> <a class="badge-lab" href="labs/lab-06.html">Lab 6</a></td>
     </tr>
 
     <tr class="week-row"><td colspan="5">Week 8 — Categorical Predictors &amp; Interactions</td></tr>
@@ -201,7 +202,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td class="topic-cell">Outliers, Leverage &amp; Influence
         <span class="sub-topic">Studentized residuals, hat matrix, Cook's distance</span></td>
       <td><a class="badge-slide" href="#">Slides</a></td>
-      <td><a class="badge-hw" href="hw/hw-04.html">HW 4</a> <a class="badge-lab" href="labs/lab-07.html">Lab 7</a></td>
+      <td><a class="badge-lab" href="labs/lab-07.html">Lab 7</a></td>
     </tr>
 
     <tr class="week-row"><td colspan="5">Week 9 — Model Building &amp; Variable Selection</td></tr>
@@ -217,7 +218,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td class="topic-cell">Best Subsets &amp; Cross-Validation
         <span class="sub-topic">All-subsets regression, model comparison strategies</span></td>
       <td><a class="badge-slide" href="#">Slides</a></td>
-      <td></td>
+      <td><a class="badge-hw" href="hw/hw-04.html">HW 4</a></td>
     </tr>
     <tr class="no-class-row">
       <td></td><td class="date-cell">Fri, Nov 27</td>
@@ -245,7 +246,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td class="topic-cell">Course Review &amp; Final Exam Prep
         <span class="sub-topic">Key concepts, practice problems, Q&amp;A</span></td>
       <td><a class="badge-slide" href="#">Slides</a></td>
-      <td><a class="badge-hw" href="hw/hw-05.html">HW 5</a> <a class="badge-lab" href="labs/lab-08.html">Lab 8</a></td>
+      <td><a class="badge-lab" href="labs/lab-08.html">Lab 8</a></td>
     </tr>
 
     <tr class="week-row"><td colspan="5">Finals Week — Dec 7–12</td></tr>
@@ -256,6 +257,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td></td>
       <td><span class="badge-exam">Final</span></td>
     </tr>
+    -->
 
   </tbody>
 </table>

@@ -1,0 +1,241 @@
+---
+title: "Welcome to PSTAT 126: Linear Regression!"
+subtitle: "Course Overview — Fall 2026"
+author: "Annie Adams"
+institute: "UC Santa Barbara"
+format:
+  revealjs:
+    theme: [default, ../styles.scss]
+    slide-number: true
+    preview-links: auto
+    footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
+    logo: ""
+    title-slide-attributes:
+      data-background-color: "#003660"
+---
+
+## Course Information {background-color="#003660"}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**Instructor**
+Annie Adams · [aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+**Lectures**
+Mon / Wed · 12:30 – 1:45 PM · TD-W 1701
+
+**Units**
+4 Units
+
+**Office Hours**
+Tuesday 10 – 11 AM
+
+**Prerequisites**
+PSTAT 10 and PSTAT 120B
+:::
+
+::: {.column width="50%"}
+**Discussion Sections:**
+Mondays: 
+
+  - 8 - 8:50 am
+  -  9 - 9:50 am
+  - 10 - 10:50 am
+  - 11 - 11:50 am
+  - 9 - 9:50 am
+  - 5 - 5:50 pm
+
+
+:::
+
+::::
+
+**Computing:** R ≥ 4.4.0 · RStudio ≥ 2024.04.02
+
+---
+
+## Course Description
+
+Linear and multiple regression with an emphasis on real-world application.
+
+**Topics include:**
+
+- Simple and multiple linear regression
+- Residual analysis and model diagnostics
+- Transformations and variable selection
+- Analysis of covariance
+- Stepwise regression
+
+---
+
+## Learning Objectives {.smaller}
+
+By the end of this course, you will be able to:
+
+- Formulate, fit, and interpret simple and multiple linear regression models
+- Conduct residual analysis and diagnose violations of model assumptions
+- Identify and handle outliers, leverage points, and multicollinearity
+- Apply transformations to linearize relationships and stabilize variance
+- Implement variable selection methods
+- Perform statistical inference and prediction in regression models
+- Use R for exploratory data analysis, model fitting, and diagnostic plotting
+
+---
+
+## Grading
+
+| Component | Weight | Notes |
+|:---|:---:|:---|
+| Homework (4) | 40% | ~2 weeks per assignment |
+| Quizzes (4) | 10% | Lowest score dropped |
+| Labs (10) | 15% | Completed in weekly section |
+| Midterm | 15% | Week 6, closed book |
+| Final Exam | 20% | Finals Week, Cumulative |
+
+---
+
+## Homework
+
+- **4 assignments** — approximately two weeks per assignment
+- Due at **11:59 PM** on the listed date
+- Submitted via **[Gradescope](https://www.gradescope.com)**
+
+**Late Passes**
+
+- You can earn **2 late passes** by completing **2 Optional Late Pass Questionnaires**
+-  Each late pass grants a single 24-hour extension
+- Passes cannot be stacked
+- Assignments marked "Late" on Gradescope automatically use a pass
+- No pass remaining + late submission = **zero**
+
+---
+
+## Quizzes & Labs
+
+**Quizzes**
+
+- 4 in-person quizzes, held at the start of class
+- Your **lowest score is dropped**
+- Quiz dates: Monday of Week 3, 5, 8, & 10
+
+**Labs**
+
+- 8 lab assignments total
+- Completed during your designated **discussion section**
+
+---
+
+## Exams
+
+**Midterm**
+
+- Monday of **Week 6 — November 2nd**
+- In class, closed book · Formula sheet provided
+
+**Final Exam**
+
+- **Tuesday, December 8th · 12:00 – 3:00 PM**
+- Cumulative
+- Formula sheet provided
+
+---
+
+## Assignment Calendar — First Half {.smaller}
+
+| Week | Assignment | Due Date |
+|:---:|:---|:---:|
+| 1 | Optional Late Pass Questionnaire | Fri, Oct 3 |
+| 2 | HW 1 | Sat, Oct 17 |
+| 3 | Quiz 1 | Mon, Oct 12 |
+| 4 | HW 2 | Sat, Oct 31 |
+| 5 | Quiz 2 | Mon, Oct 26 |
+| 5 | Optional Late Pass Questionnaire | Sat, Oct 31 |
+| 6 | **Midterm** | Mon, Nov 2 |
+
+---
+
+## Assignment Calendar — Second Half {.smaller}
+
+| Week | Assignment | Due Date |
+|:---:|:---|:---:|
+| 7 | HW 3 | Sat, Nov 14 |
+| 8 | Quiz 3 | Mon, Nov 16 |
+| 9 | HW 4 | Sat, Nov 28 |
+| 10 | Quiz 4 | Mon, Nov 30 |
+| Finals | **Final Exam** | Tue, Dec 8 · 12–3 PM |
+
+---
+
+## Course Platforms
+
+**Canvas**
+Grades, announcements, and file/resource distribution
+
+**[Course Website](https://pstat-126.github.io/)**
+Week-by-week schedule, lecture slides, homework, and resources
+
+**[Gradescope](https://www.gradescope.com)**
+Assignment submission, feedback, and exam scores
+
+---
+
+## Attendance
+
+**In-person attendance is crucial.** It allows you to engage in hands-on activities, ask questions in real time, and form connections with your peers and instructor.
+
+**If you miss a class:**
+
+- Be proactive — notify me before or within a day; no documentation required
+- Work with me to review any missed material
+- **Stay home when you are sick**
+
+---
+
+## Policy on Generative AI {.smaller}
+
+AI tools (e.g., ChatGPT, Claude, Copilot, etc.) can be valuable for learning, but must be used responsibly. You are permitted to use AI for helping to understand statistical concepts or mathematical formulas, debugging your own code by asking why an error occurred or how to fix a specific line, or clarifying course material or lecture concepts. However, you are not permitted to use AI to write or complete assignments for you, generate code solutions, solve homework or exam problems, or use AI output without understanding what it does.
+
+Uses of AI that do not follow the guidelines above will result in receiving a lower score on the assignment.
+
+
+---
+
+## Accommodations & Conduct {.smaller}
+
+**Course Conduct**
+
+All students are expected to follow the [UCSB Code of Conduct](https://www.sa.ucsb.edu/regulations/student-conduct-code/student-conduct-code). This is an inclusive environment — discrimination, harassment, and bullying are not tolerated. Reach out to share or update your name and pronouns.
+
+**Accommodations**
+
+- Contact the [Disabled Students Program (DSP)](https://dsp.sa.ucsb.edu/) to arrange formal accommodations
+- Submit requests early — it is never too late to apply
+- DSP communicates with faculty directly; you do not need to disclose your condition to me
+
+---
+
+## Student Resources {.smaller}
+
+| Resource | Contact |
+|:---|:---|
+| CAPS (Counseling) | [caps.sa.ucsb.edu](http://caps.sa.ucsb.edu) · 805.893.4411 |
+| Food Insecurity | [food.ucsb.edu](http://food.ucsb.edu) · AS Food Bank |
+| RCSGD | [rcsgd.sa.ucsb.edu](http://rcsgd.sa.ucsb.edu/) |
+| Dream Scholars | [sa.ucsb.edu/dreamscholars](http://www.sa.ucsb.edu/dreamscholars/home) |
+| CLAS (Tutoring) | [clas.sa.ucsb.edu](http://clas.sa.ucsb.edu) |
+| CARE | 805.893.4613 · [wgse.sa.ucsb.edu/care](http://wgse.sa.ucsb.edu/care/home) |
+| Health & Wellness | [wellbeing.ucsb.edu](https://wellbeing.ucsb.edu/) |
+
+---
+
+## Questions? {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em;"}
+**Annie Adams**
+[aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+Office Hours: Tuesday 10 – 11 AM
+
+[Course Website](https://pstat-126.github.io/) · [Gradescope](https://www.gradescope.com)
+:::

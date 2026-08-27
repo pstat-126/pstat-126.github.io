@@ -57,8 +57,9 @@ By the end of this course, students will be able to:
 | Component | Weight | Notes |
 |:---|:---|:---|
 | Homework (4) | 40% | ~2 weeks per assignment |
-| Quizzes (4) | 20% | Lowest score dropped |
-| Midterm | 20% | Week 6, closed book |
+| Quizzes (4) | 10% | Lowest score dropped |
+| Labs (10) | 15% | Completed in your weekly section|
+| Midterm | 15% | Week 6, closed book |
 | Final Exam | 20% | Cumulative |
 
 ### Homework
@@ -73,6 +74,10 @@ All homework must be submitted through [Gradescope](https://www.gradescope.com).
 
 There will be four in-person quizzes. Quizzes will take place at the beginning of class — refer to the assignment calendar below for dates. Your **lowest quiz score will be dropped**.
 
+### Labs
+
+There will be 8 lab assignments to submit in the course. Labs will take place at your designated section time. 
+
 ### Midterm
 
 The midterm will take place in class on **Monday of Week 6 (November 2nd)**. The exam will be closed book. A formula sheet will be provided.
@@ -85,17 +90,17 @@ The final exam will take place on **Tuesday, December 8th from 12:00 – 3:00 PM
 
 | Week Assigned | Assignment | Date Due | Week Due |
 |:---:|:---|:---:|:---:|
-| 1 | Optional Self Reflection | — | 1 |
-| 2 | HW 1 | Sat, Oct 11 | 3 |
-| 3 | Quiz 1 | Thu, Oct 16 | 3 |
-| 4 | HW 2 | Sat, Oct 25 | 5 |
-| 5 | Quiz 2 | Mon, Nov 1 | 5 |
-| 5 | Optional Self Reflection | — | 5 |
+| 1 | Optional Late Pass Questionnaire | Fri, Oct 3 | 1 |
+| 2 | HW 1 | Sat, Oct 17 | 3 |
+| 3 | Quiz 1 | Mon, Oct 12 | 3 |
+| 4 | HW 2 | Sat, Oct 31 | 5 |
+| 5 | Quiz 2 | Mon, Oct 26 | 5 |
+| 5 | Optional Late Pass Questionnaire | Sat, Oct 31 | 5 |
 | 6 | **Midterm** | Mon, Nov 2 | 6 |
-| 7 | HW 3 | Sat, Nov 22 | 8 |
-| 8 | Quiz 3 | Thu, Nov 20 | 8 |
-| 9 | HW 4 | Sat, Dec 6 | 10 |
-| 10 | Quiz 4 | Thu, Dec 4 | 10 |
+| 7 | HW 3 | Sat, Nov 14 | 8 |
+| 8 | Quiz 3 | Mon, Nov 16 | 8 |
+| 9 | HW 4 | Sat, Nov 28 | 9 |
+| 10 | Quiz 4 | Mon, Nov 30 | 10 |
 | Finals | **Final Exam** | Tue, Dec 8 · 12–3 PM | Finals |
 
 ## Platforms
