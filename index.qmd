@@ -16,8 +16,13 @@ By the end of the quarter, you will be able to formulate, fit, and interpret reg
 | **Lectures** | Mondays + Wednesdays 12:30 PM - 1:45 PM in TD-W 1701  |
 | **Units** | 4 |
 | **Prerequisites** | PSTAT 10 and PSTAT 120B |
-| **Textbook** | Faraway, *Linear Models with R* (2nd ed.) — free PDF via UCSB library |
 | **Software** | R ≥ 4.4.0 · RStudio ≥ 2024.04.02 (both free) |
+
+## Readings
+
+**Faraway, J.J. (2004).** *Linear Models with R.* Chapman and Hall/CRC. [Free PDF →](https://utstat.toronto.edu/~brunner/books/LinearModelsWithR.pdf)
+
+**Gelman, A., Hill, J., & Vehtari, A. (2020).** *Regression and Other Stories.* Cambridge University Press. [Free PDF →](https://users.aalto.fi/~ave/ROS.pdf)
 
 ## Teaching Team
 

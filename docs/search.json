@@ -71,7 +71,7 @@
     "href": "index.html#course-info",
     "title": "PSTAT 126: Regression Analysis",
     "section": "Course Info",
-    "text": "Course Info\n\n\n\n\n\n\n\nTerm\nFall 2026\n\n\nInstructor\nAnnie Adams\n\n\nLectures\nMondays + Wednesdays 12:30 PM - 1:45 PM in TD-W 1701\n\n\nUnits\n4\n\n\nPrerequisites\nPSTAT 10 and PSTAT 120B\n\n\nTextbook\nFaraway, Linear Models with R (2nd ed.) — free PDF via UCSB library\n\n\nSoftware\nR ≥ 4.4.0 · RStudio ≥ 2024.04.02 (both free)"
+    "text": "Course Info\n\n\n\nTerm\nFall 2026\n\n\nInstructor\nAnnie Adams\n\n\nLectures\nMondays + Wednesdays 12:30 PM - 1:45 PM in TD-W 1701\n\n\nUnits\n4\n\n\nPrerequisites\nPSTAT 10 and PSTAT 120B\n\n\nSoftware\nR ≥ 4.4.0 · RStudio ≥ 2024.04.02 (both free)"
   },
   {
     "objectID": "index.html#teaching-team",
@@ -474,6 +474,25 @@
       "Syllabus",
       "Quizzes",
       "Quiz 1"
+    ]
+  },
+  {
+    "objectID": "index.html#readings",
+    "href": "index.html#readings",
+    "title": "PSTAT 126: Regression Analysis",
+    "section": "Readings",
+    "text": "Readings\nFaraway, J.J. (2004). Linear Models with R. Chapman and Hall/CRC. Free PDF →\nGelman, A., Hill, J., & Vehtari, A. (2020). Regression and Other Stories. Cambridge University Press. Free PDF →"
+  },
+  {
+    "objectID": "course-syllabus.html#readings",
+    "href": "course-syllabus.html#readings",
+    "title": "Course Syllabus",
+    "section": "Readings",
+    "text": "Readings\nFaraway, J.J. (2004). Linear Models with R. Chapman and Hall/CRC. Free PDF →\nGelman, A., Hill, J., & Vehtari, A. (2020). Regression and Other Stories. Cambridge University Press. Free PDF →",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Syllabus"
     ]
   }
 ]

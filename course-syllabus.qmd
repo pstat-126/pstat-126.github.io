@@ -32,6 +32,12 @@ subtitle: "PSTAT 126 — Linear Regression | Fall 2026 | UC Santa Barbara"
 
 **Computing requirements:** R version 4.4.0 or higher · RStudio version 2024.04.02 or higher
 
+## Readings
+
+**Faraway, J.J. (2004).** *Linear Models with R.* Chapman and Hall/CRC. [Free PDF →](https://utstat.toronto.edu/~brunner/books/LinearModelsWithR.pdf)
+
+**Gelman, A., Hill, J., & Vehtari, A. (2020).** *Regression and Other Stories.* Cambridge University Press. [Free PDF →](https://users.aalto.fi/~ave/ROS.pdf)
+
 ## Course Description
 
 Linear and multiple regression, analysis of residuals, transformations, variable and model selection including stepwise regression, and analysis of covariance. The course will stress the use of computer packages to solve real-world problems.
