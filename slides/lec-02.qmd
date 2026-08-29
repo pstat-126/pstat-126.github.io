@@ -1,0 +1,382 @@
+---
+title: "Lecture 2: Fitting the Simple Linear Model"
+subtitle: "PSTAT 126 — Linear Regression"
+author: "Annie Adams"
+institute: "UC Santa Barbara"
+date: "Week 1 · Wednesday"
+format:
+  revealjs:
+    theme: [default, ../styles.scss]
+    slide-number: true
+    preview-links: auto
+    footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
+    logo: ""
+    title-slide-attributes:
+      data-background-color: "#003660"
+---
+
+## Review: The Simple Linear Model
+
+From Monday, the simple linear regression model is:
+
+$$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \quad \varepsilon_i \overset{\text{iid}}{\sim} \mathcal{N}(0, \sigma^2)$$
+
+- $\beta_1$ is a **comparison** between units — not a causal effect
+- The fitted line $\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x$ summarizes the relationship
+
+**Today:** How do we estimate $\hat{\beta}_0$, $\hat{\beta}_1$, and $\sigma$ from data?
+
+---
+
+## Learning Objectives
+
+By the end of today you will be able to:
+
+- Explain the least squares criterion and apply it conceptually
+- State the OLS formulas for the slope and intercept
+- Compute and interpret fitted values and residuals
+- Interpret the residual standard deviation $\hat{\sigma}$ and $R^2$
+- Explain what a standard error measures
+- Use `lm()` in R to fit a simple linear regression and read its output
+
+---
+
+## How Do We Fit a Line? {background-color="#003660"}
+
+---
+
+## The Problem of Fitting
+
+Given data $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, infinitely many lines pass through or near the points.
+
+We need a **criterion** to select the "best" line.
+
+**Intuition:** The best line should make prediction errors as small as possible across all observations simultaneously.
+
+---
+
+## Residuals: Measuring Prediction Error
+
+For a candidate line with intercept $a$ and slope $b$, the **residual** for observation $i$ is:
+
+$$e_i = y_i - \hat{y}_i = y_i - (a + b x_i)$$
+
+- $\hat{y}_i = a + bx_i$: the **fitted value** (what the line predicts)
+- $e_i > 0$: observed point is above the line
+- $e_i < 0$: observed point is below the line
+
+A good line has small residuals throughout.
+
+---
+
+## Ordinary Least Squares (OLS) {background-color="#003660"}
+
+---
+
+## The Least Squares Criterion
+
+**Ordinary Least Squares (OLS)** chooses $\hat{\beta}_0$ and $\hat{\beta}_1$ to minimize the **Residual Sum of Squares (RSS)**:
+
+$$\text{RSS}(a, b) = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n} (y_i - a - b x_i)^2$$
+
+Why **square** the residuals?
+
+::: {.incremental}
+- Positive and negative errors don't cancel each other out
+- Large errors are penalized more heavily than small ones
+- The squared criterion has a clean, closed-form solution
+:::
+
+---
+
+## Deriving the OLS Estimators
+
+Minimize RSS by taking partial derivatives with respect to $a$ and $b$, setting them to zero, and solving:
+
+$$\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2} = \frac{S_{xy}}{S_{xx}}$$
+
+$$\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$$
+
+::: {.callout-note}
+The OLS line always passes through the point $(\bar{x},\, \bar{y})$.
+:::
+
+---
+
+## A Useful Rewrite
+
+The OLS slope can also be written as:
+
+$$\hat{\beta}_1 = r \cdot \frac{s_y}{s_x}$$
+
+where $r$ is the **sample correlation** between $x$ and $y$, and $s_x$, $s_y$ are sample standard deviations.
+
+::: {.incremental}
+- When $r = 0$: slope is 0 — no linear relationship
+- When $|r| = 1$: all points lie exactly on a line
+- The sign of $\hat{\beta}_1$ always equals the sign of $r$
+:::
+
+---
+
+## Fitting the Election Model in R
+
+```{r}
+#| echo: true
+#| eval: false
+hibbs <- read.table("hibbs.dat", header = TRUE)
+fit   <- lm(vote ~ growth, data = hibbs)
+summary(fit)
+```
+
+```
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)  46.248      1.623   28.50  < 2e-16 ***
+growth        3.061      0.710    4.31  0.00076 ***
+
+Residual standard error: 3.763 on 14 degrees of freedom
+Multiple R-squared: 0.5700
+```
+
+---
+
+## Reading the `lm()` Output {.smaller}
+
+| Term | What it means |
+|:---|:---|
+| `(Intercept)` | $\hat{\beta}_0 = 46.2$: predicted vote share when growth = 0% |
+| `growth` | $\hat{\beta}_1 = 3.1$: predicted change in vote share per 1% more income growth |
+| `Std. Error` | Estimated standard error of each coefficient |
+| `t value` | Coefficient estimate divided by its standard error |
+| `Pr(>|t|)` | p-value for the hypothesis $H_0: \beta = 0$ |
+| `Residual standard error` | $\hat{\sigma} = 3.76$: typical size of prediction errors |
+| `Multiple R-squared` | $R^2 = 0.57$: fraction of variance in $y$ explained by the model |
+
+---
+
+## Residuals and Model Fit {background-color="#003660"}
+
+---
+
+## Accessing Residuals in R
+
+```{r}
+#| echo: true
+#| eval: false
+residuals(fit)   # e_i = y_i - y_hat_i
+fitted(fit)      # y_hat_i = beta0_hat + beta1_hat * x_i
+
+# Residual plot
+plot(fitted(fit), residuals(fit),
+     xlab = "Fitted values",
+     ylab = "Residuals",
+     main = "Residuals vs. Fitted")
+abline(h = 0, lty = 2, col = "gray50")
+```
+
+A well-fitted model has residuals that are centered at zero with no systematic pattern.
+
+---
+
+## Estimating $\sigma$
+
+The true error variance $\sigma^2$ is unknown — we estimate it from the residuals:
+
+$$\hat{\sigma}^2 = \frac{\text{RSS}}{n - 2} = \frac{\displaystyle\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n - 2}$$
+
+We divide by $n - 2$ — not $n$ — because we estimated **two parameters** ($\beta_0$ and $\beta_1$) from the data, using up 2 degrees of freedom.
+
+---
+
+## What Does $\hat{\sigma}$ Tell Us?
+
+$\hat{\sigma}$ is the **residual standard deviation** — the typical size of prediction errors, on the scale of $y$.
+
+For the election model: $\hat{\sigma} = 3.76$ percentage points.
+
+**Interpretation:** Even with the best linear prediction using income growth, vote shares typically deviate from predictions by about **3.8 percentage points**.
+
+::: {.callout-tip}
+Compare $\hat{\sigma}$ to the spread of $y$ to assess predictive accuracy. A small $\hat{\sigma}$ relative to the range of $y$ indicates a useful model.
+:::
+
+---
+
+## $R^2$: Proportion of Variance Explained
+
+$$R^2 = 1 - \frac{\text{RSS}}{\text{TSS}} = 1 - \frac{\displaystyle\sum(y_i - \hat{y}_i)^2}{\displaystyle\sum(y_i - \bar{y})^2}$$
+
+- **TSS** = Total Sum of Squares — variance in $y$ if we ignored $x$ entirely
+- $R^2 = 0$: the model explains nothing; predicting $\bar{y}$ is just as good
+- $R^2 = 1$: the model explains everything; residuals are all zero
+- Election model: $R^2 = 0.57$ — income growth explains **57%** of the variation in vote share
+
+::: {.callout-caution}
+High $R^2$ does not mean the model is correct or causal — it only measures linear fit.
+:::
+
+---
+
+## Standard Errors {background-color="#003660"}
+
+---
+
+## What is a Standard Error?
+
+A **standard error** measures the precision of a sample estimate.
+
+Imagine drawing many independent samples of size $n$ from the same population and computing $\hat{\beta}_1$ each time. The standard deviation of those estimates across samples is the **standard error** of $\hat{\beta}_1$.
+
+$$\text{SE}(\hat{\beta}_1) = \frac{\hat{\sigma}}{\sqrt{S_{xx}}} = \frac{\hat{\sigma}}{\sqrt{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2}}$$
+
+---
+
+## What Makes Standard Errors Smaller?
+
+$$\text{SE}(\hat{\beta}_1) = \frac{\hat{\sigma}}{\sqrt{\sum(x_i - \bar{x})^2}}$$
+
+Standard errors are **smaller** (more precise estimates) when:
+
+::: {.incremental}
+- $\hat{\sigma}$ is small — less noise in the data
+- Predictors $x$ are more spread out — more information about the slope
+- Sample size $n$ is larger — more data overall
+:::
+
+---
+
+## Confidence Intervals for Coefficients
+
+A **95% confidence interval** for $\beta_1$ is:
+
+$$\hat{\beta}_1 \pm t_{n-2,\,0.025} \cdot \text{SE}(\hat{\beta}_1)$$
+
+For the election model ($n = 16$, $t_{14, 0.025} \approx 2.14$):
+
+$$3.06 \pm 2.14 \times 0.71 \approx (1.54,\; 4.58)$$
+
+**Interpretation:** We are 95% confident the true slope lies between 1.54 and 4.58 — a 1% increase in income growth is associated with between 1.5 and 4.6 more percentage points of vote share.
+
+---
+
+## Regression as Comparison {background-color="#003660"}
+
+---
+
+## Comparing Two Groups as Regression
+
+Regression is a generalization of simpler statistical comparisons.
+
+**Comparing a single mean:** regress $y$ on just a constant:
+$$y_i = \mu + \varepsilon_i \quad \Longrightarrow \quad \hat{\mu} = \bar{y}$$
+
+**Comparing two groups:** let $x_i \in \{0, 1\}$ be a binary group indicator:
+$$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$$
+
+- $\hat{\beta}_0 = \bar{y}_{\text{group 0}}$
+- $\hat{\beta}_1 = \bar{y}_{\text{group 1}} - \bar{y}_{\text{group 0}}$
+
+This is algebraically equivalent to a two-sample $t$-test (assuming equal variances).
+
+---
+
+## Regression Generalizes the $t$-test
+
+```{r}
+#| echo: true
+#| eval: false
+# Suppose x is a binary 0/1 indicator (e.g., treatment vs. control)
+t.test(y ~ x, var.equal = TRUE)
+
+# Produces the same estimate as:
+lm(y ~ x)
+```
+
+Regression is strictly more general — it can:
+
+- Handle continuous predictors
+- Adjust for additional variables simultaneously (multiple regression)
+- Accommodate more than two groups via indicator coding
+
+---
+
+## Making Predictions
+
+Given a new observation with predictor value $x^*$, the predicted outcome is:
+
+$$\hat{y}^* = \hat{\beta}_0 + \hat{\beta}_1 x^*$$
+
+**Example:** What vote share does the model predict when income growth = 2%?
+
+$$\hat{y} = 46.2 + 3.1 \times 2 = 52.4\%$$
+
+::: {.callout-warning}
+## Extrapolation
+Predicting far outside the range of the observed $x$ values is unreliable. The linear relationship may not hold beyond the data.
+:::
+
+---
+
+## Brief Intro: Fake-Data Simulation
+
+A powerful way to **validate** our fitting procedure: simulate data from a known model, then check whether we can recover the true parameters.
+
+```{r}
+#| echo: true
+#| eval: false
+set.seed(42)
+n     <- 50
+x     <- runif(n, min = 0, max = 10)
+
+# True (known) parameters
+beta0 <- 2
+beta1 <- 3
+sigma <- 5
+
+y   <- beta0 + beta1 * x + rnorm(n, mean = 0, sd = sigma)
+fit <- lm(y ~ x)
+coef(fit)  # should be close to (2, 3)
+```
+
+If estimates are far from the truth on simulated data, something is wrong with our procedure.
+
+---
+
+## Summary {.smaller}
+
+::: {.incremental}
+- **OLS** chooses $\hat{\beta}_0$ and $\hat{\beta}_1$ by minimizing $\text{RSS} = \sum(y_i - \hat{y}_i)^2$
+- Closed-form solution: $\hat{\beta}_1 = S_{xy}/S_{xx}$, $\;\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$
+- **Residuals** $e_i = y_i - \hat{y}_i$ measure prediction errors
+- **$\hat{\sigma}$** is the residual SD — typical prediction error — estimated by $\sqrt{\text{RSS}/(n-2)}$
+- **$R^2$** is the proportion of variance in $y$ explained by $x$ — useful but limited
+- **Standard errors** quantify uncertainty in coefficient estimates
+- Regression with a binary predictor generalizes the two-sample $t$-test
+- **Fake-data simulation** is a principled tool for validating our fitting procedure
+:::
+
+---
+
+## Looking Ahead
+
+**Week 2:** Multiple Linear Regression
+
+- Adding more predictors: $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \varepsilon$
+- Interpreting partial slopes — "holding other predictors constant"
+- Indicator variables and categorical predictors
+
+**Reading:** *Regression and Other Stories*, Chapters 7.2–7.3 & Chapter 8
+
+---
+
+## Questions? {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em;"}
+**Annie Adams**
+[aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+Office Hours: Tuesday 10 – 11 AM
+
+[Course Website](https://pstat-126.github.io/)
+:::

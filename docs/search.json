@@ -494,5 +494,404 @@
       "Course Information",
       "Syllabus"
     ]
+  },
+  {
+    "objectID": "slides/lec-02.html#review-the-simple-linear-model",
+    "href": "slides/lec-02.html#review-the-simple-linear-model",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Review: The Simple Linear Model",
+    "text": "Review: The Simple Linear Model\nFrom Monday, the simple linear regression model is:\n\\[y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i, \\quad \\varepsilon_i \\overset{\\text{iid}}{\\sim} \\mathcal{N}(0, \\sigma^2)\\]\n\n\\(\\beta_1\\) is a comparison between units — not a causal effect\nThe fitted line \\(\\hat{y} = \\hat{\\beta}_0 + \\hat{\\beta}_1 x\\) summarizes the relationship\n\nToday: How do we estimate \\(\\hat{\\beta}_0\\), \\(\\hat{\\beta}_1\\), and \\(\\sigma\\) from data?"
+  },
+  {
+    "objectID": "slides/lec-02.html#learning-objectives",
+    "href": "slides/lec-02.html#learning-objectives",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\nBy the end of today you will be able to:\n\nExplain the least squares criterion and apply it conceptually\nState the OLS formulas for the slope and intercept\nCompute and interpret fitted values and residuals\nInterpret the residual standard deviation \\(\\hat{\\sigma}\\) and \\(R^2\\)\nExplain what a standard error measures\nUse lm() in R to fit a simple linear regression and read its output"
+  },
+  {
+    "objectID": "slides/lec-02.html#how-do-we-fit-a-line",
+    "href": "slides/lec-02.html#how-do-we-fit-a-line",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "How Do We Fit a Line?",
+    "text": "How Do We Fit a Line?"
+  },
+  {
+    "objectID": "slides/lec-02.html#the-problem-of-fitting",
+    "href": "slides/lec-02.html#the-problem-of-fitting",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "The Problem of Fitting",
+    "text": "The Problem of Fitting\nGiven data \\((x_1, y_1), (x_2, y_2), \\ldots, (x_n, y_n)\\), infinitely many lines pass through or near the points.\nWe need a criterion to select the “best” line.\nIntuition: The best line should make prediction errors as small as possible across all observations simultaneously."
+  },
+  {
+    "objectID": "slides/lec-02.html#residuals-measuring-prediction-error",
+    "href": "slides/lec-02.html#residuals-measuring-prediction-error",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Residuals: Measuring Prediction Error",
+    "text": "Residuals: Measuring Prediction Error\nFor a candidate line with intercept \\(a\\) and slope \\(b\\), the residual for observation \\(i\\) is:\n\\[e_i = y_i - \\hat{y}_i = y_i - (a + b x_i)\\]\n\n\\(\\hat{y}_i = a + bx_i\\): the fitted value (what the line predicts)\n\\(e_i &gt; 0\\): observed point is above the line\n\\(e_i &lt; 0\\): observed point is below the line\n\nA good line has small residuals throughout."
+  },
+  {
+    "objectID": "slides/lec-02.html#ordinary-least-squares-ols",
+    "href": "slides/lec-02.html#ordinary-least-squares-ols",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Ordinary Least Squares (OLS)",
+    "text": "Ordinary Least Squares (OLS)"
+  },
+  {
+    "objectID": "slides/lec-02.html#the-least-squares-criterion",
+    "href": "slides/lec-02.html#the-least-squares-criterion",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "The Least Squares Criterion",
+    "text": "The Least Squares Criterion\nOrdinary Least Squares (OLS) chooses \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) to minimize the Residual Sum of Squares (RSS):\n\\[\\text{RSS}(a, b) = \\sum_{i=1}^{n} e_i^2 = \\sum_{i=1}^{n} (y_i - a - b x_i)^2\\]\nWhy square the residuals?\n\nPositive and negative errors don’t cancel each other out\nLarge errors are penalized more heavily than small ones\nThe squared criterion has a clean, closed-form solution"
+  },
+  {
+    "objectID": "slides/lec-02.html#deriving-the-ols-estimators",
+    "href": "slides/lec-02.html#deriving-the-ols-estimators",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Deriving the OLS Estimators",
+    "text": "Deriving the OLS Estimators\nMinimize RSS by taking partial derivatives with respect to \\(a\\) and \\(b\\), setting them to zero, and solving:\n\\[\\hat{\\beta}_1 = \\frac{\\displaystyle\\sum_{i=1}^n (x_i - \\bar{x})(y_i - \\bar{y})}{\\displaystyle\\sum_{i=1}^n (x_i - \\bar{x})^2} = \\frac{S_{xy}}{S_{xx}}\\]\n\\[\\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x}\\]\n\n\n\n\n\n\nNote\n\n\nThe OLS line always passes through the point \\((\\bar{x},\\, \\bar{y})\\)."
+  },
+  {
+    "objectID": "slides/lec-02.html#a-useful-rewrite",
+    "href": "slides/lec-02.html#a-useful-rewrite",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "A Useful Rewrite",
+    "text": "A Useful Rewrite\nThe OLS slope can also be written as:\n\\[\\hat{\\beta}_1 = r \\cdot \\frac{s_y}{s_x}\\]\nwhere \\(r\\) is the sample correlation between \\(x\\) and \\(y\\), and \\(s_x\\), \\(s_y\\) are sample standard deviations.\n\nWhen \\(r = 0\\): slope is 0 — no linear relationship\nWhen \\(|r| = 1\\): all points lie exactly on a line\nThe sign of \\(\\hat{\\beta}_1\\) always equals the sign of \\(r\\)"
+  },
+  {
+    "objectID": "slides/lec-02.html#fitting-the-election-model-in-r",
+    "href": "slides/lec-02.html#fitting-the-election-model-in-r",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Fitting the Election Model in R",
+    "text": "Fitting the Election Model in R\n\nhibbs &lt;- read.table(\"hibbs.dat\", header = TRUE)\nfit   &lt;- lm(vote ~ growth, data = hibbs)\nsummary(fit)\n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)\n(Intercept)  46.248      1.623   28.50  &lt; 2e-16 ***\ngrowth        3.061      0.710    4.31  0.00076 ***\n\nResidual standard error: 3.763 on 14 degrees of freedom\nMultiple R-squared: 0.5700"
+  },
+  {
+    "objectID": "slides/lec-02.html#reading-the-lm-output",
+    "href": "slides/lec-02.html#reading-the-lm-output",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Reading the lm() Output",
+    "text": "Reading the lm() Output\n\n\n\n\n\n\n\nTerm\nWhat it means\n\n\n\n\n(Intercept)\n\\(\\hat{\\beta}_0 = 46.2\\): predicted vote share when growth = 0%\n\n\ngrowth\n\\(\\hat{\\beta}_1 = 3.1\\): predicted change in vote share per 1% more income growth\n\n\nStd. Error\nEstimated standard error of each coefficient\n\n\nt value\nCoefficient estimate divided by its standard error\n\n\nPr(&gt;|t|)\np-value for the hypothesis \\(H_0: \\beta = 0\\)\n\n\nResidual standard error\n\\(\\hat{\\sigma} = 3.76\\): typical size of prediction errors\n\n\nMultiple R-squared\n\\(R^2 = 0.57\\): fraction of variance in \\(y\\) explained by the model"
+  },
+  {
+    "objectID": "slides/lec-02.html#residuals-and-model-fit",
+    "href": "slides/lec-02.html#residuals-and-model-fit",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Residuals and Model Fit",
+    "text": "Residuals and Model Fit"
+  },
+  {
+    "objectID": "slides/lec-02.html#accessing-residuals-in-r",
+    "href": "slides/lec-02.html#accessing-residuals-in-r",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Accessing Residuals in R",
+    "text": "Accessing Residuals in R\n\nresiduals(fit)   # e_i = y_i - y_hat_i\nfitted(fit)      # y_hat_i = beta0_hat + beta1_hat * x_i\n\n# Residual plot\nplot(fitted(fit), residuals(fit),\n     xlab = \"Fitted values\",\n     ylab = \"Residuals\",\n     main = \"Residuals vs. Fitted\")\nabline(h = 0, lty = 2, col = \"gray50\")\n\nA well-fitted model has residuals that are centered at zero with no systematic pattern."
+  },
+  {
+    "objectID": "slides/lec-02.html#estimating-sigma",
+    "href": "slides/lec-02.html#estimating-sigma",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Estimating \\(\\sigma\\)",
+    "text": "Estimating \\(\\sigma\\)\nThe true error variance \\(\\sigma^2\\) is unknown — we estimate it from the residuals:\n\\[\\hat{\\sigma}^2 = \\frac{\\text{RSS}}{n - 2} = \\frac{\\displaystyle\\sum_{i=1}^n (y_i - \\hat{y}_i)^2}{n - 2}\\]\nWe divide by \\(n - 2\\) — not \\(n\\) — because we estimated two parameters (\\(\\beta_0\\) and \\(\\beta_1\\)) from the data, using up 2 degrees of freedom."
+  },
+  {
+    "objectID": "slides/lec-02.html#what-does-hatsigma-tell-us",
+    "href": "slides/lec-02.html#what-does-hatsigma-tell-us",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "What Does \\(\\hat{\\sigma}\\) Tell Us?",
+    "text": "What Does \\(\\hat{\\sigma}\\) Tell Us?\n\\(\\hat{\\sigma}\\) is the residual standard deviation — the typical size of prediction errors, on the scale of \\(y\\).\nFor the election model: \\(\\hat{\\sigma} = 3.76\\) percentage points.\nInterpretation: Even with the best linear prediction using income growth, vote shares typically deviate from predictions by about 3.8 percentage points.\n\n\n\n\n\n\nTip\n\n\nCompare \\(\\hat{\\sigma}\\) to the spread of \\(y\\) to assess predictive accuracy. A small \\(\\hat{\\sigma}\\) relative to the range of \\(y\\) indicates a useful model."
+  },
+  {
+    "objectID": "slides/lec-02.html#r2-proportion-of-variance-explained",
+    "href": "slides/lec-02.html#r2-proportion-of-variance-explained",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "\\(R^2\\): Proportion of Variance Explained",
+    "text": "\\(R^2\\): Proportion of Variance Explained\n\\[R^2 = 1 - \\frac{\\text{RSS}}{\\text{TSS}} = 1 - \\frac{\\displaystyle\\sum(y_i - \\hat{y}_i)^2}{\\displaystyle\\sum(y_i - \\bar{y})^2}\\]\n\nTSS = Total Sum of Squares — variance in \\(y\\) if we ignored \\(x\\) entirely\n\\(R^2 = 0\\): the model explains nothing; predicting \\(\\bar{y}\\) is just as good\n\\(R^2 = 1\\): the model explains everything; residuals are all zero\nElection model: \\(R^2 = 0.57\\) — income growth explains 57% of the variation in vote share\n\n\n\n\n\n\n\nCaution\n\n\nHigh \\(R^2\\) does not mean the model is correct or causal — it only measures linear fit."
+  },
+  {
+    "objectID": "slides/lec-02.html#standard-errors",
+    "href": "slides/lec-02.html#standard-errors",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Standard Errors",
+    "text": "Standard Errors"
+  },
+  {
+    "objectID": "slides/lec-02.html#what-is-a-standard-error",
+    "href": "slides/lec-02.html#what-is-a-standard-error",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "What is a Standard Error?",
+    "text": "What is a Standard Error?\nA standard error measures the precision of a sample estimate.\nImagine drawing many independent samples of size \\(n\\) from the same population and computing \\(\\hat{\\beta}_1\\) each time. The standard deviation of those estimates across samples is the standard error of \\(\\hat{\\beta}_1\\).\n\\[\\text{SE}(\\hat{\\beta}_1) = \\frac{\\hat{\\sigma}}{\\sqrt{S_{xx}}} = \\frac{\\hat{\\sigma}}{\\sqrt{\\displaystyle\\sum_{i=1}^n (x_i - \\bar{x})^2}}\\]"
+  },
+  {
+    "objectID": "slides/lec-02.html#what-makes-standard-errors-smaller",
+    "href": "slides/lec-02.html#what-makes-standard-errors-smaller",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "What Makes Standard Errors Smaller?",
+    "text": "What Makes Standard Errors Smaller?\n\\[\\text{SE}(\\hat{\\beta}_1) = \\frac{\\hat{\\sigma}}{\\sqrt{\\sum(x_i - \\bar{x})^2}}\\]\nStandard errors are smaller (more precise estimates) when:\n\n\\(\\hat{\\sigma}\\) is small — less noise in the data\nPredictors \\(x\\) are more spread out — more information about the slope\nSample size \\(n\\) is larger — more data overall"
+  },
+  {
+    "objectID": "slides/lec-02.html#confidence-intervals-for-coefficients",
+    "href": "slides/lec-02.html#confidence-intervals-for-coefficients",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Confidence Intervals for Coefficients",
+    "text": "Confidence Intervals for Coefficients\nA 95% confidence interval for \\(\\beta_1\\) is:\n\\[\\hat{\\beta}_1 \\pm t_{n-2,\\,0.025} \\cdot \\text{SE}(\\hat{\\beta}_1)\\]\nFor the election model (\\(n = 16\\), \\(t_{14, 0.025} \\approx 2.14\\)):\n\\[3.06 \\pm 2.14 \\times 0.71 \\approx (1.54,\\; 4.58)\\]\nInterpretation: We are 95% confident the true slope lies between 1.54 and 4.58 — a 1% increase in income growth is associated with between 1.5 and 4.6 more percentage points of vote share."
+  },
+  {
+    "objectID": "slides/lec-02.html#regression-as-comparison",
+    "href": "slides/lec-02.html#regression-as-comparison",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Regression as Comparison",
+    "text": "Regression as Comparison"
+  },
+  {
+    "objectID": "slides/lec-02.html#comparing-two-groups-as-regression",
+    "href": "slides/lec-02.html#comparing-two-groups-as-regression",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Comparing Two Groups as Regression",
+    "text": "Comparing Two Groups as Regression\nRegression is a generalization of simpler statistical comparisons.\nComparing a single mean: regress \\(y\\) on just a constant: \\[y_i = \\mu + \\varepsilon_i \\quad \\Longrightarrow \\quad \\hat{\\mu} = \\bar{y}\\]\nComparing two groups: let \\(x_i \\in \\{0, 1\\}\\) be a binary group indicator: \\[y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\]\n\n\\(\\hat{\\beta}_0 = \\bar{y}_{\\text{group 0}}\\)\n\\(\\hat{\\beta}_1 = \\bar{y}_{\\text{group 1}} - \\bar{y}_{\\text{group 0}}\\)\n\nThis is algebraically equivalent to a two-sample \\(t\\)-test (assuming equal variances)."
+  },
+  {
+    "objectID": "slides/lec-02.html#regression-generalizes-the-t-test",
+    "href": "slides/lec-02.html#regression-generalizes-the-t-test",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Regression Generalizes the \\(t\\)-test",
+    "text": "Regression Generalizes the \\(t\\)-test\n\n# Suppose x is a binary 0/1 indicator (e.g., treatment vs. control)\nt.test(y ~ x, var.equal = TRUE)\n\n# Produces the same estimate as:\nlm(y ~ x)\n\nRegression is strictly more general — it can:\n\nHandle continuous predictors\nAdjust for additional variables simultaneously (multiple regression)\nAccommodate more than two groups via indicator coding"
+  },
+  {
+    "objectID": "slides/lec-02.html#making-predictions",
+    "href": "slides/lec-02.html#making-predictions",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Making Predictions",
+    "text": "Making Predictions\nGiven a new observation with predictor value \\(x^*\\), the predicted outcome is:\n\\[\\hat{y}^* = \\hat{\\beta}_0 + \\hat{\\beta}_1 x^*\\]\nExample: What vote share does the model predict when income growth = 2%?\n\\[\\hat{y} = 46.2 + 3.1 \\times 2 = 52.4\\%\\]\n\n\n\n\n\n\nExtrapolation\n\n\nPredicting far outside the range of the observed \\(x\\) values is unreliable. The linear relationship may not hold beyond the data."
+  },
+  {
+    "objectID": "slides/lec-02.html#brief-intro-fake-data-simulation",
+    "href": "slides/lec-02.html#brief-intro-fake-data-simulation",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Brief Intro: Fake-Data Simulation",
+    "text": "Brief Intro: Fake-Data Simulation\nA powerful way to validate our fitting procedure: simulate data from a known model, then check whether we can recover the true parameters.\n\nset.seed(42)\nn     &lt;- 50\nx     &lt;- runif(n, min = 0, max = 10)\n\n# True (known) parameters\nbeta0 &lt;- 2\nbeta1 &lt;- 3\nsigma &lt;- 5\n\ny   &lt;- beta0 + beta1 * x + rnorm(n, mean = 0, sd = sigma)\nfit &lt;- lm(y ~ x)\ncoef(fit)  # should be close to (2, 3)\n\nIf estimates are far from the truth on simulated data, something is wrong with our procedure."
+  },
+  {
+    "objectID": "slides/lec-02.html#summary",
+    "href": "slides/lec-02.html#summary",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Summary",
+    "text": "Summary\n\nOLS chooses \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) by minimizing \\(\\text{RSS} = \\sum(y_i - \\hat{y}_i)^2\\)\nClosed-form solution: \\(\\hat{\\beta}_1 = S_{xy}/S_{xx}\\), \\(\\;\\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x}\\)\nResiduals \\(e_i = y_i - \\hat{y}_i\\) measure prediction errors\n\\(\\hat{\\sigma}\\) is the residual SD — typical prediction error — estimated by \\(\\sqrt{\\text{RSS}/(n-2)}\\)\n\\(R^2\\) is the proportion of variance in \\(y\\) explained by \\(x\\) — useful but limited\nStandard errors quantify uncertainty in coefficient estimates\nRegression with a binary predictor generalizes the two-sample \\(t\\)-test\nFake-data simulation is a principled tool for validating our fitting procedure"
+  },
+  {
+    "objectID": "slides/lec-02.html#looking-ahead",
+    "href": "slides/lec-02.html#looking-ahead",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Looking Ahead",
+    "text": "Looking Ahead\nWeek 2: Multiple Linear Regression\n\nAdding more predictors: \\(y = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\cdots + \\varepsilon\\)\nInterpreting partial slopes — “holding other predictors constant”\nIndicator variables and categorical predictors\n\nReading: Regression and Other Stories, Chapters 7.2–7.3 & Chapter 8"
+  },
+  {
+    "objectID": "slides/lec-02.html#questions",
+    "href": "slides/lec-02.html#questions",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Questions?",
+    "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM\nCourse Website"
+  },
+  {
+    "objectID": "slides/lec-01.html#learning-objectives",
+    "href": "slides/lec-01.html#learning-objectives",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\nBy the end of today you will be able to:\n\nExplain the historical origin of “regression” and what regression to the mean means\nDescribe what a regression model is and what questions it can answer\nWrite the simple linear regression model and identify its components\nInterpret a regression coefficient as a comparison, not a causal effect"
+  },
+  {
+    "objectID": "slides/lec-01.html#what-is-a-statistical-model",
+    "href": "slides/lec-01.html#what-is-a-statistical-model",
+    "title": "Lecture 1: What is Regression?",
+    "section": "What is a Statistical Model?",
+    "text": "What is a Statistical Model?"
+  },
+  {
+    "objectID": "slides/lec-01.html#why-regression",
+    "href": "slides/lec-01.html#why-regression",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Why Regression?",
+    "text": "Why Regression?\nRegression lets us answer questions like:\n\nHow does income relate to years of education?\nDoes economic growth predict election outcomes?\nWhat is the average difference in test scores between two groups, holding other factors constant?\nGiven a new observation, what do we predict for \\(y\\)?"
+  },
+  {
+    "objectID": "slides/lec-01.html#forms-of-regression-models",
+    "href": "slides/lec-01.html#forms-of-regression-models",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Forms of Regression Models",
+    "text": "Forms of Regression Models\nThe regression framework is flexible enough to handle many data structures:\n\n\n\n\n\n\n\nModel Type\nForm\n\n\n\n\nSimple linear\n\\(y = \\beta_0 + \\beta_1 x + \\varepsilon\\)\n\n\nMultiple linear\n\\(y = \\beta_0 + \\beta_1 x_1 + \\cdots + \\beta_p x_p + \\varepsilon\\)\n\n\nLog-transformed\n\\(\\log(y) = \\beta_0 + \\beta_1 x + \\varepsilon\\)\n\n\nWith interactions\n\\(y = \\beta_0 + \\beta_1 x_1 + \\beta_2 x_2 + \\beta_3 x_1 x_2 + \\varepsilon\\)\n\n\nLogistic\n\\(\\log\\!\\left(\\frac{p}{1-p}\\right) = \\beta_0 + \\beta_1 x\\)"
+  },
+  {
+    "objectID": "slides/lec-01.html#a-motivating-example",
+    "href": "slides/lec-01.html#a-motivating-example",
+    "title": "Lecture 1: What is Regression?",
+    "section": "A Motivating Example",
+    "text": "A Motivating Example"
+  },
+  {
+    "objectID": "slides/lec-01.html#predicting-presidential-elections",
+    "href": "slides/lec-01.html#predicting-presidential-elections",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Predicting Presidential Elections",
+    "text": "Predicting Presidential Elections\nQuestion: Can economic performance predict U.S. presidential election outcomes?\nDouglas Hibbs (2000) proposed a simple model:\n\nOutcome \\(y\\): Democratic candidate’s share of the two-party vote (%)\nPredictor \\(x\\): Average personal income growth during the president’s term (%)\n\nData: 16 U.S. presidential elections (1952–2012)\nWhat do you think? Should this relationship exist?"
+  },
+  {
+    "objectID": "slides/lec-01.html#the-hibbs-data",
+    "href": "slides/lec-01.html#the-hibbs-data",
+    "title": "Lecture 1: What is Regression?",
+    "section": "The Hibbs Data",
+    "text": "The Hibbs Data\n\nlibrary(ggplot2)\n\nhibbs &lt;- read.table(\"hibbs.dat\", header = TRUE)\n\nggplot(hibbs, aes(x = growth, y = vote)) +\n  geom_point(size = 3) +\n  geom_text(aes(label = year), nudge_y = 0.8, size = 3) +\n  labs(\n    x = \"Average income growth (%)\",\n    y = \"Democratic vote share (%)\"\n  ) +\n  theme_minimal()\n\nWhat patterns do you notice in the scatter plot?"
+  },
+  {
+    "objectID": "slides/lec-01.html#the-simple-linear-regression-model",
+    "href": "slides/lec-01.html#the-simple-linear-regression-model",
+    "title": "Lecture 1: What is Regression?",
+    "section": "The Simple Linear Regression Model",
+    "text": "The Simple Linear Regression Model"
+  },
+  {
+    "objectID": "slides/lec-01.html#the-model",
+    "href": "slides/lec-01.html#the-model",
+    "title": "Lecture 1: What is Regression?",
+    "section": "The Model",
+    "text": "The Model\nThe simple linear regression model relates one predictor to a continuous outcome:\n\\[y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\]\n\n\\(y_i\\): observed outcome for unit \\(i\\)\n\\(x_i\\): predictor for unit \\(i\\)\n\\(\\beta_0\\)(intercept): expected value of \\(y\\) when \\(x = 0\\)\n\\(\\beta_1\\)(slope): expected change in \\(y\\) per one-unit increase in \\(x\\)\n\\(\\varepsilon_i \\overset{\\text{iid}}{\\sim} \\mathcal{N}(0, \\sigma^2)\\): random error"
+  },
+  {
+    "objectID": "slides/lec-01.html#interpreting-slope-and-intercept",
+    "href": "slides/lec-01.html#interpreting-slope-and-intercept",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Interpreting Slope and Intercept",
+    "text": "Interpreting Slope and Intercept\nFor the Ames housing model, fitting gives: \\[\\widehat{\\text{price}} = 13.3 + 0.111 \\times \\text{sqft}\\]\n\nIntercept (\\(\\hat{\\beta}_0 = 13.3\\)): a house with 0 sq ft is predicted to sell for $13,300 — not meaningful on its own, but a necessary mathematical anchor\nSlope (\\(\\hat{\\beta}_1 = 0.111\\)): each additional square foot of living area is associated with $111 more in sale price, on average"
+  },
+  {
+    "objectID": "slides/lec-01.html#adding-the-fitted-line",
+    "href": "slides/lec-01.html#adding-the-fitted-line",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Adding the Fitted Line",
+    "text": "Adding the Fitted Line\n\nThe fitted line \\(\\hat{y} = \\hat{\\beta}_0 + \\hat{\\beta}_1 x\\) is our best linear summary of the relationship."
+  },
+  {
+    "objectID": "slides/lec-01.html#historical-origins-of-regression",
+    "href": "slides/lec-01.html#historical-origins-of-regression",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Historical Origins of Regression",
+    "text": "Historical Origins of Regression"
+  },
+  {
+    "objectID": "slides/lec-01.html#francis-galton-and-heredity",
+    "href": "slides/lec-01.html#francis-galton-and-heredity",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Francis Galton and Heredity",
+    "text": "Francis Galton and Heredity\nIn the 1880s, Francis Galton studied the relationship between parents’ heights and their children’s heights.\nHis finding: Tall parents tend to have taller children who are shorter than the parents. Short parents tend to have shorter children who are taller than the parents.\nChildren’s heights “regressed” back toward the population mean.\nThis is the origin of the word “regression.”"
+  },
+  {
+    "objectID": "slides/lec-01.html#pearson-lee-1903",
+    "href": "slides/lec-01.html#pearson-lee-1903",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Pearson & Lee (1903)",
+    "text": "Pearson & Lee (1903)\nKarl Pearson and Alice Lee measured heights of 1,078 father-son pairs.Using the data they collected, they found that:\n\\[\\widehat{\\text{son's height}} = 33.9 + 0.51 \\times \\text{father's height}\\]\n\nA father 1 inch above average \\(\\Rightarrow\\) son predicted ~0.51 inches above average\nThe slope is less than 1: sons are pulled toward the mean relative to fathers\nThis is regression to the mean in its original form"
+  },
+  {
+    "objectID": "slides/lec-01.html#regression-to-the-mean",
+    "href": "slides/lec-01.html#regression-to-the-mean",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Regression to the Mean",
+    "text": "Regression to the Mean"
+  },
+  {
+    "objectID": "slides/lec-01.html#what-is-regression-to-the-mean",
+    "href": "slides/lec-01.html#what-is-regression-to-the-mean",
+    "title": "Lecture 1: What is Regression?",
+    "section": "What is Regression to the Mean?",
+    "text": "What is Regression to the Mean?\nKey insight: Extreme values on one measurement tend to be less extreme on a subsequent measurement — not because of any real change, but because of random variation.\n\n\n\n\n\n\nThe Regression Fallacy\n\n\nMistaking regression to the mean for a real causal effect.\n\n\n\nExamples:\n\nStudents who score very high on a pretest score lower on a retest, on average\nAthletes who have exceptional seasons tend to regress the following year\nPatients who seek treatment when symptoms are worst often improve — even without effective treatment"
+  },
+  {
+    "objectID": "slides/lec-01.html#why-does-regression-to-the-mean-happen",
+    "href": "slides/lec-01.html#why-does-regression-to-the-mean-happen",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Why Does Regression to the Mean Happen?",
+    "text": "Why Does Regression to the Mean Happen?\nThink of an observed score as composed of signal and noise:\n\\[x_{\\text{observed}} = \\mu_{\\text{true}} + \\varepsilon_{\\text{random}}\\]\nWhen you select a very high observation, you’re also selecting a large positive error \\(\\varepsilon\\). On a second measurement, that error is likely to be smaller — pulling the score back toward the mean.\nThis is a statistical artifact, not a causal mechanism."
+  },
+  {
+    "objectID": "slides/lec-01.html#coefficients-as-comparisons",
+    "href": "slides/lec-01.html#coefficients-as-comparisons",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Coefficients as Comparisons",
+    "text": "Coefficients as Comparisons"
+  },
+  {
+    "objectID": "slides/lec-01.html#regression-coefficients-describe-comparisons",
+    "href": "slides/lec-01.html#regression-coefficients-describe-comparisons",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Regression Coefficients Describe Comparisons",
+    "text": "Regression Coefficients Describe Comparisons\nA regression slope \\(\\hat{\\beta}_1\\) compares groups of units that differ by 1 unit in \\(x\\).\n\\(\\hat{\\beta}_1\\) is the estimated average difference in \\(y\\) between two otherwise-similar observations where \\(x\\) differs by 1 unit.\n\n\n\n\n\n\nCorrelation \\(\\neq\\) Causation\n\n\nRegression coefficients describe associations in data. They do not, by themselves, establish causal relationships."
+  },
+  {
+    "objectID": "slides/lec-01.html#why-effect-language-can-mislead",
+    "href": "slides/lec-01.html#why-effect-language-can-mislead",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Why “Effect” Language Can Mislead",
+    "text": "Why “Effect” Language Can Mislead\nConsider: “Each year of education increases income by $5,000.”\nThis phrasing implies a causal mechanism — that giving someone more education would change their income by $5,000.\nWhat the regression actually estimates:\n\n“People with one more year of education earn, on average, $5,000 more than people with one fewer year of education.”\n\nThe difference matters when drawing policy conclusions."
+  },
+  {
+    "objectID": "slides/lec-01.html#a-better-framing",
+    "href": "slides/lec-01.html#a-better-framing",
+    "title": "Lecture 1: What is Regression?",
+    "section": "A Better Framing",
+    "text": "A Better Framing\n\n\nAvoid:\n“Education increases income by $5,000.”\n\nPrefer:\n“Comparing people who differ by one year of education, those with more education earn $5,000 more on average.”\n\nRegression describes comparisons across units in the data. Causal claims require additional study design considerations beyond this course."
+  },
+  {
+    "objectID": "slides/lec-01.html#summary",
+    "href": "slides/lec-01.html#summary",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Summary",
+    "text": "Summary\n\nRegression originated from Galton’s 19th-century study of heredity\nRegression to the mean is a statistical phenomenon driven by random error, not a causal mechanism\nRegression models the relationship between \\(y\\) and \\(x\\): \\(y = \\beta_0 + \\beta_1 x + \\varepsilon\\)\nThe slope \\(\\beta_1\\) describes how \\(y\\) changes with \\(x\\), on average — a comparison between units\nThe intercept \\(\\beta_0\\) is the predicted value of \\(y\\) when \\(x = 0\\)\nCoefficients describe comparisons, not causal effects — language matters"
+  },
+  {
+    "objectID": "slides/lec-01.html#looking-ahead",
+    "href": "slides/lec-01.html#looking-ahead",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Looking Ahead",
+    "text": "Looking Ahead\nWednesday: How do we actually fit a regression model to data?\n\nOrdinary Least Squares (OLS) — minimizing prediction errors\nResiduals and residual standard deviation \\(\\hat{\\sigma}\\)\nStandard errors and uncertainty in estimates\nUsing lm() in R\n\nReading: Regression and Other Stories, Chapters 6 & 7.1"
+  },
+  {
+    "objectID": "slides/lec-01.html#questions",
+    "href": "slides/lec-01.html#questions",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Questions?",
+    "text": "Questions?\n\nCome to office Hours tomorrow!\nTuesday 10 – 11 AM @"
+  },
+  {
+    "objectID": "slides/lec-01.html#what-is-a-statistical-model-1",
+    "href": "slides/lec-01.html#what-is-a-statistical-model-1",
+    "title": "Lecture 1: What is Regression?",
+    "section": "What is a Statistical Model?",
+    "text": "What is a Statistical Model?\nA statistical model is a way of describing real-world phenomena using mathematical relationships. It takes data as input and creates a structured way of understanding how variables relate to one another, and how those relationships can be used to predict an outcome.\n\\[y = f(x) + \\varepsilon\\]\n\n\\(y\\): outcome of interest (response variable)\n\\(x\\): predictor (explanatory variable)\n\\(f(x)\\): systematic component — what we can explain\n\\(\\varepsilon\\): random error — irreducible noise\n\nRegression is the most widely used class of statistical models."
+  },
+  {
+    "objectID": "slides/lec-01.html#predicting-house-prices",
+    "href": "slides/lec-01.html#predicting-house-prices",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Predicting House Prices",
+    "text": "Predicting House Prices\nQuestion: Can the size of a house predict its sale price?\nData: 2,930 home sales in Ames, Iowa (De Cock 2011)\n\nOutcome \\(y\\): sale price ($1,000s)\nPredictor \\(x\\): above-ground living area (square feet)\n\n\n\n\n\n\n\n\nTurn & Talk\n\n\n\nWhat do you think? How strong should this relationship be? Do you think it will be positive or negative?"
+  },
+  {
+    "objectID": "slides/lec-01.html#the-ames-housing-data",
+    "href": "slides/lec-01.html#the-ames-housing-data",
+    "title": "Lecture 1: What is Regression?",
+    "section": "The Ames Housing Data",
+    "text": "The Ames Housing Data\n\nWhat patterns do you notice in the scatter plot?"
+  },
+  {
+    "objectID": "slides/lec-01.html#discussion",
+    "href": "slides/lec-01.html#discussion",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Discussion",
+    "text": "Discussion"
+  },
+  {
+    "objectID": "slides/lec-01.html#turn-talk",
+    "href": "slides/lec-01.html#turn-talk",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Turn & Talk",
+    "text": "Turn & Talk\n\nWhat everyday examples of regression to the mean can you think of?\nDiscuss with a neighbor: could any of these fool someone into thinking an intervention worked when it didn’t?\n\n\n\n3:00\n\nStart"
   }
 ]

@@ -1,0 +1,304 @@
+---
+title: "Lecture 1: What is Regression?"
+subtitle: "PSTAT 126 — Linear Regression"
+author: "Annie Adams"
+institute: "UC Santa Barbara"
+date: "09/28/2026"
+format:
+  revealjs:
+    theme: [default, ../styles.scss]
+    slide-number: true
+    preview-links: auto
+    footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
+    logo: ""
+    title-slide-attributes:
+      data-background-color: "#003660"
+---
+
+```{r}
+#| include: false
+if (!requireNamespace("modeldata", quietly = TRUE)) install.packages("modeldata")
+library(modeldata)
+library(ggplot2)
+data(ames)
+```
+
+## Learning Objectives
+
+By the end of today you will be able to:
+
+- Explain the historical origin of "regression" and what regression to the mean means
+- Describe what a regression model is and what questions it can answer
+- Write the simple linear regression model and identify its components
+- Interpret a regression coefficient as a **comparison**, not a causal effect
+
+---
+
+## Historical Origins of Regression {background-color="#003660"}
+
+---
+
+## Francis Galton and Heredity
+
+In the **1880s**, Francis Galton studied the relationship between parents' heights and their children's heights.
+
+**His finding:** Tall parents tend to have taller children who are *shorter than the parents*. Short parents tend to have shorter children who are *taller than the parents*.
+
+Children's heights "regressed" back toward the population mean.
+
+This is the origin of the word **"regression."**
+
+
+---
+
+## What is a Statistical Model? {background-color="#003660"}
+
+---
+
+## What is a Statistical Model?
+A **statistical model** is a way of describing real-world phenomena using mathematical relationships. It takes data as input and creates a structured way of understanding how variables relate to one another, and how those relationships can be used to predict an outcome. 
+
+
+
+
+
+$$y = f(x) + \varepsilon$$
+
+- $y$: outcome of interest (response variable)
+- $x$: predictor (explanatory variable)
+- $f(x)$: systematic component — what we can explain
+- $\varepsilon$: random error — irreducible noise
+
+**Regression** is the most widely used class of statistical models.
+
+---
+
+## Why Regression?
+
+Regression lets us answer questions like:
+
+- How does income relate to years of education?
+- Does economic growth predict election outcomes?
+- What is the average difference in test scores between two groups, *holding other factors constant*?
+- Given a new observation, what do we predict for $y$?
+
+---
+
+## Forms of Regression Models {.smaller}
+
+The regression framework is flexible enough to handle many data structures:
+
+
+| Model Type | Form |
+|:---|:---|
+| Simple linear | $y = \beta_0 + \beta_1 x + \varepsilon$ |
+| Multiple linear | $y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p + \varepsilon$ |
+| Log-transformed | $\log(y) = \beta_0 + \beta_1 x + \varepsilon$ |
+| With interactions | $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \varepsilon$ |
+| Logistic | $\log\!\left(\frac{p}{1-p}\right) = \beta_0 + \beta_1 x$ |
+
+---
+
+## A Motivating Example {background-color="#003660"}
+
+---
+
+## Predicting House Prices
+
+**Question:** Can the size of a house predict its sale price?
+
+Data: 2,930 home sales in Ames, Iowa (De Cock 2011)
+
+- **Outcome** $y$: sale price ($1,000s)
+- **Predictor** $x$: above-ground living area (square feet)
+
+
+:::{.fragment}
+::: callout-tip
+## Turn & Talk
+
+:::{.nonincremental}
+::: {style="font-size: 30px"}
+What do you think? How strong should this relationship be? Do you think it will be positive or negative? 
+
+```{r}
+#| echo: false
+countdown::countdown(
+  minutes = 1,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em",
+)
+```
+
+:::
+:::
+:::
+:::
+
+---
+
+## The Ames Housing Data
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| fig-align: center
+ggplot(ames, aes(x = Gr_Liv_Area, y = Sale_Price / 1000)) +
+  geom_point(alpha = 0.3, size = 1.5) +
+  labs(
+    x = "Above-ground living area (sq ft)",
+    y = "Sale price ($1,000s)"
+  ) +
+  theme_minimal()
+```
+
+What patterns do you notice in the scatter plot?
+
+---
+
+## The Simple Linear Regression Model {background-color="#003660"}
+
+---
+
+## The Model
+
+The **simple linear regression model** relates one predictor to a continuous outcome:
+
+$$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$$
+
+- $y_i$: observed outcome for unit $i$
+- $x_i$: predictor for unit $i$
+- $\beta_0$(**intercept**):  expected value of $y$ when $x = 0$
+- $\beta_1$(**slope**): expected change in $y$ per one-unit increase in $x$
+- $\varepsilon_i \overset{\text{iid}}{\sim} \mathcal{N}(0, \sigma^2)$: random error
+
+---
+
+## Interpreting Slope and Intercept
+
+For the Ames housing model, fitting gives:
+$$\widehat{\text{price}} = 13.3 + 0.111 \times \text{sqft}$$
+
+::: {.incremental}
+- **Intercept** ($\hat{\beta}_0 = 13.3$): a house with 0 sq ft is predicted to sell for $13,300 — not meaningful on its own, but a necessary mathematical anchor
+
+- **Slope** ($\hat{\beta}_1 = 0.111$): each additional square foot of living area is associated with $111 more in sale price, *on average*
+:::
+
+---
+
+## Adding the Fitted Line
+
+```{r}
+#| echo: false
+#| eval: true
+ggplot(ames, aes(x = Gr_Liv_Area, y = Sale_Price / 1000)) +
+  geom_point(alpha = 0.3, size = 1.5) +
+  geom_smooth(method = "lm", se = FALSE, color = "#003660") +
+  labs(
+    x = "Above-ground living area (sq ft)",
+    y = "Sale price ($1,000s)",
+    title = "Sale Price ~ Living Area (Ames, Iowa)"
+  ) +
+  theme_minimal()
+```
+
+The fitted line $\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x$ is our best linear summary of the relationship.
+
+---
+
+## Coefficients as Comparisons {background-color="#003660"}
+
+---
+
+## Regression Coefficients Describe Comparisons
+
+A regression slope $\hat{\beta}_1$ compares groups of units that differ by 1 unit in $x$.
+
+$\hat{\beta}_1$ is the estimated average difference in $y$ between two otherwise-similar observations where $x$ differs by 1 unit.
+
+::: {.callout-important}
+## Correlation $\neq$ Causation
+Regression coefficients describe **associations** in data. They do not, by themselves, establish causal relationships.
+:::
+
+---
+
+## Why "Effect" Language Can Mislead
+
+Consider: *"Each year of education **increases** income by $5,000."*
+
+This phrasing implies a causal mechanism — that giving someone more education *would* change their income by $5,000.
+
+What the regression actually estimates:
+
+> "People with one more year of education earn, **on average**, $5,000 more than people with one fewer year of education."
+
+The difference matters when drawing policy conclusions.
+
+---
+
+## A Better Framing
+
+::: {.columns}
+::: {.column width="48%"}
+**Avoid:**
+
+*"Education increases income by $5,000."*
+:::
+::: {.column width="48%"}
+**Prefer:**
+
+*"Comparing people who differ by one year of education, those with more education earn $5,000 more on average."*
+:::
+:::
+
+Regression describes **comparisons across units in the data**. Causal claims require additional study design considerations beyond this course.
+
+---
+
+## Summary {.smaller}
+
+::: {.incremental}
+- Regression originated from Galton's 19th-century study of heredity
+- **Regression to the mean** is a statistical phenomenon driven by random error, not a causal mechanism
+- Regression models the relationship between $y$ and $x$: $y = \beta_0 + \beta_1 x + \varepsilon$
+- The **slope** $\beta_1$ describes how $y$ changes with $x$, on average — a comparison between units
+- The **intercept** $\beta_0$ is the predicted value of $y$ when $x = 0$
+- Coefficients describe **comparisons**, not causal effects — language matters
+:::
+
+---
+
+## Looking Ahead
+
+**Wednesday:** How do we actually *fit* a regression model to data?
+
+- Ordinary Least Squares (OLS) — minimizing prediction errors
+- Residuals and residual standard deviation $\hat{\sigma}$
+- Standard errors and uncertainty in estimates
+- Using `lm()` in R
+
+**Reading:** *Regression and Other Stories*, Chapters 6 & 7.1
+
+---
+
+## Questions? {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em;"}
+
+
+Come to office Hours tomorrow! 
+
+Tuesday 10 – 11 AM @ 
+
+
+:::
