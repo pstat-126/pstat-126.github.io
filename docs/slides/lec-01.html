@@ -156,10 +156,10 @@ Annie Adams
 <h2>Learning Objectives</h2>
 <p>By the end of today you will be able to:</p>
 <ul>
-<li>Explain the historical origin of “regression” and what regression to the mean means</li>
-<li>Describe what a regression model is and what questions it can answer</li>
-<li>Write the simple linear regression model and identify its components</li>
-<li>Interpret a regression coefficient as a <strong>comparison</strong>, not a causal effect</li>
+<li class="fragment">Explain the historical origin of “regression” and what regression to the mean means</li>
+<li class="fragment">Describe what a regression model is, what questions it can answer, and when to use it</li>
+<li class="fragment">Write the simple linear regression model and identify its components</li>
+<li class="fragment">Interpret a regression coefficient as a <strong>comparison</strong>, not a causal effect</li>
 </ul>
 </section>
 <section id="historical-origins-of-regression" class="slide level2" data-background-color="#003660">
@@ -180,10 +180,10 @@ Annie Adams
 <p>A <strong>statistical model</strong> is a way of describing real-world phenomena using mathematical relationships. It takes data as input and creates a structured way of understanding how variables relate to one another, and how those relationships can be used to predict an outcome.</p>
 <p><span class="math display">\[y = f(x) + \varepsilon\]</span></p>
 <ul>
-<li><span class="math inline">\(y\)</span>: outcome of interest (response variable)</li>
-<li><span class="math inline">\(x\)</span>: predictor (explanatory variable)</li>
-<li><span class="math inline">\(f(x)\)</span>: systematic component — what we can explain</li>
-<li><span class="math inline">\(\varepsilon\)</span>: random error — irreducible noise</li>
+<li class="fragment"><span class="math inline">\(y\)</span>: outcome of interest (response variable)</li>
+<li class="fragment"><span class="math inline">\(x\)</span>: predictor (explanatory variable)</li>
+<li class="fragment"><span class="math inline">\(f(x)\)</span>: systematic component — what we can explain</li>
+<li class="fragment"><span class="math inline">\(\varepsilon\)</span>: random error — irreducible noise</li>
 </ul>
 <p><strong>Regression</strong> is the most widely used class of statistical models.</p>
 </section>
@@ -191,11 +191,31 @@ Annie Adams
 <h2>Why Regression?</h2>
 <p>Regression lets us answer questions like:</p>
 <ul>
-<li>How does income relate to years of education?</li>
-<li>Does economic growth predict election outcomes?</li>
-<li>What is the average difference in test scores between two groups, <em>holding other factors constant</em>?</li>
-<li>Given a new observation, what do we predict for <span class="math inline">\(y\)</span>?</li>
+<li class="fragment">How does income relate to years of education?</li>
+<li class="fragment">Does economic growth predict election outcomes?</li>
+<li class="fragment">What is the average difference in test scores between two groups, <em>holding other factors constant</em>?</li>
+<li class="fragment">Given a new observation, what do we predict for <span class="math inline">\(y\)</span>?</li>
 </ul>
+</section>
+<section id="when-do-we-use-regression" class="slide level2">
+<h2>When do we use Regression?</h2>
+<p>Regression analysis is used for explaining or modelings the relationship between a response variable (<span class="math inline">\(Y\)</span>) and one or more predictors (<span class="math inline">\(X_1,...X_p\)</span>).</p>
+<p>The response variable must be continuous, but the predictors can be continuous, discrete, or categorical.</p>
+</section>
+<section id="discrete-vs-continuous-refresher" class="slide level2">
+<h2>Discrete vs Continuous Refresher</h2>
+
+<img data-src="images/discrete_cont.png" class="r-stretch"></section>
+<section id="when-do-we-use-regression-1" class="slide level2">
+<h2>When do we use Regression?</h2>
+<p>Regression analysis is used for explaining or modelings the relationship between a response variable (<span class="math inline">\(Y\)</span>) and one or more predictors (<span class="math inline">\(X_1,...X_p\)</span>).</p>
+<p>The response variable must be continuous, but the predictors can be continuous, discrete, or categorical.</p>
+<p>Regression can be used for:</p>
+<ol type="1">
+<li class="fragment">Prediction of future observations</li>
+<li class="fragment">Assesmemt of the effect or relationship between predictor variables and the response variable</li>
+<li class="fragment">A general description of the data structure</li>
+</ol>
 </section>
 <section id="forms-of-regression-models" class="slide level2 smaller">
 <h2>Forms of Regression Models</h2>
@@ -257,10 +277,10 @@ Annie Adams
 </div>
 <div class="callout-content">
 <div style="font-size: 30px">
-<p>What do you think? How strong should this relationship be? Do you think it will be positive or negative?</p>
+<p>Is the outcome variable discrete or continuous? What about the predictor variable? How strong should this relationship be? Do you think it will be positive or negative?</p>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_20e28265" minutes="1" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_cb644d84" minutes="1" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div>
@@ -277,8 +297,8 @@ Annie Adams
 <section id="the-simple-linear-regression-model" class="slide level2" data-background-color="#003660">
 <h2>The Simple Linear Regression Model</h2>
 </section>
-<section id="the-model" class="slide level2">
-<h2>The Model</h2>
+<section id="simple-linear-regression" class="slide level2">
+<h2>Simple Linear Regression</h2>
 <p>The <strong>simple linear regression model</strong> relates one predictor to a continuous outcome:</p>
 <p><span class="math display">\[y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\]</span></p>
 <ul>
@@ -300,50 +320,122 @@ Annie Adams
 <section id="adding-the-fitted-line" class="slide level2">
 <h2>Adding the Fitted Line</h2>
 
-<img data-src="lec-01_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><p>The fitted line <span class="math inline">\(\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x\)</span> is our best linear summary of the relationship.</p>
+<img data-src="lec-01_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
+<section id="least-squares-estimation" class="slide level2" data-background-color="#003660">
+<h2>Least Squares Estimation</h2>
 </section>
-<section id="coefficients-as-comparisons" class="slide level2" data-background-color="#003660">
-<h2>Coefficients as Comparisons</h2>
+<section id="how-do-we-pick-beta_0-and-beta_1" class="slide level2 smaller">
+<h2>How do we pick <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>?</h2>
+<p>We need a rule to pick the “best” <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>. To do so, we want to make prediction errors small across all observations simultaneously.</p>
+<p>The <strong>residual</strong> for observation <span class="math inline">\(i\)</span> is: <span class="math display">\[e_i = y_i - \hat{y}_i\]</span></p>
+<p>where <span class="math inline">\(\hat{y}_i\)</span> (“y-hat sub <span class="math inline">\(i\)</span>”) is the <strong>predicted value</strong> <span class="math inline">\(\hat{\beta}_0 + \hat{\beta}_1 x_i\)</span></p>
+<p>To find the best line, we minimize the <strong>Residual Sum of Squares</strong>: <span class="math display">\[\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2\]</span></p>
+<p>We square the residuals so positive and negative errors don’t cancel, and so large errors are penalized more heavily.</p>
 </section>
-<section id="regression-coefficients-describe-comparisons" class="slide level2">
-<h2>Regression Coefficients Describe Comparisons</h2>
-<p>A regression slope <span class="math inline">\(\hat{\beta}_1\)</span> compares groups of units that differ by 1 unit in <span class="math inline">\(x\)</span>.</p>
-<p><span class="math inline">\(\hat{\beta}_1\)</span> is the estimated average difference in <span class="math inline">\(y\)</span> between two otherwise-similar observations where <span class="math inline">\(x\)</span> differs by 1 unit.</p>
-<div class="callout callout-important callout-titled callout-style-default">
+<section id="the-least-squares-criterion" class="slide level2 smaller">
+<h2>The Least Squares Criterion</h2>
+<div style="font-size: 0.75em; color: gray;">
+<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;17 · ROS Ch. 8.1</em></p>
+</div>
+<p>From the previous slide, <span class="math inline">\(e_i = y_i - \hat{y}_i\)</span>. Since the candidate line predicts <span class="math inline">\(\hat{y}_i = \beta_0 + \beta_1 x_i\)</span>, substituting gives:</p>
+<p><span class="math display">\[e_i = y_i - \beta_0 - \beta_1 x_i\]</span></p>
+<p>So the <strong>Residual Sum of Squares</strong> is:</p>
+<p><span class="math display">\[\text{RSS}(\beta_0, \beta_1) = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2\]</span></p>
+<p><strong>Goal:</strong> choose <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> to minimize RSS.</p>
+</section>
+<section id="the-normal-equations" class="slide level2 smaller">
+<h2>The Normal Equations</h2>
+<div style="font-size: 0.75em; color: gray;">
+<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;17 · ROS Ch. 8.1</em></p>
+</div>
+<p>RSS is a smooth function of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, so we minimize by calculus. Setting both partial derivatives to zero gives the <strong>normal equations</strong>:</p>
+<p><span class="math display">\[\frac{\partial \text{RSS}}{\partial \beta_0} = 0 \;\Rightarrow\; \sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
+<p><span class="math display">\[\frac{\partial \text{RSS}}{\partial \beta_1} = 0 \;\Rightarrow\; \sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
+<div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Correlation <span class="math inline">\(\neq\)</span> Causation</strong></p>
+<p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>Regression coefficients describe <strong>associations</strong> in data. They do not, by themselves, establish causal relationships.</p>
+<p>The first equation says the residuals <strong>sum to zero</strong> — the line is centered on the data. The second says the residuals are <strong>uncorrelated with</strong> <span class="math inline">\(x\)</span> — no systematic trend is left over.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="why-effect-language-can-mislead" class="slide level2">
-<h2>Why “Effect” Language Can Mislead</h2>
-<p>Consider: <em>“Each year of education <strong>increases</strong> income by $5,000.”</em></p>
-<p>This phrasing implies a causal mechanism — that giving someone more education <em>would</em> change their income by $5,000.</p>
-<p>What the regression actually estimates:</p>
-<blockquote>
-<p>“People with one more year of education earn, <strong>on average</strong>, $5,000 more than people with one fewer year of education.”</p>
-</blockquote>
-<p>The difference matters when drawing policy conclusions.</p>
+<section id="solving-the-normal-equations" class="slide level2 smaller">
+<h2>Solving the Normal Equations</h2>
+<div style="font-size: 0.75em; color: gray;">
+<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;18</em></p>
+</div>
+<p><strong>Step 1 — solve equation 1 for <span class="math inline">\(\hat{\beta}_0\)</span>:</strong></p>
+<p><span class="math display">\[\sum_{i=1}^n(y_i - \beta_0 - \beta_1 x_i) = 0 \;\Rightarrow\; n\bar{y} - n\beta_0 - n\beta_1\bar{x} = 0\]</span></p>
+<p><span class="math display">\[\boxed{\hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}}\]</span></p>
+<p><strong>Step 2 — substitute into equation 2 and solve for <span class="math inline">\(\hat{\beta}_1\)</span>:</strong></p>
+<p><span class="math display">\[\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
+<p>Replace <span class="math inline">\(\beta_0\)</span> with <span class="math inline">\(\bar{y} - \beta_1\bar{x}\)</span> and rearrange:</p>
+<p><span class="math display">\[\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} = \beta_1\!\left(\sum_{i=1}^n x_i^2 - n\bar{x}^2\right)\]</span></p>
+<p><span class="math display">\[\boxed{\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}}{\displaystyle\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \frac{S_{xy}}{S_{xx}}}\]</span></p>
 </section>
-<section id="a-better-framing" class="slide level2">
-<h2>A Better Framing</h2>
-<div class="columns">
-<div class="column" style="width:48%;">
-<p><strong>Avoid:</strong></p>
-<p><em>“Education increases income by $5,000.”</em></p>
-</div><div class="column" style="width:48%;">
-<p><strong>Prefer:</strong></p>
-<p><em>“Comparing people who differ by one year of education, those with more education earn $5,000 more on average.”</em></p>
-</div></div>
-<p>Regression describes <strong>comparisons across units in the data</strong>. Causal claims require additional study design considerations beyond this course.</p>
+<section id="the-ols-estimators" class="slide level2 smaller">
+<h2>The OLS Estimators</h2>
+<div style="font-size: 0.75em; color: gray;">
+<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;18 · ROS Ch. 8.1</em></p>
+</div>
+<p>Solving the normal equations yields:</p>
+<p><span class="math display">\[\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2} = \frac{S_{xy}}{S_{xx}}\]</span></p>
+<p><span class="math display">\[\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}\]</span></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>The OLS line always passes through <span class="math inline">\((\bar{x},\, \bar{y})\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="connection-to-correlation" class="slide level2 smaller">
+<h2>Connection to Correlation</h2>
+<div style="font-size: 0.75em; color: gray;">
+<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;21</em></p>
+</div>
+<p>The OLS slope has a useful rewrite in terms of correlation:</p>
+<p><span class="math display">\[\hat{\beta}_1 = r \cdot \frac{s_y}{s_x}\]</span></p>
+<p>where <span class="math inline">\(r\)</span> is the sample correlation between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, and <span class="math inline">\(s_x\)</span>, <span class="math inline">\(s_y\)</span> are sample standard deviations.</p>
+<ul>
+<li class="fragment">The sign of <span class="math inline">\(\hat{\beta}_1\)</span> always equals the sign of <span class="math inline">\(r\)</span></li>
+<li class="fragment">When <span class="math inline">\(r = 0\)</span>: slope is 0 — no linear relationship</li>
+<li class="fragment">When <span class="math inline">\(|r| = 1\)</span>: all points lie exactly on a line — perfect fit</li>
+</ul>
+</section>
+<section id="properties-of-the-ols-estimators" class="slide level2 smaller">
+<h2>Properties of the OLS Estimators</h2>
+<div style="font-size: 0.75em; color: gray;">
+<p><em>Wang, PSTAT 126 Notes (hand1.pdf), pp.&nbsp;23–31 · ROS Ch. 8.1</em></p>
+</div>
+<ol type="1">
+<li class="fragment"><p><strong>Linear</strong> — <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are linear functions of <span class="math inline">\(y_1, \ldots, y_n\)</span></p></li>
+<li class="fragment"><p><strong>Unbiased</strong> — <span class="math inline">\(\mathbb{E}(\hat{\beta}_0) = \beta_0\)</span> and <span class="math inline">\(\mathbb{E}(\hat{\beta}_1) = \beta_1\)</span>: on average, the estimates recover the true parameters</p></li>
+<li class="fragment"><p><strong>Known variances</strong>: <span class="math display">\[\text{Var}(\hat{\beta}_1) = \frac{\sigma^2}{S_{xx}}, \qquad \text{Var}(\hat{\beta}_0) = \sigma^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)\]</span></p></li>
+<li class="fragment"><p><strong>Gauss-Markov (BLUE)</strong> — OLS estimators have the smallest variance among all linear unbiased estimators. No other unbiased linear estimator can do better.</p></li>
+</ol>
+</section>
+<section id="estimating-sigma2" class="slide level2 smaller">
+<h2>Estimating <span class="math inline">\(\sigma^2\)</span></h2>
+<div style="font-size: 0.75em; color: gray;">
+<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;37 · ROS Ch. 8.1</em></p>
+</div>
+<p>The error variance <span class="math inline">\(\sigma^2\)</span> is unknown — we estimate it from the residuals.</p>
+<p><strong>Residual Sum of Squares (SSE):</strong> <span class="math display">\[\text{SSE} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2\]</span></p>
+<p><strong>Mean Squared Error (MSE) = unbiased estimate of <span class="math inline">\(\sigma^2\)</span>:</strong> <span class="math display">\[\hat{\sigma}^2 = \text{MSE} = \frac{\text{SSE}}{n - 2}\]</span></p>
+<p>We divide by <span class="math inline">\(n - 2\)</span> (not <span class="math inline">\(n\)</span>) because estimating <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> uses 2 degrees of freedom. It can be shown that <span class="math inline">\(\mathbb{E}(\text{MSE}) = \sigma^2\)</span>.</p>
 </section>
 <section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>

@@ -27,10 +27,12 @@ data(ames)
 
 By the end of today you will be able to:
 
+::: {.incremental}
 - Explain the historical origin of "regression" and what regression to the mean means
-- Describe what a regression model is and what questions it can answer
+- Describe what a regression model is, what questions it can answer, and when to use it
 - Write the simple linear regression model and identify its components
 - Interpret a regression coefficient as a **comparison**, not a causal effect
+:::
 
 ---
 
@@ -42,12 +44,13 @@ By the end of today you will be able to:
 
 In the **1880s**, Francis Galton studied the relationship between parents' heights and their children's heights.
 
+::: {.incremental}
 **His finding:** Tall parents tend to have taller children who are *shorter than the parents*. Short parents tend to have shorter children who are *taller than the parents*.
 
 Children's heights "regressed" back toward the population mean.
 
 This is the origin of the word **"regression."**
-
+:::
 
 ---
 
@@ -61,7 +64,7 @@ A **statistical model** is a way of describing real-world phenomena using mathem
 
 
 
-
+::: {.incremental}
 $$y = f(x) + \varepsilon$$
 
 - $y$: outcome of interest (response variable)
@@ -70,17 +73,50 @@ $$y = f(x) + \varepsilon$$
 - $\varepsilon$: random error — irreducible noise
 
 **Regression** is the most widely used class of statistical models.
-
+:::
 ---
 
 ## Why Regression?
 
 Regression lets us answer questions like:
 
+::: {.incremental}
 - How does income relate to years of education?
 - Does economic growth predict election outcomes?
 - What is the average difference in test scores between two groups, *holding other factors constant*?
 - Given a new observation, what do we predict for $y$?
+:::
+
+## When do we use Regression?
+
+::: {.incremental}
+Regression analysis is used for explaining or modelings the relationship between a response variable ($Y$) and one or more predictors ($X_1,...X_p$).
+
+
+The response variable must be continuous, but the predictors can be continuous, discrete, or categorical. 
+:::
+
+
+
+## Discrete vs Continuous Refresher
+
+![](images/discrete_cont.png)
+
+
+## When do we use Regression?
+
+Regression analysis is used for explaining or modelings the relationship between a response variable ($Y$) and one or more predictors ($X_1,...X_p$).
+
+ The response variable must be continuous, but the predictors can be continuous, discrete, or categorical. 
+
+::: {.incremental}
+ Regression can be used for: 
+ 
+ 1. Prediction of future observations
+ 2. Assesmemt of the effect or relationship between predictor variables and the response variable
+ 3. A general description of the data structure
+:::
+
 
 ---
 
@@ -119,7 +155,7 @@ Data: 2,930 home sales in Ames, Iowa (De Cock 2011)
 
 :::{.nonincremental}
 ::: {style="font-size: 30px"}
-What do you think? How strong should this relationship be? Do you think it will be positive or negative? 
+Is the outcome variable discrete or continuous? What about the predictor variable? How strong should this relationship be? Do you think it will be positive or negative? 
 
 ```{r}
 #| echo: false
@@ -168,7 +204,7 @@ What patterns do you notice in the scatter plot?
 
 ---
 
-## The Model
+## Simple Linear Regression
 
 The **simple linear regression model** relates one predictor to a continuous outcome:
 
@@ -200,70 +236,231 @@ $$\widehat{\text{price}} = 13.3 + 0.111 \times \text{sqft}$$
 ```{r}
 #| echo: false
 #| eval: true
+#| fig-width: 9
+#| fig-height: 5
+#| fig-align: center
+
+# slope triangle endpoints (on the fitted line)
+x1 <- 2000; x2 <- 3000
+y1 <- 13.3 + 0.111 * x1   # 235.3
+y2 <- 13.3 + 0.111 * x2   # 346.3
+
+# epsilon: point above the line around 4000 sq ft
+x_eps     <- 3900
+y_eps     <- 620
+y_hat_eps <- 13.3 + 0.111 * x_eps   # 446.2
+
 ggplot(ames, aes(x = Gr_Liv_Area, y = Sale_Price / 1000)) +
-  geom_point(alpha = 0.3, size = 1.5) +
-  geom_smooth(method = "lm", se = FALSE, color = "#003660") +
-  labs(
-    x = "Above-ground living area (sq ft)",
-    y = "Sale price ($1,000s)",
-    title = "Sale Price ~ Living Area (Ames, Iowa)"
-  ) +
-  theme_minimal()
+  geom_point(alpha = 0.2, size = 1.2, color = "gray60") +
+  geom_smooth(method = "lm", se = FALSE, color = "#003660",
+              linewidth = 1.1, fullrange = TRUE) +
+  scale_x_continuous(limits = c(0, NA)) +
+  scale_y_continuous(limits = c(0, NA)) +
+
+  # --- β₀: y-intercept at x = 0 ---
+  annotate("point", x = 0, y = 13.3, color = "#27ae60", size = 3.5) +
+  annotate("segment", x = 0, xend = 0, y = 0, yend = 13.3,
+           color = "#27ae60", linewidth = 0.8, linetype = "dotted") +
+  annotate("text", x = 120, y = 100,
+           label = expression(beta[0] == 13.3),
+           color = "#27ae60", size = 3.8, hjust = 0, fontface = "bold") +
+  annotate("segment", x = 100, xend = 8, y = 88, yend = 35,
+           arrow = arrow(length = unit(0.2, "cm"), type = "closed"),
+           color = "#27ae60", linewidth = 0.7) +
+
+  # --- slope triangle labeled β₁ ---
+  annotate("segment", x = x1, xend = x2, y = y1, yend = y1,
+           color = "#c0392b", linewidth = 0.9, linetype = "dashed") +
+  annotate("segment", x = x2, xend = x2, y = y1, yend = y2,
+           color = "#c0392b", linewidth = 0.9, linetype = "dashed") +
+  annotate("text", x = x2 + 130, y = (y1 + y2) / 2,
+           label = expression(beta[1]), color = "#c0392b",
+           size = 5, hjust = 0, fontface = "bold") +
+
+  # --- ε: residual at ~4000 sq ft ---
+  annotate("point", x = x_eps, y = y_eps, color = "#7d3c98", size = 3.5) +
+  annotate("segment", x = x_eps, xend = x_eps, y = y_eps, yend = y_hat_eps,
+           color = "#7d3c98", linewidth = 1,
+           arrow = arrow(ends = "both", length = unit(0.15, "cm"), type = "open")) +
+  annotate("text", x = x_eps + 110, y = (y_eps + y_hat_eps) / 2,
+           label = expression(epsilon[i] == y[i] - hat(y)[i]),
+           color = "#7d3c98", size = 3.5, hjust = 0, fontface = "bold") +
+
+  # --- fitted line equation with arrow ---
+  annotate("label", x = 4800, y = 700,
+           label = expression(atop("Fitted line:", hat(y) == 13.3 + 0.111 %.% sqft)),
+           color = "#003660", fill = "#eef3f9",
+           size = 3.3, label.size = 0.5) +
+  annotate("segment", x = 4700, xend = 4400, y = 655, yend = 502,
+           arrow = arrow(length = unit(0.25, "cm"), type = "closed"),
+           color = "#003660", linewidth = 0.7) +
+
+  labs(x = "Above-ground living area (sq ft)", y = "Sale price ($1,000s)") +
+  theme_minimal(base_size = 13)
 ```
 
-The fitted line $\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x$ is our best linear summary of the relationship.
+---
+
+## Least Squares Estimation {background-color="#003660"}
 
 ---
 
-## Coefficients as Comparisons {background-color="#003660"}
+## How do we pick $\beta_0$ and $\beta_1$? {.smaller}
+
+
+We need a rule to pick the "best" $\hat{\beta}_0$ and $\hat{\beta}_1$. To do so, we want to make prediction errors small across all observations simultaneously. 
+
+The **residual** for observation $i$ is:
+$$e_i = y_i - \hat{y}_i$$
+
+where $\hat{y}_i$ ("y-hat sub $i$") is the **predicted value** $\hat{\beta}_0 + \hat{\beta}_1 x_i$ 
+
+To find the best line, we minimize the **Residual Sum of Squares**:
+$$\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2$$
+
+We square the residuals so positive and negative errors don't cancel, and so large errors are penalized more heavily.
+
 
 ---
 
-## Regression Coefficients Describe Comparisons
+## The Least Squares Criterion {.smaller}
 
-A regression slope $\hat{\beta}_1$ compares groups of units that differ by 1 unit in $x$.
+::: {style="font-size: 0.75em; color: gray;"}
+*Wang, PSTAT 126 Notes (hand1.pdf), p. 17 · ROS Ch. 8.1*
+:::
 
-$\hat{\beta}_1$ is the estimated average difference in $y$ between two otherwise-similar observations where $x$ differs by 1 unit.
+From the previous slide, $e_i = y_i - \hat{y}_i$. Since the candidate line predicts $\hat{y}_i = \beta_0 + \beta_1 x_i$, substituting gives:
 
-::: {.callout-important}
-## Correlation $\neq$ Causation
-Regression coefficients describe **associations** in data. They do not, by themselves, establish causal relationships.
+$$e_i = y_i - \beta_0 - \beta_1 x_i$$
+
+So the **Residual Sum of Squares** is:
+
+$$\text{RSS}(\beta_0, \beta_1) = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2$$
+
+**Goal:** choose $\hat{\beta}_0$ and $\hat{\beta}_1$ to minimize RSS.
+
+---
+
+## The Normal Equations {.smaller}
+
+::: {style="font-size: 0.75em; color: gray;"}
+*Wang, PSTAT 126 Notes (hand1.pdf), p. 17 · ROS Ch. 8.1*
+:::
+
+RSS is a smooth function of $\beta_0$ and $\beta_1$, so we minimize by calculus. Setting both partial derivatives to zero gives the **normal equations**:
+
+$$\frac{\partial \text{RSS}}{\partial \beta_0} = 0 \;\Rightarrow\; \sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0$$
+
+$$\frac{\partial \text{RSS}}{\partial \beta_1} = 0 \;\Rightarrow\; \sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0$$
+
+::: {.callout-note}
+The first equation says the residuals **sum to zero** — the line is centered on the data.
+The second says the residuals are **uncorrelated with** $x$ — no systematic trend is left over.
+:::
+
+
+---
+
+## Solving the Normal Equations {.smaller}
+
+::: {style="font-size: 0.75em; color: gray;"}
+*Wang, PSTAT 126 Notes (hand1.pdf), p. 18*
+:::
+
+**Step 1 — solve equation 1 for $\hat{\beta}_0$:**
+
+$$\sum_{i=1}^n(y_i - \beta_0 - \beta_1 x_i) = 0 \;\Rightarrow\; n\bar{y} - n\beta_0 - n\beta_1\bar{x} = 0$$
+
+$$\boxed{\hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}}$$
+
+**Step 2 — substitute into equation 2 and solve for $\hat{\beta}_1$:**
+
+$$\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0$$
+
+Replace $\beta_0$ with $\bar{y} - \beta_1\bar{x}$ and rearrange:
+
+$$\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} = \beta_1\!\left(\sum_{i=1}^n x_i^2 - n\bar{x}^2\right)$$
+
+$$\boxed{\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}}{\displaystyle\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \frac{S_{xy}}{S_{xx}}}$$
+
+---
+
+## The OLS Estimators {.smaller}
+
+::: {style="font-size: 0.75em; color: gray;"}
+*Wang, PSTAT 126 Notes (hand1.pdf), p. 18 · ROS Ch. 8.1*
+:::
+
+Solving the normal equations yields:
+
+$$\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2} = \frac{S_{xy}}{S_{xx}}$$
+
+$$\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$$
+
+::: {.callout-note}
+The OLS line always passes through $(\bar{x},\, \bar{y})$.
 :::
 
 ---
 
-## Why "Effect" Language Can Mislead
+## Connection to Correlation {.smaller}
 
-Consider: *"Each year of education **increases** income by $5,000."*
+::: {style="font-size: 0.75em; color: gray;"}
+*Wang, PSTAT 126 Notes (hand1.pdf), p. 21*
+:::
 
-This phrasing implies a causal mechanism — that giving someone more education *would* change their income by $5,000.
+The OLS slope has a useful rewrite in terms of correlation:
 
-What the regression actually estimates:
+$$\hat{\beta}_1 = r \cdot \frac{s_y}{s_x}$$
 
-> "People with one more year of education earn, **on average**, $5,000 more than people with one fewer year of education."
+where $r$ is the sample correlation between $x$ and $y$, and $s_x$, $s_y$ are sample standard deviations.
 
-The difference matters when drawing policy conclusions.
+::: {.incremental}
+- The sign of $\hat{\beta}_1$ always equals the sign of $r$
+- When $r = 0$: slope is 0 — no linear relationship
+- When $|r| = 1$: all points lie exactly on a line — perfect fit
+:::
 
 ---
 
-## A Better Framing
+## Properties of the OLS Estimators {.smaller}
 
-::: {.columns}
-::: {.column width="48%"}
-**Avoid:**
-
-*"Education increases income by $5,000."*
-:::
-::: {.column width="48%"}
-**Prefer:**
-
-*"Comparing people who differ by one year of education, those with more education earn $5,000 more on average."*
-:::
+::: {style="font-size: 0.75em; color: gray;"}
+*Wang, PSTAT 126 Notes (hand1.pdf), pp. 23–31 · ROS Ch. 8.1*
 :::
 
-Regression describes **comparisons across units in the data**. Causal claims require additional study design considerations beyond this course.
+::: {.incremental}
+1. **Linear** — $\hat{\beta}_0$ and $\hat{\beta}_1$ are linear functions of $y_1, \ldots, y_n$
+
+2. **Unbiased** — $\mathbb{E}(\hat{\beta}_0) = \beta_0$ and $\mathbb{E}(\hat{\beta}_1) = \beta_1$: on average, the estimates recover the true parameters
+
+3. **Known variances**:
+$$\text{Var}(\hat{\beta}_1) = \frac{\sigma^2}{S_{xx}}, \qquad \text{Var}(\hat{\beta}_0) = \sigma^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)$$
+
+4. **Gauss-Markov (BLUE)** — OLS estimators have the smallest variance among all linear unbiased estimators. No other unbiased linear estimator can do better.
+:::
 
 ---
+
+## Estimating $\sigma^2$ {.smaller}
+
+::: {style="font-size: 0.75em; color: gray;"}
+*Wang, PSTAT 126 Notes (hand1.pdf), p. 37 · ROS Ch. 8.1*
+:::
+
+The error variance $\sigma^2$ is unknown — we estimate it from the residuals.
+
+**Residual Sum of Squares (SSE):**
+$$\text{SSE} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2$$
+
+**Mean Squared Error (MSE) = unbiased estimate of $\sigma^2$:**
+$$\hat{\sigma}^2 = \text{MSE} = \frac{\text{SSE}}{n - 2}$$
+
+We divide by $n - 2$ (not $n$) because estimating $\hat{\beta}_0$ and $\hat{\beta}_1$ uses 2 degrees of freedom. It can be shown that $\mathbb{E}(\text{MSE}) = \sigma^2$.
+
+---
+
+
 
 ## Summary {.smaller}
 

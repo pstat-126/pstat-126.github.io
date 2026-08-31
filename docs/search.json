@@ -696,7 +696,7 @@
     "href": "slides/lec-01.html#learning-objectives",
     "title": "Lecture 1: What is Regression?",
     "section": "Learning Objectives",
-    "text": "Learning Objectives\nBy the end of today you will be able to:\n\nExplain the historical origin of “regression” and what regression to the mean means\nDescribe what a regression model is and what questions it can answer\nWrite the simple linear regression model and identify its components\nInterpret a regression coefficient as a comparison, not a causal effect"
+    "text": "Learning Objectives\nBy the end of today you will be able to:\n\nExplain the historical origin of “regression” and what regression to the mean means\nDescribe what a regression model is, what questions it can answer, and when to use it\nWrite the simple linear regression model and identify its components\nInterpret a regression coefficient as a comparison, not a causal effect"
   },
   {
     "objectID": "slides/lec-01.html#what-is-a-statistical-model",
@@ -766,7 +766,7 @@
     "href": "slides/lec-01.html#adding-the-fitted-line",
     "title": "Lecture 1: What is Regression?",
     "section": "Adding the Fitted Line",
-    "text": "Adding the Fitted Line\n\nThe fitted line \\(\\hat{y} = \\hat{\\beta}_0 + \\hat{\\beta}_1 x\\) is our best linear summary of the relationship."
+    "text": "Adding the Fitted Line"
   },
   {
     "objectID": "slides/lec-01.html#historical-origins-of-regression",
@@ -871,7 +871,7 @@
     "href": "slides/lec-01.html#predicting-house-prices",
     "title": "Lecture 1: What is Regression?",
     "section": "Predicting House Prices",
-    "text": "Predicting House Prices\nQuestion: Can the size of a house predict its sale price?\nData: 2,930 home sales in Ames, Iowa (De Cock 2011)\n\nOutcome \\(y\\): sale price ($1,000s)\nPredictor \\(x\\): above-ground living area (square feet)\n\n\n\n\n\n\n\n\nTurn & Talk\n\n\n\nWhat do you think? How strong should this relationship be? Do you think it will be positive or negative?"
+    "text": "Predicting House Prices\nQuestion: Can the size of a house predict its sale price?\nData: 2,930 home sales in Ames, Iowa (De Cock 2011)\n\nOutcome \\(y\\): sale price ($1,000s)\nPredictor \\(x\\): above-ground living area (square feet)\n\n\n\n\n\n\n\n\nTurn & Talk\n\n\n\nIs the outcome variable discrete or continuous? What about the predictor variable? How strong should this relationship be? Do you think it will be positive or negative?"
   },
   {
     "objectID": "slides/lec-01.html#the-ames-housing-data",
@@ -893,5 +893,131 @@
     "title": "Lecture 1: What is Regression?",
     "section": "Turn & Talk",
     "text": "Turn & Talk\n\nWhat everyday examples of regression to the mean can you think of?\nDiscuss with a neighbor: could any of these fool someone into thinking an intervention worked when it didn’t?\n\n\n\n3:00\n\nStart"
+  },
+  {
+    "objectID": "slides/lec-01.html#when-do-we-use-regression",
+    "href": "slides/lec-01.html#when-do-we-use-regression",
+    "title": "Lecture 1: What is Regression?",
+    "section": "When do we use Regression?",
+    "text": "When do we use Regression?\nRegression analysis is used for explaining or modelings the relationship between a response variable (\\(Y\\)) and one or more predictors (\\(X_1,...X_p\\)).\nThe response variable must be continuous, but the predictors can be continuous, discrete, or categorical."
+  },
+  {
+    "objectID": "slides/lec-01.html#discrete-vs-continuous-refresher",
+    "href": "slides/lec-01.html#discrete-vs-continuous-refresher",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Discrete vs Continuous Refresher",
+    "text": "Discrete vs Continuous Refresher"
+  },
+  {
+    "objectID": "slides/lec-01.html#when-do-we-use-regression-1",
+    "href": "slides/lec-01.html#when-do-we-use-regression-1",
+    "title": "Lecture 1: What is Regression?",
+    "section": "When do we use Regression?",
+    "text": "When do we use Regression?\nRegression analysis is used for explaining or modelings the relationship between a response variable (\\(Y\\)) and one or more predictors (\\(X_1,...X_p\\)).\nThe response variable must be continuous, but the predictors can be continuous, discrete, or categorical.\nRegression can be used for:\n\nPrediction of future observations\nAssesmemt of the effect or relationship between predictor variables and the response variable\nA general description of the data structure"
+  },
+  {
+    "objectID": "slides/lec-01.html#simple-linear-regression",
+    "href": "slides/lec-01.html#simple-linear-regression",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Simple Linear Regression",
+    "text": "Simple Linear Regression\nThe simple linear regression model relates one predictor to a continuous outcome:\n\\[y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\]\n\n\\(y_i\\): observed outcome for unit \\(i\\)\n\\(x_i\\): predictor for unit \\(i\\)\n\\(\\beta_0\\)(intercept): expected value of \\(y\\) when \\(x = 0\\)\n\\(\\beta_1\\)(slope): expected change in \\(y\\) per one-unit increase in \\(x\\)\n\\(\\varepsilon_i \\overset{\\text{iid}}{\\sim} \\mathcal{N}(0, \\sigma^2)\\): random error"
+  },
+  {
+    "objectID": "slides/lec-02.html#coefficients-as-comparisons",
+    "href": "slides/lec-02.html#coefficients-as-comparisons",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Coefficients as Comparisons",
+    "text": "Coefficients as Comparisons"
+  },
+  {
+    "objectID": "slides/lec-02.html#regression-coefficients-describe-comparisons",
+    "href": "slides/lec-02.html#regression-coefficients-describe-comparisons",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Regression Coefficients Describe Comparisons",
+    "text": "Regression Coefficients Describe Comparisons\nA regression slope \\(\\hat{\\beta}_1\\) compares groups of units that differ by 1 unit in \\(x\\).\n\\(\\hat{\\beta}_1\\) is the estimated average difference in \\(y\\) between two otherwise-similar observations where \\(x\\) differs by 1 unit.\n\n\n\n\n\n\nCorrelation \\(\\neq\\) Causation\n\n\nRegression coefficients describe associations in data. They do not, by themselves, establish causal relationships."
+  },
+  {
+    "objectID": "slides/lec-02.html#why-effect-language-can-mislead",
+    "href": "slides/lec-02.html#why-effect-language-can-mislead",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Why “Effect” Language Can Mislead",
+    "text": "Why “Effect” Language Can Mislead\nConsider: “Each year of education increases income by $5,000.”\nThis phrasing implies a causal mechanism — that giving someone more education would change their income by $5,000.\nWhat the regression actually estimates:\n\n“People with one more year of education earn, on average, $5,000 more than people with one fewer year of education.”\n\nThe difference matters when drawing policy conclusions."
+  },
+  {
+    "objectID": "slides/lec-02.html#a-better-framing",
+    "href": "slides/lec-02.html#a-better-framing",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "A Better Framing",
+    "text": "A Better Framing\n\n\nAvoid:\n“Education increases income by $5,000.”\n\nPrefer:\n“Comparing people who differ by one year of education, those with more education earn $5,000 more on average.”\n\nRegression describes comparisons across units in the data. Causal claims require additional study design considerations beyond this course."
+  },
+  {
+    "objectID": "slides/lec-01.html#least-squares-estimation",
+    "href": "slides/lec-01.html#least-squares-estimation",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Least Squares Estimation",
+    "text": "Least Squares Estimation"
+  },
+  {
+    "objectID": "slides/lec-01.html#why-minimize-squared-errors",
+    "href": "slides/lec-01.html#why-minimize-squared-errors",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Why Minimize Squared Errors?",
+    "text": "Why Minimize Squared Errors?\n\nWang, PSTAT 126 Notes (hand1.pdf), p. 17 · ROS Ch. 8.1\n\nWe need a rule to pick the “best” \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\). The natural goal: make prediction errors small across all observations simultaneously.\nThe residual for observation \\(i\\) is \\(e_i = y_i - \\hat{y}_i\\).\nWhy square the residuals rather than just summing them?\n\nPositive and negative errors cancel — the sum \\(\\sum e_i = 0\\) for any line through \\((\\bar{x}, \\bar{y})\\), so it carries no useful information\nSquaring penalizes large errors more than small ones\nThe squared criterion has a clean, closed-form solution"
+  },
+  {
+    "objectID": "slides/lec-01.html#the-least-squares-criterion",
+    "href": "slides/lec-01.html#the-least-squares-criterion",
+    "title": "Lecture 1: What is Regression?",
+    "section": "The Least Squares Criterion",
+    "text": "The Least Squares Criterion\n\nWang, PSTAT 126 Notes (hand1.pdf), p. 17 · ROS Ch. 8.1\n\nFrom the previous slide, \\(e_i = y_i - \\hat{y}_i\\). Since the candidate line predicts \\(\\hat{y}_i = \\beta_0 + \\beta_1 x_i\\), substituting gives:\n\\[e_i = y_i - \\beta_0 - \\beta_1 x_i\\]\nSo the Residual Sum of Squares is:\n\\[\\text{RSS}(\\beta_0, \\beta_1) = \\sum_{i=1}^{n} e_i^2 = \\sum_{i=1}^{n}(y_i - \\beta_0 - \\beta_1 x_i)^2\\]\nGoal: choose \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) to minimize RSS."
+  },
+  {
+    "objectID": "slides/lec-01.html#the-ols-estimators",
+    "href": "slides/lec-01.html#the-ols-estimators",
+    "title": "Lecture 1: What is Regression?",
+    "section": "The OLS Estimators",
+    "text": "The OLS Estimators\n\nWang, PSTAT 126 Notes (hand1.pdf), p. 18 · ROS Ch. 8.1\n\nSolving the normal equations yields:\n\\[\\hat{\\beta}_1 = \\frac{\\displaystyle\\sum_{i=1}^n (x_i - \\bar{x})(y_i - \\bar{y})}{\\displaystyle\\sum_{i=1}^n (x_i - \\bar{x})^2} = \\frac{S_{xy}}{S_{xx}}\\]\n\\[\\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x}\\]\n\n\n\n\n\n\nNote\n\n\nThe OLS line always passes through \\((\\bar{x},\\, \\bar{y})\\)."
+  },
+  {
+    "objectID": "slides/lec-01.html#connection-to-correlation",
+    "href": "slides/lec-01.html#connection-to-correlation",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Connection to Correlation",
+    "text": "Connection to Correlation\n\nWang, PSTAT 126 Notes (hand1.pdf), p. 21\n\nThe OLS slope has a useful rewrite in terms of correlation:\n\\[\\hat{\\beta}_1 = r \\cdot \\frac{s_y}{s_x}\\]\nwhere \\(r\\) is the sample correlation between \\(x\\) and \\(y\\), and \\(s_x\\), \\(s_y\\) are sample standard deviations.\n\nThe sign of \\(\\hat{\\beta}_1\\) always equals the sign of \\(r\\)\nWhen \\(r = 0\\): slope is 0 — no linear relationship\nWhen \\(|r| = 1\\): all points lie exactly on a line — perfect fit"
+  },
+  {
+    "objectID": "slides/lec-01.html#properties-of-the-ols-estimators",
+    "href": "slides/lec-01.html#properties-of-the-ols-estimators",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Properties of the OLS Estimators",
+    "text": "Properties of the OLS Estimators\n\nWang, PSTAT 126 Notes (hand1.pdf), pp. 23–31 · ROS Ch. 8.1\n\n\nLinear — \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) are linear functions of \\(y_1, \\ldots, y_n\\)\nUnbiased — \\(\\mathbb{E}(\\hat{\\beta}_0) = \\beta_0\\) and \\(\\mathbb{E}(\\hat{\\beta}_1) = \\beta_1\\): on average, the estimates recover the true parameters\nKnown variances: \\[\\text{Var}(\\hat{\\beta}_1) = \\frac{\\sigma^2}{S_{xx}}, \\qquad \\text{Var}(\\hat{\\beta}_0) = \\sigma^2\\!\\left(\\frac{1}{n} + \\frac{\\bar{x}^2}{S_{xx}}\\right)\\]\nGauss-Markov (BLUE) — OLS estimators have the smallest variance among all linear unbiased estimators. No other unbiased linear estimator can do better."
+  },
+  {
+    "objectID": "slides/lec-01.html#estimating-sigma2",
+    "href": "slides/lec-01.html#estimating-sigma2",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Estimating \\(\\sigma^2\\)",
+    "text": "Estimating \\(\\sigma^2\\)\n\nWang, PSTAT 126 Notes (hand1.pdf), p. 37 · ROS Ch. 8.1\n\nThe error variance \\(\\sigma^2\\) is unknown — we estimate it from the residuals.\nResidual Sum of Squares (SSE): \\[\\text{SSE} = \\sum_{i=1}^n e_i^2 = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2\\]\nMean Squared Error (MSE) = unbiased estimate of \\(\\sigma^2\\): \\[\\hat{\\sigma}^2 = \\text{MSE} = \\frac{\\text{SSE}}{n - 2}\\]\nWe divide by \\(n - 2\\) (not \\(n\\)) because estimating \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) uses 2 degrees of freedom. It can be shown that \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\)."
+  },
+  {
+    "objectID": "slides/lec-01.html#how-do-we-pick-beta_0-and-beta_1",
+    "href": "slides/lec-01.html#how-do-we-pick-beta_0-and-beta_1",
+    "title": "Lecture 1: What is Regression?",
+    "section": "How do we pick \\(\\beta_0\\) and \\(\\beta_1\\)?",
+    "text": "How do we pick \\(\\beta_0\\) and \\(\\beta_1\\)?\nWe need a rule to pick the “best” \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\). To do so, we want to make prediction errors small across all observations simultaneously.\nThe residual for observation \\(i\\) is: \\[e_i = y_i - \\hat{y}_i\\]\nwhere \\(\\hat{y}_i\\) (“y-hat sub \\(i\\)”) is the predicted value \\(\\hat{\\beta}_0 + \\hat{\\beta}_1 x_i\\)\nTo find the best line, we minimize the Residual Sum of Squares: \\[\\text{RSS} = \\sum_{i=1}^n e_i^2 = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2\\]\nWe square the residuals so positive and negative errors don’t cancel, and so large errors are penalized more heavily."
+  },
+  {
+    "objectID": "slides/lec-01.html#the-normal-equations",
+    "href": "slides/lec-01.html#the-normal-equations",
+    "title": "Lecture 1: What is Regression?",
+    "section": "The Normal Equations",
+    "text": "The Normal Equations\n\nWang, PSTAT 126 Notes (hand1.pdf), p. 17 · ROS Ch. 8.1\n\nRSS is a smooth function of \\(\\beta_0\\) and \\(\\beta_1\\), so we minimize by calculus. Setting both partial derivatives to zero gives the normal equations:\n\\[\\frac{\\partial \\text{RSS}}{\\partial \\beta_0} = 0 \\;\\Rightarrow\\; \\sum_{i=1}^n (y_i - \\beta_0 - \\beta_1 x_i) = 0\\]\n\\[\\frac{\\partial \\text{RSS}}{\\partial \\beta_1} = 0 \\;\\Rightarrow\\; \\sum_{i=1}^n x_i(y_i - \\beta_0 - \\beta_1 x_i) = 0\\]\n\n\n\n\n\n\nNote\n\n\nThe first equation says the residuals sum to zero — the line is centered on the data. The second says the residuals are uncorrelated with \\(x\\) — no systematic trend is left over."
+  },
+  {
+    "objectID": "slides/lec-01.html#solving-the-normal-equations",
+    "href": "slides/lec-01.html#solving-the-normal-equations",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Solving the Normal Equations",
+    "text": "Solving the Normal Equations\n\nWang, PSTAT 126 Notes (hand1.pdf), p. 18\n\nStep 1 — solve equation 1 for \\(\\hat{\\beta}_0\\):\n\\[\\sum_{i=1}^n(y_i - \\beta_0 - \\beta_1 x_i) = 0 \\;\\Rightarrow\\; n\\bar{y} - n\\beta_0 - n\\beta_1\\bar{x} = 0\\]\n\\[\\boxed{\\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1\\bar{x}}\\]\nStep 2 — substitute into equation 2 and solve for \\(\\hat{\\beta}_1\\):\n\\[\\sum_{i=1}^n x_i(y_i - \\beta_0 - \\beta_1 x_i) = 0\\]\nReplace \\(\\beta_0\\) with \\(\\bar{y} - \\beta_1\\bar{x}\\) and rearrange:\n\\[\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y} = \\beta_1\\!\\left(\\sum_{i=1}^n x_i^2 - n\\bar{x}^2\\right)\\]\n\\[\\boxed{\\hat{\\beta}_1 = \\frac{\\displaystyle\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y}}{\\displaystyle\\sum_{i=1}^n x_i^2 - n\\bar{x}^2} = \\frac{S_{xy}}{S_{xx}}}\\]"
   }
 ]

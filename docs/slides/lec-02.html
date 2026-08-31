@@ -101,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-2b8322a59dc5739b5d541d907da0a508.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-587359f803ea82c42dd9086c2159450a.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -522,6 +522,49 @@ Multiple R-squared: 0.5700</code></pre>
 <span id="cb5-12"><a aria-label="12"></a><span class="fu">coef</span>(fit)  <span class="co"># should be close to (2, 3)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>If estimates are far from the truth on simulated data, something is wrong with our procedure.</p>
+</section>
+<section id="coefficients-as-comparisons" class="slide level2" data-background-color="#003660">
+<h2>Coefficients as Comparisons</h2>
+</section>
+<section id="regression-coefficients-describe-comparisons" class="slide level2">
+<h2>Regression Coefficients Describe Comparisons</h2>
+<p>A regression slope <span class="math inline">\(\hat{\beta}_1\)</span> compares groups of units that differ by 1 unit in <span class="math inline">\(x\)</span>.</p>
+<p><span class="math inline">\(\hat{\beta}_1\)</span> is the estimated average difference in <span class="math inline">\(y\)</span> between two otherwise-similar observations where <span class="math inline">\(x\)</span> differs by 1 unit.</p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Correlation <span class="math inline">\(\neq\)</span> Causation</strong></p>
+</div>
+<div class="callout-content">
+<p>Regression coefficients describe <strong>associations</strong> in data. They do not, by themselves, establish causal relationships.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="why-effect-language-can-mislead" class="slide level2">
+<h2>Why “Effect” Language Can Mislead</h2>
+<p>Consider: <em>“Each year of education <strong>increases</strong> income by $5,000.”</em></p>
+<p>This phrasing implies a causal mechanism — that giving someone more education <em>would</em> change their income by $5,000.</p>
+<p>What the regression actually estimates:</p>
+<blockquote>
+<p>“People with one more year of education earn, <strong>on average</strong>, $5,000 more than people with one fewer year of education.”</p>
+</blockquote>
+<p>The difference matters when drawing policy conclusions.</p>
+</section>
+<section id="a-better-framing" class="slide level2">
+<h2>A Better Framing</h2>
+<div class="columns">
+<div class="column" style="width:48%;">
+<p><strong>Avoid:</strong></p>
+<p><em>“Education increases income by $5,000.”</em></p>
+</div><div class="column" style="width:48%;">
+<p><strong>Prefer:</strong></p>
+<p><em>“Comparing people who differ by one year of education, those with more education earn $5,000 more on average.”</em></p>
+</div></div>
+<p>Regression describes <strong>comparisons across units in the data</strong>. Causal claims require additional study design considerations beyond this course.</p>
 </section>
 <section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>

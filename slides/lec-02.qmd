@@ -343,6 +343,57 @@ If estimates are far from the truth on simulated data, something is wrong with o
 
 ---
 
+
+## Coefficients as Comparisons {background-color="#003660"}
+
+---
+
+## Regression Coefficients Describe Comparisons
+
+A regression slope $\hat{\beta}_1$ compares groups of units that differ by 1 unit in $x$.
+
+$\hat{\beta}_1$ is the estimated average difference in $y$ between two otherwise-similar observations where $x$ differs by 1 unit.
+
+::: {.callout-important}
+## Correlation $\neq$ Causation
+Regression coefficients describe **associations** in data. They do not, by themselves, establish causal relationships.
+:::
+
+---
+
+## Why "Effect" Language Can Mislead
+
+Consider: *"Each year of education **increases** income by $5,000."*
+
+This phrasing implies a causal mechanism — that giving someone more education *would* change their income by $5,000.
+
+What the regression actually estimates:
+
+> "People with one more year of education earn, **on average**, $5,000 more than people with one fewer year of education."
+
+The difference matters when drawing policy conclusions.
+
+---
+
+## A Better Framing
+
+::: {.columns}
+::: {.column width="48%"}
+**Avoid:**
+
+*"Education increases income by $5,000."*
+:::
+::: {.column width="48%"}
+**Prefer:**
+
+*"Comparing people who differ by one year of education, those with more education earn $5,000 more on average."*
+:::
+:::
+
+Regression describes **comparisons across units in the data**. Causal claims require additional study design considerations beyond this course.
+
+---
+
 ## Summary {.smaller}
 
 ::: {.incremental}
