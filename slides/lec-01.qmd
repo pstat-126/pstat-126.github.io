@@ -3,7 +3,7 @@ title: "Lecture 1: What is Regression?"
 subtitle: "PSTAT 126 — Linear Regression"
 author: "Annie Adams"
 institute: "UC Santa Barbara"
-date: "09/28/2026"
+date: "09/30/2026"
 format:
   revealjs:
     theme: [default, ../styles.scss]
@@ -31,7 +31,7 @@ By the end of today you will be able to:
 - Explain the historical origin of "regression" and what regression to the mean means
 - Describe what a regression model is, what questions it can answer, and when to use it
 - Write the simple linear regression model and identify its components
-- Interpret a regression coefficient as a **comparison**, not a causal effect
+- Interpret a regression coefficient and intercept
 :::
 
 ---
@@ -69,8 +69,8 @@ $$y = f(x) + \varepsilon$$
 
 - $y$: outcome of interest (response variable)
 - $x$: predictor (explanatory variable)
-- $f(x)$: systematic component — what we can explain
-- $\varepsilon$: random error — irreducible noise
+- $f(x)$: systematic component 
+- $\varepsilon$: random error 
 
 **Regression** is the most widely used class of statistical models.
 :::
@@ -117,6 +117,73 @@ Regression analysis is used for explaining or modelings the relationship between
  3. A general description of the data structure
 :::
 
+
+---
+
+## Inference vs. Prediction {.smaller}
+
+Two distinct goals for regression:
+
+::: {.incremental}
+**Inference**:  understand *how* and *why* variables are related
+
+- Focus: the coefficients $\beta_0, \beta_1$
+- Questions: Is there a relationship? How strong? In what direction?
+- Example: *Does income growth affect vote share, and by how much?*
+
+**Prediction**: produce accurate forecasts for new observations
+
+- Focus: the fitted value $\widehat{y}$
+- Questions: Given $\widehat{x}$, what is our best guess for $\widehat{y}$?
+- Example: *What vote share do we expect when income growth is 2%?*
+:::
+
+---
+
+## Discussion: Inference or Prediction? {background-color="#003660"}
+
+---
+
+## Inference or Prediction? {.smaller}
+
+:::{.fragment}
+::: callout-tip
+## Turn & Talk
+
+:::{.nonincremental}
+::: {style="font-size: 30px"}
+
+For each scenario, decide: is the goal **inference** or **prediction**?
+
+::: {.incremental}
+1. A public health researcher wants to know whether air pollution levels are associated with increased rates of asthma, and by how much.
+
+2. A real estate app estimates the sale price of a home based on its size, location, and age.
+
+3. An economist studies whether years of education affect wages after controlling for work experience.
+
+4. A weather model outputs tomorrow's expected high temperature given today's atmospheric readings.
+:::
+
+```{r}
+#| echo: false
+countdown::countdown(
+  minutes = 2,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em",
+)
+```
+
+:::
+:::
+:::
+:::
 
 ---
 
@@ -224,9 +291,9 @@ For the Ames housing model, fitting gives:
 $$\widehat{\text{price}} = 13.3 + 0.111 \times \text{sqft}$$
 
 ::: {.incremental}
-- **Intercept** ($\hat{\beta}_0 = 13.3$): a house with 0 sq ft is predicted to sell for $13,300 — not meaningful on its own, but a necessary mathematical anchor
+- **Intercept** ($\widehat{\beta}_0 = 13.3$): a house with 0 sq ft is predicted to sell for $13,300 — not meaningful on its own, but a necessary mathematical anchor
 
-- **Slope** ($\hat{\beta}_1 = 0.111$): each additional square foot of living area is associated with $111 more in sale price, *on average*
+- **Slope** ($\widehat{\beta}_1 = 0.111$): each additional square foot of living area is associated with $111 more in sale price, *on average*
 :::
 
 ---
@@ -301,176 +368,17 @@ ggplot(ames, aes(x = Gr_Liv_Area, y = Sale_Price / 1000)) +
 
 ---
 
-## Least Squares Estimation {background-color="#003660"}
-
----
-
-## How do we pick $\beta_0$ and $\beta_1$? {.smaller}
-
-
-We need a rule to pick the "best" $\hat{\beta}_0$ and $\hat{\beta}_1$. To do so, we want to make prediction errors small across all observations simultaneously. 
-
-The **residual** for observation $i$ is:
-$$e_i = y_i - \hat{y}_i$$
-
-where $\hat{y}_i$ ("y-hat sub $i$") is the **predicted value** $\hat{\beta}_0 + \hat{\beta}_1 x_i$ 
-
-To find the best line, we minimize the **Residual Sum of Squares**:
-$$\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2$$
-
-We square the residuals so positive and negative errors don't cancel, and so large errors are penalized more heavily.
-
-
----
-
-## The Least Squares Criterion {.smaller}
-
-::: {style="font-size: 0.75em; color: gray;"}
-*Wang, PSTAT 126 Notes (hand1.pdf), p. 17 · ROS Ch. 8.1*
-:::
-
-From the previous slide, $e_i = y_i - \hat{y}_i$. Since the candidate line predicts $\hat{y}_i = \beta_0 + \beta_1 x_i$, substituting gives:
-
-$$e_i = y_i - \beta_0 - \beta_1 x_i$$
-
-So the **Residual Sum of Squares** is:
-
-$$\text{RSS}(\beta_0, \beta_1) = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2$$
-
-**Goal:** choose $\hat{\beta}_0$ and $\hat{\beta}_1$ to minimize RSS.
-
----
-
-## The Normal Equations {.smaller}
-
-::: {style="font-size: 0.75em; color: gray;"}
-*Wang, PSTAT 126 Notes (hand1.pdf), p. 17 · ROS Ch. 8.1*
-:::
-
-RSS is a smooth function of $\beta_0$ and $\beta_1$, so we minimize by calculus. Setting both partial derivatives to zero gives the **normal equations**:
-
-$$\frac{\partial \text{RSS}}{\partial \beta_0} = 0 \;\Rightarrow\; \sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0$$
-
-$$\frac{\partial \text{RSS}}{\partial \beta_1} = 0 \;\Rightarrow\; \sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0$$
-
-::: {.callout-note}
-The first equation says the residuals **sum to zero** — the line is centered on the data.
-The second says the residuals are **uncorrelated with** $x$ — no systematic trend is left over.
-:::
-
-
----
-
-## Solving the Normal Equations {.smaller}
-
-::: {style="font-size: 0.75em; color: gray;"}
-*Wang, PSTAT 126 Notes (hand1.pdf), p. 18*
-:::
-
-**Step 1 — solve equation 1 for $\hat{\beta}_0$:**
-
-$$\sum_{i=1}^n(y_i - \beta_0 - \beta_1 x_i) = 0 \;\Rightarrow\; n\bar{y} - n\beta_0 - n\beta_1\bar{x} = 0$$
-
-$$\boxed{\hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}}$$
-
-**Step 2 — substitute into equation 2 and solve for $\hat{\beta}_1$:**
-
-$$\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0$$
-
-Replace $\beta_0$ with $\bar{y} - \beta_1\bar{x}$ and rearrange:
-
-$$\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} = \beta_1\!\left(\sum_{i=1}^n x_i^2 - n\bar{x}^2\right)$$
-
-$$\boxed{\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}}{\displaystyle\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \frac{S_{xy}}{S_{xx}}}$$
-
----
-
-## The OLS Estimators {.smaller}
-
-::: {style="font-size: 0.75em; color: gray;"}
-*Wang, PSTAT 126 Notes (hand1.pdf), p. 18 · ROS Ch. 8.1*
-:::
-
-Solving the normal equations yields:
-
-$$\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2} = \frac{S_{xy}}{S_{xx}}$$
-
-$$\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$$
-
-::: {.callout-note}
-The OLS line always passes through $(\bar{x},\, \bar{y})$.
-:::
-
----
-
-## Connection to Correlation {.smaller}
-
-::: {style="font-size: 0.75em; color: gray;"}
-*Wang, PSTAT 126 Notes (hand1.pdf), p. 21*
-:::
-
-The OLS slope has a useful rewrite in terms of correlation:
-
-$$\hat{\beta}_1 = r \cdot \frac{s_y}{s_x}$$
-
-where $r$ is the sample correlation between $x$ and $y$, and $s_x$, $s_y$ are sample standard deviations.
-
-::: {.incremental}
-- The sign of $\hat{\beta}_1$ always equals the sign of $r$
-- When $r = 0$: slope is 0 — no linear relationship
-- When $|r| = 1$: all points lie exactly on a line — perfect fit
-:::
-
----
-
-## Properties of the OLS Estimators {.smaller}
-
-::: {style="font-size: 0.75em; color: gray;"}
-*Wang, PSTAT 126 Notes (hand1.pdf), pp. 23–31 · ROS Ch. 8.1*
-:::
-
-::: {.incremental}
-1. **Linear** — $\hat{\beta}_0$ and $\hat{\beta}_1$ are linear functions of $y_1, \ldots, y_n$
-
-2. **Unbiased** — $\mathbb{E}(\hat{\beta}_0) = \beta_0$ and $\mathbb{E}(\hat{\beta}_1) = \beta_1$: on average, the estimates recover the true parameters
-
-3. **Known variances**:
-$$\text{Var}(\hat{\beta}_1) = \frac{\sigma^2}{S_{xx}}, \qquad \text{Var}(\hat{\beta}_0) = \sigma^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)$$
-
-4. **Gauss-Markov (BLUE)** — OLS estimators have the smallest variance among all linear unbiased estimators. No other unbiased linear estimator can do better.
-:::
-
----
-
-## Estimating $\sigma^2$ {.smaller}
-
-::: {style="font-size: 0.75em; color: gray;"}
-*Wang, PSTAT 126 Notes (hand1.pdf), p. 37 · ROS Ch. 8.1*
-:::
-
-The error variance $\sigma^2$ is unknown — we estimate it from the residuals.
-
-**Residual Sum of Squares (SSE):**
-$$\text{SSE} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2$$
-
-**Mean Squared Error (MSE) = unbiased estimate of $\sigma^2$:**
-$$\hat{\sigma}^2 = \text{MSE} = \frac{\text{SSE}}{n - 2}$$
-
-We divide by $n - 2$ (not $n$) because estimating $\hat{\beta}_0$ and $\hat{\beta}_1$ uses 2 degrees of freedom. It can be shown that $\mathbb{E}(\text{MSE}) = \sigma^2$.
-
----
-
-
 
 ## Summary {.smaller}
 
 ::: {.incremental}
-- Regression originated from Galton's 19th-century study of heredity
-- **Regression to the mean** is a statistical phenomenon driven by random error, not a causal mechanism
-- Regression models the relationship between $y$ and $x$: $y = \beta_0 + \beta_1 x + \varepsilon$
-- The **slope** $\beta_1$ describes how $y$ changes with $x$, on average — a comparison between units
-- The **intercept** $\beta_0$ is the predicted value of $y$ when $x = 0$
-- Coefficients describe **comparisons**, not causal effects — language matters
+- A **statistical model** decomposes an outcome into a systematic part $f(x)$ and random error $\varepsilon$
+- Regression can be used for **prediction**, **inference**, or **description** 
+- **Inference** focuses on the coefficients: is there a relationship, how strong, in what direction?
+- **Prediction** focuses on $\widehat{y}$: given new inputs, what is the best forecast?
+- The **simple linear regression model** is $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$
+- The **slope** $\beta_1$ is the expected change in $y$ per one-unit increase in $x$
+- The **intercept** $\beta_0$ is the expected value of $y$ when $x = 0$
 :::
 
 ---
@@ -479,12 +387,10 @@ We divide by $n - 2$ (not $n$) because estimating $\hat{\beta}_0$ and $\hat{\bet
 
 **Wednesday:** How do we actually *fit* a regression model to data?
 
-- Ordinary Least Squares (OLS) — minimizing prediction errors
-- Residuals and residual standard deviation $\hat{\sigma}$
+- Ordinary Least Squares (OLS)
+- Residuals and residual standard deviation $\widehat{\sigma}$
 - Standard errors and uncertainty in estimates
 - Using `lm()` in R
-
-**Reading:** *Regression and Other Stories*, Chapters 6 & 7.1
 
 ---
 

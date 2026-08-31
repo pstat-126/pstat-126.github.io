@@ -4,7 +4,7 @@
     "href": "schedule.html",
     "title": "Course Schedule",
     "section": "",
-    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nMaterials\nDue\n\n\n\n\nWeek 1 — Introduction & Simple Linear Regression\n\n\n\nMon, Sep 28\nWelcome & Course Overview What is regression? Motivation and examples\nSlides\n\n\n\n\nWed, Sep 30\nThe Simple Linear Regression Model Model assumptions, population vs. fitted line\nSlides Notes\n\n\n\n\nFri, Oct 2\nLeast Squares Estimation Deriving OLS estimators, interpreting coefficients\nSlides\nLab 1",
+    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nMaterials\nDue\n\n\n\n\nWeek 1 — Introduction & Simple Linear Regression\n\n\n\nMon, Sep 28\nWelcome to PSTAT 126! Course Information & Overview\nThe Simple Linear Regression Model Linear Regression Intro\nSlides\n\n\n\nSlides\n\n\n\n\nWed, Sep 30\nLeast Squares Estimation Deriving OLS estimators, interpreting coefficients\nSlides",
     "crumbs": [
       "Syllabus",
       "Course Information",
@@ -133,180 +133,105 @@
     "href": "slides/syllabus-slides.html#course-information",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Course Information",
-    "text": "Course Information\nInstructor Annie Adams · aradams@ucsb.edu\nLectures Mon / Wed · 12:30 – 1:45 PM · TD-W 1701\nUnits 4 Units\nOffice Hours Tuesday 10 – 11 AM\nPrerequisites PSTAT 10 and PSTAT 120B\nComputing: R ≥ 4.4.0 · RStudio ≥ 2024.04.02",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Course Information\nInstructor Annie Adams · aradams@ucsb.edu\nLectures Mon / Wed · 12:30 – 1:45 PM · TD-W 1701\nUnits 4 Units\nOffice Hours Tuesday 10 – 11 AM\nPrerequisites PSTAT 10 and PSTAT 120B\nComputing: R ≥ 4.4.0 · RStudio ≥ 2024.04.02"
   },
   {
     "objectID": "slides/syllabus-slides.html#course-description",
     "href": "slides/syllabus-slides.html#course-description",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Course Description",
-    "text": "Course Description\nLinear and multiple regression with an emphasis on real-world application.\nTopics include:\n\nSimple and multiple linear regression\nResidual analysis and model diagnostics\nTransformations and variable selection\nAnalysis of covariance\nStepwise regression",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Course Description\nLinear and multiple regression with an emphasis on real-world application.\nTopics include:\n\nSimple and multiple linear regression\nResidual analysis and model diagnostics\nTransformations and variable selection\nAnalysis of covariance\nStepwise regression"
   },
   {
     "objectID": "slides/syllabus-slides.html#learning-objectives",
     "href": "slides/syllabus-slides.html#learning-objectives",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Learning Objectives",
-    "text": "Learning Objectives\nBy the end of this course, you will be able to:\n\nFormulate, fit, and interpret simple and multiple linear regression models\nConduct residual analysis and diagnose violations of model assumptions\nIdentify and handle outliers, leverage points, and multicollinearity\nApply transformations to linearize relationships and stabilize variance\nImplement variable selection methods\nPerform statistical inference and prediction in regression models\nUse R for exploratory data analysis, model fitting, and diagnostic plotting",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Learning Objectives\nBy the end of this course, you will be able to:\n\nFormulate, fit, and interpret simple and multiple linear regression models\nConduct residual analysis and diagnose violations of model assumptions\nIdentify and handle outliers, leverage points, and multicollinearity\nApply transformations to linearize relationships and stabilize variance\nImplement variable selection methods\nPerform statistical inference and prediction in regression models\nUse R for exploratory data analysis, model fitting, and diagnostic plotting"
   },
   {
     "objectID": "slides/syllabus-slides.html#grading",
     "href": "slides/syllabus-slides.html#grading",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Grading",
-    "text": "Grading\n\n\n\nComponent\nWeight\nNotes\n\n\n\n\nHomework (4)\n40%\n~2 weeks per assignment\n\n\nQuizzes (4)\n10%\nLowest score dropped\n\n\nLabs (10)\n15%\nCompleted in weekly section\n\n\nMidterm\n15%\nWeek 6, closed book\n\n\nFinal Exam\n20%\nFinals Week, Cumulative",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Grading\n\n\n\nComponent\nWeight\nNotes\n\n\n\n\nHomework (4)\n40%\n~2 weeks per assignment\n\n\nQuizzes (4)\n10%\nLowest score dropped\n\n\nLabs (10)\n15%\nCompleted in weekly section\n\n\nMidterm\n15%\nWeek 6, closed book\n\n\nFinal Exam\n20%\nFinals Week, Cumulative"
   },
   {
     "objectID": "slides/syllabus-slides.html#homework",
     "href": "slides/syllabus-slides.html#homework",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Homework",
-    "text": "Homework\n\n4 assignments — approximately two weeks per assignment\nDue at 11:59 PM on the listed date\nSubmitted via Gradescope\n\nLate Passes\n\nYou can earn 2 late passes by completing 2 Optional Late Pass Questionnaires\nEach late pass grants a single 24-hour extension\nPasses cannot be stacked\nAssignments marked “Late” on Gradescope automatically use a pass\nNo pass remaining + late submission = zero",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Homework\n\n4 assignments — approximately two weeks per assignment\nDue at 11:59 PM on the listed date\nSubmitted via Gradescope\n\nLate Passes\n\nYou can earn 2 late passes by completing 2 Optional Late Pass Questionnaires\nEach late pass grants a single 24-hour extension\nPasses cannot be stacked\nAssignments marked “Late” on Gradescope automatically use a pass\nNo pass remaining + late submission = zero"
   },
   {
     "objectID": "slides/syllabus-slides.html#quizzes-labs",
     "href": "slides/syllabus-slides.html#quizzes-labs",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Quizzes & Labs",
-    "text": "Quizzes & Labs\nQuizzes\n\n4 in-person quizzes, held at the start of class\nYour lowest score is dropped\nQuiz dates: Monday of Week 3, 5, 8, & 10\n\nLabs\n\n8 lab assignments total\nCompleted during your designated discussion section",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Quizzes & Labs\nQuizzes\n\n4 in-person quizzes, held at the start of class\nYour lowest score is dropped\nQuiz dates: Monday of Week 3, 5, 8, & 10\n\nLabs\n\n8 lab assignments total\nCompleted during your designated discussion section"
   },
   {
     "objectID": "slides/syllabus-slides.html#exams",
     "href": "slides/syllabus-slides.html#exams",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Exams",
-    "text": "Exams\nMidterm\n\nMonday of Week 6 — November 2nd\nIn class, closed book · Formula sheet provided\n\nFinal Exam\n\nTuesday, December 8th · 12:00 – 3:00 PM\nCumulative\nFormula sheet provided",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Exams\nMidterm\n\nMonday of Week 6 — November 2nd\nIn class, closed book · Formula sheet provided\n\nFinal Exam\n\nTuesday, December 8th · 12:00 – 3:00 PM\nCumulative\nFormula sheet provided"
   },
   {
     "objectID": "slides/syllabus-slides.html#assignment-calendar-first-half",
     "href": "slides/syllabus-slides.html#assignment-calendar-first-half",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Assignment Calendar — First Half",
-    "text": "Assignment Calendar — First Half\n\n\n\nWeek\nAssignment\nDue Date\n\n\n\n\n1\nOptional Late Pass Questionnaire\nFri, Oct 3\n\n\n2\nHW 1\nSat, Oct 17\n\n\n3\nQuiz 1\nMon, Oct 12\n\n\n4\nHW 2\nSat, Oct 31\n\n\n5\nQuiz 2\nMon, Oct 26\n\n\n5\nOptional Late Pass Questionnaire\nSat, Oct 31\n\n\n6\nMidterm\nMon, Nov 2",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Assignment Calendar — First Half\n\n\n\nWeek\nAssignment\nDue Date\n\n\n\n\n1\nOptional Late Pass Questionnaire\nFri, Oct 3\n\n\n2\nHW 1\nSat, Oct 17\n\n\n3\nQuiz 1\nMon, Oct 12\n\n\n4\nHW 2\nSat, Oct 31\n\n\n5\nQuiz 2\nMon, Oct 26\n\n\n5\nOptional Late Pass Questionnaire\nSat, Oct 31\n\n\n6\nMidterm\nMon, Nov 2"
   },
   {
     "objectID": "slides/syllabus-slides.html#assignment-calendar-second-half",
     "href": "slides/syllabus-slides.html#assignment-calendar-second-half",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Assignment Calendar — Second Half",
-    "text": "Assignment Calendar — Second Half\n\n\n\nWeek\nAssignment\nDue Date\n\n\n\n\n7\nHW 3\nSat, Nov 14\n\n\n8\nQuiz 3\nMon, Nov 16\n\n\n9\nHW 4\nSat, Nov 28\n\n\n10\nQuiz 4\nMon, Nov 30\n\n\nFinals\nFinal Exam\nTue, Dec 8 · 12–3 PM",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Assignment Calendar — Second Half\n\n\n\nWeek\nAssignment\nDue Date\n\n\n\n\n7\nHW 3\nSat, Nov 14\n\n\n8\nQuiz 3\nMon, Nov 16\n\n\n9\nHW 4\nSat, Nov 28\n\n\n10\nQuiz 4\nMon, Nov 30\n\n\nFinals\nFinal Exam\nTue, Dec 8 · 12–3 PM"
   },
   {
     "objectID": "slides/syllabus-slides.html#course-platforms",
     "href": "slides/syllabus-slides.html#course-platforms",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Course Platforms",
-    "text": "Course Platforms\nCanvas Grades, announcements, and file/resource distribution\nCourse Website Week-by-week schedule, lecture slides, homework, and resources\nGradescope Assignment submission, feedback, and exam scores",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Course Platforms\nCanvas Grades, announcements, and file/resource distribution\nCourse Website Week-by-week schedule, lecture slides, homework, and resources\nGradescope Assignment submission, feedback, and exam scores"
   },
   {
     "objectID": "slides/syllabus-slides.html#attendance",
     "href": "slides/syllabus-slides.html#attendance",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Attendance",
-    "text": "Attendance\nIn-person attendance is crucial. It allows you to engage in hands-on activities, ask questions in real time, and form connections with your peers and instructor.\nIf you miss a class:\n\nBe proactive — notify me before or within a day; no documentation required\nWork with me to review any missed material\nStay home when you are sick",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Attendance\nIn-person attendance is crucial. It allows you to engage in hands-on activities, ask questions in real time, and form connections with your peers and instructor.\nIf you miss a class:\n\nBe proactive — notify me before or within a day; no documentation required\nWork with me to review any missed material\nStay home when you are sick"
   },
   {
     "objectID": "slides/syllabus-slides.html#policy-on-generative-ai",
     "href": "slides/syllabus-slides.html#policy-on-generative-ai",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Policy on Generative AI",
-    "text": "Policy on Generative AI\nAI tools (e.g., ChatGPT, Claude, Copilot, etc.) can be valuable for learning, but must be used responsibly. You are permitted to use AI for helping to understand statistical concepts or mathematical formulas, debugging your own code by asking why an error occurred or how to fix a specific line, or clarifying course material or lecture concepts. However, you are not permitted to use AI to write or complete assignments for you, generate code solutions, solve homework or exam problems, or use AI output without understanding what it does.\nUses of AI that do not follow the guidelines above will result in receiving a lower score on the assignment.",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Policy on Generative AI\nAI tools (e.g., ChatGPT, Claude, Copilot, etc.) can be valuable for learning, but must be used responsibly. You are permitted to use AI for helping to understand statistical concepts or mathematical formulas, debugging your own code by asking why an error occurred or how to fix a specific line, or clarifying course material or lecture concepts. However, you are not permitted to use AI to write or complete assignments for you, generate code solutions, solve homework or exam problems, or use AI output without understanding what it does.\nUses of AI that do not follow the guidelines above will result in receiving a lower score on the assignment."
   },
   {
     "objectID": "slides/syllabus-slides.html#accommodations-conduct",
     "href": "slides/syllabus-slides.html#accommodations-conduct",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Accommodations & Conduct",
-    "text": "Accommodations & Conduct\nCourse Conduct\nAll students are expected to follow the UCSB Code of Conduct. This is an inclusive environment — discrimination, harassment, and bullying are not tolerated. Reach out to share or update your name and pronouns.\nAccommodations\n\nContact the Disabled Students Program (DSP) to arrange formal accommodations\nSubmit requests early — it is never too late to apply\nDSP communicates with faculty directly; you do not need to disclose your condition to me",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Accommodations & Conduct\nCourse Conduct\nAll students are expected to follow the UCSB Code of Conduct. This is an inclusive environment — discrimination, harassment, and bullying are not tolerated. Reach out to share or update your name and pronouns.\nAccommodations\n\nContact the Disabled Students Program (DSP) to arrange formal accommodations\nSubmit requests early — it is never too late to apply\nDSP communicates with faculty directly; you do not need to disclose your condition to me"
   },
   {
     "objectID": "slides/syllabus-slides.html#student-resources",
     "href": "slides/syllabus-slides.html#student-resources",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Student Resources",
-    "text": "Student Resources\n\n\n\nResource\nContact\n\n\n\n\nCAPS (Counseling)\ncaps.sa.ucsb.edu · 805.893.4411\n\n\nFood Insecurity\nfood.ucsb.edu · AS Food Bank\n\n\nRCSGD\nrcsgd.sa.ucsb.edu\n\n\nDream Scholars\nsa.ucsb.edu/dreamscholars\n\n\nCLAS (Tutoring)\nclas.sa.ucsb.edu\n\n\nCARE\n805.893.4613 · wgse.sa.ucsb.edu/care\n\n\nHealth & Wellness\nwellbeing.ucsb.edu",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Student Resources\n\n\n\nResource\nContact\n\n\n\n\nCAPS (Counseling)\ncaps.sa.ucsb.edu · 805.893.4411\n\n\nFood Insecurity\nfood.ucsb.edu · AS Food Bank\n\n\nRCSGD\nrcsgd.sa.ucsb.edu\n\n\nDream Scholars\nsa.ucsb.edu/dreamscholars\n\n\nCLAS (Tutoring)\nclas.sa.ucsb.edu\n\n\nCARE\n805.893.4613 · wgse.sa.ucsb.edu/care\n\n\nHealth & Wellness\nwellbeing.ucsb.edu"
   },
   {
     "objectID": "slides/syllabus-slides.html#questions",
     "href": "slides/syllabus-slides.html#questions",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Questions?",
-    "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM\nCourse Website · Gradescope",
-    "crumbs": [
-      "Syllabus",
-      "Course Information",
-      "Syllabus Slides"
-    ]
+    "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM\nCourse Website · Gradescope"
   },
   {
     "objectID": "exams/final.html",
@@ -542,7 +467,7 @@
     "href": "slides/lec-02.html#the-least-squares-criterion",
     "title": "Lecture 2: Fitting the Simple Linear Model",
     "section": "The Least Squares Criterion",
-    "text": "The Least Squares Criterion\nOrdinary Least Squares (OLS) chooses \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) to minimize the Residual Sum of Squares (RSS):\n\\[\\text{RSS}(a, b) = \\sum_{i=1}^{n} e_i^2 = \\sum_{i=1}^{n} (y_i - a - b x_i)^2\\]\nWhy square the residuals?\n\nPositive and negative errors don’t cancel each other out\nLarge errors are penalized more heavily than small ones\nThe squared criterion has a clean, closed-form solution"
+    "text": "The Least Squares Criterion\n\nWang, PSTAT 126 Notes (hand1.pdf), p. 17 · ROS Ch. 8.1\n\nFrom the previous slide, \\(e_i = y_i - \\hat{y}_i\\). Since the candidate line predicts \\(\\hat{y}_i = \\beta_0 + \\beta_1 x_i\\), substituting gives:\n\\[e_i = y_i - \\beta_0 - \\beta_1 x_i\\]\nSo the Residual Sum of Squares is:\n\\[\\text{RSS}(\\beta_0, \\beta_1) = \\sum_{i=1}^{n} e_i^2 = \\sum_{i=1}^{n}(y_i - \\beta_0 - \\beta_1 x_i)^2\\]\nGoal: choose \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) to minimize RSS."
   },
   {
     "objectID": "slides/lec-02.html#deriving-the-ols-estimators",
@@ -696,7 +621,7 @@
     "href": "slides/lec-01.html#learning-objectives",
     "title": "Lecture 1: What is Regression?",
     "section": "Learning Objectives",
-    "text": "Learning Objectives\nBy the end of today you will be able to:\n\nExplain the historical origin of “regression” and what regression to the mean means\nDescribe what a regression model is, what questions it can answer, and when to use it\nWrite the simple linear regression model and identify its components\nInterpret a regression coefficient as a comparison, not a causal effect"
+    "text": "Learning Objectives\nBy the end of today you will be able to:\n\nExplain the historical origin of “regression” and what regression to the mean means\nDescribe what a regression model is, what questions it can answer, and when to use it\nWrite the simple linear regression model and identify its components\nInterpret a regression coefficient and intercept"
   },
   {
     "objectID": "slides/lec-01.html#what-is-a-statistical-model",
@@ -759,7 +684,7 @@
     "href": "slides/lec-01.html#interpreting-slope-and-intercept",
     "title": "Lecture 1: What is Regression?",
     "section": "Interpreting Slope and Intercept",
-    "text": "Interpreting Slope and Intercept\nFor the Ames housing model, fitting gives: \\[\\widehat{\\text{price}} = 13.3 + 0.111 \\times \\text{sqft}\\]\n\nIntercept (\\(\\hat{\\beta}_0 = 13.3\\)): a house with 0 sq ft is predicted to sell for $13,300 — not meaningful on its own, but a necessary mathematical anchor\nSlope (\\(\\hat{\\beta}_1 = 0.111\\)): each additional square foot of living area is associated with $111 more in sale price, on average"
+    "text": "Interpreting Slope and Intercept\nFor the Ames housing model, fitting gives: \\[\\widehat{\\text{price}} = 13.3 + 0.111 \\times \\text{sqft}\\]\n\nIntercept (\\(\\widehat{\\beta}_0 = 13.3\\)): a house with 0 sq ft is predicted to sell for $13,300 — not meaningful on its own, but a necessary mathematical anchor\nSlope (\\(\\widehat{\\beta}_1 = 0.111\\)): each additional square foot of living area is associated with $111 more in sale price, on average"
   },
   {
     "objectID": "slides/lec-01.html#adding-the-fitted-line",
@@ -843,14 +768,14 @@
     "href": "slides/lec-01.html#summary",
     "title": "Lecture 1: What is Regression?",
     "section": "Summary",
-    "text": "Summary\n\nRegression originated from Galton’s 19th-century study of heredity\nRegression to the mean is a statistical phenomenon driven by random error, not a causal mechanism\nRegression models the relationship between \\(y\\) and \\(x\\): \\(y = \\beta_0 + \\beta_1 x + \\varepsilon\\)\nThe slope \\(\\beta_1\\) describes how \\(y\\) changes with \\(x\\), on average — a comparison between units\nThe intercept \\(\\beta_0\\) is the predicted value of \\(y\\) when \\(x = 0\\)\nCoefficients describe comparisons, not causal effects — language matters"
+    "text": "Summary\n\nA statistical model decomposes an outcome into a systematic part \\(f(x)\\) and random error \\(\\varepsilon\\)\nRegression can be used for prediction, inference, or description\nInference focuses on the coefficients: is there a relationship, how strong, in what direction?\nPrediction focuses on \\(\\widehat{y}\\): given new inputs, what is the best forecast?\nThe simple linear regression model is \\(y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i\\)\nThe slope \\(\\beta_1\\) is the expected change in \\(y\\) per one-unit increase in \\(x\\)\nThe intercept \\(\\beta_0\\) is the expected value of \\(y\\) when \\(x = 0\\)"
   },
   {
     "objectID": "slides/lec-01.html#looking-ahead",
     "href": "slides/lec-01.html#looking-ahead",
     "title": "Lecture 1: What is Regression?",
     "section": "Looking Ahead",
-    "text": "Looking Ahead\nWednesday: How do we actually fit a regression model to data?\n\nOrdinary Least Squares (OLS) — minimizing prediction errors\nResiduals and residual standard deviation \\(\\hat{\\sigma}\\)\nStandard errors and uncertainty in estimates\nUsing lm() in R\n\nReading: Regression and Other Stories, Chapters 6 & 7.1"
+    "text": "Looking Ahead\nWednesday: How do we actually fit a regression model to data?\n\nOrdinary Least Squares (OLS)\nResiduals and residual standard deviation \\(\\widehat{\\sigma}\\)\nStandard errors and uncertainty in estimates\nUsing lm() in R"
   },
   {
     "objectID": "slides/lec-01.html#questions",
@@ -864,7 +789,7 @@
     "href": "slides/lec-01.html#what-is-a-statistical-model-1",
     "title": "Lecture 1: What is Regression?",
     "section": "What is a Statistical Model?",
-    "text": "What is a Statistical Model?\nA statistical model is a way of describing real-world phenomena using mathematical relationships. It takes data as input and creates a structured way of understanding how variables relate to one another, and how those relationships can be used to predict an outcome.\n\\[y = f(x) + \\varepsilon\\]\n\n\\(y\\): outcome of interest (response variable)\n\\(x\\): predictor (explanatory variable)\n\\(f(x)\\): systematic component — what we can explain\n\\(\\varepsilon\\): random error — irreducible noise\n\nRegression is the most widely used class of statistical models."
+    "text": "What is a Statistical Model?\nA statistical model is a way of describing real-world phenomena using mathematical relationships. It takes data as input and creates a structured way of understanding how variables relate to one another, and how those relationships can be used to predict an outcome.\n\\[y = f(x) + \\varepsilon\\]\n\n\\(y\\): outcome of interest (response variable)\n\\(x\\): predictor (explanatory variable)\n\\(f(x)\\): systematic component\n\\(\\varepsilon\\): random error\n\nRegression is the most widely used class of statistical models."
   },
   {
     "objectID": "slides/lec-01.html#predicting-house-prices",
@@ -1019,5 +944,82 @@
     "title": "Lecture 1: What is Regression?",
     "section": "Solving the Normal Equations",
     "text": "Solving the Normal Equations\n\nWang, PSTAT 126 Notes (hand1.pdf), p. 18\n\nStep 1 — solve equation 1 for \\(\\hat{\\beta}_0\\):\n\\[\\sum_{i=1}^n(y_i - \\beta_0 - \\beta_1 x_i) = 0 \\;\\Rightarrow\\; n\\bar{y} - n\\beta_0 - n\\beta_1\\bar{x} = 0\\]\n\\[\\boxed{\\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1\\bar{x}}\\]\nStep 2 — substitute into equation 2 and solve for \\(\\hat{\\beta}_1\\):\n\\[\\sum_{i=1}^n x_i(y_i - \\beta_0 - \\beta_1 x_i) = 0\\]\nReplace \\(\\beta_0\\) with \\(\\bar{y} - \\beta_1\\bar{x}\\) and rearrange:\n\\[\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y} = \\beta_1\\!\\left(\\sum_{i=1}^n x_i^2 - n\\bar{x}^2\\right)\\]\n\\[\\boxed{\\hat{\\beta}_1 = \\frac{\\displaystyle\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y}}{\\displaystyle\\sum_{i=1}^n x_i^2 - n\\bar{x}^2} = \\frac{S_{xy}}{S_{xx}}}\\]"
+  },
+  {
+    "objectID": "slides/lec-02.html#least-squares-estimation",
+    "href": "slides/lec-02.html#least-squares-estimation",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Least Squares Estimation",
+    "text": "Least Squares Estimation"
+  },
+  {
+    "objectID": "slides/lec-02.html#how-do-we-pick-beta_0-and-beta_1",
+    "href": "slides/lec-02.html#how-do-we-pick-beta_0-and-beta_1",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "How do we pick \\(\\beta_0\\) and \\(\\beta_1\\)?",
+    "text": "How do we pick \\(\\beta_0\\) and \\(\\beta_1\\)?\nWe need a rule to pick the “best” \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\). To do so, we want to make prediction errors small across all observations simultaneously.\nThe residual for observation \\(i\\) is: \\[e_i = y_i - \\hat{y}_i\\]\nwhere \\(\\hat{y}_i\\) (“y-hat sub \\(i\\)”) is the predicted value \\(\\hat{\\beta}_0 + \\hat{\\beta}_1 x_i\\)\nTo find the best line, we minimize the Residual Sum of Squares: \\[\\text{RSS} = \\sum_{i=1}^n e_i^2 = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2\\]\nWe square the residuals so positive and negative errors don’t cancel, and so large errors are penalized more heavily."
+  },
+  {
+    "objectID": "slides/lec-02.html#the-normal-equations",
+    "href": "slides/lec-02.html#the-normal-equations",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "The Normal Equations",
+    "text": "The Normal Equations\n\nWang, PSTAT 126 Notes (hand1.pdf), p. 17 · ROS Ch. 8.1\n\nRSS is a smooth function of \\(\\beta_0\\) and \\(\\beta_1\\), so we minimize by calculus. Setting both partial derivatives to zero gives the normal equations:\n\\[\\frac{\\partial \\text{RSS}}{\\partial \\beta_0} = 0 \\;\\Rightarrow\\; \\sum_{i=1}^n (y_i - \\beta_0 - \\beta_1 x_i) = 0\\]\n\\[\\frac{\\partial \\text{RSS}}{\\partial \\beta_1} = 0 \\;\\Rightarrow\\; \\sum_{i=1}^n x_i(y_i - \\beta_0 - \\beta_1 x_i) = 0\\]\n\n\n\n\n\n\nNote\n\n\nThe first equation says the residuals sum to zero — the line is centered on the data. The second says the residuals are uncorrelated with \\(x\\) — no systematic trend is left over."
+  },
+  {
+    "objectID": "slides/lec-02.html#solving-the-normal-equations",
+    "href": "slides/lec-02.html#solving-the-normal-equations",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Solving the Normal Equations",
+    "text": "Solving the Normal Equations\n\nWang, PSTAT 126 Notes (hand1.pdf), p. 18\n\nStep 1 — solve equation 1 for \\(\\hat{\\beta}_0\\):\n\\[\\sum_{i=1}^n(y_i - \\beta_0 - \\beta_1 x_i) = 0 \\;\\Rightarrow\\; n\\bar{y} - n\\beta_0 - n\\beta_1\\bar{x} = 0\\]\n\\[\\boxed{\\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1\\bar{x}}\\]\nStep 2 — substitute into equation 2 and solve for \\(\\hat{\\beta}_1\\):\n\\[\\sum_{i=1}^n x_i(y_i - \\beta_0 - \\beta_1 x_i) = 0\\]\nReplace \\(\\beta_0\\) with \\(\\bar{y} - \\beta_1\\bar{x}\\) and rearrange:\n\\[\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y} = \\beta_1\\!\\left(\\sum_{i=1}^n x_i^2 - n\\bar{x}^2\\right)\\]\n\\[\\boxed{\\hat{\\beta}_1 = \\frac{\\displaystyle\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y}}{\\displaystyle\\sum_{i=1}^n x_i^2 - n\\bar{x}^2} = \\frac{S_{xy}}{S_{xx}}}\\]"
+  },
+  {
+    "objectID": "slides/lec-02.html#the-ols-estimators",
+    "href": "slides/lec-02.html#the-ols-estimators",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "The OLS Estimators",
+    "text": "The OLS Estimators\n\nWang, PSTAT 126 Notes (hand1.pdf), p. 18 · ROS Ch. 8.1\n\nSolving the normal equations yields:\n\\[\\hat{\\beta}_1 = \\frac{\\displaystyle\\sum_{i=1}^n (x_i - \\bar{x})(y_i - \\bar{y})}{\\displaystyle\\sum_{i=1}^n (x_i - \\bar{x})^2} = \\frac{S_{xy}}{S_{xx}}\\]\n\\[\\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1 \\bar{x}\\]\n\n\n\n\n\n\nNote\n\n\nThe OLS line always passes through \\((\\bar{x},\\, \\bar{y})\\)."
+  },
+  {
+    "objectID": "slides/lec-02.html#connection-to-correlation",
+    "href": "slides/lec-02.html#connection-to-correlation",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Connection to Correlation",
+    "text": "Connection to Correlation\n\nWang, PSTAT 126 Notes (hand1.pdf), p. 21\n\nThe OLS slope has a useful rewrite in terms of correlation:\n\\[\\hat{\\beta}_1 = r \\cdot \\frac{s_y}{s_x}\\]\nwhere \\(r\\) is the sample correlation between \\(x\\) and \\(y\\), and \\(s_x\\), \\(s_y\\) are sample standard deviations.\n\nThe sign of \\(\\hat{\\beta}_1\\) always equals the sign of \\(r\\)\nWhen \\(r = 0\\): slope is 0 — no linear relationship\nWhen \\(|r| = 1\\): all points lie exactly on a line — perfect fit"
+  },
+  {
+    "objectID": "slides/lec-02.html#properties-of-the-ols-estimators",
+    "href": "slides/lec-02.html#properties-of-the-ols-estimators",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Properties of the OLS Estimators",
+    "text": "Properties of the OLS Estimators\n\nWang, PSTAT 126 Notes (hand1.pdf), pp. 23–31 · ROS Ch. 8.1\n\n\nLinear — \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) are linear functions of \\(y_1, \\ldots, y_n\\)\nUnbiased — \\(\\mathbb{E}(\\hat{\\beta}_0) = \\beta_0\\) and \\(\\mathbb{E}(\\hat{\\beta}_1) = \\beta_1\\): on average, the estimates recover the true parameters\nKnown variances: \\[\\text{Var}(\\hat{\\beta}_1) = \\frac{\\sigma^2}{S_{xx}}, \\qquad \\text{Var}(\\hat{\\beta}_0) = \\sigma^2\\!\\left(\\frac{1}{n} + \\frac{\\bar{x}^2}{S_{xx}}\\right)\\]\nGauss-Markov (BLUE) — OLS estimators have the smallest variance among all linear unbiased estimators. No other unbiased linear estimator can do better."
+  },
+  {
+    "objectID": "slides/lec-02.html#estimating-sigma2",
+    "href": "slides/lec-02.html#estimating-sigma2",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Estimating \\(\\sigma^2\\)",
+    "text": "Estimating \\(\\sigma^2\\)\n\nWang, PSTAT 126 Notes (hand1.pdf), p. 37 · ROS Ch. 8.1\n\nThe error variance \\(\\sigma^2\\) is unknown — we estimate it from the residuals.\nResidual Sum of Squares (SSE): \\[\\text{SSE} = \\sum_{i=1}^n e_i^2 = \\sum_{i=1}^n (y_i - \\hat{y}_i)^2\\]\nMean Squared Error (MSE) = unbiased estimate of \\(\\sigma^2\\): \\[\\hat{\\sigma}^2 = \\text{MSE} = \\frac{\\text{SSE}}{n - 2}\\]\nWe divide by \\(n - 2\\) (not \\(n\\)) because estimating \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) uses 2 degrees of freedom. It can be shown that \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\)."
+  },
+  {
+    "objectID": "slides/lec-01.html#inference-vs.-prediction",
+    "href": "slides/lec-01.html#inference-vs.-prediction",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Inference vs. Prediction",
+    "text": "Inference vs. Prediction\nTwo distinct goals for regression:\nInference: understand how and why variables are related\n\nFocus: the coefficients \\(\\beta_0, \\beta_1\\)\nQuestions: Is there a relationship? How strong? In what direction?\nExample: Does income growth affect vote share, and by how much?\n\nPrediction: produce accurate forecasts for new observations\n\nFocus: the fitted value \\(\\widehat{y}\\)\nQuestions: Given \\(\\widehat{x}\\), what is our best guess for \\(\\widehat{y}\\)?\nExample: What vote share do we expect when income growth is 2%?"
+  },
+  {
+    "objectID": "slides/lec-01.html#discussion-inference-or-prediction",
+    "href": "slides/lec-01.html#discussion-inference-or-prediction",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Discussion: Inference or Prediction?",
+    "text": "Discussion: Inference or Prediction?"
+  },
+  {
+    "objectID": "slides/lec-01.html#inference-or-prediction",
+    "href": "slides/lec-01.html#inference-or-prediction",
+    "title": "Lecture 1: What is Regression?",
+    "section": "Inference or Prediction?",
+    "text": "Inference or Prediction?\n\n\n\n\n\n\n\nTurn & Talk\n\n\n\nFor each scenario, decide: is the goal inference or prediction?\n\nA public health researcher wants to know whether air pollution levels are associated with increased rates of asthma, and by how much.\nA real estate app estimates the sale price of a home based on its size, location, and age.\nAn economist studies whether years of education affect wages after controlling for work experience.\nA weather model outputs tomorrow’s expected high temperature given today’s atmospheric readings."
   }
 ]

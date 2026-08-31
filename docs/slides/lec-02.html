@@ -237,43 +237,70 @@ Annie Adams
 <li>Use <code>lm()</code> in R to fit a simple linear regression and read its output</li>
 </ul>
 </section>
-<section id="how-do-we-fit-a-line" class="slide level2" data-background-color="#003660">
-<h2>How Do We Fit a Line?</h2>
+<section id="least-squares-estimation" class="slide level2" data-background-color="#003660">
+<h2>Least Squares Estimation</h2>
 </section>
-<section id="the-problem-of-fitting" class="slide level2">
-<h2>The Problem of Fitting</h2>
-<p>Given data <span class="math inline">\((x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)\)</span>, infinitely many lines pass through or near the points.</p>
-<p>We need a <strong>criterion</strong> to select the “best” line.</p>
-<p><strong>Intuition:</strong> The best line should make prediction errors as small as possible across all observations simultaneously.</p>
+<section id="how-do-we-pick-beta_0-and-beta_1" class="slide level2 smaller">
+<h2>How do we pick <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>?</h2>
+<p>We need a rule to pick the “best” <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>. To do so, we want to make prediction errors small across all observations simultaneously.</p>
+<p>The <strong>residual</strong> for observation <span class="math inline">\(i\)</span> is: <span class="math display">\[e_i = y_i - \hat{y}_i\]</span></p>
+<p>where <span class="math inline">\(\hat{y}_i\)</span> (“y-hat sub <span class="math inline">\(i\)</span>”) is the <strong>predicted value</strong> <span class="math inline">\(\hat{\beta}_0 + \hat{\beta}_1 x_i\)</span></p>
+<p>To find the best line, we minimize the <strong>Residual Sum of Squares</strong>: <span class="math display">\[\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2\]</span></p>
+<p>We square the residuals so positive and negative errors don’t cancel, and so large errors are penalized more heavily.</p>
 </section>
-<section id="residuals-measuring-prediction-error" class="slide level2">
-<h2>Residuals: Measuring Prediction Error</h2>
-<p>For a candidate line with intercept <span class="math inline">\(a\)</span> and slope <span class="math inline">\(b\)</span>, the <strong>residual</strong> for observation <span class="math inline">\(i\)</span> is:</p>
-<p><span class="math display">\[e_i = y_i - \hat{y}_i = y_i - (a + b x_i)\]</span></p>
-<ul>
-<li><span class="math inline">\(\hat{y}_i = a + bx_i\)</span>: the <strong>fitted value</strong> (what the line predicts)</li>
-<li><span class="math inline">\(e_i &gt; 0\)</span>: observed point is above the line</li>
-<li><span class="math inline">\(e_i &lt; 0\)</span>: observed point is below the line</li>
-</ul>
-<p>A good line has small residuals throughout.</p>
-</section>
-<section id="ordinary-least-squares-ols" class="slide level2" data-background-color="#003660">
-<h2>Ordinary Least Squares (OLS)</h2>
-</section>
-<section id="the-least-squares-criterion" class="slide level2">
+<section id="the-least-squares-criterion" class="slide level2 smaller">
 <h2>The Least Squares Criterion</h2>
-<p><strong>Ordinary Least Squares (OLS)</strong> chooses <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> to minimize the <strong>Residual Sum of Squares (RSS)</strong>:</p>
-<p><span class="math display">\[\text{RSS}(a, b) = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n} (y_i - a - b x_i)^2\]</span></p>
-<p>Why <strong>square</strong> the residuals?</p>
-<ul>
-<li class="fragment">Positive and negative errors don’t cancel each other out</li>
-<li class="fragment">Large errors are penalized more heavily than small ones</li>
-<li class="fragment">The squared criterion has a clean, closed-form solution</li>
-</ul>
+<div style="font-size: 0.75em; color: gray;">
+<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;17 · ROS Ch. 8.1</em></p>
+</div>
+<p>From the previous slide, <span class="math inline">\(e_i = y_i - \hat{y}_i\)</span>. Since the candidate line predicts <span class="math inline">\(\hat{y}_i = \beta_0 + \beta_1 x_i\)</span>, substituting gives:</p>
+<p><span class="math display">\[e_i = y_i - \beta_0 - \beta_1 x_i\]</span></p>
+<p>So the <strong>Residual Sum of Squares</strong> is:</p>
+<p><span class="math display">\[\text{RSS}(\beta_0, \beta_1) = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2\]</span></p>
+<p><strong>Goal:</strong> choose <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> to minimize RSS.</p>
 </section>
-<section id="deriving-the-ols-estimators" class="slide level2">
-<h2>Deriving the OLS Estimators</h2>
-<p>Minimize RSS by taking partial derivatives with respect to <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, setting them to zero, and solving:</p>
+<section id="the-normal-equations" class="slide level2 smaller">
+<h2>The Normal Equations</h2>
+<div style="font-size: 0.75em; color: gray;">
+<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;17 · ROS Ch. 8.1</em></p>
+</div>
+<p>RSS is a smooth function of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, so we minimize by calculus. Setting both partial derivatives to zero gives the <strong>normal equations</strong>:</p>
+<p><span class="math display">\[\frac{\partial \text{RSS}}{\partial \beta_0} = 0 \;\Rightarrow\; \sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
+<p><span class="math display">\[\frac{\partial \text{RSS}}{\partial \beta_1} = 0 \;\Rightarrow\; \sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>The first equation says the residuals <strong>sum to zero</strong> — the line is centered on the data. The second says the residuals are <strong>uncorrelated with</strong> <span class="math inline">\(x\)</span> — no systematic trend is left over.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="solving-the-normal-equations" class="slide level2 smaller">
+<h2>Solving the Normal Equations</h2>
+<div style="font-size: 0.75em; color: gray;">
+<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;18</em></p>
+</div>
+<p><strong>Step 1 — solve equation 1 for <span class="math inline">\(\hat{\beta}_0\)</span>:</strong></p>
+<p><span class="math display">\[\sum_{i=1}^n(y_i - \beta_0 - \beta_1 x_i) = 0 \;\Rightarrow\; n\bar{y} - n\beta_0 - n\beta_1\bar{x} = 0\]</span></p>
+<p><span class="math display">\[\boxed{\hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}}\]</span></p>
+<p><strong>Step 2 — substitute into equation 2 and solve for <span class="math inline">\(\hat{\beta}_1\)</span>:</strong></p>
+<p><span class="math display">\[\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
+<p>Replace <span class="math inline">\(\beta_0\)</span> with <span class="math inline">\(\bar{y} - \beta_1\bar{x}\)</span> and rearrange:</p>
+<p><span class="math display">\[\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} = \beta_1\!\left(\sum_{i=1}^n x_i^2 - n\bar{x}^2\right)\]</span></p>
+<p><span class="math display">\[\boxed{\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}}{\displaystyle\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \frac{S_{xy}}{S_{xx}}}\]</span></p>
+</section>
+<section id="the-ols-estimators" class="slide level2 smaller">
+<h2>The OLS Estimators</h2>
+<div style="font-size: 0.75em; color: gray;">
+<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;18 · ROS Ch. 8.1</em></p>
+</div>
+<p>Solving the normal equations yields:</p>
 <p><span class="math display">\[\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2} = \frac{S_{xy}}{S_{xx}}\]</span></p>
 <p><span class="math display">\[\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}\]</span></p>
 <div class="callout callout-note callout-titled callout-style-default">
@@ -285,21 +312,46 @@ Annie Adams
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>The OLS line always passes through the point <span class="math inline">\((\bar{x},\, \bar{y})\)</span>.</p>
+<p>The OLS line always passes through <span class="math inline">\((\bar{x},\, \bar{y})\)</span>.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="a-useful-rewrite" class="slide level2">
-<h2>A Useful Rewrite</h2>
-<p>The OLS slope can also be written as:</p>
+<section id="connection-to-correlation" class="slide level2 smaller">
+<h2>Connection to Correlation</h2>
+<div style="font-size: 0.75em; color: gray;">
+<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;21</em></p>
+</div>
+<p>The OLS slope has a useful rewrite in terms of correlation:</p>
 <p><span class="math display">\[\hat{\beta}_1 = r \cdot \frac{s_y}{s_x}\]</span></p>
-<p>where <span class="math inline">\(r\)</span> is the <strong>sample correlation</strong> between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, and <span class="math inline">\(s_x\)</span>, <span class="math inline">\(s_y\)</span> are sample standard deviations.</p>
+<p>where <span class="math inline">\(r\)</span> is the sample correlation between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, and <span class="math inline">\(s_x\)</span>, <span class="math inline">\(s_y\)</span> are sample standard deviations.</p>
 <ul>
-<li class="fragment">When <span class="math inline">\(r = 0\)</span>: slope is 0 — no linear relationship</li>
-<li class="fragment">When <span class="math inline">\(|r| = 1\)</span>: all points lie exactly on a line</li>
 <li class="fragment">The sign of <span class="math inline">\(\hat{\beta}_1\)</span> always equals the sign of <span class="math inline">\(r\)</span></li>
+<li class="fragment">When <span class="math inline">\(r = 0\)</span>: slope is 0 — no linear relationship</li>
+<li class="fragment">When <span class="math inline">\(|r| = 1\)</span>: all points lie exactly on a line — perfect fit</li>
 </ul>
+</section>
+<section id="properties-of-the-ols-estimators" class="slide level2 smaller">
+<h2>Properties of the OLS Estimators</h2>
+<div style="font-size: 0.75em; color: gray;">
+<p><em>Wang, PSTAT 126 Notes (hand1.pdf), pp.&nbsp;23–31 · ROS Ch. 8.1</em></p>
+</div>
+<ol type="1">
+<li class="fragment"><p><strong>Linear</strong> — <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are linear functions of <span class="math inline">\(y_1, \ldots, y_n\)</span></p></li>
+<li class="fragment"><p><strong>Unbiased</strong> — <span class="math inline">\(\mathbb{E}(\hat{\beta}_0) = \beta_0\)</span> and <span class="math inline">\(\mathbb{E}(\hat{\beta}_1) = \beta_1\)</span>: on average, the estimates recover the true parameters</p></li>
+<li class="fragment"><p><strong>Known variances</strong>: <span class="math display">\[\text{Var}(\hat{\beta}_1) = \frac{\sigma^2}{S_{xx}}, \qquad \text{Var}(\hat{\beta}_0) = \sigma^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)\]</span></p></li>
+<li class="fragment"><p><strong>Gauss-Markov (BLUE)</strong> — OLS estimators have the smallest variance among all linear unbiased estimators. No other unbiased linear estimator can do better.</p></li>
+</ol>
+</section>
+<section id="estimating-sigma2" class="slide level2 smaller">
+<h2>Estimating <span class="math inline">\(\sigma^2\)</span></h2>
+<div style="font-size: 0.75em; color: gray;">
+<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;37 · ROS Ch. 8.1</em></p>
+</div>
+<p>The error variance <span class="math inline">\(\sigma^2\)</span> is unknown — we estimate it from the residuals.</p>
+<p><strong>Residual Sum of Squares (SSE):</strong> <span class="math display">\[\text{SSE} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2\]</span></p>
+<p><strong>Mean Squared Error (MSE) = unbiased estimate of <span class="math inline">\(\sigma^2\)</span>:</strong> <span class="math display">\[\hat{\sigma}^2 = \text{MSE} = \frac{\text{SSE}}{n - 2}\]</span></p>
+<p>We divide by <span class="math inline">\(n - 2\)</span> (not <span class="math inline">\(n\)</span>) because estimating <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> uses 2 degrees of freedom. It can be shown that <span class="math inline">\(\mathbb{E}(\text{MSE}) = \sigma^2\)</span>.</p>
 </section>
 <section id="fitting-the-election-model-in-r" class="slide level2">
 <h2>Fitting the Election Model in R</h2>

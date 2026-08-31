@@ -41,81 +41,159 @@ By the end of today you will be able to:
 
 ---
 
-## How Do We Fit a Line? {background-color="#003660"}
+## Least Squares Estimation {background-color="#003660"}
 
 ---
 
-## The Problem of Fitting
+## How do we pick $\beta_0$ and $\beta_1$? {.smaller}
 
-Given data $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, infinitely many lines pass through or near the points.
+We need a rule to pick the "best" $\hat{\beta}_0$ and $\hat{\beta}_1$. To do so, we want to make prediction errors small across all observations simultaneously.
 
-We need a **criterion** to select the "best" line.
+The **residual** for observation $i$ is:
+$$e_i = y_i - \hat{y}_i$$
 
-**Intuition:** The best line should make prediction errors as small as possible across all observations simultaneously.
+where $\hat{y}_i$ ("y-hat sub $i$") is the **predicted value** $\hat{\beta}_0 + \hat{\beta}_1 x_i$
 
----
+To find the best line, we minimize the **Residual Sum of Squares**:
+$$\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2$$
 
-## Residuals: Measuring Prediction Error
-
-For a candidate line with intercept $a$ and slope $b$, the **residual** for observation $i$ is:
-
-$$e_i = y_i - \hat{y}_i = y_i - (a + b x_i)$$
-
-- $\hat{y}_i = a + bx_i$: the **fitted value** (what the line predicts)
-- $e_i > 0$: observed point is above the line
-- $e_i < 0$: observed point is below the line
-
-A good line has small residuals throughout.
+We square the residuals so positive and negative errors don't cancel, and so large errors are penalized more heavily.
 
 ---
 
-## Ordinary Least Squares (OLS) {background-color="#003660"}
+## The Least Squares Criterion {.smaller}
+
+::: {style="font-size: 0.75em; color: gray;"}
+*Wang, PSTAT 126 Notes (hand1.pdf), p. 17 · ROS Ch. 8.1*
+:::
+
+From the previous slide, $e_i = y_i - \hat{y}_i$. Since the candidate line predicts $\hat{y}_i = \beta_0 + \beta_1 x_i$, substituting gives:
+
+$$e_i = y_i - \beta_0 - \beta_1 x_i$$
+
+So the **Residual Sum of Squares** is:
+
+$$\text{RSS}(\beta_0, \beta_1) = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2$$
+
+**Goal:** choose $\hat{\beta}_0$ and $\hat{\beta}_1$ to minimize RSS.
 
 ---
 
-## The Least Squares Criterion
+## The Normal Equations {.smaller}
 
-**Ordinary Least Squares (OLS)** chooses $\hat{\beta}_0$ and $\hat{\beta}_1$ to minimize the **Residual Sum of Squares (RSS)**:
+::: {style="font-size: 0.75em; color: gray;"}
+*Wang, PSTAT 126 Notes (hand1.pdf), p. 17 · ROS Ch. 8.1*
+:::
 
-$$\text{RSS}(a, b) = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n} (y_i - a - b x_i)^2$$
+RSS is a smooth function of $\beta_0$ and $\beta_1$, so we minimize by calculus. Setting both partial derivatives to zero gives the **normal equations**:
 
-Why **square** the residuals?
+$$\frac{\partial \text{RSS}}{\partial \beta_0} = 0 \;\Rightarrow\; \sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0$$
 
-::: {.incremental}
-- Positive and negative errors don't cancel each other out
-- Large errors are penalized more heavily than small ones
-- The squared criterion has a clean, closed-form solution
+$$\frac{\partial \text{RSS}}{\partial \beta_1} = 0 \;\Rightarrow\; \sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0$$
+
+::: {.callout-note}
+The first equation says the residuals **sum to zero** — the line is centered on the data.
+The second says the residuals are **uncorrelated with** $x$ — no systematic trend is left over.
 :::
 
 ---
 
-## Deriving the OLS Estimators
+## Solving the Normal Equations {.smaller}
 
-Minimize RSS by taking partial derivatives with respect to $a$ and $b$, setting them to zero, and solving:
+::: {style="font-size: 0.75em; color: gray;"}
+*Wang, PSTAT 126 Notes (hand1.pdf), p. 18*
+:::
+
+**Step 1 — solve equation 1 for $\hat{\beta}_0$:**
+
+$$\sum_{i=1}^n(y_i - \beta_0 - \beta_1 x_i) = 0 \;\Rightarrow\; n\bar{y} - n\beta_0 - n\beta_1\bar{x} = 0$$
+
+$$\boxed{\hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}}$$
+
+**Step 2 — substitute into equation 2 and solve for $\hat{\beta}_1$:**
+
+$$\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0$$
+
+Replace $\beta_0$ with $\bar{y} - \beta_1\bar{x}$ and rearrange:
+
+$$\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} = \beta_1\!\left(\sum_{i=1}^n x_i^2 - n\bar{x}^2\right)$$
+
+$$\boxed{\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}}{\displaystyle\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \frac{S_{xy}}{S_{xx}}}$$
+
+---
+
+## The OLS Estimators {.smaller}
+
+::: {style="font-size: 0.75em; color: gray;"}
+*Wang, PSTAT 126 Notes (hand1.pdf), p. 18 · ROS Ch. 8.1*
+:::
+
+Solving the normal equations yields:
 
 $$\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2} = \frac{S_{xy}}{S_{xx}}$$
 
 $$\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$$
 
 ::: {.callout-note}
-The OLS line always passes through the point $(\bar{x},\, \bar{y})$.
+The OLS line always passes through $(\bar{x},\, \bar{y})$.
 :::
 
 ---
 
-## A Useful Rewrite
+## Connection to Correlation {.smaller}
 
-The OLS slope can also be written as:
+::: {style="font-size: 0.75em; color: gray;"}
+*Wang, PSTAT 126 Notes (hand1.pdf), p. 21*
+:::
+
+The OLS slope has a useful rewrite in terms of correlation:
 
 $$\hat{\beta}_1 = r \cdot \frac{s_y}{s_x}$$
 
-where $r$ is the **sample correlation** between $x$ and $y$, and $s_x$, $s_y$ are sample standard deviations.
+where $r$ is the sample correlation between $x$ and $y$, and $s_x$, $s_y$ are sample standard deviations.
 
 ::: {.incremental}
-- When $r = 0$: slope is 0 — no linear relationship
-- When $|r| = 1$: all points lie exactly on a line
 - The sign of $\hat{\beta}_1$ always equals the sign of $r$
+- When $r = 0$: slope is 0 — no linear relationship
+- When $|r| = 1$: all points lie exactly on a line — perfect fit
 :::
+
+---
+
+## Properties of the OLS Estimators {.smaller}
+
+::: {style="font-size: 0.75em; color: gray;"}
+*Wang, PSTAT 126 Notes (hand1.pdf), pp. 23–31 · ROS Ch. 8.1*
+:::
+
+::: {.incremental}
+1. **Linear** — $\hat{\beta}_0$ and $\hat{\beta}_1$ are linear functions of $y_1, \ldots, y_n$
+
+2. **Unbiased** — $\mathbb{E}(\hat{\beta}_0) = \beta_0$ and $\mathbb{E}(\hat{\beta}_1) = \beta_1$: on average, the estimates recover the true parameters
+
+3. **Known variances**:
+$$\text{Var}(\hat{\beta}_1) = \frac{\sigma^2}{S_{xx}}, \qquad \text{Var}(\hat{\beta}_0) = \sigma^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)$$
+
+4. **Gauss-Markov (BLUE)** — OLS estimators have the smallest variance among all linear unbiased estimators. No other unbiased linear estimator can do better.
+:::
+
+---
+
+## Estimating $\sigma^2$ {.smaller}
+
+::: {style="font-size: 0.75em; color: gray;"}
+*Wang, PSTAT 126 Notes (hand1.pdf), p. 37 · ROS Ch. 8.1*
+:::
+
+The error variance $\sigma^2$ is unknown — we estimate it from the residuals.
+
+**Residual Sum of Squares (SSE):**
+$$\text{SSE} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2$$
+
+**Mean Squared Error (MSE) = unbiased estimate of $\sigma^2$:**
+$$\hat{\sigma}^2 = \text{MSE} = \frac{\text{SSE}}{n - 2}$$
+
+We divide by $n - 2$ (not $n$) because estimating $\hat{\beta}_0$ and $\hat{\beta}_1$ uses 2 degrees of freedom. It can be shown that $\mathbb{E}(\text{MSE}) = \sigma^2$.
 
 ---
 
