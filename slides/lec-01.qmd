@@ -1,9 +1,9 @@
 ---
 title: "Lecture 1: What is Regression?"
-subtitle: "PSTAT 126 — Linear Regression"
+subtitle: "PSTAT 126: Linear Regression"
 author: "Annie Adams"
 institute: "UC Santa Barbara"
-date: "09/30/2026"
+date: "09/28/2026"
 format:
   revealjs:
     theme: [default, ../styles.scss]
@@ -281,7 +281,7 @@ $$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$$
 - $x_i$: predictor for unit $i$
 - $\beta_0$(**intercept**):  expected value of $y$ when $x = 0$
 - $\beta_1$(**slope**): expected change in $y$ per one-unit increase in $x$
-- $\varepsilon_i \overset{\text{iid}}{\sim} \mathcal{N}(0, \sigma^2)$: random error
+- $\varepsilon_i \stackrel{\scriptscriptstyle\text{iid}}{\sim} \mathcal{N}(0, \sigma^2)$: random error
 
 ---
 

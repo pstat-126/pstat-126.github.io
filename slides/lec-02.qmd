@@ -1,9 +1,9 @@
 ---
 title: "Lecture 2: Fitting the Simple Linear Model"
-subtitle: "PSTAT 126 — Linear Regression"
+subtitle: "PSTAT 126: Linear Regression"
 author: "Annie Adams"
 institute: "UC Santa Barbara"
-date: "Week 1 · Wednesday"
+date: "9/30/2026"
 format:
   revealjs:
     theme: [default, ../styles.scss]
@@ -21,10 +21,10 @@ From Monday, the simple linear regression model is:
 
 $$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \quad \varepsilon_i \overset{\text{iid}}{\sim} \mathcal{N}(0, \sigma^2)$$
 
-- $\beta_1$ is a **comparison** between units — not a causal effect
-- The fitted line $\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x$ summarizes the relationship
+- $\beta_1$ is a **comparison** between units 
+- The fitted line $\widehat{y} = \widehat{\beta}_0 + \widehat{\beta}_1 x$ summarizes the relationship
 
-**Today:** How do we estimate $\hat{\beta}_0$, $\hat{\beta}_1$, and $\sigma$ from data?
+**Today:** How do we estimate $\widehat{\beta}_0$, $\widehat{\beta}_1$, and $\sigma$ from data?
 
 ---
 
@@ -35,7 +35,7 @@ By the end of today you will be able to:
 - Explain the least squares criterion and apply it conceptually
 - State the OLS formulas for the slope and intercept
 - Compute and interpret fitted values and residuals
-- Interpret the residual standard deviation $\hat{\sigma}$ and $R^2$
+- Interpret the residual standard deviation $\widehat{\sigma}$ and $R^2$
 - Explain what a standard error measures
 - Use `lm()` in R to fit a simple linear regression and read its output
 
@@ -43,19 +43,127 @@ By the end of today you will be able to:
 
 ## Least Squares Estimation {background-color="#003660"}
 
+
+
+## Mini Refresher: Derivatives {.smaller}
+
+**Power rule:** $\frac{d}{dx} x^n = nx^{n-1}$
+
+**Chain rule:** $\frac{d}{dx} f(g(x)) = f'(g(x)) \cdot g'(x)$ 
+
+**Partial derivatives:** treat all other variables as constants and differentiate with respect to one variable at a time.
+
+**Example:** $\dfrac{\partial}{\partial \beta_0}(y - \beta_0 - \beta_1 x)^2 = 2(y - \beta_0 - \beta_1 x) \cdot (-1)$
+
+
+## Practice Problems
+
+:::{.fragment}
+::: callout-tip
+## Practice Problems
+
+:::{.nonincremental}
+::: {style="font-size: 30px"}
+
+Find the derivates of the following:
+
+1.$x^6$
+
+2. $y = (x^2 + 1)^3$
+
+Find the partial derivative of the following:
+
+1. $f(\beta_0, \beta_1) = (y - \beta_0 - \beta_1 x)^2$, find $\dfrac{\partial f}{\partial \beta_1}$
+
+```{r}
+#| echo: false
+countdown::countdown(
+  minutes = 2,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em",
+)
+```
+
+:::
+:::
+:::
+:::
+
+
+---
+
+## Mini Refresher: Summation Rules {.smaller}
+
+**Derivatives through sums:** 
+$$\frac{\partial}{\partial \beta_0}\sum_{i=1}^n f_i(\beta_0) = \sum_{i=1}^n \frac{\partial}{\partial \beta_0} f_i(\beta_0)$$
+
+**Constants in sums:**
+
+- $\displaystyle\sum_{i=1}^n c = nc$ — a constant summed $n$ times is just $n \times c$
+- $\displaystyle\sum_{i=1}^n c \cdot x_i = c\sum_{i=1}^n x_i$ — a constant factor pulls out of the sum
+
+::: {.callout-note}
+These are all we need to minimize RSS — apply the chain rule, pass the derivative through the sum, set to zero, and simplify.
+:::
+
+
+## Practice Problems
+:::{.fragment}
+::: callout-tip
+## Practice Problems
+
+:::{.nonincremental}
+::: {style="font-size: 30px"}
+
+Simplify the following:
+
+1. $\displaystyle\sum_{i=1}^{5} 4$
+
+2. $\displaystyle\sum_{i=1}^{n} 3x_i$
+
+3. $\dfrac{\partial}{\partial \beta_0}\displaystyle\sum_{i=1}^{n}(y_i - \beta_0)^2$
+
+```{r}
+#| echo: false
+countdown::countdown(
+  minutes = 2,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em",
+)
+```
+
+:::
+:::
+:::
+:::
+
+---
+
 ---
 
 ## How do we pick $\beta_0$ and $\beta_1$? {.smaller}
 
-We need a rule to pick the "best" $\hat{\beta}_0$ and $\hat{\beta}_1$. To do so, we want to make prediction errors small across all observations simultaneously.
+We need a rule to pick the "best" $\widehat{\beta}_0$ and $\widehat{\beta}_1$. To do so, we want to make prediction errors small across all observations simultaneously.
 
 The **residual** for observation $i$ is:
-$$e_i = y_i - \hat{y}_i$$
+$$e_i = y_i - \widehat{y}_i$$
 
-where $\hat{y}_i$ ("y-hat sub $i$") is the **predicted value** $\hat{\beta}_0 + \hat{\beta}_1 x_i$
+where $\widehat{y}_i$ is the **predicted value** $\widehat{\beta}_0 + \widehat{\beta}_1 x_i$
 
 To find the best line, we minimize the **Residual Sum of Squares**:
-$$\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2$$
+$$\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \widehat{y}_i)^2$$
 
 We square the residuals so positive and negative errors don't cancel, and so large errors are penalized more heavily.
 
@@ -63,11 +171,8 @@ We square the residuals so positive and negative errors don't cancel, and so lar
 
 ## The Least Squares Criterion {.smaller}
 
-::: {style="font-size: 0.75em; color: gray;"}
-*Wang, PSTAT 126 Notes (hand1.pdf), p. 17 · ROS Ch. 8.1*
-:::
 
-From the previous slide, $e_i = y_i - \hat{y}_i$. Since the candidate line predicts $\hat{y}_i = \beta_0 + \beta_1 x_i$, substituting gives:
+From the previous slide, $e_i = y_i - \widehat{y}_i$. Since the candidate line predicts $\widehat{y}_i = \beta_0 + \beta_1 x_i$, substituting gives:
 
 $$e_i = y_i - \beta_0 - \beta_1 x_i$$
 
@@ -75,429 +180,495 @@ So the **Residual Sum of Squares** is:
 
 $$\text{RSS}(\beta_0, \beta_1) = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2$$
 
-**Goal:** choose $\hat{\beta}_0$ and $\hat{\beta}_1$ to minimize RSS.
+**Goal:** choose $\widehat{\beta}_0$ and $\widehat{\beta}_1$ to minimize RSS.
 
 ---
 
 ## The Normal Equations {.smaller}
 
-::: {style="font-size: 0.75em; color: gray;"}
-*Wang, PSTAT 126 Notes (hand1.pdf), p. 17 · ROS Ch. 8.1*
-:::
+We have **2 unknowns** ($\beta_0$ and $\beta_1$) and need **2 equations** to pin them down.
 
-RSS is a smooth function of $\beta_0$ and $\beta_1$, so we minimize by calculus. Setting both partial derivatives to zero gives the **normal equations**:
+Setting $\dfrac{\partial \text{RSS}}{\partial \beta_0} = 0$ and $\dfrac{\partial \text{RSS}}{\partial \beta_1} = 0$ each gives one equation — together they form a **system of two linear equations** called the **normal equations**.
 
-$$\frac{\partial \text{RSS}}{\partial \beta_0} = 0 \;\Rightarrow\; \sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0$$
+Recall: $\text{RSS}(\beta_0, \beta_1) = \displaystyle\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2$
 
-$$\frac{\partial \text{RSS}}{\partial \beta_1} = 0 \;\Rightarrow\; \sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0$$
-
-::: {.callout-note}
-The first equation says the residuals **sum to zero** — the line is centered on the data.
-The second says the residuals are **uncorrelated with** $x$ — no systematic trend is left over.
-:::
+**Strategy:** differentiate RSS with respect to each parameter, set each derivative to zero, then use the chain rule and summation rule to simplify.
 
 ---
 
-## Solving the Normal Equations {.smaller}
+## The Normal Equations: Derivation {.smaller}
 
-::: {style="font-size: 0.75em; color: gray;"}
-*Wang, PSTAT 126 Notes (hand1.pdf), p. 18*
+:::: {.columns style="font-size: 0.78em;"}
+
+::: {.column width="50%"}
+
+*Set $\partial\text{RSS}/\partial\beta_0 = 0$:*
+$$\frac{\partial}{\partial \beta_0}\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2 = 0$$
+
+::: {.fragment}
+*Pass derivative through sum (summation rule):*
+$$\sum_{i=1}^{n} \frac{\partial}{\partial \beta_0}(y_i - \beta_0 - \beta_1 x_i)^2 = 0$$
 :::
 
-**Step 1 — solve equation 1 for $\hat{\beta}_0$:**
+::: {.fragment}
+*Chain rule:*
+$$\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-1) = 0$$
+:::
+
+::: {.fragment}
+*Factor out $-2$, then divide both sides by $-2$:*
+$$\sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0$$
+:::
+
+:::
+
+::: {.column width="50%"}
+
+*Set $\partial\text{RSS}/\partial\beta_1 = 0$:*
+$$\frac{\partial}{\partial \beta_1}\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2 = 0$$
+
+::: {.fragment}
+*Pass derivative through sum (summation rule):*
+$$\sum_{i=1}^{n} \frac{\partial}{\partial \beta_1}(y_i - \beta_0 - \beta_1 x_i)^2 = 0$$
+:::
+
+::: {.fragment}
+*Chain rule:*
+$$\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-x_i) = 0$$
+:::
+
+::: {.fragment}
+*Factor out $-2$, then divide both sides by $-2$:*
+$$\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0$$
+:::
+
+:::
+
+::::
+
+
+---
+
+
+## Solving the Normal Equations: Step 1
+
+
+**Solve equation 1 for $\widehat{\beta}_0$:**
 
 $$\sum_{i=1}^n(y_i - \beta_0 - \beta_1 x_i) = 0 \;\Rightarrow\; n\bar{y} - n\beta_0 - n\beta_1\bar{x} = 0$$
 
-$$\boxed{\hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}}$$
+$$\boxed{\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}}$$
 
-**Step 2 — substitute into equation 2 and solve for $\hat{\beta}_1$:**
+---
 
-$$\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0$$
+## Solving the Normal Equations: Step 2 {.smaller}
 
-Replace $\beta_0$ with $\bar{y} - \beta_1\bar{x}$ and rearrange:
+**Substitute into equation 2 and solve for $\widehat{\beta}_1$:**
 
+Start with equation 2 and distribute the sum:
+$$\sum_{i=1}^n x_i y_i - \beta_0\sum_{i=1}^n x_i - \beta_1\sum_{i=1}^n x_i^2 = 0$$
+
+Substitute $\beta_0 = \bar{y} - \beta_1\bar{x}$ and use $\sum x_i = n\bar{x}$:
+$$\sum_{i=1}^n x_i y_i - (\bar{y} - \beta_1\bar{x})\,n\bar{x} - \beta_1\sum_{i=1}^n x_i^2 = 0$$
+
+Expand the multiplication:
+$$\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} + n\bar{x}^2\beta_1 - \beta_1\sum_{i=1}^n x_i^2 = 0$$
+
+---
+
+## Solving the Normal Equations: Step 2 (cont.) {.smaller}
+
+Collect $\beta_1$ terms on the right:
 $$\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} = \beta_1\!\left(\sum_{i=1}^n x_i^2 - n\bar{x}^2\right)$$
 
-$$\boxed{\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}}{\displaystyle\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \frac{S_{xy}}{S_{xx}}}$$
+Divide both sides by $\left(\sum x_i^2 - n\bar{x}^2\right)$:
+
+$$\boxed{\widehat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}}{\displaystyle\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \frac{S_{xy}}{S_{xx}}}$$
+
+---
+
+## Equivalent Form of $\widehat{\beta}_1$ {.smaller}
+
+The numerator and denominator have a cleaner equivalent form. Expanding $\sum(x_i - \bar{x})(y_i - \bar{y})$:
+
+$$\sum(x_i - \bar{x})(y_i - \bar{y}) = \sum x_iy_i - \bar{y}\sum x_i - \bar{x}\sum y_i + n\bar{x}\bar{y}$$
+
+Since $\sum x_i = n\bar{x}$ and $\sum y_i = n\bar{y}$:
+
+$$= \sum x_iy_i - n\bar{x}\bar{y} - n\bar{x}\bar{y} + n\bar{x}\bar{y} = \sum x_iy_i - n\bar{x}\bar{y}$$
+
+The same identity holds for the denominator: $\displaystyle\sum(x_i - \bar{x})^2 = \sum x_i^2 - n\bar{x}^2$
+
+
+So the two forms are equivalent. We will use the simpler form on the next slide. 
 
 ---
 
 ## The OLS Estimators {.smaller}
 
-::: {style="font-size: 0.75em; color: gray;"}
-*Wang, PSTAT 126 Notes (hand1.pdf), p. 18 · ROS Ch. 8.1*
-:::
-
 Solving the normal equations yields:
 
-$$\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2} = \frac{S_{xy}}{S_{xx}}$$
+$$\widehat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2} = \frac{S_{xy}}{S_{xx}}$$
 
-$$\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$$
+$$\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1 \bar{x}$$
 
-::: {.callout-note}
-The OLS line always passes through $(\bar{x},\, \bar{y})$.
-:::
+where:
+
+$$S_{xy} = \sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y}) \quad \text{(co-variation of } x \text{ and } y \text{ around their means)}$$
+
+$$S_{xx} = \sum_{i=1}^n (x_i - \bar{x})^2 \quad \text{(total spread of } x \text{ around its mean)}$$
+
 
 ---
 
 ## Connection to Correlation {.smaller}
 
-::: {style="font-size: 0.75em; color: gray;"}
-*Wang, PSTAT 126 Notes (hand1.pdf), p. 21*
-:::
 
 The OLS slope has a useful rewrite in terms of correlation:
 
-$$\hat{\beta}_1 = r \cdot \frac{s_y}{s_x}$$
+$$\widehat{\beta}_1 = r \cdot \frac{s_y}{s_x}$$
 
 where $r$ is the sample correlation between $x$ and $y$, and $s_x$, $s_y$ are sample standard deviations.
 
 ::: {.incremental}
-- The sign of $\hat{\beta}_1$ always equals the sign of $r$
-- When $r = 0$: slope is 0 — no linear relationship
-- When $|r| = 1$: all points lie exactly on a line — perfect fit
+- The sign of $\widehat{\beta}_1$ always equals the sign of $r$
+- When $r = 0$ $\rightarrow$ slope is 0 $\rightarrow$ no linear relationship
+- When $|r| = 1$ $\rightarrow$ all points lie exactly on a line $\rightarrow$ perfect fit
 :::
 
 ---
 
 ## Properties of the OLS Estimators {.smaller}
 
-::: {style="font-size: 0.75em; color: gray;"}
-*Wang, PSTAT 126 Notes (hand1.pdf), pp. 23–31 · ROS Ch. 8.1*
+::: {style="font-size: 0.82em;"}
+**Notation:** $S_{xx} = \displaystyle\sum_{i=1}^n(x_i - \bar{x})^2$ — total spread of the predictor; $\sigma^2$ — true (unknown) error variance; $\mathbb{E}(\cdot)$ — expected value; $\text{Var}(\cdot)$ — variance.
 :::
 
 ::: {.incremental}
-1. **Linear** — $\hat{\beta}_0$ and $\hat{\beta}_1$ are linear functions of $y_1, \ldots, y_n$
+1. **Linear:** $\widehat{\beta}_0$ and $\widehat{\beta}_1$ are linear functions of $y_1, \ldots, y_n$
 
-2. **Unbiased** — $\mathbb{E}(\hat{\beta}_0) = \beta_0$ and $\mathbb{E}(\hat{\beta}_1) = \beta_1$: on average, the estimates recover the true parameters
+2. **Unbiased:** $\mathbb{E}(\widehat{\beta}_0) = \beta_0$ and $\mathbb{E}(\widehat{\beta}_1) = \beta_1$ — on average, the estimates recover the true parameters
 
-3. **Known variances**:
-$$\text{Var}(\hat{\beta}_1) = \frac{\sigma^2}{S_{xx}}, \qquad \text{Var}(\hat{\beta}_0) = \sigma^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)$$
+3. **Known variances:**
+$$\text{Var}(\widehat{\beta}_1) = \frac{\sigma^2}{S_{xx}}, \qquad \text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)$$
 
-4. **Gauss-Markov (BLUE)** — OLS estimators have the smallest variance among all linear unbiased estimators. No other unbiased linear estimator can do better.
+4. **Gauss-Markov (BLUE):** OLS has the smallest variance among all linear unbiased estimators — no other such estimator can do better.
 :::
 
 ---
 
-## Estimating $\sigma^2$ {.smaller}
+## Property 1: Linearity of $\widehat{\beta}_1$ {.smaller}
 
-::: {style="font-size: 0.75em; color: gray;"}
-*Wang, PSTAT 126 Notes (hand1.pdf), p. 37 · ROS Ch. 8.1*
+::: {style="font-size: 0.82em;"}
+$\widehat{\beta}_1$ is a **linear combination** $\sum a_i y_i$ where weights $a_i$ depend only on $x$. Starting from:
+$\widehat{\beta}_1 = \dfrac{\sum(x_i - \bar{x})(y_i - \bar{y})}{S_{xx}}$
+
+::: {.fragment}
+**Step 1 — split the numerator:**
+$$= \frac{\sum(x_i-\bar{x})y_i \;-\; \sum(x_i-\bar{x})\bar{y}}{S_{xx}}$$
 :::
 
-The error variance $\sigma^2$ is unknown — we estimate it from the residuals.
+::: {.fragment}
+**Step 2 — the second term is zero.** Since $\sum(x_i-\bar{x})=0$ (deviations from mean sum to zero) and $\bar{y}$ is a constant:
+$$\sum(x_i-\bar{x})\bar{y} = \bar{y}\underbrace{\sum(x_i-\bar{x})}_{=\;0} = 0$$
+:::
 
-**Residual Sum of Squares (SSE):**
-$$\text{SSE} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2$$
-
-**Mean Squared Error (MSE) = unbiased estimate of $\sigma^2$:**
-$$\hat{\sigma}^2 = \text{MSE} = \frac{\text{SSE}}{n - 2}$$
-
-We divide by $n - 2$ (not $n$) because estimating $\hat{\beta}_0$ and $\hat{\beta}_1$ uses 2 degrees of freedom. It can be shown that $\mathbb{E}(\text{MSE}) = \sigma^2$.
+::: {.fragment}
+**Step 3 — define weights** $a_i = (x_i - \bar{x})/S_{xx}$, which depend only on $x_i$:
+$$\widehat{\beta}_1 = \frac{\sum(x_i-\bar{x})\,y_i}{S_{xx}} = \sum_{i=1}^n \underbrace{\frac{x_i - \bar{x}}{S_{xx}}}_{a_i} y_i = \sum_{i=1}^n a_i\,y_i \quad \checkmark$$
+:::
+:::
 
 ---
 
-## Fitting the Election Model in R
+## Property 1: Linearity of $\widehat{\beta}_0$ {.smaller}
+
+::: {style="font-size: 0.85em;"}
+From the previous slide, $\widehat{\beta}_1 = \sum a_i y_i$. Now show $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$ is also linear.
+
+**Step 1 — write $\bar{y}$ as a sum** (the sample mean is itself a linear combination):
+$$\bar{y} = \sum_{i=1}^n \frac{1}{n}y_i$$
+
+**Step 2 — substitute and collect** $y_i$ terms:
+$$\widehat{\beta}_0 = \sum_{i=1}^n \frac{1}{n}y_i - \bar{x}\sum_{i=1}^n a_i y_i = \sum_{i=1}^n\!\underbrace{\left(\frac{1}{n} - a_i\bar{x}\right)}_{\text{weight for }y_i}y_i$$
+
+The weights $\left(\tfrac{1}{n} - a_i\bar{x}\right)$ depend only on $x_i$, not $y_i$.
+
+Both $\widehat{\beta}_0$ and $\widehat{\beta}_1$ are linear combinations of $y_1,\ldots,y_n$. 
+:::
+
+---
+
+## Property 2: $\widehat{\beta}_1$ is Unbiased {.smaller}
+
+::: {.callout-note title="Refresher: Expected Value"}
+Key properties:
+
+- $\mathbb{E}(c) = c$
+- $\mathbb{E}(aY) = a\,\mathbb{E}(Y)$
+- $\mathbb{E}(Y_1+Y_2)=\mathbb{E}(Y_1)+\mathbb{E}(Y_2)$
+- $\mathbb{E}\!\left(\sum_i a_i Y_i\right) = \sum_i a_i\,\mathbb{E}(Y_i)$
+:::
+
+**Goal:** show $\mathbb{E}(\widehat{\beta}_1) = \beta_1$, i.e. the estimator is correct on average.
+
+From the model, $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ with $\mathbb{E}(\varepsilon_i)=0$, so $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$.
+
+---
+
+## Property 2: $\widehat{\beta}_1$ is Unbiased (cont.) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+
+Since $a_i$ are constants, linearity of expectation lets us pull them out:
+$$\mathbb{E}(\widehat{\beta}_1) = \mathbb{E}\!\left(\sum_{i=1}^n a_i y_i\right) = \sum_{i=1}^n a_i\,\mathbb{E}(y_i)$$
+
+Substitute $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:
+$$= \sum_{i=1}^n a_i(\beta_0 + \beta_1 x_i) = \beta_0\underbrace{\sum_{i=1}^n a_i}_{=\,0} + \beta_1\underbrace{\sum_{i=1}^n a_i x_i}_{=\,1}$$
+
+**Why the sums equal 0 and 1:** recall $a_i = (x_i - \bar{x})/S_{xx}$
+
+- $\sum a_i = \sum(x_i-\bar{x})/S_{xx} = 0$ since deviations from the mean sum to zero
+- $\sum a_i x_i = \sum(x_i-\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1$
+
+Therefore $\mathbb{E}(\widehat{\beta}_1) = \beta_0 \cdot 0 + \beta_1 \cdot 1 = \beta_1$. 
+
+:::
+
+---
+
+## Property 2: $\widehat{\beta}_0$ is Unbiased {.smaller}
+
+**Goal:** show $\mathbb{E}(\widehat{\beta}_0) = \beta_0$.
+
+**Step 1 — find $\mathbb{E}(\bar{y})$:** expand using the model $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:
+
+$$\mathbb{E}(\bar{y}) = \frac{1}{n}\sum_{i=1}^n \mathbb{E}(y_i) = \frac{1}{n}\sum_{i=1}^n(\beta_0 + \beta_1 x_i) = \frac{1}{n}(n\beta_0 + \beta_1 n\bar{x}) = \beta_0 + \beta_1\bar{x}$$
+
+**Step 2 — apply linearity of expectation to $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$:** since $\bar{x}$ is a fixed constant,
+
+$$\mathbb{E}(\widehat{\beta}_0) = \mathbb{E}(\bar{y}) - \bar{x}\,\mathbb{E}(\widehat{\beta}_1)$$
+
+**Step 3 — substitute and cancel:** plug in $\mathbb{E}(\bar{y}) = \beta_0 + \beta_1\bar{x}$ and $\mathbb{E}(\widehat{\beta}_1) = \beta_1$:
+
+$$\mathbb{E}(\widehat{\beta}_0) = (\beta_0 + \beta_1\bar{x}) - \bar{x}\,\beta_1 = \beta_0 $$
+
+---
+
+## Property 3: Variance of $\widehat{\beta}_1$ {.smaller}
+
+**Goal:** derive the formula $\text{Var}(\widehat{\beta}_1) = \sigma^2 / S_{xx}$.
+
+**Step 1 — apply the variance of a linear combination:** since $y_i$'s are independent with $\text{Var}(y_i)=\sigma^2$, and $a_i$ are fixed constants:
+
+$$\text{Var}(\widehat{\beta}_1) = \text{Var}\!\left(\sum_{i=1}^n a_i y_i\right) \overset{\text{indep.}}{=} \sum_{i=1}^n a_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n a_i^2$$
+
+Independence eliminates all cross-terms $a_ia_j\text{Cov}(y_i,y_j)$ for $i\neq j$.
+
+---
+
+## Property 3: Variance of $\widehat{\beta}_1$ (cont.) {.smaller}
+
+**Step 2 — evaluate $\sum a_i^2$:** substitute $a_i = (x_i-\bar{x})/S_{xx}$ and use $\sum(x_i-\bar{x})^2 = S_{xx}$:
+
+$$\sum_{i=1}^n a_i^2 = \sum_{i=1}^n \frac{(x_i-\bar{x})^2}{S_{xx}^2} = \frac{1}{S_{xx}^2}\underbrace{\sum_{i=1}^n(x_i-\bar{x})^2}_{=\,S_{xx}} = \frac{1}{S_{xx}}$$
+
+**Step 3 — combine:**
+
+$$\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma^2}{S_{xx}} \qquad$$
+
+---
+
+## Property 3: Variance of $\widehat{\beta}_0$ {.smaller}
+
+**Goal:** derive $\text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\tfrac{1}{n}+\tfrac{\bar{x}^2}{S_{xx}}\right)$.
+
+**Step 1 — expand the variance.** Since $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$ and $\bar{x}$ is a fixed constant:
+
+$$\text{Var}(\widehat{\beta}_0) = \text{Var}(\bar{y} - \widehat{\beta}_1\bar{x}) = \text{Var}(\bar{y}) + \bar{x}^2\,\text{Var}(\widehat{\beta}_1) - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
+
+**Step 2 — substitute known variances.** Using $\text{Var}(\bar{y}) = \sigma^2/n$ and $\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}$:
+
+$$= \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
+
+**Step 3 — handle the covariance.** It can be shown that $\text{Cov}(\bar{y}, \widehat{\beta}_1) = 0$ (see [proof](https://en.wikipedia.org/wiki/Simple_linear_regression)), so the last term drops out:
+
+$$\text{Var}(\widehat{\beta}_0) = \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}\right) \qquad$$
+
+---
+
+## Property 4: Gauss-Markov (BLUE) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Goal:** OLS has the smallest variance among all linear unbiased estimators.
+
+Let $b_1^* = \sum_{i=1}^n c_i y_i$ be any competing linear unbiased estimator of $\beta_1$.
+
+**Step 1 — unbiasedness constraints.** We need $\mathbb{E}(b_1^*) = \beta_1$ for all $\beta_0, \beta_1$. Substitute $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:
+$$\mathbb{E}(b_1^*) = \sum_{i=1}^n c_i(\beta_0 + \beta_1 x_i) = \beta_0\sum_{i=1}^n c_i + \beta_1\sum_{i=1}^n c_i x_i$$
+For this to equal $\beta_1$ for *every* possible $\beta_0$ and $\beta_1$, we match coefficients:
+$$\underbrace{\sum_{i=1}^n c_i}_{\text{coeff. of }\beta_0} = 0 \qquad \text{and} \qquad \underbrace{\sum_{i=1}^n c_i x_i}_{\text{coeff. of }\beta_1} = 1$$
+:::
+
+---
+
+## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Step 2 — decompose the weights.** Write $c_i = a_i + d_i$, where $a_i = (x_i-\bar{x})/S_{xx}$ are the OLS weights and $d_i = c_i - a_i$ is the extra piece.
+
+Both $c_i$ and $a_i$ satisfy the same two constraints:
+
+- From Step 1: $\sum c_i = 0$ and $\sum c_i x_i = 1$ (required for $b_1^*$ to be unbiased)
+- From Property 1: $\sum a_i = 0$ and $\sum a_i x_i = 1$ (shown when we proved linearity of $\widehat{\beta}_1$)
+
+Subtracting gives $\sum d_i = 0$ and $\sum d_i x_i = 0$.
+:::
+
+---
+
+## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Step 2 (cont.) — show $\sum a_i d_i = 0$.** We need this so the cross term vanishes when we expand $\sum(a_i + d_i)^2$ in Step 3 — without it we can't isolate $\text{Var}(\widehat{\beta}_1)$. Using $\sum d_i = 0$ and $\sum d_i x_i = 0$:
+$$\sum_{i=1}^n a_i d_i = \frac{\sum(x_i-\bar{x})d_i}{S_{xx}} = \frac{\sum d_i x_i - \bar{x}\sum d_i}{S_{xx}} = \frac{0 - 0}{S_{xx}} = 0$$
+:::
+
+---
+
+## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Step 3 — compare variances.** Two key rules:
+
+- $\text{Var}(cY) = c^2\text{Var}(Y)$ — a constant scales variance by its square
+- $\text{Var}(Y_1 + Y_2) = \text{Var}(Y_1) + \text{Var}(Y_2)$ when $Y_1, Y_2$ are independent (cross terms $2c_ic_j\text{Cov}(y_i,y_j) = 0$)
+
+Applying both to $b_1^* = \sum c_i y_i$ with independent $y_i$'s and $\text{Var}(y_i) = \sigma^2$:
+$$\text{Var}(b_1^*) = \sum_{i=1}^n c_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n c_i^2$$
+:::
+
+---
+
+## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+Substitute $c_i = a_i + d_i$ and expand:
+
+$$\sigma^2\sum(a_i + d_i)^2 = \sigma^2\!\left(\sum a_i^2 + 2\underbrace{\sum a_i d_i}_{=\;0} + \sum d_i^2\right) = \sigma^2\sum a_i^2 + \sigma^2\sum d_i^2$$
+
+Recognizing $\sigma^2 \sum a_i^2 = \text{Var}(\widehat{\beta}_1)$:
+
+$$\text{Var}(b_1^*) = \text{Var}(\widehat{\beta}_1) + \underbrace{\sigma^2 \sum d_i^2}_{\geq\;0} \;\geq\; \text{Var}(\widehat{\beta}_1) \qquad $$
+
+The extra term $\sigma^2\sum d_i^2 \geq 0$ always — with equality only when $d_i = 0$ for all $i$, i.e. when $b_1^* = \widehat{\beta}_1$.
+:::
+
+---
+
+## Practice: Computing OLS Estimates {.smaller}
+
+A researcher records daily exercise hours ($x$) and wellness score ($y$, out of 15) for $n = 5$ students:
+
+:::: {.columns}
+
+::: {.column width="38%"}
+
+| $i$ | $x_i$ | $y_i$ |
+|:---:|:------:|:------:|
+| 1 | 1 | 4 |
+| 2 | 2 | 3 |
+| 3 | 3 | 8 |
+| 4 | 4 | 9 |
+| 5 | 5 | 11 |
+
+::: {style="font-size: 0.85em;"}
+**Given:** $\bar{x} = 3$, $\;\bar{y} = 7$, $\;S_{xx} = 10$, $\;S_{xy} = 20$
+:::
+
+:::
+
+::: {.column width="62%"}
+
+**Compute:**
+
+1. $\widehat{\beta}_1 = S_{xy} / S_{xx}$
+
+2. $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$
+
+3. Fitted values $\;\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i$
+
+4. Residuals $\;e_i = y_i - \widehat{y}_i$
 
 ```{r}
-#| echo: true
-#| eval: false
-hibbs <- read.table("hibbs.dat", header = TRUE)
-fit   <- lm(vote ~ growth, data = hibbs)
-summary(fit)
+#| echo: false
+countdown::countdown(
+  minutes = 5,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em",
+)
 ```
 
-```
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)
-(Intercept)  46.248      1.623   28.50  < 2e-16 ***
-growth        3.061      0.710    4.31  0.00076 ***
-
-Residual standard error: 3.763 on 14 degrees of freedom
-Multiple R-squared: 0.5700
-```
-
----
-
-## Reading the `lm()` Output {.smaller}
-
-| Term | What it means |
-|:---|:---|
-| `(Intercept)` | $\hat{\beta}_0 = 46.2$: predicted vote share when growth = 0% |
-| `growth` | $\hat{\beta}_1 = 3.1$: predicted change in vote share per 1% more income growth |
-| `Std. Error` | Estimated standard error of each coefficient |
-| `t value` | Coefficient estimate divided by its standard error |
-| `Pr(>|t|)` | p-value for the hypothesis $H_0: \beta = 0$ |
-| `Residual standard error` | $\hat{\sigma} = 3.76$: typical size of prediction errors |
-| `Multiple R-squared` | $R^2 = 0.57$: fraction of variance in $y$ explained by the model |
-
----
-
-## Residuals and Model Fit {background-color="#003660"}
-
----
-
-## Accessing Residuals in R
-
-```{r}
-#| echo: true
-#| eval: false
-residuals(fit)   # e_i = y_i - y_hat_i
-fitted(fit)      # y_hat_i = beta0_hat + beta1_hat * x_i
-
-# Residual plot
-plot(fitted(fit), residuals(fit),
-     xlab = "Fitted values",
-     ylab = "Residuals",
-     main = "Residuals vs. Fitted")
-abline(h = 0, lty = 2, col = "gray50")
-```
-
-A well-fitted model has residuals that are centered at zero with no systematic pattern.
-
----
-
-## Estimating $\sigma$
-
-The true error variance $\sigma^2$ is unknown — we estimate it from the residuals:
-
-$$\hat{\sigma}^2 = \frac{\text{RSS}}{n - 2} = \frac{\displaystyle\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n - 2}$$
-
-We divide by $n - 2$ — not $n$ — because we estimated **two parameters** ($\beta_0$ and $\beta_1$) from the data, using up 2 degrees of freedom.
-
----
-
-## What Does $\hat{\sigma}$ Tell Us?
-
-$\hat{\sigma}$ is the **residual standard deviation** — the typical size of prediction errors, on the scale of $y$.
-
-For the election model: $\hat{\sigma} = 3.76$ percentage points.
-
-**Interpretation:** Even with the best linear prediction using income growth, vote shares typically deviate from predictions by about **3.8 percentage points**.
-
-::: {.callout-tip}
-Compare $\hat{\sigma}$ to the spread of $y$ to assess predictive accuracy. A small $\hat{\sigma}$ relative to the range of $y$ indicates a useful model.
 :::
 
----
-
-## $R^2$: Proportion of Variance Explained
-
-$$R^2 = 1 - \frac{\text{RSS}}{\text{TSS}} = 1 - \frac{\displaystyle\sum(y_i - \hat{y}_i)^2}{\displaystyle\sum(y_i - \bar{y})^2}$$
-
-- **TSS** = Total Sum of Squares — variance in $y$ if we ignored $x$ entirely
-- $R^2 = 0$: the model explains nothing; predicting $\bar{y}$ is just as good
-- $R^2 = 1$: the model explains everything; residuals are all zero
-- Election model: $R^2 = 0.57$ — income growth explains **57%** of the variation in vote share
-
-::: {.callout-caution}
-High $R^2$ does not mean the model is correct or causal — it only measures linear fit.
-:::
+::::
 
 ---
 
-## Standard Errors {background-color="#003660"}
+## Practice: Solution {.smaller}
 
----
+:::: {.columns}
 
-## What is a Standard Error?
-
-A **standard error** measures the precision of a sample estimate.
-
-Imagine drawing many independent samples of size $n$ from the same population and computing $\hat{\beta}_1$ each time. The standard deviation of those estimates across samples is the **standard error** of $\hat{\beta}_1$.
-
-$$\text{SE}(\hat{\beta}_1) = \frac{\hat{\sigma}}{\sqrt{S_{xx}}} = \frac{\hat{\sigma}}{\sqrt{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2}}$$
-
----
-
-## What Makes Standard Errors Smaller?
-
-$$\text{SE}(\hat{\beta}_1) = \frac{\hat{\sigma}}{\sqrt{\sum(x_i - \bar{x})^2}}$$
-
-Standard errors are **smaller** (more precise estimates) when:
-
-::: {.incremental}
-- $\hat{\sigma}$ is small — less noise in the data
-- Predictors $x$ are more spread out — more information about the slope
-- Sample size $n$ is larger — more data overall
-:::
-
----
-
-## Confidence Intervals for Coefficients
-
-A **95% confidence interval** for $\beta_1$ is:
-
-$$\hat{\beta}_1 \pm t_{n-2,\,0.025} \cdot \text{SE}(\hat{\beta}_1)$$
-
-For the election model ($n = 16$, $t_{14, 0.025} \approx 2.14$):
-
-$$3.06 \pm 2.14 \times 0.71 \approx (1.54,\; 4.58)$$
-
-**Interpretation:** We are 95% confident the true slope lies between 1.54 and 4.58 — a 1% increase in income growth is associated with between 1.5 and 4.6 more percentage points of vote share.
-
----
-
-## Regression as Comparison {background-color="#003660"}
-
----
-
-## Comparing Two Groups as Regression
-
-Regression is a generalization of simpler statistical comparisons.
-
-**Comparing a single mean:** regress $y$ on just a constant:
-$$y_i = \mu + \varepsilon_i \quad \Longrightarrow \quad \hat{\mu} = \bar{y}$$
-
-**Comparing two groups:** let $x_i \in \{0, 1\}$ be a binary group indicator:
-$$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$$
-
-- $\hat{\beta}_0 = \bar{y}_{\text{group 0}}$
-- $\hat{\beta}_1 = \bar{y}_{\text{group 1}} - \bar{y}_{\text{group 0}}$
-
-This is algebraically equivalent to a two-sample $t$-test (assuming equal variances).
-
----
-
-## Regression Generalizes the $t$-test
-
-```{r}
-#| echo: true
-#| eval: false
-# Suppose x is a binary 0/1 indicator (e.g., treatment vs. control)
-t.test(y ~ x, var.equal = TRUE)
-
-# Produces the same estimate as:
-lm(y ~ x)
-```
-
-Regression is strictly more general — it can:
-
-- Handle continuous predictors
-- Adjust for additional variables simultaneously (multiple regression)
-- Accommodate more than two groups via indicator coding
-
----
-
-## Making Predictions
-
-Given a new observation with predictor value $x^*$, the predicted outcome is:
-
-$$\hat{y}^* = \hat{\beta}_0 + \hat{\beta}_1 x^*$$
-
-**Example:** What vote share does the model predict when income growth = 2%?
-
-$$\hat{y} = 46.2 + 3.1 \times 2 = 52.4\%$$
-
-::: {.callout-warning}
-## Extrapolation
-Predicting far outside the range of the observed $x$ values is unreliable. The linear relationship may not hold beyond the data.
-:::
-
----
-
-## Brief Intro: Fake-Data Simulation
-
-A powerful way to **validate** our fitting procedure: simulate data from a known model, then check whether we can recover the true parameters.
-
-```{r}
-#| echo: true
-#| eval: false
-set.seed(42)
-n     <- 50
-x     <- runif(n, min = 0, max = 10)
-
-# True (known) parameters
-beta0 <- 2
-beta1 <- 3
-sigma <- 5
-
-y   <- beta0 + beta1 * x + rnorm(n, mean = 0, sd = sigma)
-fit <- lm(y ~ x)
-coef(fit)  # should be close to (2, 3)
-```
-
-If estimates are far from the truth on simulated data, something is wrong with our procedure.
-
----
-
-
-## Coefficients as Comparisons {background-color="#003660"}
-
----
-
-## Regression Coefficients Describe Comparisons
-
-A regression slope $\hat{\beta}_1$ compares groups of units that differ by 1 unit in $x$.
-
-$\hat{\beta}_1$ is the estimated average difference in $y$ between two otherwise-similar observations where $x$ differs by 1 unit.
-
-::: {.callout-important}
-## Correlation $\neq$ Causation
-Regression coefficients describe **associations** in data. They do not, by themselves, establish causal relationships.
-:::
-
----
-
-## Why "Effect" Language Can Mislead
-
-Consider: *"Each year of education **increases** income by $5,000."*
-
-This phrasing implies a causal mechanism — that giving someone more education *would* change their income by $5,000.
-
-What the regression actually estimates:
-
-> "People with one more year of education earn, **on average**, $5,000 more than people with one fewer year of education."
-
-The difference matters when drawing policy conclusions.
-
----
-
-## A Better Framing
-
-::: {.columns}
 ::: {.column width="48%"}
-**Avoid:**
 
-*"Education increases income by $5,000."*
-:::
-::: {.column width="48%"}
-**Prefer:**
+**Steps 1–2: Estimates**
 
-*"Comparing people who differ by one year of education, those with more education earn $5,000 more on average."*
-:::
+$$\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{20}{10} = 2$$
+
+$$\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x} = 7 - 2(3) = 1$$
+
+Fitted line: $\;\widehat{y} = 1 + 2x$
+
 :::
 
-Regression describes **comparisons across units in the data**. Causal claims require additional study design considerations beyond this course.
+::: {.column width="52%"}
+
+**Steps 3–4: Fitted values and residuals**
+
+| $i$ | $x_i$ | $y_i$ | $\widehat{y}_i$ | $e_i$ |
+|:---:|:------:|:------:|:---------------:|:-----:|
+| 1 | 1 | 4 | 3 | 1 |
+| 2 | 2 | 3 | 5 | −2 |
+| 3 | 3 | 8 | 7 | 1 |
+| 4 | 4 | 9 | 9 | 0 |
+| 5 | 5 | 11 | 11 | 0 |
+
+:::
+
+::::
 
 ---
 
 ## Summary {.smaller}
 
 ::: {.incremental}
-- **OLS** chooses $\hat{\beta}_0$ and $\hat{\beta}_1$ by minimizing $\text{RSS} = \sum(y_i - \hat{y}_i)^2$
-- Closed-form solution: $\hat{\beta}_1 = S_{xy}/S_{xx}$, $\;\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}$
-- **Residuals** $e_i = y_i - \hat{y}_i$ measure prediction errors
-- **$\hat{\sigma}$** is the residual SD — typical prediction error — estimated by $\sqrt{\text{RSS}/(n-2)}$
-- **$R^2$** is the proportion of variance in $y$ explained by $x$ — useful but limited
-- **Standard errors** quantify uncertainty in coefficient estimates
-- Regression with a binary predictor generalizes the two-sample $t$-test
-- **Fake-data simulation** is a principled tool for validating our fitting procedure
+- **Least squares:** OLS picks $\widehat{\beta}_0$ and $\widehat{\beta}_1$ to minimize $\text{RSS} = \sum(y_i - \widehat{y}_i)^2$
+- **Normal equations** give closed-form solutions: $\widehat{\beta}_1 = S_{xy}/S_{xx}$, $\;\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$
+- **Residuals** $e_i = y_i - \widehat{y}_i$ measure how far each observation falls from the fitted line
+- **Property 1 (Linearity):** both estimators are linear combinations of $y_1, \ldots, y_n$
+- **Property 2 (Unbiasedness):** $\mathbb{E}(\widehat{\beta}_0) = \beta_0$ and $\mathbb{E}(\widehat{\beta}_1) = \beta_1$
+- **Property 3 (Known variances):** $\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}$, $\;\text{Var}(\widehat{\beta}_0) = \sigma^2(1/n + \bar{x}^2/S_{xx})$
+- **Property 4 (Gauss-Markov):** OLS is BLUE — smallest variance among all linear unbiased estimators
 :::
 
 ---
 
-## Looking Ahead
-
-**Week 2:** Multiple Linear Regression
-
-- Adding more predictors: $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \varepsilon$
-- Interpreting partial slopes — "holding other predictors constant"
-- Indicator variables and categorical predictors
-
-**Reading:** *Regression and Other Stories*, Chapters 7.2–7.3 & Chapter 8
-
----
 
 ## Questions? {background-color="#003660"}
 

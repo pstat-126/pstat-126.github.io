@@ -10,6 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Annie Adams">
+  <meta name="dcterms.date" content="2026-09-30">
   <title>PSTAT 126 – Lecture 2: Fitting the Simple Linear Model</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -34,72 +35,6 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    html { -webkit-text-size-adjust: 100%; }
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-587359f803ea82c42dd9086c2159450a.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -193,6 +128,8 @@
       margin-right: 0; 
     }
   </style>
+  <link href="../site_libs/countdown-0.6.0/countdown.css" rel="stylesheet">
+  <script src="../site_libs/countdown-0.6.0/countdown.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -200,7 +137,7 @@
 
 <section id="title-slide" data-background-color="#003660" class="quarto-title-block center">
   <h1 class="title">Lecture 2: Fitting the Simple Linear Model</h1>
-  <p class="subtitle">PSTAT 126 — Linear Regression</p>
+  <p class="subtitle">PSTAT 126: Linear Regression</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -213,17 +150,17 @@ Annie Adams
     </div>
 </div>
 
-  <p class="date">Invalid Date</p>
+  <p class="date">2026-09-30</p>
 </section>
 <section id="review-the-simple-linear-model" class="slide level2">
 <h2>Review: The Simple Linear Model</h2>
 <p>From Monday, the simple linear regression model is:</p>
 <p><span class="math display">\[y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \quad \varepsilon_i \overset{\text{iid}}{\sim} \mathcal{N}(0, \sigma^2)\]</span></p>
 <ul>
-<li><span class="math inline">\(\beta_1\)</span> is a <strong>comparison</strong> between units — not a causal effect</li>
-<li>The fitted line <span class="math inline">\(\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x\)</span> summarizes the relationship</li>
+<li><span class="math inline">\(\beta_1\)</span> is a <strong>comparison</strong> between units</li>
+<li>The fitted line <span class="math inline">\(\widehat{y} = \widehat{\beta}_0 + \widehat{\beta}_1 x\)</span> summarizes the relationship</li>
 </ul>
-<p><strong>Today:</strong> How do we estimate <span class="math inline">\(\hat{\beta}_0\)</span>, <span class="math inline">\(\hat{\beta}_1\)</span>, and <span class="math inline">\(\sigma\)</span> from data?</p>
+<p><strong>Today:</strong> How do we estimate <span class="math inline">\(\widehat{\beta}_0\)</span>, <span class="math inline">\(\widehat{\beta}_1\)</span>, and <span class="math inline">\(\sigma\)</span> from data?</p>
 </section>
 <section id="learning-objectives" class="slide level2">
 <h2>Learning Objectives</h2>
@@ -232,7 +169,7 @@ Annie Adams
 <li>Explain the least squares criterion and apply it conceptually</li>
 <li>State the OLS formulas for the slope and intercept</li>
 <li>Compute and interpret fitted values and residuals</li>
-<li>Interpret the residual standard deviation <span class="math inline">\(\hat{\sigma}\)</span> and <span class="math inline">\(R^2\)</span></li>
+<li>Interpret the residual standard deviation <span class="math inline">\(\widehat{\sigma}\)</span> and <span class="math inline">\(R^2\)</span></li>
 <li>Explain what a standard error measures</li>
 <li>Use <code>lm()</code> in R to fit a simple linear regression and read its output</li>
 </ul>
@@ -240,406 +177,645 @@ Annie Adams
 <section id="least-squares-estimation" class="slide level2" data-background-color="#003660">
 <h2>Least Squares Estimation</h2>
 </section>
-<section id="how-do-we-pick-beta_0-and-beta_1" class="slide level2 smaller">
-<h2>How do we pick <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>?</h2>
-<p>We need a rule to pick the “best” <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>. To do so, we want to make prediction errors small across all observations simultaneously.</p>
-<p>The <strong>residual</strong> for observation <span class="math inline">\(i\)</span> is: <span class="math display">\[e_i = y_i - \hat{y}_i\]</span></p>
-<p>where <span class="math inline">\(\hat{y}_i\)</span> (“y-hat sub <span class="math inline">\(i\)</span>”) is the <strong>predicted value</strong> <span class="math inline">\(\hat{\beta}_0 + \hat{\beta}_1 x_i\)</span></p>
-<p>To find the best line, we minimize the <strong>Residual Sum of Squares</strong>: <span class="math display">\[\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2\]</span></p>
-<p>We square the residuals so positive and negative errors don’t cancel, and so large errors are penalized more heavily.</p>
+<section id="mini-refresher-derivatives" class="slide level2 smaller">
+<h2>Mini Refresher: Derivatives</h2>
+<p><strong>Power rule:</strong> <span class="math inline">\(\frac{d}{dx} x^n = nx^{n-1}\)</span></p>
+<p><strong>Chain rule:</strong> <span class="math inline">\(\frac{d}{dx} f(g(x)) = f'(g(x)) \cdot g'(x)\)</span></p>
+<p><strong>Partial derivatives:</strong> treat all other variables as constants and differentiate with respect to one variable at a time.</p>
+<p><strong>Example:</strong> <span class="math inline">\(\dfrac{\partial}{\partial \beta_0}(y - \beta_0 - \beta_1 x)^2 = 2(y - \beta_0 - \beta_1 x) \cdot (-1)\)</span></p>
 </section>
-<section id="the-least-squares-criterion" class="slide level2 smaller">
-<h2>The Least Squares Criterion</h2>
-<div style="font-size: 0.75em; color: gray;">
-<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;17 · ROS Ch. 8.1</em></p>
-</div>
-<p>From the previous slide, <span class="math inline">\(e_i = y_i - \hat{y}_i\)</span>. Since the candidate line predicts <span class="math inline">\(\hat{y}_i = \beta_0 + \beta_1 x_i\)</span>, substituting gives:</p>
-<p><span class="math display">\[e_i = y_i - \beta_0 - \beta_1 x_i\]</span></p>
-<p>So the <strong>Residual Sum of Squares</strong> is:</p>
-<p><span class="math display">\[\text{RSS}(\beta_0, \beta_1) = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2\]</span></p>
-<p><strong>Goal:</strong> choose <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> to minimize RSS.</p>
-</section>
-<section id="the-normal-equations" class="slide level2 smaller">
-<h2>The Normal Equations</h2>
-<div style="font-size: 0.75em; color: gray;">
-<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;17 · ROS Ch. 8.1</em></p>
-</div>
-<p>RSS is a smooth function of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, so we minimize by calculus. Setting both partial derivatives to zero gives the <strong>normal equations</strong>:</p>
-<p><span class="math display">\[\frac{\partial \text{RSS}}{\partial \beta_0} = 0 \;\Rightarrow\; \sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
-<p><span class="math display">\[\frac{\partial \text{RSS}}{\partial \beta_1} = 0 \;\Rightarrow\; \sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>The first equation says the residuals <strong>sum to zero</strong> — the line is centered on the data. The second says the residuals are <strong>uncorrelated with</strong> <span class="math inline">\(x\)</span> — no systematic trend is left over.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="solving-the-normal-equations" class="slide level2 smaller">
-<h2>Solving the Normal Equations</h2>
-<div style="font-size: 0.75em; color: gray;">
-<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;18</em></p>
-</div>
-<p><strong>Step 1 — solve equation 1 for <span class="math inline">\(\hat{\beta}_0\)</span>:</strong></p>
-<p><span class="math display">\[\sum_{i=1}^n(y_i - \beta_0 - \beta_1 x_i) = 0 \;\Rightarrow\; n\bar{y} - n\beta_0 - n\beta_1\bar{x} = 0\]</span></p>
-<p><span class="math display">\[\boxed{\hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x}}\]</span></p>
-<p><strong>Step 2 — substitute into equation 2 and solve for <span class="math inline">\(\hat{\beta}_1\)</span>:</strong></p>
-<p><span class="math display">\[\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
-<p>Replace <span class="math inline">\(\beta_0\)</span> with <span class="math inline">\(\bar{y} - \beta_1\bar{x}\)</span> and rearrange:</p>
-<p><span class="math display">\[\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} = \beta_1\!\left(\sum_{i=1}^n x_i^2 - n\bar{x}^2\right)\]</span></p>
-<p><span class="math display">\[\boxed{\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}}{\displaystyle\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \frac{S_{xy}}{S_{xx}}}\]</span></p>
-</section>
-<section id="the-ols-estimators" class="slide level2 smaller">
-<h2>The OLS Estimators</h2>
-<div style="font-size: 0.75em; color: gray;">
-<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;18 · ROS Ch. 8.1</em></p>
-</div>
-<p>Solving the normal equations yields:</p>
-<p><span class="math display">\[\hat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2} = \frac{S_{xy}}{S_{xx}}\]</span></p>
-<p><span class="math display">\[\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}\]</span></p>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>The OLS line always passes through <span class="math inline">\((\bar{x},\, \bar{y})\)</span>.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="connection-to-correlation" class="slide level2 smaller">
-<h2>Connection to Correlation</h2>
-<div style="font-size: 0.75em; color: gray;">
-<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;21</em></p>
-</div>
-<p>The OLS slope has a useful rewrite in terms of correlation:</p>
-<p><span class="math display">\[\hat{\beta}_1 = r \cdot \frac{s_y}{s_x}\]</span></p>
-<p>where <span class="math inline">\(r\)</span> is the sample correlation between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, and <span class="math inline">\(s_x\)</span>, <span class="math inline">\(s_y\)</span> are sample standard deviations.</p>
-<ul>
-<li class="fragment">The sign of <span class="math inline">\(\hat{\beta}_1\)</span> always equals the sign of <span class="math inline">\(r\)</span></li>
-<li class="fragment">When <span class="math inline">\(r = 0\)</span>: slope is 0 — no linear relationship</li>
-<li class="fragment">When <span class="math inline">\(|r| = 1\)</span>: all points lie exactly on a line — perfect fit</li>
-</ul>
-</section>
-<section id="properties-of-the-ols-estimators" class="slide level2 smaller">
-<h2>Properties of the OLS Estimators</h2>
-<div style="font-size: 0.75em; color: gray;">
-<p><em>Wang, PSTAT 126 Notes (hand1.pdf), pp.&nbsp;23–31 · ROS Ch. 8.1</em></p>
-</div>
-<ol type="1">
-<li class="fragment"><p><strong>Linear</strong> — <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are linear functions of <span class="math inline">\(y_1, \ldots, y_n\)</span></p></li>
-<li class="fragment"><p><strong>Unbiased</strong> — <span class="math inline">\(\mathbb{E}(\hat{\beta}_0) = \beta_0\)</span> and <span class="math inline">\(\mathbb{E}(\hat{\beta}_1) = \beta_1\)</span>: on average, the estimates recover the true parameters</p></li>
-<li class="fragment"><p><strong>Known variances</strong>: <span class="math display">\[\text{Var}(\hat{\beta}_1) = \frac{\sigma^2}{S_{xx}}, \qquad \text{Var}(\hat{\beta}_0) = \sigma^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)\]</span></p></li>
-<li class="fragment"><p><strong>Gauss-Markov (BLUE)</strong> — OLS estimators have the smallest variance among all linear unbiased estimators. No other unbiased linear estimator can do better.</p></li>
-</ol>
-</section>
-<section id="estimating-sigma2" class="slide level2 smaller">
-<h2>Estimating <span class="math inline">\(\sigma^2\)</span></h2>
-<div style="font-size: 0.75em; color: gray;">
-<p><em>Wang, PSTAT 126 Notes (hand1.pdf), p.&nbsp;37 · ROS Ch. 8.1</em></p>
-</div>
-<p>The error variance <span class="math inline">\(\sigma^2\)</span> is unknown — we estimate it from the residuals.</p>
-<p><strong>Residual Sum of Squares (SSE):</strong> <span class="math display">\[\text{SSE} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2\]</span></p>
-<p><strong>Mean Squared Error (MSE) = unbiased estimate of <span class="math inline">\(\sigma^2\)</span>:</strong> <span class="math display">\[\hat{\sigma}^2 = \text{MSE} = \frac{\text{SSE}}{n - 2}\]</span></p>
-<p>We divide by <span class="math inline">\(n - 2\)</span> (not <span class="math inline">\(n\)</span>) because estimating <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> uses 2 degrees of freedom. It can be shown that <span class="math inline">\(\mathbb{E}(\text{MSE}) = \sigma^2\)</span>.</p>
-</section>
-<section id="fitting-the-election-model-in-r" class="slide level2">
-<h2>Fitting the Election Model in R</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>hibbs <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"hibbs.dat"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-2"><a aria-label="2"></a>fit   <span class="ot">&lt;-</span> <span class="fu">lm</span>(vote <span class="sc">~</span> growth, <span class="at">data =</span> hibbs)</span>
-<span id="cb1-3"><a aria-label="3"></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<pre><code>Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept)  46.248      1.623   28.50  &lt; 2e-16 ***
-growth        3.061      0.710    4.31  0.00076 ***
-
-Residual standard error: 3.763 on 14 degrees of freedom
-Multiple R-squared: 0.5700</code></pre>
-</section>
-<section id="reading-the-lm-output" class="slide level2 smaller">
-<h2>Reading the <code>lm()</code> Output</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Term</th>
-<th style="text-align: left;">What it means</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><code>(Intercept)</code></td>
-<td style="text-align: left;"><span class="math inline">\(\hat{\beta}_0 = 46.2\)</span>: predicted vote share when growth = 0%</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>growth</code></td>
-<td style="text-align: left;"><span class="math inline">\(\hat{\beta}_1 = 3.1\)</span>: predicted change in vote share per 1% more income growth</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>Std. Error</code></td>
-<td style="text-align: left;">Estimated standard error of each coefficient</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>t value</code></td>
-<td style="text-align: left;">Coefficient estimate divided by its standard error</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>Pr(&gt;|t|)</code></td>
-<td style="text-align: left;">p-value for the hypothesis <span class="math inline">\(H_0: \beta = 0\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>Residual standard error</code></td>
-<td style="text-align: left;"><span class="math inline">\(\hat{\sigma} = 3.76\)</span>: typical size of prediction errors</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>Multiple R-squared</code></td>
-<td style="text-align: left;"><span class="math inline">\(R^2 = 0.57\)</span>: fraction of variance in <span class="math inline">\(y\)</span> explained by the model</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="residuals-and-model-fit" class="slide level2" data-background-color="#003660">
-<h2>Residuals and Model Fit</h2>
-</section>
-<section id="accessing-residuals-in-r" class="slide level2">
-<h2>Accessing Residuals in R</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="fu">residuals</span>(fit)   <span class="co"># e_i = y_i - y_hat_i</span></span>
-<span id="cb3-2"><a aria-label="2"></a><span class="fu">fitted</span>(fit)      <span class="co"># y_hat_i = beta0_hat + beta1_hat * x_i</span></span>
-<span id="cb3-3"><a aria-label="3"></a></span>
-<span id="cb3-4"><a aria-label="4"></a><span class="co"># Residual plot</span></span>
-<span id="cb3-5"><a aria-label="5"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit), <span class="fu">residuals</span>(fit),</span>
-<span id="cb3-6"><a aria-label="6"></a>     <span class="at">xlab =</span> <span class="st">"Fitted values"</span>,</span>
-<span id="cb3-7"><a aria-label="7"></a>     <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
-<span id="cb3-8"><a aria-label="8"></a>     <span class="at">main =</span> <span class="st">"Residuals vs. Fitted"</span>)</span>
-<span id="cb3-9"><a aria-label="9"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"gray50"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>A well-fitted model has residuals that are centered at zero with no systematic pattern.</p>
-</section>
-<section id="estimating-sigma" class="slide level2">
-<h2>Estimating <span class="math inline">\(\sigma\)</span></h2>
-<p>The true error variance <span class="math inline">\(\sigma^2\)</span> is unknown — we estimate it from the residuals:</p>
-<p><span class="math display">\[\hat{\sigma}^2 = \frac{\text{RSS}}{n - 2} = \frac{\displaystyle\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n - 2}\]</span></p>
-<p>We divide by <span class="math inline">\(n - 2\)</span> — not <span class="math inline">\(n\)</span> — because we estimated <strong>two parameters</strong> (<span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>) from the data, using up 2 degrees of freedom.</p>
-</section>
-<section id="what-does-hatsigma-tell-us" class="slide level2">
-<h2>What Does <span class="math inline">\(\hat{\sigma}\)</span> Tell Us?</h2>
-<p><span class="math inline">\(\hat{\sigma}\)</span> is the <strong>residual standard deviation</strong> — the typical size of prediction errors, on the scale of <span class="math inline">\(y\)</span>.</p>
-<p>For the election model: <span class="math inline">\(\hat{\sigma} = 3.76\)</span> percentage points.</p>
-<p><strong>Interpretation:</strong> Even with the best linear prediction using income growth, vote shares typically deviate from predictions by about <strong>3.8 percentage points</strong>.</p>
+<section id="practice-problems" class="slide level2">
+<h2>Practice Problems</h2>
+<div class="fragment">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Tip</strong></p>
+<p><strong>Practice Problems</strong></p>
 </div>
 <div class="callout-content">
-<p>Compare <span class="math inline">\(\hat{\sigma}\)</span> to the spread of <span class="math inline">\(y\)</span> to assess predictive accuracy. A small <span class="math inline">\(\hat{\sigma}\)</span> relative to the range of <span class="math inline">\(y\)</span> indicates a useful model.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="r2-proportion-of-variance-explained" class="slide level2">
-<h2><span class="math inline">\(R^2\)</span>: Proportion of Variance Explained</h2>
-<p><span class="math display">\[R^2 = 1 - \frac{\text{RSS}}{\text{TSS}} = 1 - \frac{\displaystyle\sum(y_i - \hat{y}_i)^2}{\displaystyle\sum(y_i - \bar{y})^2}\]</span></p>
-<ul>
-<li><strong>TSS</strong> = Total Sum of Squares — variance in <span class="math inline">\(y\)</span> if we ignored <span class="math inline">\(x\)</span> entirely</li>
-<li><span class="math inline">\(R^2 = 0\)</span>: the model explains nothing; predicting <span class="math inline">\(\bar{y}\)</span> is just as good</li>
-<li><span class="math inline">\(R^2 = 1\)</span>: the model explains everything; residuals are all zero</li>
-<li>Election model: <span class="math inline">\(R^2 = 0.57\)</span> — income growth explains <strong>57%</strong> of the variation in vote share</li>
-</ul>
-<div class="callout callout-caution callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Caution</strong></p>
-</div>
-<div class="callout-content">
-<p>High <span class="math inline">\(R^2\)</span> does not mean the model is correct or causal — it only measures linear fit.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="standard-errors" class="slide level2" data-background-color="#003660">
-<h2>Standard Errors</h2>
-</section>
-<section id="what-is-a-standard-error" class="slide level2">
-<h2>What is a Standard Error?</h2>
-<p>A <strong>standard error</strong> measures the precision of a sample estimate.</p>
-<p>Imagine drawing many independent samples of size <span class="math inline">\(n\)</span> from the same population and computing <span class="math inline">\(\hat{\beta}_1\)</span> each time. The standard deviation of those estimates across samples is the <strong>standard error</strong> of <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
-<p><span class="math display">\[\text{SE}(\hat{\beta}_1) = \frac{\hat{\sigma}}{\sqrt{S_{xx}}} = \frac{\hat{\sigma}}{\sqrt{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2}}\]</span></p>
-</section>
-<section id="what-makes-standard-errors-smaller" class="slide level2">
-<h2>What Makes Standard Errors Smaller?</h2>
-<p><span class="math display">\[\text{SE}(\hat{\beta}_1) = \frac{\hat{\sigma}}{\sqrt{\sum(x_i - \bar{x})^2}}\]</span></p>
-<p>Standard errors are <strong>smaller</strong> (more precise estimates) when:</p>
-<ul>
-<li class="fragment"><span class="math inline">\(\hat{\sigma}\)</span> is small — less noise in the data</li>
-<li class="fragment">Predictors <span class="math inline">\(x\)</span> are more spread out — more information about the slope</li>
-<li class="fragment">Sample size <span class="math inline">\(n\)</span> is larger — more data overall</li>
-</ul>
-</section>
-<section id="confidence-intervals-for-coefficients" class="slide level2">
-<h2>Confidence Intervals for Coefficients</h2>
-<p>A <strong>95% confidence interval</strong> for <span class="math inline">\(\beta_1\)</span> is:</p>
-<p><span class="math display">\[\hat{\beta}_1 \pm t_{n-2,\,0.025} \cdot \text{SE}(\hat{\beta}_1)\]</span></p>
-<p>For the election model (<span class="math inline">\(n = 16\)</span>, <span class="math inline">\(t_{14, 0.025} \approx 2.14\)</span>):</p>
-<p><span class="math display">\[3.06 \pm 2.14 \times 0.71 \approx (1.54,\; 4.58)\]</span></p>
-<p><strong>Interpretation:</strong> We are 95% confident the true slope lies between 1.54 and 4.58 — a 1% increase in income growth is associated with between 1.5 and 4.6 more percentage points of vote share.</p>
-</section>
-<section id="regression-as-comparison" class="slide level2" data-background-color="#003660">
-<h2>Regression as Comparison</h2>
-</section>
-<section id="comparing-two-groups-as-regression" class="slide level2">
-<h2>Comparing Two Groups as Regression</h2>
-<p>Regression is a generalization of simpler statistical comparisons.</p>
-<p><strong>Comparing a single mean:</strong> regress <span class="math inline">\(y\)</span> on just a constant: <span class="math display">\[y_i = \mu + \varepsilon_i \quad \Longrightarrow \quad \hat{\mu} = \bar{y}\]</span></p>
-<p><strong>Comparing two groups:</strong> let <span class="math inline">\(x_i \in \{0, 1\}\)</span> be a binary group indicator: <span class="math display">\[y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\]</span></p>
-<ul>
-<li><span class="math inline">\(\hat{\beta}_0 = \bar{y}_{\text{group 0}}\)</span></li>
-<li><span class="math inline">\(\hat{\beta}_1 = \bar{y}_{\text{group 1}} - \bar{y}_{\text{group 0}}\)</span></li>
-</ul>
-<p>This is algebraically equivalent to a two-sample <span class="math inline">\(t\)</span>-test (assuming equal variances).</p>
-</section>
-<section id="regression-generalizes-the-t-test" class="slide level2">
-<h2>Regression Generalizes the <span class="math inline">\(t\)</span>-test</h2>
+<div style="font-size: 30px">
+<p>Find the derivates of the following:</p>
+<p>1.<span class="math inline">\(x^6\)</span></p>
+<ol start="2" type="1">
+<li><span class="math inline">\(y = (x^2 + 1)^3\)</span></li>
+</ol>
+<p>Find the partial derivative of the following:</p>
+<ol type="1">
+<li><span class="math inline">\(f(\beta_0, \beta_1) = (y - \beta_0 - \beta_1 x)^2\)</span>, find <span class="math inline">\(\dfrac{\partial f}{\partial \beta_1}\)</span></li>
+</ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># Suppose x is a binary 0/1 indicator (e.g., treatment vs. control)</span></span>
-<span id="cb4-2"><a aria-label="2"></a><span class="fu">t.test</span>(y <span class="sc">~</span> x, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-3"><a aria-label="3"></a></span>
-<span id="cb4-4"><a aria-label="4"></a><span class="co"># Produces the same estimate as:</span></span>
-<span id="cb4-5"><a aria-label="5"></a><span class="fu">lm</span>(y <span class="sc">~</span> x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<countdown-timer class="countdown" id="timer_4ce76599" minutes="2" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
-<p>Regression is strictly more general — it can:</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="mini-refresher-summation-rules" class="slide level2 smaller">
+<h2>Mini Refresher: Summation Rules</h2>
+<p><strong>Derivatives through sums:</strong> <span class="math display">\[\frac{\partial}{\partial \beta_0}\sum_{i=1}^n f_i(\beta_0) = \sum_{i=1}^n \frac{\partial}{\partial \beta_0} f_i(\beta_0)\]</span></p>
+<p><strong>Constants in sums:</strong></p>
 <ul>
-<li>Handle continuous predictors</li>
-<li>Adjust for additional variables simultaneously (multiple regression)</li>
-<li>Accommodate more than two groups via indicator coding</li>
+<li><span class="math inline">\(\displaystyle\sum_{i=1}^n c = nc\)</span> — a constant summed <span class="math inline">\(n\)</span> times is just <span class="math inline">\(n \times c\)</span></li>
+<li><span class="math inline">\(\displaystyle\sum_{i=1}^n c \cdot x_i = c\sum_{i=1}^n x_i\)</span> — a constant factor pulls out of the sum</li>
+</ul>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>These are all we need to minimize RSS — apply the chain rule, pass the derivative through the sum, set to zero, and simplify.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="practice-problems-2" class="slide level2">
+<h2>Practice Problems</h2>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Practice Problems</strong></p>
+</div>
+<div class="callout-content">
+<div style="font-size: 30px">
+<p>Simplify the following:</p>
+<ol type="1">
+<li><p><span class="math inline">\(\displaystyle\sum_{i=1}^{5} 4\)</span></p></li>
+<li><p><span class="math inline">\(\displaystyle\sum_{i=1}^{n} 3x_i\)</span></p></li>
+<li><p><span class="math inline">\(\dfrac{\partial}{\partial \beta_0}\displaystyle\sum_{i=1}^{n}(y_i - \beta_0)^2\)</span></p></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<countdown-timer class="countdown" id="timer_9ad30422" minutes="2" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+</section>
+<section id="how-do-we-pick-beta_0-and-beta_1" class="slide level2 smaller">
+<h2>How do we pick <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>?</h2>
+<p>We need a rule to pick the “best” <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span>. To do so, we want to make prediction errors small across all observations simultaneously.</p>
+<p>The <strong>residual</strong> for observation <span class="math inline">\(i\)</span> is: <span class="math display">\[e_i = y_i - \widehat{y}_i\]</span></p>
+<p>where <span class="math inline">\(\widehat{y}_i\)</span> is the <strong>predicted value</strong> <span class="math inline">\(\widehat{\beta}_0 + \widehat{\beta}_1 x_i\)</span></p>
+<p>To find the best line, we minimize the <strong>Residual Sum of Squares</strong>: <span class="math display">\[\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \widehat{y}_i)^2\]</span></p>
+<p>We square the residuals so positive and negative errors don’t cancel, and so large errors are penalized more heavily.</p>
+</section>
+<section id="the-least-squares-criterion" class="slide level2 smaller">
+<h2>The Least Squares Criterion</h2>
+<p>From the previous slide, <span class="math inline">\(e_i = y_i - \widehat{y}_i\)</span>. Since the candidate line predicts <span class="math inline">\(\widehat{y}_i = \beta_0 + \beta_1 x_i\)</span>, substituting gives:</p>
+<p><span class="math display">\[e_i = y_i - \beta_0 - \beta_1 x_i\]</span></p>
+<p>So the <strong>Residual Sum of Squares</strong> is:</p>
+<p><span class="math display">\[\text{RSS}(\beta_0, \beta_1) = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2\]</span></p>
+<p><strong>Goal:</strong> choose <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> to minimize RSS.</p>
+</section>
+<section id="the-normal-equations" class="slide level2 smaller">
+<h2>The Normal Equations</h2>
+<p>We have <strong>2 unknowns</strong> (<span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>) and need <strong>2 equations</strong> to pin them down.</p>
+<p>Setting <span class="math inline">\(\dfrac{\partial \text{RSS}}{\partial \beta_0} = 0\)</span> and <span class="math inline">\(\dfrac{\partial \text{RSS}}{\partial \beta_1} = 0\)</span> each gives one equation — together they form a <strong>system of two linear equations</strong> called the <strong>normal equations</strong>.</p>
+<p>Recall: <span class="math inline">\(\text{RSS}(\beta_0, \beta_1) = \displaystyle\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2\)</span></p>
+<p><strong>Strategy:</strong> differentiate RSS with respect to each parameter, set each derivative to zero, then use the chain rule and summation rule to simplify.</p>
+</section>
+<section id="the-normal-equations-derivation" class="slide level2 smaller">
+<h2>The Normal Equations: Derivation</h2>
+<div class="columns" style="font-size: 0.78em;">
+<div class="column" style="width:50%;">
+<p><em>Set <span class="math inline">\(\partial\text{RSS}/\partial\beta_0 = 0\)</span>:</em> <span class="math display">\[\frac{\partial}{\partial \beta_0}\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2 = 0\]</span></p>
+<div class="fragment">
+<p><em>Pass derivative through sum (summation rule):</em> <span class="math display">\[\sum_{i=1}^{n} \frac{\partial}{\partial \beta_0}(y_i - \beta_0 - \beta_1 x_i)^2 = 0\]</span></p>
+</div>
+<div class="fragment">
+<p><em>Chain rule:</em> <span class="math display">\[\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-1) = 0\]</span></p>
+</div>
+<div class="fragment">
+<p><em>Factor out <span class="math inline">\(-2\)</span>, then divide both sides by <span class="math inline">\(-2\)</span>:</em> <span class="math display">\[\sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
+</div>
+</div><div class="column" style="width:50%;">
+<p><em>Set <span class="math inline">\(\partial\text{RSS}/\partial\beta_1 = 0\)</span>:</em> <span class="math display">\[\frac{\partial}{\partial \beta_1}\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2 = 0\]</span></p>
+<div class="fragment">
+<p><em>Pass derivative through sum (summation rule):</em> <span class="math display">\[\sum_{i=1}^{n} \frac{\partial}{\partial \beta_1}(y_i - \beta_0 - \beta_1 x_i)^2 = 0\]</span></p>
+</div>
+<div class="fragment">
+<p><em>Chain rule:</em> <span class="math display">\[\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-x_i) = 0\]</span></p>
+</div>
+<div class="fragment">
+<p><em>Factor out <span class="math inline">\(-2\)</span>, then divide both sides by <span class="math inline">\(-2\)</span>:</em> <span class="math display">\[\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
+</div>
+</div></div>
+</section>
+<section id="solving-the-normal-equations-step-1" class="slide level2">
+<h2>Solving the Normal Equations: Step 1</h2>
+<p><strong>Solve equation 1 for <span class="math inline">\(\widehat{\beta}_0\)</span>:</strong></p>
+<p><span class="math display">\[\sum_{i=1}^n(y_i - \beta_0 - \beta_1 x_i) = 0 \;\Rightarrow\; n\bar{y} - n\beta_0 - n\beta_1\bar{x} = 0\]</span></p>
+<p><span class="math display">\[\boxed{\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}}\]</span></p>
+</section>
+<section id="solving-the-normal-equations-step-2" class="slide level2 smaller">
+<h2>Solving the Normal Equations: Step 2</h2>
+<p><strong>Substitute into equation 2 and solve for <span class="math inline">\(\widehat{\beta}_1\)</span>:</strong></p>
+<p>Start with equation 2 and distribute the sum: <span class="math display">\[\sum_{i=1}^n x_i y_i - \beta_0\sum_{i=1}^n x_i - \beta_1\sum_{i=1}^n x_i^2 = 0\]</span></p>
+<p>Substitute <span class="math inline">\(\beta_0 = \bar{y} - \beta_1\bar{x}\)</span> and use <span class="math inline">\(\sum x_i = n\bar{x}\)</span>: <span class="math display">\[\sum_{i=1}^n x_i y_i - (\bar{y} - \beta_1\bar{x})\,n\bar{x} - \beta_1\sum_{i=1}^n x_i^2 = 0\]</span></p>
+<p>Expand the multiplication: <span class="math display">\[\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} + n\bar{x}^2\beta_1 - \beta_1\sum_{i=1}^n x_i^2 = 0\]</span></p>
+</section>
+<section id="solving-the-normal-equations-step-2-cont." class="slide level2 smaller">
+<h2>Solving the Normal Equations: Step 2 (cont.)</h2>
+<p>Collect <span class="math inline">\(\beta_1\)</span> terms on the right: <span class="math display">\[\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} = \beta_1\!\left(\sum_{i=1}^n x_i^2 - n\bar{x}^2\right)\]</span></p>
+<p>Divide both sides by <span class="math inline">\(\left(\sum x_i^2 - n\bar{x}^2\right)\)</span>:</p>
+<p><span class="math display">\[\boxed{\widehat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}}{\displaystyle\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \frac{S_{xy}}{S_{xx}}}\]</span></p>
+</section>
+<section id="equivalent-form-of-widehatbeta_1" class="slide level2 smaller">
+<h2>Equivalent Form of <span class="math inline">\(\widehat{\beta}_1\)</span></h2>
+<p>The numerator and denominator have a cleaner equivalent form. Expanding <span class="math inline">\(\sum(x_i - \bar{x})(y_i - \bar{y})\)</span>:</p>
+<p><span class="math display">\[\sum(x_i - \bar{x})(y_i - \bar{y}) = \sum x_iy_i - \bar{y}\sum x_i - \bar{x}\sum y_i + n\bar{x}\bar{y}\]</span></p>
+<p>Since <span class="math inline">\(\sum x_i = n\bar{x}\)</span> and <span class="math inline">\(\sum y_i = n\bar{y}\)</span>:</p>
+<p><span class="math display">\[= \sum x_iy_i - n\bar{x}\bar{y} - n\bar{x}\bar{y} + n\bar{x}\bar{y} = \sum x_iy_i - n\bar{x}\bar{y}\]</span></p>
+<p>The same identity holds for the denominator: <span class="math inline">\(\displaystyle\sum(x_i - \bar{x})^2 = \sum x_i^2 - n\bar{x}^2\)</span></p>
+<p>So the two forms are equivalent. We will use the simpler form on the next slide.</p>
+</section>
+<section id="the-ols-estimators" class="slide level2 smaller">
+<h2>The OLS Estimators</h2>
+<p>Solving the normal equations yields:</p>
+<p><span class="math display">\[\widehat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2} = \frac{S_{xy}}{S_{xx}}\]</span></p>
+<p><span class="math display">\[\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1 \bar{x}\]</span></p>
+<p>where:</p>
+<p><span class="math display">\[S_{xy} = \sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y}) \quad \text{(co-variation of } x \text{ and } y \text{ around their means)}\]</span></p>
+<p><span class="math display">\[S_{xx} = \sum_{i=1}^n (x_i - \bar{x})^2 \quad \text{(total spread of } x \text{ around its mean)}\]</span></p>
+</section>
+<section id="connection-to-correlation" class="slide level2 smaller">
+<h2>Connection to Correlation</h2>
+<p>The OLS slope has a useful rewrite in terms of correlation:</p>
+<p><span class="math display">\[\widehat{\beta}_1 = r \cdot \frac{s_y}{s_x}\]</span></p>
+<p>where <span class="math inline">\(r\)</span> is the sample correlation between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, and <span class="math inline">\(s_x\)</span>, <span class="math inline">\(s_y\)</span> are sample standard deviations.</p>
+<ul>
+<li class="fragment">The sign of <span class="math inline">\(\widehat{\beta}_1\)</span> always equals the sign of <span class="math inline">\(r\)</span></li>
+<li class="fragment">When <span class="math inline">\(r = 0\)</span> <span class="math inline">\(\rightarrow\)</span> slope is 0 <span class="math inline">\(\rightarrow\)</span> no linear relationship</li>
+<li class="fragment">When <span class="math inline">\(|r| = 1\)</span> <span class="math inline">\(\rightarrow\)</span> all points lie exactly on a line <span class="math inline">\(\rightarrow\)</span> perfect fit</li>
 </ul>
 </section>
-<section id="making-predictions" class="slide level2">
-<h2>Making Predictions</h2>
-<p>Given a new observation with predictor value <span class="math inline">\(x^*\)</span>, the predicted outcome is:</p>
-<p><span class="math display">\[\hat{y}^* = \hat{\beta}_0 + \hat{\beta}_1 x^*\]</span></p>
-<p><strong>Example:</strong> What vote share does the model predict when income growth = 2%?</p>
-<p><span class="math display">\[\hat{y} = 46.2 + 3.1 \times 2 = 52.4\%\]</span></p>
-<div class="callout callout-warning callout-titled callout-style-default">
+<section id="properties-of-the-ols-estimators" class="slide level2 smaller">
+<h2>Properties of the OLS Estimators</h2>
+<div style="font-size: 0.82em;">
+<p><strong>Notation:</strong> <span class="math inline">\(S_{xx} = \displaystyle\sum_{i=1}^n(x_i - \bar{x})^2\)</span> — total spread of the predictor; <span class="math inline">\(\sigma^2\)</span> — true (unknown) error variance; <span class="math inline">\(\mathbb{E}(\cdot)\)</span> — expected value; <span class="math inline">\(\text{Var}(\cdot)\)</span> — variance.</p>
+</div>
+<ol type="1">
+<li class="fragment"><p><strong>Linear:</strong> <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> are linear functions of <span class="math inline">\(y_1, \ldots, y_n\)</span></p></li>
+<li class="fragment"><p><strong>Unbiased:</strong> <span class="math inline">\(\mathbb{E}(\widehat{\beta}_0) = \beta_0\)</span> and <span class="math inline">\(\mathbb{E}(\widehat{\beta}_1) = \beta_1\)</span> — on average, the estimates recover the true parameters</p></li>
+<li class="fragment"><p><strong>Known variances:</strong> <span class="math display">\[\text{Var}(\widehat{\beta}_1) = \frac{\sigma^2}{S_{xx}}, \qquad \text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)\]</span></p></li>
+<li class="fragment"><p><strong>Gauss-Markov (BLUE):</strong> OLS has the smallest variance among all linear unbiased estimators — no other such estimator can do better.</p></li>
+</ol>
+</section>
+<section id="property-1-linearity-of-widehatbeta_1" class="slide level2 smaller">
+<h2>Property 1: Linearity of <span class="math inline">\(\widehat{\beta}_1\)</span></h2>
+<div style="font-size: 0.82em;">
+<p><span class="math inline">\(\widehat{\beta}_1\)</span> is a <strong>linear combination</strong> <span class="math inline">\(\sum a_i y_i\)</span> where weights <span class="math inline">\(a_i\)</span> depend only on <span class="math inline">\(x\)</span>. Starting from: <span class="math inline">\(\widehat{\beta}_1 = \dfrac{\sum(x_i - \bar{x})(y_i - \bar{y})}{S_{xx}}\)</span></p>
+<div class="fragment">
+<p><strong>Step 1 — split the numerator:</strong> <span class="math display">\[= \frac{\sum(x_i-\bar{x})y_i \;-\; \sum(x_i-\bar{x})\bar{y}}{S_{xx}}\]</span></p>
+</div>
+<div class="fragment">
+<p><strong>Step 2 — the second term is zero.</strong> Since <span class="math inline">\(\sum(x_i-\bar{x})=0\)</span> (deviations from mean sum to zero) and <span class="math inline">\(\bar{y}\)</span> is a constant: <span class="math display">\[\sum(x_i-\bar{x})\bar{y} = \bar{y}\underbrace{\sum(x_i-\bar{x})}_{=\;0} = 0\]</span></p>
+</div>
+<div class="fragment">
+<p><strong>Step 3 — define weights</strong> <span class="math inline">\(a_i = (x_i - \bar{x})/S_{xx}\)</span>, which depend only on <span class="math inline">\(x_i\)</span>: <span class="math display">\[\widehat{\beta}_1 = \frac{\sum(x_i-\bar{x})\,y_i}{S_{xx}} = \sum_{i=1}^n \underbrace{\frac{x_i - \bar{x}}{S_{xx}}}_{a_i} y_i = \sum_{i=1}^n a_i\,y_i \quad \checkmark\]</span></p>
+</div>
+</div>
+</section>
+<section id="property-1-linearity-of-widehatbeta_0" class="slide level2 smaller">
+<h2>Property 1: Linearity of <span class="math inline">\(\widehat{\beta}_0\)</span></h2>
+<div style="font-size: 0.85em;">
+<p>From the previous slide, <span class="math inline">\(\widehat{\beta}_1 = \sum a_i y_i\)</span>. Now show <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span> is also linear.</p>
+<p><strong>Step 1 — write <span class="math inline">\(\bar{y}\)</span> as a sum</strong> (the sample mean is itself a linear combination): <span class="math display">\[\bar{y} = \sum_{i=1}^n \frac{1}{n}y_i\]</span></p>
+<p><strong>Step 2 — substitute and collect</strong> <span class="math inline">\(y_i\)</span> terms: <span class="math display">\[\widehat{\beta}_0 = \sum_{i=1}^n \frac{1}{n}y_i - \bar{x}\sum_{i=1}^n a_i y_i = \sum_{i=1}^n\!\underbrace{\left(\frac{1}{n} - a_i\bar{x}\right)}_{\text{weight for }y_i}y_i\]</span></p>
+<p>The weights <span class="math inline">\(\left(\tfrac{1}{n} - a_i\bar{x}\right)\)</span> depend only on <span class="math inline">\(x_i\)</span>, not <span class="math inline">\(y_i\)</span>.</p>
+<p>Both <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> are linear combinations of <span class="math inline">\(y_1,\ldots,y_n\)</span>.</p>
+</div>
+</section>
+<section id="property-2-widehatbeta_1-is-unbiased" class="slide level2 smaller">
+<h2>Property 2: <span class="math inline">\(\widehat{\beta}_1\)</span> is Unbiased</h2>
+<div title="Refresher: Expected Value">
+<div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Extrapolation</strong></p>
+<p><strong>Refresher: Expected Value</strong></p>
 </div>
 <div class="callout-content">
-<p>Predicting far outside the range of the observed <span class="math inline">\(x\)</span> values is unreliable. The linear relationship may not hold beyond the data.</p>
+<p>Key properties:</p>
+<ul>
+<li><span class="math inline">\(\mathbb{E}(c) = c\)</span></li>
+<li><span class="math inline">\(\mathbb{E}(aY) = a\,\mathbb{E}(Y)\)</span></li>
+<li><span class="math inline">\(\mathbb{E}(Y_1+Y_2)=\mathbb{E}(Y_1)+\mathbb{E}(Y_2)\)</span></li>
+<li><span class="math inline">\(\mathbb{E}\!\left(\sum_i a_i Y_i\right) = \sum_i a_i\,\mathbb{E}(Y_i)\)</span></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<p><strong>Goal:</strong> show <span class="math inline">\(\mathbb{E}(\widehat{\beta}_1) = \beta_1\)</span>, i.e.&nbsp;the estimator is correct on average.</p>
+<p>From the model, <span class="math inline">\(y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span> with <span class="math inline">\(\mathbb{E}(\varepsilon_i)=0\)</span>, so <span class="math inline">\(\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i\)</span>.</p>
+</section>
+<section id="property-2-widehatbeta_1-is-unbiased-cont." class="slide level2 smaller">
+<h2>Property 2: <span class="math inline">\(\widehat{\beta}_1\)</span> is Unbiased (cont.)</h2>
+<div style="font-size: 0.85em;">
+<p>Since <span class="math inline">\(a_i\)</span> are constants, linearity of expectation lets us pull them out: <span class="math display">\[\mathbb{E}(\widehat{\beta}_1) = \mathbb{E}\!\left(\sum_{i=1}^n a_i y_i\right) = \sum_{i=1}^n a_i\,\mathbb{E}(y_i)\]</span></p>
+<p>Substitute <span class="math inline">\(\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i\)</span>: <span class="math display">\[= \sum_{i=1}^n a_i(\beta_0 + \beta_1 x_i) = \beta_0\underbrace{\sum_{i=1}^n a_i}_{=\,0} + \beta_1\underbrace{\sum_{i=1}^n a_i x_i}_{=\,1}\]</span></p>
+<p><strong>Why the sums equal 0 and 1:</strong> recall <span class="math inline">\(a_i = (x_i - \bar{x})/S_{xx}\)</span></p>
+<ul>
+<li><span class="math inline">\(\sum a_i = \sum(x_i-\bar{x})/S_{xx} = 0\)</span> since deviations from the mean sum to zero</li>
+<li><span class="math inline">\(\sum a_i x_i = \sum(x_i-\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1\)</span></li>
+</ul>
+<p>Therefore <span class="math inline">\(\mathbb{E}(\widehat{\beta}_1) = \beta_0 \cdot 0 + \beta_1 \cdot 1 = \beta_1\)</span>.</p>
+</div>
+</section>
+<section id="property-2-widehatbeta_0-is-unbiased" class="slide level2 smaller">
+<h2>Property 2: <span class="math inline">\(\widehat{\beta}_0\)</span> is Unbiased</h2>
+<p><strong>Goal:</strong> show <span class="math inline">\(\mathbb{E}(\widehat{\beta}_0) = \beta_0\)</span>.</p>
+<p><strong>Step 1 — find <span class="math inline">\(\mathbb{E}(\bar{y})\)</span>:</strong> expand using the model <span class="math inline">\(\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i\)</span>:</p>
+<p><span class="math display">\[\mathbb{E}(\bar{y}) = \frac{1}{n}\sum_{i=1}^n \mathbb{E}(y_i) = \frac{1}{n}\sum_{i=1}^n(\beta_0 + \beta_1 x_i) = \frac{1}{n}(n\beta_0 + \beta_1 n\bar{x}) = \beta_0 + \beta_1\bar{x}\]</span></p>
+<p><strong>Step 2 — apply linearity of expectation to <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span>:</strong> since <span class="math inline">\(\bar{x}\)</span> is a fixed constant,</p>
+<p><span class="math display">\[\mathbb{E}(\widehat{\beta}_0) = \mathbb{E}(\bar{y}) - \bar{x}\,\mathbb{E}(\widehat{\beta}_1)\]</span></p>
+<p><strong>Step 3 — substitute and cancel:</strong> plug in <span class="math inline">\(\mathbb{E}(\bar{y}) = \beta_0 + \beta_1\bar{x}\)</span> and <span class="math inline">\(\mathbb{E}(\widehat{\beta}_1) = \beta_1\)</span>:</p>
+<p><span class="math display">\[\mathbb{E}(\widehat{\beta}_0) = (\beta_0 + \beta_1\bar{x}) - \bar{x}\,\beta_1 = \beta_0 \]</span></p>
+</section>
+<section id="property-3-variance-of-widehatbeta_1" class="slide level2 smaller">
+<h2>Property 3: Variance of <span class="math inline">\(\widehat{\beta}_1\)</span></h2>
+<p><strong>Goal:</strong> derive the formula <span class="math inline">\(\text{Var}(\widehat{\beta}_1) = \sigma^2 / S_{xx}\)</span>.</p>
+<p><strong>Step 1 — apply the variance of a linear combination:</strong> since <span class="math inline">\(y_i\)</span>’s are independent with <span class="math inline">\(\text{Var}(y_i)=\sigma^2\)</span>, and <span class="math inline">\(a_i\)</span> are fixed constants:</p>
+<p><span class="math display">\[\text{Var}(\widehat{\beta}_1) = \text{Var}\!\left(\sum_{i=1}^n a_i y_i\right) \overset{\text{indep.}}{=} \sum_{i=1}^n a_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n a_i^2\]</span></p>
+<p>Independence eliminates all cross-terms <span class="math inline">\(a_ia_j\text{Cov}(y_i,y_j)\)</span> for <span class="math inline">\(i\neq j\)</span>.</p>
+</section>
+<section id="property-3-variance-of-widehatbeta_1-cont." class="slide level2 smaller">
+<h2>Property 3: Variance of <span class="math inline">\(\widehat{\beta}_1\)</span> (cont.)</h2>
+<p><strong>Step 2 — evaluate <span class="math inline">\(\sum a_i^2\)</span>:</strong> substitute <span class="math inline">\(a_i = (x_i-\bar{x})/S_{xx}\)</span> and use <span class="math inline">\(\sum(x_i-\bar{x})^2 = S_{xx}\)</span>:</p>
+<p><span class="math display">\[\sum_{i=1}^n a_i^2 = \sum_{i=1}^n \frac{(x_i-\bar{x})^2}{S_{xx}^2} = \frac{1}{S_{xx}^2}\underbrace{\sum_{i=1}^n(x_i-\bar{x})^2}_{=\,S_{xx}} = \frac{1}{S_{xx}}\]</span></p>
+<p><strong>Step 3 — combine:</strong></p>
+<p><span class="math display">\[\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma^2}{S_{xx}} \qquad\]</span></p>
+</section>
+<section id="property-3-variance-of-widehatbeta_0" class="slide level2 smaller">
+<h2>Property 3: Variance of <span class="math inline">\(\widehat{\beta}_0\)</span></h2>
+<p><strong>Goal:</strong> derive <span class="math inline">\(\text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\tfrac{1}{n}+\tfrac{\bar{x}^2}{S_{xx}}\right)\)</span>.</p>
+<p><strong>Step 1 — expand the variance.</strong> Since <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span> and <span class="math inline">\(\bar{x}\)</span> is a fixed constant:</p>
+<p><span class="math display">\[\text{Var}(\widehat{\beta}_0) = \text{Var}(\bar{y} - \widehat{\beta}_1\bar{x}) = \text{Var}(\bar{y}) + \bar{x}^2\,\text{Var}(\widehat{\beta}_1) - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)\]</span></p>
+<p><strong>Step 2 — substitute known variances.</strong> Using <span class="math inline">\(\text{Var}(\bar{y}) = \sigma^2/n\)</span> and <span class="math inline">\(\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}\)</span>:</p>
+<p><span class="math display">\[= \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)\]</span></p>
+<p><strong>Step 3 — handle the covariance.</strong> It can be shown that <span class="math inline">\(\text{Cov}(\bar{y}, \widehat{\beta}_1) = 0\)</span> (see <a href="https://en.wikipedia.org/wiki/Simple_linear_regression">proof</a>), so the last term drops out:</p>
+<p><span class="math display">\[\text{Var}(\widehat{\beta}_0) = \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}\right) \qquad\]</span></p>
+</section>
+<section id="property-4-gauss-markov-blue" class="slide level2 smaller">
+<h2>Property 4: Gauss-Markov (BLUE)</h2>
+<div style="font-size: 0.85em;">
+<p><strong>Goal:</strong> OLS has the smallest variance among all linear unbiased estimators.</p>
+<p>Let <span class="math inline">\(b_1^* = \sum_{i=1}^n c_i y_i\)</span> be any competing linear unbiased estimator of <span class="math inline">\(\beta_1\)</span>.</p>
+<p><strong>Step 1 — unbiasedness constraints.</strong> We need <span class="math inline">\(\mathbb{E}(b_1^*) = \beta_1\)</span> for all <span class="math inline">\(\beta_0, \beta_1\)</span>. Substitute <span class="math inline">\(\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i\)</span>: <span class="math display">\[\mathbb{E}(b_1^*) = \sum_{i=1}^n c_i(\beta_0 + \beta_1 x_i) = \beta_0\sum_{i=1}^n c_i + \beta_1\sum_{i=1}^n c_i x_i\]</span> For this to equal <span class="math inline">\(\beta_1\)</span> for <em>every</em> possible <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, we match coefficients: <span class="math display">\[\underbrace{\sum_{i=1}^n c_i}_{\text{coeff. of }\beta_0} = 0 \qquad \text{and} \qquad \underbrace{\sum_{i=1}^n c_i x_i}_{\text{coeff. of }\beta_1} = 1\]</span></p>
+</div>
+</section>
+<section id="property-4-gauss-markov-blue-cont." class="slide level2 smaller">
+<h2>Property 4: Gauss-Markov (BLUE) (cont.)</h2>
+<div style="font-size: 0.85em;">
+<p><strong>Step 2 — decompose the weights.</strong> Write <span class="math inline">\(c_i = a_i + d_i\)</span>, where <span class="math inline">\(a_i = (x_i-\bar{x})/S_{xx}\)</span> are the OLS weights and <span class="math inline">\(d_i = c_i - a_i\)</span> is the extra piece.</p>
+<p>Both <span class="math inline">\(c_i\)</span> and <span class="math inline">\(a_i\)</span> satisfy the same two constraints:</p>
+<ul>
+<li>From Step 1: <span class="math inline">\(\sum c_i = 0\)</span> and <span class="math inline">\(\sum c_i x_i = 1\)</span> (required for <span class="math inline">\(b_1^*\)</span> to be unbiased)</li>
+<li>From Property 1: <span class="math inline">\(\sum a_i = 0\)</span> and <span class="math inline">\(\sum a_i x_i = 1\)</span> (shown when we proved linearity of <span class="math inline">\(\widehat{\beta}_1\)</span>)</li>
+</ul>
+<p>Subtracting gives <span class="math inline">\(\sum d_i = 0\)</span> and <span class="math inline">\(\sum d_i x_i = 0\)</span>.</p>
+</div>
+</section>
+<section id="property-4-gauss-markov-blue-cont.-1" class="slide level2 smaller">
+<h2>Property 4: Gauss-Markov (BLUE) (cont.)</h2>
+<div style="font-size: 0.85em;">
+<p><strong>Step 2 (cont.) — show <span class="math inline">\(\sum a_i d_i = 0\)</span>.</strong> We need this so the cross term vanishes when we expand <span class="math inline">\(\sum(a_i + d_i)^2\)</span> in Step 3 — without it we can’t isolate <span class="math inline">\(\text{Var}(\widehat{\beta}_1)\)</span>. Using <span class="math inline">\(\sum d_i = 0\)</span> and <span class="math inline">\(\sum d_i x_i = 0\)</span>: <span class="math display">\[\sum_{i=1}^n a_i d_i = \frac{\sum(x_i-\bar{x})d_i}{S_{xx}} = \frac{\sum d_i x_i - \bar{x}\sum d_i}{S_{xx}} = \frac{0 - 0}{S_{xx}} = 0\]</span></p>
+</div>
+</section>
+<section id="property-4-gauss-markov-blue-cont.-2" class="slide level2 smaller">
+<h2>Property 4: Gauss-Markov (BLUE) (cont.)</h2>
+<div style="font-size: 0.85em;">
+<p><strong>Step 3 — compare variances.</strong> Two key rules:</p>
+<ul>
+<li><span class="math inline">\(\text{Var}(cY) = c^2\text{Var}(Y)\)</span> — a constant scales variance by its square</li>
+<li><span class="math inline">\(\text{Var}(Y_1 + Y_2) = \text{Var}(Y_1) + \text{Var}(Y_2)\)</span> when <span class="math inline">\(Y_1, Y_2\)</span> are independent (cross terms <span class="math inline">\(2c_ic_j\text{Cov}(y_i,y_j) = 0\)</span>)</li>
+</ul>
+<p>Applying both to <span class="math inline">\(b_1^* = \sum c_i y_i\)</span> with independent <span class="math inline">\(y_i\)</span>’s and <span class="math inline">\(\text{Var}(y_i) = \sigma^2\)</span>: <span class="math display">\[\text{Var}(b_1^*) = \sum_{i=1}^n c_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n c_i^2\]</span></p>
+</div>
+</section>
+<section id="property-4-gauss-markov-blue-cont.-3" class="slide level2 smaller">
+<h2>Property 4: Gauss-Markov (BLUE) (cont.)</h2>
+<div style="font-size: 0.85em;">
+<p>Substitute <span class="math inline">\(c_i = a_i + d_i\)</span> and expand:</p>
+<p><span class="math display">\[\sigma^2\sum(a_i + d_i)^2 = \sigma^2\!\left(\sum a_i^2 + 2\underbrace{\sum a_i d_i}_{=\;0} + \sum d_i^2\right) = \sigma^2\sum a_i^2 + \sigma^2\sum d_i^2\]</span></p>
+<p>Recognizing <span class="math inline">\(\sigma^2 \sum a_i^2 = \text{Var}(\widehat{\beta}_1)\)</span>:</p>
+<p><span class="math display">\[\text{Var}(b_1^*) = \text{Var}(\widehat{\beta}_1) + \underbrace{\sigma^2 \sum d_i^2}_{\geq\;0} \;\geq\; \text{Var}(\widehat{\beta}_1) \qquad \]</span></p>
+<p>The extra term <span class="math inline">\(\sigma^2\sum d_i^2 \geq 0\)</span> always — with equality only when <span class="math inline">\(d_i = 0\)</span> for all <span class="math inline">\(i\)</span>, i.e.&nbsp;when <span class="math inline">\(b_1^* = \widehat{\beta}_1\)</span>.</p>
+</div>
+</section>
+<section id="residuals" class="slide level2" data-background-color="#003660">
+<h2>Residuals</h2>
+</section>
+<section id="what-are-residuals" class="slide level2 smaller">
+<h2>What are Residuals?</h2>
+<p>After fitting the model, the <strong>residual</strong> for observation <span class="math inline">\(i\)</span> is:</p>
+<p><span class="math display">\[e_i = y_i - \widehat{y}_i = y_i - \widehat{\beta}_0 - \widehat{\beta}_1 x_i\]</span></p>
+<p>Residuals measure how far each observation falls from the fitted line:</p>
+<ul>
+<li><span class="math inline">\(e_i &gt; 0\)</span>: observed value is <strong>above</strong> the fitted line</li>
+<li><span class="math inline">\(e_i &lt; 0\)</span>: observed value is <strong>below</strong> the fitted line</li>
+<li><span class="math inline">\(e_i = 0\)</span>: observation falls <strong>exactly</strong> on the fitted line</li>
+</ul>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Residuals <span class="math inline">\(e_i\)</span> are the observed counterparts to the unobservable errors <span class="math inline">\(\varepsilon_i\)</span>. We use them to check model assumptions and estimate <span class="math inline">\(\sigma^2\)</span>.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="brief-intro-fake-data-simulation" class="slide level2">
-<h2>Brief Intro: Fake-Data Simulation</h2>
-<p>A powerful way to <strong>validate</strong> our fitting procedure: simulate data from a known model, then check whether we can recover the true parameters.</p>
+<section id="properties-of-ols-residuals" class="slide level2 smaller">
+<h2>Properties of OLS Residuals</h2>
+<p>The OLS normal equations force two exact constraints on the residuals:</p>
+<p><span class="math display">\[\sum_{i=1}^n e_i = 0 \qquad \text{(1)}\]</span></p>
+<p><span class="math display">\[\sum_{i=1}^n x_i e_i = 0 \qquad \text{(2)}\]</span></p>
+<p>These two properties imply two more:</p>
+<ul>
+<li><span class="math inline">\(\bar{e} = 0\)</span> — the mean of the residuals is always zero</li>
+<li><span class="math inline">\(\sum_{i=1}^n \widehat{y}_i e_i = 0\)</span> — residuals are uncorrelated with the fitted values</li>
+</ul>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>These are exact algebraic facts — true for every OLS fit, regardless of whether the model is correct.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="proving-the-properties" class="slide level2 smaller">
+<h2>Proving the Properties</h2>
+<p><strong>Property (1): <span class="math inline">\(\sum e_i = 0\)</span>.</strong> Recall normal equation 1: <span class="math display">\[\sum_{i=1}^n (y_i - \widehat{\beta}_0 - \widehat{\beta}_1 x_i) = 0 \;\Longrightarrow\; \sum_{i=1}^n e_i = 0\]</span></p>
+<p><strong>Property (2): <span class="math inline">\(\sum x_i e_i = 0\)</span>.</strong> Recall normal equation 2: <span class="math display">\[\sum_{i=1}^n x_i(y_i - \widehat{\beta}_0 - \widehat{\beta}_1 x_i) = 0 \;\Longrightarrow\; \sum_{i=1}^n x_i e_i = 0\]</span></p>
+<p><strong>Corollary: <span class="math inline">\(\sum \widehat{y}_i e_i = 0\)</span>.</strong> Since <span class="math inline">\(\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i\)</span>: <span class="math display">\[\sum_{i=1}^n \widehat{y}_i e_i = \widehat{\beta}_0\underbrace{\sum e_i}_{=\,0} + \widehat{\beta}_1\underbrace{\sum x_i e_i}_{=\,0} = 0\]</span></p>
+</section>
+<section id="residual-sum-of-squares" class="slide level2 smaller">
+<h2>Residual Sum of Squares</h2>
+<p>The <strong>Residual Sum of Squares (RSS)</strong> measures the total unexplained variation:</p>
+<p><span class="math display">\[\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \widehat{y}_i)^2\]</span></p>
+<ul>
+<li>A smaller RSS means the line fits the data more closely</li>
+<li>RSS = 0 only if every point lies exactly on the fitted line</li>
+<li>RSS is used to estimate the unknown error variance <span class="math inline">\(\sigma^2\)</span> (next lecture)</li>
+</ul>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>RSS cannot be reduced further — OLS was specifically designed to minimize it.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="practice-residual-properties" class="slide level2 smaller">
+<h2>Practice: Residual Properties</h2>
+<p>Using the dataset below with fitted line <span class="math inline">\(\widehat{y} = 1 + 2x\)</span>:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(x_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(y_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\widehat{y}_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(e_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">−2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<p><strong>Verify:</strong></p>
+<ol type="1">
+<li><p><span class="math inline">\(\sum_{i=1}^5 e_i = 0\)</span></p></li>
+<li><p><span class="math inline">\(\sum_{i=1}^5 x_i e_i = 0\)</span></p></li>
+<li><p><span class="math inline">\(\sum_{i=1}^5 \widehat{y}_i e_i = 0\)</span></p></li>
+<li><p>Compute <span class="math inline">\(\text{RSS} = \sum e_i^2\)</span></p></li>
+</ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb5-2"><a aria-label="2"></a>n     <span class="ot">&lt;-</span> <span class="dv">50</span></span>
-<span id="cb5-3"><a aria-label="3"></a>x     <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">10</span>)</span>
-<span id="cb5-4"><a aria-label="4"></a></span>
-<span id="cb5-5"><a aria-label="5"></a><span class="co"># True (known) parameters</span></span>
-<span id="cb5-6"><a aria-label="6"></a>beta0 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb5-7"><a aria-label="7"></a>beta1 <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb5-8"><a aria-label="8"></a>sigma <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb5-9"><a aria-label="9"></a></span>
-<span id="cb5-10"><a aria-label="10"></a>y   <span class="ot">&lt;-</span> beta0 <span class="sc">+</span> beta1 <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
-<span id="cb5-11"><a aria-label="11"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
-<span id="cb5-12"><a aria-label="12"></a><span class="fu">coef</span>(fit)  <span class="co"># should be close to (2, 3)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<countdown-timer class="countdown" id="timer_2a490655" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
-<p>If estimates are far from the truth on simulated data, something is wrong with our procedure.</p>
+</div>
+</div></div>
 </section>
-<section id="coefficients-as-comparisons" class="slide level2" data-background-color="#003660">
-<h2>Coefficients as Comparisons</h2>
+<section id="practice-solution" class="slide level2 smaller">
+<h2>Practice: Solution</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Verify <span class="math inline">\(\sum e_i = 0\)</span>:</strong> <span class="math display">\[1 + (-2) + 1 + 0 + 0 = 0 \checkmark\]</span></p>
+<p><strong>Verify <span class="math inline">\(\sum x_i e_i = 0\)</span>:</strong> <span class="math display">\[1(1) + 2(-2) + 3(1) + 4(0) + 5(0) = 1 - 4 + 3 = 0 \checkmark\]</span></p>
+</div><div class="column" style="width:50%;">
+<p><strong>Verify <span class="math inline">\(\sum \widehat{y}_i e_i = 0\)</span>:</strong> <span class="math display">\[3(1) + 5(-2) + 7(1) + 9(0) + 11(0) = 3 - 10 + 7 = 0 \checkmark\]</span></p>
+<p><strong>Compute RSS:</strong> <span class="math display">\[\text{RSS} = 1^2 + (-2)^2 + 1^2 + 0^2 + 0^2 = 1 + 4 + 1 = 6\]</span></p>
+</div></div>
 </section>
-<section id="regression-coefficients-describe-comparisons" class="slide level2">
-<h2>Regression Coefficients Describe Comparisons</h2>
-<p>A regression slope <span class="math inline">\(\hat{\beta}_1\)</span> compares groups of units that differ by 1 unit in <span class="math inline">\(x\)</span>.</p>
-<p><span class="math inline">\(\hat{\beta}_1\)</span> is the estimated average difference in <span class="math inline">\(y\)</span> between two otherwise-similar observations where <span class="math inline">\(x\)</span> differs by 1 unit.</p>
-<div class="callout callout-important callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="practice-computing-ols-estimates" class="slide level2 smaller">
+<h2>Practice: Computing OLS Estimates</h2>
+<p>A researcher records daily exercise hours (<span class="math inline">\(x\)</span>) and wellness score (<span class="math inline">\(y\)</span>, out of 15) for <span class="math inline">\(n = 5\)</span> students:</p>
+<div class="columns">
+<div class="column" style="width:38%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(x_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(y_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">11</td>
+</tr>
+</tbody>
+</table>
+<div style="font-size: 0.85em;">
+<p><strong>Given:</strong> <span class="math inline">\(\bar{x} = 3\)</span>, <span class="math inline">\(\;\bar{y} = 7\)</span>, <span class="math inline">\(\;S_{xx} = 10\)</span>, <span class="math inline">\(\;S_{xy} = 20\)</span></p>
 </div>
-<p><strong>Correlation <span class="math inline">\(\neq\)</span> Causation</strong></p>
+</div><div class="column" style="width:62%;">
+<p><strong>Compute:</strong></p>
+<ol type="1">
+<li><p><span class="math inline">\(\widehat{\beta}_1 = S_{xy} / S_{xx}\)</span></p></li>
+<li><p><span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span></p></li>
+<li><p>Fitted values <span class="math inline">\(\;\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i\)</span></p></li>
+<li><p>Residuals <span class="math inline">\(\;e_i = y_i - \widehat{y}_i\)</span></p></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<countdown-timer class="countdown" id="timer_0847f7ef" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
-<div class="callout-content">
-<p>Regression coefficients describe <strong>associations</strong> in data. They do not, by themselves, establish causal relationships.</p>
 </div>
-</div>
-</div>
+</div></div>
 </section>
-<section id="why-effect-language-can-mislead" class="slide level2">
-<h2>Why “Effect” Language Can Mislead</h2>
-<p>Consider: <em>“Each year of education <strong>increases</strong> income by $5,000.”</em></p>
-<p>This phrasing implies a causal mechanism — that giving someone more education <em>would</em> change their income by $5,000.</p>
-<p>What the regression actually estimates:</p>
-<blockquote>
-<p>“People with one more year of education earn, <strong>on average</strong>, $5,000 more than people with one fewer year of education.”</p>
-</blockquote>
-<p>The difference matters when drawing policy conclusions.</p>
-</section>
-<section id="a-better-framing" class="slide level2">
-<h2>A Better Framing</h2>
+<section id="practice-solution-1" class="slide level2 smaller">
+<h2>Practice: Solution</h2>
 <div class="columns">
 <div class="column" style="width:48%;">
-<p><strong>Avoid:</strong></p>
-<p><em>“Education increases income by $5,000.”</em></p>
-</div><div class="column" style="width:48%;">
-<p><strong>Prefer:</strong></p>
-<p><em>“Comparing people who differ by one year of education, those with more education earn $5,000 more on average.”</em></p>
+<p><strong>Steps 1–2: Estimates</strong></p>
+<p><span class="math display">\[\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{20}{10} = 2\]</span></p>
+<p><span class="math display">\[\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x} = 7 - 2(3) = 1\]</span></p>
+<p>Fitted line: <span class="math inline">\(\;\widehat{y} = 1 + 2x\)</span></p>
+</div><div class="column" style="width:52%;">
+<p><strong>Steps 3–4: Fitted values and residuals</strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(x_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(y_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\widehat{y}_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(e_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">−2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
 </div></div>
-<p>Regression describes <strong>comparisons across units in the data</strong>. Causal claims require additional study design considerations beyond this course.</p>
 </section>
 <section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>
 <ul>
-<li class="fragment"><strong>OLS</strong> chooses <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> by minimizing <span class="math inline">\(\text{RSS} = \sum(y_i - \hat{y}_i)^2\)</span></li>
-<li class="fragment">Closed-form solution: <span class="math inline">\(\hat{\beta}_1 = S_{xy}/S_{xx}\)</span>, <span class="math inline">\(\;\hat{\beta}_0 = \bar{y} - \hat{\beta}_1 \bar{x}\)</span></li>
-<li class="fragment"><strong>Residuals</strong> <span class="math inline">\(e_i = y_i - \hat{y}_i\)</span> measure prediction errors</li>
-<li class="fragment"><strong><span class="math inline">\(\hat{\sigma}\)</span></strong> is the residual SD — typical prediction error — estimated by <span class="math inline">\(\sqrt{\text{RSS}/(n-2)}\)</span></li>
-<li class="fragment"><strong><span class="math inline">\(R^2\)</span></strong> is the proportion of variance in <span class="math inline">\(y\)</span> explained by <span class="math inline">\(x\)</span> — useful but limited</li>
-<li class="fragment"><strong>Standard errors</strong> quantify uncertainty in coefficient estimates</li>
-<li class="fragment">Regression with a binary predictor generalizes the two-sample <span class="math inline">\(t\)</span>-test</li>
-<li class="fragment"><strong>Fake-data simulation</strong> is a principled tool for validating our fitting procedure</li>
+<li class="fragment"><strong>Least squares:</strong> OLS picks <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> to minimize <span class="math inline">\(\text{RSS} = \sum(y_i - \widehat{y}_i)^2\)</span></li>
+<li class="fragment"><strong>Normal equations</strong> give closed-form solutions: <span class="math inline">\(\widehat{\beta}_1 = S_{xy}/S_{xx}\)</span>, <span class="math inline">\(\;\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span></li>
+<li class="fragment"><strong>Residuals</strong> <span class="math inline">\(e_i = y_i - \widehat{y}_i\)</span> measure how far each observation falls from the fitted line</li>
+<li class="fragment"><strong>Property 1 (Linearity):</strong> both estimators are linear combinations of <span class="math inline">\(y_1, \ldots, y_n\)</span></li>
+<li class="fragment"><strong>Property 2 (Unbiasedness):</strong> <span class="math inline">\(\mathbb{E}(\widehat{\beta}_0) = \beta_0\)</span> and <span class="math inline">\(\mathbb{E}(\widehat{\beta}_1) = \beta_1\)</span></li>
+<li class="fragment"><strong>Property 3 (Known variances):</strong> <span class="math inline">\(\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}\)</span>, <span class="math inline">\(\;\text{Var}(\widehat{\beta}_0) = \sigma^2(1/n + \bar{x}^2/S_{xx})\)</span></li>
+<li class="fragment"><strong>Property 4 (Gauss-Markov):</strong> OLS is BLUE — smallest variance among all linear unbiased estimators</li>
 </ul>
-</section>
-<section id="looking-ahead" class="slide level2">
-<h2>Looking Ahead</h2>
-<p><strong>Week 2:</strong> Multiple Linear Regression</p>
-<ul>
-<li>Adding more predictors: <span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \varepsilon\)</span></li>
-<li>Interpreting partial slopes — “holding other predictors constant”</li>
-<li>Indicator variables and categorical predictors</li>
-</ul>
-<p><strong>Reading:</strong> <em>Regression and Other Stories</em>, Chapters 7.2–7.3 &amp; Chapter 8</p>
 </section>
 <section id="questions" class="slide level2" data-background-color="#003660">
 <h2>Questions?</h2>
