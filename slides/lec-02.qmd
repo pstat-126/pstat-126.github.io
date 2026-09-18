@@ -572,23 +572,19 @@ A researcher records daily exercise hours ($x$) and wellness score ($y$, out of 
 
 :::: {.columns}
 
-::: {.column width="38%"}
+::: {.column width="52%"}
 
-| $i$ | $x_i$ | $y_i$ |
-|:---:|:------:|:------:|
-| 1 | 1 | 4 |
-| 2 | 2 | 3 |
-| 3 | 3 | 8 |
-| 4 | 4 | 9 |
-| 5 | 5 | 11 |
-
-::: {style="font-size: 0.85em;"}
-**Given:** $\bar{x} = 3$, $\;\bar{y} = 7$, $\;S_{xx} = 10$, $\;S_{xy} = 20$
-:::
+| $i$ | $x_i$ | $y_i$ | $\widehat{y}_i$ | $\hat{e}_i$ |
+|:---:|:------:|:------:|:---------------:|:-----------:|
+| 1 | 1 | 4 | | |
+| 2 | 2 | 3 | | |
+| 3 | 3 | 8 | | |
+| 4 | 4 | 9 | | |
+| 5 | 5 | 11 | | |
 
 :::
 
-::: {.column width="62%"}
+::: {.column width="48%"}
 
 **Compute:**
 
@@ -596,14 +592,14 @@ A researcher records daily exercise hours ($x$) and wellness score ($y$, out of 
 
 2. $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$
 
-3. Fitted values $\;\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i$
+3. Fill in $\widehat{y}_i$ using $\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i$
 
-4. Residuals $\;e_i = y_i - \widehat{y}_i$
+4. Fill in $\hat{e}_i$ using $\hat{e}_i = y_i - \widehat{y}_i$
 
 ```{r}
 #| echo: false
 countdown::countdown(
-  minutes = 5,
+  minutes = 7,
   play_sound = TRUE,
   color_border              = "#FEBC11",
   color_text                = "#003660",
@@ -623,35 +619,33 @@ countdown::countdown(
 
 ## Practice: Solution {.smaller}
 
-:::: {.columns}
+**Finding $\bar{x}$, $\bar{y}$, $S_{xx}$, $S_{xy}$:**
 
-::: {.column width="48%"}
+$$\bar{x} = \frac{1+2+3+4+5}{5} = 3, \qquad \bar{y} = \frac{4+3+8+9+11}{5} = 7$$
 
-**Steps 1–2: Estimates**
+$$S_{xx} = (-2)^2+(-1)^2+0^2+1^2+2^2 = 10$$
 
-$$\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{20}{10} = 2$$
+$$S_{xy} = (-2)(-3)+(-1)(-4)+(0)(1)+(1)(2)+(2)(4) = 20$$
 
-$$\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x} = 7 - 2(3) = 1$$
+**Estimates:**
+
+$$\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{20}{10} = 2, \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x} = 7 - 2(3) = 1$$
 
 Fitted line: $\;\widehat{y} = 1 + 2x$
 
-:::
+---
 
-::: {.column width="52%"}
+## Practice: Solution (cont.) {.smaller}
 
-**Steps 3–4: Fitted values and residuals**
+**Fitted values and residuals**
 
-| $i$ | $x_i$ | $y_i$ | $\widehat{y}_i$ | $e_i$ |
-|:---:|:------:|:------:|:---------------:|:-----:|
+| $i$ | $x_i$ | $y_i$ | $\widehat{y}_i$ | $\hat{e}_i$ |
+|:---:|:------:|:------:|:---------------:|:-----------:|
 | 1 | 1 | 4 | 3 | 1 |
 | 2 | 2 | 3 | 5 | −2 |
 | 3 | 3 | 8 | 7 | 1 |
 | 4 | 4 | 9 | 9 | 0 |
 | 5 | 5 | 11 | 11 | 0 |
-
-:::
-
-::::
 
 ---
 

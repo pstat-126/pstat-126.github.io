@@ -208,7 +208,7 @@ Annie Adams
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_4ce76599" minutes="2" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_1794064c" minutes="2" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div>
@@ -260,7 +260,7 @@ Annie Adams
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_9ad30422" minutes="2" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_aed1da40" minutes="2" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div>
@@ -527,91 +527,11 @@ Annie Adams
 <p>The extra term <span class="math inline">\(\sigma^2\sum d_i^2 \geq 0\)</span> always — with equality only when <span class="math inline">\(d_i = 0\)</span> for all <span class="math inline">\(i\)</span>, i.e.&nbsp;when <span class="math inline">\(b_1^* = \widehat{\beta}_1\)</span>.</p>
 </div>
 </section>
-<section id="residuals" class="slide level2" data-background-color="#003660">
-<h2>Residuals</h2>
-</section>
-<section id="what-are-residuals" class="slide level2 smaller">
-<h2>What are Residuals?</h2>
-<p>After fitting the model, the <strong>residual</strong> for observation <span class="math inline">\(i\)</span> is:</p>
-<p><span class="math display">\[e_i = y_i - \widehat{y}_i = y_i - \widehat{\beta}_0 - \widehat{\beta}_1 x_i\]</span></p>
-<p>Residuals measure how far each observation falls from the fitted line:</p>
-<ul>
-<li><span class="math inline">\(e_i &gt; 0\)</span>: observed value is <strong>above</strong> the fitted line</li>
-<li><span class="math inline">\(e_i &lt; 0\)</span>: observed value is <strong>below</strong> the fitted line</li>
-<li><span class="math inline">\(e_i = 0\)</span>: observation falls <strong>exactly</strong> on the fitted line</li>
-</ul>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>Residuals <span class="math inline">\(e_i\)</span> are the observed counterparts to the unobservable errors <span class="math inline">\(\varepsilon_i\)</span>. We use them to check model assumptions and estimate <span class="math inline">\(\sigma^2\)</span>.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="properties-of-ols-residuals" class="slide level2 smaller">
-<h2>Properties of OLS Residuals</h2>
-<p>The OLS normal equations force two exact constraints on the residuals:</p>
-<p><span class="math display">\[\sum_{i=1}^n e_i = 0 \qquad \text{(1)}\]</span></p>
-<p><span class="math display">\[\sum_{i=1}^n x_i e_i = 0 \qquad \text{(2)}\]</span></p>
-<p>These two properties imply two more:</p>
-<ul>
-<li><span class="math inline">\(\bar{e} = 0\)</span> — the mean of the residuals is always zero</li>
-<li><span class="math inline">\(\sum_{i=1}^n \widehat{y}_i e_i = 0\)</span> — residuals are uncorrelated with the fitted values</li>
-</ul>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>These are exact algebraic facts — true for every OLS fit, regardless of whether the model is correct.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="proving-the-properties" class="slide level2 smaller">
-<h2>Proving the Properties</h2>
-<p><strong>Property (1): <span class="math inline">\(\sum e_i = 0\)</span>.</strong> Recall normal equation 1: <span class="math display">\[\sum_{i=1}^n (y_i - \widehat{\beta}_0 - \widehat{\beta}_1 x_i) = 0 \;\Longrightarrow\; \sum_{i=1}^n e_i = 0\]</span></p>
-<p><strong>Property (2): <span class="math inline">\(\sum x_i e_i = 0\)</span>.</strong> Recall normal equation 2: <span class="math display">\[\sum_{i=1}^n x_i(y_i - \widehat{\beta}_0 - \widehat{\beta}_1 x_i) = 0 \;\Longrightarrow\; \sum_{i=1}^n x_i e_i = 0\]</span></p>
-<p><strong>Corollary: <span class="math inline">\(\sum \widehat{y}_i e_i = 0\)</span>.</strong> Since <span class="math inline">\(\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i\)</span>: <span class="math display">\[\sum_{i=1}^n \widehat{y}_i e_i = \widehat{\beta}_0\underbrace{\sum e_i}_{=\,0} + \widehat{\beta}_1\underbrace{\sum x_i e_i}_{=\,0} = 0\]</span></p>
-</section>
-<section id="residual-sum-of-squares" class="slide level2 smaller">
-<h2>Residual Sum of Squares</h2>
-<p>The <strong>Residual Sum of Squares (RSS)</strong> measures the total unexplained variation:</p>
-<p><span class="math display">\[\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \widehat{y}_i)^2\]</span></p>
-<ul>
-<li>A smaller RSS means the line fits the data more closely</li>
-<li>RSS = 0 only if every point lies exactly on the fitted line</li>
-<li>RSS is used to estimate the unknown error variance <span class="math inline">\(\sigma^2\)</span> (next lecture)</li>
-</ul>
-<div class="callout callout-note callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Note</strong></p>
-</div>
-<div class="callout-content">
-<p>RSS cannot be reduced further — OLS was specifically designed to minimize it.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="practice-residual-properties" class="slide level2 smaller">
-<h2>Practice: Residual Properties</h2>
-<p>Using the dataset below with fitted line <span class="math inline">\(\widehat{y} = 1 + 2x\)</span>:</p>
+<section id="practice-computing-ols-estimates" class="slide level2 smaller">
+<h2>Practice: Computing OLS Estimates</h2>
+<p>A researcher records daily exercise hours (<span class="math inline">\(x\)</span>) and wellness score (<span class="math inline">\(y\)</span>, out of 15) for <span class="math inline">\(n = 5\)</span> students:</p>
 <div class="columns">
-<div class="column" style="width:50%;">
+<div class="column" style="width:52%;">
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -619,7 +539,7 @@ Annie Adams
 <th style="text-align: center;"><span class="math inline">\(x_i\)</span></th>
 <th style="text-align: center;"><span class="math inline">\(y_i\)</span></th>
 <th style="text-align: center;"><span class="math inline">\(\widehat{y}_i\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(e_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\hat{e}_i\)</span></th>
 </tr>
 </thead>
 <tbody>
@@ -627,134 +547,67 @@ Annie Adams
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">4</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2</td>
 <td style="text-align: center;">2</td>
 <td style="text-align: center;">3</td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">−2</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">3</td>
 <td style="text-align: center;">3</td>
 <td style="text-align: center;">8</td>
-<td style="text-align: center;">7</td>
-<td style="text-align: center;">1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">4</td>
 <td style="text-align: center;">4</td>
 <td style="text-align: center;">9</td>
-<td style="text-align: center;">9</td>
-<td style="text-align: center;">0</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">5</td>
 <td style="text-align: center;">5</td>
 <td style="text-align: center;">11</td>
-<td style="text-align: center;">11</td>
-<td style="text-align: center;">0</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
 </tr>
 </tbody>
 </table>
-</div><div class="column" style="width:50%;">
-<p><strong>Verify:</strong></p>
+</div><div class="column" style="width:48%;">
+<p><strong>Compute:</strong></p>
 <ol type="1">
-<li><p><span class="math inline">\(\sum_{i=1}^5 e_i = 0\)</span></p></li>
-<li><p><span class="math inline">\(\sum_{i=1}^5 x_i e_i = 0\)</span></p></li>
-<li><p><span class="math inline">\(\sum_{i=1}^5 \widehat{y}_i e_i = 0\)</span></p></li>
-<li><p>Compute <span class="math inline">\(\text{RSS} = \sum e_i^2\)</span></p></li>
+<li><p><span class="math inline">\(\widehat{\beta}_1 = S_{xy} / S_{xx}\)</span></p></li>
+<li><p><span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span></p></li>
+<li><p>Fill in <span class="math inline">\(\widehat{y}_i\)</span> using <span class="math inline">\(\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i\)</span></p></li>
+<li><p>Fill in <span class="math inline">\(\hat{e}_i\)</span> using <span class="math inline">\(\hat{e}_i = y_i - \widehat{y}_i\)</span></p></li>
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_2a490655" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_efd0e6cd" minutes="7" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div></div>
 </section>
 <section id="practice-solution" class="slide level2 smaller">
 <h2>Practice: Solution</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Verify <span class="math inline">\(\sum e_i = 0\)</span>:</strong> <span class="math display">\[1 + (-2) + 1 + 0 + 0 = 0 \checkmark\]</span></p>
-<p><strong>Verify <span class="math inline">\(\sum x_i e_i = 0\)</span>:</strong> <span class="math display">\[1(1) + 2(-2) + 3(1) + 4(0) + 5(0) = 1 - 4 + 3 = 0 \checkmark\]</span></p>
-</div><div class="column" style="width:50%;">
-<p><strong>Verify <span class="math inline">\(\sum \widehat{y}_i e_i = 0\)</span>:</strong> <span class="math display">\[3(1) + 5(-2) + 7(1) + 9(0) + 11(0) = 3 - 10 + 7 = 0 \checkmark\]</span></p>
-<p><strong>Compute RSS:</strong> <span class="math display">\[\text{RSS} = 1^2 + (-2)^2 + 1^2 + 0^2 + 0^2 = 1 + 4 + 1 = 6\]</span></p>
-</div></div>
-</section>
-<section id="practice-computing-ols-estimates" class="slide level2 smaller">
-<h2>Practice: Computing OLS Estimates</h2>
-<p>A researcher records daily exercise hours (<span class="math inline">\(x\)</span>) and wellness score (<span class="math inline">\(y\)</span>, out of 15) for <span class="math inline">\(n = 5\)</span> students:</p>
-<div class="columns">
-<div class="column" style="width:38%;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(x_i\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(y_i\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">8</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">9</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">11</td>
-</tr>
-</tbody>
-</table>
-<div style="font-size: 0.85em;">
-<p><strong>Given:</strong> <span class="math inline">\(\bar{x} = 3\)</span>, <span class="math inline">\(\;\bar{y} = 7\)</span>, <span class="math inline">\(\;S_{xx} = 10\)</span>, <span class="math inline">\(\;S_{xy} = 20\)</span></p>
-</div>
-</div><div class="column" style="width:62%;">
-<p><strong>Compute:</strong></p>
-<ol type="1">
-<li><p><span class="math inline">\(\widehat{\beta}_1 = S_{xy} / S_{xx}\)</span></p></li>
-<li><p><span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span></p></li>
-<li><p>Fitted values <span class="math inline">\(\;\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i\)</span></p></li>
-<li><p>Residuals <span class="math inline">\(\;e_i = y_i - \widehat{y}_i\)</span></p></li>
-</ol>
-<div class="cell">
-<div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_0847f7ef" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
-</div>
-</div></div>
-</section>
-<section id="practice-solution-1" class="slide level2 smaller">
-<h2>Practice: Solution</h2>
-<div class="columns">
-<div class="column" style="width:48%;">
-<p><strong>Steps 1–2: Estimates</strong></p>
-<p><span class="math display">\[\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{20}{10} = 2\]</span></p>
-<p><span class="math display">\[\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x} = 7 - 2(3) = 1\]</span></p>
+<p><strong>Finding <span class="math inline">\(\bar{x}\)</span>, <span class="math inline">\(\bar{y}\)</span>, <span class="math inline">\(S_{xx}\)</span>, <span class="math inline">\(S_{xy}\)</span>:</strong></p>
+<p><span class="math display">\[\bar{x} = \frac{1+2+3+4+5}{5} = 3, \qquad \bar{y} = \frac{4+3+8+9+11}{5} = 7\]</span></p>
+<p><span class="math display">\[S_{xx} = (-2)^2+(-1)^2+0^2+1^2+2^2 = 10\]</span></p>
+<p><span class="math display">\[S_{xy} = (-2)(-3)+(-1)(-4)+(0)(1)+(1)(2)+(2)(4) = 20\]</span></p>
+<p><strong>Estimates:</strong></p>
+<p><span class="math display">\[\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{20}{10} = 2, \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x} = 7 - 2(3) = 1\]</span></p>
 <p>Fitted line: <span class="math inline">\(\;\widehat{y} = 1 + 2x\)</span></p>
-</div><div class="column" style="width:52%;">
-<p><strong>Steps 3–4: Fitted values and residuals</strong></p>
+</section>
+<section id="practice-solution-cont." class="slide level2 smaller">
+<h2>Practice: Solution (cont.)</h2>
+<p><strong>Fitted values and residuals</strong></p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -762,7 +615,7 @@ Annie Adams
 <th style="text-align: center;"><span class="math inline">\(x_i\)</span></th>
 <th style="text-align: center;"><span class="math inline">\(y_i\)</span></th>
 <th style="text-align: center;"><span class="math inline">\(\widehat{y}_i\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(e_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\hat{e}_i\)</span></th>
 </tr>
 </thead>
 <tbody>
@@ -803,7 +656,6 @@ Annie Adams
 </tr>
 </tbody>
 </table>
-</div></div>
 </section>
 <section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>
