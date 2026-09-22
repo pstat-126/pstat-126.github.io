@@ -133,7 +133,7 @@ By the end of this course, you will be able to:
 | 3 | Quiz 1 | Mon, Oct 12 |
 | 4 | HW 2 | Sat, Oct 31 |
 | 5 | Quiz 2 | Mon, Oct 26 |
-| 6 | Optional Late Pass Questionnaire | Fri, Nov 7 |
+| 6 | Optional Late Pass Questionnaire | Sat, Nov 7 |
 | 6 | **Midterm** | Mon, Nov 2 |
 
 ---

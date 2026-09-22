@@ -78,7 +78,7 @@
     "href": "index.html#teaching-team",
     "title": "PSTAT 126: Regression Analysis",
     "section": "Teaching Team",
-    "text": "Teaching Team\n\n\nInstructor\nAnnie Adams\naradams@ucsb.edu\nOffice hours: Tuesday 10 AM - 11 AM — see the office hours page\n\n\nTeaching Assistants\nTong Lin\ntong_ling@ucsb.edu\nOffice hours: TBD — see the office hours page\nBingjiang Xia\nbxia@umail.ucsb.edu\nOffice hours: TBD — see the office hours page"
+    "text": "Teaching Team\n\n\nInstructor\nAnnie Adams\naradams@ucsb.edu\nOffice hours: Tuesday 10 AM - 11 AM on Zoom — see the office hours page\n\n\nTeaching Assistants\nTong Li\ntong_ling@ucsb.edu\nOffice hours: TBD — see the office hours page\nBingjiang Xia\nbxia@umail.ucsb.edu\nOffice hours: TBD — see the office hours page"
   },
   {
     "objectID": "hw/hw-03.html",
@@ -182,7 +182,7 @@
     "href": "slides/syllabus-slides.html#assignment-calendar-first-half",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Assignment Calendar — First Half",
-    "text": "Assignment Calendar — First Half\n\n\n\nWeek\nAssignment\nDue Date\n\n\n\n\n1\nOptional Late Pass Questionnaire\nFri, Oct 3\n\n\n2\nHW 1\nSat, Oct 17\n\n\n3\nQuiz 1\nMon, Oct 12\n\n\n4\nHW 2\nSat, Oct 31\n\n\n5\nQuiz 2\nMon, Oct 26\n\n\n6\nOptional Late Pass Questionnaire\nFri, Nov 7\n\n\n6\nMidterm\nMon, Nov 2"
+    "text": "Assignment Calendar — First Half\n\n\n\nWeek\nAssignment\nDue Date\n\n\n\n\n1\nOptional Late Pass Questionnaire\nFri, Oct 3\n\n\n2\nHW 1\nSat, Oct 17\n\n\n3\nQuiz 1\nMon, Oct 12\n\n\n4\nHW 2\nSat, Oct 31\n\n\n5\nQuiz 2\nMon, Oct 26\n\n\n6\nOptional Late Pass Questionnaire\nSat, Nov 7\n\n\n6\nMidterm\nMon, Nov 2"
   },
   {
     "objectID": "slides/syllabus-slides.html#assignment-calendar-second-half",
@@ -310,7 +310,7 @@
     "href": "course-syllabus.html#assignment-calendar",
     "title": "Course Syllabus",
     "section": "Assignment Calendar",
-    "text": "Assignment Calendar\n\n\n\nWeek Assigned\nAssignment\nDate Due\nWeek Due\n\n\n\n\n1\nOptional Late Pass Questionnaire\nFri, Oct 3\n1\n\n\n2\nHW 1\nSat, Oct 17\n3\n\n\n3\nQuiz 1\nMon, Oct 12\n3\n\n\n4\nHW 2\nSat, Oct 31\n5\n\n\n5\nQuiz 2\nMon, Oct 26\n5\n\n\n5\nOptional Late Pass Questionnaire\nSat, Oct 31\n5\n\n\n6\nMidterm\nMon, Nov 2\n6\n\n\n7\nHW 3\nSat, Nov 14\n8\n\n\n8\nQuiz 3\nMon, Nov 16\n8\n\n\n9\nHW 4\nSat, Nov 28\nFinals\n\n\n10\nQuiz 4\nMon, Nov 30\n10\n\n\nFinals\nFinal Exam\nTue, Dec 8 · 12–3 PM\nFinals",
+    "text": "Assignment Calendar\n\n\n\nWeek Assigned\nAssignment\nDate Due\nWeek Due\n\n\n\n\n1\nOptional Late Pass Questionnaire\nFri, Oct 3\n1\n\n\n2\nHW 1\nSat, Oct 17\n3\n\n\n3\nQuiz 1\nMon, Oct 12\n3\n\n\n4\nHW 2\nSat, Oct 31\n5\n\n\n5\nQuiz 2\nMon, Oct 26\n5\n\n\n6\nOptional Late Pass Questionnaire\nSat, Nov 7\n6\n\n\n6\nMidterm\nMon, Nov 2\n6\n\n\n7\nHW 3\nSat, Nov 14\n8\n\n\n8\nQuiz 3\nMon, Nov 16\n8\n\n\n9\nHW 4\nSat, Nov 28\nFinals\n\n\n10\nQuiz 4\nMon, Nov 30\n10\n\n\nFinals\nFinal Exam\nTue, Dec 8 · 12–3 PM\nFinals",
     "crumbs": [
       "Syllabus",
       "Course Information",
@@ -406,7 +406,7 @@
     "href": "index.html#readings",
     "title": "PSTAT 126: Regression Analysis",
     "section": "Readings",
-    "text": "Readings\nFaraway, J.J. (2004). Linear Models with R. Chapman and Hall/CRC. Free PDF →\nGelman, A., Hill, J., & Vehtari, A. (2020). Regression and Other Stories. Cambridge University Press. Free PDF →"
+    "text": "Readings\nFaraway, J.J. (2004). Linear Models with R. Chapman and Hall/CRC. Free PDF →\nWeisberg, S. (2014). Applied Linear Regression. Wiley. Free PDF →"
   },
   {
     "objectID": "course-syllabus.html#readings",
@@ -1692,7 +1692,7 @@
     "href": "index.html#acknowledgements",
     "title": "PSTAT 126: Regression Analysis",
     "section": "Acknowledgements",
-    "text": "Acknowledgements\nThe lecture slides, homework assignments, and labs used in this course are adapted from or directly based on materials developed by Yuednong Wang for PSTAT 126."
+    "text": "Acknowledgements\nThe lecture slides, homework assignments, and labs used in this course are adapted from or directly based on materials developed by Yuedong Wang for PSTAT 126."
   },
   {
     "objectID": "slides/syllabus-slides.html#late-passes",

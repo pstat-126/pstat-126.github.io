@@ -22,7 +22,7 @@ By the end of the quarter, you will be able to formulate, fit, and interpret reg
 
 **Faraway, J.J. (2004).** *Linear Models with R.* Chapman and Hall/CRC. [Free PDF →](https://utstat.toronto.edu/~brunner/books/LinearModelsWithR.pdf)
 
-**Gelman, A., Hill, J., & Vehtari, A. (2020).** *Regression and Other Stories.* Cambridge University Press. [Free PDF →](https://users.aalto.fi/~ave/ROS.pdf)
+**Weisberg, S. (2014).** *Applied Linear Regression.* Wiley. [Free PDF →](https://www.stat.purdue.edu/~qfsong/teaching/525/book/Weisberg-Applied-Linear-Regression-Wiley.pdf)
 
 ## Teaching Team
 
@@ -32,11 +32,11 @@ By the end of the quarter, you will be able to formulate, fit, and interpret reg
 
 **Instructor**
 
-Annie Adams
+[Annie Adams]{style="color: #003660; font-weight: 600;"}
 
 [aradams@ucsb.edu](mailto:aradams@ucsb.edu)
 
-Office hours: Tuesday 10 AM - 11 AM — see the [office hours page](office-hours.html)
+Office hours: Tuesday 10 AM - 11 AM on [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1) — see the [office hours page](office-hours.html)
 
 :::
 
@@ -44,14 +44,14 @@ Office hours: Tuesday 10 AM - 11 AM — see the [office hours page](office-hours
 
 **Teaching Assistants**
 
-Tong Lin
+[Tong Li]{style="color: #003660; font-weight: 600;"}
 
 [tong_ling@ucsb.edu](mailto:tong_ling@ucsb.edu)
 
 Office hours: TBD — see the [office hours page](office-hours.html)
 
 
-Bingjiang Xia
+[Bingjiang Xia]{style="color: #003660; font-weight: 600;"}
 
 [bxia@umail.ucsb.edu](mailto:bxia@umail.ucsb.edu)
 
@@ -64,4 +64,4 @@ Office hours: TBD — see the [office hours page](office-hours.html)
 
 ## Acknowledgements
 
-The lecture slides, homework assignments, and labs used in this course are adapted from or directly based on materials developed by [Yuednong Wang](https://yuedong.faculty.pstat.ucsb.edu/) for PSTAT 126.
+The lecture slides, homework assignments, and labs used in this course are adapted from or directly based on materials developed by [Yuedong Wang](https://yuedong.faculty.pstat.ucsb.edu/) for PSTAT 126.
