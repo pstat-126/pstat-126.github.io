@@ -19,9 +19,7 @@ website:
       - text: "Gradescope"
         href: https://www.gradescope.com
         target: _blank
-      - icon: github
-        href: https://github.com/pstat-126
-        target: _blank
+      
 
   sidebar:
     style: docked
