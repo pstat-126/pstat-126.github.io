@@ -1,0 +1,235 @@
+---
+title: "Lecture 3: Residuals and Estimating Error Variance"
+subtitle: "PSTAT 126: Linear Regression"
+author: "Annie Adams"
+institute: "UC Santa Barbara"
+date: "10/2/2026"
+format:
+  revealjs:
+    theme: [default, ../styles.scss]
+    slide-number: true
+    preview-links: auto
+    footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
+    logo: ""
+    chalkboard: true
+    title-slide-attributes:
+      data-background-color: "#003660"
+---
+
+## Review: OLS Estimators
+
+From last time, the OLS estimators are:
+
+$$\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}}, \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$$
+
+They are **unbiased**, **linear**, and **BLUE** (Gauss-Markov).
+
+**Today:** What do the residuals tell us, and how do we estimate the unknown $\sigma^2$?
+
+---
+
+## Learning Objectives
+
+By the end of today you will be able to:
+
+- Define residuals and explain what they measure
+- State and prove the four properties of OLS residuals
+- Define RSS and explain its role in regression
+- Compute and interpret $\widehat{\sigma}^2$ and $\widehat{\sigma}$
+- Explain why we divide by $n - 2$ rather than $n$
+
+---
+
+## Residuals {background-color="#003660"}
+
+---
+
+## What are Residuals? {.smaller}
+
+After fitting the model, the **residual** for observation $i$ is:
+
+$$e_i = y_i - \widehat{y}_i = y_i - \widehat{\beta}_0 - \widehat{\beta}_1 x_i$$
+
+Residuals measure how far each observation falls from the fitted line:
+
+- $e_i > 0$: observed value is **above** the fitted line
+- $e_i < 0$: observed value is **below** the fitted line
+- $e_i = 0$: observation falls **exactly** on the fitted line
+
+::: {.callout-note}
+Residuals $e_i$ are the observable counterparts to the unobservable errors $\varepsilon_i$. We use them to check model assumptions and estimate $\sigma^2$.
+:::
+
+---
+
+## Properties of OLS Residuals {.smaller}
+
+
+1. $\displaystyle\sum_{i=1}^n e_i = 0$ — residuals sum to zero
+2. $\displaystyle\sum_{i=1}^n \widehat{y}_i = \sum_{i=1}^n y_i$ — sum of fitted values equals sum of observed values
+3. $\displaystyle\sum_{i=1}^n x_i e_i = 0$ — residuals are uncorrelated with the predictor
+4. $\displaystyle\sum_{i=1}^n \widehat{y}_i e_i = 0$ — residuals are uncorrelated with the fitted values
+5. The fitted line always passes through $(\bar{x}, \bar{y})$
+
+
+---
+
+## Estimating $\sigma^2$ {background-color="#003660"}
+
+---
+
+## Residual Sum of Squares {.smaller}
+
+The **Residual Sum of Squares (RSS)** measures the total unexplained variation:
+
+$$\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \widehat{y}_i)^2$$
+
+- A smaller RSS means the line fits the data more closely
+- RSS = 0 only if every point lies exactly on the fitted line
+
+
+---
+
+## Estimating $\sigma^2$ {.smaller}
+
+The error variance $\sigma^2 = \text{Var}(\varepsilon_i)$ is unknown. We estimate it using the residuals.
+
+A natural starting point is the average squared residual, but we must divide by $n - 2$, not $n$:
+
+$$\widehat{\sigma}^2 = \frac{\text{RSS}}{n - 2} = \frac{\sum_{i=1}^n e_i^2}{n-2}$$
+
+**Why $n - 2$?** Estimating $\widehat{\beta}_0$ and $\widehat{\beta}_1$ uses 2 degrees of freedom since two parameters are being used.
+
+It can be shown that $\mathbb{E}(\widehat{\sigma}^2) = \sigma^2$, so $\widehat{\sigma}^2$ is an **unbiased** estimator of $\sigma^2$.
+
+---
+
+## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Step 1 — expand E(SSE).** Substitute $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$:
+$$\mathbb{E}(\text{SSE}) = \mathbb{E}\!\left\{\sum(y_i - \widehat{y}_i)^2\right\} = \mathbb{E}\!\left\{\sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\right\}$$
+
+**Step 2 — expand the square and use** $\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}$:
+$$= \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 + \widehat{\beta}_1^2 S_{xx} - 2\widehat{\beta}_1^2 S_{xx}\right\} = \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 - \widehat{\beta}_1^2 S_{xx}\right\}$$
+:::
+
+---
+
+## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (cont.) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Step 3 — evaluate each expectation piece by piece.**
+
+Substitute $y_i - \bar{y} = \beta_1(x_i-\bar{x}) + (\varepsilon_i - \bar{\varepsilon})$ and expand:
+
+- $\mathbb{E}\!\left\{\sum(y_i-\bar{y})^2\right\} = \beta_1^2 S_{xx} + \mathbb{E}\!\left\{\sum(\varepsilon_i-\bar{\varepsilon})^2\right\} + 0 = \beta_1^2 S_{xx} + (n-1)\sigma^2$
+
+  since $\mathbb{E}\!\left\{\sum(\varepsilon_i - \bar{\varepsilon})^2\right\} = (n-1)\sigma^2$ and the cross term has $\mathbb{E}(\varepsilon_i - \bar{\varepsilon}) = 0$
+
+- $\mathbb{E}(\widehat{\beta}_1^2) = \text{Var}(\widehat{\beta}_1) + \left[\mathbb{E}(\widehat{\beta}_1)\right]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2$, so $\;\mathbb{E}(\widehat{\beta}_1^2 S_{xx}) = \sigma^2 + \beta_1^2 S_{xx}$
+
+**Step 4 — combine:**
+$$\mathbb{E}(\text{SSE}) = \beta_1^2 S_{xx} + (n-1)\sigma^2 - \sigma^2 - \beta_1^2 S_{xx} = (n-2)\sigma^2$$
+
+Therefore:
+$$\mathbb{E}(\text{MSE}) = \mathbb{E}\!\left(\frac{\text{SSE}}{n-2}\right) = \frac{(n-2)\sigma^2}{n-2} = \sigma^2 \qquad \blacksquare$$
+:::
+
+---
+
+## The Residual Standard Deviation {.smaller}
+
+Taking the square root gives the **residual standard deviation**:
+
+$$\widehat{\sigma} = \sqrt{\widehat{\sigma}^2} = \sqrt{\frac{\text{RSS}}{n-2}}$$
+
+**Interpretation:** $\widehat{\sigma}$ is the typical size of a prediction error, on the scale of $y$.
+
+::: {.callout-tip}
+Compare $\widehat{\sigma}$ to the spread of $y$ to gauge model usefulness. A small $\widehat{\sigma}$ relative to the range of $y$ indicates a good fit.
+:::
+
+---
+
+## Standard Errors of the Estimators {.smaller}
+
+Since $\sigma^2$ is unknown, we replace it with $\widehat{\sigma}^2$ in the variance formulas:
+
+$$\widehat{\text{Var}}(\widehat{\beta}_1) = \frac{\widehat{\sigma}^2}{S_{xx}}, \qquad \widehat{\text{Var}}(\widehat{\beta}_0) = \widehat{\sigma}^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)$$
+
+The **standard errors** are the square roots:
+
+$$\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}}, \qquad \text{SE}(\widehat{\beta}_0) = \widehat{\sigma}\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}$$
+
+Standard errors quantify the uncertainty in each estimate — they are the basis for confidence intervals and hypothesis tests (coming soon).
+
+---
+
+## Practice: Computing $\widehat{\sigma}$ {.smaller}
+
+Using the same dataset ($n = 5$, $S_{xx} = 10$, $\text{RSS} = 6$, fitted line $\widehat{y} = 1 + 2x$):
+
+**Compute:**
+
+1. $\widehat{\sigma}^2 = \text{RSS} / (n - 2)$
+
+2. $\widehat{\sigma} = \sqrt{\widehat{\sigma}^2}$
+
+3. $\text{SE}(\widehat{\beta}_1) = \widehat{\sigma} / \sqrt{S_{xx}}$
+
+```{r}
+#| echo: false
+countdown::countdown(
+  minutes = 3,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em",
+)
+```
+
+---
+
+## Practice: Solution {.smaller}
+
+**Step 1 — estimate $\sigma^2$:**
+$$\widehat{\sigma}^2 = \frac{\text{RSS}}{n-2} = \frac{6}{5-2} = \frac{6}{3} = 2$$
+
+**Step 2 — residual standard deviation:**
+$$\widehat{\sigma} = \sqrt{2} \approx 1.41$$
+
+**Step 3 — standard error of $\widehat{\beta}_1$:**
+$$\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}} = \frac{\sqrt{2}}{\sqrt{10}} = \sqrt{\frac{2}{10}} = \sqrt{0.2} \approx 0.45$$
+
+**Interpretation:** the slope estimate $\widehat{\beta}_1 = 2$ has a typical uncertainty of about $\pm 0.45$ wellness points per hour of exercise.
+
+---
+
+## Summary {.smaller}
+
+::: {.incremental}
+- **Residuals** $e_i = y_i - \widehat{y}_i$ are observed proxies for the unobservable errors $\varepsilon_i$
+- **Five properties** of OLS residuals follow from the normal equations: $\sum e_i = 0$, $\sum \widehat{y}_i = \sum y_i$, $\sum x_i e_i = 0$, $\sum \widehat{y}_i e_i = 0$, and the line passes through $(\bar{x}, \bar{y})$
+- **RSS** $= \sum e_i^2$ measures total unexplained variation — OLS minimizes it by construction
+- **$\widehat{\sigma}^2 = \text{RSS}/(n-2)$** is an unbiased estimate of $\sigma^2$; dividing by $n-2$ corrects for two constraints placed on the residuals
+- **$\widehat{\sigma}$** is the residual standard deviation — the typical prediction error on the scale of $y$
+- **Standard errors** replace $\sigma$ with $\widehat{\sigma}$ in the variance formulas — the foundation for inference
+:::
+
+---
+
+## Questions? {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em;"}
+**Annie Adams**
+[aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+Office Hours: Tuesday 10 – 11 AM
+
+[Course Website](https://pstat-126.github.io/)
+:::

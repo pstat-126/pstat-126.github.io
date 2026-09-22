@@ -5,8 +5,8 @@ title: "Office Hours"
 
 | Person | Role | Day | Time | Location |
 |---|---|---|---|---|
-| Annie Adams | Instructor | Tuesday | 10 AM - 11 AM  | TBD |
-| TBD | TA | TBD | TBD | TBD |
-| TBD | TA | TBD | TBD | TBD |
+| Annie Adams | Instructor | Tuesday | 10 AM - 11 AM  | [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1) |
+| Bingjiang Xia | TA | TBD | TBD | TBD |
+| Tong Lin | TA | TBD | TBD | TBD |
 
 Office hours are also available by appointment. Email the instructor to schedule.

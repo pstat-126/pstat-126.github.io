@@ -131,6 +131,68 @@ $link-color: #1a5ca8;
   color: #7a5000;
 }
 
+// ---- Revealjs slide styling ----
+
+.reveal h2 {
+  color: #003660;
+  border-bottom: 3px solid #FEBC11;
+  padding-bottom: 0.3em;
+  margin-bottom: 0.6em;
+}
+
+.reveal h3 {
+  color: #1a5ca8;
+  font-size: 1em;
+  margin-bottom: 0.4em;
+}
+
+.reveal a {
+  color: #1a5ca8;
+  text-decoration: underline;
+}
+
+.reveal .slides section {
+  padding-top: 0.5em;
+}
+
+.reveal .slide-number {
+  background: #003660;
+  color: white;
+  border-radius: 3px;
+  padding: 2px 6px;
+}
+
+.reveal .footer {
+  color: #666;
+  font-size: 0.6em;
+  border-top: 2px solid #FEBC11;
+  padding-top: 0.3em;
+}
+
+.reveal pre code {
+  border-left: 4px solid #FEBC11;
+  background: #f6f8fa;
+}
+
+.reveal .callout {
+  border-radius: 5px;
+}
+
+.reveal table th {
+  background: #003660;
+  color: white;
+  padding: 0.4em 0.75em;
+}
+
+.reveal table td {
+  padding: 0.4em 0.75em;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.reveal table tr:nth-child(even) td {
+  background: #f2f4f7;
+}
+
 // ---- Grading table ----
 
 .grading-table {

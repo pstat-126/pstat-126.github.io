@@ -11,6 +11,7 @@ format:
     preview-links: auto
     footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
     logo: ""
+    chalkboard: true
     title-slide-attributes:
       data-background-color: "#003660"
 ---

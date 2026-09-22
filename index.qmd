@@ -44,12 +44,24 @@ Office hours: Tuesday 10 AM - 11 AM — see the [office hours page](office-hours
 
 **Teaching Assistants**
 
-TBD
+Tong Lin
 
-[ta\@ucsb.edu](mailto:ta@ucsb.edu)
+[tong_ling@ucsb.edu](mailto:tong_ling@ucsb.edu)
 
 Office hours: TBD — see the [office hours page](office-hours.html)
 
+
+Bingjiang Xia
+
+[bxia@umail.ucsb.edu](mailto:bxia@umail.ucsb.edu)
+
+Office hours: TBD — see the [office hours page](office-hours.html)
+
+
 :::
 
 :::
+
+## Acknowledgements
+
+The lecture slides, homework assignments, and labs used in this course are adapted from or directly based on materials developed by [Yuednong Wang](https://yuedong.faculty.pstat.ucsb.edu/) for PSTAT 126.

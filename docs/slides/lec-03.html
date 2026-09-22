@@ -10,7 +10,8 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Annie Adams">
-  <title>PSTAT 126 – Welcome to PSTAT 126: Linear Regression!</title>
+  <meta name="dcterms.date" content="2026-10-02">
+  <title>PSTAT 126 – Lecture 3: Residuals and Estimating Error Variance</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -35,12 +36,10 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-6359f6a13dddf015e3c4843adb306559.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-587359f803ea82c42dd9086c2159450a.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
@@ -129,14 +128,16 @@
       margin-right: 0; 
     }
   </style>
+  <link href="../site_libs/countdown-0.6.0/countdown.css" rel="stylesheet">
+  <script src="../site_libs/countdown-0.6.0/countdown.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" data-background-color="#003660" class="quarto-title-block center">
-  <h1 class="title">Welcome to PSTAT 126: Linear Regression!</h1>
-  <p class="subtitle">Course Overview — Fall 2026</p>
+  <h1 class="title">Lecture 3: Residuals and Estimating Error Variance</h1>
+  <p class="subtitle">PSTAT 126: Linear Regression</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -149,305 +150,170 @@ Annie Adams
     </div>
 </div>
 
+  <p class="date">2026-10-02</p>
 </section>
-<section id="course-information" class="slide level2" data-background-color="#003660">
-<h2>Course Information</h2>
-<p><strong>Instructor:</strong> Annie Adams · <a href="mailto:aradams@ucsb.edu">aradams@ucsb.edu</a></p>
-<p><strong>Lectures:</strong> Mon / Wed · 12:30 – 1:45 PM · TD-W 1701</p>
-<p><strong>Units:</strong> 4 Units</p>
-<p><strong>Office Hours</strong> Tuesday 10 – 11 AM on <a href="https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1">Zoom</a></p>
-<p><strong>Prerequisites:</strong> PSTAT 10 and PSTAT 120B</p>
-<p><strong>Computing:</strong> R ≥ 4.4.0 · RStudio ≥ 2024.04.02</p>
+<section id="review-ols-estimators" class="slide level2">
+<h2>Review: OLS Estimators</h2>
+<p>From last time, the OLS estimators are:</p>
+<p><span class="math display">\[\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}}, \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\]</span></p>
+<p>They are <strong>unbiased</strong>, <strong>linear</strong>, and <strong>BLUE</strong> (Gauss-Markov).</p>
+<p><strong>Today:</strong> What do the residuals tell us, and how do we estimate the unknown <span class="math inline">\(\sigma^2\)</span>?</p>
 </section>
-<section id="course-description" class="slide level2">
-<h2>Course Description</h2>
-<p>Linear and multiple regression with an emphasis on real-world application.</p>
-<p><strong>Topics include:</strong></p>
-<ul>
-<li>Simple and multiple linear regression</li>
-<li>Residual analysis and model diagnostics</li>
-<li>Transformations and variable selection</li>
-<li>Analysis of covariance</li>
-<li>Stepwise regression</li>
-</ul>
-</section>
-<section id="learning-objectives" class="slide level2 smaller">
+<section id="learning-objectives" class="slide level2">
 <h2>Learning Objectives</h2>
-<p>By the end of this course, you will be able to:</p>
+<p>By the end of today you will be able to:</p>
 <ul>
-<li>Formulate, fit, and interpret simple and multiple linear regression models</li>
-<li>Conduct residual analysis and diagnose violations of model assumptions</li>
-<li>Identify and handle outliers, leverage points, and multicollinearity</li>
-<li>Apply transformations to linearize relationships and stabilize variance</li>
-<li>Implement variable selection methods</li>
-<li>Perform statistical inference and prediction in regression models</li>
-<li>Use R for exploratory data analysis, model fitting, and diagnostic plotting</li>
+<li>Define residuals and explain what they measure</li>
+<li>State and prove the four properties of OLS residuals</li>
+<li>Define RSS and explain its role in regression</li>
+<li>Compute and interpret <span class="math inline">\(\widehat{\sigma}^2\)</span> and <span class="math inline">\(\widehat{\sigma}\)</span></li>
+<li>Explain why we divide by <span class="math inline">\(n - 2\)</span> rather than <span class="math inline">\(n\)</span></li>
 </ul>
 </section>
-<section id="grading" class="slide level2">
-<h2>Grading</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Component</th>
-<th style="text-align: center;">Weight</th>
-<th style="text-align: left;">Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Homework (4)</td>
-<td style="text-align: center;">40%</td>
-<td style="text-align: left;">~2 weeks per assignment</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Quizzes (4)</td>
-<td style="text-align: center;">10%</td>
-<td style="text-align: left;">Lowest score dropped</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Labs (10)</td>
-<td style="text-align: center;">15%</td>
-<td style="text-align: left;">Completed in weekly section</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Midterm</td>
-<td style="text-align: center;">15%</td>
-<td style="text-align: left;">Week 6, closed book</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Final Exam</td>
-<td style="text-align: center;">20%</td>
-<td style="text-align: left;">Finals Week, Cumulative</td>
-</tr>
-</tbody>
-</table>
+<section id="residuals" class="slide level2" data-background-color="#003660">
+<h2>Residuals</h2>
 </section>
-<section id="homework" class="slide level2">
-<h2>Homework</h2>
+<section id="what-are-residuals" class="slide level2 smaller">
+<h2>What are Residuals?</h2>
+<p>After fitting the model, the <strong>residual</strong> for observation <span class="math inline">\(i\)</span> is:</p>
+<p><span class="math display">\[e_i = y_i - \widehat{y}_i = y_i - \widehat{\beta}_0 - \widehat{\beta}_1 x_i\]</span></p>
+<p>Residuals measure how far each observation falls from the fitted line:</p>
 <ul>
-<li><strong>4 assignments</strong> — approximately two weeks per assignment</li>
-<li>Due at <strong>11:59 PM</strong> on the listed date</li>
-<li>Submitted via <strong><a href="https://www.gradescope.com">Gradescope</a></strong></li>
+<li><span class="math inline">\(e_i &gt; 0\)</span>: observed value is <strong>above</strong> the fitted line</li>
+<li><span class="math inline">\(e_i &lt; 0\)</span>: observed value is <strong>below</strong> the fitted line</li>
+<li><span class="math inline">\(e_i = 0\)</span>: observation falls <strong>exactly</strong> on the fitted line</li>
+</ul>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Residuals <span class="math inline">\(e_i\)</span> are the observable counterparts to the unobservable errors <span class="math inline">\(\varepsilon_i\)</span>. We use them to check model assumptions and estimate <span class="math inline">\(\sigma^2\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="properties-of-ols-residuals" class="slide level2 smaller">
+<h2>Properties of OLS Residuals</h2>
+<ol type="1">
+<li><span class="math inline">\(\displaystyle\sum_{i=1}^n e_i = 0\)</span> — residuals sum to zero</li>
+<li><span class="math inline">\(\displaystyle\sum_{i=1}^n \widehat{y}_i = \sum_{i=1}^n y_i\)</span> — sum of fitted values equals sum of observed values</li>
+<li><span class="math inline">\(\displaystyle\sum_{i=1}^n x_i e_i = 0\)</span> — residuals are uncorrelated with the predictor</li>
+<li><span class="math inline">\(\displaystyle\sum_{i=1}^n \widehat{y}_i e_i = 0\)</span> — residuals are uncorrelated with the fitted values</li>
+<li>The fitted line always passes through <span class="math inline">\((\bar{x}, \bar{y})\)</span></li>
+</ol>
+</section>
+<section id="estimating-sigma2" class="slide level2" data-background-color="#003660">
+<h2>Estimating <span class="math inline">\(\sigma^2\)</span></h2>
+</section>
+<section id="residual-sum-of-squares" class="slide level2 smaller">
+<h2>Residual Sum of Squares</h2>
+<p>The <strong>Residual Sum of Squares (RSS)</strong> measures the total unexplained variation:</p>
+<p><span class="math display">\[\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \widehat{y}_i)^2\]</span></p>
+<ul>
+<li>A smaller RSS means the line fits the data more closely</li>
+<li>RSS = 0 only if every point lies exactly on the fitted line</li>
 </ul>
 </section>
-<section id="late-passes" class="slide level2">
-<h2>Late Passes</h2>
+<section id="estimating-sigma2-1" class="slide level2 smaller">
+<h2>Estimating <span class="math inline">\(\sigma^2\)</span></h2>
+<p>The error variance <span class="math inline">\(\sigma^2 = \text{Var}(\varepsilon_i)\)</span> is unknown. We estimate it using the residuals.</p>
+<p>A natural starting point is the average squared residual, but we must divide by <span class="math inline">\(n - 2\)</span>, not <span class="math inline">\(n\)</span>:</p>
+<p><span class="math display">\[\widehat{\sigma}^2 = \frac{\text{RSS}}{n - 2} = \frac{\sum_{i=1}^n e_i^2}{n-2}\]</span></p>
+<p><strong>Why <span class="math inline">\(n - 2\)</span>?</strong> Estimating <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> uses 2 degrees of freedom since two parameters are being used.</p>
+<p>It can be shown that <span class="math inline">\(\mathbb{E}(\widehat{\sigma}^2) = \sigma^2\)</span>, so <span class="math inline">\(\widehat{\sigma}^2\)</span> is an <strong>unbiased</strong> estimator of <span class="math inline">\(\sigma^2\)</span>.</p>
+</section>
+<section id="proof-mathbbetextmse-sigma2" class="slide level2 smaller">
+<h2>Proof: <span class="math inline">\(\mathbb{E}(\text{MSE}) = \sigma^2\)</span></h2>
+<div style="font-size: 0.85em;">
+<p><strong>Step 1 — expand E(SSE).</strong> Substitute <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span>: <span class="math display">\[\mathbb{E}(\text{SSE}) = \mathbb{E}\!\left\{\sum(y_i - \widehat{y}_i)^2\right\} = \mathbb{E}\!\left\{\sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\right\}\]</span></p>
+<p><strong>Step 2 — expand the square and use</strong> <span class="math inline">\(\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}\)</span>: <span class="math display">\[= \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 + \widehat{\beta}_1^2 S_{xx} - 2\widehat{\beta}_1^2 S_{xx}\right\} = \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 - \widehat{\beta}_1^2 S_{xx}\right\}\]</span></p>
+</div>
+</section>
+<section id="proof-mathbbetextmse-sigma2-cont." class="slide level2 smaller">
+<h2>Proof: <span class="math inline">\(\mathbb{E}(\text{MSE}) = \sigma^2\)</span> (cont.)</h2>
+<div style="font-size: 0.85em;">
+<p><strong>Step 3 — evaluate each expectation piece by piece.</strong></p>
+<p>Substitute <span class="math inline">\(y_i - \bar{y} = \beta_1(x_i-\bar{x}) + (\varepsilon_i - \bar{\varepsilon})\)</span> and expand:</p>
 <ul>
-<li>You can earn <strong>2 late passes</strong> by completing <strong>2 Optional Late Pass Questionnaires</strong></li>
-<li>Each late pass grants a single 24-hour extension on a Homework Assignment</li>
-<li>Passes cannot be stacked</li>
-<li>Assignments marked “Late” on Gradescope automatically use a pass</li>
-<li>No pass remaining + late submission = <strong>zero</strong></li>
+<li><p><span class="math inline">\(\mathbb{E}\!\left\{\sum(y_i-\bar{y})^2\right\} = \beta_1^2 S_{xx} + \mathbb{E}\!\left\{\sum(\varepsilon_i-\bar{\varepsilon})^2\right\} + 0 = \beta_1^2 S_{xx} + (n-1)\sigma^2\)</span></p>
+<p>since <span class="math inline">\(\mathbb{E}\!\left\{\sum(\varepsilon_i - \bar{\varepsilon})^2\right\} = (n-1)\sigma^2\)</span> and the cross term has <span class="math inline">\(\mathbb{E}(\varepsilon_i - \bar{\varepsilon}) = 0\)</span></p></li>
+<li><p><span class="math inline">\(\mathbb{E}(\widehat{\beta}_1^2) = \text{Var}(\widehat{\beta}_1) + \left[\mathbb{E}(\widehat{\beta}_1)\right]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2\)</span>, so <span class="math inline">\(\;\mathbb{E}(\widehat{\beta}_1^2 S_{xx}) = \sigma^2 + \beta_1^2 S_{xx}\)</span></p></li>
 </ul>
+<p><strong>Step 4 — combine:</strong> <span class="math display">\[\mathbb{E}(\text{SSE}) = \beta_1^2 S_{xx} + (n-1)\sigma^2 - \sigma^2 - \beta_1^2 S_{xx} = (n-2)\sigma^2\]</span></p>
+<p>Therefore: <span class="math display">\[\mathbb{E}(\text{MSE}) = \mathbb{E}\!\left(\frac{\text{SSE}}{n-2}\right) = \frac{(n-2)\sigma^2}{n-2} = \sigma^2 \qquad \blacksquare\]</span></p>
+</div>
 </section>
-<section id="quizzes-labs" class="slide level2">
-<h2>Quizzes &amp; Labs</h2>
-<p><strong>Quizzes</strong></p>
+<section id="the-residual-standard-deviation" class="slide level2 smaller">
+<h2>The Residual Standard Deviation</h2>
+<p>Taking the square root gives the <strong>residual standard deviation</strong>:</p>
+<p><span class="math display">\[\widehat{\sigma} = \sqrt{\widehat{\sigma}^2} = \sqrt{\frac{\text{RSS}}{n-2}}\]</span></p>
+<p><strong>Interpretation:</strong> <span class="math inline">\(\widehat{\sigma}\)</span> is the typical size of a prediction error, on the scale of <span class="math inline">\(y\)</span>.</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Compare <span class="math inline">\(\widehat{\sigma}\)</span> to the spread of <span class="math inline">\(y\)</span> to gauge model usefulness. A small <span class="math inline">\(\widehat{\sigma}\)</span> relative to the range of <span class="math inline">\(y\)</span> indicates a good fit.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="standard-errors-of-the-estimators" class="slide level2 smaller">
+<h2>Standard Errors of the Estimators</h2>
+<p>Since <span class="math inline">\(\sigma^2\)</span> is unknown, we replace it with <span class="math inline">\(\widehat{\sigma}^2\)</span> in the variance formulas:</p>
+<p><span class="math display">\[\widehat{\text{Var}}(\widehat{\beta}_1) = \frac{\widehat{\sigma}^2}{S_{xx}}, \qquad \widehat{\text{Var}}(\widehat{\beta}_0) = \widehat{\sigma}^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)\]</span></p>
+<p>The <strong>standard errors</strong> are the square roots:</p>
+<p><span class="math display">\[\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}}, \qquad \text{SE}(\widehat{\beta}_0) = \widehat{\sigma}\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}\]</span></p>
+<p>Standard errors quantify the uncertainty in each estimate — they are the basis for confidence intervals and hypothesis tests (coming soon).</p>
+</section>
+<section id="practice-computing-widehatsigma" class="slide level2 smaller">
+<h2>Practice: Computing <span class="math inline">\(\widehat{\sigma}\)</span></h2>
+<p>Using the same dataset (<span class="math inline">\(n = 5\)</span>, <span class="math inline">\(S_{xx} = 10\)</span>, <span class="math inline">\(\text{RSS} = 6\)</span>, fitted line <span class="math inline">\(\widehat{y} = 1 + 2x\)</span>):</p>
+<p><strong>Compute:</strong></p>
+<ol type="1">
+<li><p><span class="math inline">\(\widehat{\sigma}^2 = \text{RSS} / (n - 2)\)</span></p></li>
+<li><p><span class="math inline">\(\widehat{\sigma} = \sqrt{\widehat{\sigma}^2}\)</span></p></li>
+<li><p><span class="math inline">\(\text{SE}(\widehat{\beta}_1) = \widehat{\sigma} / \sqrt{S_{xx}}\)</span></p></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<countdown-timer class="countdown" id="timer_05dbdcfe" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+</div>
+</div>
+</section>
+<section id="practice-solution" class="slide level2 smaller">
+<h2>Practice: Solution</h2>
+<p><strong>Step 1 — estimate <span class="math inline">\(\sigma^2\)</span>:</strong> <span class="math display">\[\widehat{\sigma}^2 = \frac{\text{RSS}}{n-2} = \frac{6}{5-2} = \frac{6}{3} = 2\]</span></p>
+<p><strong>Step 2 — residual standard deviation:</strong> <span class="math display">\[\widehat{\sigma} = \sqrt{2} \approx 1.41\]</span></p>
+<p><strong>Step 3 — standard error of <span class="math inline">\(\widehat{\beta}_1\)</span>:</strong> <span class="math display">\[\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}} = \frac{\sqrt{2}}{\sqrt{10}} = \sqrt{\frac{2}{10}} = \sqrt{0.2} \approx 0.45\]</span></p>
+<p><strong>Interpretation:</strong> the slope estimate <span class="math inline">\(\widehat{\beta}_1 = 2\)</span> has a typical uncertainty of about <span class="math inline">\(\pm 0.45\)</span> wellness points per hour of exercise.</p>
+</section>
+<section id="summary" class="slide level2 smaller">
+<h2>Summary</h2>
 <ul>
-<li>4 in-person quizzes, held at the start of class</li>
-<li>Your <strong>lowest score is dropped</strong></li>
-<li>Quiz dates: Monday of Week 3, 5, 8, &amp; 10</li>
+<li class="fragment"><strong>Residuals</strong> <span class="math inline">\(e_i = y_i - \widehat{y}_i\)</span> are observed proxies for the unobservable errors <span class="math inline">\(\varepsilon_i\)</span></li>
+<li class="fragment"><strong>Five properties</strong> of OLS residuals follow from the normal equations: <span class="math inline">\(\sum e_i = 0\)</span>, <span class="math inline">\(\sum \widehat{y}_i = \sum y_i\)</span>, <span class="math inline">\(\sum x_i e_i = 0\)</span>, <span class="math inline">\(\sum \widehat{y}_i e_i = 0\)</span>, and the line passes through <span class="math inline">\((\bar{x}, \bar{y})\)</span></li>
+<li class="fragment"><strong>RSS</strong> <span class="math inline">\(= \sum e_i^2\)</span> measures total unexplained variation — OLS minimizes it by construction</li>
+<li class="fragment"><strong><span class="math inline">\(\widehat{\sigma}^2 = \text{RSS}/(n-2)\)</span></strong> is an unbiased estimate of <span class="math inline">\(\sigma^2\)</span>; dividing by <span class="math inline">\(n-2\)</span> corrects for two constraints placed on the residuals</li>
+<li class="fragment"><strong><span class="math inline">\(\widehat{\sigma}\)</span></strong> is the residual standard deviation — the typical prediction error on the scale of <span class="math inline">\(y\)</span></li>
+<li class="fragment"><strong>Standard errors</strong> replace <span class="math inline">\(\sigma\)</span> with <span class="math inline">\(\widehat{\sigma}\)</span> in the variance formulas — the foundation for inference</li>
 </ul>
-<p><strong>Labs</strong></p>
-<ul>
-<li>8 lab assignments total</li>
-<li>Completed during your designated <strong>discussion section</strong></li>
-<li>Due on Gradescope the day of your section by <strong>11:59 PM</strong></li>
-</ul>
-</section>
-<section id="exams" class="slide level2">
-<h2>Exams</h2>
-<p><strong>Midterm</strong></p>
-<ul>
-<li>Monday of Week 6, <strong>November 2nd</strong></li>
-<li>In class, closed book</li>
-<li>Formula sheet provided</li>
-</ul>
-<p><strong>Final Exam</strong></p>
-<ul>
-<li><strong>Tuesday, December 8th · 12:00 – 3:00 PM</strong></li>
-<li>Cumulative</li>
-<li>Formula sheet provided</li>
-</ul>
-</section>
-<section id="assignment-calendar-first-half" class="slide level2 smaller">
-<h2>Assignment Calendar — First Half</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;">Week</th>
-<th style="text-align: left;">Assignment</th>
-<th style="text-align: center;">Due Date</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: left;">Optional Late Pass Questionnaire</td>
-<td style="text-align: center;">Fri, Oct 3</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">2</td>
-<td style="text-align: left;">HW 1</td>
-<td style="text-align: center;">Sat, Oct 17</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">3</td>
-<td style="text-align: left;">Quiz 1</td>
-<td style="text-align: center;">Mon, Oct 12</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">4</td>
-<td style="text-align: left;">HW 2</td>
-<td style="text-align: center;">Sat, Oct 31</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">5</td>
-<td style="text-align: left;">Quiz 2</td>
-<td style="text-align: center;">Mon, Oct 26</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">6</td>
-<td style="text-align: left;">Optional Late Pass Questionnaire</td>
-<td style="text-align: center;">Fri, Nov 7</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">6</td>
-<td style="text-align: left;"><strong>Midterm</strong></td>
-<td style="text-align: center;">Mon, Nov 2</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="assignment-calendar-second-half" class="slide level2 smaller">
-<h2>Assignment Calendar — Second Half</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;">Week</th>
-<th style="text-align: left;">Assignment</th>
-<th style="text-align: center;">Due Date</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">7</td>
-<td style="text-align: left;">HW 3</td>
-<td style="text-align: center;">Sat, Nov 14</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">8</td>
-<td style="text-align: left;">Quiz 3</td>
-<td style="text-align: center;">Mon, Nov 16</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">9</td>
-<td style="text-align: left;">HW 4</td>
-<td style="text-align: center;">Sat, Nov 28</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">10</td>
-<td style="text-align: left;">Quiz 4</td>
-<td style="text-align: center;">Mon, Nov 30</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">Finals</td>
-<td style="text-align: left;"><strong>Final Exam</strong></td>
-<td style="text-align: center;">Tue, Dec 8 · 12–3 PM</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="course-platforms" class="slide level2">
-<h2>Course Platforms</h2>
-<p><strong>Canvas</strong> Grades, announcements, and file/resource distribution</p>
-<p><strong><a href="https://pstat-126.github.io/">Course Website</a></strong> Week-by-week schedule, lecture slides, homework, and resources</p>
-<p><strong><a href="https://www.gradescope.com">Gradescope</a></strong> Assignment submission, feedback, and exam scores</p>
-</section>
-<section id="how-quarto-slides-work" class="slide level2">
-<h2>How Quarto Slides Work</h2>
-<p>Slides are built with <strong>Quarto + Reveal.js</strong> — here’s what you can do:</p>
-<ul>
-<li><strong>Download as PDF</strong> — press <code>E</code> to enter print view, then print to PDF from your browser</li>
-<li><strong>Draw on slides</strong> — press <code>C</code> to annotate the current slide; press <code>B</code> for a blank chalkboard; change color with <code>X</code>; erase with <code>Del</code></li>
-<li><strong>Full-screen</strong> — press <code>F</code>; press <code>Esc</code> to exit</li>
-<li><strong>Slide overview</strong> — press <code>Esc</code> to see all slides at once</li>
-</ul>
-</section>
-<section id="attendance" class="slide level2">
-<h2>Attendance</h2>
-<p><strong>In-person attendance is crucial.</strong> It allows you to engage in hands-on activities, ask questions in real time, and form connections with your peers and instructor.</p>
-<p><strong>If you miss a class:</strong></p>
-<ul>
-<li>Be proactive, notify us before you miss class</li>
-<li>Work with the TAs/myself to review any missed material</li>
-<li><strong>Stay home when you are sick</strong></li>
-</ul>
-</section>
-<section id="policy-on-generative-ai" class="slide level2 smaller">
-<h2>Policy on Generative AI</h2>
-<p>AI tools (e.g., ChatGPT, Claude, Copilot, etc.) can be valuable for learning, but must be used responsibly. You are permitted to use AI for helping to understand statistical concepts or mathematical formulas, debugging your own code by asking why an error occurred or how to fix a specific line, or clarifying course material or lecture concepts. However, you are not permitted to use AI to write or complete assignments for you, generate code solutions, solve homework or exam problems, or use AI output without understanding what it does.</p>
-<p>Uses of AI that do not follow the guidelines above will result in receiving a lower score on the assignment.</p>
-</section>
-<section id="accommodations-conduct" class="slide level2 smaller">
-<h2>Accommodations &amp; Conduct</h2>
-<p><strong>Course Conduct</strong></p>
-<p>All students are expected to follow the <a href="https://www.sa.ucsb.edu/regulations/student-conduct-code/student-conduct-code">UCSB Code of Conduct</a>. This is an inclusive environment — discrimination, harassment, and bullying are not tolerated. Reach out to share or update your name and pronouns.</p>
-<p><strong>Accommodations</strong></p>
-<ul>
-<li>Contact the <a href="https://dsp.sa.ucsb.edu/">Disabled Students Program (DSP)</a> to arrange formal accommodations</li>
-<li>Submit requests early — it is never too late to apply</li>
-<li>DSP communicates with faculty directly; you do not need to disclose your condition to me</li>
-</ul>
-</section>
-<section id="student-resources" class="slide level2 smaller">
-<h2>Student Resources</h2>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Resource</th>
-<th style="text-align: left;">Contact</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">CAPS (Counseling)</td>
-<td style="text-align: left;"><a href="http://caps.sa.ucsb.edu">caps.sa.ucsb.edu</a> · 805.893.4411</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Food Insecurity</td>
-<td style="text-align: left;"><a href="http://food.ucsb.edu">food.ucsb.edu</a> · AS Food Bank</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">RCSGD</td>
-<td style="text-align: left;"><a href="http://rcsgd.sa.ucsb.edu/">rcsgd.sa.ucsb.edu</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Dream Scholars</td>
-<td style="text-align: left;"><a href="http://www.sa.ucsb.edu/dreamscholars/home">sa.ucsb.edu/dreamscholars</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">CLAS (Tutoring)</td>
-<td style="text-align: left;"><a href="http://clas.sa.ucsb.edu">clas.sa.ucsb.edu</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">CARE</td>
-<td style="text-align: left;">805.893.4613 · <a href="http://wgse.sa.ucsb.edu/care/home">wgse.sa.ucsb.edu/care</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Health &amp; Wellness</td>
-<td style="text-align: left;"><a href="https://wellbeing.ucsb.edu/">wellbeing.ucsb.edu</a></td>
-</tr>
-</tbody>
-</table>
 </section>
 <section id="questions" class="slide level2" data-background-color="#003660">
 <h2>Questions?</h2>
 <div style="text-align: center; margin-top: 2em;">
 <p><strong>Annie Adams</strong> <a href="mailto:aradams@ucsb.edu">aradams@ucsb.edu</a></p>
 <p>Office Hours: Tuesday 10 – 11 AM</p>
-<p><a href="https://pstat-126.github.io/">Course Website</a> · <a href="https://www.gradescope.com">Gradescope</a></p>
+<p><a href="https://pstat-126.github.io/">Course Website</a></p>
 </div>
 
 
@@ -466,7 +332,6 @@ Annie Adams
   <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
   <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -488,8 +353,7 @@ Annie Adams
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'chalkboard': {"buttons":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -660,7 +524,7 @@ Annie Adams
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
 
           RevealMath,
           RevealNotes,
@@ -669,6 +533,44 @@ Annie Adams
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
