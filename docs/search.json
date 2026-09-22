@@ -4,7 +4,7 @@
     "href": "schedule.html",
     "title": "Course Schedule",
     "section": "",
-    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nDate\nTopic\nMaterials\nDue\n\n\n\n\nWeek 1 — Introduction & Simple Linear Regression\n\n\n\nMon, Sep 28\nWelcome to PSTAT 126! Course Information & Overview\nThe Simple Linear Regression Model Linear Regression Intro\nSlides\n\n\n\nSlides\n\n\n\n\nWed, Sep 30\nLeast Squares Estimation Deriving OLS estimators, interpreting coefficients\nSlides",
+    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.",
     "crumbs": [
       "Syllabus",
       "Course Information",
@@ -1714,5 +1714,17 @@
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "How Quarto Slides Work",
     "text": "How Quarto Slides Work\nSlides are built with Quarto + Reveal.js — here’s what you can do:\n\nDownload as PDF — press E to enter print view, then print to PDF from your browser\nDraw on slides — press C to annotate the current slide; press B for a blank chalkboard; change color with X; erase with Del\nFull-screen — press F; press Esc to exit\nSlide overview — press Esc to see all slides at once"
+  },
+  {
+    "objectID": "schedule.html#assignment-calendar",
+    "href": "schedule.html#assignment-calendar",
+    "title": "Course Schedule",
+    "section": "Assignment Calendar",
+    "text": "Assignment Calendar",
+    "crumbs": [
+      "Syllabus",
+      "Course Information",
+      "Schedule"
+    ]
   }
 ]
