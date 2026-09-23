@@ -37,7 +37,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td class="topic-cell">Least Squares Estimation
         <span class="sub-topic">Deriving OLS estimators, interpreting coefficients</span></td>
       <td style="vertical-align: middle;"><a class="badge-slide" href="slides/lec-02.html">Slides</a></td>
-      <td></td>
+      <td><a class="badge-optional" href="https://docs.google.com/document/d/1Pof9S4uuy5uUBTCQY95d5jJpExjRXXVdpZA2zfaQZAI/edit?usp=sharing">Late Pass Q <em>(optional)</em></a></td>
     </tr>
 
     <!--

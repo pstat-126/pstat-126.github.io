@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - late_pass_questionnaire/
 
 website:
   title: "PSTAT 126"
@@ -15,6 +17,8 @@ website:
         href: course-syllabus.qmd
       - text: "Schedule"
         href: schedule.qmd
+      - text: "Assignments"
+        href: assignments.qmd
     right:
       - text: "Gradescope"
         href: https://www.gradescope.com
@@ -34,8 +38,10 @@ website:
             href: schedule.qmd
           - text: "Office Hours"
             href: office-hours.qmd
-      - section: "Homework"
+      - section: "Assignments"
         contents:
+          - text: "All Assignments"
+            href: assignments.qmd
           - text: "HW 1"
             href: hw/hw-01.qmd
           - text: "HW 2"

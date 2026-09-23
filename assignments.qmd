@@ -1,0 +1,63 @@
+---
+title: "Assignments"
+subtitle: "PSTAT 126 — Fall 2026"
+toc: false
+---
+
+```{=html}
+<div style="overflow-x:auto">
+<table class="schedule-table">
+  <thead>
+    <tr>
+      <th>Assignment</th>
+      <th style="width:130px">Assigned</th>
+      <th style="width:130px">Due</th>
+      <th style="width:130px">Submission</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr class="week-row"><td colspan="5">Optional</td></tr>
+    <tr>
+      <td><a href="https://docs.google.com/document/d/1Pof9S4uuy5uUBTCQY95d5jJpExjRXXVdpZA2zfaQZAI/edit?usp=sharing">Late Pass Questionnaire</a></td>
+      <td class="date-cell">Mon, Sep 28</td>
+      <td class="date-cell">Sat, Oct 3</td>
+      <td><a href="https://www.gradescope.com/courses/1392258/assignments/8711953">Submission Portal</a></td>
+      <td><span class="sub-topic" style="color:#2e7d32;font-size:0.85rem">Optional Assignmnet. Complete to receive a late pass for a future HW assignment</span></td>
+    </tr>
+
+    <tr class="week-row"><td colspan="5">Homework</td></tr>
+    <tr>
+      <td><a href="hw/hw-01.html">Homework 1</a></td>
+      <td class="date-cell"></td>
+      <td class="date-cell"></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><a href="hw/hw-02.html">Homework 2</a></td>
+      <td class="date-cell"></td>
+      <td class="date-cell"></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><a href="hw/hw-03.html">Homework 3</a></td>
+      <td class="date-cell"></td>
+      <td class="date-cell"></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><a href="hw/hw-04.html">Homework 4</a></td>
+      <td class="date-cell"></td>
+      <td class="date-cell"></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+```
