@@ -1,0 +1,9 @@
+---
+title: "Class Calendar"
+subtitle: "PSTAT 126 — Fall 2026"
+toc: false
+---
+
+```{=html}
+<iframe src="https://calendar.google.com/calendar/embed?src=c_af41aabc4e8bba7a0cf4970234f170622a034b8c7199415c6fe814c721833d25%40group.calendar.google.com&ctz=America%2FLos_Angeles" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+```

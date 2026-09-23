@@ -15,7 +15,7 @@ website:
     left:
       - text: "Syllabus"
         href: course-syllabus.qmd
-      - text: "Schedule"
+      - text: "Lecture Materials"
         href: schedule.qmd
       - text: "Assignments"
         href: assignments.qmd
@@ -36,10 +36,12 @@ website:
         contents:
           - text: "Syllabus"
             href: course-syllabus.qmd
-          - text: "Schedule"
-            href: schedule.qmd
+          - text: "Class Calendar"
+            href: class-calendar.qmd
           - text: "Office Hours"
             href: office-hours.qmd
+      - text: "Lecture Materials"
+        href: schedule.qmd
       - section: "Assignments"
         contents:
           - text: "All Assignments"
@@ -52,16 +54,6 @@ website:
             href: hw/hw-03.qmd
           - text: "HW 4"
             href: hw/hw-04.qmd
-      - section: "Quizzes"
-        contents:
-          - text: "Quiz 1"
-            href: quizzes/quiz-01.qmd
-          - text: "Quiz 2"
-            href: quizzes/quiz-02.qmd
-          - text: "Quiz 3"
-            href: quizzes/quiz-03.qmd
-          - text: "Quiz 4"
-            href: quizzes/quiz-04.qmd
       - section: "Labs"
         contents:
           - text: "All Labs"

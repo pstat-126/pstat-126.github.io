@@ -4,11 +4,10 @@
     "href": "schedule.html",
     "title": "Course Schedule",
     "section": "",
-    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.",
+    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDate\nTopic\nMaterials\nLab\nDue\n\n\n\n\nWeek 1 — Introduction & Simple Linear Regression\n\n\nMon, Sep 28\nWelcome to PSTAT 126! Course Information & Overview\nThe Simple Linear Regression Model Linear Regression Intro\nSlides\n\n\n\nSlides\n\n\n\n\nWed, Sep 30\nLeast Squares Estimation Deriving OLS estimators, interpreting coefficients\nSlides\n\n\n\n\nSat, Oct 3\n\nLate Pass Q (optional)",
     "crumbs": [
       "Syllabus",
-      "Course Information",
-      "Schedule"
+      "Lecture Materials"
     ]
   },
   {
@@ -19,8 +18,7 @@
     "text": "Assignment Calendar",
     "crumbs": [
       "Syllabus",
-      "Course Information",
-      "Schedule"
+      "Lecture Materials"
     ]
   },
   {

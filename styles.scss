@@ -65,6 +65,16 @@ $link-color: #1a5ca8;
   font-style: italic;
 }
 
+.due-row td {
+  background: #fdf7ef !important;
+  border-bottom: 1px solid #f0dbc5;
+}
+
+.due-row .date-cell {
+  color: #8b5000;
+  font-weight: 500;
+}
+
 .exam-topic {
   color: #b03020;
   font-weight: 600;
