@@ -1,0 +1,28 @@
+---
+title: "Labs"
+subtitle: "PSTAT 126 — Fall 2026"
+toc: false
+---
+
+```{=html}
+<div style="overflow-x:auto">
+<table class="schedule-table">
+  <thead>
+    <tr>
+      <th>Lab</th>
+      <th style="width:160px">Date</th>
+      <th>Topic</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td><a href="labs/lab-01.html"><span class="badge-lab">Lab 1</span></a></td>
+      <td class="date-cell">Mon, Oct 5</td>
+      <td>Getting started with R Markdown</td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+```

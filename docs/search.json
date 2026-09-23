@@ -989,5 +989,200 @@
       "Assignments",
       "All Assignments"
     ]
+  },
+  {
+    "objectID": "labs.html",
+    "href": "labs.html",
+    "title": "Labs",
+    "section": "",
+    "text": "Lab\nDate\nTopic\n\n\n\n\nLab 1\nMon, Oct 5\nGetting started with R Markdown",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "All Labs"
+    ]
+  },
+  {
+    "objectID": "labs/lab1.html#codes-the-r-in-r-markdown",
+    "href": "labs/lab1.html#codes-the-r-in-r-markdown",
+    "title": "Getting started with R Markdown",
+    "section": "Codes: the “R” in R Markdown",
+    "text": "Codes: the “R” in R Markdown\nFirst we’ll examine aspects of the .Rmd file that pertain to R codes, output, and graphics."
+  },
+  {
+    "objectID": "labs/lab1.html#basic-functions",
+    "href": "labs/lab1.html#basic-functions",
+    "title": "Getting started with R Markdown",
+    "section": "Basic functions",
+    "text": "Basic functions\nWhile composing a document, code chunks can be written and executed from within the .Rmd file in RStudio. Below this paragraph in the .Rmd file is an example code chunk with some simple commands. Try running individual lines from the .Rmd file for this document within RStudio. The results will appear below the chunk and in the console.\nReminder: you can execute code by placing your cursor on the line you wish to run and pressing CTRL + ENTER or CMD + ENTER.\nTip: If you wish to run an entire chunk, use the ‘play’ icon in green that appears in the upper right corner of the chunk.\nNow notice that the code chunk is set off by three back-ticks and some text in braces ```{some text}. The first part of the text in braces is always r; optionally, a name for the chunk (above, example-chunk); then a comma, followed by code chunk options that control how the code will be displayed in the knitted document."
+  },
+  {
+    "objectID": "labs/lab1.html#knitting-document",
+    "href": "labs/lab1.html#knitting-document",
+    "title": "Getting started with R Markdown",
+    "section": "Knitting document",
+    "text": "Knitting document\nClick the ‘Knit’ button with the ball-of-yarn icon and have a look at the knitted document. For the code chunk above, nothing appears! To change this behavior we can change the code chunk options. To get started, let’s tinker with those options.\nTo knit to pdf or HTML, go all the way to the top of the document, and change the output part of the header block to html_document or to pdf_document respectively.\n\nR code chunks options\n\necho: Display code in output document (default = TRUE)\neval: Run code in chunk (default = TRUE)\nmessage: Display code messages in document (default = TRUE)\nwarning: Display code warnings in document (default = TRUE)\nfig.align: “left”, “right”, or “center”.\nfig.height, fig.width: Dimensions of plots in inches.\n\n\n\nYour turn\nMake each of the following changes one by one, and re-knit after each change to examine the effect on the knitted document.\n\nChange the name of the chunk to your favorite author’s last name. After knitting, examine the ‘Render’ tab in RStudio and look for where the new name appears. Try introducing a command in the code chunk that will produce an error, and knit again. How does naming the chunk prove to helpful in this instance?\n\nAnswer:\n\nChange the results = 'hide' option to results = 'markup'. Also try results = 'asis'. What is the difference?\n\nAnswer:\n\nRemove the results option altogether.What is the default behavior? Now go all the way to the top of the .Rmd file and examine the setup chunk. Try changing the results option there to one of the other options. After examining the effect on the knitted document, revert to results = 'markup'.\n\nAnswer:\n\nTry adding echo = T to the example code chunk. What happens?\n\nAnswer:\n\nConfigure the code chunk options so that the knitted document shows the codes themselves but not the results."
+  },
+  {
+    "objectID": "labs/lab1.html#matrices",
+    "href": "labs/lab1.html#matrices",
+    "title": "Getting started with R Markdown",
+    "section": "Matrices",
+    "text": "Matrices\n\n# using matrix() function\nmat &lt;- matrix(c(3,2,5,3,1,4,7,4,9), nrow = 3)\nmat\n\n     [,1] [,2] [,3]\n[1,]    3    3    7\n[2,]    2    1    4\n[3,]    5    4    9\n\n# fill matrix by row\nmat &lt;- matrix(c(3,2,5,3,1,4,7,4,9), byrow=T, nrow = 3) \nmat\n\n     [,1] [,2] [,3]\n[1,]    3    2    5\n[2,]    3    1    4\n[3,]    7    4    9\n\n# Using rbind() or cbind() Function\nx &lt;- 1:5\ny &lt;- 2:6\nmat &lt;- cbind(x,y) # create a matrix by combining vectors column-wise\nmat\n\n     x y\n[1,] 1 2\n[2,] 2 3\n[3,] 3 4\n[4,] 4 5\n[5,] 5 6\n\nmat &lt;- rbind(x,y) # create a matrix by combining vectors row-wise\nmat\n\n  [,1] [,2] [,3] [,4] [,5]\nx    1    2    3    4    5\ny    2    3    4    5    6\n\n# How to name the rows and columns of an R matrix?\n\n# Using dimnames argument in matrix() function\nrnames &lt;- c(\"row1\",\"row2\",\"row3\")\ncnames &lt;- c(\"col1\",\"col2\",\"col3\")\nmat &lt;- matrix(c(3,2,5,3,1,4,7,4,9), nrow=3, dimnames=list(rnames,cnames))\nmat\n\n     col1 col2 col3\nrow1    3    3    7\nrow2    2    1    4\nrow3    5    4    9\n\n# Using rownames() or colnames() functions\nmat &lt;- matrix(c(3,2,5,3,1,4,7,4,9), nrow = 3)\nrownames(mat) &lt;- c(\"row1\",\"row2\",\"row3\")\ncolnames(mat) &lt;- c(\"col1\",\"col2\",\"col3\")\nmat\n\n     col1 col2 col3\nrow1    3    3    7\nrow2    2    1    4\nrow3    5    4    9\n\nmat%*%mat # matrix multiplication\n\n     col1 col2 col3\nrow1   50   40   96\nrow2   28   23   54\nrow3   68   55  132\n\nsolve(mat) # Matrix inversion for non-singular matrices\n\n           row1       row2       row3\ncol1 -1.1666667  0.1666667  0.8333333\ncol2  0.3333333 -1.3333333  0.3333333\ncol3  0.5000000  0.5000000 -0.5000000\n\ndiag(mat) # extract the diagonal elements of the matrix\n\n[1] 3 1 9\n\nt(mat) # transpose of matrix\n\n     row1 row2 row3\ncol1    3    2    5\ncol2    3    1    4\ncol3    7    4    9"
+  },
+  {
+    "objectID": "labs/lab1.html#working-with-dataframe",
+    "href": "labs/lab1.html#working-with-dataframe",
+    "title": "Getting started with R Markdown",
+    "section": "Working with DataFrame",
+    "text": "Working with DataFrame\n\nsubject &lt;- c(\"English\", \"Maths\", \"Chemistry\", \"Physics\")\npercentage &lt;- c(80, 100, 85, 95)\ndf &lt;- data.frame(subject, percentage)\ndf\n\n    subject percentage\n1   English         80\n2     Maths        100\n3 Chemistry         85\n4   Physics         95\n\n# Appending a column to a DataFrame\ndf$GPA &lt;-c(3.0, 4.0, 3.0, 4.0)\ndf\n\n    subject percentage GPA\n1   English         80   3\n2     Maths        100   4\n3 Chemistry         85   3\n4   Physics         95   4\n\n\n\nPlots\nThere are multiple ways to plot in R, either using base R or ggplot2\n\nhead(eco)\n\n            usborn income home      pop\nAlabama    0.98656  21442 75.9  4040587\nAlaska     0.93914  25675 34.0   550043\nArizona    0.90918  23060 34.2  3665228\nArkansas   0.98688  20346 67.1  2350725\nCalifornia 0.74541  27503 46.4 29760021\nColorado   0.94688  28657 43.3  3294394\n\n#?eco\n\nplot(eco$usborn, eco$income,\nxlab = \"Percentage of Babies Born in US\", ylab = \"Income ($)\",\nmain = \"Percentage of US Born per Income\")\n\n\n\n\n\n\n\n\nNow once the plot looks nice, try knitting. Notice that the plot does not appear in the knitted document. This is due to the fig.show = 'hide' option; remove this and re-knit, and the plot should appear.\n\nYour turn\nOften it is necessary to resize plots for knitting to avoid oversize or cut-off images. Try the following chunk options one by one and knit between each change to take note of the effect in the knitted document.\n\nAdd the option fig.width = 2 and examine the output. Tinker with the option by changing the number until you find a display width that you like.\nAdd the option fig.height = ..., specifying a number of your choosing for the height. Play until you find a display height that you like.\nNotice that the alignment is off-center. Try adding fig.align = 'center'.\n\nThere are many other code chunk options, but those come up particularly often. The above and other options are summarized in the R Markdown cheatsheet.\n\n\n\nCode style guidelines\nA few points of style can dramatically improve readability:\n\n&lt;- is used for assignment (not =, used to specify function arguments)\nevery comma is followed by a space\nspaces on either side of = and &lt;-, logical operations, and arithmetic operators (‘infix’ operators)\nshort explanatory comments above groups of lines preceded by a blank line\nuse descriptive names with _ to introduce spaces separating name components\nbreak long commands over multiple lines\nspecify function arguments explicitly by name"
+  },
+  {
+    "objectID": "labs/lab1.html#rstudio-settings-tips",
+    "href": "labs/lab1.html#rstudio-settings-tips",
+    "title": "Getting started with R Markdown",
+    "section": "RStudio Settings Tips",
+    "text": "RStudio Settings Tips\nA few RStudio settings that make writing and reading code much easier.\n\nRainbow Parentheses\nRainbow parentheses color-code matching pairs of parentheses, brackets, and braces, making it much easier to spot mismatched or missing delimiters.\nTo enable: go to Tools &gt; Global Options &gt; Code &gt; Display and check the box for Rainbow parentheses.\nOnce enabled, nested parentheses like mean(c(1, sd(x), var(y))) will each appear in a distinct color, so you can immediately see which opening and closing symbols are paired.\n\n\nRender Output in Viewer Pane\nBy default, knitting an .Rmd file opens the output in a new window or browser tab. You can instead have it appear in the Viewer pane inside RStudio, which keeps everything in one place.\nTo enable: go to Tools &gt; Global Options &gt; R Markdown and set Show output preview in to Viewer Pane."
+  },
+  {
+    "objectID": "labs/lab1.html#brief-tidyverse-intro",
+    "href": "labs/lab1.html#brief-tidyverse-intro",
+    "title": "Getting started with R Markdown",
+    "section": "Brief Tidyverse intro",
+    "text": "Brief Tidyverse intro\nOther useful functions in the tidyverse are group_by(),arrange(),mutate() , and summarise() For more info on tidyverse function go to https://r4ds.had.co.nz/transform.html/. You can use glimpse() (from tidyverse package) or str() to get a quick look at a dataset.\n\n# Install Tidyverse and dplyr if you haven't already\n#install.packages(\"tidyverse\")\n#install.packages(\"dplyr\")\n\n\nlibrary(tidyverse)\nlibrary(dplyr)\n\neco %&gt;%\ndplyr::select(usborn) %&gt;% # select usborn column\nfilter(usborn &lt;= 0.9) %&gt;% # filter usborn leq 0.9\nslice(1:5) # print out only first 5 rows\n\n             usborn\nCalifornia  0.74541\nConnecticut 0.89761\nDC          0.88972\nFlorida     0.84932\nHawaii      0.81911\n\n\nThe \\(\\%&gt;\\%\\) is commonly referred to as the “pipe operator” and is used to make code more readable by chaining together a sequence of operations.\n\neco %&gt;%\nfilter(usborn &lt;= 0.9) %&gt;% # filter usborn leq 0.9\nggplot() +\n# scatterplot with usborn on x axis and income on y\ngeom_point(aes(x = usborn, y = income),\n# orange color data points. alpha changes the transparency of the points\ncolor = \"orange\", alpha = 0.7)"
+  },
+  {
+    "objectID": "labs/lab1.html#distributions",
+    "href": "labs/lab1.html#distributions",
+    "title": "Getting started with R Markdown",
+    "section": "Distributions",
+    "text": "Distributions\nCan obtain random sample from a specific distribution: Type in ?d istribution in console to see all the different distributions in R.\n\np for ‘probability’, the cumulative distribution function (c. d. f.)\nq for ‘quantile’, the inverse c. d. f.\nd for ‘density’, the density function (p. f. or p. d. f.)\nr for ‘random’, a random variable having the specified distribution\n\n\n# Type  '?distribution' in console to see all the different distributions in R.\n# Remember to set seed\nset.seed(555)\n# r for “random”, a random variable having the specified distribution\nrnorm(10, mean = 0, sd = 1)\n\n [1] -0.32986031  0.50364643  0.37436955  1.88861980 -1.77990273  0.88563111\n [7] -0.15677268  1.36455477  0.03663687  0.61852988\n\nrunif(10, min = 0, max = 1)\n\n [1] 0.39023846 0.05664266 0.25231944 0.28724524 0.15885389 0.57696525\n [7] 0.19704603 0.90133294 0.24974167 0.10325946\n\nnormal_sample &lt;- rnorm(1000, mean = 0, sd = 1)\nmean(normal_sample) # mean of sample\n\n[1] -0.02762708\n\nhist(normal_sample) #\n\n\n\n\n\n\n\nggplot() +\ngeom_histogram(aes(x = normal_sample), # using ggplot to make histograms\nbins = 10, color = \"white\", # control the number of bins\nfill = \"darkgreen\")"
+  },
+  {
+    "objectID": "labs/lab1.html#text-the-markdown-in-r-markdown",
+    "href": "labs/lab1.html#text-the-markdown-in-r-markdown",
+    "title": "Getting started with R Markdown",
+    "section": "Text: the ‘Markdown’ in R Markdown",
+    "text": "Text: the ‘Markdown’ in R Markdown\nNow we’ll look over the text aspects of .Rmd documents.\n\nNarrative text\nYou’ve probably noticed by now that headers are set off by #, ##, ### in the .Rmd document, and these are rendered in nice format in the knitted document. These are examples of text markdown elements, which are used to control the display of text in the knitted document. Some common ones are:\n\n# header, number of hashes specifies header level\n*italic text* renders in italic\n**bold text** renders in bold\n*, -, + set off itemize list elements\n\nsub-item\n\n1., 2., .. set off numbered lists\n[link text](url) creates hyperlinks\n\nThese and other options are summarized in the R Markdown cheatsheet.\n\n\nMathematical notation\nR Markdown documents also integrate math display using math expressions. For inline math environments, enclose expressions in $, such as $\\left(\\frac{1}{x}\\right)$, which appears as \\(\\left(\\frac{1}{x}\\right)\\). The .Rmd file has dynamic previewing while building a document; hovering your cursor over the expression while editing will show you what it will look like in the generated document.\nEquation blocks can be created by enclosing math expressions in $$. For example, $$Y = \\mathbf{x}\\beta + \\epsilon$$ displays as: \\[Y = \\mathbf{X}\\beta + \\epsilon\\]\nFor a list of LaTeX math syntax, see wikibooks. (These expressions also work on Nectir using the same syntax!)\n\nYour turn\nWrite the density of a Gaussian random variable in an equation block. Below that, write the mean and variance in inline math mode (preferably in a short sentence).\n\\[\nf(x) = \\frac{1}{\\sqrt{2 \\pi \\sigma^2}} e^{\\frac{-(x-\\mu)^2}{2\\sigma^2}}\n\\]\nThe mean is \\(\\mathbb{E}[X] = \\mu\\) and the variance is \\(\\text{Var}(X) = \\sigma^2\\)."
+  },
+  {
+    "objectID": "labs/lab-01.html",
+    "href": "labs/lab-01.html",
+    "title": "Lab 1: Getting Started with R Markdown",
+    "section": "",
+    "text": "Note\n\n\n\n-Download the .Rmd file below, open it in RStudio, and work through the exercises inside.\nDownload lab1.Rmd",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 1"
+    ]
+  },
+  {
+    "objectID": "labs/lab-01.html#codes-the-r-in-r-markdown",
+    "href": "labs/lab-01.html#codes-the-r-in-r-markdown",
+    "title": "Lab 1: Getting Started with R Markdown",
+    "section": "Codes: the “R” in R Markdown",
+    "text": "Codes: the “R” in R Markdown\nFirst we’ll examine aspects of the .Rmd file that pertain to R codes, output, and graphics.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 1"
+    ]
+  },
+  {
+    "objectID": "labs/lab-01.html#basic-functions",
+    "href": "labs/lab-01.html#basic-functions",
+    "title": "Lab 1: Getting Started with R Markdown",
+    "section": "Basic functions",
+    "text": "Basic functions\nWhile composing a document, code chunks can be written and executed from within the .Rmd file in RStudio. Below this paragraph in the .Rmd file is an example code chunk with some simple commands. Try running individual lines from the .Rmd file for this document within RStudio. The results will appear below the chunk and in the console.\nReminder: you can execute code by placing your cursor on the line you wish to run and pressing CTRL + ENTER or CMD + ENTER.\nTip: If you wish to run an entire chunk, use the ‘play’ icon in green that appears in the upper right corner of the chunk.\n\n# concatenation `c()`\nc(1, 3, 2, 5)\n\n# assignment `&lt;-`\nx &lt;- c(1, 3, 2, 5)\nx\n\n# sequence of numbers starting from 1 until 5 by 1\nx &lt;- seq(from = 1, to = 5, by = 1)\n\n# repeats 1 four times\nx &lt;- rep(1, times=4)\n\n# repeats each value in 1,2,3,4 two times\nx &lt;- rep(1:4, each=2)\n\n# check object structure `str()`\nstr(x)\nx[1]\n\nmean(x)\nsd(x)\nvar(x)\nsort(x)\nsummary(x)\n\n# vectorized arithmetic and logic\ny &lt;- x + 1\ny\nx &gt; y\n\nNow notice that the code chunk is set off by three back-ticks and some text in braces ```{some text}. The first part of the text in braces is always r; optionally, a name for the chunk (above, example-chunk); then a comma, followed by code chunk options that control how the code will be displayed in the knitted document.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 1"
+    ]
+  },
+  {
+    "objectID": "labs/lab-01.html#knitting-document",
+    "href": "labs/lab-01.html#knitting-document",
+    "title": "Lab 1: Getting Started with R Markdown",
+    "section": "Knitting document",
+    "text": "Knitting document\nClick the ‘Knit’ button with the ball-of-yarn icon and have a look at the knitted document. For the code chunk above, nothing appears! To change this behavior we can change the code chunk options. To get started, let’s tinker with those options.\nTo knit to pdf or HTML, go all the way to the top of the document, and change the output part of the header block to html_document or to pdf_document respectively.\n\nR code chunk options\n\necho: Display code in output document (default = TRUE)\neval: Run code in chunk (default = TRUE)\nmessage: Display code messages in document (default = TRUE)\nwarning: Display code warnings in document (default = TRUE)\nfig.align: “left”, “right”, or “center”.\nfig.height, fig.width: Dimensions of plots in inches.\n\n\n\nYour turn\nMake each of the following changes one by one, and re-knit after each change to examine the effect on the knitted document.\n\nChange the name of the chunk to your favorite author’s last name. After knitting, examine the ‘Render’ tab in RStudio and look for where the new name appears. Try introducing a command in the code chunk that will produce an error, and knit again. How does naming the chunk prove to helpful in this instance?\n\nAnswer:\n\nChange the results = 'hide' option to results = 'markup'. Also try results = 'asis'. What is the difference?\n\nAnswer:\n\nRemove the results option altogether. What is the default behavior? Now go all the way to the top of the .Rmd file and examine the setup chunk. Try changing the results option there to one of the other options. After examining the effect on the knitted document, revert to results = 'markup'.\n\nAnswer:\n\nTry adding echo = T to the example code chunk. What happens?\n\nAnswer:\n\nConfigure the code chunk options so that the knitted document shows the codes themselves but not the results.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 1"
+    ]
+  },
+  {
+    "objectID": "labs/lab-01.html#matrices",
+    "href": "labs/lab-01.html#matrices",
+    "title": "Lab 1: Getting Started with R Markdown",
+    "section": "Matrices",
+    "text": "Matrices\n\n# using matrix() function\nmat &lt;- matrix(c(3,2,5,3,1,4,7,4,9), nrow = 3)\nmat\n\n# fill matrix by row\nmat &lt;- matrix(c(3,2,5,3,1,4,7,4,9), byrow=T, nrow = 3)\nmat\n\n# Using rbind() or cbind() Function\nx &lt;- 1:5\ny &lt;- 2:6\nmat &lt;- cbind(x,y)\nmat\n\nmat &lt;- rbind(x,y)\nmat\n\n# Using dimnames argument in matrix() function\nrnames &lt;- c(\"row1\",\"row2\",\"row3\")\ncnames &lt;- c(\"col1\",\"col2\",\"col3\")\nmat &lt;- matrix(c(3,2,5,3,1,4,7,4,9), nrow=3, dimnames=list(rnames,cnames))\nmat\n\n# Using rownames() or colnames() functions\nmat &lt;- matrix(c(3,2,5,3,1,4,7,4,9), nrow = 3)\nrownames(mat) &lt;- c(\"row1\",\"row2\",\"row3\")\ncolnames(mat) &lt;- c(\"col1\",\"col2\",\"col3\")\nmat\n\nmat%*%mat       # matrix multiplication\nsolve(mat)      # matrix inversion for non-singular matrices\ndiag(mat)       # extract diagonal elements\nt(mat)          # transpose",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 1"
+    ]
+  },
+  {
+    "objectID": "labs/lab-01.html#working-with-dataframes",
+    "href": "labs/lab-01.html#working-with-dataframes",
+    "title": "Lab 1: Getting Started with R Markdown",
+    "section": "Working with DataFrames",
+    "text": "Working with DataFrames\n\nsubject    &lt;- c(\"English\", \"Maths\", \"Chemistry\", \"Physics\")\npercentage &lt;- c(80, 100, 85, 95)\ndf &lt;- data.frame(subject, percentage)\ndf\n\n# Appending a column to a DataFrame\ndf$GPA &lt;- c(3.0, 4.0, 3.0, 4.0)\ndf\n\n\nPlots\nThere are multiple ways to plot in R, either using base R or ggplot2.\n\nlibrary(faraway)\n\nhead(eco)\n\nplot(eco$usborn, eco$income,\n     xlab = \"Percentage of Babies Born in US\", ylab = \"Income ($)\",\n     main = \"Percentage of US Born per Income\")\n\n\nlibrary(ggplot2)\n\nggplot(data = eco, mapping = aes(x = usborn, y = income)) +\n  geom_point() +\n  labs(title = \"Percentage of US Born per Income\",\n       y = \"Income ($)\",\n       x = \"Percentage of Babies Born in US\") +\n  theme()\n\nNow once the plot looks nice, try knitting. Notice that the plot does not appear in the knitted document. This is due to the fig.show = 'hide' option; remove this and re-knit, and the plot should appear.\n\nYour turn\nOften it is necessary to resize plots for knitting to avoid oversize or cut-off images. Try the following chunk options one by one and knit between each change to take note of the effect in the knitted document.\n\nAdd the option fig.width = 2 and examine the output. Tinker with the option by changing the number until you find a display width that you like.\nAdd the option fig.height = ..., specifying a number of your choosing for the height. Play until you find a display height that you like.\nNotice that the alignment is off-center. Try adding fig.align = 'center'.\n\nThere are many other code chunk options, but those come up particularly often. The above and other options are summarized in the R Markdown cheatsheet.\n\n\n\nCode style guidelines\nA few points of style can dramatically improve readability:\n\n&lt;- is used for assignment (not =, used to specify function arguments)\nevery comma is followed by a space\nspaces on either side of = and &lt;-, logical operations, and arithmetic operators (‘infix’ operators)\nshort explanatory comments above groups of lines preceded by a blank line\nuse descriptive names with _ to introduce spaces separating name components\nbreak long commands over multiple lines\nspecify function arguments explicitly by name",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 1"
+    ]
+  },
+  {
+    "objectID": "labs/lab-01.html#rstudio-settings-tips",
+    "href": "labs/lab-01.html#rstudio-settings-tips",
+    "title": "Lab 1: Getting Started with R Markdown",
+    "section": "RStudio Settings Tips",
+    "text": "RStudio Settings Tips\nA few RStudio settings that make writing and reading code much easier.\n\nRainbow Parentheses\nRainbow parentheses color-code matching pairs of parentheses, brackets, and braces, making it much easier to spot mismatched or missing delimiters.\nTo enable: go to Tools &gt; Global Options &gt; Code &gt; Display and check the box for Rainbow parentheses.\n\n\nRender Output in Viewer Pane\nBy default, knitting an .Rmd file opens the output in a new window or browser tab. You can instead have it appear in the Viewer pane inside RStudio, which keeps everything in one place.\nTo enable: go to Tools &gt; Global Options &gt; R Markdown and set Show output preview in to Viewer Pane.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 1"
+    ]
+  },
+  {
+    "objectID": "labs/lab-01.html#brief-tidyverse-intro",
+    "href": "labs/lab-01.html#brief-tidyverse-intro",
+    "title": "Lab 1: Getting Started with R Markdown",
+    "section": "Brief Tidyverse intro",
+    "text": "Brief Tidyverse intro\nOther useful functions in the tidyverse are group_by(), arrange(), mutate(), and summarise(). For more info on tidyverse functions go to https://r4ds.had.co.nz/transform.html/. You can use glimpse() (from tidyverse) or str() to get a quick look at a dataset.\n\nlibrary(tidyverse)\nlibrary(dplyr)\n\neco %&gt;%\n  dplyr::select(usborn) %&gt;%\n  filter(usborn &lt;= 0.9) %&gt;%\n  slice(1:5)\n\nThe \\(\\%&gt;\\%\\) is commonly referred to as the “pipe operator” and is used to make code more readable by chaining together a sequence of operations.\n\neco %&gt;%\n  filter(usborn &lt;= 0.9) %&gt;%\n  ggplot() +\n  geom_point(aes(x = usborn, y = income),\n             color = \"orange\", alpha = 0.7)",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 1"
+    ]
+  },
+  {
+    "objectID": "labs/lab-01.html#distributions",
+    "href": "labs/lab-01.html#distributions",
+    "title": "Lab 1: Getting Started with R Markdown",
+    "section": "Distributions",
+    "text": "Distributions\nCan obtain random sample from a specific distribution. Type ?distribution in the console to see all the different distributions in R.\n\np for ‘probability’, the cumulative distribution function (c.d.f.)\nq for ‘quantile’, the inverse c.d.f.\nd for ‘density’, the density function (p.f. or p.d.f.)\nr for ‘random’, a random variable having the specified distribution\n\n\nset.seed(555)\nrnorm(10, mean = 0, sd = 1)\nrunif(10, min = 0, max = 1)\n\nnormal_sample &lt;- rnorm(1000, mean = 0, sd = 1)\nmean(normal_sample)\nhist(normal_sample)\n\nggplot() +\n  geom_histogram(aes(x = normal_sample),\n                 bins = 10, color = \"white\",\n                 fill = \"darkgreen\")",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 1"
+    ]
+  },
+  {
+    "objectID": "labs/lab-01.html#text-the-markdown-in-r-markdown",
+    "href": "labs/lab-01.html#text-the-markdown-in-r-markdown",
+    "title": "Lab 1: Getting Started with R Markdown",
+    "section": "Text: the ‘Markdown’ in R Markdown",
+    "text": "Text: the ‘Markdown’ in R Markdown\nNow we’ll look over the text aspects of .Rmd documents.\n\nNarrative text\nYou’ve probably noticed by now that headers are set off by #, ##, ### in the .Rmd document, and these are rendered in nice format in the knitted document. These are examples of text markdown elements, which are used to control the display of text in the knitted document. Some common ones are:\n\n# header, number of hashes specifies header level\n*italic text* renders in italic\n**bold text** renders in bold\n*, -, + set off itemize list elements\n\nsub-item\n\n1., 2., .. set off numbered lists\n[link text](url) creates hyperlinks\n\nThese and other options are summarized in the R Markdown cheatsheet.\n\n\nMathematical notation\nR Markdown documents also integrate math display using math expressions. For inline math environments, enclose expressions in $, such as $\\left(\\frac{1}{x}\\right)$, which appears as \\(\\left(\\frac{1}{x}\\right)\\).\nEquation blocks can be created by enclosing math expressions in $$. For example, $$Y = \\mathbf{X}\\beta + \\epsilon$$ displays as: \\[Y = \\mathbf{X}\\beta + \\epsilon\\]\nFor a list of LaTeX math syntax, see wikibooks.\n\nYour turn\nWrite the density of a Gaussian random variable in an equation block. Below that, write the mean and variance in inline math mode (preferably in a short sentence).\n\\[\nf(x) = \\frac{1}{\\sqrt{2 \\pi \\sigma^2}} e^{\\frac{-(x-\\mu)^2}{2\\sigma^2}}\n\\]\nThe mean is \\(\\mathbb{E}[X] = \\mu\\) and the variance is \\(\\text{Var}(X) = \\sigma^2\\).",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 1"
+    ]
   }
 ]
