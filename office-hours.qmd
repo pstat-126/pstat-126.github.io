@@ -6,7 +6,7 @@ title: "Office Hours"
 | Person | Role | Day | Time | Location |
 |---|---|---|---|---|
 | Annie Adams | Instructor | Tuesday | 10 AM - 11 AM  | [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1) |
-| Bingjiang Xia | TA | TBD | TBD | TBD |
-| Tong Lin | TA | TBD | TBD | TBD |
+| Bingjiang Xia | TA | Thursday | 12:30 PM - 1:30 PM | South Hall 2421 |
+| Tong Lin | TA | Wednesday | 9:30 AM - 10:30 AM | South Hall 5431C |
 
 Office hours are also available by appointment. Email the instructor to schedule.

@@ -60,7 +60,7 @@ By the end of this course, students will be able to:
 |:---|:---|:---|
 | Homework (4) | 40% | ~2 weeks per assignment |
 | Quizzes (4) | 10% | Lowest score dropped |
-| Labs (10) | 15% | Completed in your weekly section|
+| Labs (8) | 15% | Completed in your weekly section|
 | Midterm | 15% | Week 6, closed book |
 | Final Exam | 20% | Cumulative |
 
