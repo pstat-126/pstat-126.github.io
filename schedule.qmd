@@ -310,5 +310,9 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
   </tbody>
 </table>
 </div>
+<script>
+  document.querySelectorAll('a.badge-slide').forEach(a => a.target = '_blank');
+  document.querySelectorAll('.schedule-table a[href^="http"]').forEach(a => a.target = '_blank');
+</script>
 ```
 
