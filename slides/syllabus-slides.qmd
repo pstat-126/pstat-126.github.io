@@ -71,7 +71,7 @@ By the end of this course, you will be able to:
 | Homework (4) | 40% | ~2 weeks per assignment |
 | Quizzes (4) | 10% | Lowest score dropped |
 | Labs (8) | 15% | Completed in weekly section |
-| Midterm | 15% | Week 6, closed book |
+| Midterm | 15% | Monday of Week 6 |
 | Final Exam | 20% | Finals Week, Cumulative |
 
 ---
@@ -84,7 +84,7 @@ By the end of this course, you will be able to:
 
 ## Late Passes
 
-- You can earn **2 late passes** by completing **2 Optional Late Pass Questionnaires**
+- You can earn **2 late passes** by completing **2 Optional Late Pass Questionnaires** throughout the quarter
 - Each late pass grants a single 24-hour extension on a Homework Assignment
 - Passes cannot be stacked
 - Assignments marked "Late" on Gradescope automatically use a pass
@@ -92,7 +92,9 @@ By the end of this course, you will be able to:
 
 ---
 
-## Quizzes & Labs
+## Quizzes & Labs 
+::: {style="font-size: 30px"}
+
 
 **Quizzes**
 
@@ -105,26 +107,34 @@ By the end of this course, you will be able to:
 - 8 lab assignments total
 - Completed during your designated **discussion section**
 - Due on Gradescope the day of your section by **11:59 PM**
-
+:::
 ---
 
 ## Exams
 
+:::: {.columns}
+
+::: {.column width="50%"}
 **Midterm**
 
 - Monday of Week 6, **November 2nd**
-- In class, closed book 
+- In class
 - Formula sheet provided
+:::
 
+::: {.column width="50%"}
 **Final Exam**
 
 - **Tuesday, December 8th · 12:00 – 3:00 PM**
 - Cumulative
 - Formula sheet provided
+:::
+
+::::
 
 ---
 
-## Assignment Calendar — First Half {.smaller}
+## Assignment Calendar (Weeks 1 - 6){.smaller}
 
 | Week | Assignment | Due Date |
 |:---:|:---|:---:|
@@ -138,7 +148,7 @@ By the end of this course, you will be able to:
 
 ---
 
-## Assignment Calendar — Second Half {.smaller}
+## Assignment Calendar (Weeks 7 - 10) {.smaller}
 
 | Week | Assignment | Due Date |
 |:---:|:---|:---:|
@@ -163,6 +173,26 @@ Assignment submission, feedback, and exam scores
 
 ---
 
+## Website Tour **[(pstat-126.github.io)](https://pstat-126.github.io/)**
+
+
+
+
+**What's on the site:**
+
+- **Course Information** - Syllabus, Office Hours, Google Class Calendar
+- **Lecture Materials** — week-by-week plan with lecture slides, labs, and homework links
+- **Assignments** — Homework assignments 
+- **Labs** - Rendered Labs and scripts to download for lab
+- **Exams** — Information on exams and formula sheet
+
+
+
+
+
+
+---
+
 ## How Quarto Slides Work
 
 Slides are built with **Quarto + Reveal.js** — here's what you can do:
@@ -182,7 +212,7 @@ Slides are built with **Quarto + Reveal.js** — here's what you can do:
 
 **If you miss a class:**
 
-- Be proactive,  notify us before you miss class
+- Be proactive,  notify us if you will miss more than one class
 - Work with the TAs/myself to review any missed material
 - **Stay home when you are sick**
 

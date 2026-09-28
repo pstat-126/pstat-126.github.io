@@ -703,7 +703,7 @@
     "href": "slides/syllabus-slides.html#grading",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Grading",
-    "text": "Grading\n\n\n\nComponent\nWeight\nNotes\n\n\n\n\nHomework (4)\n40%\n~2 weeks per assignment\n\n\nQuizzes (4)\n10%\nLowest score dropped\n\n\nLabs (8)\n15%\nCompleted in weekly section\n\n\nMidterm\n15%\nWeek 6, closed book\n\n\nFinal Exam\n20%\nFinals Week, Cumulative"
+    "text": "Grading\n\n\n\nComponent\nWeight\nNotes\n\n\n\n\nHomework (4)\n40%\n~2 weeks per assignment\n\n\nQuizzes (4)\n10%\nLowest score dropped\n\n\nLabs (8)\n15%\nCompleted in weekly section\n\n\nMidterm\n15%\nMonday of Week 6\n\n\nFinal Exam\n20%\nFinals Week, Cumulative"
   },
   {
     "objectID": "slides/syllabus-slides.html#homework",
@@ -717,21 +717,21 @@
     "href": "slides/syllabus-slides.html#late-passes",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Late Passes",
-    "text": "Late Passes\n\nYou can earn 2 late passes by completing 2 Optional Late Pass Questionnaires\nEach late pass grants a single 24-hour extension on a Homework Assignment\nPasses cannot be stacked\nAssignments marked “Late” on Gradescope automatically use a pass\nNo pass remaining + late submission = zero"
+    "text": "Late Passes\n\nYou can earn 2 late passes by completing 2 Optional Late Pass Questionnaires throughout the quarter\nEach late pass grants a single 24-hour extension on a Homework Assignment\nPasses cannot be stacked\nAssignments marked “Late” on Gradescope automatically use a pass\nNo pass remaining + late submission = zero"
   },
   {
     "objectID": "slides/syllabus-slides.html#quizzes-labs",
     "href": "slides/syllabus-slides.html#quizzes-labs",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Quizzes & Labs",
-    "text": "Quizzes & Labs\nQuizzes\n\n4 in-person quizzes, held at the start of class\nYour lowest score is dropped\nQuiz dates: Monday of Week 3, 5, 8, & 10\n\nLabs\n\n8 lab assignments total\nCompleted during your designated discussion section\nDue on Gradescope the day of your section by 11:59 PM"
+    "text": "Quizzes & Labs\n\nQuizzes\n\n4 in-person quizzes, held at the start of class\nYour lowest score is dropped\nQuiz dates: Monday of Week 3, 5, 8, & 10\n\nLabs\n\n8 lab assignments total\nCompleted during your designated discussion section\nDue on Gradescope the day of your section by 11:59 PM"
   },
   {
     "objectID": "slides/syllabus-slides.html#exams",
     "href": "slides/syllabus-slides.html#exams",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Exams",
-    "text": "Exams\nMidterm\n\nMonday of Week 6, November 2nd\nIn class, closed book\nFormula sheet provided\n\nFinal Exam\n\nTuesday, December 8th · 12:00 – 3:00 PM\nCumulative\nFormula sheet provided"
+    "text": "Exams\n\n\nMidterm\n\nMonday of Week 6, November 2nd\nIn class\nFormula sheet provided\n\n\nFinal Exam\n\nTuesday, December 8th · 12:00 – 3:00 PM\nCumulative\nFormula sheet provided"
   },
   {
     "objectID": "slides/syllabus-slides.html#assignment-calendar-first-half",
@@ -766,7 +766,7 @@
     "href": "slides/syllabus-slides.html#attendance",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Attendance",
-    "text": "Attendance\nIn-person attendance is crucial. It allows you to engage in hands-on activities, ask questions in real time, and form connections with your peers and instructor.\nIf you miss a class:\n\nBe proactive, notify us before you miss class\nWork with the TAs/myself to review any missed material\nStay home when you are sick"
+    "text": "Attendance\nIn-person attendance is crucial. It allows you to engage in hands-on activities, ask questions in real time, and form connections with your peers and instructor.\nIf you miss a class:\n\nBe proactive, notify us if you will miss more than one class\nWork with the TAs/myself to review any missed material\nStay home when you are sick"
   },
   {
     "objectID": "slides/syllabus-slides.html#policy-on-generative-ai",
@@ -909,7 +909,7 @@
     "href": "course-syllabus.html#attendance",
     "title": "Course Syllabus",
     "section": "Attendance",
-    "text": "Attendance\nIn-person attendance to class and discussion section is crucial. It allows you to engage in hands-on activities, ask questions in real-time, and form connections with your peers and instructor. Regular attendance also mirrors professional expectations and helps you build relationships that can become valuable references.\nIf you miss a class:\n\nBe proactive — notify the instructor before it happens or within a day. Documentation is not required, but honesty and professionalism are expected.\nCatch up — work with the instructor/TAs to review any missed material.\nStay home when you are sick. If you are feeling unwell, prioritize your health.",
+    "text": "Attendance\nIn-person attendance to class and discussion section is crucial. It allows you to engage in hands-on activities, ask questions in real-time, and form connections with your peers and instructor. Regular attendance also mirrors professional expectations and helps you build relationships that can become valuable references.\nIf you miss a class:\n\nBe proactive — notify the instructor if you wil miss more than one class. Documentation is not required, but honesty and professionalism are expected.\nCatch up — work with the instructor/TAs to review any missed material.\nStay home when you are sick. If you are feeling unwell, prioritize your health.",
     "crumbs": [
       "Syllabus",
       "Course Information",
@@ -1407,5 +1407,47 @@
     "title": "Lecture 1: What is Regression?",
     "section": "Your Turn: Predicted Price — Answer",
     "text": "Your Turn: Predicted Price — Answer\n\\[\\widehat{\\text{price}} = 13.3 + 0.111 \\times 1500 = 13.3 + 166.5 = 179.8\\]\nA home with 1,500 sq ft is predicted to sell for $179,800."
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#assignment-calendar-weeks-1--6",
+    "href": "slides/syllabus-slides.html#assignment-calendar-weeks-1--6",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Assignment Calendar (Weeks 1 -6)",
+    "text": "Assignment Calendar (Weeks 1 -6)\n\n\n\nWeek\nAssignment\nDue Date\n\n\n\n\n1\nOptional Late Pass Questionnaire\nFri, Oct 3\n\n\n2\nHW 1\nSat, Oct 17\n\n\n3\nQuiz 1\nMon, Oct 12\n\n\n4\nHW 2\nSat, Oct 31\n\n\n5\nQuiz 2\nMon, Oct 26\n\n\n6\nOptional Late Pass Questionnaire\nSat, Nov 7\n\n\n6\nMidterm\nMon, Nov 2"
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#assignment-calendarweeks-7---10",
+    "href": "slides/syllabus-slides.html#assignment-calendarweeks-7---10",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Assignment Calendar(Weeks 7 - 10)",
+    "text": "Assignment Calendar(Weeks 7 - 10)\n\n\n\nWeek\nAssignment\nDue Date\n\n\n\n\n7\nHW 3\nSat, Nov 14\n\n\n8\nQuiz 3\nMon, Nov 16\n\n\n9\nHW 4\nSat, Nov 28\n\n\n10\nQuiz 4\nMon, Nov 30\n\n\nFinals\nFinal Exam\nTue, Dec 8 · 12–3 PM"
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#assignment-calendar-weeks-1---6",
+    "href": "slides/syllabus-slides.html#assignment-calendar-weeks-1---6",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Assignment Calendar (Weeks 1 - 6)",
+    "text": "Assignment Calendar (Weeks 1 - 6)\n\n\n\nWeek\nAssignment\nDue Date\n\n\n\n\n1\nOptional Late Pass Questionnaire\nFri, Oct 3\n\n\n2\nHW 1\nSat, Oct 17\n\n\n3\nQuiz 1\nMon, Oct 12\n\n\n4\nHW 2\nSat, Oct 31\n\n\n5\nQuiz 2\nMon, Oct 26\n\n\n6\nOptional Late Pass Questionnaire\nSat, Nov 7\n\n\n6\nMidterm\nMon, Nov 2"
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#assignment-calendar-weeks-7---10",
+    "href": "slides/syllabus-slides.html#assignment-calendar-weeks-7---10",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Assignment Calendar (Weeks 7 - 10)",
+    "text": "Assignment Calendar (Weeks 7 - 10)\n\n\n\nWeek\nAssignment\nDue Date\n\n\n\n\n7\nHW 3\nSat, Nov 14\n\n\n8\nQuiz 3\nMon, Nov 16\n\n\n9\nHW 4\nSat, Nov 28\n\n\n10\nQuiz 4\nMon, Nov 30\n\n\nFinals\nFinal Exam\nTue, Dec 8 · 12–3 PM"
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#website-tour",
+    "href": "slides/syllabus-slides.html#website-tour",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Website Tour",
+    "text": "Website Tour\npstat-126.github.io\nWhat’s on the site:\n\nCourse Information - Syllabus, Office Hours, Google Class Calendar\nLecture Materials — week-by-week plan with lecture slides, labs, and homework links\nAssignments — Homework assignments\nLabs - Rendered Labs and scripts to download for lab\nExams — Information on exams and formula sheet"
+  },
+  {
+    "objectID": "slides/syllabus-slides.html#website-tour-pstat-126.github.io",
+    "href": "slides/syllabus-slides.html#website-tour-pstat-126.github.io",
+    "title": "Welcome to PSTAT 126: Linear Regression!",
+    "section": "Website Tour (pstat-126.github.io)",
+    "text": "Website Tour (pstat-126.github.io)\nWhat’s on the site:\n\nCourse Information - Syllabus, Office Hours, Google Class Calendar\nLecture Materials — week-by-week plan with lecture slides, labs, and homework links\nAssignments — Homework assignments\nLabs - Rendered Labs and scripts to download for lab\nExams — Information on exams and formula sheet"
   }
 ]
