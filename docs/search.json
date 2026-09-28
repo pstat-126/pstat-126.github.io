@@ -249,7 +249,7 @@
     "href": "slides/lec-01.html#inference-vs.-prediction",
     "title": "Lecture 1: What is Regression?",
     "section": "Inference vs. Prediction",
-    "text": "Inference vs. Prediction\nTwo distinct goals for regression:\nInference: understand how and why variables are related\n\nFocus: the coefficients \\(\\beta_0, \\beta_1\\)\nQuestions: Is there a relationship? How strong? In what direction?\nExample: Does income growth affect vote share, and by how much?\n\nPrediction: produce accurate forecasts for new observations\n\nFocus: the fitted value \\(\\widehat{y}\\)\nQuestions: Given \\(\\widehat{x}\\), what is our best guess for \\(\\widehat{y}\\)?\nExample: What vote share do we expect when income growth is 2%?"
+    "text": "Inference vs. Prediction\nTwo distinct goals for regression:\nInference: understand how and why variables are related\n\nFocus: the coefficients \\(\\beta_0, \\beta_1\\)\nQuestions: Is there a relationship? How strong? In what direction?\nExample: Does studying more hours lead to higher exam scores, and by how much?\n\nPrediction: produce accurate forecasts for new observations\n\nFocus: the fitted value \\(\\widehat{y}\\)\nQuestions: Given \\(\\widehat{x}\\), what is our best guess for \\(\\widehat{y}\\)?\nExample: What exam score do we expect for a student who studies 8 hours?"
   },
   {
     "objectID": "slides/lec-01.html#discussion-inference-or-prediction",
