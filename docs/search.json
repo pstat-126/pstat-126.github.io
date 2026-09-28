@@ -752,7 +752,7 @@
     "href": "slides/syllabus-slides.html#course-platforms",
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Course Platforms",
-    "text": "Course Platforms\nCanvas Grades, announcements, and file/resource distribution\nCourse Website Week-by-week schedule, lecture slides, homework, and resources\nGradescope Assignment submission, feedback, and exam scores"
+    "text": "Course Platforms\nCanvas: Grades and announcements\nCourse Website: Week-by-week schedule, lecture slides, homework, and resources\nGradescope: Assignment submission, feedback, and exam scores"
   },
   {
     "objectID": "slides/syllabus-slides.html#how-quarto-slides-work",

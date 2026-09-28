@@ -162,13 +162,13 @@ By the end of this course, you will be able to:
 
 ## Course Platforms
 
-**Canvas**
-Grades, announcements, and file/resource distribution
+**[Canvas:](https://ucsb.instructure.com/courses/35301)**
+Grades and announcements
 
-**[Course Website](https://pstat-126.github.io/)**
+**[Course Website:](https://pstat-126.github.io/)**
 Week-by-week schedule, lecture slides, homework, and resources
 
-**[Gradescope](https://www.gradescope.com)**
+**[Gradescope:](https://www.gradescope.com)**
 Assignment submission, feedback, and exam scores
 
 ---
