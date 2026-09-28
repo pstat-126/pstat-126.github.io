@@ -200,7 +200,7 @@
     "href": "slides/lec-01.html#francis-galton-and-heredity",
     "title": "Lecture 1: What is Regression?",
     "section": "Francis Galton and Heredity",
-    "text": "Francis Galton and Heredity\nIn the 1880s, Francis Galton studied the relationship between parents’ heights and their children’s heights.\nHis finding: Tall parents tend to have taller children who are shorter than the parents. Short parents tend to have shorter children who are taller than the parents.\nChildren’s heights “regressed” back toward the population mean.\nThis is the origin of the word “regression.”"
+    "text": "Francis Galton and Heredity\n\nIn the 1880s, Francis Galton studied the relationship between parents’ heights and their children’s heights.\nHis findings:\n\nTall parents tend to have taller children. Short parents tend to have shorter children.\nVery tall parents tend to have tall children who are shorter than the parents. Very short parents tend to have shorter children who are taller than the parents.\n\n\nChildren’s heights “regressed” back toward the population mean.\n\n\nThis is the origin of the word “regression.”"
   },
   {
     "objectID": "slides/lec-01.html#what-is-a-statistical-model",

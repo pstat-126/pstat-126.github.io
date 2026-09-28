@@ -43,14 +43,25 @@ By the end of today you will be able to:
 
 ## Francis Galton and Heredity
 
+::: {style="font-size: 0.85em;"}
+
 In the **1880s**, Francis Galton studied the relationship between parents' heights and their children's heights.
 
+**His findings:**
+
 ::: {.incremental}
-**His finding:** Tall parents tend to have taller children who are *shorter than the parents*. Short parents tend to have shorter children who are *taller than the parents*.
+- Tall parents tend to have taller children. Short parents tend to have shorter children.
+- Very tall parents tend to have tall children who are *shorter than the parents*. Very short parents tend to have shorter children who are *taller than the parents*.
+:::
 
+::: {.fragment}
 Children's heights "regressed" back toward the population mean.
+:::
 
+::: {.fragment}
 This is the origin of the word **"regression."**
+:::
+
 :::
 
 ---
