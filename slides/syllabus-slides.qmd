@@ -138,7 +138,7 @@ By the end of this course, you will be able to:
 
 | Week | Assignment | Due Date |
 |:---:|:---|:---:|
-| 1 | Optional Late Pass Questionnaire | Fri, Oct 3 |
+| 1 | Optional Late Pass Questionnaire | Sat, Oct 3 |
 | 2 | HW 1 | Sat, Oct 17 |
 | 3 | Quiz 1 | Mon, Oct 12 |
 | 4 | HW 2 | Sat, Oct 31 |
