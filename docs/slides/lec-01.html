@@ -36,7 +36,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-6359f6a13dddf015e3c4843adb306559.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-69270963cbea74292a2e047a5aecd8f9.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -179,6 +179,7 @@ Annie Adams
 </section>
 <section id="what-is-a-statistical-model-1" class="slide level2">
 <h2>What is a Statistical Model?</h2>
+<div style="font-size: 0.85em;">
 <p>A <strong>statistical model</strong> is a way of describing real-world phenomena using mathematical relationships. It takes data as input and creates a structured way of understanding how variables relate to one another, and how those relationships can be used to predict an outcome.</p>
 <p><span class="math display">\[y = f(x) + \varepsilon\]</span></p>
 <ul>
@@ -187,7 +188,7 @@ Annie Adams
 <li class="fragment"><span class="math inline">\(f(x)\)</span>: systematic component</li>
 <li class="fragment"><span class="math inline">\(\varepsilon\)</span>: random error</li>
 </ul>
-<p><strong>Regression</strong> is the most widely used class of statistical models.</p>
+</div>
 </section>
 <section id="why-regression" class="slide level2">
 <h2>Why Regression?</h2>
@@ -210,6 +211,7 @@ Annie Adams
 <img data-src="images/discrete_cont.png" class="r-stretch"></section>
 <section id="when-do-we-use-regression-1" class="slide level2">
 <h2>When do we use Regression?</h2>
+<div style="font-size: 0.85em;">
 <p>Regression analysis is used for explaining or modelings the relationship between a response variable (<span class="math inline">\(Y\)</span>) and one or more predictors (<span class="math inline">\(X_1,...X_p\)</span>).</p>
 <p>The response variable must be continuous, but the predictors can be continuous, discrete, or categorical.</p>
 <p>Regression can be used for:</p>
@@ -218,6 +220,7 @@ Annie Adams
 <li class="fragment">Assesmemt of the effect or relationship between predictor variables and the response variable</li>
 <li class="fragment">A general description of the data structure</li>
 </ol>
+</div>
 </section>
 <section id="inference-vs.-prediction" class="slide level2 smaller">
 <h2>Inference vs.&nbsp;Prediction</h2>
@@ -260,7 +263,7 @@ Annie Adams
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_7bfa3a33" minutes="2" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_ed0bc3e6" minutes="2" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div>
@@ -332,7 +335,7 @@ Annie Adams
 <p>Is the outcome variable discrete or continuous? What about the predictor variable? How strong should this relationship be? Do you think it will be positive or negative?</p>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_b80e7569" minutes="1" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_b3679e49" minutes="1" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div>
@@ -353,13 +356,15 @@ Annie Adams
 <h2>Simple Linear Regression</h2>
 <p>The <strong>simple linear regression model</strong> relates one predictor to a continuous outcome:</p>
 <p><span class="math display">\[y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\]</span></p>
+<div style="font-size: 0.85em;">
 <ul>
-<li><span class="math inline">\(y_i\)</span>: observed outcome for unit <span class="math inline">\(i\)</span></li>
-<li><span class="math inline">\(x_i\)</span>: predictor for unit <span class="math inline">\(i\)</span></li>
-<li><span class="math inline">\(\beta_0\)</span>(<strong>intercept</strong>): expected value of <span class="math inline">\(y\)</span> when <span class="math inline">\(x = 0\)</span></li>
-<li><span class="math inline">\(\beta_1\)</span>(<strong>slope</strong>): expected change in <span class="math inline">\(y\)</span> per one-unit increase in <span class="math inline">\(x\)</span></li>
-<li><span class="math inline">\(\varepsilon_i \stackrel{\scriptscriptstyle\text{iid}}{\sim} \mathcal{N}(0, \sigma^2)\)</span>: random error</li>
+<li class="fragment"><span class="math inline">\(y_i\)</span>: observed outcome for unit <span class="math inline">\(i\)</span></li>
+<li class="fragment"><span class="math inline">\(x_i\)</span>: predictor for unit <span class="math inline">\(i\)</span></li>
+<li class="fragment"><span class="math inline">\(\beta_0\)</span> (<strong>intercept</strong>): expected value of <span class="math inline">\(y\)</span> when <span class="math inline">\(x = 0\)</span></li>
+<li class="fragment"><span class="math inline">\(\beta_1\)</span> (<strong>slope</strong>): expected change in <span class="math inline">\(y\)</span> per one-unit increase in <span class="math inline">\(x\)</span></li>
+<li class="fragment"><span class="math inline">\(\varepsilon_i \sim N(0, \sigma^2)\)</span>: random error, independently and identically distributed</li>
 </ul>
+</div>
 </section>
 <section id="interpreting-slope-and-intercept" class="slide level2">
 <h2>Interpreting Slope and Intercept</h2>
@@ -369,15 +374,46 @@ Annie Adams
 <li class="fragment"><p><strong>Slope</strong> (<span class="math inline">\(\widehat{\beta}_1 = 0.111\)</span>): each additional square foot of living area is associated with $111 more in sale price, <em>on average</em></p></li>
 </ul>
 </section>
+<section id="your-turn-predicted-price" class="slide level2">
+<h2>Your Turn: Predicted Price</h2>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Practice Problem</strong></p>
+</div>
+<div class="callout-content">
+<div style="font-size: 30px">
+<p>Using the fitted model: <span class="math display">\[\widehat{\text{price}} = 13.3 + 0.111 \times \text{sqft}\]</span></p>
+<p>What is the predicted sale price for a home with <strong>1,500 square feet</strong> of above-ground living area?</p>
+<div class="cell">
+<div class="cell-output-display">
+<countdown-timer class="countdown" id="timer_5cf50cb6" minutes="2" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="your-turn-predicted-price-answer" class="slide level2">
+<h2>Your Turn: Predicted Price — Answer</h2>
+<p><span class="math display">\[\widehat{\text{price}} = 13.3 + 0.111 \times 1500 = 13.3 + 166.5 = 179.8\]</span></p>
+<p>A home with 1,500 sq ft is predicted to sell for <strong>$179,800</strong>.</p>
+</section>
 <section id="adding-the-fitted-line" class="slide level2">
 <h2>Adding the Fitted Line</h2>
 
-<img data-src="lec-01_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
+<img data-src="lec-01_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
 <section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>
 <ul>
 <li class="fragment">A <strong>statistical model</strong> decomposes an outcome into a systematic part <span class="math inline">\(f(x)\)</span> and random error <span class="math inline">\(\varepsilon\)</span></li>
-<li class="fragment">Regression can be used for <strong>prediction</strong>, <strong>inference</strong>, or <strong>description</strong></li>
+<li class="fragment">Regression can be used for <strong>prediction</strong> or <strong>inference</strong></li>
 <li class="fragment"><strong>Inference</strong> focuses on the coefficients: is there a relationship, how strong, in what direction?</li>
 <li class="fragment"><strong>Prediction</strong> focuses on <span class="math inline">\(\widehat{y}\)</span>: given new inputs, what is the best forecast?</li>
 <li class="fragment">The <strong>simple linear regression model</strong> is <span class="math inline">\(y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span></li>
@@ -390,16 +426,13 @@ Annie Adams
 <p><strong>Wednesday:</strong> How do we actually <em>fit</em> a regression model to data?</p>
 <ul>
 <li>Ordinary Least Squares (OLS)</li>
-<li>Residuals and residual standard deviation <span class="math inline">\(\widehat{\sigma}\)</span></li>
-<li>Standard errors and uncertainty in estimates</li>
-<li>Using <code>lm()</code> in R</li>
 </ul>
 </section>
 <section id="questions" class="slide level2" data-background-color="#003660">
 <h2>Questions?</h2>
 <div style="text-align: center; margin-top: 2em;">
 <p>Come to office Hours tomorrow!</p>
-<p>Tuesday 10 – 11 AM @</p>
+<p>Tuesday 10 – 11 AM on <a href="https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1">Zoom</a></p>
 </div>
 
 

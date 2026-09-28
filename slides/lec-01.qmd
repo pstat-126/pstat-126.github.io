@@ -60,20 +60,19 @@ This is the origin of the word **"regression."**
 ---
 
 ## What is a Statistical Model?
-A **statistical model** is a way of describing real-world phenomena using mathematical relationships. It takes data as input and creates a structured way of understanding how variables relate to one another, and how those relationships can be used to predict an outcome. 
 
-
-
+::: {style="font-size: 0.85em;"}
+A **statistical model** is a way of describing real-world phenomena using mathematical relationships. It takes data as input and creates a structured way of understanding how variables relate to one another, and how those relationships can be used to predict an outcome.
 
 ::: {.incremental}
 $$y = f(x) + \varepsilon$$
 
 - $y$: outcome of interest (response variable)
 - $x$: predictor (explanatory variable)
-- $f(x)$: systematic component 
-- $\varepsilon$: random error 
+- $f(x)$: systematic component
+- $\varepsilon$: random error
 
-**Regression** is the most widely used class of statistical models.
+:::
 :::
 ---
 
@@ -106,18 +105,19 @@ The response variable must be continuous, but the predictors can be continuous, 
 
 ## When do we use Regression?
 
+::: {style="font-size: 0.85em;"}
 Regression analysis is used for explaining or modelings the relationship between a response variable ($Y$) and one or more predictors ($X_1,...X_p$).
 
- The response variable must be continuous, but the predictors can be continuous, discrete, or categorical. 
+The response variable must be continuous, but the predictors can be continuous, discrete, or categorical.
 
 ::: {.incremental}
- Regression can be used for: 
- 
- 1. Prediction of future observations
- 2. Assesmemt of the effect or relationship between predictor variables and the response variable
- 3. A general description of the data structure
-:::
+Regression can be used for:
 
+1. Prediction of future observations
+2. Assesmemt of the effect or relationship between predictor variables and the response variable
+3. A general description of the data structure
+:::
+:::
 
 ---
 
@@ -278,11 +278,13 @@ The **simple linear regression model** relates one predictor to a continuous out
 
 $$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$$
 
+::: {.incremental style="font-size: 0.85em;"}
 - $y_i$: observed outcome for unit $i$
 - $x_i$: predictor for unit $i$
-- $\beta_0$(**intercept**):  expected value of $y$ when $x = 0$
-- $\beta_1$(**slope**): expected change in $y$ per one-unit increase in $x$
-- $\varepsilon_i \stackrel{\scriptscriptstyle\text{iid}}{\sim} \mathcal{N}(0, \sigma^2)$: random error
+- $\beta_0$ (**intercept**): expected value of $y$ when $x = 0$
+- $\beta_1$ (**slope**): expected change in $y$ per one-unit increase in $x$
+- $\varepsilon_i \sim N(0, \sigma^2)$: random error, independently and identically distributed
+:::
 
 ---
 
@@ -296,6 +298,50 @@ $$\widehat{\text{price}} = 13.3 + 0.111 \times \text{sqft}$$
 
 - **Slope** ($\widehat{\beta}_1 = 0.111$): each additional square foot of living area is associated with $111 more in sale price, *on average*
 :::
+
+---
+
+## Your Turn: Predicted Price
+
+:::{.fragment}
+::: callout-tip
+## Practice Problem
+
+:::{.nonincremental}
+::: {style="font-size: 30px"}
+
+Using the fitted model:
+$$\widehat{\text{price}} = 13.3 + 0.111 \times \text{sqft}$$
+
+What is the predicted sale price for a home with **1,500 square feet** of above-ground living area?
+
+```{r}
+#| echo: false
+countdown::countdown(
+  minutes = 2,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em",
+)
+```
+
+:::
+:::
+:::
+:::
+
+---
+
+## Your Turn: Predicted Price — Answer
+
+$$\widehat{\text{price}} = 13.3 + 0.111 \times 1500 = 13.3 + 166.5 = 179.8$$
+
+A home with 1,500 sq ft is predicted to sell for **\$179,800**.
 
 ---
 
@@ -374,7 +420,7 @@ ggplot(ames, aes(x = Gr_Liv_Area, y = Sale_Price / 1000)) +
 
 ::: {.incremental}
 - A **statistical model** decomposes an outcome into a systematic part $f(x)$ and random error $\varepsilon$
-- Regression can be used for **prediction**, **inference**, or **description** 
+- Regression can be used for **prediction** or **inference**
 - **Inference** focuses on the coefficients: is there a relationship, how strong, in what direction?
 - **Prediction** focuses on $\widehat{y}$: given new inputs, what is the best forecast?
 - The **simple linear regression model** is $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$
@@ -382,16 +428,14 @@ ggplot(ames, aes(x = Gr_Liv_Area, y = Sale_Price / 1000)) +
 - The **intercept** $\beta_0$ is the expected value of $y$ when $x = 0$
 :::
 
----
+--- 
 
 ## Looking Ahead
 
 **Wednesday:** How do we actually *fit* a regression model to data?
 
 - Ordinary Least Squares (OLS)
-- Residuals and residual standard deviation $\widehat{\sigma}$
-- Standard errors and uncertainty in estimates
-- Using `lm()` in R
+
 
 ---
 
@@ -402,7 +446,7 @@ ggplot(ames, aes(x = Gr_Liv_Area, y = Sale_Price / 1000)) +
 
 Come to office Hours tomorrow! 
 
-Tuesday 10 – 11 AM @ 
+Tuesday 10 – 11 AM on [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1)
 
 
 :::

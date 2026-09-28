@@ -4,6 +4,7 @@ subtitle: "PSTAT 126 — Linear Regression | Fall 2026 | UC Santa Barbara"
 ---
 
 ## Course Information
+*The official syllabus document can be found [here](https://docs.google.com/document/d/13dqmvFFTKM5DPgPVuF-UN25JkuLgh17jiNmFCEDk3e0/edit?usp=sharing).*
 
 ```{=html}
 <div class="info-grid">
@@ -119,8 +120,8 @@ The final exam will take place on **Tuesday, December 8th from 12:00 – 3:00 PM
 
 If you miss a class:
 
-- **Be proactive** — notify the instructor before it happens or within a day, with a brief explanation. Documentation is not required, but honesty and professionalism are expected.
-- **Catch up** — work with the instructor to review any missed material.
+- **Be proactive** — notify the instructor before it happens or within a day. Documentation is not required, but honesty and professionalism are expected.
+- **Catch up** — work with the instructor/TAs to review any missed material.
 - **Stay home when you are sick.** If you are feeling unwell, prioritize your health.
 
 ## Policy on Generative AI

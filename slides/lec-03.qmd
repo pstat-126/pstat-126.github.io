@@ -229,7 +229,8 @@ $$\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}} = \frac{
 **Annie Adams**
 [aradams@ucsb.edu](mailto:aradams@ucsb.edu)
 
-Office Hours: Tuesday 10 – 11 AM
+Office Hours: Tuesday 10 – 11 AM on [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1)
+
 
 [Course Website](https://pstat-126.github.io/)
 :::
