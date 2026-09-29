@@ -170,14 +170,14 @@
   {
     "objectID": "slides/lec-03.html#summary",
     "href": "slides/lec-03.html#summary",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 3: OLS Properties (Continued)",
     "section": "Summary",
-    "text": "Summary\n\nResiduals \\(e_i = y_i - \\widehat{y}_i\\) are observed proxies for the unobservable errors \\(\\varepsilon_i\\)\nFive properties of OLS residuals follow from the normal equations: \\(\\sum e_i = 0\\), \\(\\sum \\widehat{y}_i = \\sum y_i\\), \\(\\sum x_i e_i = 0\\), \\(\\sum \\widehat{y}_i e_i = 0\\), and the line passes through \\((\\bar{x}, \\bar{y})\\)\nRSS \\(= \\sum e_i^2\\) measures total unexplained variation — OLS minimizes it by construction\n\\(\\widehat{\\sigma}^2 = \\text{RSS}/(n-2)\\) is an unbiased estimate of \\(\\sigma^2\\); dividing by \\(n-2\\) corrects for two constraints placed on the residuals\n\\(\\widehat{\\sigma}\\) is the residual standard deviation — the typical prediction error on the scale of \\(y\\)\nStandard errors replace \\(\\sigma\\) with \\(\\widehat{\\sigma}\\) in the variance formulas — the foundation for inference"
+    "text": "Summary\n\nProperty 3 (Known variances): \\(\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2/S_{xx}\\), \\(\\;\\text{Var}(\\widehat{\\beta}_0) = \\sigma^2(1/n + \\bar{x}^2/S_{xx})\\)\nProperty 4 (Gauss-Markov): OLS is BLUE — smallest variance among all linear unbiased estimators\nTogether, Properties 1–4 say OLS estimators are linear, correct on average, have known precision, and are optimal in their class"
   },
   {
     "objectID": "slides/lec-03.html#questions",
     "href": "slides/lec-03.html#questions",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 3: OLS Properties (Continued)",
     "section": "Questions?",
     "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
   },
@@ -668,7 +668,7 @@
     "href": "slides/lec-02.html#summary",
     "title": "Lecture 2: Fitting the Simple Linear Model",
     "section": "Summary",
-    "text": "Summary\n\nLeast squares: OLS picks \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) to minimize \\(\\text{RSS} = \\sum(y_i - \\widehat{y}_i)^2\\)\nNormal equations give closed-form solutions: \\(\\widehat{\\beta}_1 = S_{xy}/S_{xx}\\), \\(\\;\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\)\nResiduals \\(e_i = y_i - \\widehat{y}_i\\) measure how far each observation falls from the fitted line\nProperty 1 (Linearity): both estimators are linear combinations of \\(y_1, \\ldots, y_n\\)\nProperty 2 (Unbiasedness): \\(\\mathbb{E}(\\widehat{\\beta}_0) = \\beta_0\\) and \\(\\mathbb{E}(\\widehat{\\beta}_1) = \\beta_1\\)\nProperty 3 (Known variances): \\(\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2/S_{xx}\\), \\(\\;\\text{Var}(\\widehat{\\beta}_0) = \\sigma^2(1/n + \\bar{x}^2/S_{xx})\\)\nProperty 4 (Gauss-Markov): OLS is BLUE — smallest variance among all linear unbiased estimators"
+    "text": "Summary\n\nLeast squares: OLS picks \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) to minimize \\(\\text{RSS} = \\sum(y_i - \\widehat{y}_i)^2\\)\nNormal equations give closed-form solutions: \\(\\widehat{\\beta}_1 = S_{xy}/S_{xx}\\), \\(\\;\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\)\nResiduals \\(e_i = y_i - \\widehat{y}_i\\) measure how far each observation falls from the fitted line\nProperty 1 (Linearity): both estimators are linear combinations of \\(y_1, \\ldots, y_n\\)\nProperty 2 (Unbiasedness): \\(\\mathbb{E}(\\widehat{\\beta}_0) = \\beta_0\\) and \\(\\mathbb{E}(\\widehat{\\beta}_1) = \\beta_1\\)\nNext lecture: Properties 3 (variance formulas) and 4 (Gauss-Markov / BLUE) continue in Lecture 3"
   },
   {
     "objectID": "slides/lec-02.html#questions",
@@ -1449,5 +1449,180 @@
     "title": "Welcome to PSTAT 126: Linear Regression!",
     "section": "Website Tour (pstat-126.github.io)",
     "text": "Website Tour (pstat-126.github.io)\nWhat’s on the site:\n\nCourse Information - Syllabus, Office Hours, Google Class Calendar\nLecture Materials — week-by-week plan with lecture slides, labs, and homework links\nAssignments — Homework assignments\nLabs - Rendered Labs and scripts to download for lab\nExams — Information on exams and formula sheet"
+  },
+  {
+    "objectID": "slides/lec-03.html#review-properties-of-the-ols-estimators",
+    "href": "slides/lec-03.html#review-properties-of-the-ols-estimators",
+    "title": "Lecture 3: OLS Properties (Continued)",
+    "section": "Review: Properties of the OLS Estimators",
+    "text": "Review: Properties of the OLS Estimators\n\nNotation: \\(S_{xx} = \\displaystyle\\sum_{i=1}^n(x_i - \\bar{x})^2\\) — total spread of the predictor; \\(\\sigma^2\\) — true (unknown) error variance; \\(\\mathbb{E}(\\cdot)\\) — expected value; \\(\\text{Var}(\\cdot)\\) — variance.\n\n\nLinear ✓ — \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) are linear functions of \\(y_1, \\ldots, y_n\\)\nUnbiased ✓ — \\(\\mathbb{E}(\\widehat{\\beta}_0) = \\beta_0\\) and \\(\\mathbb{E}(\\widehat{\\beta}_1) = \\beta_1\\)\nKnown variances — \\(\\text{Var}(\\widehat{\\beta}_1) = \\dfrac{\\sigma^2}{S_{xx}}\\), \\(\\quad \\text{Var}(\\widehat{\\beta}_0) = \\sigma^2\\!\\left(\\dfrac{1}{n} + \\dfrac{\\bar{x}^2}{S_{xx}}\\right)\\)\nGauss-Markov (BLUE) — OLS has the smallest variance among all linear unbiased estimators\n\nToday: prove Properties 3 and 4."
+  },
+  {
+    "objectID": "slides/lec-03.html#property-3-variance-of-widehatbeta_1",
+    "href": "slides/lec-03.html#property-3-variance-of-widehatbeta_1",
+    "title": "Lecture 3: OLS Properties (Continued)",
+    "section": "Property 3: Variance of \\(\\widehat{\\beta}_1\\)",
+    "text": "Property 3: Variance of \\(\\widehat{\\beta}_1\\)\nGoal: derive the formula \\(\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2 / S_{xx}\\).\n\nStep 1 — apply the variance of a linear combination: since \\(y_i\\)’s are independent with \\(\\text{Var}(y_i)=\\sigma^2\\), and \\(a_i\\) are fixed constants:\n\n\n\n\\[\\text{Var}(\\widehat{\\beta}_1) = \\text{Var}\\!\\left(\\sum_{i=1}^n a_i y_i\\right) \\overset{\\text{indep.}}{=} \\sum_{i=1}^n a_i^2\\,\\text{Var}(y_i) = \\sigma^2\\sum_{i=1}^n a_i^2\\]\n\n\n\\[\\text{Var}(\\widehat{\\beta}_1) = \\text{Var}\\!\\left(\\sum_{i=1}^n a_i y_i\\right) \\overset{\\text{indep.}}{=} \\sum_{i=1}^n a_i^2\\,\\text{Var}(y_i) = \\sigma^2\\sum_{i=1}^n a_i^2\\]\n\n\n\nIndependence eliminates all cross-terms \\(a_ia_j\\text{Cov}(y_i,y_j)\\) for \\(i\\neq j\\)."
+  },
+  {
+    "objectID": "slides/lec-03.html#property-3-variance-of-widehatbeta_1-cont.",
+    "href": "slides/lec-03.html#property-3-variance-of-widehatbeta_1-cont.",
+    "title": "Lecture 3: OLS Properties (Continued)",
+    "section": "Property 3: Variance of \\(\\widehat{\\beta}_1\\) (cont.)",
+    "text": "Property 3: Variance of \\(\\widehat{\\beta}_1\\) (cont.)\n\nStep 2 — evaluate \\(\\sum a_i^2\\): substitute \\(a_i = (x_i-\\bar{x})/S_{xx}\\) and use \\(\\sum(x_i-\\bar{x})^2 = S_{xx}\\):\n\n\n\n\\[\\sum_{i=1}^n a_i^2 = \\sum_{i=1}^n \\frac{(x_i-\\bar{x})^2}{S_{xx}^2} = \\frac{1}{S_{xx}^2}\\underbrace{\\sum_{i=1}^n(x_i-\\bar{x})^2}_{=\\,S_{xx}} = \\frac{1}{S_{xx}}\\]\n\n\n\\[\\sum_{i=1}^n a_i^2 = \\sum_{i=1}^n \\frac{(x_i-\\bar{x})^2}{S_{xx}^2} = \\frac{1}{S_{xx}^2}\\underbrace{\\sum_{i=1}^n(x_i-\\bar{x})^2}_{=\\,S_{xx}} = \\frac{1}{S_{xx}}\\]\n\n\n\nStep 3 — combine:\n\n\n\n\\[\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2 \\cdot \\frac{1}{S_{xx}} = \\frac{\\sigma^2}{S_{xx}} \\qquad\\]\n\n\n\\[\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2 \\cdot \\frac{1}{S_{xx}} = \\frac{\\sigma^2}{S_{xx}} \\qquad\\]"
+  },
+  {
+    "objectID": "slides/lec-03.html#property-3-variance-of-widehatbeta_0",
+    "href": "slides/lec-03.html#property-3-variance-of-widehatbeta_0",
+    "title": "Lecture 3: OLS Properties (Continued)",
+    "section": "Property 3: Variance of \\(\\widehat{\\beta}_0\\)",
+    "text": "Property 3: Variance of \\(\\widehat{\\beta}_0\\)\n\nGoal: derive \\(\\text{Var}(\\widehat{\\beta}_0) = \\sigma^2\\!\\left(\\tfrac{1}{n}+\\tfrac{\\bar{x}^2}{S_{xx}}\\right)\\).\n\nStep 1 — expand the variance. Since \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) and \\(\\bar{x}\\) is a fixed constant:\n\n\n\n\\[\\text{Var}(\\widehat{\\beta}_0) = \\text{Var}(\\bar{y} - \\widehat{\\beta}_1\\bar{x}) = \\text{Var}(\\bar{y}) + \\bar{x}^2\\,\\text{Var}(\\widehat{\\beta}_1) - 2\\bar{x}\\,\\text{Cov}(\\bar{y},\\widehat{\\beta}_1)\\]\n\n\n\\[\\text{Var}(\\widehat{\\beta}_0) = \\text{Var}(\\bar{y} - \\widehat{\\beta}_1\\bar{x}) = \\text{Var}(\\bar{y}) + \\bar{x}^2\\,\\text{Var}(\\widehat{\\beta}_1) - 2\\bar{x}\\,\\text{Cov}(\\bar{y},\\widehat{\\beta}_1)\\]\n\n\n\nStep 2 — substitute known variances. Using \\(\\text{Var}(\\bar{y}) = \\sigma^2/n\\) and \\(\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2/S_{xx}\\):\n\n\n\n\\[= \\frac{\\sigma^2}{n} + \\frac{\\bar{x}^2\\sigma^2}{S_{xx}} - 2\\bar{x}\\,\\text{Cov}(\\bar{y},\\widehat{\\beta}_1)\\]\n\n\n\\[= \\frac{\\sigma^2}{n} + \\frac{\\bar{x}^2\\sigma^2}{S_{xx}} - 2\\bar{x}\\,\\text{Cov}(\\bar{y},\\widehat{\\beta}_1)\\]\n\n\n\nStep 3 — handle the covariance. It can be shown that \\(\\text{Cov}(\\bar{y}, \\widehat{\\beta}_1) = 0\\) (see proof), so the last term drops out:\n\n\n\n\\[\\text{Var}(\\widehat{\\beta}_0) = \\frac{\\sigma^2}{n} + \\frac{\\bar{x}^2\\sigma^2}{S_{xx}} = \\sigma^2\\!\\left(\\frac{1}{n}+\\frac{\\bar{x}^2}{S_{xx}}\\right) \\qquad\\]\n\n\n\\[\\text{Var}(\\widehat{\\beta}_0) = \\frac{\\sigma^2}{n} + \\frac{\\bar{x}^2\\sigma^2}{S_{xx}} = \\sigma^2\\!\\left(\\frac{1}{n}+\\frac{\\bar{x}^2}{S_{xx}}\\right) \\qquad\\]"
+  },
+  {
+    "objectID": "slides/lec-03.html#property-4-gauss-markov-blue",
+    "href": "slides/lec-03.html#property-4-gauss-markov-blue",
+    "title": "Lecture 3: OLS Properties (Continued)",
+    "section": "Property 4: Gauss-Markov (BLUE)",
+    "text": "Property 4: Gauss-Markov (BLUE)\n\nGoal: OLS has the smallest variance among all linear unbiased estimators.\nLet \\(b_1^* = \\sum_{i=1}^n c_i y_i\\) be any competing linear unbiased estimator of \\(\\beta_1\\).\n\nStep 1 — unbiasedness constraints. We need \\(\\mathbb{E}(b_1^*) = \\beta_1\\) for all \\(\\beta_0, \\beta_1\\). Substitute \\(\\mathbb{E}(y_i) = \\beta_0 + \\beta_1 x_i\\):\n\n\n\n\\[\\mathbb{E}(b_1^*) = \\sum_{i=1}^n c_i(\\beta_0 + \\beta_1 x_i) = \\beta_0\\sum_{i=1}^n c_i + \\beta_1\\sum_{i=1}^n c_i x_i\\]\n\n\n\\[\\mathbb{E}(b_1^*) = \\sum_{i=1}^n c_i(\\beta_0 + \\beta_1 x_i) = \\beta_0\\sum_{i=1}^n c_i + \\beta_1\\sum_{i=1}^n c_i x_i\\]\n\n\n\nFor this to equal \\(\\beta_1\\) for every possible \\(\\beta_0\\) and \\(\\beta_1\\), we match coefficients:\n\n\n\n\\[\\underbrace{\\sum_{i=1}^n c_i}_{\\text{coeff. of }\\beta_0} = 0 \\qquad \\text{and} \\qquad \\underbrace{\\sum_{i=1}^n c_i x_i}_{\\text{coeff. of }\\beta_1} = 1\\]\n\n\n\\[\\underbrace{\\sum_{i=1}^n c_i}_{\\text{coeff. of }\\beta_0} = 0 \\qquad \\text{and} \\qquad \\underbrace{\\sum_{i=1}^n c_i x_i}_{\\text{coeff. of }\\beta_1} = 1\\]"
+  },
+  {
+    "objectID": "slides/lec-03.html#property-4-gauss-markov-blue-cont.",
+    "href": "slides/lec-03.html#property-4-gauss-markov-blue-cont.",
+    "title": "Lecture 3: OLS Properties (Continued)",
+    "section": "Property 4: Gauss-Markov (BLUE) (cont.)",
+    "text": "Property 4: Gauss-Markov (BLUE) (cont.)\n\n\nStep 2 — decompose the weights. Write \\(c_i = a_i + d_i\\), where \\(a_i = (x_i-\\bar{x})/S_{xx}\\) are the OLS weights and \\(d_i = c_i - a_i\\) is the extra piece.\nBoth \\(c_i\\) and \\(a_i\\) satisfy the same two constraints:\n\nFrom Step 1: \\(\\sum c_i = 0\\) and \\(\\sum c_i x_i = 1\\) (required for \\(b_1^*\\) to be unbiased)\nFrom Property 1: \\(\\sum a_i = 0\\) and \\(\\sum a_i x_i = 1\\) (shown when we proved linearity of \\(\\widehat{\\beta}_1\\))\n\nSubtracting gives \\(\\sum d_i = 0\\) and \\(\\sum d_i x_i = 0\\)."
+  },
+  {
+    "objectID": "slides/lec-03.html#property-4-gauss-markov-blue-cont.-1",
+    "href": "slides/lec-03.html#property-4-gauss-markov-blue-cont.-1",
+    "title": "Lecture 3: OLS Properties (Continued)",
+    "section": "Property 4: Gauss-Markov (BLUE) (cont.)",
+    "text": "Property 4: Gauss-Markov (BLUE) (cont.)\n\n\nStep 2 (cont.) — show \\(\\sum a_i d_i = 0\\). We need this so the cross term vanishes when we expand \\(\\sum(a_i + d_i)^2\\) in Step 3 — without it we can’t isolate \\(\\text{Var}(\\widehat{\\beta}_1)\\). Using \\(\\sum d_i = 0\\) and \\(\\sum d_i x_i = 0\\):\n\n\n\n\\[\\sum_{i=1}^n a_i d_i = \\frac{\\sum(x_i-\\bar{x})d_i}{S_{xx}} = \\frac{\\sum d_i x_i - \\bar{x}\\sum d_i}{S_{xx}} = \\frac{0 - 0}{S_{xx}} = 0\\]\n\n\n\\[\\sum_{i=1}^n a_i d_i = \\frac{\\sum(x_i-\\bar{x})d_i}{S_{xx}} = \\frac{\\sum d_i x_i - \\bar{x}\\sum d_i}{S_{xx}} = \\frac{0 - 0}{S_{xx}} = 0\\]"
+  },
+  {
+    "objectID": "slides/lec-03.html#property-4-gauss-markov-blue-cont.-2",
+    "href": "slides/lec-03.html#property-4-gauss-markov-blue-cont.-2",
+    "title": "Lecture 3: OLS Properties (Continued)",
+    "section": "Property 4: Gauss-Markov (BLUE) (cont.)",
+    "text": "Property 4: Gauss-Markov (BLUE) (cont.)\n\n\nStep 3 — compare variances. Two key rules:\n\n\\(\\text{Var}(cY) = c^2\\text{Var}(Y)\\) — a constant scales variance by its square\n\\(\\text{Var}(Y_1 + Y_2) = \\text{Var}(Y_1) + \\text{Var}(Y_2)\\) when \\(Y_1, Y_2\\) are independent (cross terms \\(2c_ic_j\\text{Cov}(y_i,y_j) = 0\\))\n\nApplying both to \\(b_1^* = \\sum c_i y_i\\) with independent \\(y_i\\)’s and \\(\\text{Var}(y_i) = \\sigma^2\\):\n\n\n\n\\[\\text{Var}(b_1^*) = \\sum_{i=1}^n c_i^2\\,\\text{Var}(y_i) = \\sigma^2\\sum_{i=1}^n c_i^2\\]\n\n\n\\[\\text{Var}(b_1^*) = \\sum_{i=1}^n c_i^2\\,\\text{Var}(y_i) = \\sigma^2\\sum_{i=1}^n c_i^2\\]"
+  },
+  {
+    "objectID": "slides/lec-03.html#property-4-gauss-markov-blue-cont.-3",
+    "href": "slides/lec-03.html#property-4-gauss-markov-blue-cont.-3",
+    "title": "Lecture 3: OLS Properties (Continued)",
+    "section": "Property 4: Gauss-Markov (BLUE) (cont.)",
+    "text": "Property 4: Gauss-Markov (BLUE) (cont.)\n\n\nSubstitute \\(c_i = a_i + d_i\\) and expand:\n\n\n\n\\[\\sigma^2\\sum(a_i + d_i)^2 = \\sigma^2\\!\\left(\\sum a_i^2 + 2\\underbrace{\\sum a_i d_i}_{=\\;0} + \\sum d_i^2\\right) = \\sigma^2\\sum a_i^2 + \\sigma^2\\sum d_i^2\\]\n\n\n\\[\\sigma^2\\sum(a_i + d_i)^2 = \\sigma^2\\!\\left(\\sum a_i^2 + 2\\underbrace{\\sum a_i d_i}_{=\\;0} + \\sum d_i^2\\right) = \\sigma^2\\sum a_i^2 + \\sigma^2\\sum d_i^2\\]\n\n\n\nRecognizing \\(\\sigma^2 \\sum a_i^2 = \\text{Var}(\\widehat{\\beta}_1)\\):\n\n\n\n\\[\\text{Var}(b_1^*) = \\text{Var}(\\widehat{\\beta}_1) + \\underbrace{\\sigma^2 \\sum d_i^2}_{\\geq\\;0} \\;\\geq\\; \\text{Var}(\\widehat{\\beta}_1) \\qquad \\]\n\n\n\\[\\text{Var}(b_1^*) = \\text{Var}(\\widehat{\\beta}_1) + \\underbrace{\\sigma^2 \\sum d_i^2}_{\\geq\\;0} \\;\\geq\\; \\text{Var}(\\widehat{\\beta}_1) \\qquad \\]\n\n\n\nThe extra term \\(\\sigma^2\\sum d_i^2 \\geq 0\\) always — with equality only when \\(d_i = 0\\) for all \\(i\\), i.e. when \\(b_1^* = \\widehat{\\beta}_1\\)."
+  },
+  {
+    "objectID": "slides/lec-04.html#review-ols-estimators",
+    "href": "slides/lec-04.html#review-ols-estimators",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "Review: OLS Estimators",
+    "text": "Review: OLS Estimators\nFrom last time, the OLS estimators are:\n\\[\\widehat{\\beta}_1 = \\frac{S_{xy}}{S_{xx}}, \\qquad \\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\]\nThey are unbiased, linear, and BLUE (Gauss-Markov).\nToday: What do the residuals tell us, and how do we estimate the unknown \\(\\sigma^2\\)?"
+  },
+  {
+    "objectID": "slides/lec-04.html#learning-objectives",
+    "href": "slides/lec-04.html#learning-objectives",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\nBy the end of today you will be able to:\n\nDefine residuals and explain what they measure\nState and prove the four properties of OLS residuals\nDefine RSS and explain its role in regression\nCompute and interpret \\(\\widehat{\\sigma}^2\\) and \\(\\widehat{\\sigma}\\)\nExplain why we divide by \\(n - 2\\) rather than \\(n\\)"
+  },
+  {
+    "objectID": "slides/lec-04.html#residuals",
+    "href": "slides/lec-04.html#residuals",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "Residuals",
+    "text": "Residuals"
+  },
+  {
+    "objectID": "slides/lec-04.html#what-are-residuals",
+    "href": "slides/lec-04.html#what-are-residuals",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "What are Residuals?",
+    "text": "What are Residuals?\nAfter fitting the model, the residual for observation \\(i\\) is:\n\\[e_i = y_i - \\widehat{y}_i = y_i - \\widehat{\\beta}_0 - \\widehat{\\beta}_1 x_i\\]\nResiduals measure how far each observation falls from the fitted line:\n\n\\(e_i &gt; 0\\): observed value is above the fitted line\n\\(e_i &lt; 0\\): observed value is below the fitted line\n\\(e_i = 0\\): observation falls exactly on the fitted line\n\n\n\n\n\n\n\nNote\n\n\nResiduals \\(e_i\\) are the observable counterparts to the unobservable errors \\(\\varepsilon_i\\). We use them to check model assumptions and estimate \\(\\sigma^2\\)."
+  },
+  {
+    "objectID": "slides/lec-04.html#properties-of-ols-residuals",
+    "href": "slides/lec-04.html#properties-of-ols-residuals",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "Properties of OLS Residuals",
+    "text": "Properties of OLS Residuals\n\n\\(\\displaystyle\\sum_{i=1}^n e_i = 0\\) — residuals sum to zero\n\\(\\displaystyle\\sum_{i=1}^n \\widehat{y}_i = \\sum_{i=1}^n y_i\\) — sum of fitted values equals sum of observed values\n\\(\\displaystyle\\sum_{i=1}^n x_i e_i = 0\\) — residuals are uncorrelated with the predictor\n\\(\\displaystyle\\sum_{i=1}^n \\widehat{y}_i e_i = 0\\) — residuals are uncorrelated with the fitted values\nThe fitted line always passes through \\((\\bar{x}, \\bar{y})\\)"
+  },
+  {
+    "objectID": "slides/lec-04.html#estimating-sigma2",
+    "href": "slides/lec-04.html#estimating-sigma2",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "Estimating \\(\\sigma^2\\)",
+    "text": "Estimating \\(\\sigma^2\\)"
+  },
+  {
+    "objectID": "slides/lec-04.html#residual-sum-of-squares",
+    "href": "slides/lec-04.html#residual-sum-of-squares",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "Residual Sum of Squares",
+    "text": "Residual Sum of Squares\nThe Residual Sum of Squares (RSS) measures the total unexplained variation:\n\\[\\text{RSS} = \\sum_{i=1}^n e_i^2 = \\sum_{i=1}^n (y_i - \\widehat{y}_i)^2\\]\n\nA smaller RSS means the line fits the data more closely\nRSS = 0 only if every point lies exactly on the fitted line"
+  },
+  {
+    "objectID": "slides/lec-04.html#estimating-sigma2-1",
+    "href": "slides/lec-04.html#estimating-sigma2-1",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "Estimating \\(\\sigma^2\\)",
+    "text": "Estimating \\(\\sigma^2\\)\nThe error variance \\(\\sigma^2 = \\text{Var}(\\varepsilon_i)\\) is unknown. We estimate it using the residuals.\nA natural starting point is the average squared residual, but we must divide by \\(n - 2\\), not \\(n\\):\n\\[\\widehat{\\sigma}^2 = \\frac{\\text{RSS}}{n - 2} = \\frac{\\sum_{i=1}^n e_i^2}{n-2}\\]\nWhy \\(n - 2\\)? Estimating \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) uses 2 degrees of freedom since two parameters are being used.\nIt can be shown that \\(\\mathbb{E}(\\widehat{\\sigma}^2) = \\sigma^2\\), so \\(\\widehat{\\sigma}^2\\) is an unbiased estimator of \\(\\sigma^2\\)."
+  },
+  {
+    "objectID": "slides/lec-04.html#proof-mathbbetextmse-sigma2",
+    "href": "slides/lec-04.html#proof-mathbbetextmse-sigma2",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "Proof: \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\)",
+    "text": "Proof: \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\)\n\nStep 1 — expand E(SSE). Substitute \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\): \\[\\mathbb{E}(\\text{SSE}) = \\mathbb{E}\\!\\left\\{\\sum(y_i - \\widehat{y}_i)^2\\right\\} = \\mathbb{E}\\!\\left\\{\\sum\\!\\left[(y_i - \\bar{y}) - \\widehat{\\beta}_1(x_i - \\bar{x})\\right]^2\\right\\}\\]\nStep 2 — expand the square and use \\(\\sum(y_i-\\bar{y})(x_i-\\bar{x}) = \\widehat{\\beta}_1 S_{xx}\\): \\[= \\mathbb{E}\\!\\left\\{\\sum(y_i-\\bar{y})^2 + \\widehat{\\beta}_1^2 S_{xx} - 2\\widehat{\\beta}_1^2 S_{xx}\\right\\} = \\mathbb{E}\\!\\left\\{\\sum(y_i-\\bar{y})^2 - \\widehat{\\beta}_1^2 S_{xx}\\right\\}\\]"
+  },
+  {
+    "objectID": "slides/lec-04.html#proof-mathbbetextmse-sigma2-cont.",
+    "href": "slides/lec-04.html#proof-mathbbetextmse-sigma2-cont.",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "Proof: \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\) (cont.)",
+    "text": "Proof: \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\) (cont.)\n\nStep 3 — evaluate each expectation piece by piece.\nSubstitute \\(y_i - \\bar{y} = \\beta_1(x_i-\\bar{x}) + (\\varepsilon_i - \\bar{\\varepsilon})\\) and expand:\n\n\\(\\mathbb{E}\\!\\left\\{\\sum(y_i-\\bar{y})^2\\right\\} = \\beta_1^2 S_{xx} + \\mathbb{E}\\!\\left\\{\\sum(\\varepsilon_i-\\bar{\\varepsilon})^2\\right\\} + 0 = \\beta_1^2 S_{xx} + (n-1)\\sigma^2\\)\nsince \\(\\mathbb{E}\\!\\left\\{\\sum(\\varepsilon_i - \\bar{\\varepsilon})^2\\right\\} = (n-1)\\sigma^2\\) and the cross term has \\(\\mathbb{E}(\\varepsilon_i - \\bar{\\varepsilon}) = 0\\)\n\\(\\mathbb{E}(\\widehat{\\beta}_1^2) = \\text{Var}(\\widehat{\\beta}_1) + \\left[\\mathbb{E}(\\widehat{\\beta}_1)\\right]^2 = \\dfrac{\\sigma^2}{S_{xx}} + \\beta_1^2\\), so \\(\\;\\mathbb{E}(\\widehat{\\beta}_1^2 S_{xx}) = \\sigma^2 + \\beta_1^2 S_{xx}\\)\n\nStep 4 — combine: \\[\\mathbb{E}(\\text{SSE}) = \\beta_1^2 S_{xx} + (n-1)\\sigma^2 - \\sigma^2 - \\beta_1^2 S_{xx} = (n-2)\\sigma^2\\]\nTherefore: \\[\\mathbb{E}(\\text{MSE}) = \\mathbb{E}\\!\\left(\\frac{\\text{SSE}}{n-2}\\right) = \\frac{(n-2)\\sigma^2}{n-2} = \\sigma^2 \\qquad \\blacksquare\\]"
+  },
+  {
+    "objectID": "slides/lec-04.html#the-residual-standard-deviation",
+    "href": "slides/lec-04.html#the-residual-standard-deviation",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "The Residual Standard Deviation",
+    "text": "The Residual Standard Deviation\nTaking the square root gives the residual standard deviation:\n\\[\\widehat{\\sigma} = \\sqrt{\\widehat{\\sigma}^2} = \\sqrt{\\frac{\\text{RSS}}{n-2}}\\]\nInterpretation: \\(\\widehat{\\sigma}\\) is the typical size of a prediction error, on the scale of \\(y\\).\n\n\n\n\n\n\nTip\n\n\nCompare \\(\\widehat{\\sigma}\\) to the spread of \\(y\\) to gauge model usefulness. A small \\(\\widehat{\\sigma}\\) relative to the range of \\(y\\) indicates a good fit."
+  },
+  {
+    "objectID": "slides/lec-04.html#standard-errors-of-the-estimators",
+    "href": "slides/lec-04.html#standard-errors-of-the-estimators",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "Standard Errors of the Estimators",
+    "text": "Standard Errors of the Estimators\nSince \\(\\sigma^2\\) is unknown, we replace it with \\(\\widehat{\\sigma}^2\\) in the variance formulas:\n\\[\\widehat{\\text{Var}}(\\widehat{\\beta}_1) = \\frac{\\widehat{\\sigma}^2}{S_{xx}}, \\qquad \\widehat{\\text{Var}}(\\widehat{\\beta}_0) = \\widehat{\\sigma}^2\\!\\left(\\frac{1}{n} + \\frac{\\bar{x}^2}{S_{xx}}\\right)\\]\nThe standard errors are the square roots:\n\\[\\text{SE}(\\widehat{\\beta}_1) = \\frac{\\widehat{\\sigma}}{\\sqrt{S_{xx}}}, \\qquad \\text{SE}(\\widehat{\\beta}_0) = \\widehat{\\sigma}\\sqrt{\\frac{1}{n} + \\frac{\\bar{x}^2}{S_{xx}}}\\]\nStandard errors quantify the uncertainty in each estimate — they are the basis for confidence intervals and hypothesis tests (coming soon)."
+  },
+  {
+    "objectID": "slides/lec-04.html#practice-computing-widehatsigma",
+    "href": "slides/lec-04.html#practice-computing-widehatsigma",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "Practice: Computing \\(\\widehat{\\sigma}\\)",
+    "text": "Practice: Computing \\(\\widehat{\\sigma}\\)\nUsing the same dataset (\\(n = 5\\), \\(S_{xx} = 10\\), \\(\\text{RSS} = 6\\), fitted line \\(\\widehat{y} = 1 + 2x\\)):\nCompute:\n\n\\(\\widehat{\\sigma}^2 = \\text{RSS} / (n - 2)\\)\n\\(\\widehat{\\sigma} = \\sqrt{\\widehat{\\sigma}^2}\\)\n\\(\\text{SE}(\\widehat{\\beta}_1) = \\widehat{\\sigma} / \\sqrt{S_{xx}}\\)"
+  },
+  {
+    "objectID": "slides/lec-04.html#practice-solution",
+    "href": "slides/lec-04.html#practice-solution",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "Practice: Solution",
+    "text": "Practice: Solution\nStep 1 — estimate \\(\\sigma^2\\): \\[\\widehat{\\sigma}^2 = \\frac{\\text{RSS}}{n-2} = \\frac{6}{5-2} = \\frac{6}{3} = 2\\]\nStep 2 — residual standard deviation: \\[\\widehat{\\sigma} = \\sqrt{2} \\approx 1.41\\]\nStep 3 — standard error of \\(\\widehat{\\beta}_1\\): \\[\\text{SE}(\\widehat{\\beta}_1) = \\frac{\\widehat{\\sigma}}{\\sqrt{S_{xx}}} = \\frac{\\sqrt{2}}{\\sqrt{10}} = \\sqrt{\\frac{2}{10}} = \\sqrt{0.2} \\approx 0.45\\]\nInterpretation: the slope estimate \\(\\widehat{\\beta}_1 = 2\\) has a typical uncertainty of about \\(\\pm 0.45\\) wellness points per hour of exercise."
+  },
+  {
+    "objectID": "slides/lec-04.html#summary",
+    "href": "slides/lec-04.html#summary",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "Summary",
+    "text": "Summary\n\nResiduals \\(e_i = y_i - \\widehat{y}_i\\) are observed proxies for the unobservable errors \\(\\varepsilon_i\\)\nFive properties of OLS residuals follow from the normal equations: \\(\\sum e_i = 0\\), \\(\\sum \\widehat{y}_i = \\sum y_i\\), \\(\\sum x_i e_i = 0\\), \\(\\sum \\widehat{y}_i e_i = 0\\), and the line passes through \\((\\bar{x}, \\bar{y})\\)\nRSS \\(= \\sum e_i^2\\) measures total unexplained variation — OLS minimizes it by construction\n\\(\\widehat{\\sigma}^2 = \\text{RSS}/(n-2)\\) is an unbiased estimate of \\(\\sigma^2\\); dividing by \\(n-2\\) corrects for two constraints placed on the residuals\n\\(\\widehat{\\sigma}\\) is the residual standard deviation — the typical prediction error on the scale of \\(y\\)\nStandard errors replace \\(\\sigma\\) with \\(\\widehat{\\sigma}\\) in the variance formulas — the foundation for inference"
+  },
+  {
+    "objectID": "slides/lec-04.html#questions",
+    "href": "slides/lec-04.html#questions",
+    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "section": "Questions?",
+    "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
   }
 ]

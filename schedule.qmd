@@ -37,7 +37,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td class="date-cell">Wed, Sep 30</td>
       <td class="topic-cell">Least Squares Estimation
         <span class="sub-topic">Deriving OLS estimators, interpreting coefficients</span></td>
-      <td><a class="badge-slide" href="">Slides</a></td>
+      <td><a class="badge-slide" href="slides/lec-02.html">Slides</a></td>
       <td></td>
       <td></td>
     </tr>

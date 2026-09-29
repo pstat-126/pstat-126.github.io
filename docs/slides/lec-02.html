@@ -211,7 +211,7 @@ Annie Adams
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_63a99753" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_55a553df" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div>
@@ -263,7 +263,7 @@ Annie Adams
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_3b3dcc62" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_fb23aae6" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div>
@@ -490,6 +490,136 @@ Annie Adams
 <li class="fragment">When <span class="math inline">\(|r| = 1\)</span> <span class="math inline">\(\rightarrow\)</span> all points lie exactly on a line <span class="math inline">\(\rightarrow\)</span> perfect fit</li>
 </ul>
 </section>
+<section id="practice-computing-ols-estimates" class="slide level2 smaller">
+<h2>Practice: Computing OLS Estimates</h2>
+<p>A researcher records daily exercise hours (<span class="math inline">\(x\)</span>) and wellness score (<span class="math inline">\(y\)</span>, out of 15) for <span class="math inline">\(n = 5\)</span> students:</p>
+<div class="columns">
+<div class="column" style="width:52%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(x_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(y_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\widehat{y}_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\hat{e}_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:48%;">
+<p><strong>Compute:</strong></p>
+<ol type="1">
+<li><p><span class="math inline">\(\widehat{\beta}_1 = S_{xy} / S_{xx}\)</span></p></li>
+<li><p><span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span></p></li>
+<li><p>Fill in <span class="math inline">\(\widehat{y}_i\)</span> using <span class="math inline">\(\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i\)</span></p></li>
+<li><p>Fill in <span class="math inline">\(\hat{e}_i\)</span> using <span class="math inline">\(\hat{e}_i = y_i - \widehat{y}_i\)</span></p></li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<countdown-timer class="countdown" id="timer_6afa4d59" minutes="7" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+</div>
+</div>
+</div></div>
+</section>
+<section id="practice-solution" class="slide level2 smaller">
+<h2>Practice: Solution</h2>
+<p><strong>Finding <span class="math inline">\(\bar{x}\)</span>, <span class="math inline">\(\bar{y}\)</span>, <span class="math inline">\(S_{xx}\)</span>, <span class="math inline">\(S_{xy}\)</span>:</strong></p>
+<p><span class="math display">\[\bar{x} = \frac{1+2+3+4+5}{5} = 3, \qquad \bar{y} = \frac{4+3+8+9+11}{5} = 7\]</span></p>
+<p><span class="math display">\[S_{xx} = (-2)^2+(-1)^2+0^2+1^2+2^2 = 10\]</span></p>
+<p><span class="math display">\[S_{xy} = (-2)(-3)+(-1)(-4)+(0)(1)+(1)(2)+(2)(4) = 20\]</span></p>
+<p><strong>Estimates:</strong></p>
+<p><span class="math display">\[\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{20}{10} = 2, \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x} = 7 - 2(3) = 1\]</span></p>
+<p>Fitted line: <span class="math inline">\(\;\widehat{y} = 1 + 2x\)</span></p>
+</section>
+<section id="practice-solution-cont." class="slide level2 smaller">
+<h2>Practice: Solution (cont.)</h2>
+<p><strong>Fitted values and residuals</strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(x_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(y_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\widehat{y}_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\hat{e}_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">−2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="properties-of-the-ols-estimators" class="slide level2 smaller">
 <h2>Properties of the OLS Estimators</h2>
 <div style="font-size: 0.82em;">
@@ -675,328 +805,6 @@ Annie Adams
 </div>
 </div>
 </section>
-<section id="property-3-variance-of-widehatbeta_1" class="slide level2 smaller">
-<h2>Property 3: Variance of <span class="math inline">\(\widehat{\beta}_1\)</span></h2>
-<p><strong>Goal:</strong> derive the formula <span class="math inline">\(\text{Var}(\widehat{\beta}_1) = \sigma^2 / S_{xx}\)</span>.</p>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Step 1 — apply the variance of a linear combination:</strong> since <span class="math inline">\(y_i\)</span>’s are independent with <span class="math inline">\(\text{Var}(y_i)=\sigma^2\)</span>, and <span class="math inline">\(a_i\)</span> are fixed constants:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="1" style="visibility: hidden;">
-<p><span class="math display">\[\text{Var}(\widehat{\beta}_1) = \text{Var}\!\left(\sum_{i=1}^n a_i y_i\right) \overset{\text{indep.}}{=} \sum_{i=1}^n a_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n a_i^2\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="2" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\text{Var}(\widehat{\beta}_1) = \text{Var}\!\left(\sum_{i=1}^n a_i y_i\right) \overset{\text{indep.}}{=} \sum_{i=1}^n a_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n a_i^2\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p>Independence eliminates all cross-terms <span class="math inline">\(a_ia_j\text{Cov}(y_i,y_j)\)</span> for <span class="math inline">\(i\neq j\)</span>.</p>
-</div>
-</section>
-<section id="property-3-variance-of-widehatbeta_1-cont." class="slide level2 smaller">
-<h2>Property 3: Variance of <span class="math inline">\(\widehat{\beta}_1\)</span> (cont.)</h2>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Step 2 — evaluate <span class="math inline">\(\sum a_i^2\)</span>:</strong> substitute <span class="math inline">\(a_i = (x_i-\bar{x})/S_{xx}\)</span> and use <span class="math inline">\(\sum(x_i-\bar{x})^2 = S_{xx}\)</span>:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="1" style="visibility: hidden;">
-<p><span class="math display">\[\sum_{i=1}^n a_i^2 = \sum_{i=1}^n \frac{(x_i-\bar{x})^2}{S_{xx}^2} = \frac{1}{S_{xx}^2}\underbrace{\sum_{i=1}^n(x_i-\bar{x})^2}_{=\,S_{xx}} = \frac{1}{S_{xx}}\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="3" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sum_{i=1}^n a_i^2 = \sum_{i=1}^n \frac{(x_i-\bar{x})^2}{S_{xx}^2} = \frac{1}{S_{xx}^2}\underbrace{\sum_{i=1}^n(x_i-\bar{x})^2}_{=\,S_{xx}} = \frac{1}{S_{xx}}\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p><strong>Step 3 — combine:</strong></p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="2" style="visibility: hidden;">
-<p><span class="math display">\[\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma^2}{S_{xx}} \qquad\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="4" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma^2}{S_{xx}} \qquad\]</span></p>
-</div>
-</div>
-</section>
-<section id="property-3-variance-of-widehatbeta_0" class="slide level2 smaller">
-<h2>Property 3: Variance of <span class="math inline">\(\widehat{\beta}_0\)</span></h2>
-<div style="font-size: 0.82em;">
-<p><strong>Goal:</strong> derive <span class="math inline">\(\text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\tfrac{1}{n}+\tfrac{\bar{x}^2}{S_{xx}}\right)\)</span>.</p>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Step 1 — expand the variance.</strong> Since <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span> and <span class="math inline">\(\bar{x}\)</span> is a fixed constant:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="1" style="visibility: hidden;">
-<p><span class="math display">\[\text{Var}(\widehat{\beta}_0) = \text{Var}(\bar{y} - \widehat{\beta}_1\bar{x}) = \text{Var}(\bar{y}) + \bar{x}^2\,\text{Var}(\widehat{\beta}_1) - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="4" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\text{Var}(\widehat{\beta}_0) = \text{Var}(\bar{y} - \widehat{\beta}_1\bar{x}) = \text{Var}(\bar{y}) + \bar{x}^2\,\text{Var}(\widehat{\beta}_1) - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p><strong>Step 2 — substitute known variances.</strong> Using <span class="math inline">\(\text{Var}(\bar{y}) = \sigma^2/n\)</span> and <span class="math inline">\(\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}\)</span>:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="2" style="visibility: hidden;">
-<p><span class="math display">\[= \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="5" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[= \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p><strong>Step 3 — handle the covariance.</strong> It can be shown that <span class="math inline">\(\text{Cov}(\bar{y}, \widehat{\beta}_1) = 0\)</span> (see <a href="https://en.wikipedia.org/wiki/Simple_linear_regression">proof</a>), so the last term drops out:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="3" style="visibility: hidden;">
-<p><span class="math display">\[\text{Var}(\widehat{\beta}_0) = \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}\right) \qquad\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="6" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\text{Var}(\widehat{\beta}_0) = \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}\right) \qquad\]</span></p>
-</div>
-</div>
-</div>
-</section>
-<section id="property-4-gauss-markov-blue" class="slide level2 smaller">
-<h2>Property 4: Gauss-Markov (BLUE)</h2>
-<div style="font-size: 0.85em;">
-<p><strong>Goal:</strong> OLS has the smallest variance among all linear unbiased estimators.</p>
-<p>Let <span class="math inline">\(b_1^* = \sum_{i=1}^n c_i y_i\)</span> be any competing linear unbiased estimator of <span class="math inline">\(\beta_1\)</span>.</p>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Step 1 — unbiasedness constraints.</strong> We need <span class="math inline">\(\mathbb{E}(b_1^*) = \beta_1\)</span> for all <span class="math inline">\(\beta_0, \beta_1\)</span>. Substitute <span class="math inline">\(\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i\)</span>:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="1" style="visibility: hidden;">
-<p><span class="math display">\[\mathbb{E}(b_1^*) = \sum_{i=1}^n c_i(\beta_0 + \beta_1 x_i) = \beta_0\sum_{i=1}^n c_i + \beta_1\sum_{i=1}^n c_i x_i\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="3" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\mathbb{E}(b_1^*) = \sum_{i=1}^n c_i(\beta_0 + \beta_1 x_i) = \beta_0\sum_{i=1}^n c_i + \beta_1\sum_{i=1}^n c_i x_i\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p>For this to equal <span class="math inline">\(\beta_1\)</span> for <em>every</em> possible <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, we match coefficients:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="2" style="visibility: hidden;">
-<p><span class="math display">\[\underbrace{\sum_{i=1}^n c_i}_{\text{coeff. of }\beta_0} = 0 \qquad \text{and} \qquad \underbrace{\sum_{i=1}^n c_i x_i}_{\text{coeff. of }\beta_1} = 1\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="4" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\underbrace{\sum_{i=1}^n c_i}_{\text{coeff. of }\beta_0} = 0 \qquad \text{and} \qquad \underbrace{\sum_{i=1}^n c_i x_i}_{\text{coeff. of }\beta_1} = 1\]</span></p>
-</div>
-</div>
-</div>
-</section>
-<section id="property-4-gauss-markov-blue-cont." class="slide level2 smaller">
-<h2>Property 4: Gauss-Markov (BLUE) (cont.)</h2>
-<div style="font-size: 0.85em;">
-<div class="fragment" data-fragment-index="1">
-<p><strong>Step 2 — decompose the weights.</strong> Write <span class="math inline">\(c_i = a_i + d_i\)</span>, where <span class="math inline">\(a_i = (x_i-\bar{x})/S_{xx}\)</span> are the OLS weights and <span class="math inline">\(d_i = c_i - a_i\)</span> is the extra piece.</p>
-<p>Both <span class="math inline">\(c_i\)</span> and <span class="math inline">\(a_i\)</span> satisfy the same two constraints:</p>
-<ul>
-<li>From Step 1: <span class="math inline">\(\sum c_i = 0\)</span> and <span class="math inline">\(\sum c_i x_i = 1\)</span> (required for <span class="math inline">\(b_1^*\)</span> to be unbiased)</li>
-<li>From Property 1: <span class="math inline">\(\sum a_i = 0\)</span> and <span class="math inline">\(\sum a_i x_i = 1\)</span> (shown when we proved linearity of <span class="math inline">\(\widehat{\beta}_1\)</span>)</li>
-</ul>
-<p>Subtracting gives <span class="math inline">\(\sum d_i = 0\)</span> and <span class="math inline">\(\sum d_i x_i = 0\)</span>.</p>
-</div>
-</div>
-</section>
-<section id="property-4-gauss-markov-blue-cont.-1" class="slide level2 smaller">
-<h2>Property 4: Gauss-Markov (BLUE) (cont.)</h2>
-<div style="font-size: 0.85em;">
-<div class="fragment" data-fragment-index="1">
-<p><strong>Step 2 (cont.) — show <span class="math inline">\(\sum a_i d_i = 0\)</span>.</strong> We need this so the cross term vanishes when we expand <span class="math inline">\(\sum(a_i + d_i)^2\)</span> in Step 3 — without it we can’t isolate <span class="math inline">\(\text{Var}(\widehat{\beta}_1)\)</span>. Using <span class="math inline">\(\sum d_i = 0\)</span> and <span class="math inline">\(\sum d_i x_i = 0\)</span>:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="1" style="visibility: hidden;">
-<p><span class="math display">\[\sum_{i=1}^n a_i d_i = \frac{\sum(x_i-\bar{x})d_i}{S_{xx}} = \frac{\sum d_i x_i - \bar{x}\sum d_i}{S_{xx}} = \frac{0 - 0}{S_{xx}} = 0\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="2" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sum_{i=1}^n a_i d_i = \frac{\sum(x_i-\bar{x})d_i}{S_{xx}} = \frac{\sum d_i x_i - \bar{x}\sum d_i}{S_{xx}} = \frac{0 - 0}{S_{xx}} = 0\]</span></p>
-</div>
-</div>
-</div>
-</section>
-<section id="property-4-gauss-markov-blue-cont.-2" class="slide level2 smaller">
-<h2>Property 4: Gauss-Markov (BLUE) (cont.)</h2>
-<div style="font-size: 0.85em;">
-<div class="fragment" data-fragment-index="1">
-<p><strong>Step 3 — compare variances.</strong> Two key rules:</p>
-<ul>
-<li><span class="math inline">\(\text{Var}(cY) = c^2\text{Var}(Y)\)</span> — a constant scales variance by its square</li>
-<li><span class="math inline">\(\text{Var}(Y_1 + Y_2) = \text{Var}(Y_1) + \text{Var}(Y_2)\)</span> when <span class="math inline">\(Y_1, Y_2\)</span> are independent (cross terms <span class="math inline">\(2c_ic_j\text{Cov}(y_i,y_j) = 0\)</span>)</li>
-</ul>
-<p>Applying both to <span class="math inline">\(b_1^* = \sum c_i y_i\)</span> with independent <span class="math inline">\(y_i\)</span>’s and <span class="math inline">\(\text{Var}(y_i) = \sigma^2\)</span>:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="1" style="visibility: hidden;">
-<p><span class="math display">\[\text{Var}(b_1^*) = \sum_{i=1}^n c_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n c_i^2\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="2" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\text{Var}(b_1^*) = \sum_{i=1}^n c_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n c_i^2\]</span></p>
-</div>
-</div>
-</div>
-</section>
-<section id="property-4-gauss-markov-blue-cont.-3" class="slide level2 smaller">
-<h2>Property 4: Gauss-Markov (BLUE) (cont.)</h2>
-<div style="font-size: 0.85em;">
-<div class="fragment" data-fragment-index="1">
-<p>Substitute <span class="math inline">\(c_i = a_i + d_i\)</span> and expand:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="1" style="visibility: hidden;">
-<p><span class="math display">\[\sigma^2\sum(a_i + d_i)^2 = \sigma^2\!\left(\sum a_i^2 + 2\underbrace{\sum a_i d_i}_{=\;0} + \sum d_i^2\right) = \sigma^2\sum a_i^2 + \sigma^2\sum d_i^2\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="3" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sigma^2\sum(a_i + d_i)^2 = \sigma^2\!\left(\sum a_i^2 + 2\underbrace{\sum a_i d_i}_{=\;0} + \sum d_i^2\right) = \sigma^2\sum a_i^2 + \sigma^2\sum d_i^2\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p>Recognizing <span class="math inline">\(\sigma^2 \sum a_i^2 = \text{Var}(\widehat{\beta}_1)\)</span>:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="2" style="visibility: hidden;">
-<p><span class="math display">\[\text{Var}(b_1^*) = \text{Var}(\widehat{\beta}_1) + \underbrace{\sigma^2 \sum d_i^2}_{\geq\;0} \;\geq\; \text{Var}(\widehat{\beta}_1) \qquad \]</span></p>
-</div>
-<div class="fragment" data-fragment-index="4" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\text{Var}(b_1^*) = \text{Var}(\widehat{\beta}_1) + \underbrace{\sigma^2 \sum d_i^2}_{\geq\;0} \;\geq\; \text{Var}(\widehat{\beta}_1) \qquad \]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="5">
-<p>The extra term <span class="math inline">\(\sigma^2\sum d_i^2 \geq 0\)</span> always — with equality only when <span class="math inline">\(d_i = 0\)</span> for all <span class="math inline">\(i\)</span>, i.e.&nbsp;when <span class="math inline">\(b_1^* = \widehat{\beta}_1\)</span>.</p>
-</div>
-</div>
-</section>
-<section id="practice-computing-ols-estimates" class="slide level2 smaller">
-<h2>Practice: Computing OLS Estimates</h2>
-<p>A researcher records daily exercise hours (<span class="math inline">\(x\)</span>) and wellness score (<span class="math inline">\(y\)</span>, out of 15) for <span class="math inline">\(n = 5\)</span> students:</p>
-<div class="columns">
-<div class="column" style="width:52%;">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(x_i\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(y_i\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(\widehat{y}_i\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(\hat{e}_i\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">8</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">9</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">11</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-</tbody>
-</table>
-</div><div class="column" style="width:48%;">
-<p><strong>Compute:</strong></p>
-<ol type="1">
-<li><p><span class="math inline">\(\widehat{\beta}_1 = S_{xy} / S_{xx}\)</span></p></li>
-<li><p><span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span></p></li>
-<li><p>Fill in <span class="math inline">\(\widehat{y}_i\)</span> using <span class="math inline">\(\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i\)</span></p></li>
-<li><p>Fill in <span class="math inline">\(\hat{e}_i\)</span> using <span class="math inline">\(\hat{e}_i = y_i - \widehat{y}_i\)</span></p></li>
-</ol>
-<div class="cell">
-<div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_664df764" minutes="7" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
-</div>
-</div></div>
-</section>
-<section id="practice-solution" class="slide level2 smaller">
-<h2>Practice: Solution</h2>
-<p><strong>Finding <span class="math inline">\(\bar{x}\)</span>, <span class="math inline">\(\bar{y}\)</span>, <span class="math inline">\(S_{xx}\)</span>, <span class="math inline">\(S_{xy}\)</span>:</strong></p>
-<p><span class="math display">\[\bar{x} = \frac{1+2+3+4+5}{5} = 3, \qquad \bar{y} = \frac{4+3+8+9+11}{5} = 7\]</span></p>
-<p><span class="math display">\[S_{xx} = (-2)^2+(-1)^2+0^2+1^2+2^2 = 10\]</span></p>
-<p><span class="math display">\[S_{xy} = (-2)(-3)+(-1)(-4)+(0)(1)+(1)(2)+(2)(4) = 20\]</span></p>
-<p><strong>Estimates:</strong></p>
-<p><span class="math display">\[\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{20}{10} = 2, \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x} = 7 - 2(3) = 1\]</span></p>
-<p>Fitted line: <span class="math inline">\(\;\widehat{y} = 1 + 2x\)</span></p>
-</section>
-<section id="practice-solution-cont." class="slide level2 smaller">
-<h2>Practice: Solution (cont.)</h2>
-<p><strong>Fitted values and residuals</strong></p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(x_i\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(y_i\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(\widehat{y}_i\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(\hat{e}_i\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">−2</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">7</td>
-<td style="text-align: center;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">9</td>
-<td style="text-align: center;">9</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">11</td>
-<td style="text-align: center;">11</td>
-<td style="text-align: center;">0</td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>
 <ul>
@@ -1005,8 +813,7 @@ Annie Adams
 <li class="fragment"><strong>Residuals</strong> <span class="math inline">\(e_i = y_i - \widehat{y}_i\)</span> measure how far each observation falls from the fitted line</li>
 <li class="fragment"><strong>Property 1 (Linearity):</strong> both estimators are linear combinations of <span class="math inline">\(y_1, \ldots, y_n\)</span></li>
 <li class="fragment"><strong>Property 2 (Unbiasedness):</strong> <span class="math inline">\(\mathbb{E}(\widehat{\beta}_0) = \beta_0\)</span> and <span class="math inline">\(\mathbb{E}(\widehat{\beta}_1) = \beta_1\)</span></li>
-<li class="fragment"><strong>Property 3 (Known variances):</strong> <span class="math inline">\(\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}\)</span>, <span class="math inline">\(\;\text{Var}(\widehat{\beta}_0) = \sigma^2(1/n + \bar{x}^2/S_{xx})\)</span></li>
-<li class="fragment"><strong>Property 4 (Gauss-Markov):</strong> OLS is BLUE — smallest variance among all linear unbiased estimators</li>
+<li class="fragment"><strong>Next lecture:</strong> Properties 3 (variance formulas) and 4 (Gauss-Markov / BLUE) continue in Lecture 3</li>
 </ul>
 </section>
 <section id="questions" class="slide level2" data-background-color="#003660">

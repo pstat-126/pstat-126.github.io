@@ -1,9 +1,9 @@
 ---
-title: "Lecture 3: Residuals and Estimating Error Variance"
+title: "Lecture 3: OLS Properties (Continued)"
 subtitle: "PSTAT 126: Linear Regression"
 author: "Annie Adams"
 institute: "UC Santa Barbara"
-date: "10/2/2026"
+date: "10/5/2026"
 format:
   revealjs:
     theme: [default, ../styles.scss]
@@ -16,209 +16,251 @@ format:
       data-background-color: "#003660"
 ---
 
-## Review: OLS Estimators
+## Review: Properties of the OLS Estimators {.smaller}
 
-From last time, the OLS estimators are:
+::: {style="font-size: 0.82em;"}
+**Notation:** $S_{xx} = \displaystyle\sum_{i=1}^n(x_i - \bar{x})^2$ — total spread of the predictor; $\sigma^2$ — true (unknown) error variance; $\mathbb{E}(\cdot)$ — expected value; $\text{Var}(\cdot)$ — variance.
+:::
 
-$$\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}}, \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$$
+1. **Linear** ✓ — $\widehat{\beta}_0$ and $\widehat{\beta}_1$ are linear functions of $y_1, \ldots, y_n$
 
-They are **unbiased**, **linear**, and **BLUE** (Gauss-Markov).
+2. **Unbiased** ✓ — $\mathbb{E}(\widehat{\beta}_0) = \beta_0$ and $\mathbb{E}(\widehat{\beta}_1) = \beta_1$
 
-**Today:** What do the residuals tell us, and how do we estimate the unknown $\sigma^2$?
+3. **Known variances** — $\text{Var}(\widehat{\beta}_1) = \dfrac{\sigma^2}{S_{xx}}$, $\quad \text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\dfrac{1}{n} + \dfrac{\bar{x}^2}{S_{xx}}\right)$
 
----
+4. **Gauss-Markov (BLUE)** — OLS has the smallest variance among all linear unbiased estimators
 
-## Learning Objectives
-
-By the end of today you will be able to:
-
-- Define residuals and explain what they measure
-- State and prove the four properties of OLS residuals
-- Define RSS and explain its role in regression
-- Compute and interpret $\widehat{\sigma}^2$ and $\widehat{\sigma}$
-- Explain why we divide by $n - 2$ rather than $n$
+**Today:** prove Properties 3 and 4.
 
 ---
 
-## Residuals {background-color="#003660"}
+## Property 3: Variance of $\widehat{\beta}_1$ {.smaller}
 
----
+**Goal:** derive the formula $\text{Var}(\widehat{\beta}_1) = \sigma^2 / S_{xx}$.
 
-## What are Residuals? {.smaller}
+::: {.fragment fragment-index=1}
+**Step 1 — apply the variance of a linear combination:** since $y_i$'s are independent with $\text{Var}(y_i)=\sigma^2$, and $a_i$ are fixed constants:
+:::
+::: {style="position: relative;"}
+::: {.fragment fragment-index=1 style="visibility: hidden;"}
+$$\text{Var}(\widehat{\beta}_1) = \text{Var}\!\left(\sum_{i=1}^n a_i y_i\right) \overset{\text{indep.}}{=} \sum_{i=1}^n a_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n a_i^2$$
+:::
+::: {.fragment fragment-index=2 style="position: absolute; top: 0; left: 0; width: 100%;"}
+$$\text{Var}(\widehat{\beta}_1) = \text{Var}\!\left(\sum_{i=1}^n a_i y_i\right) \overset{\text{indep.}}{=} \sum_{i=1}^n a_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n a_i^2$$
+:::
+:::
 
-After fitting the model, the **residual** for observation $i$ is:
-
-$$e_i = y_i - \widehat{y}_i = y_i - \widehat{\beta}_0 - \widehat{\beta}_1 x_i$$
-
-Residuals measure how far each observation falls from the fitted line:
-
-- $e_i > 0$: observed value is **above** the fitted line
-- $e_i < 0$: observed value is **below** the fitted line
-- $e_i = 0$: observation falls **exactly** on the fitted line
-
-::: {.callout-note}
-Residuals $e_i$ are the observable counterparts to the unobservable errors $\varepsilon_i$. We use them to check model assumptions and estimate $\sigma^2$.
+::: {.fragment fragment-index=3}
+Independence eliminates all cross-terms $a_ia_j\text{Cov}(y_i,y_j)$ for $i\neq j$.
 :::
 
 ---
 
-## Properties of OLS Residuals {.smaller}
+## Property 3: Variance of $\widehat{\beta}_1$ (cont.) {.smaller}
 
+::: {.fragment fragment-index=1}
+**Step 2 — evaluate $\sum a_i^2$:** substitute $a_i = (x_i-\bar{x})/S_{xx}$ and use $\sum(x_i-\bar{x})^2 = S_{xx}$:
+:::
+::: {style="position: relative;"}
+::: {.fragment fragment-index=1 style="visibility: hidden;"}
+$$\sum_{i=1}^n a_i^2 = \sum_{i=1}^n \frac{(x_i-\bar{x})^2}{S_{xx}^2} = \frac{1}{S_{xx}^2}\underbrace{\sum_{i=1}^n(x_i-\bar{x})^2}_{=\,S_{xx}} = \frac{1}{S_{xx}}$$
+:::
+::: {.fragment fragment-index=3 style="position: absolute; top: 0; left: 0; width: 100%;"}
+$$\sum_{i=1}^n a_i^2 = \sum_{i=1}^n \frac{(x_i-\bar{x})^2}{S_{xx}^2} = \frac{1}{S_{xx}^2}\underbrace{\sum_{i=1}^n(x_i-\bar{x})^2}_{=\,S_{xx}} = \frac{1}{S_{xx}}$$
+:::
+:::
 
-1. $\displaystyle\sum_{i=1}^n e_i = 0$ — residuals sum to zero
-2. $\displaystyle\sum_{i=1}^n \widehat{y}_i = \sum_{i=1}^n y_i$ — sum of fitted values equals sum of observed values
-3. $\displaystyle\sum_{i=1}^n x_i e_i = 0$ — residuals are uncorrelated with the predictor
-4. $\displaystyle\sum_{i=1}^n \widehat{y}_i e_i = 0$ — residuals are uncorrelated with the fitted values
-5. The fitted line always passes through $(\bar{x}, \bar{y})$
-
-
----
-
-## Estimating $\sigma^2$ {background-color="#003660"}
-
----
-
-## Residual Sum of Squares {.smaller}
-
-The **Residual Sum of Squares (RSS)** measures the total unexplained variation:
-
-$$\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \widehat{y}_i)^2$$
-
-- A smaller RSS means the line fits the data more closely
-- RSS = 0 only if every point lies exactly on the fitted line
-
-
----
-
-## Estimating $\sigma^2$ {.smaller}
-
-The error variance $\sigma^2 = \text{Var}(\varepsilon_i)$ is unknown. We estimate it using the residuals.
-
-A natural starting point is the average squared residual, but we must divide by $n - 2$, not $n$:
-
-$$\widehat{\sigma}^2 = \frac{\text{RSS}}{n - 2} = \frac{\sum_{i=1}^n e_i^2}{n-2}$$
-
-**Why $n - 2$?** Estimating $\widehat{\beta}_0$ and $\widehat{\beta}_1$ uses 2 degrees of freedom since two parameters are being used.
-
-It can be shown that $\mathbb{E}(\widehat{\sigma}^2) = \sigma^2$, so $\widehat{\sigma}^2$ is an **unbiased** estimator of $\sigma^2$.
+::: {.fragment fragment-index=2}
+**Step 3 — combine:**
+:::
+::: {style="position: relative;"}
+::: {.fragment fragment-index=2 style="visibility: hidden;"}
+$$\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma^2}{S_{xx}} \qquad$$
+:::
+::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
+$$\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma^2}{S_{xx}} \qquad$$
+:::
+:::
 
 ---
 
-## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ {.smaller}
+## Property 3: Variance of $\widehat{\beta}_0$ {.smaller}
+
+::: {style="font-size: 0.82em;"}
+**Goal:** derive $\text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\tfrac{1}{n}+\tfrac{\bar{x}^2}{S_{xx}}\right)$.
+
+::: {.fragment fragment-index=1}
+**Step 1 — expand the variance.** Since $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$ and $\bar{x}$ is a fixed constant:
+:::
+::: {style="position: relative;"}
+::: {.fragment fragment-index=1 style="visibility: hidden;"}
+$$\text{Var}(\widehat{\beta}_0) = \text{Var}(\bar{y} - \widehat{\beta}_1\bar{x}) = \text{Var}(\bar{y}) + \bar{x}^2\,\text{Var}(\widehat{\beta}_1) - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
+:::
+::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
+$$\text{Var}(\widehat{\beta}_0) = \text{Var}(\bar{y} - \widehat{\beta}_1\bar{x}) = \text{Var}(\bar{y}) + \bar{x}^2\,\text{Var}(\widehat{\beta}_1) - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
+:::
+:::
+
+::: {.fragment fragment-index=2}
+**Step 2 — substitute known variances.** Using $\text{Var}(\bar{y}) = \sigma^2/n$ and $\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}$:
+:::
+::: {style="position: relative;"}
+::: {.fragment fragment-index=2 style="visibility: hidden;"}
+$$= \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
+:::
+::: {.fragment fragment-index=5 style="position: absolute; top: 0; left: 0; width: 100%;"}
+$$= \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
+:::
+:::
+
+::: {.fragment fragment-index=3}
+**Step 3 — handle the covariance.** It can be shown that $\text{Cov}(\bar{y}, \widehat{\beta}_1) = 0$ (see [proof](https://en.wikipedia.org/wiki/Simple_linear_regression)), so the last term drops out:
+:::
+::: {style="position: relative;"}
+::: {.fragment fragment-index=3 style="visibility: hidden;"}
+$$\text{Var}(\widehat{\beta}_0) = \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}\right) \qquad$$
+:::
+::: {.fragment fragment-index=6 style="position: absolute; top: 0; left: 0; width: 100%;"}
+$$\text{Var}(\widehat{\beta}_0) = \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}\right) \qquad$$
+:::
+:::
+
+:::
+
+---
+
+## Property 4: Gauss-Markov (BLUE) {.smaller}
 
 ::: {style="font-size: 0.85em;"}
-**Step 1 — expand E(SSE).** Substitute $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$:
-$$\mathbb{E}(\text{SSE}) = \mathbb{E}\!\left\{\sum(y_i - \widehat{y}_i)^2\right\} = \mathbb{E}\!\left\{\sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\right\}$$
+**Goal:** OLS has the smallest variance among all linear unbiased estimators.
 
-**Step 2 — expand the square and use** $\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}$:
-$$= \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 + \widehat{\beta}_1^2 S_{xx} - 2\widehat{\beta}_1^2 S_{xx}\right\} = \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 - \widehat{\beta}_1^2 S_{xx}\right\}$$
+Let $b_1^* = \sum_{i=1}^n c_i y_i$ be any competing linear unbiased estimator of $\beta_1$.
+
+::: {.fragment fragment-index=1}
+**Step 1 — unbiasedness constraints.** We need $\mathbb{E}(b_1^*) = \beta_1$ for all $\beta_0, \beta_1$. Substitute $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:
+:::
+::: {style="position: relative;"}
+::: {.fragment fragment-index=1 style="visibility: hidden;"}
+$$\mathbb{E}(b_1^*) = \sum_{i=1}^n c_i(\beta_0 + \beta_1 x_i) = \beta_0\sum_{i=1}^n c_i + \beta_1\sum_{i=1}^n c_i x_i$$
+:::
+::: {.fragment fragment-index=3 style="position: absolute; top: 0; left: 0; width: 100%;"}
+$$\mathbb{E}(b_1^*) = \sum_{i=1}^n c_i(\beta_0 + \beta_1 x_i) = \beta_0\sum_{i=1}^n c_i + \beta_1\sum_{i=1}^n c_i x_i$$
+:::
+:::
+
+::: {.fragment fragment-index=2}
+For this to equal $\beta_1$ for *every* possible $\beta_0$ and $\beta_1$, we match coefficients:
+:::
+::: {style="position: relative;"}
+::: {.fragment fragment-index=2 style="visibility: hidden;"}
+$$\underbrace{\sum_{i=1}^n c_i}_{\text{coeff. of }\beta_0} = 0 \qquad \text{and} \qquad \underbrace{\sum_{i=1}^n c_i x_i}_{\text{coeff. of }\beta_1} = 1$$
+:::
+::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
+$$\underbrace{\sum_{i=1}^n c_i}_{\text{coeff. of }\beta_0} = 0 \qquad \text{and} \qquad \underbrace{\sum_{i=1}^n c_i x_i}_{\text{coeff. of }\beta_1} = 1$$
+:::
+:::
 :::
 
 ---
 
-## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (cont.) {.smaller}
+## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
 
 ::: {style="font-size: 0.85em;"}
-**Step 3 — evaluate each expectation piece by piece.**
+::: {.fragment fragment-index=1}
+**Step 2 — decompose the weights.** Write $c_i = a_i + d_i$, where $a_i = (x_i-\bar{x})/S_{xx}$ are the OLS weights and $d_i = c_i - a_i$ is the extra piece.
 
-Substitute $y_i - \bar{y} = \beta_1(x_i-\bar{x}) + (\varepsilon_i - \bar{\varepsilon})$ and expand:
+Both $c_i$ and $a_i$ satisfy the same two constraints:
 
-- $\mathbb{E}\!\left\{\sum(y_i-\bar{y})^2\right\} = \beta_1^2 S_{xx} + \mathbb{E}\!\left\{\sum(\varepsilon_i-\bar{\varepsilon})^2\right\} + 0 = \beta_1^2 S_{xx} + (n-1)\sigma^2$
+- From Step 1: $\sum c_i = 0$ and $\sum c_i x_i = 1$ (required for $b_1^*$ to be unbiased)
+- From Property 1: $\sum a_i = 0$ and $\sum a_i x_i = 1$ (shown when we proved linearity of $\widehat{\beta}_1$)
 
-  since $\mathbb{E}\!\left\{\sum(\varepsilon_i - \bar{\varepsilon})^2\right\} = (n-1)\sigma^2$ and the cross term has $\mathbb{E}(\varepsilon_i - \bar{\varepsilon}) = 0$
-
-- $\mathbb{E}(\widehat{\beta}_1^2) = \text{Var}(\widehat{\beta}_1) + \left[\mathbb{E}(\widehat{\beta}_1)\right]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2$, so $\;\mathbb{E}(\widehat{\beta}_1^2 S_{xx}) = \sigma^2 + \beta_1^2 S_{xx}$
-
-**Step 4 — combine:**
-$$\mathbb{E}(\text{SSE}) = \beta_1^2 S_{xx} + (n-1)\sigma^2 - \sigma^2 - \beta_1^2 S_{xx} = (n-2)\sigma^2$$
-
-Therefore:
-$$\mathbb{E}(\text{MSE}) = \mathbb{E}\!\left(\frac{\text{SSE}}{n-2}\right) = \frac{(n-2)\sigma^2}{n-2} = \sigma^2 \qquad \blacksquare$$
+Subtracting gives $\sum d_i = 0$ and $\sum d_i x_i = 0$.
+:::
 :::
 
 ---
 
-## The Residual Standard Deviation {.smaller}
+## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
 
-Taking the square root gives the **residual standard deviation**:
-
-$$\widehat{\sigma} = \sqrt{\widehat{\sigma}^2} = \sqrt{\frac{\text{RSS}}{n-2}}$$
-
-**Interpretation:** $\widehat{\sigma}$ is the typical size of a prediction error, on the scale of $y$.
-
-::: {.callout-tip}
-Compare $\widehat{\sigma}$ to the spread of $y$ to gauge model usefulness. A small $\widehat{\sigma}$ relative to the range of $y$ indicates a good fit.
+::: {style="font-size: 0.85em;"}
+::: {.fragment fragment-index=1}
+**Step 2 (cont.) — show $\sum a_i d_i = 0$.** We need this so the cross term vanishes when we expand $\sum(a_i + d_i)^2$ in Step 3 — without it we can't isolate $\text{Var}(\widehat{\beta}_1)$. Using $\sum d_i = 0$ and $\sum d_i x_i = 0$:
+:::
+::: {style="position: relative;"}
+::: {.fragment fragment-index=1 style="visibility: hidden;"}
+$$\sum_{i=1}^n a_i d_i = \frac{\sum(x_i-\bar{x})d_i}{S_{xx}} = \frac{\sum d_i x_i - \bar{x}\sum d_i}{S_{xx}} = \frac{0 - 0}{S_{xx}} = 0$$
+:::
+::: {.fragment fragment-index=2 style="position: absolute; top: 0; left: 0; width: 100%;"}
+$$\sum_{i=1}^n a_i d_i = \frac{\sum(x_i-\bar{x})d_i}{S_{xx}} = \frac{\sum d_i x_i - \bar{x}\sum d_i}{S_{xx}} = \frac{0 - 0}{S_{xx}} = 0$$
+:::
+:::
 :::
 
 ---
 
-## Standard Errors of the Estimators {.smaller}
+## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
 
-Since $\sigma^2$ is unknown, we replace it with $\widehat{\sigma}^2$ in the variance formulas:
+::: {style="font-size: 0.85em;"}
+::: {.fragment fragment-index=1}
+**Step 3 — compare variances.** Two key rules:
 
-$$\widehat{\text{Var}}(\widehat{\beta}_1) = \frac{\widehat{\sigma}^2}{S_{xx}}, \qquad \widehat{\text{Var}}(\widehat{\beta}_0) = \widehat{\sigma}^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)$$
+- $\text{Var}(cY) = c^2\text{Var}(Y)$ — a constant scales variance by its square
+- $\text{Var}(Y_1 + Y_2) = \text{Var}(Y_1) + \text{Var}(Y_2)$ when $Y_1, Y_2$ are independent (cross terms $2c_ic_j\text{Cov}(y_i,y_j) = 0$)
 
-The **standard errors** are the square roots:
-
-$$\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}}, \qquad \text{SE}(\widehat{\beta}_0) = \widehat{\sigma}\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}$$
-
-Standard errors quantify the uncertainty in each estimate — they are the basis for confidence intervals and hypothesis tests (coming soon).
-
----
-
-## Practice: Computing $\widehat{\sigma}$ {.smaller}
-
-Using the same dataset ($n = 5$, $S_{xx} = 10$, $\text{RSS} = 6$, fitted line $\widehat{y} = 1 + 2x$):
-
-**Compute:**
-
-1. $\widehat{\sigma}^2 = \text{RSS} / (n - 2)$
-
-2. $\widehat{\sigma} = \sqrt{\widehat{\sigma}^2}$
-
-3. $\text{SE}(\widehat{\beta}_1) = \widehat{\sigma} / \sqrt{S_{xx}}$
-
-```{r}
-#| echo: false
-countdown::countdown(
-  minutes = 3,
-  play_sound = TRUE,
-  color_border              = "#FEBC11",
-  color_text                = "#003660",
-  color_running_background  = "#003660",
-  color_running_text        = "#FFFFFF",
-  color_finished_background = "#FEBC11",
-  color_finished_text       = "#003660",
-  font_size = "2em",
-)
-```
+Applying both to $b_1^* = \sum c_i y_i$ with independent $y_i$'s and $\text{Var}(y_i) = \sigma^2$:
+:::
+::: {style="position: relative;"}
+::: {.fragment fragment-index=1 style="visibility: hidden;"}
+$$\text{Var}(b_1^*) = \sum_{i=1}^n c_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n c_i^2$$
+:::
+::: {.fragment fragment-index=2 style="position: absolute; top: 0; left: 0; width: 100%;"}
+$$\text{Var}(b_1^*) = \sum_{i=1}^n c_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n c_i^2$$
+:::
+:::
+:::
 
 ---
 
-## Practice: Solution {.smaller}
+## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
 
-**Step 1 — estimate $\sigma^2$:**
-$$\widehat{\sigma}^2 = \frac{\text{RSS}}{n-2} = \frac{6}{5-2} = \frac{6}{3} = 2$$
+::: {style="font-size: 0.85em;"}
+::: {.fragment fragment-index=1}
+Substitute $c_i = a_i + d_i$ and expand:
+:::
+::: {style="position: relative;"}
+::: {.fragment fragment-index=1 style="visibility: hidden;"}
+$$\sigma^2\sum(a_i + d_i)^2 = \sigma^2\!\left(\sum a_i^2 + 2\underbrace{\sum a_i d_i}_{=\;0} + \sum d_i^2\right) = \sigma^2\sum a_i^2 + \sigma^2\sum d_i^2$$
+:::
+::: {.fragment fragment-index=3 style="position: absolute; top: 0; left: 0; width: 100%;"}
+$$\sigma^2\sum(a_i + d_i)^2 = \sigma^2\!\left(\sum a_i^2 + 2\underbrace{\sum a_i d_i}_{=\;0} + \sum d_i^2\right) = \sigma^2\sum a_i^2 + \sigma^2\sum d_i^2$$
+:::
+:::
 
-**Step 2 — residual standard deviation:**
-$$\widehat{\sigma} = \sqrt{2} \approx 1.41$$
+::: {.fragment fragment-index=2}
+Recognizing $\sigma^2 \sum a_i^2 = \text{Var}(\widehat{\beta}_1)$:
+:::
+::: {style="position: relative;"}
+::: {.fragment fragment-index=2 style="visibility: hidden;"}
+$$\text{Var}(b_1^*) = \text{Var}(\widehat{\beta}_1) + \underbrace{\sigma^2 \sum d_i^2}_{\geq\;0} \;\geq\; \text{Var}(\widehat{\beta}_1) \qquad $$
+:::
+::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
+$$\text{Var}(b_1^*) = \text{Var}(\widehat{\beta}_1) + \underbrace{\sigma^2 \sum d_i^2}_{\geq\;0} \;\geq\; \text{Var}(\widehat{\beta}_1) \qquad $$
+:::
+:::
 
-**Step 3 — standard error of $\widehat{\beta}_1$:**
-$$\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}} = \frac{\sqrt{2}}{\sqrt{10}} = \sqrt{\frac{2}{10}} = \sqrt{0.2} \approx 0.45$$
-
-**Interpretation:** the slope estimate $\widehat{\beta}_1 = 2$ has a typical uncertainty of about $\pm 0.45$ wellness points per hour of exercise.
+::: {.fragment fragment-index=5}
+The extra term $\sigma^2\sum d_i^2 \geq 0$ always — with equality only when $d_i = 0$ for all $i$, i.e. when $b_1^* = \widehat{\beta}_1$.
+:::
+:::
 
 ---
 
 ## Summary {.smaller}
 
 ::: {.incremental}
-- **Residuals** $e_i = y_i - \widehat{y}_i$ are observed proxies for the unobservable errors $\varepsilon_i$
-- **Five properties** of OLS residuals follow from the normal equations: $\sum e_i = 0$, $\sum \widehat{y}_i = \sum y_i$, $\sum x_i e_i = 0$, $\sum \widehat{y}_i e_i = 0$, and the line passes through $(\bar{x}, \bar{y})$
-- **RSS** $= \sum e_i^2$ measures total unexplained variation — OLS minimizes it by construction
-- **$\widehat{\sigma}^2 = \text{RSS}/(n-2)$** is an unbiased estimate of $\sigma^2$; dividing by $n-2$ corrects for two constraints placed on the residuals
-- **$\widehat{\sigma}$** is the residual standard deviation — the typical prediction error on the scale of $y$
-- **Standard errors** replace $\sigma$ with $\widehat{\sigma}$ in the variance formulas — the foundation for inference
+- **Property 3 (Known variances):** $\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}$, $\;\text{Var}(\widehat{\beta}_0) = \sigma^2(1/n + \bar{x}^2/S_{xx})$
+- **Property 4 (Gauss-Markov):** OLS is BLUE — smallest variance among all linear unbiased estimators
+- Together, Properties 1–4 say OLS estimators are linear, correct on average, have known precision, and are optimal in their class
 :::
 
 ---

@@ -445,6 +445,89 @@ where $r$ is the sample correlation between $x$ and $y$, and $s_x$, $s_y$ are sa
 
 ---
 
+## Practice: Computing OLS Estimates {.smaller}
+
+A researcher records daily exercise hours ($x$) and wellness score ($y$, out of 15) for $n = 5$ students:
+
+:::: {.columns}
+
+::: {.column width="52%"}
+
+| $i$ | $x_i$ | $y_i$ | $\widehat{y}_i$ | $\hat{e}_i$ |
+|:---:|:------:|:------:|:---------------:|:-----------:|
+| 1 | 1 | 4 | | |
+| 2 | 2 | 3 | | |
+| 3 | 3 | 8 | | |
+| 4 | 4 | 9 | | |
+| 5 | 5 | 11 | | |
+
+:::
+
+::: {.column width="48%"}
+
+**Compute:**
+
+1. $\widehat{\beta}_1 = S_{xy} / S_{xx}$
+
+2. $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$
+
+3. Fill in $\widehat{y}_i$ using $\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i$
+
+4. Fill in $\hat{e}_i$ using $\hat{e}_i = y_i - \widehat{y}_i$
+
+```{r}
+#| echo: false
+countdown::countdown(
+  minutes = 7,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em",
+)
+```
+
+:::
+
+::::
+
+---
+
+## Practice: Solution {.smaller}
+
+**Finding $\bar{x}$, $\bar{y}$, $S_{xx}$, $S_{xy}$:**
+
+$$\bar{x} = \frac{1+2+3+4+5}{5} = 3, \qquad \bar{y} = \frac{4+3+8+9+11}{5} = 7$$
+
+$$S_{xx} = (-2)^2+(-1)^2+0^2+1^2+2^2 = 10$$
+
+$$S_{xy} = (-2)(-3)+(-1)(-4)+(0)(1)+(1)(2)+(2)(4) = 20$$
+
+**Estimates:**
+
+$$\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{20}{10} = 2, \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x} = 7 - 2(3) = 1$$
+
+Fitted line: $\;\widehat{y} = 1 + 2x$
+
+---
+
+## Practice: Solution (cont.) {.smaller}
+
+**Fitted values and residuals**
+
+| $i$ | $x_i$ | $y_i$ | $\widehat{y}_i$ | $\hat{e}_i$ |
+|:---:|:------:|:------:|:---------------:|:-----------:|
+| 1 | 1 | 4 | 3 | 1 |
+| 2 | 2 | 3 | 5 | −2 |
+| 3 | 3 | 8 | 7 | 1 |
+| 4 | 4 | 9 | 9 | 0 |
+| 5 | 5 | 11 | 11 | 0 |
+
+---
+
 ## Properties of the OLS Estimators {.smaller}
 
 ::: {style="font-size: 0.82em;"}
@@ -650,310 +733,6 @@ $$\mathbb{E}(\widehat{\beta}_0) = (\beta_0 + \beta_1\bar{x}) - \bar{x}\,\beta_1 
 
 ---
 
-## Property 3: Variance of $\widehat{\beta}_1$ {.smaller}
-
-**Goal:** derive the formula $\text{Var}(\widehat{\beta}_1) = \sigma^2 / S_{xx}$.
-
-::: {.fragment fragment-index=1}
-**Step 1 — apply the variance of a linear combination:** since $y_i$'s are independent with $\text{Var}(y_i)=\sigma^2$, and $a_i$ are fixed constants:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\text{Var}(\widehat{\beta}_1) = \text{Var}\!\left(\sum_{i=1}^n a_i y_i\right) \overset{\text{indep.}}{=} \sum_{i=1}^n a_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n a_i^2$$
-:::
-::: {.fragment fragment-index=2 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\text{Var}(\widehat{\beta}_1) = \text{Var}\!\left(\sum_{i=1}^n a_i y_i\right) \overset{\text{indep.}}{=} \sum_{i=1}^n a_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n a_i^2$$
-:::
-:::
-
-::: {.fragment fragment-index=3}
-Independence eliminates all cross-terms $a_ia_j\text{Cov}(y_i,y_j)$ for $i\neq j$.
-:::
-
----
-
-## Property 3: Variance of $\widehat{\beta}_1$ (cont.) {.smaller}
-
-::: {.fragment fragment-index=1}
-**Step 2 — evaluate $\sum a_i^2$:** substitute $a_i = (x_i-\bar{x})/S_{xx}$ and use $\sum(x_i-\bar{x})^2 = S_{xx}$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\sum_{i=1}^n a_i^2 = \sum_{i=1}^n \frac{(x_i-\bar{x})^2}{S_{xx}^2} = \frac{1}{S_{xx}^2}\underbrace{\sum_{i=1}^n(x_i-\bar{x})^2}_{=\,S_{xx}} = \frac{1}{S_{xx}}$$
-:::
-::: {.fragment fragment-index=3 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^n a_i^2 = \sum_{i=1}^n \frac{(x_i-\bar{x})^2}{S_{xx}^2} = \frac{1}{S_{xx}^2}\underbrace{\sum_{i=1}^n(x_i-\bar{x})^2}_{=\,S_{xx}} = \frac{1}{S_{xx}}$$
-:::
-:::
-
-::: {.fragment fragment-index=2}
-**Step 3 — combine:**
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
-$$\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma^2}{S_{xx}} \qquad$$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma^2}{S_{xx}} \qquad$$
-:::
-:::
-
----
-
-## Property 3: Variance of $\widehat{\beta}_0$ {.smaller}
-
-::: {style="font-size: 0.82em;"}
-**Goal:** derive $\text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\tfrac{1}{n}+\tfrac{\bar{x}^2}{S_{xx}}\right)$.
-
-::: {.fragment fragment-index=1}
-**Step 1 — expand the variance.** Since $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$ and $\bar{x}$ is a fixed constant:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\text{Var}(\widehat{\beta}_0) = \text{Var}(\bar{y} - \widehat{\beta}_1\bar{x}) = \text{Var}(\bar{y}) + \bar{x}^2\,\text{Var}(\widehat{\beta}_1) - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\text{Var}(\widehat{\beta}_0) = \text{Var}(\bar{y} - \widehat{\beta}_1\bar{x}) = \text{Var}(\bar{y}) + \bar{x}^2\,\text{Var}(\widehat{\beta}_1) - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
-:::
-:::
-
-::: {.fragment fragment-index=2}
-**Step 2 — substitute known variances.** Using $\text{Var}(\bar{y}) = \sigma^2/n$ and $\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
-$$= \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
-:::
-::: {.fragment fragment-index=5 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$= \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
-:::
-:::
-
-::: {.fragment fragment-index=3}
-**Step 3 — handle the covariance.** It can be shown that $\text{Cov}(\bar{y}, \widehat{\beta}_1) = 0$ (see [proof](https://en.wikipedia.org/wiki/Simple_linear_regression)), so the last term drops out:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=3 style="visibility: hidden;"}
-$$\text{Var}(\widehat{\beta}_0) = \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}\right) \qquad$$
-:::
-::: {.fragment fragment-index=6 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\text{Var}(\widehat{\beta}_0) = \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}\right) \qquad$$
-:::
-:::
-
-:::
-
----
-
-## Property 4: Gauss-Markov (BLUE) {.smaller}
-
-::: {style="font-size: 0.85em;"}
-**Goal:** OLS has the smallest variance among all linear unbiased estimators.
-
-Let $b_1^* = \sum_{i=1}^n c_i y_i$ be any competing linear unbiased estimator of $\beta_1$.
-
-::: {.fragment fragment-index=1}
-**Step 1 — unbiasedness constraints.** We need $\mathbb{E}(b_1^*) = \beta_1$ for all $\beta_0, \beta_1$. Substitute $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\mathbb{E}(b_1^*) = \sum_{i=1}^n c_i(\beta_0 + \beta_1 x_i) = \beta_0\sum_{i=1}^n c_i + \beta_1\sum_{i=1}^n c_i x_i$$
-:::
-::: {.fragment fragment-index=3 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\mathbb{E}(b_1^*) = \sum_{i=1}^n c_i(\beta_0 + \beta_1 x_i) = \beta_0\sum_{i=1}^n c_i + \beta_1\sum_{i=1}^n c_i x_i$$
-:::
-:::
-
-::: {.fragment fragment-index=2}
-For this to equal $\beta_1$ for *every* possible $\beta_0$ and $\beta_1$, we match coefficients:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
-$$\underbrace{\sum_{i=1}^n c_i}_{\text{coeff. of }\beta_0} = 0 \qquad \text{and} \qquad \underbrace{\sum_{i=1}^n c_i x_i}_{\text{coeff. of }\beta_1} = 1$$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\underbrace{\sum_{i=1}^n c_i}_{\text{coeff. of }\beta_0} = 0 \qquad \text{and} \qquad \underbrace{\sum_{i=1}^n c_i x_i}_{\text{coeff. of }\beta_1} = 1$$
-:::
-:::
-:::
-
----
-
-## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
-
-::: {style="font-size: 0.85em;"}
-::: {.fragment fragment-index=1}
-**Step 2 — decompose the weights.** Write $c_i = a_i + d_i$, where $a_i = (x_i-\bar{x})/S_{xx}$ are the OLS weights and $d_i = c_i - a_i$ is the extra piece.
-
-Both $c_i$ and $a_i$ satisfy the same two constraints:
-
-- From Step 1: $\sum c_i = 0$ and $\sum c_i x_i = 1$ (required for $b_1^*$ to be unbiased)
-- From Property 1: $\sum a_i = 0$ and $\sum a_i x_i = 1$ (shown when we proved linearity of $\widehat{\beta}_1$)
-
-Subtracting gives $\sum d_i = 0$ and $\sum d_i x_i = 0$.
-:::
-:::
-
----
-
-## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
-
-::: {style="font-size: 0.85em;"}
-::: {.fragment fragment-index=1}
-**Step 2 (cont.) — show $\sum a_i d_i = 0$.** We need this so the cross term vanishes when we expand $\sum(a_i + d_i)^2$ in Step 3 — without it we can't isolate $\text{Var}(\widehat{\beta}_1)$. Using $\sum d_i = 0$ and $\sum d_i x_i = 0$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\sum_{i=1}^n a_i d_i = \frac{\sum(x_i-\bar{x})d_i}{S_{xx}} = \frac{\sum d_i x_i - \bar{x}\sum d_i}{S_{xx}} = \frac{0 - 0}{S_{xx}} = 0$$
-:::
-::: {.fragment fragment-index=2 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^n a_i d_i = \frac{\sum(x_i-\bar{x})d_i}{S_{xx}} = \frac{\sum d_i x_i - \bar{x}\sum d_i}{S_{xx}} = \frac{0 - 0}{S_{xx}} = 0$$
-:::
-:::
-:::
-
----
-
-## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
-
-::: {style="font-size: 0.85em;"}
-::: {.fragment fragment-index=1}
-**Step 3 — compare variances.** Two key rules:
-
-- $\text{Var}(cY) = c^2\text{Var}(Y)$ — a constant scales variance by its square
-- $\text{Var}(Y_1 + Y_2) = \text{Var}(Y_1) + \text{Var}(Y_2)$ when $Y_1, Y_2$ are independent (cross terms $2c_ic_j\text{Cov}(y_i,y_j) = 0$)
-
-Applying both to $b_1^* = \sum c_i y_i$ with independent $y_i$'s and $\text{Var}(y_i) = \sigma^2$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\text{Var}(b_1^*) = \sum_{i=1}^n c_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n c_i^2$$
-:::
-::: {.fragment fragment-index=2 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\text{Var}(b_1^*) = \sum_{i=1}^n c_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n c_i^2$$
-:::
-:::
-:::
-
----
-
-## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
-
-::: {style="font-size: 0.85em;"}
-::: {.fragment fragment-index=1}
-Substitute $c_i = a_i + d_i$ and expand:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\sigma^2\sum(a_i + d_i)^2 = \sigma^2\!\left(\sum a_i^2 + 2\underbrace{\sum a_i d_i}_{=\;0} + \sum d_i^2\right) = \sigma^2\sum a_i^2 + \sigma^2\sum d_i^2$$
-:::
-::: {.fragment fragment-index=3 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sigma^2\sum(a_i + d_i)^2 = \sigma^2\!\left(\sum a_i^2 + 2\underbrace{\sum a_i d_i}_{=\;0} + \sum d_i^2\right) = \sigma^2\sum a_i^2 + \sigma^2\sum d_i^2$$
-:::
-:::
-
-::: {.fragment fragment-index=2}
-Recognizing $\sigma^2 \sum a_i^2 = \text{Var}(\widehat{\beta}_1)$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
-$$\text{Var}(b_1^*) = \text{Var}(\widehat{\beta}_1) + \underbrace{\sigma^2 \sum d_i^2}_{\geq\;0} \;\geq\; \text{Var}(\widehat{\beta}_1) \qquad $$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\text{Var}(b_1^*) = \text{Var}(\widehat{\beta}_1) + \underbrace{\sigma^2 \sum d_i^2}_{\geq\;0} \;\geq\; \text{Var}(\widehat{\beta}_1) \qquad $$
-:::
-:::
-
-::: {.fragment fragment-index=5}
-The extra term $\sigma^2\sum d_i^2 \geq 0$ always — with equality only when $d_i = 0$ for all $i$, i.e. when $b_1^* = \widehat{\beta}_1$.
-:::
-:::
-
----
-
-## Practice: Computing OLS Estimates {.smaller}
-
-A researcher records daily exercise hours ($x$) and wellness score ($y$, out of 15) for $n = 5$ students:
-
-:::: {.columns}
-
-::: {.column width="52%"}
-
-| $i$ | $x_i$ | $y_i$ | $\widehat{y}_i$ | $\hat{e}_i$ |
-|:---:|:------:|:------:|:---------------:|:-----------:|
-| 1 | 1 | 4 | | |
-| 2 | 2 | 3 | | |
-| 3 | 3 | 8 | | |
-| 4 | 4 | 9 | | |
-| 5 | 5 | 11 | | |
-
-:::
-
-::: {.column width="48%"}
-
-**Compute:**
-
-1. $\widehat{\beta}_1 = S_{xy} / S_{xx}$
-
-2. $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$
-
-3. Fill in $\widehat{y}_i$ using $\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i$
-
-4. Fill in $\hat{e}_i$ using $\hat{e}_i = y_i - \widehat{y}_i$
-
-```{r}
-#| echo: false
-countdown::countdown(
-  minutes = 7,
-  play_sound = TRUE,
-  color_border              = "#FEBC11",
-  color_text                = "#003660",
-  color_running_background  = "#003660",
-  color_running_text        = "#FFFFFF",
-  color_finished_background = "#FEBC11",
-  color_finished_text       = "#003660",
-  font_size = "2em",
-)
-```
-
-:::
-
-::::
-
----
-
-## Practice: Solution {.smaller}
-
-**Finding $\bar{x}$, $\bar{y}$, $S_{xx}$, $S_{xy}$:**
-
-$$\bar{x} = \frac{1+2+3+4+5}{5} = 3, \qquad \bar{y} = \frac{4+3+8+9+11}{5} = 7$$
-
-$$S_{xx} = (-2)^2+(-1)^2+0^2+1^2+2^2 = 10$$
-
-$$S_{xy} = (-2)(-3)+(-1)(-4)+(0)(1)+(1)(2)+(2)(4) = 20$$
-
-**Estimates:**
-
-$$\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{20}{10} = 2, \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x} = 7 - 2(3) = 1$$
-
-Fitted line: $\;\widehat{y} = 1 + 2x$
-
----
-
-## Practice: Solution (cont.) {.smaller}
-
-**Fitted values and residuals**
-
-| $i$ | $x_i$ | $y_i$ | $\widehat{y}_i$ | $\hat{e}_i$ |
-|:---:|:------:|:------:|:---------------:|:-----------:|
-| 1 | 1 | 4 | 3 | 1 |
-| 2 | 2 | 3 | 5 | −2 |
-| 3 | 3 | 8 | 7 | 1 |
-| 4 | 4 | 9 | 9 | 0 |
-| 5 | 5 | 11 | 11 | 0 |
-
----
-
 ## Summary {.smaller}
 
 ::: {.incremental}
@@ -962,8 +741,7 @@ Fitted line: $\;\widehat{y} = 1 + 2x$
 - **Residuals** $e_i = y_i - \widehat{y}_i$ measure how far each observation falls from the fitted line
 - **Property 1 (Linearity):** both estimators are linear combinations of $y_1, \ldots, y_n$
 - **Property 2 (Unbiasedness):** $\mathbb{E}(\widehat{\beta}_0) = \beta_0$ and $\mathbb{E}(\widehat{\beta}_1) = \beta_1$
-- **Property 3 (Known variances):** $\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}$, $\;\text{Var}(\widehat{\beta}_0) = \sigma^2(1/n + \bar{x}^2/S_{xx})$
-- **Property 4 (Gauss-Markov):** OLS is BLUE — smallest variance among all linear unbiased estimators
+- **Next lecture:** Properties 3 (variance formulas) and 4 (Gauss-Markov / BLUE) continue in Lecture 3
 :::
 
 ---
