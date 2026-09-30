@@ -30,16 +30,19 @@ $$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \quad \varepsilon_i \overset{\tex
 
 ---
 
-## Learning Objectives
+## Learning Objectives 
+
+::: {style="font-size: 31px"}
 
 By the end of today you will be able to:
 
-- Explain the least squares criterion and apply it conceptually
-- State the OLS formulas for the slope and intercept
-- Compute and interpret fitted values and residuals
-- Interpret the residual standard deviation $\widehat{\sigma}$ and $R^2$
-- Explain what a standard error measures
-- Use `lm()` in R to fit a simple linear regression and read its output
+- Explain the least squares criterion and define the residual sum of squares
+- Derive the OLS estimators $\widehat{\beta}_0$ and $\widehat{\beta}_1$ by solving the normal equations
+- Compute fitted values and residuals from the estimated line
+- Connect $\widehat{\beta}_1$ to the sample correlation between $x$ and $y$
+- Show that the OLS estimators are linear combinations of $y_1, \ldots, y_n$
+- Show that the OLS estimators are unbiased: $\mathbb{E}(\widehat{\beta}_0) = \beta_0$ and $\mathbb{E}(\widehat{\beta}_1) = \beta_1$
+:::
 
 ---
 
@@ -51,7 +54,7 @@ By the end of today you will be able to:
 
 **Power rule:** $\frac{d}{dx} x^n = nx^{n-1}$
 
-**Chain rule:** $\frac{d}{dx} f(g(x)) = f'(g(x)) \cdot g'(x)$ 
+**Chain rule:** $\frac{d}{dx} f(g(x)) = f'(g(x)) \cdot g'(x)$
 
 **Partial derivatives:** treat all other variables as constants and differentiate with respect to one variable at a time.
 
@@ -102,7 +105,7 @@ countdown::countdown(
 
 ## Mini Refresher: Summation Rules {.smaller}
 
-**Derivatives through sums:** 
+**Derivatives through sums:**
 $$\frac{\partial}{\partial \beta_0}\sum_{i=1}^n f_i(\beta_0) = \sum_{i=1}^n \frac{\partial}{\partial \beta_0} f_i(\beta_0)$$
 
 **Constants in sums:**
@@ -150,8 +153,6 @@ countdown::countdown(
 :::
 :::
 :::
-
----
 
 ---
 
@@ -207,41 +208,14 @@ Recall: $\text{RSS}(\beta_0, \beta_1) = \displaystyle\sum_{i=1}^{n}(y_i - \beta_
 *Set $\partial\text{RSS}/\partial\beta_0 = 0$:*
 $$\frac{\partial}{\partial \beta_0}\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2 = 0$$
 
-::: {.fragment fragment-index=1}
 *Pass derivative through sum (summation rule):*
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\sum_{i=1}^{n} \frac{\partial}{\partial \beta_0}(y_i - \beta_0 - \beta_1 x_i)^2 = 0$$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^{n} \frac{\partial}{\partial \beta_0}(y_i - \beta_0 - \beta_1 x_i)^2 = 0$$
-:::
-:::
+<div style="height: 8em;"></div>
 
-::: {.fragment fragment-index=2}
 *Chain rule:*
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
-$$\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-1) = 0$$
-:::
-::: {.fragment fragment-index=5 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-1) = 0$$
-:::
-:::
+<div style="height: 8em;"></div>
 
-::: {.fragment fragment-index=3}
 *Factor out $-2$, then divide both sides by $-2$:*
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=3 style="visibility: hidden;"}
-$$\sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0$$
-:::
-::: {.fragment fragment-index=6 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0$$
-:::
-:::
+<div style="height: 8em;"></div>
 
 :::
 
@@ -250,72 +224,78 @@ $$\sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0$$
 *Set $\partial\text{RSS}/\partial\beta_1 = 0$:*
 $$\frac{\partial}{\partial \beta_1}\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2 = 0$$
 
-::: {.fragment fragment-index=7}
 *Pass derivative through sum (summation rule):*
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=7 style="visibility: hidden;"}
-$$\sum_{i=1}^{n} \frac{\partial}{\partial \beta_1}(y_i - \beta_0 - \beta_1 x_i)^2 = 0$$
-:::
-::: {.fragment fragment-index=10 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^{n} \frac{\partial}{\partial \beta_1}(y_i - \beta_0 - \beta_1 x_i)^2 = 0$$
-:::
-:::
+<div style="height: 8em;"></div>
 
-::: {.fragment fragment-index=8}
 *Chain rule:*
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=8 style="visibility: hidden;"}
-$$\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-x_i) = 0$$
-:::
-::: {.fragment fragment-index=11 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-x_i) = 0$$
-:::
-:::
+<div style="height: 8em;"></div>
 
-::: {.fragment fragment-index=9}
 *Factor out $-2$, then divide both sides by $-2$:*
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=9 style="visibility: hidden;"}
-$$\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0$$
-:::
-::: {.fragment fragment-index=12 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0$$
-:::
-:::
+<div style="height: 8em;"></div>
 
 :::
 
 ::::
 
+---
+
+## The Normal Equations: Derivation (Solution) {.smaller}
+
+:::: {.columns style="font-size: 0.65em;"}
+
+::: {.column width="50%"}
+
+*Set $\partial\text{RSS}/\partial\beta_0 = 0$:*
+$$\frac{\partial}{\partial \beta_0}\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2 = 0$$
+
+*Pass derivative through sum (summation rule):*
+$$\sum_{i=1}^{n} \frac{\partial}{\partial \beta_0}(y_i - \beta_0 - \beta_1 x_i)^2 = 0$$
+
+*Chain rule:*
+$$\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-1) = 0$$
+
+*Factor out $-2$, then divide both sides by $-2$:*
+$$\sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0$$
+
+:::
+
+::: {.column width="50%"}
+
+*Set $\partial\text{RSS}/\partial\beta_1 = 0$:*
+$$\frac{\partial}{\partial \beta_1}\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2 = 0$$
+
+*Pass derivative through sum (summation rule):*
+$$\sum_{i=1}^{n} \frac{\partial}{\partial \beta_1}(y_i - \beta_0 - \beta_1 x_i)^2 = 0$$
+
+*Chain rule:*
+$$\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-x_i) = 0$$
+
+*Factor out $-2$, then divide both sides by $-2$:*
+$$\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0$$
+
+:::
+
+::::
 
 ---
 
-
 ## Solving the Normal Equations: Step 1
-
 
 **Solve equation 1 for $\widehat{\beta}_0$:**
 
-::: {style="position: relative;"}
-::: {style="visibility: hidden;"}
-$$\sum_{i=1}^n(y_i - \beta_0 - \beta_1 x_i) = 0 \;\Rightarrow\; n\bar{y} - n\beta_0 - n\beta_1\bar{x} = 0$$
-:::
-::: {.fragment fragment-index=1 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^n(y_i - \beta_0 - \beta_1 x_i) = 0 \;\Rightarrow\; n\bar{y} - n\beta_0 - n\beta_1\bar{x} = 0$$
-:::
-:::
+<div style="height: 6em;"></div>
 
-::: {style="position: relative;"}
-::: {style="visibility: hidden;"}
+<div style="height: 6em;"></div>
+
+---
+
+## Solving the Normal Equations: Step 1 (Solution)
+
+**Solve equation 1 for $\widehat{\beta}_0$:**
+
+$$\sum_{i=1}^n(y_i - \beta_0 - \beta_1 x_i) = 0 \;\Rightarrow\; n\bar{y} - n\beta_0 - n\beta_1\bar{x} = 0$$
+
 $$\boxed{\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}}$$
-:::
-::: {.fragment fragment-index=2 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\boxed{\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}}$$
-:::
-:::
 
 ---
 
@@ -324,41 +304,31 @@ $$\boxed{\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}}$$
 ::: {style="font-size: 0.82em;"}
 **Substitute into equation 2 and solve for $\widehat{\beta}_1$:**
 
-::: {.fragment fragment-index=1}
 Start with equation 2 and distribute the sum:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\sum_{i=1}^n x_i y_i - \beta_0\sum_{i=1}^n x_i - \beta_1\sum_{i=1}^n x_i^2 = 0$$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^n x_i y_i - \beta_0\sum_{i=1}^n x_i - \beta_1\sum_{i=1}^n x_i^2 = 0$$
-:::
-:::
+<div style="height: 6em;"></div>
 
-::: {.fragment fragment-index=2}
 Substitute $\beta_0 = \bar{y} - \beta_1\bar{x}$ and use $\sum x_i = n\bar{x}$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
-$$\sum_{i=1}^n x_i y_i - (\bar{y} - \beta_1\bar{x})\,n\bar{x} - \beta_1\sum_{i=1}^n x_i^2 = 0$$
-:::
-::: {.fragment fragment-index=5 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^n x_i y_i - (\bar{y} - \beta_1\bar{x})\,n\bar{x} - \beta_1\sum_{i=1}^n x_i^2 = 0$$
-:::
+<div style="height: 6em;"></div>
+
+Expand the multiplication:
+<div style="height: 6em;"></div>
 :::
 
-::: {.fragment fragment-index=3}
+---
+
+## Solving the Normal Equations: Step 2 (Solution) {.smaller}
+
+::: {style="font-size: 0.82em;"}
+**Substitute into equation 2 and solve for $\widehat{\beta}_1$:**
+
+Start with equation 2 and distribute the sum:
+$$\sum_{i=1}^n x_i y_i - \beta_0\sum_{i=1}^n x_i - \beta_1\sum_{i=1}^n x_i^2 = 0$$
+
+Substitute $\beta_0 = \bar{y} - \beta_1\bar{x}$ and use $\sum x_i = n\bar{x}$:
+$$\sum_{i=1}^n x_i y_i - (\bar{y} - \beta_1\bar{x})\,n\bar{x} - \beta_1\sum_{i=1}^n x_i^2 = 0$$
+
 Expand the multiplication:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=3 style="visibility: hidden;"}
 $$\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} + n\bar{x}^2\beta_1 - \beta_1\sum_{i=1}^n x_i^2 = 0$$
-:::
-::: {.fragment fragment-index=6 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} + n\bar{x}^2\beta_1 - \beta_1\sum_{i=1}^n x_i^2 = 0$$
-:::
-:::
 :::
 
 ---
@@ -366,29 +336,23 @@ $$\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} + n\bar{x}^2\beta_1 - \beta_1\sum_{i=1}
 ## Solving the Normal Equations: Step 2 (cont.) {.smaller}
 
 ::: {style="font-size: 0.82em;"}
-::: {.fragment fragment-index=1}
 Collect $\beta_1$ terms on the right:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} = \beta_1\!\left(\sum_{i=1}^n x_i^2 - n\bar{x}^2\right)$$
-:::
-::: {.fragment fragment-index=3 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} = \beta_1\!\left(\sum_{i=1}^n x_i^2 - n\bar{x}^2\right)$$
-:::
+<div style="height: 6em;"></div>
+
+Divide both sides by $\left(\sum x_i^2 - n\bar{x}^2\right)$:
+<div style="height: 8em;"></div>
 :::
 
-::: {.fragment fragment-index=2}
+---
+
+## Solving the Normal Equations: Step 2 (cont.) (Solution) {.smaller}
+
+::: {style="font-size: 0.82em;"}
+Collect $\beta_1$ terms on the right:
+$$\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} = \beta_1\!\left(\sum_{i=1}^n x_i^2 - n\bar{x}^2\right)$$
+
 Divide both sides by $\left(\sum x_i^2 - n\bar{x}^2\right)$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
 $$\boxed{\widehat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}}{\displaystyle\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \frac{S_{xy}}{S_{xx}}}$$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\boxed{\widehat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}}{\displaystyle\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \frac{S_{xy}}{S_{xx}}}$$
-:::
-:::
 :::
 
 ---
@@ -553,41 +517,32 @@ $$\text{Var}(\widehat{\beta}_1) = \frac{\sigma^2}{S_{xx}}, \qquad \text{Var}(\wi
 $\widehat{\beta}_1$ is a **linear combination** $\sum a_i y_i$ where weights $a_i$ depend only on $x$. Starting from:
 $\widehat{\beta}_1 = \dfrac{\sum(x_i - \bar{x})(y_i - \bar{y})}{S_{xx}}$
 
-::: {.fragment fragment-index=1}
 **Step 1 — split the numerator:**
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$= \frac{\sum(x_i-\bar{x})y_i \;-\; \sum(x_i-\bar{x})\bar{y}}{S_{xx}}$$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$= \frac{\sum(x_i-\bar{x})y_i \;-\; \sum(x_i-\bar{x})\bar{y}}{S_{xx}}$$
-:::
-:::
+<div style="height: 8em;"></div>
 
-::: {.fragment fragment-index=2}
 **Step 2 — the second term is zero.** Since $\sum(x_i-\bar{x})=0$ (deviations from mean sum to zero) and $\bar{y}$ is a constant:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
-$$\sum(x_i-\bar{x})\bar{y} = \bar{y}\underbrace{\sum(x_i-\bar{x})}_{=\;0} = 0$$
-:::
-::: {.fragment fragment-index=5 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum(x_i-\bar{x})\bar{y} = \bar{y}\underbrace{\sum(x_i-\bar{x})}_{=\;0} = 0$$
-:::
+<div style="height: 8em;"></div>
+
+**Step 3 — define weights** $a_i = (x_i - \bar{x})/S_{xx}$, which depend only on $x_i$:
+<div style="height: 8em;"></div>
 :::
 
-::: {.fragment fragment-index=3}
+---
+
+## Property 1: Linearity of $\widehat{\beta}_1$ (Solution) {.smaller}
+
+::: {style="font-size: 0.72em;"}
+$\widehat{\beta}_1$ is a **linear combination** $\sum a_i y_i$ where weights $a_i$ depend only on $x$. Starting from:
+$\widehat{\beta}_1 = \dfrac{\sum(x_i - \bar{x})(y_i - \bar{y})}{S_{xx}}$
+
+**Step 1 — split the numerator:**
+$$= \frac{\sum(x_i-\bar{x})y_i \;-\; \sum(x_i-\bar{x})\bar{y}}{S_{xx}}$$
+
+**Step 2 — the second term is zero.** Since $\sum(x_i-\bar{x})=0$ (deviations from mean sum to zero) and $\bar{y}$ is a constant:
+$$\sum(x_i-\bar{x})\bar{y} = \bar{y}\underbrace{\sum(x_i-\bar{x})}_{=\;0} = 0$$
+
 **Step 3 — define weights** $a_i = (x_i - \bar{x})/S_{xx}$, which depend only on $x_i$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=3 style="visibility: hidden;"}
 $$\widehat{\beta}_1 = \frac{\sum(x_i-\bar{x})\,y_i}{S_{xx}} = \sum_{i=1}^n \underbrace{\frac{x_i - \bar{x}}{S_{xx}}}_{a_i} y_i = \sum_{i=1}^n a_i\,y_i \quad \checkmark$$
-:::
-::: {.fragment fragment-index=6 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\widehat{\beta}_1 = \frac{\sum(x_i-\bar{x})\,y_i}{S_{xx}} = \sum_{i=1}^n \underbrace{\frac{x_i - \bar{x}}{S_{xx}}}_{a_i} y_i = \sum_{i=1}^n a_i\,y_i \quad \checkmark$$
-:::
-:::
 :::
 
 ---
@@ -597,35 +552,33 @@ $$\widehat{\beta}_1 = \frac{\sum(x_i-\bar{x})\,y_i}{S_{xx}} = \sum_{i=1}^n \unde
 ::: {style="font-size: 0.85em;"}
 From the previous slide, $\widehat{\beta}_1 = \sum a_i y_i$. Now show $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$ is also linear.
 
-::: {.fragment fragment-index=1}
 **Step 1 — write $\bar{y}$ as a sum** (the sample mean is itself a linear combination):
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\bar{y} = \sum_{i=1}^n \frac{1}{n}y_i$$
-:::
-::: {.fragment fragment-index=3 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\bar{y} = \sum_{i=1}^n \frac{1}{n}y_i$$
-:::
-:::
+<div style="height: 8em;"></div>
 
-::: {.fragment fragment-index=2}
 **Step 2 — substitute and collect** $y_i$ terms:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
-$$\widehat{\beta}_0 = \sum_{i=1}^n \frac{1}{n}y_i - \bar{x}\sum_{i=1}^n a_i y_i = \sum_{i=1}^n\!\underbrace{\left(\frac{1}{n} - a_i\bar{x}\right)}_{\text{weight for }y_i}y_i$$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\widehat{\beta}_0 = \sum_{i=1}^n \frac{1}{n}y_i - \bar{x}\sum_{i=1}^n a_i y_i = \sum_{i=1}^n\!\underbrace{\left(\frac{1}{n} - a_i\bar{x}\right)}_{\text{weight for }y_i}y_i$$
-:::
-:::
+<div style="height: 6em;"></div>
 
-::: {.fragment fragment-index=5}
 The weights $\left(\tfrac{1}{n} - a_i\bar{x}\right)$ depend only on $x_i$, not $y_i$.
 
 Both $\widehat{\beta}_0$ and $\widehat{\beta}_1$ are linear combinations of $y_1,\ldots,y_n$.
 :::
+
+---
+
+## Property 1: Linearity of $\widehat{\beta}_0$ (Solution) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+From the previous slide, $\widehat{\beta}_1 = \sum a_i y_i$. Now show $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$ is also linear.
+
+**Step 1 — write $\bar{y}$ as a sum** (the sample mean is itself a linear combination):
+$$\bar{y} = \sum_{i=1}^n \frac{1}{n}y_i$$
+
+**Step 2 — substitute and collect** $y_i$ terms:
+$$\widehat{\beta}_0 = \sum_{i=1}^n \frac{1}{n}y_i - \bar{x}\sum_{i=1}^n a_i y_i = \sum_{i=1}^n\!\underbrace{\left(\frac{1}{n} - a_i\bar{x}\right)}_{\text{weight for }y_i}y_i$$
+
+The weights $\left(\tfrac{1}{n} - a_i\bar{x}\right)$ depend only on $x_i$, not $y_i$.
+
+Both $\widehat{\beta}_0$ and $\widehat{\beta}_1$ are linear combinations of $y_1,\ldots,y_n$.
 :::
 
 ---
@@ -651,41 +604,35 @@ From the model, $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ with $\mathbb{E}(\
 
 ::: {style="font-size: 0.75em;"}
 
-::: {.fragment fragment-index=1}
 **Step 1 — apply linearity of expectation.** Since $a_i$ are constants:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\mathbb{E}(\widehat{\beta}_1) = \mathbb{E}\!\left(\sum_{i=1}^n a_i y_i\right) = \sum_{i=1}^n a_i\,\mathbb{E}(y_i)$$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\mathbb{E}(\widehat{\beta}_1) = \mathbb{E}\!\left(\sum_{i=1}^n a_i y_i\right) = \sum_{i=1}^n a_i\,\mathbb{E}(y_i)$$
-:::
-:::
+<div style="height: 8em;"></div>
 
-::: {.fragment fragment-index=2}
 **Step 2 — substitute $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:**
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
-$$= \sum_{i=1}^n a_i(\beta_0 + \beta_1 x_i) = \beta_0\underbrace{\sum_{i=1}^n a_i}_{=\,0} + \beta_1\underbrace{\sum_{i=1}^n a_i x_i}_{=\,1}$$
-:::
-::: {.fragment fragment-index=5 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$= \sum_{i=1}^n a_i(\beta_0 + \beta_1 x_i) = \beta_0\underbrace{\sum_{i=1}^n a_i}_{=\,0} + \beta_1\underbrace{\sum_{i=1}^n a_i x_i}_{=\,1}$$
-:::
-:::
+<div style="height: 8em;"></div>
 
-::: {.fragment fragment-index=3}
 **Step 3 — evaluate the constraint sums.** Recall $a_i = (x_i - \bar{x})/S_{xx}$:
-:::
-::: {.fragment fragment-index=6}
 - $\sum a_i = \sum(x_i-\bar{x})/S_{xx} = 0$ since deviations from the mean sum to zero
 - $\sum a_i x_i = \sum(x_i-\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1$
+
 :::
 
-::: {.fragment fragment-index=7}
+---
+
+## Property 2: $\widehat{\beta}_1$ is Unbiased (cont.) (Solution) {.smaller}
+
+::: {style="font-size: 0.75em;"}
+
+**Step 1 — apply linearity of expectation.** Since $a_i$ are constants:
+$$\mathbb{E}(\widehat{\beta}_1) = \mathbb{E}\!\left(\sum_{i=1}^n a_i y_i\right) = \sum_{i=1}^n a_i\,\mathbb{E}(y_i)$$
+
+**Step 2 — substitute $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:**
+$$= \sum_{i=1}^n a_i(\beta_0 + \beta_1 x_i) = \beta_0\underbrace{\sum_{i=1}^n a_i}_{=\,0} + \beta_1\underbrace{\sum_{i=1}^n a_i x_i}_{=\,1}$$
+
+**Step 3 — evaluate the constraint sums.** Recall $a_i = (x_i - \bar{x})/S_{xx}$:
+- $\sum a_i = \sum(x_i-\bar{x})/S_{xx} = 0$ since deviations from the mean sum to zero
+- $\sum a_i x_i = \sum(x_i-\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1$
+
 Therefore $\mathbb{E}(\widehat{\beta}_1) = \beta_0 \cdot 0 + \beta_1 \cdot 1 = \beta_1$.
-:::
 
 :::
 
@@ -695,41 +642,29 @@ Therefore $\mathbb{E}(\widehat{\beta}_1) = \beta_0 \cdot 0 + \beta_1 \cdot 1 = \
 
 **Goal:** show $\mathbb{E}(\widehat{\beta}_0) = \beta_0$.
 
-::: {.fragment fragment-index=1}
 **Step 1 — find $\mathbb{E}(\bar{y})$:** expand using the model $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\mathbb{E}(\bar{y}) = \frac{1}{n}\sum_{i=1}^n \mathbb{E}(y_i) = \frac{1}{n}\sum_{i=1}^n(\beta_0 + \beta_1 x_i) = \frac{1}{n}(n\beta_0 + \beta_1 n\bar{x}) = \beta_0 + \beta_1\bar{x}$$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\mathbb{E}(\bar{y}) = \frac{1}{n}\sum_{i=1}^n \mathbb{E}(y_i) = \frac{1}{n}\sum_{i=1}^n(\beta_0 + \beta_1 x_i) = \frac{1}{n}(n\beta_0 + \beta_1 n\bar{x}) = \beta_0 + \beta_1\bar{x}$$
-:::
-:::
+<div style="height: 4em;"></div>
 
-::: {.fragment fragment-index=2}
 **Step 2 — apply linearity of expectation to $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$:** since $\bar{x}$ is a fixed constant,
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
-$$\mathbb{E}(\widehat{\beta}_0) = \mathbb{E}(\bar{y}) - \bar{x}\,\mathbb{E}(\widehat{\beta}_1)$$
-:::
-::: {.fragment fragment-index=5 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\mathbb{E}(\widehat{\beta}_0) = \mathbb{E}(\bar{y}) - \bar{x}\,\mathbb{E}(\widehat{\beta}_1)$$
-:::
-:::
+<div style="height: 4em;"></div>
 
-::: {.fragment fragment-index=3}
 **Step 3 — substitute and cancel:** plug in $\mathbb{E}(\bar{y}) = \beta_0 + \beta_1\bar{x}$ and $\mathbb{E}(\widehat{\beta}_1) = \beta_1$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=3 style="visibility: hidden;"}
+<div style="height: 4em;"></div>
+
+---
+
+## Property 2: $\widehat{\beta}_0$ is Unbiased (Solution) {.smaller}
+
+**Goal:** show $\mathbb{E}(\widehat{\beta}_0) = \beta_0$.
+
+**Step 1 — find $\mathbb{E}(\bar{y})$:** expand using the model $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:
+$$\mathbb{E}(\bar{y}) = \frac{1}{n}\sum_{i=1}^n \mathbb{E}(y_i) = \frac{1}{n}\sum_{i=1}^n(\beta_0 + \beta_1 x_i) = \frac{1}{n}(n\beta_0 + \beta_1 n\bar{x}) = \beta_0 + \beta_1\bar{x}$$
+
+**Step 2 — apply linearity of expectation to $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$:** since $\bar{x}$ is a fixed constant,
+$$\mathbb{E}(\widehat{\beta}_0) = \mathbb{E}(\bar{y}) - \bar{x}\,\mathbb{E}(\widehat{\beta}_1)$$
+
+**Step 3 — substitute and cancel:** plug in $\mathbb{E}(\bar{y}) = \beta_0 + \beta_1\bar{x}$ and $\mathbb{E}(\widehat{\beta}_1) = \beta_1$:
 $$\mathbb{E}(\widehat{\beta}_0) = (\beta_0 + \beta_1\bar{x}) - \bar{x}\,\beta_1 = \beta_0 $$
-:::
-::: {.fragment fragment-index=6 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\mathbb{E}(\widehat{\beta}_0) = (\beta_0 + \beta_1\bar{x}) - \bar{x}\,\beta_1 = \beta_0 $$
-:::
-:::
 
 ---
 

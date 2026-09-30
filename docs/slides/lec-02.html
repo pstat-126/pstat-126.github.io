@@ -167,15 +167,17 @@ Annie Adams
 </section>
 <section id="learning-objectives" class="slide level2">
 <h2>Learning Objectives</h2>
+<div style="font-size: 31px">
 <p>By the end of today you will be able to:</p>
 <ul>
-<li>Explain the least squares criterion and apply it conceptually</li>
-<li>State the OLS formulas for the slope and intercept</li>
-<li>Compute and interpret fitted values and residuals</li>
-<li>Interpret the residual standard deviation <span class="math inline">\(\widehat{\sigma}\)</span> and <span class="math inline">\(R^2\)</span></li>
-<li>Explain what a standard error measures</li>
-<li>Use <code>lm()</code> in R to fit a simple linear regression and read its output</li>
+<li>Explain the least squares criterion and define the residual sum of squares</li>
+<li>Derive the OLS estimators <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> by solving the normal equations</li>
+<li>Compute fitted values and residuals from the estimated line</li>
+<li>Connect <span class="math inline">\(\widehat{\beta}_1\)</span> to the sample correlation between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span></li>
+<li>Show that the OLS estimators are linear combinations of <span class="math inline">\(y_1, \ldots, y_n\)</span></li>
+<li>Show that the OLS estimators are unbiased: <span class="math inline">\(\mathbb{E}(\widehat{\beta}_0) = \beta_0\)</span> and <span class="math inline">\(\mathbb{E}(\widehat{\beta}_1) = \beta_1\)</span></li>
 </ul>
+</div>
 </section>
 <section id="least-squares-estimation" class="slide level2" data-background-color="#003660">
 <h2>Least Squares Estimation</h2>
@@ -211,7 +213,7 @@ Annie Adams
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_55a553df" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_16358c25" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div>
@@ -263,7 +265,7 @@ Annie Adams
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_fb23aae6" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_e0ad4e08" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div>
@@ -271,9 +273,6 @@ Annie Adams
 </div>
 </div>
 </div>
-</section>
-<section class="slide level2">
-
 </section>
 <section id="how-do-we-pick-beta_0-and-beta_1" class="slide level2 smaller">
 <h2>How do we pick <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>?</h2>
@@ -303,160 +302,110 @@ Annie Adams
 <div class="columns" style="font-size: 0.65em;">
 <div class="column" style="width:50%;">
 <p><em>Set <span class="math inline">\(\partial\text{RSS}/\partial\beta_0 = 0\)</span>:</em> <span class="math display">\[\frac{\partial}{\partial \beta_0}\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2 = 0\]</span></p>
-<div class="fragment" data-fragment-index="1">
-<p><em>Pass derivative through sum (summation rule):</em></p>
+<em>Pass derivative through sum (summation rule):</em>
+<div style="height: 8em;">
+
 </div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="1" style="visibility: hidden;">
-<p><span class="math display">\[\sum_{i=1}^{n} \frac{\partial}{\partial \beta_0}(y_i - \beta_0 - \beta_1 x_i)^2 = 0\]</span></p>
+<em>Chain rule:</em>
+<div style="height: 8em;">
+
 </div>
-<div class="fragment" data-fragment-index="4" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sum_{i=1}^{n} \frac{\partial}{\partial \beta_0}(y_i - \beta_0 - \beta_1 x_i)^2 = 0\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p><em>Chain rule:</em></p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="2" style="visibility: hidden;">
-<p><span class="math display">\[\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-1) = 0\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="5" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-1) = 0\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p><em>Factor out <span class="math inline">\(-2\)</span>, then divide both sides by <span class="math inline">\(-2\)</span>:</em></p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="3" style="visibility: hidden;">
-<p><span class="math display">\[\sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="6" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
-</div>
+<em>Factor out <span class="math inline">\(-2\)</span>, then divide both sides by <span class="math inline">\(-2\)</span>:</em>
+<div style="height: 8em;">
+
 </div>
 </div><div class="column" style="width:50%;">
 <p><em>Set <span class="math inline">\(\partial\text{RSS}/\partial\beta_1 = 0\)</span>:</em> <span class="math display">\[\frac{\partial}{\partial \beta_1}\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2 = 0\]</span></p>
-<div class="fragment" data-fragment-index="7">
-<p><em>Pass derivative through sum (summation rule):</em></p>
+<em>Pass derivative through sum (summation rule):</em>
+<div style="height: 8em;">
+
 </div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="7" style="visibility: hidden;">
-<p><span class="math display">\[\sum_{i=1}^{n} \frac{\partial}{\partial \beta_1}(y_i - \beta_0 - \beta_1 x_i)^2 = 0\]</span></p>
+<em>Chain rule:</em>
+<div style="height: 8em;">
+
 </div>
-<div class="fragment" data-fragment-index="10" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sum_{i=1}^{n} \frac{\partial}{\partial \beta_1}(y_i - \beta_0 - \beta_1 x_i)^2 = 0\]</span></p>
+<em>Factor out <span class="math inline">\(-2\)</span>, then divide both sides by <span class="math inline">\(-2\)</span>:</em>
+<div style="height: 8em;">
+
 </div>
-</div>
-<div class="fragment" data-fragment-index="8">
-<p><em>Chain rule:</em></p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="8" style="visibility: hidden;">
-<p><span class="math display">\[\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-x_i) = 0\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="11" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-x_i) = 0\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="9">
-<p><em>Factor out <span class="math inline">\(-2\)</span>, then divide both sides by <span class="math inline">\(-2\)</span>:</em></p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="9" style="visibility: hidden;">
-<p><span class="math display">\[\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="12" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
-</div>
-</div>
+</div></div>
+</section>
+<section id="the-normal-equations-derivation-solution" class="slide level2 smaller">
+<h2>The Normal Equations: Derivation (Solution)</h2>
+<div class="columns" style="font-size: 0.65em;">
+<div class="column" style="width:50%;">
+<p><em>Set <span class="math inline">\(\partial\text{RSS}/\partial\beta_0 = 0\)</span>:</em> <span class="math display">\[\frac{\partial}{\partial \beta_0}\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2 = 0\]</span></p>
+<p><em>Pass derivative through sum (summation rule):</em> <span class="math display">\[\sum_{i=1}^{n} \frac{\partial}{\partial \beta_0}(y_i - \beta_0 - \beta_1 x_i)^2 = 0\]</span></p>
+<p><em>Chain rule:</em> <span class="math display">\[\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-1) = 0\]</span></p>
+<p><em>Factor out <span class="math inline">\(-2\)</span>, then divide both sides by <span class="math inline">\(-2\)</span>:</em> <span class="math display">\[\sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
+</div><div class="column" style="width:50%;">
+<p><em>Set <span class="math inline">\(\partial\text{RSS}/\partial\beta_1 = 0\)</span>:</em> <span class="math display">\[\frac{\partial}{\partial \beta_1}\sum_{i=1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2 = 0\]</span></p>
+<p><em>Pass derivative through sum (summation rule):</em> <span class="math display">\[\sum_{i=1}^{n} \frac{\partial}{\partial \beta_1}(y_i - \beta_0 - \beta_1 x_i)^2 = 0\]</span></p>
+<p><em>Chain rule:</em> <span class="math display">\[\sum_{i=1}^{n} 2(y_i - \beta_0 - \beta_1 x_i) \cdot (-x_i) = 0\]</span></p>
+<p><em>Factor out <span class="math inline">\(-2\)</span>, then divide both sides by <span class="math inline">\(-2\)</span>:</em> <span class="math display">\[\sum_{i=1}^n x_i(y_i - \beta_0 - \beta_1 x_i) = 0\]</span></p>
 </div></div>
 </section>
 <section id="solving-the-normal-equations-step-1" class="slide level2">
 <h2>Solving the Normal Equations: Step 1</h2>
 <p><strong>Solve equation 1 for <span class="math inline">\(\widehat{\beta}_0\)</span>:</strong></p>
-<div style="position: relative;">
-<div style="visibility: hidden;">
+<div style="height: 6em;">
+
+</div>
+<div style="height: 6em;">
+
+</div>
+</section>
+<section id="solving-the-normal-equations-step-1-solution" class="slide level2">
+<h2>Solving the Normal Equations: Step 1 (Solution)</h2>
+<p><strong>Solve equation 1 for <span class="math inline">\(\widehat{\beta}_0\)</span>:</strong></p>
 <p><span class="math display">\[\sum_{i=1}^n(y_i - \beta_0 - \beta_1 x_i) = 0 \;\Rightarrow\; n\bar{y} - n\beta_0 - n\beta_1\bar{x} = 0\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="1" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sum_{i=1}^n(y_i - \beta_0 - \beta_1 x_i) = 0 \;\Rightarrow\; n\bar{y} - n\beta_0 - n\beta_1\bar{x} = 0\]</span></p>
-</div>
-</div>
-<div style="position: relative;">
-<div style="visibility: hidden;">
 <p><span class="math display">\[\boxed{\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}}\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="2" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\boxed{\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}}\]</span></p>
-</div>
-</div>
 </section>
 <section id="solving-the-normal-equations-step-2" class="slide level2 smaller">
 <h2>Solving the Normal Equations: Step 2</h2>
 <div style="font-size: 0.82em;">
 <p><strong>Substitute into equation 2 and solve for <span class="math inline">\(\widehat{\beta}_1\)</span>:</strong></p>
-<div class="fragment" data-fragment-index="1">
-<p>Start with equation 2 and distribute the sum:</p>
+Start with equation 2 and distribute the sum:
+<div style="height: 6em;">
+
 </div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="1" style="visibility: hidden;">
-<p><span class="math display">\[\sum_{i=1}^n x_i y_i - \beta_0\sum_{i=1}^n x_i - \beta_1\sum_{i=1}^n x_i^2 = 0\]</span></p>
+Substitute <span class="math inline">\(\beta_0 = \bar{y} - \beta_1\bar{x}\)</span> and use <span class="math inline">\(\sum x_i = n\bar{x}\)</span>:
+<div style="height: 6em;">
+
 </div>
-<div class="fragment" data-fragment-index="4" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sum_{i=1}^n x_i y_i - \beta_0\sum_{i=1}^n x_i - \beta_1\sum_{i=1}^n x_i^2 = 0\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p>Substitute <span class="math inline">\(\beta_0 = \bar{y} - \beta_1\bar{x}\)</span> and use <span class="math inline">\(\sum x_i = n\bar{x}\)</span>:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="2" style="visibility: hidden;">
-<p><span class="math display">\[\sum_{i=1}^n x_i y_i - (\bar{y} - \beta_1\bar{x})\,n\bar{x} - \beta_1\sum_{i=1}^n x_i^2 = 0\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="5" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sum_{i=1}^n x_i y_i - (\bar{y} - \beta_1\bar{x})\,n\bar{x} - \beta_1\sum_{i=1}^n x_i^2 = 0\]</span></p>
+Expand the multiplication:
+<div style="height: 6em;">
+
 </div>
 </div>
-<div class="fragment" data-fragment-index="3">
-<p>Expand the multiplication:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="3" style="visibility: hidden;">
-<p><span class="math display">\[\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} + n\bar{x}^2\beta_1 - \beta_1\sum_{i=1}^n x_i^2 = 0\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="6" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} + n\bar{x}^2\beta_1 - \beta_1\sum_{i=1}^n x_i^2 = 0\]</span></p>
-</div>
-</div>
+</section>
+<section id="solving-the-normal-equations-step-2-solution" class="slide level2 smaller">
+<h2>Solving the Normal Equations: Step 2 (Solution)</h2>
+<div style="font-size: 0.82em;">
+<p><strong>Substitute into equation 2 and solve for <span class="math inline">\(\widehat{\beta}_1\)</span>:</strong></p>
+<p>Start with equation 2 and distribute the sum: <span class="math display">\[\sum_{i=1}^n x_i y_i - \beta_0\sum_{i=1}^n x_i - \beta_1\sum_{i=1}^n x_i^2 = 0\]</span></p>
+<p>Substitute <span class="math inline">\(\beta_0 = \bar{y} - \beta_1\bar{x}\)</span> and use <span class="math inline">\(\sum x_i = n\bar{x}\)</span>: <span class="math display">\[\sum_{i=1}^n x_i y_i - (\bar{y} - \beta_1\bar{x})\,n\bar{x} - \beta_1\sum_{i=1}^n x_i^2 = 0\]</span></p>
+<p>Expand the multiplication: <span class="math display">\[\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} + n\bar{x}^2\beta_1 - \beta_1\sum_{i=1}^n x_i^2 = 0\]</span></p>
 </div>
 </section>
 <section id="solving-the-normal-equations-step-2-cont." class="slide level2 smaller">
 <h2>Solving the Normal Equations: Step 2 (cont.)</h2>
 <div style="font-size: 0.82em;">
-<div class="fragment" data-fragment-index="1">
-<p>Collect <span class="math inline">\(\beta_1\)</span> terms on the right:</p>
+Collect <span class="math inline">\(\beta_1\)</span> terms on the right:
+<div style="height: 6em;">
+
 </div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="1" style="visibility: hidden;">
-<p><span class="math display">\[\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} = \beta_1\!\left(\sum_{i=1}^n x_i^2 - n\bar{x}^2\right)\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="3" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} = \beta_1\!\left(\sum_{i=1}^n x_i^2 - n\bar{x}^2\right)\]</span></p>
+Divide both sides by <span class="math inline">\(\left(\sum x_i^2 - n\bar{x}^2\right)\)</span>:
+<div style="height: 8em;">
+
 </div>
 </div>
-<div class="fragment" data-fragment-index="2">
-<p>Divide both sides by <span class="math inline">\(\left(\sum x_i^2 - n\bar{x}^2\right)\)</span>:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="2" style="visibility: hidden;">
-<p><span class="math display">\[\boxed{\widehat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}}{\displaystyle\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \frac{S_{xy}}{S_{xx}}}\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="4" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\boxed{\widehat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}}{\displaystyle\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \frac{S_{xy}}{S_{xx}}}\]</span></p>
-</div>
-</div>
+</section>
+<section id="solving-the-normal-equations-step-2-cont.-solution" class="slide level2 smaller">
+<h2>Solving the Normal Equations: Step 2 (cont.) (Solution)</h2>
+<div style="font-size: 0.82em;">
+<p>Collect <span class="math inline">\(\beta_1\)</span> terms on the right: <span class="math display">\[\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y} = \beta_1\!\left(\sum_{i=1}^n x_i^2 - n\bar{x}^2\right)\]</span></p>
+<p>Divide both sides by <span class="math inline">\(\left(\sum x_i^2 - n\bar{x}^2\right)\)</span>: <span class="math display">\[\boxed{\widehat{\beta}_1 = \frac{\displaystyle\sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}}{\displaystyle\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \frac{S_{xy}}{S_{xx}}}\]</span></p>
 </div>
 </section>
 <section id="equivalent-form-of-widehatbeta_1" class="slide level2 smaller">
@@ -553,7 +502,7 @@ Annie Adams
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_6afa4d59" minutes="7" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_83fff64f" minutes="7" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div></div>
@@ -636,71 +585,53 @@ Annie Adams
 <h2>Property 1: Linearity of <span class="math inline">\(\widehat{\beta}_1\)</span></h2>
 <div style="font-size: 0.72em;">
 <p><span class="math inline">\(\widehat{\beta}_1\)</span> is a <strong>linear combination</strong> <span class="math inline">\(\sum a_i y_i\)</span> where weights <span class="math inline">\(a_i\)</span> depend only on <span class="math inline">\(x\)</span>. Starting from: <span class="math inline">\(\widehat{\beta}_1 = \dfrac{\sum(x_i - \bar{x})(y_i - \bar{y})}{S_{xx}}\)</span></p>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Step 1 — split the numerator:</strong></p>
+<strong>Step 1 — split the numerator:</strong>
+<div style="height: 8em;">
+
 </div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="1" style="visibility: hidden;">
-<p><span class="math display">\[= \frac{\sum(x_i-\bar{x})y_i \;-\; \sum(x_i-\bar{x})\bar{y}}{S_{xx}}\]</span></p>
+<strong>Step 2 — the second term is zero.</strong> Since <span class="math inline">\(\sum(x_i-\bar{x})=0\)</span> (deviations from mean sum to zero) and <span class="math inline">\(\bar{y}\)</span> is a constant:
+<div style="height: 8em;">
+
 </div>
-<div class="fragment" data-fragment-index="4" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[= \frac{\sum(x_i-\bar{x})y_i \;-\; \sum(x_i-\bar{x})\bar{y}}{S_{xx}}\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p><strong>Step 2 — the second term is zero.</strong> Since <span class="math inline">\(\sum(x_i-\bar{x})=0\)</span> (deviations from mean sum to zero) and <span class="math inline">\(\bar{y}\)</span> is a constant:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="2" style="visibility: hidden;">
-<p><span class="math display">\[\sum(x_i-\bar{x})\bar{y} = \bar{y}\underbrace{\sum(x_i-\bar{x})}_{=\;0} = 0\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="5" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\sum(x_i-\bar{x})\bar{y} = \bar{y}\underbrace{\sum(x_i-\bar{x})}_{=\;0} = 0\]</span></p>
+<strong>Step 3 — define weights</strong> <span class="math inline">\(a_i = (x_i - \bar{x})/S_{xx}\)</span>, which depend only on <span class="math inline">\(x_i\)</span>:
+<div style="height: 8em;">
+
 </div>
 </div>
-<div class="fragment" data-fragment-index="3">
-<p><strong>Step 3 — define weights</strong> <span class="math inline">\(a_i = (x_i - \bar{x})/S_{xx}\)</span>, which depend only on <span class="math inline">\(x_i\)</span>:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="3" style="visibility: hidden;">
-<p><span class="math display">\[\widehat{\beta}_1 = \frac{\sum(x_i-\bar{x})\,y_i}{S_{xx}} = \sum_{i=1}^n \underbrace{\frac{x_i - \bar{x}}{S_{xx}}}_{a_i} y_i = \sum_{i=1}^n a_i\,y_i \quad \checkmark\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="6" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\widehat{\beta}_1 = \frac{\sum(x_i-\bar{x})\,y_i}{S_{xx}} = \sum_{i=1}^n \underbrace{\frac{x_i - \bar{x}}{S_{xx}}}_{a_i} y_i = \sum_{i=1}^n a_i\,y_i \quad \checkmark\]</span></p>
-</div>
-</div>
+</section>
+<section id="property-1-linearity-of-widehatbeta_1-solution" class="slide level2 smaller">
+<h2>Property 1: Linearity of <span class="math inline">\(\widehat{\beta}_1\)</span> (Solution)</h2>
+<div style="font-size: 0.72em;">
+<p><span class="math inline">\(\widehat{\beta}_1\)</span> is a <strong>linear combination</strong> <span class="math inline">\(\sum a_i y_i\)</span> where weights <span class="math inline">\(a_i\)</span> depend only on <span class="math inline">\(x\)</span>. Starting from: <span class="math inline">\(\widehat{\beta}_1 = \dfrac{\sum(x_i - \bar{x})(y_i - \bar{y})}{S_{xx}}\)</span></p>
+<p><strong>Step 1 — split the numerator:</strong> <span class="math display">\[= \frac{\sum(x_i-\bar{x})y_i \;-\; \sum(x_i-\bar{x})\bar{y}}{S_{xx}}\]</span></p>
+<p><strong>Step 2 — the second term is zero.</strong> Since <span class="math inline">\(\sum(x_i-\bar{x})=0\)</span> (deviations from mean sum to zero) and <span class="math inline">\(\bar{y}\)</span> is a constant: <span class="math display">\[\sum(x_i-\bar{x})\bar{y} = \bar{y}\underbrace{\sum(x_i-\bar{x})}_{=\;0} = 0\]</span></p>
+<p><strong>Step 3 — define weights</strong> <span class="math inline">\(a_i = (x_i - \bar{x})/S_{xx}\)</span>, which depend only on <span class="math inline">\(x_i\)</span>: <span class="math display">\[\widehat{\beta}_1 = \frac{\sum(x_i-\bar{x})\,y_i}{S_{xx}} = \sum_{i=1}^n \underbrace{\frac{x_i - \bar{x}}{S_{xx}}}_{a_i} y_i = \sum_{i=1}^n a_i\,y_i \quad \checkmark\]</span></p>
 </div>
 </section>
 <section id="property-1-linearity-of-widehatbeta_0" class="slide level2 smaller">
 <h2>Property 1: Linearity of <span class="math inline">\(\widehat{\beta}_0\)</span></h2>
 <div style="font-size: 0.85em;">
 <p>From the previous slide, <span class="math inline">\(\widehat{\beta}_1 = \sum a_i y_i\)</span>. Now show <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span> is also linear.</p>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Step 1 — write <span class="math inline">\(\bar{y}\)</span> as a sum</strong> (the sample mean is itself a linear combination):</p>
+<strong>Step 1 — write <span class="math inline">\(\bar{y}\)</span> as a sum</strong> (the sample mean is itself a linear combination):
+<div style="height: 8em;">
+
 </div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="1" style="visibility: hidden;">
-<p><span class="math display">\[\bar{y} = \sum_{i=1}^n \frac{1}{n}y_i\]</span></p>
+<strong>Step 2 — substitute and collect</strong> <span class="math inline">\(y_i\)</span> terms:
+<div style="height: 6em;">
+
 </div>
-<div class="fragment" data-fragment-index="3" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\bar{y} = \sum_{i=1}^n \frac{1}{n}y_i\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p><strong>Step 2 — substitute and collect</strong> <span class="math inline">\(y_i\)</span> terms:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="2" style="visibility: hidden;">
-<p><span class="math display">\[\widehat{\beta}_0 = \sum_{i=1}^n \frac{1}{n}y_i - \bar{x}\sum_{i=1}^n a_i y_i = \sum_{i=1}^n\!\underbrace{\left(\frac{1}{n} - a_i\bar{x}\right)}_{\text{weight for }y_i}y_i\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="4" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\widehat{\beta}_0 = \sum_{i=1}^n \frac{1}{n}y_i - \bar{x}\sum_{i=1}^n a_i y_i = \sum_{i=1}^n\!\underbrace{\left(\frac{1}{n} - a_i\bar{x}\right)}_{\text{weight for }y_i}y_i\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="5">
 <p>The weights <span class="math inline">\(\left(\tfrac{1}{n} - a_i\bar{x}\right)\)</span> depend only on <span class="math inline">\(x_i\)</span>, not <span class="math inline">\(y_i\)</span>.</p>
 <p>Both <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> are linear combinations of <span class="math inline">\(y_1,\ldots,y_n\)</span>.</p>
 </div>
+</section>
+<section id="property-1-linearity-of-widehatbeta_0-solution" class="slide level2 smaller">
+<h2>Property 1: Linearity of <span class="math inline">\(\widehat{\beta}_0\)</span> (Solution)</h2>
+<div style="font-size: 0.85em;">
+<p>From the previous slide, <span class="math inline">\(\widehat{\beta}_1 = \sum a_i y_i\)</span>. Now show <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span> is also linear.</p>
+<p><strong>Step 1 — write <span class="math inline">\(\bar{y}\)</span> as a sum</strong> (the sample mean is itself a linear combination): <span class="math display">\[\bar{y} = \sum_{i=1}^n \frac{1}{n}y_i\]</span></p>
+<p><strong>Step 2 — substitute and collect</strong> <span class="math inline">\(y_i\)</span> terms: <span class="math display">\[\widehat{\beta}_0 = \sum_{i=1}^n \frac{1}{n}y_i - \bar{x}\sum_{i=1}^n a_i y_i = \sum_{i=1}^n\!\underbrace{\left(\frac{1}{n} - a_i\bar{x}\right)}_{\text{weight for }y_i}y_i\]</span></p>
+<p>The weights <span class="math inline">\(\left(\tfrac{1}{n} - a_i\bar{x}\right)\)</span> depend only on <span class="math inline">\(x_i\)</span>, not <span class="math inline">\(y_i\)</span>.</p>
+<p>Both <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> are linear combinations of <span class="math inline">\(y_1,\ldots,y_n\)</span>.</p>
 </div>
 </section>
 <section id="property-2-widehatbeta_1-is-unbiased" class="slide level2 smaller">
@@ -732,78 +663,48 @@ Annie Adams
 <section id="property-2-widehatbeta_1-is-unbiased-cont." class="slide level2 smaller">
 <h2>Property 2: <span class="math inline">\(\widehat{\beta}_1\)</span> is Unbiased (cont.)</h2>
 <div style="font-size: 0.75em;">
-<div class="fragment" data-fragment-index="1">
-<p><strong>Step 1 — apply linearity of expectation.</strong> Since <span class="math inline">\(a_i\)</span> are constants:</p>
+<strong>Step 1 — apply linearity of expectation.</strong> Since <span class="math inline">\(a_i\)</span> are constants:
+<div style="height: 8em;">
+
 </div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="1" style="visibility: hidden;">
-<p><span class="math display">\[\mathbb{E}(\widehat{\beta}_1) = \mathbb{E}\!\left(\sum_{i=1}^n a_i y_i\right) = \sum_{i=1}^n a_i\,\mathbb{E}(y_i)\]</span></p>
+<strong>Step 2 — substitute <span class="math inline">\(\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i\)</span>:</strong>
+<div style="height: 8em;">
+
 </div>
-<div class="fragment" data-fragment-index="4" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\mathbb{E}(\widehat{\beta}_1) = \mathbb{E}\!\left(\sum_{i=1}^n a_i y_i\right) = \sum_{i=1}^n a_i\,\mathbb{E}(y_i)\]</span></p>
+<p><strong>Step 3 — evaluate the constraint sums.</strong> Recall <span class="math inline">\(a_i = (x_i - \bar{x})/S_{xx}\)</span>: - <span class="math inline">\(\sum a_i = \sum(x_i-\bar{x})/S_{xx} = 0\)</span> since deviations from the mean sum to zero - <span class="math inline">\(\sum a_i x_i = \sum(x_i-\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1\)</span></p>
 </div>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p><strong>Step 2 — substitute <span class="math inline">\(\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i\)</span>:</strong></p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="2" style="visibility: hidden;">
-<p><span class="math display">\[= \sum_{i=1}^n a_i(\beta_0 + \beta_1 x_i) = \beta_0\underbrace{\sum_{i=1}^n a_i}_{=\,0} + \beta_1\underbrace{\sum_{i=1}^n a_i x_i}_{=\,1}\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="5" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[= \sum_{i=1}^n a_i(\beta_0 + \beta_1 x_i) = \beta_0\underbrace{\sum_{i=1}^n a_i}_{=\,0} + \beta_1\underbrace{\sum_{i=1}^n a_i x_i}_{=\,1}\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p><strong>Step 3 — evaluate the constraint sums.</strong> Recall <span class="math inline">\(a_i = (x_i - \bar{x})/S_{xx}\)</span>:</p>
-</div>
-<div class="fragment" data-fragment-index="6">
-<ul>
-<li><span class="math inline">\(\sum a_i = \sum(x_i-\bar{x})/S_{xx} = 0\)</span> since deviations from the mean sum to zero</li>
-<li><span class="math inline">\(\sum a_i x_i = \sum(x_i-\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1\)</span></li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="7">
+</section>
+<section id="property-2-widehatbeta_1-is-unbiased-cont.-solution" class="slide level2 smaller">
+<h2>Property 2: <span class="math inline">\(\widehat{\beta}_1\)</span> is Unbiased (cont.) (Solution)</h2>
+<div style="font-size: 0.75em;">
+<p><strong>Step 1 — apply linearity of expectation.</strong> Since <span class="math inline">\(a_i\)</span> are constants: <span class="math display">\[\mathbb{E}(\widehat{\beta}_1) = \mathbb{E}\!\left(\sum_{i=1}^n a_i y_i\right) = \sum_{i=1}^n a_i\,\mathbb{E}(y_i)\]</span></p>
+<p><strong>Step 2 — substitute <span class="math inline">\(\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i\)</span>:</strong> <span class="math display">\[= \sum_{i=1}^n a_i(\beta_0 + \beta_1 x_i) = \beta_0\underbrace{\sum_{i=1}^n a_i}_{=\,0} + \beta_1\underbrace{\sum_{i=1}^n a_i x_i}_{=\,1}\]</span></p>
+<p><strong>Step 3 — evaluate the constraint sums.</strong> Recall <span class="math inline">\(a_i = (x_i - \bar{x})/S_{xx}\)</span>: - <span class="math inline">\(\sum a_i = \sum(x_i-\bar{x})/S_{xx} = 0\)</span> since deviations from the mean sum to zero - <span class="math inline">\(\sum a_i x_i = \sum(x_i-\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1\)</span></p>
 <p>Therefore <span class="math inline">\(\mathbb{E}(\widehat{\beta}_1) = \beta_0 \cdot 0 + \beta_1 \cdot 1 = \beta_1\)</span>.</p>
-</div>
 </div>
 </section>
 <section id="property-2-widehatbeta_0-is-unbiased" class="slide level2 smaller">
 <h2>Property 2: <span class="math inline">\(\widehat{\beta}_0\)</span> is Unbiased</h2>
 <p><strong>Goal:</strong> show <span class="math inline">\(\mathbb{E}(\widehat{\beta}_0) = \beta_0\)</span>.</p>
-<div class="fragment" data-fragment-index="1">
-<p><strong>Step 1 — find <span class="math inline">\(\mathbb{E}(\bar{y})\)</span>:</strong> expand using the model <span class="math inline">\(\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i\)</span>:</p>
+<strong>Step 1 — find <span class="math inline">\(\mathbb{E}(\bar{y})\)</span>:</strong> expand using the model <span class="math inline">\(\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i\)</span>:
+<div style="height: 4em;">
+
 </div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="1" style="visibility: hidden;">
-<p><span class="math display">\[\mathbb{E}(\bar{y}) = \frac{1}{n}\sum_{i=1}^n \mathbb{E}(y_i) = \frac{1}{n}\sum_{i=1}^n(\beta_0 + \beta_1 x_i) = \frac{1}{n}(n\beta_0 + \beta_1 n\bar{x}) = \beta_0 + \beta_1\bar{x}\]</span></p>
+<strong>Step 2 — apply linearity of expectation to <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span>:</strong> since <span class="math inline">\(\bar{x}\)</span> is a fixed constant,
+<div style="height: 4em;">
+
 </div>
-<div class="fragment" data-fragment-index="4" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\mathbb{E}(\bar{y}) = \frac{1}{n}\sum_{i=1}^n \mathbb{E}(y_i) = \frac{1}{n}\sum_{i=1}^n(\beta_0 + \beta_1 x_i) = \frac{1}{n}(n\beta_0 + \beta_1 n\bar{x}) = \beta_0 + \beta_1\bar{x}\]</span></p>
+<strong>Step 3 — substitute and cancel:</strong> plug in <span class="math inline">\(\mathbb{E}(\bar{y}) = \beta_0 + \beta_1\bar{x}\)</span> and <span class="math inline">\(\mathbb{E}(\widehat{\beta}_1) = \beta_1\)</span>:
+<div style="height: 4em;">
+
 </div>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p><strong>Step 2 — apply linearity of expectation to <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span>:</strong> since <span class="math inline">\(\bar{x}\)</span> is a fixed constant,</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="2" style="visibility: hidden;">
-<p><span class="math display">\[\mathbb{E}(\widehat{\beta}_0) = \mathbb{E}(\bar{y}) - \bar{x}\,\mathbb{E}(\widehat{\beta}_1)\]</span></p>
-</div>
-<div class="fragment" data-fragment-index="5" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\mathbb{E}(\widehat{\beta}_0) = \mathbb{E}(\bar{y}) - \bar{x}\,\mathbb{E}(\widehat{\beta}_1)\]</span></p>
-</div>
-</div>
-<div class="fragment" data-fragment-index="3">
-<p><strong>Step 3 — substitute and cancel:</strong> plug in <span class="math inline">\(\mathbb{E}(\bar{y}) = \beta_0 + \beta_1\bar{x}\)</span> and <span class="math inline">\(\mathbb{E}(\widehat{\beta}_1) = \beta_1\)</span>:</p>
-</div>
-<div style="position: relative;">
-<div class="fragment" data-fragment-index="3" style="visibility: hidden;">
-<p><span class="math display">\[\mathbb{E}(\widehat{\beta}_0) = (\beta_0 + \beta_1\bar{x}) - \bar{x}\,\beta_1 = \beta_0 \]</span></p>
-</div>
-<div class="fragment" data-fragment-index="6" style="position: absolute; top: 0; left: 0; width: 100%;">
-<p><span class="math display">\[\mathbb{E}(\widehat{\beta}_0) = (\beta_0 + \beta_1\bar{x}) - \bar{x}\,\beta_1 = \beta_0 \]</span></p>
-</div>
-</div>
+</section>
+<section id="property-2-widehatbeta_0-is-unbiased-solution" class="slide level2 smaller">
+<h2>Property 2: <span class="math inline">\(\widehat{\beta}_0\)</span> is Unbiased (Solution)</h2>
+<p><strong>Goal:</strong> show <span class="math inline">\(\mathbb{E}(\widehat{\beta}_0) = \beta_0\)</span>.</p>
+<p><strong>Step 1 — find <span class="math inline">\(\mathbb{E}(\bar{y})\)</span>:</strong> expand using the model <span class="math inline">\(\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i\)</span>: <span class="math display">\[\mathbb{E}(\bar{y}) = \frac{1}{n}\sum_{i=1}^n \mathbb{E}(y_i) = \frac{1}{n}\sum_{i=1}^n(\beta_0 + \beta_1 x_i) = \frac{1}{n}(n\beta_0 + \beta_1 n\bar{x}) = \beta_0 + \beta_1\bar{x}\]</span></p>
+<p><strong>Step 2 — apply linearity of expectation to <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span>:</strong> since <span class="math inline">\(\bar{x}\)</span> is a fixed constant, <span class="math display">\[\mathbb{E}(\widehat{\beta}_0) = \mathbb{E}(\bar{y}) - \bar{x}\,\mathbb{E}(\widehat{\beta}_1)\]</span></p>
+<p><strong>Step 3 — substitute and cancel:</strong> plug in <span class="math inline">\(\mathbb{E}(\bar{y}) = \beta_0 + \beta_1\bar{x}\)</span> and <span class="math inline">\(\mathbb{E}(\widehat{\beta}_1) = \beta_1\)</span>: <span class="math display">\[\mathbb{E}(\widehat{\beta}_0) = (\beta_0 + \beta_1\bar{x}) - \bar{x}\,\beta_1 = \beta_0 \]</span></p>
 </section>
 <section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>

@@ -437,7 +437,7 @@
     "href": "slides/lec-02.html#learning-objectives",
     "title": "Lecture 2: Fitting the Simple Linear Model",
     "section": "Learning Objectives",
-    "text": "Learning Objectives\nBy the end of today you will be able to:\n\nExplain the least squares criterion and apply it conceptually\nState the OLS formulas for the slope and intercept\nCompute and interpret fitted values and residuals\nInterpret the residual standard deviation \\(\\widehat{\\sigma}\\) and \\(R^2\\)\nExplain what a standard error measures\nUse lm() in R to fit a simple linear regression and read its output"
+    "text": "Learning Objectives\n\nBy the end of today you will be able to:\n\nExplain the least squares criterion and define the residual sum of squares\nDerive the OLS estimators \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) by solving the normal equations\nCompute fitted values and residuals from the estimated line\nConnect \\(\\widehat{\\beta}_1\\) to the sample correlation between \\(x\\) and \\(y\\)\nShow that the OLS estimators are linear combinations of \\(y_1, \\ldots, y_n\\)\nShow that the OLS estimators are unbiased: \\(\\mathbb{E}(\\widehat{\\beta}_0) = \\beta_0\\) and \\(\\mathbb{E}(\\widehat{\\beta}_1) = \\beta_1\\)"
   },
   {
     "objectID": "slides/lec-02.html#least-squares-estimation",
@@ -500,28 +500,28 @@
     "href": "slides/lec-02.html#the-normal-equations-derivation",
     "title": "Lecture 2: Fitting the Simple Linear Model",
     "section": "The Normal Equations: Derivation",
-    "text": "The Normal Equations: Derivation\n\n\nSet \\(\\partial\\text{RSS}/\\partial\\beta_0 = 0\\): \\[\\frac{\\partial}{\\partial \\beta_0}\\sum_{i=1}^{n}(y_i - \\beta_0 - \\beta_1 x_i)^2 = 0\\]\n\nPass derivative through sum (summation rule):\n\n\n\n\\[\\sum_{i=1}^{n} \\frac{\\partial}{\\partial \\beta_0}(y_i - \\beta_0 - \\beta_1 x_i)^2 = 0\\]\n\n\n\\[\\sum_{i=1}^{n} \\frac{\\partial}{\\partial \\beta_0}(y_i - \\beta_0 - \\beta_1 x_i)^2 = 0\\]\n\n\n\nChain rule:\n\n\n\n\\[\\sum_{i=1}^{n} 2(y_i - \\beta_0 - \\beta_1 x_i) \\cdot (-1) = 0\\]\n\n\n\\[\\sum_{i=1}^{n} 2(y_i - \\beta_0 - \\beta_1 x_i) \\cdot (-1) = 0\\]\n\n\n\nFactor out \\(-2\\), then divide both sides by \\(-2\\):\n\n\n\n\\[\\sum_{i=1}^n (y_i - \\beta_0 - \\beta_1 x_i) = 0\\]\n\n\n\\[\\sum_{i=1}^n (y_i - \\beta_0 - \\beta_1 x_i) = 0\\]\n\n\n\nSet \\(\\partial\\text{RSS}/\\partial\\beta_1 = 0\\): \\[\\frac{\\partial}{\\partial \\beta_1}\\sum_{i=1}^{n}(y_i - \\beta_0 - \\beta_1 x_i)^2 = 0\\]\n\nPass derivative through sum (summation rule):\n\n\n\n\\[\\sum_{i=1}^{n} \\frac{\\partial}{\\partial \\beta_1}(y_i - \\beta_0 - \\beta_1 x_i)^2 = 0\\]\n\n\n\\[\\sum_{i=1}^{n} \\frac{\\partial}{\\partial \\beta_1}(y_i - \\beta_0 - \\beta_1 x_i)^2 = 0\\]\n\n\n\nChain rule:\n\n\n\n\\[\\sum_{i=1}^{n} 2(y_i - \\beta_0 - \\beta_1 x_i) \\cdot (-x_i) = 0\\]\n\n\n\\[\\sum_{i=1}^{n} 2(y_i - \\beta_0 - \\beta_1 x_i) \\cdot (-x_i) = 0\\]\n\n\n\nFactor out \\(-2\\), then divide both sides by \\(-2\\):\n\n\n\n\\[\\sum_{i=1}^n x_i(y_i - \\beta_0 - \\beta_1 x_i) = 0\\]\n\n\n\\[\\sum_{i=1}^n x_i(y_i - \\beta_0 - \\beta_1 x_i) = 0\\]"
+    "text": "The Normal Equations: Derivation\n\n\nSet \\(\\partial\\text{RSS}/\\partial\\beta_0 = 0\\): \\[\\frac{\\partial}{\\partial \\beta_0}\\sum_{i=1}^{n}(y_i - \\beta_0 - \\beta_1 x_i)^2 = 0\\]\nPass derivative through sum (summation rule):\n\n\n\nChain rule:\n\n\n\nFactor out \\(-2\\), then divide both sides by \\(-2\\):\n\n\n\n\nSet \\(\\partial\\text{RSS}/\\partial\\beta_1 = 0\\): \\[\\frac{\\partial}{\\partial \\beta_1}\\sum_{i=1}^{n}(y_i - \\beta_0 - \\beta_1 x_i)^2 = 0\\]\nPass derivative through sum (summation rule):\n\n\n\nChain rule:\n\n\n\nFactor out \\(-2\\), then divide both sides by \\(-2\\):"
   },
   {
     "objectID": "slides/lec-02.html#solving-the-normal-equations-step-1",
     "href": "slides/lec-02.html#solving-the-normal-equations-step-1",
     "title": "Lecture 2: Fitting the Simple Linear Model",
     "section": "Solving the Normal Equations: Step 1",
-    "text": "Solving the Normal Equations: Step 1\nSolve equation 1 for \\(\\widehat{\\beta}_0\\):\n\n\n\\[\\sum_{i=1}^n(y_i - \\beta_0 - \\beta_1 x_i) = 0 \\;\\Rightarrow\\; n\\bar{y} - n\\beta_0 - n\\beta_1\\bar{x} = 0\\]\n\n\n\\[\\sum_{i=1}^n(y_i - \\beta_0 - \\beta_1 x_i) = 0 \\;\\Rightarrow\\; n\\bar{y} - n\\beta_0 - n\\beta_1\\bar{x} = 0\\]\n\n\n\n\n\\[\\boxed{\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}}\\]\n\n\n\\[\\boxed{\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}}\\]"
+    "text": "Solving the Normal Equations: Step 1\nSolve equation 1 for \\(\\widehat{\\beta}_0\\):"
   },
   {
     "objectID": "slides/lec-02.html#solving-the-normal-equations-step-2",
     "href": "slides/lec-02.html#solving-the-normal-equations-step-2",
     "title": "Lecture 2: Fitting the Simple Linear Model",
     "section": "Solving the Normal Equations: Step 2",
-    "text": "Solving the Normal Equations: Step 2\n\nSubstitute into equation 2 and solve for \\(\\widehat{\\beta}_1\\):\n\nStart with equation 2 and distribute the sum:\n\n\n\n\\[\\sum_{i=1}^n x_i y_i - \\beta_0\\sum_{i=1}^n x_i - \\beta_1\\sum_{i=1}^n x_i^2 = 0\\]\n\n\n\\[\\sum_{i=1}^n x_i y_i - \\beta_0\\sum_{i=1}^n x_i - \\beta_1\\sum_{i=1}^n x_i^2 = 0\\]\n\n\n\nSubstitute \\(\\beta_0 = \\bar{y} - \\beta_1\\bar{x}\\) and use \\(\\sum x_i = n\\bar{x}\\):\n\n\n\n\\[\\sum_{i=1}^n x_i y_i - (\\bar{y} - \\beta_1\\bar{x})\\,n\\bar{x} - \\beta_1\\sum_{i=1}^n x_i^2 = 0\\]\n\n\n\\[\\sum_{i=1}^n x_i y_i - (\\bar{y} - \\beta_1\\bar{x})\\,n\\bar{x} - \\beta_1\\sum_{i=1}^n x_i^2 = 0\\]\n\n\n\nExpand the multiplication:\n\n\n\n\\[\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y} + n\\bar{x}^2\\beta_1 - \\beta_1\\sum_{i=1}^n x_i^2 = 0\\]\n\n\n\\[\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y} + n\\bar{x}^2\\beta_1 - \\beta_1\\sum_{i=1}^n x_i^2 = 0\\]"
+    "text": "Solving the Normal Equations: Step 2\n\nSubstitute into equation 2 and solve for \\(\\widehat{\\beta}_1\\):\nStart with equation 2 and distribute the sum:\n\n\n\nSubstitute \\(\\beta_0 = \\bar{y} - \\beta_1\\bar{x}\\) and use \\(\\sum x_i = n\\bar{x}\\):\n\n\n\nExpand the multiplication:"
   },
   {
     "objectID": "slides/lec-02.html#solving-the-normal-equations-step-2-cont.",
     "href": "slides/lec-02.html#solving-the-normal-equations-step-2-cont.",
     "title": "Lecture 2: Fitting the Simple Linear Model",
     "section": "Solving the Normal Equations: Step 2 (cont.)",
-    "text": "Solving the Normal Equations: Step 2 (cont.)\n\n\nCollect \\(\\beta_1\\) terms on the right:\n\n\n\n\\[\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y} = \\beta_1\\!\\left(\\sum_{i=1}^n x_i^2 - n\\bar{x}^2\\right)\\]\n\n\n\\[\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y} = \\beta_1\\!\\left(\\sum_{i=1}^n x_i^2 - n\\bar{x}^2\\right)\\]\n\n\n\nDivide both sides by \\(\\left(\\sum x_i^2 - n\\bar{x}^2\\right)\\):\n\n\n\n\\[\\boxed{\\widehat{\\beta}_1 = \\frac{\\displaystyle\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y}}{\\displaystyle\\sum_{i=1}^n x_i^2 - n\\bar{x}^2} = \\frac{S_{xy}}{S_{xx}}}\\]\n\n\n\\[\\boxed{\\widehat{\\beta}_1 = \\frac{\\displaystyle\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y}}{\\displaystyle\\sum_{i=1}^n x_i^2 - n\\bar{x}^2} = \\frac{S_{xy}}{S_{xx}}}\\]"
+    "text": "Solving the Normal Equations: Step 2 (cont.)\n\nCollect \\(\\beta_1\\) terms on the right:\n\n\n\nDivide both sides by \\(\\left(\\sum x_i^2 - n\\bar{x}^2\\right)\\):"
   },
   {
     "objectID": "slides/lec-02.html#equivalent-form-of-widehatbeta_1",
@@ -556,14 +556,14 @@
     "href": "slides/lec-02.html#property-1-linearity-of-widehatbeta_1",
     "title": "Lecture 2: Fitting the Simple Linear Model",
     "section": "Property 1: Linearity of \\(\\widehat{\\beta}_1\\)",
-    "text": "Property 1: Linearity of \\(\\widehat{\\beta}_1\\)\n\n\\(\\widehat{\\beta}_1\\) is a linear combination \\(\\sum a_i y_i\\) where weights \\(a_i\\) depend only on \\(x\\). Starting from: \\(\\widehat{\\beta}_1 = \\dfrac{\\sum(x_i - \\bar{x})(y_i - \\bar{y})}{S_{xx}}\\)\n\nStep 1 — split the numerator:\n\n\n\n\\[= \\frac{\\sum(x_i-\\bar{x})y_i \\;-\\; \\sum(x_i-\\bar{x})\\bar{y}}{S_{xx}}\\]\n\n\n\\[= \\frac{\\sum(x_i-\\bar{x})y_i \\;-\\; \\sum(x_i-\\bar{x})\\bar{y}}{S_{xx}}\\]\n\n\n\nStep 2 — the second term is zero. Since \\(\\sum(x_i-\\bar{x})=0\\) (deviations from mean sum to zero) and \\(\\bar{y}\\) is a constant:\n\n\n\n\\[\\sum(x_i-\\bar{x})\\bar{y} = \\bar{y}\\underbrace{\\sum(x_i-\\bar{x})}_{=\\;0} = 0\\]\n\n\n\\[\\sum(x_i-\\bar{x})\\bar{y} = \\bar{y}\\underbrace{\\sum(x_i-\\bar{x})}_{=\\;0} = 0\\]\n\n\n\nStep 3 — define weights \\(a_i = (x_i - \\bar{x})/S_{xx}\\), which depend only on \\(x_i\\):\n\n\n\n\\[\\widehat{\\beta}_1 = \\frac{\\sum(x_i-\\bar{x})\\,y_i}{S_{xx}} = \\sum_{i=1}^n \\underbrace{\\frac{x_i - \\bar{x}}{S_{xx}}}_{a_i} y_i = \\sum_{i=1}^n a_i\\,y_i \\quad \\checkmark\\]\n\n\n\\[\\widehat{\\beta}_1 = \\frac{\\sum(x_i-\\bar{x})\\,y_i}{S_{xx}} = \\sum_{i=1}^n \\underbrace{\\frac{x_i - \\bar{x}}{S_{xx}}}_{a_i} y_i = \\sum_{i=1}^n a_i\\,y_i \\quad \\checkmark\\]"
+    "text": "Property 1: Linearity of \\(\\widehat{\\beta}_1\\)\n\n\\(\\widehat{\\beta}_1\\) is a linear combination \\(\\sum a_i y_i\\) where weights \\(a_i\\) depend only on \\(x\\). Starting from: \\(\\widehat{\\beta}_1 = \\dfrac{\\sum(x_i - \\bar{x})(y_i - \\bar{y})}{S_{xx}}\\)\nStep 1 — split the numerator:\n\n\n\nStep 2 — the second term is zero. Since \\(\\sum(x_i-\\bar{x})=0\\) (deviations from mean sum to zero) and \\(\\bar{y}\\) is a constant:\n\n\n\nStep 3 — define weights \\(a_i = (x_i - \\bar{x})/S_{xx}\\), which depend only on \\(x_i\\):"
   },
   {
     "objectID": "slides/lec-02.html#property-1-linearity-of-widehatbeta_0",
     "href": "slides/lec-02.html#property-1-linearity-of-widehatbeta_0",
     "title": "Lecture 2: Fitting the Simple Linear Model",
     "section": "Property 1: Linearity of \\(\\widehat{\\beta}_0\\)",
-    "text": "Property 1: Linearity of \\(\\widehat{\\beta}_0\\)\n\nFrom the previous slide, \\(\\widehat{\\beta}_1 = \\sum a_i y_i\\). Now show \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) is also linear.\n\nStep 1 — write \\(\\bar{y}\\) as a sum (the sample mean is itself a linear combination):\n\n\n\n\\[\\bar{y} = \\sum_{i=1}^n \\frac{1}{n}y_i\\]\n\n\n\\[\\bar{y} = \\sum_{i=1}^n \\frac{1}{n}y_i\\]\n\n\n\nStep 2 — substitute and collect \\(y_i\\) terms:\n\n\n\n\\[\\widehat{\\beta}_0 = \\sum_{i=1}^n \\frac{1}{n}y_i - \\bar{x}\\sum_{i=1}^n a_i y_i = \\sum_{i=1}^n\\!\\underbrace{\\left(\\frac{1}{n} - a_i\\bar{x}\\right)}_{\\text{weight for }y_i}y_i\\]\n\n\n\\[\\widehat{\\beta}_0 = \\sum_{i=1}^n \\frac{1}{n}y_i - \\bar{x}\\sum_{i=1}^n a_i y_i = \\sum_{i=1}^n\\!\\underbrace{\\left(\\frac{1}{n} - a_i\\bar{x}\\right)}_{\\text{weight for }y_i}y_i\\]\n\n\n\nThe weights \\(\\left(\\tfrac{1}{n} - a_i\\bar{x}\\right)\\) depend only on \\(x_i\\), not \\(y_i\\).\nBoth \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) are linear combinations of \\(y_1,\\ldots,y_n\\)."
+    "text": "Property 1: Linearity of \\(\\widehat{\\beta}_0\\)\n\nFrom the previous slide, \\(\\widehat{\\beta}_1 = \\sum a_i y_i\\). Now show \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) is also linear.\nStep 1 — write \\(\\bar{y}\\) as a sum (the sample mean is itself a linear combination):\n\n\n\nStep 2 — substitute and collect \\(y_i\\) terms:\n\n\n\nThe weights \\(\\left(\\tfrac{1}{n} - a_i\\bar{x}\\right)\\) depend only on \\(x_i\\), not \\(y_i\\).\nBoth \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) are linear combinations of \\(y_1,\\ldots,y_n\\)."
   },
   {
     "objectID": "slides/lec-02.html#property-2-widehatbeta_1-is-unbiased",
@@ -577,14 +577,14 @@
     "href": "slides/lec-02.html#property-2-widehatbeta_1-is-unbiased-cont.",
     "title": "Lecture 2: Fitting the Simple Linear Model",
     "section": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.)",
-    "text": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.)\n\n\nStep 1 — apply linearity of expectation. Since \\(a_i\\) are constants:\n\n\n\n\\[\\mathbb{E}(\\widehat{\\beta}_1) = \\mathbb{E}\\!\\left(\\sum_{i=1}^n a_i y_i\\right) = \\sum_{i=1}^n a_i\\,\\mathbb{E}(y_i)\\]\n\n\n\\[\\mathbb{E}(\\widehat{\\beta}_1) = \\mathbb{E}\\!\\left(\\sum_{i=1}^n a_i y_i\\right) = \\sum_{i=1}^n a_i\\,\\mathbb{E}(y_i)\\]\n\n\n\nStep 2 — substitute \\(\\mathbb{E}(y_i) = \\beta_0 + \\beta_1 x_i\\):\n\n\n\n\\[= \\sum_{i=1}^n a_i(\\beta_0 + \\beta_1 x_i) = \\beta_0\\underbrace{\\sum_{i=1}^n a_i}_{=\\,0} + \\beta_1\\underbrace{\\sum_{i=1}^n a_i x_i}_{=\\,1}\\]\n\n\n\\[= \\sum_{i=1}^n a_i(\\beta_0 + \\beta_1 x_i) = \\beta_0\\underbrace{\\sum_{i=1}^n a_i}_{=\\,0} + \\beta_1\\underbrace{\\sum_{i=1}^n a_i x_i}_{=\\,1}\\]\n\n\n\nStep 3 — evaluate the constraint sums. Recall \\(a_i = (x_i - \\bar{x})/S_{xx}\\):\n\n\n\n\\(\\sum a_i = \\sum(x_i-\\bar{x})/S_{xx} = 0\\) since deviations from the mean sum to zero\n\\(\\sum a_i x_i = \\sum(x_i-\\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1\\)\n\n\n\nTherefore \\(\\mathbb{E}(\\widehat{\\beta}_1) = \\beta_0 \\cdot 0 + \\beta_1 \\cdot 1 = \\beta_1\\)."
+    "text": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.)\n\nStep 1 — apply linearity of expectation. Since \\(a_i\\) are constants:\n\n\n\nStep 2 — substitute \\(\\mathbb{E}(y_i) = \\beta_0 + \\beta_1 x_i\\):\n\n\n\nStep 3 — evaluate the constraint sums. Recall \\(a_i = (x_i - \\bar{x})/S_{xx}\\): - \\(\\sum a_i = \\sum(x_i-\\bar{x})/S_{xx} = 0\\) since deviations from the mean sum to zero - \\(\\sum a_i x_i = \\sum(x_i-\\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1\\)"
   },
   {
     "objectID": "slides/lec-02.html#property-2-widehatbeta_0-is-unbiased",
     "href": "slides/lec-02.html#property-2-widehatbeta_0-is-unbiased",
     "title": "Lecture 2: Fitting the Simple Linear Model",
     "section": "Property 2: \\(\\widehat{\\beta}_0\\) is Unbiased",
-    "text": "Property 2: \\(\\widehat{\\beta}_0\\) is Unbiased\nGoal: show \\(\\mathbb{E}(\\widehat{\\beta}_0) = \\beta_0\\).\n\nStep 1 — find \\(\\mathbb{E}(\\bar{y})\\): expand using the model \\(\\mathbb{E}(y_i) = \\beta_0 + \\beta_1 x_i\\):\n\n\n\n\\[\\mathbb{E}(\\bar{y}) = \\frac{1}{n}\\sum_{i=1}^n \\mathbb{E}(y_i) = \\frac{1}{n}\\sum_{i=1}^n(\\beta_0 + \\beta_1 x_i) = \\frac{1}{n}(n\\beta_0 + \\beta_1 n\\bar{x}) = \\beta_0 + \\beta_1\\bar{x}\\]\n\n\n\\[\\mathbb{E}(\\bar{y}) = \\frac{1}{n}\\sum_{i=1}^n \\mathbb{E}(y_i) = \\frac{1}{n}\\sum_{i=1}^n(\\beta_0 + \\beta_1 x_i) = \\frac{1}{n}(n\\beta_0 + \\beta_1 n\\bar{x}) = \\beta_0 + \\beta_1\\bar{x}\\]\n\n\n\nStep 2 — apply linearity of expectation to \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\): since \\(\\bar{x}\\) is a fixed constant,\n\n\n\n\\[\\mathbb{E}(\\widehat{\\beta}_0) = \\mathbb{E}(\\bar{y}) - \\bar{x}\\,\\mathbb{E}(\\widehat{\\beta}_1)\\]\n\n\n\\[\\mathbb{E}(\\widehat{\\beta}_0) = \\mathbb{E}(\\bar{y}) - \\bar{x}\\,\\mathbb{E}(\\widehat{\\beta}_1)\\]\n\n\n\nStep 3 — substitute and cancel: plug in \\(\\mathbb{E}(\\bar{y}) = \\beta_0 + \\beta_1\\bar{x}\\) and \\(\\mathbb{E}(\\widehat{\\beta}_1) = \\beta_1\\):\n\n\n\n\\[\\mathbb{E}(\\widehat{\\beta}_0) = (\\beta_0 + \\beta_1\\bar{x}) - \\bar{x}\\,\\beta_1 = \\beta_0 \\]\n\n\n\\[\\mathbb{E}(\\widehat{\\beta}_0) = (\\beta_0 + \\beta_1\\bar{x}) - \\bar{x}\\,\\beta_1 = \\beta_0 \\]"
+    "text": "Property 2: \\(\\widehat{\\beta}_0\\) is Unbiased\nGoal: show \\(\\mathbb{E}(\\widehat{\\beta}_0) = \\beta_0\\).\nStep 1 — find \\(\\mathbb{E}(\\bar{y})\\): expand using the model \\(\\mathbb{E}(y_i) = \\beta_0 + \\beta_1 x_i\\):\n\n\n\nStep 2 — apply linearity of expectation to \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\): since \\(\\bar{x}\\) is a fixed constant,\n\n\n\nStep 3 — substitute and cancel: plug in \\(\\mathbb{E}(\\bar{y}) = \\beta_0 + \\beta_1\\bar{x}\\) and \\(\\mathbb{E}(\\widehat{\\beta}_1) = \\beta_1\\):"
   },
   {
     "objectID": "slides/lec-02.html#property-3-variance-of-widehatbeta_1",
@@ -1624,5 +1624,61 @@
     "title": "Lecture 3: Residuals and Estimating Error Variance",
     "section": "Questions?",
     "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
+  },
+  {
+    "objectID": "slides/lec-02.html#the-normal-equations-derivation-solution",
+    "href": "slides/lec-02.html#the-normal-equations-derivation-solution",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "The Normal Equations: Derivation (Solution)",
+    "text": "The Normal Equations: Derivation (Solution)\n\n\nSet \\(\\partial\\text{RSS}/\\partial\\beta_0 = 0\\): \\[\\frac{\\partial}{\\partial \\beta_0}\\sum_{i=1}^{n}(y_i - \\beta_0 - \\beta_1 x_i)^2 = 0\\]\nPass derivative through sum (summation rule): \\[\\sum_{i=1}^{n} \\frac{\\partial}{\\partial \\beta_0}(y_i - \\beta_0 - \\beta_1 x_i)^2 = 0\\]\nChain rule: \\[\\sum_{i=1}^{n} 2(y_i - \\beta_0 - \\beta_1 x_i) \\cdot (-1) = 0\\]\nFactor out \\(-2\\), then divide both sides by \\(-2\\): \\[\\sum_{i=1}^n (y_i - \\beta_0 - \\beta_1 x_i) = 0\\]\n\nSet \\(\\partial\\text{RSS}/\\partial\\beta_1 = 0\\): \\[\\frac{\\partial}{\\partial \\beta_1}\\sum_{i=1}^{n}(y_i - \\beta_0 - \\beta_1 x_i)^2 = 0\\]\nPass derivative through sum (summation rule): \\[\\sum_{i=1}^{n} \\frac{\\partial}{\\partial \\beta_1}(y_i - \\beta_0 - \\beta_1 x_i)^2 = 0\\]\nChain rule: \\[\\sum_{i=1}^{n} 2(y_i - \\beta_0 - \\beta_1 x_i) \\cdot (-x_i) = 0\\]\nFactor out \\(-2\\), then divide both sides by \\(-2\\): \\[\\sum_{i=1}^n x_i(y_i - \\beta_0 - \\beta_1 x_i) = 0\\]"
+  },
+  {
+    "objectID": "slides/lec-02.html#solving-the-normal-equations-step-1-solution",
+    "href": "slides/lec-02.html#solving-the-normal-equations-step-1-solution",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Solving the Normal Equations: Step 1 (Solution)",
+    "text": "Solving the Normal Equations: Step 1 (Solution)\nSolve equation 1 for \\(\\widehat{\\beta}_0\\):\n\\[\\sum_{i=1}^n(y_i - \\beta_0 - \\beta_1 x_i) = 0 \\;\\Rightarrow\\; n\\bar{y} - n\\beta_0 - n\\beta_1\\bar{x} = 0\\]\n\\[\\boxed{\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}}\\]"
+  },
+  {
+    "objectID": "slides/lec-02.html#solving-the-normal-equations-step-2-solution",
+    "href": "slides/lec-02.html#solving-the-normal-equations-step-2-solution",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Solving the Normal Equations: Step 2 (Solution)",
+    "text": "Solving the Normal Equations: Step 2 (Solution)\n\nSubstitute into equation 2 and solve for \\(\\widehat{\\beta}_1\\):\nStart with equation 2 and distribute the sum: \\[\\sum_{i=1}^n x_i y_i - \\beta_0\\sum_{i=1}^n x_i - \\beta_1\\sum_{i=1}^n x_i^2 = 0\\]\nSubstitute \\(\\beta_0 = \\bar{y} - \\beta_1\\bar{x}\\) and use \\(\\sum x_i = n\\bar{x}\\): \\[\\sum_{i=1}^n x_i y_i - (\\bar{y} - \\beta_1\\bar{x})\\,n\\bar{x} - \\beta_1\\sum_{i=1}^n x_i^2 = 0\\]\nExpand the multiplication: \\[\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y} + n\\bar{x}^2\\beta_1 - \\beta_1\\sum_{i=1}^n x_i^2 = 0\\]"
+  },
+  {
+    "objectID": "slides/lec-02.html#solving-the-normal-equations-step-2-cont.-solution",
+    "href": "slides/lec-02.html#solving-the-normal-equations-step-2-cont.-solution",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Solving the Normal Equations: Step 2 (cont.) (Solution)",
+    "text": "Solving the Normal Equations: Step 2 (cont.) (Solution)\n\nCollect \\(\\beta_1\\) terms on the right: \\[\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y} = \\beta_1\\!\\left(\\sum_{i=1}^n x_i^2 - n\\bar{x}^2\\right)\\]\nDivide both sides by \\(\\left(\\sum x_i^2 - n\\bar{x}^2\\right)\\): \\[\\boxed{\\widehat{\\beta}_1 = \\frac{\\displaystyle\\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y}}{\\displaystyle\\sum_{i=1}^n x_i^2 - n\\bar{x}^2} = \\frac{S_{xy}}{S_{xx}}}\\]"
+  },
+  {
+    "objectID": "slides/lec-02.html#property-1-linearity-of-widehatbeta_1-solution",
+    "href": "slides/lec-02.html#property-1-linearity-of-widehatbeta_1-solution",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Property 1: Linearity of \\(\\widehat{\\beta}_1\\) (Solution)",
+    "text": "Property 1: Linearity of \\(\\widehat{\\beta}_1\\) (Solution)\n\n\\(\\widehat{\\beta}_1\\) is a linear combination \\(\\sum a_i y_i\\) where weights \\(a_i\\) depend only on \\(x\\). Starting from: \\(\\widehat{\\beta}_1 = \\dfrac{\\sum(x_i - \\bar{x})(y_i - \\bar{y})}{S_{xx}}\\)\nStep 1 — split the numerator: \\[= \\frac{\\sum(x_i-\\bar{x})y_i \\;-\\; \\sum(x_i-\\bar{x})\\bar{y}}{S_{xx}}\\]\nStep 2 — the second term is zero. Since \\(\\sum(x_i-\\bar{x})=0\\) (deviations from mean sum to zero) and \\(\\bar{y}\\) is a constant: \\[\\sum(x_i-\\bar{x})\\bar{y} = \\bar{y}\\underbrace{\\sum(x_i-\\bar{x})}_{=\\;0} = 0\\]\nStep 3 — define weights \\(a_i = (x_i - \\bar{x})/S_{xx}\\), which depend only on \\(x_i\\): \\[\\widehat{\\beta}_1 = \\frac{\\sum(x_i-\\bar{x})\\,y_i}{S_{xx}} = \\sum_{i=1}^n \\underbrace{\\frac{x_i - \\bar{x}}{S_{xx}}}_{a_i} y_i = \\sum_{i=1}^n a_i\\,y_i \\quad \\checkmark\\]"
+  },
+  {
+    "objectID": "slides/lec-02.html#property-1-linearity-of-widehatbeta_0-solution",
+    "href": "slides/lec-02.html#property-1-linearity-of-widehatbeta_0-solution",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Property 1: Linearity of \\(\\widehat{\\beta}_0\\) (Solution)",
+    "text": "Property 1: Linearity of \\(\\widehat{\\beta}_0\\) (Solution)\n\nFrom the previous slide, \\(\\widehat{\\beta}_1 = \\sum a_i y_i\\). Now show \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) is also linear.\nStep 1 — write \\(\\bar{y}\\) as a sum (the sample mean is itself a linear combination): \\[\\bar{y} = \\sum_{i=1}^n \\frac{1}{n}y_i\\]\nStep 2 — substitute and collect \\(y_i\\) terms: \\[\\widehat{\\beta}_0 = \\sum_{i=1}^n \\frac{1}{n}y_i - \\bar{x}\\sum_{i=1}^n a_i y_i = \\sum_{i=1}^n\\!\\underbrace{\\left(\\frac{1}{n} - a_i\\bar{x}\\right)}_{\\text{weight for }y_i}y_i\\]\nThe weights \\(\\left(\\tfrac{1}{n} - a_i\\bar{x}\\right)\\) depend only on \\(x_i\\), not \\(y_i\\).\nBoth \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) are linear combinations of \\(y_1,\\ldots,y_n\\)."
+  },
+  {
+    "objectID": "slides/lec-02.html#property-2-widehatbeta_1-is-unbiased-cont.-solution",
+    "href": "slides/lec-02.html#property-2-widehatbeta_1-is-unbiased-cont.-solution",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.) (Solution)",
+    "text": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.) (Solution)\n\nStep 1 — apply linearity of expectation. Since \\(a_i\\) are constants: \\[\\mathbb{E}(\\widehat{\\beta}_1) = \\mathbb{E}\\!\\left(\\sum_{i=1}^n a_i y_i\\right) = \\sum_{i=1}^n a_i\\,\\mathbb{E}(y_i)\\]\nStep 2 — substitute \\(\\mathbb{E}(y_i) = \\beta_0 + \\beta_1 x_i\\): \\[= \\sum_{i=1}^n a_i(\\beta_0 + \\beta_1 x_i) = \\beta_0\\underbrace{\\sum_{i=1}^n a_i}_{=\\,0} + \\beta_1\\underbrace{\\sum_{i=1}^n a_i x_i}_{=\\,1}\\]\nStep 3 — evaluate the constraint sums. Recall \\(a_i = (x_i - \\bar{x})/S_{xx}\\): - \\(\\sum a_i = \\sum(x_i-\\bar{x})/S_{xx} = 0\\) since deviations from the mean sum to zero - \\(\\sum a_i x_i = \\sum(x_i-\\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1\\)\nTherefore \\(\\mathbb{E}(\\widehat{\\beta}_1) = \\beta_0 \\cdot 0 + \\beta_1 \\cdot 1 = \\beta_1\\)."
+  },
+  {
+    "objectID": "slides/lec-02.html#property-2-widehatbeta_0-is-unbiased-solution",
+    "href": "slides/lec-02.html#property-2-widehatbeta_0-is-unbiased-solution",
+    "title": "Lecture 2: Fitting the Simple Linear Model",
+    "section": "Property 2: \\(\\widehat{\\beta}_0\\) is Unbiased (Solution)",
+    "text": "Property 2: \\(\\widehat{\\beta}_0\\) is Unbiased (Solution)\nGoal: show \\(\\mathbb{E}(\\widehat{\\beta}_0) = \\beta_0\\).\nStep 1 — find \\(\\mathbb{E}(\\bar{y})\\): expand using the model \\(\\mathbb{E}(y_i) = \\beta_0 + \\beta_1 x_i\\): \\[\\mathbb{E}(\\bar{y}) = \\frac{1}{n}\\sum_{i=1}^n \\mathbb{E}(y_i) = \\frac{1}{n}\\sum_{i=1}^n(\\beta_0 + \\beta_1 x_i) = \\frac{1}{n}(n\\beta_0 + \\beta_1 n\\bar{x}) = \\beta_0 + \\beta_1\\bar{x}\\]\nStep 2 — apply linearity of expectation to \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\): since \\(\\bar{x}\\) is a fixed constant, \\[\\mathbb{E}(\\widehat{\\beta}_0) = \\mathbb{E}(\\bar{y}) - \\bar{x}\\,\\mathbb{E}(\\widehat{\\beta}_1)\\]\nStep 3 — substitute and cancel: plug in \\(\\mathbb{E}(\\bar{y}) = \\beta_0 + \\beta_1\\bar{x}\\) and \\(\\mathbb{E}(\\widehat{\\beta}_1) = \\beta_1\\): \\[\\mathbb{E}(\\widehat{\\beta}_0) = (\\beta_0 + \\beta_1\\bar{x}) - \\bar{x}\\,\\beta_1 = \\beta_0 \\]"
   }
 ]
