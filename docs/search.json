@@ -668,7 +668,7 @@
     "href": "slides/lec-02.html#summary",
     "title": "Lecture 2: Fitting the Simple Linear Model",
     "section": "Summary",
-    "text": "Summary\n\nLeast squares: OLS picks \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) to minimize \\(\\text{RSS} = \\sum(y_i - \\widehat{y}_i)^2\\)\nNormal equations give closed-form solutions: \\(\\widehat{\\beta}_1 = S_{xy}/S_{xx}\\), \\(\\;\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\)\nResiduals \\(e_i = y_i - \\widehat{y}_i\\) measure how far each observation falls from the fitted line\nProperty 1 (Linearity): both estimators are linear combinations of \\(y_1, \\ldots, y_n\\)\nProperty 2 (Unbiasedness): \\(\\mathbb{E}(\\widehat{\\beta}_0) = \\beta_0\\) and \\(\\mathbb{E}(\\widehat{\\beta}_1) = \\beta_1\\)\nNext lecture: Properties 3 (variance formulas) and 4 (Gauss-Markov / BLUE) continue in Lecture 3"
+    "text": "Summary\n\nLeast squares: OLS picks \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) to minimize \\(\\text{RSS} = \\sum(y_i - \\widehat{y}_i)^2\\)\nNormal equations give closed-form solutions: \\(\\widehat{\\beta}_1 = S_{xy}/S_{xx}\\), \\(\\;\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\)\nResiduals \\(e_i = y_i - \\widehat{y}_i\\) measure how far each observation falls from the fitted line"
   },
   {
     "objectID": "slides/lec-02.html#questions",
