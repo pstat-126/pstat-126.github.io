@@ -1,5 +1,5 @@
 ---
-title: "Lecture 3: OLS Properties (Continued)"
+title: "Lecture 3: OLS Properties"
 subtitle: "PSTAT 126: Linear Regression"
 author: "Annie Adams"
 institute: "UC Santa Barbara"
@@ -191,6 +191,7 @@ $$\mathbb{E}(\widehat{\beta}_0) = \mathbb{E}(\bar{y}) - \bar{x}\,\mathbb{E}(\wid
 $$\mathbb{E}(\widehat{\beta}_0) = (\beta_0 + \beta_1\bar{x}) - \bar{x}\,\beta_1 = \beta_0 $$
 
 ---
+
 ## Property 3: Variance of $\widehat{\beta}_1$ {.smaller}
 
 **Goal:** derive the formula $\text{Var}(\widehat{\beta}_1) = \sigma^2 / S_{xx}$.
@@ -415,9 +416,10 @@ The extra term $\sigma^2\sum d_i^2 \geq 0$ always — with equality only when $d
 ## Summary {.smaller}
 
 ::: {.incremental}
+- **Property 1 (Linearity):** $\widehat{\beta}_0$ and $\widehat{\beta}_1$ are linear combinations of $y_1,\ldots,y_n$ with weights depending only on $x$
+- **Property 2 (Unbiasedness):** $\mathbb{E}(\widehat{\beta}_0) = \beta_0$ and $\mathbb{E}(\widehat{\beta}_1) = \beta_1$ — the estimators are correct on average
 - **Property 3 (Known variances):** $\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}$, $\;\text{Var}(\widehat{\beta}_0) = \sigma^2(1/n + \bar{x}^2/S_{xx})$
 - **Property 4 (Gauss-Markov):** OLS is BLUE — smallest variance among all linear unbiased estimators
-- Together, Properties 1–4 say OLS estimators are linear, correct on average, have known precision, and are optimal in their class
 :::
 
 ---

@@ -36,7 +36,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
     <tr>
       <td class="date-cell">Wed, Sep 30</td>
       <td class="topic-cell">Least Squares Estimation
-        <span class="sub-topic">Deriving OLS estimators, interpreting coefficients</span></td>
+        <span class="sub-topic">Deriving OLS estimators</span></td>
       <td><a class="badge-slide" href="slides/lec-02.html">Slides</a></td>
       <td></td>
       <td></td>
@@ -47,33 +47,23 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td><a class="badge-optional" href="https://docs.google.com/document/d/1Pof9S4uuy5uUBTCQY95d5jJpExjRXXVdpZA2zfaQZAI/edit?usp=sharing">Late Pass Q <em>(optional)</em></a></td>
     </tr>
 
-    <!--
-    <tr class="week-row"><td colspan="5">Week 2 — Properties of OLS &amp; Statistical Inference</td></tr>
+   
+    <tr class="week-row"><td colspan="5">Week 2 — Properties of OLS</td></tr>
     <tr>
       <td class="date-cell">Mon, Oct 5</td>
       <td class="topic-cell">Properties of OLS Estimators
-        <span class="sub-topic">Gauss-Markov theorem, unbiasedness, variance</span></td>
-      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td><a class="badge-slide" href="#slides/lec-03.html">Slides</a></td>
       <td><a class="badge-lab" href="labs/lab-01.html">Lab 1</a></td>
       <td></td>
     </tr>
     <tr>
       <td class="date-cell">Wed, Oct 7</td>
-      <td class="topic-cell">Hypothesis Tests for &beta;<sub>0</sub> and &beta;<sub>1</sub>
-        <span class="sub-topic">t-tests, standard errors, degrees of freedom</span></td>
+      <td class="topic-cell">
       <td><a class="badge-slide" href="#">Slides</a></td>
       <td></td>
       <td></td>
     </tr>
-    <tr>
-      <td class="date-cell">Fri, Oct 9</td>
-      <td class="topic-cell">Confidence Intervals for Regression Coefficients
-        <span class="sub-topic">CI for &beta;<sub>1</sub>, inference for the mean response</span></td>
-      <td><a class="badge-slide" href="#">Slides</a></td>
-      <td></td>
-      <td></td>
-    </tr>
-
+<!--
     <tr class="week-row"><td colspan="5">Week 3 — ANOVA, F-tests &amp; Prediction</td></tr>
     <tr>
       <td class="date-cell">Mon, Oct 12</td>
