@@ -196,49 +196,41 @@ $$\mathbb{E}(\widehat{\beta}_0) = (\beta_0 + \beta_1\bar{x}) - \bar{x}\,\beta_1 
 
 **Goal:** derive the formula $\text{Var}(\widehat{\beta}_1) = \sigma^2 / S_{xx}$.
 
-::: {.fragment fragment-index=1}
 **Step 1 — apply the variance of a linear combination:** since $y_i$'s are independent with $\text{Var}(y_i)=\sigma^2$, and $a_i$ are fixed constants:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\text{Var}(\widehat{\beta}_1) = \text{Var}\!\left(\sum_{i=1}^n a_i y_i\right) \overset{\text{indep.}}{=} \sum_{i=1}^n a_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n a_i^2$$
-:::
-::: {.fragment fragment-index=2 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\text{Var}(\widehat{\beta}_1) = \text{Var}\!\left(\sum_{i=1}^n a_i y_i\right) \overset{\text{indep.}}{=} \sum_{i=1}^n a_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n a_i^2$$
-:::
-:::
+<div style="height: 8em;"></div>
 
-::: {.fragment fragment-index=3}
 Independence eliminates all cross-terms $a_ia_j\text{Cov}(y_i,y_j)$ for $i\neq j$.
-:::
+
+---
+
+## Property 3: Variance of $\widehat{\beta}_1$ (Solution) {.smaller}
+
+**Goal:** derive the formula $\text{Var}(\widehat{\beta}_1) = \sigma^2 / S_{xx}$.
+
+**Step 1 — apply the variance of a linear combination:** since $y_i$'s are independent with $\text{Var}(y_i)=\sigma^2$, and $a_i$ are fixed constants:
+$$\text{Var}(\widehat{\beta}_1) = \text{Var}\!\left(\sum_{i=1}^n a_i y_i\right) \overset{\text{indep.}}{=} \sum_{i=1}^n a_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n a_i^2$$
+
+Independence eliminates all cross-terms $a_ia_j\text{Cov}(y_i,y_j)$ for $i\neq j$.
 
 ---
 
 ## Property 3: Variance of $\widehat{\beta}_1$ (cont.) {.smaller}
 
-::: {.fragment fragment-index=1}
 **Step 2 — evaluate $\sum a_i^2$:** substitute $a_i = (x_i-\bar{x})/S_{xx}$ and use $\sum(x_i-\bar{x})^2 = S_{xx}$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\sum_{i=1}^n a_i^2 = \sum_{i=1}^n \frac{(x_i-\bar{x})^2}{S_{xx}^2} = \frac{1}{S_{xx}^2}\underbrace{\sum_{i=1}^n(x_i-\bar{x})^2}_{=\,S_{xx}} = \frac{1}{S_{xx}}$$
-:::
-::: {.fragment fragment-index=3 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^n a_i^2 = \sum_{i=1}^n \frac{(x_i-\bar{x})^2}{S_{xx}^2} = \frac{1}{S_{xx}^2}\underbrace{\sum_{i=1}^n(x_i-\bar{x})^2}_{=\,S_{xx}} = \frac{1}{S_{xx}}$$
-:::
-:::
+<div style="height: 8em;"></div>
 
-::: {.fragment fragment-index=2}
 **Step 3 — combine:**
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
+<div style="height: 6em;"></div>
+
+---
+
+## Property 3: Variance of $\widehat{\beta}_1$ (cont.) (Solution) {.smaller}
+
+**Step 2 — evaluate $\sum a_i^2$:** substitute $a_i = (x_i-\bar{x})/S_{xx}$ and use $\sum(x_i-\bar{x})^2 = S_{xx}$:
+$$\sum_{i=1}^n a_i^2 = \sum_{i=1}^n \frac{(x_i-\bar{x})^2}{S_{xx}^2} = \frac{1}{S_{xx}^2}\underbrace{\sum_{i=1}^n(x_i-\bar{x})^2}_{=\,S_{xx}} = \frac{1}{S_{xx}}$$
+
+**Step 3 — combine:**
 $$\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma^2}{S_{xx}} \qquad$$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma^2}{S_{xx}} \qquad$$
-:::
-:::
 
 ---
 
@@ -247,41 +239,32 @@ $$\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma
 ::: {style="font-size: 0.82em;"}
 **Goal:** derive $\text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\tfrac{1}{n}+\tfrac{\bar{x}^2}{S_{xx}}\right)$.
 
-::: {.fragment fragment-index=1}
 **Step 1 — expand the variance.** Since $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$ and $\bar{x}$ is a fixed constant:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\text{Var}(\widehat{\beta}_0) = \text{Var}(\bar{y} - \widehat{\beta}_1\bar{x}) = \text{Var}(\bar{y}) + \bar{x}^2\,\text{Var}(\widehat{\beta}_1) - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\text{Var}(\widehat{\beta}_0) = \text{Var}(\bar{y} - \widehat{\beta}_1\bar{x}) = \text{Var}(\bar{y}) + \bar{x}^2\,\text{Var}(\widehat{\beta}_1) - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
-:::
-:::
+<div style="height: 6em;"></div>
 
-::: {.fragment fragment-index=2}
 **Step 2 — substitute known variances.** Using $\text{Var}(\bar{y}) = \sigma^2/n$ and $\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
-$$= \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
-:::
-::: {.fragment fragment-index=5 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$= \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
-:::
+<div style="height: 4em;"></div>
+
+**Step 3 — handle the covariance.** It can be shown that $\text{Cov}(\bar{y}, \widehat{\beta}_1) = 0$ (see [proof](https://en.wikipedia.org/wiki/Simple_linear_regression)), so the last term drops out:
+<div style="height: 4em;"></div>
+
 :::
 
-::: {.fragment fragment-index=3}
+---
+
+## Property 3: Variance of $\widehat{\beta}_0$ (Solution) {.smaller}
+
+::: {style="font-size: 0.82em;"}
+**Goal:** derive $\text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\tfrac{1}{n}+\tfrac{\bar{x}^2}{S_{xx}}\right)$.
+
+**Step 1 — expand the variance.** Since $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$ and $\bar{x}$ is a fixed constant:
+$$\text{Var}(\widehat{\beta}_0) = \text{Var}(\bar{y} - \widehat{\beta}_1\bar{x}) = \text{Var}(\bar{y}) + \bar{x}^2\,\text{Var}(\widehat{\beta}_1) - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
+
+**Step 2 — substitute known variances.** Using $\text{Var}(\bar{y}) = \sigma^2/n$ and $\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}$:
+$$= \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
+
 **Step 3 — handle the covariance.** It can be shown that $\text{Cov}(\bar{y}, \widehat{\beta}_1) = 0$ (see [proof](https://en.wikipedia.org/wiki/Simple_linear_regression)), so the last term drops out:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=3 style="visibility: hidden;"}
 $$\text{Var}(\widehat{\beta}_0) = \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}\right) \qquad$$
-:::
-::: {.fragment fragment-index=6 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\text{Var}(\widehat{\beta}_0) = \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}\right) \qquad$$
-:::
-:::
 
 :::
 
@@ -294,29 +277,27 @@ $$\text{Var}(\widehat{\beta}_0) = \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{
 
 Let $b_1^* = \sum_{i=1}^n c_i y_i$ be any competing linear unbiased estimator of $\beta_1$.
 
-::: {.fragment fragment-index=1}
 **Step 1 — unbiasedness constraints.** We need $\mathbb{E}(b_1^*) = \beta_1$ for all $\beta_0, \beta_1$. Substitute $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\mathbb{E}(b_1^*) = \sum_{i=1}^n c_i(\beta_0 + \beta_1 x_i) = \beta_0\sum_{i=1}^n c_i + \beta_1\sum_{i=1}^n c_i x_i$$
-:::
-::: {.fragment fragment-index=3 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\mathbb{E}(b_1^*) = \sum_{i=1}^n c_i(\beta_0 + \beta_1 x_i) = \beta_0\sum_{i=1}^n c_i + \beta_1\sum_{i=1}^n c_i x_i$$
-:::
+<div style="height: 6em;"></div>
+
+For this to equal $\beta_1$ for *every* possible $\beta_0$ and $\beta_1$, we match coefficients:
+<div style="height: 4em;"></div>
 :::
 
-::: {.fragment fragment-index=2}
+---
+
+## Property 4: Gauss-Markov (BLUE) (Solution) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Goal:** OLS has the smallest variance among all linear unbiased estimators.
+
+Let $b_1^* = \sum_{i=1}^n c_i y_i$ be any competing linear unbiased estimator of $\beta_1$.
+
+**Step 1 — unbiasedness constraints.** We need $\mathbb{E}(b_1^*) = \beta_1$ for all $\beta_0, \beta_1$. Substitute $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:
+$$\mathbb{E}(b_1^*) = \sum_{i=1}^n c_i(\beta_0 + \beta_1 x_i) = \beta_0\sum_{i=1}^n c_i + \beta_1\sum_{i=1}^n c_i x_i$$
+
 For this to equal $\beta_1$ for *every* possible $\beta_0$ and $\beta_1$, we match coefficients:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
 $$\underbrace{\sum_{i=1}^n c_i}_{\text{coeff. of }\beta_0} = 0 \qquad \text{and} \qquad \underbrace{\sum_{i=1}^n c_i x_i}_{\text{coeff. of }\beta_1} = 1$$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\underbrace{\sum_{i=1}^n c_i}_{\text{coeff. of }\beta_0} = 0 \qquad \text{and} \qquad \underbrace{\sum_{i=1}^n c_i x_i}_{\text{coeff. of }\beta_1} = 1$$
-:::
-:::
 :::
 
 ---
@@ -324,7 +305,6 @@ $$\underbrace{\sum_{i=1}^n c_i}_{\text{coeff. of }\beta_0} = 0 \qquad \text{and}
 ## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
 
 ::: {style="font-size: 0.85em;"}
-::: {.fragment fragment-index=1}
 **Step 2 — decompose the weights.** Write $c_i = a_i + d_i$, where $a_i = (x_i-\bar{x})/S_{xx}$ are the OLS weights and $d_i = c_i - a_i$ is the extra piece.
 
 Both $c_i$ and $a_i$ satisfy the same two constraints:
@@ -334,24 +314,23 @@ Both $c_i$ and $a_i$ satisfy the same two constraints:
 
 Subtracting gives $\sum d_i = 0$ and $\sum d_i x_i = 0$.
 :::
-:::
 
 ---
 
 ## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
 
 ::: {style="font-size: 0.85em;"}
-::: {.fragment fragment-index=1}
 **Step 2 (cont.) — show $\sum a_i d_i = 0$.** We need this so the cross term vanishes when we expand $\sum(a_i + d_i)^2$ in Step 3 — without it we can't isolate $\text{Var}(\widehat{\beta}_1)$. Using $\sum d_i = 0$ and $\sum d_i x_i = 0$:
+<div style="height: 6em;"></div>
 :::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
+
+---
+
+## Property 4: Gauss-Markov (BLUE) (cont.) (Solution) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Step 2 (cont.) — show $\sum a_i d_i = 0$.** We need this so the cross term vanishes when we expand $\sum(a_i + d_i)^2$ in Step 3 — without it we can't isolate $\text{Var}(\widehat{\beta}_1)$. Using $\sum d_i = 0$ and $\sum d_i x_i = 0$:
 $$\sum_{i=1}^n a_i d_i = \frac{\sum(x_i-\bar{x})d_i}{S_{xx}} = \frac{\sum d_i x_i - \bar{x}\sum d_i}{S_{xx}} = \frac{0 - 0}{S_{xx}} = 0$$
-:::
-::: {.fragment fragment-index=2 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sum_{i=1}^n a_i d_i = \frac{\sum(x_i-\bar{x})d_i}{S_{xx}} = \frac{\sum d_i x_i - \bar{x}\sum d_i}{S_{xx}} = \frac{0 - 0}{S_{xx}} = 0$$
-:::
-:::
 :::
 
 ---
@@ -359,22 +338,27 @@ $$\sum_{i=1}^n a_i d_i = \frac{\sum(x_i-\bar{x})d_i}{S_{xx}} = \frac{\sum d_i x_
 ## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
 
 ::: {style="font-size: 0.85em;"}
-::: {.fragment fragment-index=1}
 **Step 3 — compare variances.** Two key rules:
 
 - $\text{Var}(cY) = c^2\text{Var}(Y)$ — a constant scales variance by its square
 - $\text{Var}(Y_1 + Y_2) = \text{Var}(Y_1) + \text{Var}(Y_2)$ when $Y_1, Y_2$ are independent (cross terms $2c_ic_j\text{Cov}(y_i,y_j) = 0$)
 
 Applying both to $b_1^* = \sum c_i y_i$ with independent $y_i$'s and $\text{Var}(y_i) = \sigma^2$:
+<div style="height: 6em;"></div>
 :::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
+
+---
+
+## Property 4: Gauss-Markov (BLUE) (cont.) (Solution) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Step 3 — compare variances.** Two key rules:
+
+- $\text{Var}(cY) = c^2\text{Var}(Y)$ — a constant scales variance by its square
+- $\text{Var}(Y_1 + Y_2) = \text{Var}(Y_1) + \text{Var}(Y_2)$ when $Y_1, Y_2$ are independent (cross terms $2c_ic_j\text{Cov}(y_i,y_j) = 0$)
+
+Applying both to $b_1^* = \sum c_i y_i$ with independent $y_i$'s and $\text{Var}(y_i) = \sigma^2$:
 $$\text{Var}(b_1^*) = \sum_{i=1}^n c_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n c_i^2$$
-:::
-::: {.fragment fragment-index=2 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\text{Var}(b_1^*) = \sum_{i=1}^n c_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n c_i^2$$
-:::
-:::
 :::
 
 ---
@@ -382,33 +366,27 @@ $$\text{Var}(b_1^*) = \sum_{i=1}^n c_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n
 ## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
 
 ::: {style="font-size: 0.85em;"}
-::: {.fragment fragment-index=1}
 Substitute $c_i = a_i + d_i$ and expand:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=1 style="visibility: hidden;"}
-$$\sigma^2\sum(a_i + d_i)^2 = \sigma^2\!\left(\sum a_i^2 + 2\underbrace{\sum a_i d_i}_{=\;0} + \sum d_i^2\right) = \sigma^2\sum a_i^2 + \sigma^2\sum d_i^2$$
-:::
-::: {.fragment fragment-index=3 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\sigma^2\sum(a_i + d_i)^2 = \sigma^2\!\left(\sum a_i^2 + 2\underbrace{\sum a_i d_i}_{=\;0} + \sum d_i^2\right) = \sigma^2\sum a_i^2 + \sigma^2\sum d_i^2$$
-:::
-:::
+<div style="height: 6em;"></div>
 
-::: {.fragment fragment-index=2}
 Recognizing $\sigma^2 \sum a_i^2 = \text{Var}(\widehat{\beta}_1)$:
-:::
-::: {style="position: relative;"}
-::: {.fragment fragment-index=2 style="visibility: hidden;"}
-$$\text{Var}(b_1^*) = \text{Var}(\widehat{\beta}_1) + \underbrace{\sigma^2 \sum d_i^2}_{\geq\;0} \;\geq\; \text{Var}(\widehat{\beta}_1) \qquad $$
-:::
-::: {.fragment fragment-index=4 style="position: absolute; top: 0; left: 0; width: 100%;"}
-$$\text{Var}(b_1^*) = \text{Var}(\widehat{\beta}_1) + \underbrace{\sigma^2 \sum d_i^2}_{\geq\;0} \;\geq\; \text{Var}(\widehat{\beta}_1) \qquad $$
-:::
-:::
+<div style="height: 4em;"></div>
 
-::: {.fragment fragment-index=5}
 The extra term $\sigma^2\sum d_i^2 \geq 0$ always — with equality only when $d_i = 0$ for all $i$, i.e. when $b_1^* = \widehat{\beta}_1$.
 :::
+
+---
+
+## Property 4: Gauss-Markov (BLUE) (cont.) (Solution) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+Substitute $c_i = a_i + d_i$ and expand:
+$$\sigma^2\sum(a_i + d_i)^2 = \sigma^2\!\left(\sum a_i^2 + 2\underbrace{\sum a_i d_i}_{=\;0} + \sum d_i^2\right) = \sigma^2\sum a_i^2 + \sigma^2\sum d_i^2$$
+
+Recognizing $\sigma^2 \sum a_i^2 = \text{Var}(\widehat{\beta}_1)$:
+$$\text{Var}(b_1^*) = \text{Var}(\widehat{\beta}_1) + \underbrace{\sigma^2 \sum d_i^2}_{\geq\;0} \;\geq\; \text{Var}(\widehat{\beta}_1) \qquad $$
+
+The extra term $\sigma^2\sum d_i^2 \geq 0$ always — with equality only when $d_i = 0$ for all $i$, i.e. when $b_1^* = \widehat{\beta}_1$.
 :::
 
 ---
