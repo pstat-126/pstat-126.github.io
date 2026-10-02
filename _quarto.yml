@@ -3,6 +3,8 @@ project:
   output-dir: docs
   resources:
     - late_pass_questionnaire/
+  post-render:
+    - scripts/copy_rmds.sh
 
 website:
   title: "PSTAT 126"

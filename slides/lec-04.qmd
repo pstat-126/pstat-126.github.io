@@ -108,6 +108,18 @@ It can be shown that $\mathbb{E}(\widehat{\sigma}^2) = \sigma^2$, so $\widehat{\
 
 ::: {style="font-size: 0.85em;"}
 **Step 1 — expand E(SSE).** Substitute $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$:
+<div style="height: 8em;"></div>
+
+**Step 2 — expand the square and use** $\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}$:
+<div style="height: 8em;"></div>
+:::
+
+---
+
+## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (Solution) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Step 1 — expand E(SSE).** Substitute $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$:
 $$\mathbb{E}(\text{SSE}) = \mathbb{E}\!\left\{\sum(y_i - \widehat{y}_i)^2\right\} = \mathbb{E}\!\left\{\sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\right\}$$
 
 **Step 2 — expand the square and use** $\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}$:
@@ -117,6 +129,28 @@ $$= \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 + \widehat{\beta}_1^2 S_{xx} - 2\wide
 ---
 
 ## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (cont.) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Step 3 — evaluate each expectation piece by piece.**
+
+Substitute $y_i - \bar{y} = \beta_1(x_i-\bar{x}) + (\varepsilon_i - \bar{\varepsilon})$ and expand:
+
+- $\mathbb{E}\!\left\{\sum(y_i-\bar{y})^2\right\} = \beta_1^2 S_{xx} + \mathbb{E}\!\left\{\sum(\varepsilon_i-\bar{\varepsilon})^2\right\} + 0 = \beta_1^2 S_{xx} + (n-1)\sigma^2$
+
+  since $\mathbb{E}\!\left\{\sum(\varepsilon_i - \bar{\varepsilon})^2\right\} = (n-1)\sigma^2$ and the cross term has $\mathbb{E}(\varepsilon_i - \bar{\varepsilon}) = 0$
+
+- $\mathbb{E}(\widehat{\beta}_1^2) = \text{Var}(\widehat{\beta}_1) + \left[\mathbb{E}(\widehat{\beta}_1)\right]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2$, so $\;\mathbb{E}(\widehat{\beta}_1^2 S_{xx}) = \sigma^2 + \beta_1^2 S_{xx}$
+
+**Step 4 — combine:**
+<div style="height: 4em;"></div>
+
+Therefore:
+<div style="height: 4em;"></div>
+:::
+
+---
+
+## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (cont.) (Solution) {.smaller}
 
 ::: {style="font-size: 0.85em;"}
 **Step 3 — evaluate each expectation piece by piece.**
