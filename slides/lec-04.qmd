@@ -1,9 +1,9 @@
 ---
-title: "Lecture 3: Residuals and Estimating Error Variance"
+title: "Lecture 4: Residuals and Estimating Error Variance"
 subtitle: "PSTAT 126: Linear Regression"
 author: "Annie Adams"
 institute: "UC Santa Barbara"
-date: "10/2/2026"
+date: "10/7/2026"
 format:
   revealjs:
     theme: [default, ../styles.scss]

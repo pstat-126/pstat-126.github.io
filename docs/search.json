@@ -51,126 +51,126 @@
   {
     "objectID": "slides/lec-04.html#review-ols-estimators",
     "href": "slides/lec-04.html#review-ols-estimators",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Review: OLS Estimators",
     "text": "Review: OLS Estimators\nFrom last time, the OLS estimators are:\n\\[\\widehat{\\beta}_1 = \\frac{S_{xy}}{S_{xx}}, \\qquad \\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\]\nThey are unbiased, linear, and BLUE (Gauss-Markov).\nToday: What do the residuals tell us, and how do we estimate the unknown \\(\\sigma^2\\)?"
   },
   {
     "objectID": "slides/lec-04.html#learning-objectives",
     "href": "slides/lec-04.html#learning-objectives",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Learning Objectives",
     "text": "Learning Objectives\nBy the end of today you will be able to:\n\nDefine residuals and explain what they measure\nState and prove the four properties of OLS residuals\nDefine RSS and explain its role in regression\nCompute and interpret \\(\\widehat{\\sigma}^2\\) and \\(\\widehat{\\sigma}\\)\nExplain why we divide by \\(n - 2\\) rather than \\(n\\)"
   },
   {
     "objectID": "slides/lec-04.html#residuals",
     "href": "slides/lec-04.html#residuals",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Residuals",
     "text": "Residuals"
   },
   {
     "objectID": "slides/lec-04.html#what-are-residuals",
     "href": "slides/lec-04.html#what-are-residuals",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "What are Residuals?",
     "text": "What are Residuals?\nAfter fitting the model, the residual for observation \\(i\\) is:\n\\[e_i = y_i - \\widehat{y}_i = y_i - \\widehat{\\beta}_0 - \\widehat{\\beta}_1 x_i\\]\nResiduals measure how far each observation falls from the fitted line:\n\n\\(e_i &gt; 0\\): observed value is above the fitted line\n\\(e_i &lt; 0\\): observed value is below the fitted line\n\\(e_i = 0\\): observation falls exactly on the fitted line\n\n\n\n\n\n\n\nNote\n\n\nResiduals \\(e_i\\) are the observable counterparts to the unobservable errors \\(\\varepsilon_i\\). We use them to check model assumptions and estimate \\(\\sigma^2\\)."
   },
   {
     "objectID": "slides/lec-04.html#properties-of-ols-residuals",
     "href": "slides/lec-04.html#properties-of-ols-residuals",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Properties of OLS Residuals",
     "text": "Properties of OLS Residuals\n\n\\(\\displaystyle\\sum_{i=1}^n e_i = 0\\) — residuals sum to zero\n\\(\\displaystyle\\sum_{i=1}^n \\widehat{y}_i = \\sum_{i=1}^n y_i\\) — sum of fitted values equals sum of observed values\n\\(\\displaystyle\\sum_{i=1}^n x_i e_i = 0\\) — residuals are uncorrelated with the predictor\n\\(\\displaystyle\\sum_{i=1}^n \\widehat{y}_i e_i = 0\\) — residuals are uncorrelated with the fitted values\nThe fitted line always passes through \\((\\bar{x}, \\bar{y})\\)"
   },
   {
     "objectID": "slides/lec-04.html#estimating-sigma2",
     "href": "slides/lec-04.html#estimating-sigma2",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Estimating \\(\\sigma^2\\)",
     "text": "Estimating \\(\\sigma^2\\)"
   },
   {
     "objectID": "slides/lec-04.html#residual-sum-of-squares",
     "href": "slides/lec-04.html#residual-sum-of-squares",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Residual Sum of Squares",
     "text": "Residual Sum of Squares\nThe Residual Sum of Squares (RSS) measures the total unexplained variation:\n\\[\\text{RSS} = \\sum_{i=1}^n e_i^2 = \\sum_{i=1}^n (y_i - \\widehat{y}_i)^2\\]\n\nA smaller RSS means the line fits the data more closely\nRSS = 0 only if every point lies exactly on the fitted line"
   },
   {
     "objectID": "slides/lec-04.html#estimating-sigma2-1",
     "href": "slides/lec-04.html#estimating-sigma2-1",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Estimating \\(\\sigma^2\\)",
     "text": "Estimating \\(\\sigma^2\\)\nThe error variance \\(\\sigma^2 = \\text{Var}(\\varepsilon_i)\\) is unknown. We estimate it using the residuals.\nA natural starting point is the average squared residual, but we must divide by \\(n - 2\\), not \\(n\\):\n\\[\\widehat{\\sigma}^2 = \\frac{\\text{RSS}}{n - 2} = \\frac{\\sum_{i=1}^n e_i^2}{n-2}\\]\nWhy \\(n - 2\\)? Estimating \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) uses 2 degrees of freedom since two parameters are being used.\nIt can be shown that \\(\\mathbb{E}(\\widehat{\\sigma}^2) = \\sigma^2\\), so \\(\\widehat{\\sigma}^2\\) is an unbiased estimator of \\(\\sigma^2\\)."
   },
   {
     "objectID": "slides/lec-04.html#proof-mathbbetextmse-sigma2",
     "href": "slides/lec-04.html#proof-mathbbetextmse-sigma2",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Proof: \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\)",
     "text": "Proof: \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\)\n\nStep 1 — expand E(SSE). Substitute \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\):\n\n\n\nStep 2 — expand the square and use \\(\\sum(y_i-\\bar{y})(x_i-\\bar{x}) = \\widehat{\\beta}_1 S_{xx}\\):"
   },
   {
     "objectID": "slides/lec-04.html#proof-mathbbetextmse-sigma2-solution",
     "href": "slides/lec-04.html#proof-mathbbetextmse-sigma2-solution",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Proof: \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\) (Solution)",
     "text": "Proof: \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\) (Solution)\n\nStep 1 — expand E(SSE). Substitute \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\): \\[\\mathbb{E}(\\text{SSE}) = \\mathbb{E}\\!\\left\\{\\sum(y_i - \\widehat{y}_i)^2\\right\\} = \\mathbb{E}\\!\\left\\{\\sum\\!\\left[(y_i - \\bar{y}) - \\widehat{\\beta}_1(x_i - \\bar{x})\\right]^2\\right\\}\\]\nStep 2 — expand the square and use \\(\\sum(y_i-\\bar{y})(x_i-\\bar{x}) = \\widehat{\\beta}_1 S_{xx}\\): \\[= \\mathbb{E}\\!\\left\\{\\sum(y_i-\\bar{y})^2 + \\widehat{\\beta}_1^2 S_{xx} - 2\\widehat{\\beta}_1^2 S_{xx}\\right\\} = \\mathbb{E}\\!\\left\\{\\sum(y_i-\\bar{y})^2 - \\widehat{\\beta}_1^2 S_{xx}\\right\\}\\]"
   },
   {
     "objectID": "slides/lec-04.html#proof-mathbbetextmse-sigma2-cont.",
     "href": "slides/lec-04.html#proof-mathbbetextmse-sigma2-cont.",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Proof: \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\) (cont.)",
     "text": "Proof: \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\) (cont.)\n\nStep 3 — evaluate each expectation piece by piece.\nSubstitute \\(y_i - \\bar{y} = \\beta_1(x_i-\\bar{x}) + (\\varepsilon_i - \\bar{\\varepsilon})\\) and expand:\n\n\\(\\mathbb{E}\\!\\left\\{\\sum(y_i-\\bar{y})^2\\right\\} = \\beta_1^2 S_{xx} + \\mathbb{E}\\!\\left\\{\\sum(\\varepsilon_i-\\bar{\\varepsilon})^2\\right\\} + 0 = \\beta_1^2 S_{xx} + (n-1)\\sigma^2\\)\nsince \\(\\mathbb{E}\\!\\left\\{\\sum(\\varepsilon_i - \\bar{\\varepsilon})^2\\right\\} = (n-1)\\sigma^2\\) and the cross term has \\(\\mathbb{E}(\\varepsilon_i - \\bar{\\varepsilon}) = 0\\)\n\\(\\mathbb{E}(\\widehat{\\beta}_1^2) = \\text{Var}(\\widehat{\\beta}_1) + \\left[\\mathbb{E}(\\widehat{\\beta}_1)\\right]^2 = \\dfrac{\\sigma^2}{S_{xx}} + \\beta_1^2\\), so \\(\\;\\mathbb{E}(\\widehat{\\beta}_1^2 S_{xx}) = \\sigma^2 + \\beta_1^2 S_{xx}\\)\n\nStep 4 — combine:\n\n\n\nTherefore:"
   },
   {
     "objectID": "slides/lec-04.html#proof-mathbbetextmse-sigma2-cont.-solution",
     "href": "slides/lec-04.html#proof-mathbbetextmse-sigma2-cont.-solution",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Proof: \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\) (cont.) (Solution)",
     "text": "Proof: \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\) (cont.) (Solution)\n\nStep 3 — evaluate each expectation piece by piece.\nSubstitute \\(y_i - \\bar{y} = \\beta_1(x_i-\\bar{x}) + (\\varepsilon_i - \\bar{\\varepsilon})\\) and expand:\n\n\\(\\mathbb{E}\\!\\left\\{\\sum(y_i-\\bar{y})^2\\right\\} = \\beta_1^2 S_{xx} + \\mathbb{E}\\!\\left\\{\\sum(\\varepsilon_i-\\bar{\\varepsilon})^2\\right\\} + 0 = \\beta_1^2 S_{xx} + (n-1)\\sigma^2\\)\nsince \\(\\mathbb{E}\\!\\left\\{\\sum(\\varepsilon_i - \\bar{\\varepsilon})^2\\right\\} = (n-1)\\sigma^2\\) and the cross term has \\(\\mathbb{E}(\\varepsilon_i - \\bar{\\varepsilon}) = 0\\)\n\\(\\mathbb{E}(\\widehat{\\beta}_1^2) = \\text{Var}(\\widehat{\\beta}_1) + \\left[\\mathbb{E}(\\widehat{\\beta}_1)\\right]^2 = \\dfrac{\\sigma^2}{S_{xx}} + \\beta_1^2\\), so \\(\\;\\mathbb{E}(\\widehat{\\beta}_1^2 S_{xx}) = \\sigma^2 + \\beta_1^2 S_{xx}\\)\n\nStep 4 — combine: \\[\\mathbb{E}(\\text{SSE}) = \\beta_1^2 S_{xx} + (n-1)\\sigma^2 - \\sigma^2 - \\beta_1^2 S_{xx} = (n-2)\\sigma^2\\]\nTherefore: \\[\\mathbb{E}(\\text{MSE}) = \\mathbb{E}\\!\\left(\\frac{\\text{SSE}}{n-2}\\right) = \\frac{(n-2)\\sigma^2}{n-2} = \\sigma^2 \\qquad \\blacksquare\\]"
   },
   {
     "objectID": "slides/lec-04.html#the-residual-standard-deviation",
     "href": "slides/lec-04.html#the-residual-standard-deviation",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "The Residual Standard Deviation",
     "text": "The Residual Standard Deviation\nTaking the square root gives the residual standard deviation:\n\\[\\widehat{\\sigma} = \\sqrt{\\widehat{\\sigma}^2} = \\sqrt{\\frac{\\text{RSS}}{n-2}}\\]\nInterpretation: \\(\\widehat{\\sigma}\\) is the typical size of a prediction error, on the scale of \\(y\\).\n\n\n\n\n\n\nTip\n\n\nCompare \\(\\widehat{\\sigma}\\) to the spread of \\(y\\) to gauge model usefulness. A small \\(\\widehat{\\sigma}\\) relative to the range of \\(y\\) indicates a good fit."
   },
   {
     "objectID": "slides/lec-04.html#standard-errors-of-the-estimators",
     "href": "slides/lec-04.html#standard-errors-of-the-estimators",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Standard Errors of the Estimators",
     "text": "Standard Errors of the Estimators\nSince \\(\\sigma^2\\) is unknown, we replace it with \\(\\widehat{\\sigma}^2\\) in the variance formulas:\n\\[\\widehat{\\text{Var}}(\\widehat{\\beta}_1) = \\frac{\\widehat{\\sigma}^2}{S_{xx}}, \\qquad \\widehat{\\text{Var}}(\\widehat{\\beta}_0) = \\widehat{\\sigma}^2\\!\\left(\\frac{1}{n} + \\frac{\\bar{x}^2}{S_{xx}}\\right)\\]\nThe standard errors are the square roots:\n\\[\\text{SE}(\\widehat{\\beta}_1) = \\frac{\\widehat{\\sigma}}{\\sqrt{S_{xx}}}, \\qquad \\text{SE}(\\widehat{\\beta}_0) = \\widehat{\\sigma}\\sqrt{\\frac{1}{n} + \\frac{\\bar{x}^2}{S_{xx}}}\\]\nStandard errors quantify the uncertainty in each estimate — they are the basis for confidence intervals and hypothesis tests (coming soon)."
   },
   {
     "objectID": "slides/lec-04.html#practice-computing-widehatsigma",
     "href": "slides/lec-04.html#practice-computing-widehatsigma",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Practice: Computing \\(\\widehat{\\sigma}\\)",
     "text": "Practice: Computing \\(\\widehat{\\sigma}\\)\nUsing the same dataset (\\(n = 5\\), \\(S_{xx} = 10\\), \\(\\text{RSS} = 6\\), fitted line \\(\\widehat{y} = 1 + 2x\\)):\nCompute:\n\n\\(\\widehat{\\sigma}^2 = \\text{RSS} / (n - 2)\\)\n\\(\\widehat{\\sigma} = \\sqrt{\\widehat{\\sigma}^2}\\)\n\\(\\text{SE}(\\widehat{\\beta}_1) = \\widehat{\\sigma} / \\sqrt{S_{xx}}\\)"
   },
   {
     "objectID": "slides/lec-04.html#practice-solution",
     "href": "slides/lec-04.html#practice-solution",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Practice: Solution",
     "text": "Practice: Solution\nStep 1 — estimate \\(\\sigma^2\\): \\[\\widehat{\\sigma}^2 = \\frac{\\text{RSS}}{n-2} = \\frac{6}{5-2} = \\frac{6}{3} = 2\\]\nStep 2 — residual standard deviation: \\[\\widehat{\\sigma} = \\sqrt{2} \\approx 1.41\\]\nStep 3 — standard error of \\(\\widehat{\\beta}_1\\): \\[\\text{SE}(\\widehat{\\beta}_1) = \\frac{\\widehat{\\sigma}}{\\sqrt{S_{xx}}} = \\frac{\\sqrt{2}}{\\sqrt{10}} = \\sqrt{\\frac{2}{10}} = \\sqrt{0.2} \\approx 0.45\\]\nInterpretation: the slope estimate \\(\\widehat{\\beta}_1 = 2\\) has a typical uncertainty of about \\(\\pm 0.45\\) wellness points per hour of exercise."
   },
   {
     "objectID": "slides/lec-04.html#summary",
     "href": "slides/lec-04.html#summary",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Summary",
     "text": "Summary\n\nResiduals \\(e_i = y_i - \\widehat{y}_i\\) are observed proxies for the unobservable errors \\(\\varepsilon_i\\)\nFive properties of OLS residuals follow from the normal equations: \\(\\sum e_i = 0\\), \\(\\sum \\widehat{y}_i = \\sum y_i\\), \\(\\sum x_i e_i = 0\\), \\(\\sum \\widehat{y}_i e_i = 0\\), and the line passes through \\((\\bar{x}, \\bar{y})\\)\nRSS \\(= \\sum e_i^2\\) measures total unexplained variation — OLS minimizes it by construction\n\\(\\widehat{\\sigma}^2 = \\text{RSS}/(n-2)\\) is an unbiased estimate of \\(\\sigma^2\\); dividing by \\(n-2\\) corrects for two constraints placed on the residuals\n\\(\\widehat{\\sigma}\\) is the residual standard deviation — the typical prediction error on the scale of \\(y\\)\nStandard errors replace \\(\\sigma\\) with \\(\\widehat{\\sigma}\\) in the variance formulas — the foundation for inference"
   },
   {
     "objectID": "slides/lec-04.html#questions",
     "href": "slides/lec-04.html#questions",
-    "title": "Lecture 3: Residuals and Estimating Error Variance",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Questions?",
     "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
   },

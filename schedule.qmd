@@ -52,7 +52,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
     <tr>
       <td class="date-cell">Mon, Oct 5</td>
       <td class="topic-cell">Properties of OLS Estimators
-      <td><a class="badge-slide" href="#slides/lec-03.html">Slides</a></td>
+      <td><a class="badge-slide" href="slides/lec-03.html">Slides</a></td>
       <td><a class="badge-lab" href="labs/lab-01.html">Lab 1</a></td>
       <td></td>
     </tr>
