@@ -854,14 +854,14 @@
     "href": "slides/lec-03.html#property-1-linearity-of-widehatbeta_0",
     "title": "Lecture 3: OLS Properties",
     "section": "Property 1: Linearity of \\(\\widehat{\\beta}_0\\)",
-    "text": "Property 1: Linearity of \\(\\widehat{\\beta}_0\\)\n\nFrom the previous slide, \\(\\widehat{\\beta}_1 = \\sum a_i y_i\\). Now show \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) is also linear.\nStep 1 — write \\(\\bar{y}\\) as a sum (the sample mean is itself a linear combination):\n\n\n\nStep 2 — substitute and collect \\(y_i\\) terms:\n\n\n\nThe weights \\(\\left(\\tfrac{1}{n} - a_i\\bar{x}\\right)\\) depend only on \\(x_i\\), not \\(y_i\\).\nBoth \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) are linear combinations of \\(y_1,\\ldots,y_n\\)."
+    "text": "Property 1: Linearity of \\(\\widehat{\\beta}_0\\)\n\nFrom the previous slide, \\(\\widehat{\\beta}_1 = \\sum a_i y_i\\). Now show \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) is also linear.\nStep 1 — write \\(\\bar{y}\\) as a sum (the sample mean is itself a linear combination):\n\n\n\nStep 2 — substitute \\(\\widehat{\\beta}_1 = \\sum a_i y_i\\) and collect \\(y_i\\) terms:\n\n\n\nThe weights \\(\\left(\\tfrac{1}{n} - a_i\\bar{x}\\right)\\) depend only on \\(x_i\\), not \\(y_i\\).\nBoth \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) are linear combinations of \\(y_1,\\ldots,y_n\\)."
   },
   {
     "objectID": "slides/lec-03.html#property-1-linearity-of-widehatbeta_0-solution",
     "href": "slides/lec-03.html#property-1-linearity-of-widehatbeta_0-solution",
     "title": "Lecture 3: OLS Properties",
     "section": "Property 1: Linearity of \\(\\widehat{\\beta}_0\\) (Solution)",
-    "text": "Property 1: Linearity of \\(\\widehat{\\beta}_0\\) (Solution)\n\nFrom the previous slide, \\(\\widehat{\\beta}_1 = \\sum a_i y_i\\). Now show \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) is also linear.\nStep 1 — write \\(\\bar{y}\\) as a sum (the sample mean is itself a linear combination): \\[\\bar{y} = \\sum_{i=1}^n \\frac{1}{n}y_i\\]\nStep 2 — substitute and collect \\(y_i\\) terms: \\[\\widehat{\\beta}_0 = \\sum_{i=1}^n \\frac{1}{n}y_i - \\bar{x}\\sum_{i=1}^n a_i y_i = \\sum_{i=1}^n\\!\\underbrace{\\left(\\frac{1}{n} - a_i\\bar{x}\\right)}_{\\text{weight for }y_i}y_i\\]\nThe weights \\(\\left(\\tfrac{1}{n} - a_i\\bar{x}\\right)\\) depend only on \\(x_i\\), not \\(y_i\\).\nBoth \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) are linear combinations of \\(y_1,\\ldots,y_n\\)."
+    "text": "Property 1: Linearity of \\(\\widehat{\\beta}_0\\) (Solution)\n\nFrom the previous slide, \\(\\widehat{\\beta}_1 = \\sum a_i y_i\\). Now show \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) is also linear.\nStep 1 — write \\(\\bar{y}\\) as a sum (the sample mean is itself a linear combination): \\[\\bar{y} = \\sum_{i=1}^n \\frac{1}{n}y_i\\]\nStep 2 — substitute \\(\\widehat{\\beta}_1 = \\sum a_i y_i\\) and collect \\(y_i\\) terms: \\[\\widehat{\\beta}_0 = \\sum_{i=1}^n \\frac{1}{n}y_i - \\bar{x}\\sum_{i=1}^n a_i y_i = \\sum_{i=1}^n\\!\\underbrace{\\left(\\frac{1}{n} - a_i\\bar{x}\\right)}_{\\text{weight for }y_i}y_i\\]\nThe weights \\(\\left(\\tfrac{1}{n} - a_i\\bar{x}\\right)\\) depend only on \\(x_i\\), not \\(y_i\\).\nBoth \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) are linear combinations of \\(y_1,\\ldots,y_n\\)."
   },
   {
     "objectID": "slides/lec-03.html#property-2-widehatbeta_1-is-unbiased",
@@ -875,14 +875,14 @@
     "href": "slides/lec-03.html#property-2-widehatbeta_1-is-unbiased-cont.",
     "title": "Lecture 3: OLS Properties",
     "section": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.)",
-    "text": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.)\n\nStep 1 — apply linearity of expectation. Since \\(a_i\\) are constants:\n\n\n\nStep 2 — substitute \\(\\mathbb{E}(y_i) = \\beta_0 + \\beta_1 x_i\\):\n\n\n\nStep 3 — evaluate the constraint sums. Recall \\(a_i = (x_i - \\bar{x})/S_{xx}\\): - \\(\\sum a_i = \\sum(x_i-\\bar{x})/S_{xx} = 0\\) since deviations from the mean sum to zero - \\(\\sum a_i x_i = \\sum(x_i-\\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1\\)"
+    "text": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.)\n\nStep 1 — apply linearity of expectation. Since \\(a_i\\) are constants:\n\n\n\nStep 2 — substitute \\(\\mathbb{E}(y_i) = \\beta_0 + \\beta_1 x_i\\):"
   },
   {
     "objectID": "slides/lec-03.html#property-2-widehatbeta_1-is-unbiased-cont.-solution",
     "href": "slides/lec-03.html#property-2-widehatbeta_1-is-unbiased-cont.-solution",
     "title": "Lecture 3: OLS Properties",
     "section": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.) (Solution)",
-    "text": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.) (Solution)\n\nStep 1 — apply linearity of expectation. Since \\(a_i\\) are constants: \\[\\mathbb{E}(\\widehat{\\beta}_1) = \\mathbb{E}\\!\\left(\\sum_{i=1}^n a_i y_i\\right) = \\sum_{i=1}^n a_i\\,\\mathbb{E}(y_i)\\]\nStep 2 — substitute \\(\\mathbb{E}(y_i) = \\beta_0 + \\beta_1 x_i\\): \\[= \\sum_{i=1}^n a_i(\\beta_0 + \\beta_1 x_i) = \\beta_0\\underbrace{\\sum_{i=1}^n a_i}_{=\\,0} + \\beta_1\\underbrace{\\sum_{i=1}^n a_i x_i}_{=\\,1}\\]\nStep 3 — evaluate the constraint sums. Recall \\(a_i = (x_i - \\bar{x})/S_{xx}\\): - \\(\\sum a_i = \\sum(x_i-\\bar{x})/S_{xx} = 0\\) since deviations from the mean sum to zero - \\(\\sum a_i x_i = \\sum(x_i-\\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1\\)\nTherefore \\(\\mathbb{E}(\\widehat{\\beta}_1) = \\beta_0 \\cdot 0 + \\beta_1 \\cdot 1 = \\beta_1\\)."
+    "text": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.) (Solution)\n\nStep 1 — apply linearity of expectation. Since \\(a_i\\) are constants: \\[\\mathbb{E}(\\widehat{\\beta}_1) = \\mathbb{E}\\!\\left(\\sum_{i=1}^n a_i y_i\\right) = \\sum_{i=1}^n a_i\\,\\mathbb{E}(y_i)\\]\nStep 2 — substitute \\(\\mathbb{E}(y_i) = \\beta_0 + \\beta_1 x_i\\): \\[\\mathbb{E}(y_i) = \\mathbb{E}(\\beta_0 + \\beta_1 x_i + \\varepsilon_i) = \\mathbb{E}(\\beta_0 + \\beta_1 x_i) + \\underbrace{\\mathbb{E}(\\varepsilon_i)}_{=\\,0} = \\beta_0 + \\beta_1 x_i\\] \\[= \\sum_{i=1}^n a_i(\\beta_0 + \\beta_1 x_i) = \\beta_0\\underbrace{\\sum_{i=1}^n a_i}_{=\\,0} + \\beta_1\\underbrace{\\sum_{i=1}^n a_i x_i}_{=\\,1}\\]"
   },
   {
     "objectID": "slides/lec-03.html#property-2-widehatbeta_0-is-unbiased",
@@ -903,42 +903,42 @@
     "href": "slides/lec-03.html#property-3-variance-of-widehatbeta_1",
     "title": "Lecture 3: OLS Properties",
     "section": "Property 3: Variance of \\(\\widehat{\\beta}_1\\)",
-    "text": "Property 3: Variance of \\(\\widehat{\\beta}_1\\)\nGoal: derive the formula \\(\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2 / S_{xx}\\).\nStep 1 — apply the variance of a linear combination: since \\(y_i\\)’s are independent with \\(\\text{Var}(y_i)=\\sigma^2\\), and \\(a_i\\) are fixed constants:\n\n\n\nIndependence eliminates all cross-terms \\(a_ia_j\\text{Cov}(y_i,y_j)\\) for \\(i\\neq j\\)."
+    "text": "Property 3: Variance of \\(\\widehat{\\beta}_1\\)\nGoal: derive \\(\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2 / S_{xx}\\).\nStep 1 — apply \\(\\text{Var}\\!\\left(\\sum_i a_i Y_i\\right) = \\sum_i a_i^2\\,\\text{Var}(Y_i)\\) for independent \\(Y_i\\) with fixed \\(a_i\\):\n\n\n\nStep 2 — show \\(\\sum a_i^2 = 1/S_{xx}\\):\n\n\n\nStep 3 — combine:"
   },
   {
     "objectID": "slides/lec-03.html#property-3-variance-of-widehatbeta_1-solution",
     "href": "slides/lec-03.html#property-3-variance-of-widehatbeta_1-solution",
     "title": "Lecture 3: OLS Properties",
     "section": "Property 3: Variance of \\(\\widehat{\\beta}_1\\) (Solution)",
-    "text": "Property 3: Variance of \\(\\widehat{\\beta}_1\\) (Solution)\nGoal: derive the formula \\(\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2 / S_{xx}\\).\nStep 1 — apply the variance of a linear combination: since \\(y_i\\)’s are independent with \\(\\text{Var}(y_i)=\\sigma^2\\), and \\(a_i\\) are fixed constants: \\[\\text{Var}(\\widehat{\\beta}_1) = \\text{Var}\\!\\left(\\sum_{i=1}^n a_i y_i\\right) \\overset{\\text{indep.}}{=} \\sum_{i=1}^n a_i^2\\,\\text{Var}(y_i) = \\sigma^2\\sum_{i=1}^n a_i^2\\]\nIndependence eliminates all cross-terms \\(a_ia_j\\text{Cov}(y_i,y_j)\\) for \\(i\\neq j\\)."
+    "text": "Property 3: Variance of \\(\\widehat{\\beta}_1\\) (Solution)\nGoal: derive \\(\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2 / S_{xx}\\).\nStep 1 — apply \\(\\text{Var}\\!\\left(\\sum_i a_i Y_i\\right) = \\sum_i a_i^2\\,\\text{Var}(Y_i)\\) for independent \\(Y_i\\) with fixed \\(a_i\\):\nSince \\(\\text{Var}(y_i) = \\text{Var}(\\varepsilon_i) = \\sigma^2\\) (homoscedasticity assumption): \\[\\text{Var}(\\widehat{\\beta}_1) = \\text{Var}\\!\\left(\\sum_{i=1}^n a_i y_i\\right) \\overset{\\text{indep.}}{=} \\sum_{i=1}^n a_i^2\\,\\text{Var}(y_i) = \\sigma^2\\sum_{i=1}^n a_i^2\\]\nStep 2 — show \\(\\sum a_i^2 = 1/S_{xx}\\): \\[\\sum_{i=1}^n a_i^2 = \\sum_{i=1}^n \\frac{(x_i-\\bar{x})^2}{S_{xx}^2} = \\frac{1}{S_{xx}^2}\\underbrace{\\sum_{i=1}^n(x_i-\\bar{x})^2}_{=\\,S_{xx}} = \\frac{1}{S_{xx}}\\]\nStep 3 — combine: \\[\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2 \\cdot \\frac{1}{S_{xx}} = \\frac{\\sigma^2}{S_{xx}} \\qquad \\checkmark\\]"
   },
   {
     "objectID": "slides/lec-03.html#property-3-variance-of-widehatbeta_1-cont.",
     "href": "slides/lec-03.html#property-3-variance-of-widehatbeta_1-cont.",
     "title": "Lecture 3: OLS Properties",
     "section": "Property 3: Variance of \\(\\widehat{\\beta}_1\\) (cont.)",
-    "text": "Property 3: Variance of \\(\\widehat{\\beta}_1\\) (cont.)\nStep 2 — evaluate \\(\\sum a_i^2\\): substitute \\(a_i = (x_i-\\bar{x})/S_{xx}\\) and use \\(\\sum(x_i-\\bar{x})^2 = S_{xx}\\):\n\n\n\nStep 3 — combine:"
+    "text": "Property 3: Variance of \\(\\widehat{\\beta}_1\\) (cont.)\nStep 2 — evaluate \\(\\sum a_i^2\\): substitute \\(a_i = (x_i-\\bar{x})/S_{xx}\\) into the sum. Factor out \\(1/S_{xx}^2\\) (a constant), then recognize \\(\\sum(x_i-\\bar{x})^2 = S_{xx}\\) by definition:\n\n\n\nStep 3 — combine Steps 1 and 2: plug \\(\\sum a_i^2 = 1/S_{xx}\\) back into \\(\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2\\sum a_i^2\\) from Step 1:"
   },
   {
     "objectID": "slides/lec-03.html#property-3-variance-of-widehatbeta_1-cont.-solution",
     "href": "slides/lec-03.html#property-3-variance-of-widehatbeta_1-cont.-solution",
     "title": "Lecture 3: OLS Properties",
     "section": "Property 3: Variance of \\(\\widehat{\\beta}_1\\) (cont.) (Solution)",
-    "text": "Property 3: Variance of \\(\\widehat{\\beta}_1\\) (cont.) (Solution)\nStep 2 — evaluate \\(\\sum a_i^2\\): substitute \\(a_i = (x_i-\\bar{x})/S_{xx}\\) and use \\(\\sum(x_i-\\bar{x})^2 = S_{xx}\\): \\[\\sum_{i=1}^n a_i^2 = \\sum_{i=1}^n \\frac{(x_i-\\bar{x})^2}{S_{xx}^2} = \\frac{1}{S_{xx}^2}\\underbrace{\\sum_{i=1}^n(x_i-\\bar{x})^2}_{=\\,S_{xx}} = \\frac{1}{S_{xx}}\\]\nStep 3 — combine: \\[\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2 \\cdot \\frac{1}{S_{xx}} = \\frac{\\sigma^2}{S_{xx}} \\qquad\\]"
+    "text": "Property 3: Variance of \\(\\widehat{\\beta}_1\\) (cont.) (Solution)\nStep 2 — evaluate \\(\\sum a_i^2\\): substitute \\(a_i = (x_i-\\bar{x})/S_{xx}\\) into the sum. Factor out \\(1/S_{xx}^2\\) (a constant), then recognize \\(\\sum(x_i-\\bar{x})^2 = S_{xx}\\) by definition: \\[\\sum_{i=1}^n a_i^2 = \\sum_{i=1}^n \\frac{(x_i-\\bar{x})^2}{S_{xx}^2} = \\frac{1}{S_{xx}^2}\\underbrace{\\sum_{i=1}^n(x_i-\\bar{x})^2}_{=\\,S_{xx}} = \\frac{S_{xx}}{S_{xx}^2} = \\frac{1}{S_{xx}}\\]\nStep 3 — combine Steps 1 and 2: plug \\(\\sum a_i^2 = 1/S_{xx}\\) back into \\(\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2\\sum a_i^2\\) from Step 1: \\[\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2 \\cdot \\sum_{i=1}^n a_i^2 = \\sigma^2 \\cdot \\frac{1}{S_{xx}} = \\frac{\\sigma^2}{S_{xx}} \\qquad \\checkmark\\]"
   },
   {
     "objectID": "slides/lec-03.html#property-3-variance-of-widehatbeta_0",
     "href": "slides/lec-03.html#property-3-variance-of-widehatbeta_0",
     "title": "Lecture 3: OLS Properties",
     "section": "Property 3: Variance of \\(\\widehat{\\beta}_0\\)",
-    "text": "Property 3: Variance of \\(\\widehat{\\beta}_0\\)\n\nGoal: derive \\(\\text{Var}(\\widehat{\\beta}_0) = \\sigma^2\\!\\left(\\tfrac{1}{n}+\\tfrac{\\bar{x}^2}{S_{xx}}\\right)\\).\nStep 1 — expand the variance. Since \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) and \\(\\bar{x}\\) is a fixed constant:\n\n\n\nStep 2 — substitute known variances. Using \\(\\text{Var}(\\bar{y}) = \\sigma^2/n\\) and \\(\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2/S_{xx}\\):\n\n\n\nStep 3 — handle the covariance. It can be shown that \\(\\text{Cov}(\\bar{y}, \\widehat{\\beta}_1) = 0\\) (see proof), so the last term drops out:"
+    "text": "Property 3: Variance of \\(\\widehat{\\beta}_0\\)\n\nGoal: derive \\(\\text{Var}(\\widehat{\\beta}_0) = \\sigma^2\\!\\left(\\tfrac{1}{n}+\\tfrac{\\bar{x}^2}{S_{xx}}\\right)\\).\nStep 1 — expand the variance using \\(\\text{Var}(X - cY) = \\text{Var}(X) + c^2\\text{Var}(Y) - 2c\\,\\text{Cov}(X,Y)\\), with \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) and \\(\\bar{x}\\) a fixed constant:\n\n\n\nStep 2 — substitute known variances. Note \\(\\text{Var}(\\bar{y}) = \\text{Var}\\!\\left(\\tfrac{1}{n}\\sum y_i\\right) \\overset{\\text{Var}(cX)=c^2\\text{Var}(X)}{=} \\tfrac{1}{n^2}\\sum\\text{Var}(y_i) = \\tfrac{1}{n^2}\\cdot n\\sigma^2 = \\tfrac{\\sigma^2}{n}\\). Using this and \\(\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2/S_{xx}\\):\n\n\n\nStep 3 — handle the covariance. It can be shown that \\(\\text{Cov}(\\bar{y}, \\widehat{\\beta}_1) = 0\\) (see proof), so the last term drops out:"
   },
   {
     "objectID": "slides/lec-03.html#property-3-variance-of-widehatbeta_0-solution",
     "href": "slides/lec-03.html#property-3-variance-of-widehatbeta_0-solution",
     "title": "Lecture 3: OLS Properties",
     "section": "Property 3: Variance of \\(\\widehat{\\beta}_0\\) (Solution)",
-    "text": "Property 3: Variance of \\(\\widehat{\\beta}_0\\) (Solution)\n\nGoal: derive \\(\\text{Var}(\\widehat{\\beta}_0) = \\sigma^2\\!\\left(\\tfrac{1}{n}+\\tfrac{\\bar{x}^2}{S_{xx}}\\right)\\).\nStep 1 — expand the variance. Since \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) and \\(\\bar{x}\\) is a fixed constant: \\[\\text{Var}(\\widehat{\\beta}_0) = \\text{Var}(\\bar{y} - \\widehat{\\beta}_1\\bar{x}) = \\text{Var}(\\bar{y}) + \\bar{x}^2\\,\\text{Var}(\\widehat{\\beta}_1) - 2\\bar{x}\\,\\text{Cov}(\\bar{y},\\widehat{\\beta}_1)\\]\nStep 2 — substitute known variances. Using \\(\\text{Var}(\\bar{y}) = \\sigma^2/n\\) and \\(\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2/S_{xx}\\): \\[= \\frac{\\sigma^2}{n} + \\frac{\\bar{x}^2\\sigma^2}{S_{xx}} - 2\\bar{x}\\,\\text{Cov}(\\bar{y},\\widehat{\\beta}_1)\\]\nStep 3 — handle the covariance. It can be shown that \\(\\text{Cov}(\\bar{y}, \\widehat{\\beta}_1) = 0\\) (see proof), so the last term drops out: \\[\\text{Var}(\\widehat{\\beta}_0) = \\frac{\\sigma^2}{n} + \\frac{\\bar{x}^2\\sigma^2}{S_{xx}} = \\sigma^2\\!\\left(\\frac{1}{n}+\\frac{\\bar{x}^2}{S_{xx}}\\right) \\qquad\\]"
+    "text": "Property 3: Variance of \\(\\widehat{\\beta}_0\\) (Solution)\n\nGoal: derive \\(\\text{Var}(\\widehat{\\beta}_0) = \\sigma^2\\!\\left(\\tfrac{1}{n}+\\tfrac{\\bar{x}^2}{S_{xx}}\\right)\\).\nStep 1 — expand the variance using \\(\\text{Var}(X - cY) = \\text{Var}(X) + c^2\\text{Var}(Y) - 2c\\,\\text{Cov}(X,Y)\\), with \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) and \\(\\bar{x}\\) a fixed constant: \\[\\text{Var}(\\widehat{\\beta}_0) = \\text{Var}(\\bar{y} - \\widehat{\\beta}_1\\bar{x}) = \\text{Var}(\\bar{y}) + \\bar{x}^2\\,\\text{Var}(\\widehat{\\beta}_1) - 2\\bar{x}\\,\\text{Cov}(\\bar{y},\\widehat{\\beta}_1)\\]\nStep 2 — substitute known variances. Note \\(\\text{Var}(\\bar{y}) = \\text{Var}\\!\\left(\\tfrac{1}{n}\\sum y_i\\right) \\overset{\\text{Var}(cX)=c^2\\text{Var}(X)}{=} \\tfrac{1}{n^2}\\sum\\text{Var}(y_i) = \\tfrac{1}{n^2}\\cdot n\\sigma^2 = \\tfrac{\\sigma^2}{n}\\). Using this and \\(\\text{Var}(\\widehat{\\beta}_1) = \\sigma^2/S_{xx}\\): \\[= \\frac{\\sigma^2}{n} + \\frac{\\bar{x}^2\\sigma^2}{S_{xx}} - 2\\bar{x}\\,\\text{Cov}(\\bar{y},\\widehat{\\beta}_1)\\]\nStep 3 — handle the covariance. It can be shown that \\(\\text{Cov}(\\bar{y}, \\widehat{\\beta}_1) = 0\\) (see proof), so the last term drops out: \\[\\text{Var}(\\widehat{\\beta}_0) = \\frac{\\sigma^2}{n} + \\frac{\\bar{x}^2\\sigma^2}{S_{xx}} = \\sigma^2\\!\\left(\\frac{1}{n}+\\frac{\\bar{x}^2}{S_{xx}}\\right) \\qquad\\]"
   },
   {
     "objectID": "slides/lec-03.html#property-4-gauss-markov-blue",
@@ -952,7 +952,7 @@
     "href": "slides/lec-03.html#property-4-gauss-markov-blue-solution",
     "title": "Lecture 3: OLS Properties",
     "section": "Property 4: Gauss-Markov (BLUE) (Solution)",
-    "text": "Property 4: Gauss-Markov (BLUE) (Solution)\n\nGoal: OLS has the smallest variance among all linear unbiased estimators.\nLet \\(b_1^* = \\sum_{i=1}^n c_i y_i\\) be any competing linear unbiased estimator of \\(\\beta_1\\).\nStep 1 — unbiasedness constraints. We need \\(\\mathbb{E}(b_1^*) = \\beta_1\\) for all \\(\\beta_0, \\beta_1\\). Substitute \\(\\mathbb{E}(y_i) = \\beta_0 + \\beta_1 x_i\\): \\[\\mathbb{E}(b_1^*) = \\sum_{i=1}^n c_i(\\beta_0 + \\beta_1 x_i) = \\beta_0\\sum_{i=1}^n c_i + \\beta_1\\sum_{i=1}^n c_i x_i\\]\nFor this to equal \\(\\beta_1\\) for every possible \\(\\beta_0\\) and \\(\\beta_1\\), we match coefficients: \\[\\underbrace{\\sum_{i=1}^n c_i}_{\\text{coeff. of }\\beta_0} = 0 \\qquad \\text{and} \\qquad \\underbrace{\\sum_{i=1}^n c_i x_i}_{\\text{coeff. of }\\beta_1} = 1\\]"
+    "text": "Property 4: Gauss-Markov (BLUE) (Solution)\n\nGoal: OLS has the smallest variance among all linear unbiased estimators.\nLet \\(b_1^* = \\sum_{i=1}^n c_i y_i\\) be any competing linear unbiased estimator of \\(\\beta_1\\).\nStep 1 — unbiasedness constraints. We need \\(\\mathbb{E}(b_1^*) = \\beta_1\\) for all \\(\\beta_0, \\beta_1\\). Substitute \\(\\mathbb{E}(y_i) = \\beta_0 + \\beta_1 x_i\\): \\[\\mathbb{E}(b_1^*) = \\mathbb{E}\\!\\left(\\sum_{i=1}^n c_i y_i\\right) = \\sum_{i=1}^n c_i\\,\\mathbb{E}(y_i) = \\sum_{i=1}^n c_i(\\beta_0 + \\beta_1 x_i) = \\beta_0\\sum_{i=1}^n c_i + \\beta_1\\sum_{i=1}^n c_i x_i\\]\nFor this to equal \\(\\beta_1\\) for every possible \\(\\beta_0\\) and \\(\\beta_1\\), we match coefficients: \\[\\underbrace{\\sum_{i=1}^n c_i}_{\\text{coeff. of }\\beta_0} = 0 \\qquad \\text{and} \\qquad \\underbrace{\\sum_{i=1}^n c_i x_i}_{\\text{coeff. of }\\beta_1} = 1\\]"
   },
   {
     "objectID": "slides/lec-03.html#property-4-gauss-markov-blue-cont.",
@@ -987,7 +987,7 @@
     "href": "slides/lec-03.html#property-4-gauss-markov-blue-cont.-solution-1",
     "title": "Lecture 3: OLS Properties",
     "section": "Property 4: Gauss-Markov (BLUE) (cont.) (Solution)",
-    "text": "Property 4: Gauss-Markov (BLUE) (cont.) (Solution)\n\nStep 3 — compare variances. Two key rules:\n\n\\(\\text{Var}(cY) = c^2\\text{Var}(Y)\\) — a constant scales variance by its square\n\\(\\text{Var}(Y_1 + Y_2) = \\text{Var}(Y_1) + \\text{Var}(Y_2)\\) when \\(Y_1, Y_2\\) are independent (cross terms \\(2c_ic_j\\text{Cov}(y_i,y_j) = 0\\))\n\nApplying both to \\(b_1^* = \\sum c_i y_i\\) with independent \\(y_i\\)’s and \\(\\text{Var}(y_i) = \\sigma^2\\): \\[\\text{Var}(b_1^*) = \\sum_{i=1}^n c_i^2\\,\\text{Var}(y_i) = \\sigma^2\\sum_{i=1}^n c_i^2\\]"
+    "text": "Property 4: Gauss-Markov (BLUE) (cont.) (Solution)\n\nStep 3 — compare variances. Two key rules:\n\n\\(\\text{Var}(cY) = c^2\\text{Var}(Y)\\) — a constant scales variance by its square\n\\(\\text{Var}(Y_1 + Y_2) = \\text{Var}(Y_1) + \\text{Var}(Y_2)\\) when \\(Y_1, Y_2\\) are independent (cross terms \\(2c_ic_j\\text{Cov}(y_i,y_j) = 0\\))\n\nApplying both to \\(b_1^* = \\sum c_i y_i\\) with independent \\(y_i\\)’s and \\(\\text{Var}(y_i) = \\sigma^2\\): \\[\\text{Var}(b_1^*) = \\text{Var}\\!\\left(\\sum_{i=1}^n c_i y_i\\right) \\overset{\\text{indep.}}{=} \\sum_{i=1}^n \\text{Var}(c_i y_i) \\overset{\\text{Var}(cY)=c^2\\text{Var}(Y)}{=} \\sum_{i=1}^n c_i^2\\,\\text{Var}(y_i) = \\sigma^2\\sum_{i=1}^n c_i^2\\]"
   },
   {
     "objectID": "slides/lec-03.html#property-4-gauss-markov-blue-cont.-3",
@@ -1312,5 +1312,19 @@
     "title": "Quiz 1",
     "section": "",
     "text": "Note\n\n\n\nThis quiz has not been released yet. Check back closer to the quiz date."
+  },
+  {
+    "objectID": "slides/lec-03.html#property-2-widehatbeta_1-is-unbiased-cont.-1",
+    "href": "slides/lec-03.html#property-2-widehatbeta_1-is-unbiased-cont.-1",
+    "title": "Lecture 3: OLS Properties",
+    "section": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.)",
+    "text": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.)\n\nStep 3 — evaluate the constraint sums. Recall \\(a_i = (x_i - \\bar{x})/S_{xx}\\):\n\n\\(\\sum a_i = \\sum(x_i-\\bar{x})/S_{xx} = 0\\) since deviations from the mean sum to zero\n\\(\\sum a_i x_i = \\sum(x_i-\\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1\\)"
+  },
+  {
+    "objectID": "slides/lec-03.html#property-2-widehatbeta_1-is-unbiased-cont.-solution-1",
+    "href": "slides/lec-03.html#property-2-widehatbeta_1-is-unbiased-cont.-solution-1",
+    "title": "Lecture 3: OLS Properties",
+    "section": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.) (Solution)",
+    "text": "Property 2: \\(\\widehat{\\beta}_1\\) is Unbiased (cont.) (Solution)\n\nStep 3 — evaluate the constraint sums. Recall \\(a_i = (x_i - \\bar{x})/S_{xx}\\):\n\n\\(\\sum a_i = \\sum(x_i-\\bar{x})/S_{xx} = 0\\) since deviations from the mean sum to zero\n\\(\\sum a_i x_i = \\sum(x_i-\\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1\\)\n\nTherefore \\(\\mathbb{E}(\\widehat{\\beta}_1) = \\beta_0 \\cdot 0 + \\beta_1 \\cdot 1 = \\beta_1\\)."
   }
 ]

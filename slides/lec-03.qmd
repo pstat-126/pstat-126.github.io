@@ -79,7 +79,7 @@ From the previous slide, $\widehat{\beta}_1 = \sum a_i y_i$. Now show $\widehat{
 **Step 1 — write $\bar{y}$ as a sum** (the sample mean is itself a linear combination):
 <div style="height: 8em;"></div>
 
-**Step 2 — substitute and collect** $y_i$ terms:
+**Step 2 — substitute $\widehat{\beta}_1 = \sum a_i y_i$ and collect** $y_i$ terms:
 <div style="height: 6em;"></div>
 
 The weights $\left(\tfrac{1}{n} - a_i\bar{x}\right)$ depend only on $x_i$, not $y_i$.
@@ -97,7 +97,7 @@ From the previous slide, $\widehat{\beta}_1 = \sum a_i y_i$. Now show $\widehat{
 **Step 1 — write $\bar{y}$ as a sum** (the sample mean is itself a linear combination):
 $$\bar{y} = \sum_{i=1}^n \frac{1}{n}y_i$$
 
-**Step 2 — substitute and collect** $y_i$ terms:
+**Step 2 — substitute $\widehat{\beta}_1 = \sum a_i y_i$ and collect** $y_i$ terms:
 $$\widehat{\beta}_0 = \sum_{i=1}^n \frac{1}{n}y_i - \bar{x}\sum_{i=1}^n a_i y_i = \sum_{i=1}^n\!\underbrace{\left(\frac{1}{n} - a_i\bar{x}\right)}_{\text{weight for }y_i}y_i$$
 
 The weights $\left(\tfrac{1}{n} - a_i\bar{x}\right)$ depend only on $x_i$, not $y_i$.
@@ -134,8 +134,18 @@ From the model, $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ with $\mathbb{E}(\
 **Step 2 — substitute $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:**
 <div style="height: 8em;"></div>
 
+:::
+
+---
+
+## Property 2: $\widehat{\beta}_1$ is Unbiased (cont.) {.smaller}
+
+::: {style="font-size: 0.75em;"}
+
 **Step 3 — evaluate the constraint sums.** Recall $a_i = (x_i - \bar{x})/S_{xx}$:
+
 - $\sum a_i = \sum(x_i-\bar{x})/S_{xx} = 0$ since deviations from the mean sum to zero
+
 - $\sum a_i x_i = \sum(x_i-\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1$
 
 :::
@@ -150,10 +160,21 @@ From the model, $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ with $\mathbb{E}(\
 $$\mathbb{E}(\widehat{\beta}_1) = \mathbb{E}\!\left(\sum_{i=1}^n a_i y_i\right) = \sum_{i=1}^n a_i\,\mathbb{E}(y_i)$$
 
 **Step 2 — substitute $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:**
+$$\mathbb{E}(y_i) = \mathbb{E}(\beta_0 + \beta_1 x_i + \varepsilon_i) = \mathbb{E}(\beta_0 + \beta_1 x_i) + \underbrace{\mathbb{E}(\varepsilon_i)}_{=\,0} = \beta_0 + \beta_1 x_i$$
 $$= \sum_{i=1}^n a_i(\beta_0 + \beta_1 x_i) = \beta_0\underbrace{\sum_{i=1}^n a_i}_{=\,0} + \beta_1\underbrace{\sum_{i=1}^n a_i x_i}_{=\,1}$$
 
+:::
+
+---
+
+## Property 2: $\widehat{\beta}_1$ is Unbiased (cont.) (Solution) {.smaller}
+
+::: {style="font-size: 0.75em;"}
+
 **Step 3 — evaluate the constraint sums.** Recall $a_i = (x_i - \bar{x})/S_{xx}$:
+
 - $\sum a_i = \sum(x_i-\bar{x})/S_{xx} = 0$ since deviations from the mean sum to zero
+
 - $\sum a_i x_i = \sum(x_i-\bar{x})x_i/S_{xx} = S_{xx}/S_{xx} = 1$
 
 Therefore $\mathbb{E}(\widehat{\beta}_1) = \beta_0 \cdot 0 + \beta_1 \cdot 1 = \beta_1$.
@@ -194,43 +215,33 @@ $$\mathbb{E}(\widehat{\beta}_0) = (\beta_0 + \beta_1\bar{x}) - \bar{x}\,\beta_1 
 
 ## Property 3: Variance of $\widehat{\beta}_1$ {.smaller}
 
-**Goal:** derive the formula $\text{Var}(\widehat{\beta}_1) = \sigma^2 / S_{xx}$.
+**Goal:** derive $\text{Var}(\widehat{\beta}_1) = \sigma^2 / S_{xx}$.
 
-**Step 1 — apply the variance of a linear combination:** since $y_i$'s are independent with $\text{Var}(y_i)=\sigma^2$, and $a_i$ are fixed constants:
-<div style="height: 8em;"></div>
+**Step 1 — apply $\text{Var}\!\left(\sum_i a_i Y_i\right) = \sum_i a_i^2\,\text{Var}(Y_i)$ for independent $Y_i$ with fixed $a_i$:**
+<div style="height: 5em;"></div>
 
-Independence eliminates all cross-terms $a_ia_j\text{Cov}(y_i,y_j)$ for $i\neq j$.
+**Step 2 — show $\sum a_i^2 = 1/S_{xx}$:**
+<div style="height: 5em;"></div>
+
+**Step 3 — combine:**
+<div style="height: 3em;"></div>
 
 ---
 
 ## Property 3: Variance of $\widehat{\beta}_1$ (Solution) {.smaller}
 
-**Goal:** derive the formula $\text{Var}(\widehat{\beta}_1) = \sigma^2 / S_{xx}$.
+**Goal:** derive $\text{Var}(\widehat{\beta}_1) = \sigma^2 / S_{xx}$.
 
-**Step 1 — apply the variance of a linear combination:** since $y_i$'s are independent with $\text{Var}(y_i)=\sigma^2$, and $a_i$ are fixed constants:
+**Step 1 — apply $\text{Var}\!\left(\sum_i a_i Y_i\right) = \sum_i a_i^2\,\text{Var}(Y_i)$ for independent $Y_i$ with fixed $a_i$:**
+
+Since $\text{Var}(y_i) = \text{Var}(\varepsilon_i) = \sigma^2$ (homoscedasticity assumption):
 $$\text{Var}(\widehat{\beta}_1) = \text{Var}\!\left(\sum_{i=1}^n a_i y_i\right) \overset{\text{indep.}}{=} \sum_{i=1}^n a_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n a_i^2$$
 
-Independence eliminates all cross-terms $a_ia_j\text{Cov}(y_i,y_j)$ for $i\neq j$.
-
----
-
-## Property 3: Variance of $\widehat{\beta}_1$ (cont.) {.smaller}
-
-**Step 2 — evaluate $\sum a_i^2$:** substitute $a_i = (x_i-\bar{x})/S_{xx}$ and use $\sum(x_i-\bar{x})^2 = S_{xx}$:
-<div style="height: 8em;"></div>
-
-**Step 3 — combine:**
-<div style="height: 6em;"></div>
-
----
-
-## Property 3: Variance of $\widehat{\beta}_1$ (cont.) (Solution) {.smaller}
-
-**Step 2 — evaluate $\sum a_i^2$:** substitute $a_i = (x_i-\bar{x})/S_{xx}$ and use $\sum(x_i-\bar{x})^2 = S_{xx}$:
+**Step 2 — show $\sum a_i^2 = 1/S_{xx}$:**
 $$\sum_{i=1}^n a_i^2 = \sum_{i=1}^n \frac{(x_i-\bar{x})^2}{S_{xx}^2} = \frac{1}{S_{xx}^2}\underbrace{\sum_{i=1}^n(x_i-\bar{x})^2}_{=\,S_{xx}} = \frac{1}{S_{xx}}$$
 
 **Step 3 — combine:**
-$$\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma^2}{S_{xx}} \qquad$$
+$$\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma^2}{S_{xx}} \qquad \checkmark$$
 
 ---
 
@@ -239,10 +250,10 @@ $$\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma
 ::: {style="font-size: 0.82em;"}
 **Goal:** derive $\text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\tfrac{1}{n}+\tfrac{\bar{x}^2}{S_{xx}}\right)$.
 
-**Step 1 — expand the variance.** Since $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$ and $\bar{x}$ is a fixed constant:
+**Step 1 — expand the variance** using $\text{Var}(X - cY) = \text{Var}(X) + c^2\text{Var}(Y) - 2c\,\text{Cov}(X,Y)$, with $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$ and $\bar{x}$ a fixed constant:
 <div style="height: 6em;"></div>
 
-**Step 2 — substitute known variances.** Using $\text{Var}(\bar{y}) = \sigma^2/n$ and $\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}$:
+**Step 2 — substitute known variances.** Note $\text{Var}(\bar{y}) = \text{Var}\!\left(\tfrac{1}{n}\sum y_i\right) \overset{\text{Var}(cX)=c^2\text{Var}(X)}{=} \tfrac{1}{n^2}\sum\text{Var}(y_i) = \tfrac{1}{n^2}\cdot n\sigma^2 = \tfrac{\sigma^2}{n}$. Using this and $\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}$:
 <div style="height: 4em;"></div>
 
 **Step 3 — handle the covariance.** It can be shown that $\text{Cov}(\bar{y}, \widehat{\beta}_1) = 0$ (see [proof](https://en.wikipedia.org/wiki/Simple_linear_regression)), so the last term drops out:
@@ -257,10 +268,10 @@ $$\text{Var}(\widehat{\beta}_1) = \sigma^2 \cdot \frac{1}{S_{xx}} = \frac{\sigma
 ::: {style="font-size: 0.82em;"}
 **Goal:** derive $\text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\tfrac{1}{n}+\tfrac{\bar{x}^2}{S_{xx}}\right)$.
 
-**Step 1 — expand the variance.** Since $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$ and $\bar{x}$ is a fixed constant:
+**Step 1 — expand the variance** using $\text{Var}(X - cY) = \text{Var}(X) + c^2\text{Var}(Y) - 2c\,\text{Cov}(X,Y)$, with $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$ and $\bar{x}$ a fixed constant:
 $$\text{Var}(\widehat{\beta}_0) = \text{Var}(\bar{y} - \widehat{\beta}_1\bar{x}) = \text{Var}(\bar{y}) + \bar{x}^2\,\text{Var}(\widehat{\beta}_1) - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
 
-**Step 2 — substitute known variances.** Using $\text{Var}(\bar{y}) = \sigma^2/n$ and $\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}$:
+**Step 2 — substitute known variances.** Note $\text{Var}(\bar{y}) = \text{Var}\!\left(\tfrac{1}{n}\sum y_i\right) \overset{\text{Var}(cX)=c^2\text{Var}(X)}{=} \tfrac{1}{n^2}\sum\text{Var}(y_i) = \tfrac{1}{n^2}\cdot n\sigma^2 = \tfrac{\sigma^2}{n}$. Using this and $\text{Var}(\widehat{\beta}_1) = \sigma^2/S_{xx}$:
 $$= \frac{\sigma^2}{n} + \frac{\bar{x}^2\sigma^2}{S_{xx}} - 2\bar{x}\,\text{Cov}(\bar{y},\widehat{\beta}_1)$$
 
 **Step 3 — handle the covariance.** It can be shown that $\text{Cov}(\bar{y}, \widehat{\beta}_1) = 0$ (see [proof](https://en.wikipedia.org/wiki/Simple_linear_regression)), so the last term drops out:
@@ -282,22 +293,6 @@ Let $b_1^* = \sum_{i=1}^n c_i y_i$ be any competing linear unbiased estimator of
 
 For this to equal $\beta_1$ for *every* possible $\beta_0$ and $\beta_1$, we match coefficients:
 <div style="height: 4em;"></div>
-:::
-
----
-
-## Property 4: Gauss-Markov (BLUE) (Solution) {.smaller}
-
-::: {style="font-size: 0.85em;"}
-**Goal:** OLS has the smallest variance among all linear unbiased estimators.
-
-Let $b_1^* = \sum_{i=1}^n c_i y_i$ be any competing linear unbiased estimator of $\beta_1$.
-
-**Step 1 — unbiasedness constraints.** We need $\mathbb{E}(b_1^*) = \beta_1$ for all $\beta_0, \beta_1$. Substitute $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:
-$$\mathbb{E}(b_1^*) = \sum_{i=1}^n c_i(\beta_0 + \beta_1 x_i) = \beta_0\sum_{i=1}^n c_i + \beta_1\sum_{i=1}^n c_i x_i$$
-
-For this to equal $\beta_1$ for *every* possible $\beta_0$ and $\beta_1$, we match coefficients:
-$$\underbrace{\sum_{i=1}^n c_i}_{\text{coeff. of }\beta_0} = 0 \qquad \text{and} \qquad \underbrace{\sum_{i=1}^n c_i x_i}_{\text{coeff. of }\beta_1} = 1$$
 :::
 
 ---
@@ -326,15 +321,6 @@ Subtracting gives $\sum d_i = 0$ and $\sum d_i x_i = 0$.
 
 ---
 
-## Property 4: Gauss-Markov (BLUE) (cont.) (Solution) {.smaller}
-
-::: {style="font-size: 0.85em;"}
-**Step 2 (cont.) — show $\sum a_i d_i = 0$.** We need this so the cross term vanishes when we expand $\sum(a_i + d_i)^2$ in Step 3 — without it we can't isolate $\text{Var}(\widehat{\beta}_1)$. Using $\sum d_i = 0$ and $\sum d_i x_i = 0$:
-$$\sum_{i=1}^n a_i d_i = \frac{\sum(x_i-\bar{x})d_i}{S_{xx}} = \frac{\sum d_i x_i - \bar{x}\sum d_i}{S_{xx}} = \frac{0 - 0}{S_{xx}} = 0$$
-:::
-
----
-
 ## Property 4: Gauss-Markov (BLUE) (cont.) {.smaller}
 
 ::: {style="font-size: 0.85em;"}
@@ -345,20 +331,6 @@ $$\sum_{i=1}^n a_i d_i = \frac{\sum(x_i-\bar{x})d_i}{S_{xx}} = \frac{\sum d_i x_
 
 Applying both to $b_1^* = \sum c_i y_i$ with independent $y_i$'s and $\text{Var}(y_i) = \sigma^2$:
 <div style="height: 6em;"></div>
-:::
-
----
-
-## Property 4: Gauss-Markov (BLUE) (cont.) (Solution) {.smaller}
-
-::: {style="font-size: 0.85em;"}
-**Step 3 — compare variances.** Two key rules:
-
-- $\text{Var}(cY) = c^2\text{Var}(Y)$ — a constant scales variance by its square
-- $\text{Var}(Y_1 + Y_2) = \text{Var}(Y_1) + \text{Var}(Y_2)$ when $Y_1, Y_2$ are independent (cross terms $2c_ic_j\text{Cov}(y_i,y_j) = 0$)
-
-Applying both to $b_1^* = \sum c_i y_i$ with independent $y_i$'s and $\text{Var}(y_i) = \sigma^2$:
-$$\text{Var}(b_1^*) = \sum_{i=1}^n c_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n c_i^2$$
 :::
 
 ---
@@ -373,6 +345,45 @@ Recognizing $\sigma^2 \sum a_i^2 = \text{Var}(\widehat{\beta}_1)$:
 <div style="height: 4em;"></div>
 
 The extra term $\sigma^2\sum d_i^2 \geq 0$ always — with equality only when $d_i = 0$ for all $i$, i.e. when $b_1^* = \widehat{\beta}_1$.
+:::
+
+---
+
+## Property 4: Gauss-Markov (BLUE) (Solution) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Goal:** OLS has the smallest variance among all linear unbiased estimators.
+
+Let $b_1^* = \sum_{i=1}^n c_i y_i$ be any competing linear unbiased estimator of $\beta_1$.
+
+**Step 1 — unbiasedness constraints.** We need $\mathbb{E}(b_1^*) = \beta_1$ for all $\beta_0, \beta_1$. Substitute $\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i$:
+$$\mathbb{E}(b_1^*) = \mathbb{E}\!\left(\sum_{i=1}^n c_i y_i\right) = \sum_{i=1}^n c_i\,\mathbb{E}(y_i) = \sum_{i=1}^n c_i(\beta_0 + \beta_1 x_i) = \beta_0\sum_{i=1}^n c_i + \beta_1\sum_{i=1}^n c_i x_i$$
+
+For this to equal $\beta_1$ for *every* possible $\beta_0$ and $\beta_1$, we match coefficients:
+$$\underbrace{\sum_{i=1}^n c_i}_{\text{coeff. of }\beta_0} = 0 \qquad \text{and} \qquad \underbrace{\sum_{i=1}^n c_i x_i}_{\text{coeff. of }\beta_1} = 1$$
+:::
+
+---
+
+## Property 4: Gauss-Markov (BLUE) (cont.) (Solution) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Step 2 (cont.) — show $\sum a_i d_i = 0$.** We need this so the cross term vanishes when we expand $\sum(a_i + d_i)^2$ in Step 3 — without it we can't isolate $\text{Var}(\widehat{\beta}_1)$. Using $\sum d_i = 0$ and $\sum d_i x_i = 0$:
+$$\sum_{i=1}^n a_i d_i = \frac{\sum(x_i-\bar{x})d_i}{S_{xx}} = \frac{\sum d_i x_i - \bar{x}\sum d_i}{S_{xx}} = \frac{0 - 0}{S_{xx}} = 0$$
+:::
+
+---
+
+## Property 4: Gauss-Markov (BLUE) (cont.) (Solution) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Step 3 — compare variances.** Two key rules:
+
+- $\text{Var}(cY) = c^2\text{Var}(Y)$ — a constant scales variance by its square
+- $\text{Var}(Y_1 + Y_2) = \text{Var}(Y_1) + \text{Var}(Y_2)$ when $Y_1, Y_2$ are independent (cross terms $2c_ic_j\text{Cov}(y_i,y_j) = 0$)
+
+Applying both to $b_1^* = \sum c_i y_i$ with independent $y_i$'s and $\text{Var}(y_i) = \sigma^2$:
+$$\text{Var}(b_1^*) = \text{Var}\!\left(\sum_{i=1}^n c_i y_i\right) \overset{\text{indep.}}{=} \sum_{i=1}^n \text{Var}(c_i y_i) \overset{\text{Var}(cY)=c^2\text{Var}(Y)}{=} \sum_{i=1}^n c_i^2\,\text{Var}(y_i) = \sigma^2\sum_{i=1}^n c_i^2$$
 :::
 
 ---
