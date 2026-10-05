@@ -366,37 +366,37 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Office Hours",
+    "title": "PSTAT 126: Regression Analysis",
     "section": "",
     "text": "This course covers the theory and application of linear and multiple regression, with an emphasis on using statistical computing to solve real-world problems. Topics include simple and multiple linear regression, analysis of residuals, transformations, variable and model selection (including stepwise regression), and analysis of covariance. All computing is done in R.\nBy the end of the quarter, you will be able to formulate, fit, and interpret regression models, diagnose violations of model assumptions, handle outliers, leverage points and multicollinearity, apply appropriate transformations, implement variable selection methods, and perform statistical inference and prediction."
   },
   {
     "objectID": "index.html#course-info",
     "href": "index.html#course-info",
-    "title": "Office Hours",
+    "title": "PSTAT 126: Regression Analysis",
     "section": "Course Info",
     "text": "Course Info\n\n\n\nTerm\nFall 2026\n\n\nInstructor\nAnnie Adams\n\n\nLectures\nMondays + Wednesdays 12:30 PM - 1:45 PM in TD-W 1701\n\n\nUnits\n4\n\n\nPrerequisites\nPSTAT 10 and PSTAT 120B\n\n\nSoftware\nR ≥ 4.4.0 · RStudio ≥ 2024.04.02 (both free)"
   },
   {
     "objectID": "index.html#readings",
     "href": "index.html#readings",
-    "title": "Office Hours",
+    "title": "PSTAT 126: Regression Analysis",
     "section": "Readings",
     "text": "Readings\nFaraway, J.J. (2004). Linear Models with R. Chapman and Hall/CRC. Free PDF →\nWeisberg, S. (2014). Applied Linear Regression. Wiley. Free PDF →"
   },
   {
     "objectID": "index.html#teaching-team",
     "href": "index.html#teaching-team",
-    "title": "Office Hours",
+    "title": "PSTAT 126: Regression Analysis",
     "section": "Teaching Team",
     "text": "Teaching Team\n\n\nInstructor\nAnnie Adams\naradams@ucsb.edu\nOffice hours: Tuesday 10 AM - 11 AM on Zoom — see the office hours page\n\n\nTeaching Assistants\nTong Li\ntong_ling@ucsb.edu\nOffice hours: Wednesday 9:30 am - 10:30 am @ South Hall 5431C — see the office hours page\nBingjiang Xia\nbxia@umail.ucsb.edu\nOffice hours: Thursday 12:30 pm - 1:30 pm @ South Hall 5432V — see the office hours page"
   },
   {
     "objectID": "index.html#acknowledgements",
     "href": "index.html#acknowledgements",
-    "title": "Office Hours",
+    "title": "PSTAT 126: Regression Analysis",
     "section": "Acknowledgements",
-    "text": "Acknowledgements\nThe lecture slides, homework assignments, and labs used in this course are adapted from or directly based on materials developed by Yuedong Wang for PSTAT 126.\n\n\n\n\n\nPerson\nRole\nDay\nTime\nLocation\n\n\n\n\nAnnie Adams\nInstructor\nTuesday\n10 AM - 11 AM\nZoom\n\n\nBingjiang Xia\nTA\nThursday\n12:30 PM - 1:30 PM\nSouth Hall 5432V\n\n\nTong Lin\nTA\nWednesday\n9:30 AM - 10:30 AM\nSouth Hall 5431C\n\n\n\nOffice hours are also available by appointment. Email the instructor to schedule."
+    "text": "Acknowledgements\nThe lecture slides, homework assignments, and labs used in this course are adapted from or directly based on materials developed by Yuedong Wang for PSTAT 126."
   },
   {
     "objectID": "hw/hw-03.html",
