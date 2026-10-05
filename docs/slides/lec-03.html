@@ -164,6 +164,20 @@ Annie Adams
 <li class="fragment"><p><strong>Gauss-Markov (BLUE):</strong> OLS has the smallest variance among all linear unbiased estimators — no other such estimator can do better.</p></li>
 </ol>
 </section>
+<section id="implications-of-the-slr-model" class="slide level2 smaller">
+<h2>Implications of the SLR Model</h2>
+<p>Under the SLR model <span class="math inline">\(y_i = \beta_0 + \beta_1 x_i + \varepsilon_i\)</span>:</p>
+<ol type="1">
+<li><p><span class="math inline">\(\mathbb{E}(Y_i) = \mathbb{E}(\beta_0 + \beta_1 X_i + \varepsilon_i) = \beta_0 + \beta_1 X_i\)</span> — the <strong>regression function (line)</strong></p>
+<ul>
+<li><span class="math inline">\(\mathbb{E}(\varepsilon_i) = 0\)</span> (errors are mean-zero by assumption)</li>
+<li><span class="math inline">\(\beta_0\)</span> is the <strong>intercept</strong>: the value of <span class="math inline">\(\mathbb{E}(Y)\)</span> when <span class="math inline">\(X = 0\)</span></li>
+<li><span class="math inline">\(\beta_1\)</span> is the <strong>slope</strong>: the change in <span class="math inline">\(\mathbb{E}(Y)\)</span> for a one-unit increase in <span class="math inline">\(X\)</span></li>
+</ul></li>
+<li><p><span class="math inline">\(\text{Var}(Y_i) = \text{Var}(\beta_0 + \beta_1 X_i + \varepsilon_i) = \text{Var}(\varepsilon_i) = \sigma^2\)</span> — the responses <span class="math inline">\(Y_i\)</span> all have the same variance <span class="math inline">\(\sigma^2\)</span></p></li>
+<li><p><span class="math inline">\(\text{Cov}(Y_i, Y_j) = \text{Cov}(\varepsilon_i, \varepsilon_j) = 0\)</span> — different responses are <strong>uncorrelated</strong></p></li>
+</ol>
+</section>
 <section id="property-1-linearity-of-widehatbeta_1" class="slide level2 smaller">
 <h2>Property 1: Linearity of <span class="math inline">\(\widehat{\beta}_1\)</span></h2>
 <div style="font-size: 0.72em;">
@@ -306,6 +320,41 @@ Annie Adams
 <p><strong>Step 1 — find <span class="math inline">\(\mathbb{E}(\bar{y})\)</span>:</strong> expand using the model <span class="math inline">\(\mathbb{E}(y_i) = \beta_0 + \beta_1 x_i\)</span>: <span class="math display">\[\mathbb{E}(\bar{y}) = \frac{1}{n}\sum_{i=1}^n \mathbb{E}(y_i) = \frac{1}{n}\sum_{i=1}^n(\beta_0 + \beta_1 x_i) = \frac{1}{n}(n\beta_0 + \beta_1 n\bar{x}) = \beta_0 + \beta_1\bar{x}\]</span></p>
 <p><strong>Step 2 — apply linearity of expectation to <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span>:</strong> since <span class="math inline">\(\bar{x}\)</span> is a fixed constant, <span class="math display">\[\mathbb{E}(\widehat{\beta}_0) = \mathbb{E}(\bar{y}) - \bar{x}\,\mathbb{E}(\widehat{\beta}_1)\]</span></p>
 <p><strong>Step 3 — substitute and cancel:</strong> plug in <span class="math inline">\(\mathbb{E}(\bar{y}) = \beta_0 + \beta_1\bar{x}\)</span> and <span class="math inline">\(\mathbb{E}(\widehat{\beta}_1) = \beta_1\)</span>: <span class="math display">\[\mathbb{E}(\widehat{\beta}_0) = (\beta_0 + \beta_1\bar{x}) - \bar{x}\,\beta_1 = \beta_0 \]</span></p>
+</section>
+<section id="variance-rules" class="slide level2 smaller">
+<h2>Variance Rules</h2>
+<p>The proofs of Property 3 rely on the following rules. For random variables <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span> and constants <span class="math inline">\(a\)</span>, <span class="math inline">\(c\)</span>:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rule</th>
+<th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Constant multiple</td>
+<td><span class="math inline">\(\text{Var}(cX) = c^2\,\text{Var}(X)\)</span></td>
+</tr>
+<tr class="even">
+<td>Sum of independent r.v.s</td>
+<td><span class="math inline">\(\text{Var}\!\left(\sum_i a_i X_i\right) = \sum_i a_i^2\,\text{Var}(X_i)\)</span> for independent <span class="math inline">\(X_i\)</span></td>
+</tr>
+<tr class="odd">
+<td>Difference</td>
+<td><span class="math inline">\(\text{Var}(X - cY) = \text{Var}(X) + c^2\,\text{Var}(Y) - 2c\,\text{Cov}(X,Y)\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Under the SLR model assumptions:</p>
+<p><span class="math display">\[\text{Var}(y_i) = \text{Var}(\beta_0 + \beta_1 x_i + \varepsilon_i) = \text{Var}(\varepsilon_i) = \sigma^2\]</span></p>
+<p>since <span class="math inline">\(\beta_0 + \beta_1 x_i\)</span> is a fixed constant.</p>
+</div>
 </section>
 <section id="property-3-variance-of-widehatbeta_1" class="slide level2 smaller">
 <h2>Property 3: Variance of <span class="math inline">\(\widehat{\beta}_1\)</span></h2>

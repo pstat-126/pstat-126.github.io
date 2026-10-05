@@ -16,6 +16,8 @@ format:
       data-background-color: "#003660"
 ---
 
+
+
 ## Properties of the OLS Estimators {.smaller}
 
 ::: {style="font-size: 0.82em;"}
@@ -32,6 +34,24 @@ $$\text{Var}(\widehat{\beta}_1) = \frac{\sigma^2}{S_{xx}}, \qquad \text{Var}(\wi
 
 4. **Gauss-Markov (BLUE):** OLS has the smallest variance among all linear unbiased estimators — no other such estimator can do better.
 :::
+
+---
+
+## Implications of the SLR Model {.smaller}
+
+Under the SLR model $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$:
+
+1. $\mathbb{E}(Y_i) = \mathbb{E}(\beta_0 + \beta_1 X_i + \varepsilon_i) = \beta_0 + \beta_1 X_i$ — the **regression function (line)**
+   - $\mathbb{E}(\varepsilon_i) = 0$ (errors are mean-zero by assumption)
+   - $\beta_0$ is the **intercept**: the value of $\mathbb{E}(Y)$ when $X = 0$
+   - $\beta_1$ is the **slope**: the change in $\mathbb{E}(Y)$ for a one-unit increase in $X$
+
+2. $\text{Var}(Y_i) = \text{Var}(\beta_0 + \beta_1 X_i + \varepsilon_i) = \text{Var}(\varepsilon_i) = \sigma^2$
+   — the responses $Y_i$ all have the same variance $\sigma^2$
+
+3. $\text{Cov}(Y_i, Y_j) = \text{Cov}(\varepsilon_i, \varepsilon_j) = 0$
+   — different responses are **uncorrelated**
+
 
 ---
 
@@ -210,6 +230,26 @@ $$\mathbb{E}(\widehat{\beta}_0) = \mathbb{E}(\bar{y}) - \bar{x}\,\mathbb{E}(\wid
 
 **Step 3 — substitute and cancel:** plug in $\mathbb{E}(\bar{y}) = \beta_0 + \beta_1\bar{x}$ and $\mathbb{E}(\widehat{\beta}_1) = \beta_1$:
 $$\mathbb{E}(\widehat{\beta}_0) = (\beta_0 + \beta_1\bar{x}) - \bar{x}\,\beta_1 = \beta_0 $$
+
+---
+
+## Variance Rules {.smaller}
+
+The proofs of Property 3 rely on the following rules. For random variables $X$, $Y$ and constants $a$, $c$:
+
+| Rule | Formula |
+|------|---------|
+| Constant multiple | $\text{Var}(cX) = c^2\,\text{Var}(X)$ |
+| Sum of independent r.v.s | $\text{Var}\!\left(\sum_i a_i X_i\right) = \sum_i a_i^2\,\text{Var}(X_i)$ for independent $X_i$ |
+| Difference | $\text{Var}(X - cY) = \text{Var}(X) + c^2\,\text{Var}(Y) - 2c\,\text{Cov}(X,Y)$ |
+
+. . .
+
+Under the SLR model assumptions:
+
+$$\text{Var}(y_i) = \text{Var}(\beta_0 + \beta_1 x_i + \varepsilon_i) = \text{Var}(\varepsilon_i) = \sigma^2$$
+
+since $\beta_0 + \beta_1 x_i$ is a fixed constant.
 
 ---
 
