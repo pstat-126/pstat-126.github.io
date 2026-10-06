@@ -232,7 +232,7 @@ Annie Adams
 <h2>Review: OLS Estimators</h2>
 <p>From last time, the OLS estimators are:</p>
 <p><span class="math display">\[\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}}, \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\]</span></p>
-<p>They are <strong>unbiased</strong>, <strong>linear</strong>, and <strong>BLUE</strong> (Gauss-Markov).</p>
+<p>They are <strong>unbiased</strong>, <strong>linear</strong>, and the <strong>B</strong>est <strong>L</strong>inear <strong>U</strong>nbiased <strong>E</strong>stimator (Gauss-Markov).</p>
 <p><strong>Today:</strong> What do the residuals tell us, and how do we estimate the unknown <span class="math inline">\(\sigma^2\)</span>?</p>
 </section>
 <section id="learning-objectives" class="slide level2">
@@ -243,7 +243,6 @@ Annie Adams
 <li>State and prove the four properties of OLS residuals</li>
 <li>Define RSS and explain its role in regression</li>
 <li>Compute and interpret <span class="math inline">\(\widehat{\sigma}^2\)</span> and <span class="math inline">\(\widehat{\sigma}\)</span></li>
-<li>Explain why we divide by <span class="math inline">\(n - 2\)</span> rather than <span class="math inline">\(n\)</span></li>
 </ul>
 </section>
 <section id="residuals" class="slide level2" data-background-color="#003660">
@@ -299,7 +298,8 @@ Annie Adams
 <h2>Estimating <span class="math inline">\(\sigma^2\)</span></h2>
 <p>The error variance <span class="math inline">\(\sigma^2 = \text{Var}(\varepsilon_i)\)</span> is unknown. We estimate it using the residuals.</p>
 <p>A natural starting point is the average squared residual, but we must divide by <span class="math inline">\(n - 2\)</span>, not <span class="math inline">\(n\)</span>:</p>
-<p><span class="math display">\[\widehat{\sigma}^2 = \frac{\text{RSS}}{n - 2} = \frac{\sum_{i=1}^n e_i^2}{n-2}\]</span></p>
+<p><span class="math display">\[\widehat{\sigma}^2 = \text{MSE} = \frac{\text{RSS}}{n - 2} = \frac{\sum_{i=1}^n e_i^2}{n-2}\]</span></p>
+<p>This quantity is also called the <strong>Mean Square Error (MSE)</strong>.</p>
 <p><strong>Why <span class="math inline">\(n - 2\)</span>?</strong> Estimating <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> uses 2 degrees of freedom since two parameters are being used.</p>
 <p>It can be shown that <span class="math inline">\(\mathbb{E}(\widehat{\sigma}^2) = \sigma^2\)</span>, so <span class="math inline">\(\widehat{\sigma}^2\)</span> is an <strong>unbiased</strong> estimator of <span class="math inline">\(\sigma^2\)</span>.</p>
 </section>
@@ -320,13 +320,10 @@ Annie Adams
 <h2>Proof: <span class="math inline">\(\mathbb{E}(\text{MSE}) = \sigma^2\)</span> (cont.)</h2>
 <div style="font-size: 0.85em;">
 <p><strong>Step 3 — evaluate each expectation piece by piece.</strong></p>
-<p>Substitute <span class="math inline">\(y_i - \bar{y} = \beta_1(x_i-\bar{x}) + (\varepsilon_i - \bar{\varepsilon})\)</span> and expand:</p>
-<ul>
-<li><p><span class="math inline">\(\mathbb{E}\!\left\{\sum(y_i-\bar{y})^2\right\} = \beta_1^2 S_{xx} + \mathbb{E}\!\left\{\sum(\varepsilon_i-\bar{\varepsilon})^2\right\} + 0 = \beta_1^2 S_{xx} + (n-1)\sigma^2\)</span></p>
-<p>since <span class="math inline">\(\mathbb{E}\!\left\{\sum(\varepsilon_i - \bar{\varepsilon})^2\right\} = (n-1)\sigma^2\)</span> and the cross term has <span class="math inline">\(\mathbb{E}(\varepsilon_i - \bar{\varepsilon}) = 0\)</span></p></li>
-<li><p><span class="math inline">\(\mathbb{E}(\widehat{\beta}_1^2) = \text{Var}(\widehat{\beta}_1) + \left[\mathbb{E}(\widehat{\beta}_1)\right]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2\)</span>, so <span class="math inline">\(\;\mathbb{E}(\widehat{\beta}_1^2 S_{xx}) = \sigma^2 + \beta_1^2 S_{xx}\)</span></p></li>
-</ul>
-<strong>Step 4 — combine:</strong>
+<div style="height: 6em;">
+
+</div>
+<p><strong>Step 4 — combine:</strong></p>
 <div style="height: 4em;">
 
 </div>
@@ -339,8 +336,8 @@ Therefore:
 <section id="proof-mathbbetextmse-sigma2-solution" class="slide level2 smaller">
 <h2>Proof: <span class="math inline">\(\mathbb{E}(\text{MSE}) = \sigma^2\)</span> (Solution)</h2>
 <div style="font-size: 0.85em;">
-<p><strong>Step 1 — expand E(SSE).</strong> Substitute <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span>: <span class="math display">\[\mathbb{E}(\text{SSE}) = \mathbb{E}\!\left\{\sum(y_i - \widehat{y}_i)^2\right\} = \mathbb{E}\!\left\{\sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\right\}\]</span></p>
-<p><strong>Step 2 — expand the square and use</strong> <span class="math inline">\(\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}\)</span>: <span class="math display">\[= \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 + \widehat{\beta}_1^2 S_{xx} - 2\widehat{\beta}_1^2 S_{xx}\right\} = \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 - \widehat{\beta}_1^2 S_{xx}\right\}\]</span></p>
+<p><strong>Step 1 — expand E(SSE).</strong> Substitute <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span>: <span class="math display">\[\mathbb{E}(\text{SSE}) = \mathbb{E}\!\left(\sum(y_i - \widehat{y}_i)^2\right) = \mathbb{E}\!\left(\sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\right)\]</span></p>
+<p><strong>Step 2 — expand the square and use</strong> <span class="math inline">\(\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}\)</span>: <span class="math display">\[= \mathbb{E}\!\left(\sum(y_i-\bar{y})^2 + \widehat{\beta}_1^2 S_{xx} - 2\widehat{\beta}_1^2 S_{xx}\right) = \mathbb{E}\!\left(\sum(y_i-\bar{y})^2 - \widehat{\beta}_1^2 S_{xx}\right)\]</span></p>
 </div>
 </section>
 <section id="proof-mathbbetextmse-sigma2-cont.-solution" class="slide level2 smaller">
@@ -349,8 +346,8 @@ Therefore:
 <p><strong>Step 3 — evaluate each expectation piece by piece.</strong></p>
 <p>Substitute <span class="math inline">\(y_i - \bar{y} = \beta_1(x_i-\bar{x}) + (\varepsilon_i - \bar{\varepsilon})\)</span> and expand:</p>
 <ul>
-<li><p><span class="math inline">\(\mathbb{E}\!\left\{\sum(y_i-\bar{y})^2\right\} = \beta_1^2 S_{xx} + \mathbb{E}\!\left\{\sum(\varepsilon_i-\bar{\varepsilon})^2\right\} + 0 = \beta_1^2 S_{xx} + (n-1)\sigma^2\)</span></p>
-<p>since <span class="math inline">\(\mathbb{E}\!\left\{\sum(\varepsilon_i - \bar{\varepsilon})^2\right\} = (n-1)\sigma^2\)</span> and the cross term has <span class="math inline">\(\mathbb{E}(\varepsilon_i - \bar{\varepsilon}) = 0\)</span></p></li>
+<li><p><span class="math inline">\(\mathbb{E}\!\left(\sum(y_i-\bar{y})^2\right) = \beta_1^2 S_{xx} + \mathbb{E}\!\left(\sum(\varepsilon_i-\bar{\varepsilon})^2\right) + 0 = \beta_1^2 S_{xx} + (n-1)\sigma^2\)</span></p>
+<p>since <span class="math inline">\(\mathbb{E}\!\left(\sum(\varepsilon_i - \bar{\varepsilon})^2\right) = (n-1)\sigma^2\)</span> and the cross term has <span class="math inline">\(\mathbb{E}(\varepsilon_i - \bar{\varepsilon}) = 0\)</span></p></li>
 <li><p><span class="math inline">\(\mathbb{E}(\widehat{\beta}_1^2) = \text{Var}(\widehat{\beta}_1) + \left[\mathbb{E}(\widehat{\beta}_1)\right]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2\)</span>, so <span class="math inline">\(\;\mathbb{E}(\widehat{\beta}_1^2 S_{xx}) = \sigma^2 + \beta_1^2 S_{xx}\)</span></p></li>
 </ul>
 </div>
@@ -389,27 +386,140 @@ Therefore:
 <p><span class="math display">\[\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}}, \qquad \text{SE}(\widehat{\beta}_0) = \widehat{\sigma}\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}\]</span></p>
 <p>Standard errors quantify the uncertainty in each estimate — they are the basis for confidence intervals and hypothesis tests (coming soon).</p>
 </section>
-<section id="practice-computing-widehatsigma" class="slide level2 smaller">
-<h2>Practice: Computing <span class="math inline">\(\widehat{\sigma}\)</span></h2>
-<p>Using the same dataset (<span class="math inline">\(n = 5\)</span>, <span class="math inline">\(S_{xx} = 10\)</span>, <span class="math inline">\(\text{RSS} = 6\)</span>, fitted line <span class="math inline">\(\widehat{y} = 1 + 2x\)</span>):</p>
-<p><strong>Compute:</strong></p>
+<section id="practice-problem" class="slide level2 smaller">
+<h2>Practice Problem</h2>
+<p>Five weather stations record elevation <span class="math inline">\(X\)</span> (km) and average annual temperature <span class="math inline">\(Y\)</span> (°C), with <span class="math inline">\(n=5\)</span>, <span class="math inline">\(\bar{x}=1.5\)</span>, <span class="math inline">\(\bar{y}=10.2\)</span>, <span class="math inline">\(S_{xx}=2.5\)</span>, <span class="math inline">\(S_{xy}=-12\)</span>:</p>
+<div class="columns">
+<div class="column" style="width:52%;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(x_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(y_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\widehat{y}_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(e_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.5</td>
+<td style="text-align: center;">15.2</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1.0</td>
+<td style="text-align: center;">12.1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1.5</td>
+<td style="text-align: center;">10.8</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: center;">7.3</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">2.5</td>
+<td style="text-align: center;">5.6</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:48%;">
+<p><strong>Compute &amp; Interpret:</strong></p>
 <ol type="1">
-<li><p><span class="math inline">\(\widehat{\sigma}^2 = \text{RSS} / (n - 2)\)</span></p></li>
-<li><p><span class="math inline">\(\widehat{\sigma} = \sqrt{\widehat{\sigma}^2}\)</span></p></li>
-<li><p><span class="math inline">\(\text{SE}(\widehat{\beta}_1) = \widehat{\sigma} / \sqrt{S_{xx}}\)</span></p></li>
+<li>Write the formula for <span class="math inline">\(\widehat{\text{Temperature}}\)</span></li>
+<li>Interpret <span class="math inline">\(\widehat{\beta}_1\)</span> in context</li>
+<li>Is <span class="math inline">\(\widehat{\beta}_0\)</span> meaningful here?</li>
+<li>Fill in <span class="math inline">\(\widehat{y}_i\)</span> and <span class="math inline">\(e_i\)</span>; verify <span class="math inline">\(\sum e_i = 0\)</span></li>
+<li>Predict temperature at <span class="math inline">\(x = 1.8\)</span> km</li>
+<li>Compute RSS, <span class="math inline">\(\widehat{\sigma}^2\)</span>, <span class="math inline">\(\widehat{\sigma}\)</span>, and <span class="math inline">\(\text{SE}(\widehat{\beta}_1)\)</span>; interpret <span class="math inline">\(\widehat{\sigma}\)</span></li>
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_b9c70c5e" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_eeb216fe" minutes="10" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
+</div></div>
 </section>
 <section id="practice-solution" class="slide level2 smaller">
 <h2>Practice: Solution</h2>
-<p><strong>Step 1 — estimate <span class="math inline">\(\sigma^2\)</span>:</strong> <span class="math display">\[\widehat{\sigma}^2 = \frac{\text{RSS}}{n-2} = \frac{6}{5-2} = \frac{6}{3} = 2\]</span></p>
-<p><strong>Step 2 — residual standard deviation:</strong> <span class="math display">\[\widehat{\sigma} = \sqrt{2} \approx 1.41\]</span></p>
-<p><strong>Step 3 — standard error of <span class="math inline">\(\widehat{\beta}_1\)</span>:</strong> <span class="math display">\[\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}} = \frac{\sqrt{2}}{\sqrt{10}} = \sqrt{\frac{2}{10}} = \sqrt{0.2} \approx 0.45\]</span></p>
-<p><strong>Interpretation:</strong> the slope estimate <span class="math inline">\(\widehat{\beta}_1 = 2\)</span> has a typical uncertainty of about <span class="math inline">\(\pm 0.45\)</span> wellness points per hour of exercise.</p>
+<p><strong>Model (1):</strong> <span class="math display">\[Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i, \quad X = \text{elevation (km)},\quad Y = \text{avg. temp. (°C)},\quad \varepsilon_i \overset{\text{iid}}{\sim}(0,\sigma^2)\]</span></p>
+<p><strong>Estimates (2–3):</strong> <span class="math display">\[\widehat{\beta}_1 = \frac{-12}{2.5} = -4.8, \qquad \widehat{\beta}_0 = 10.2 - (-4.8)(1.5) = 17.4\]</span></p>
+<ul>
+<li><span class="math inline">\(\widehat{\beta}_1\)</span>: each additional km of elevation is associated with a <strong>4.8°C decrease</strong> in avg. temperature.</li>
+<li><span class="math inline">\(\widehat{\beta}_0 = 17.4\)</span>°C is the predicted temperature at 0 km elevation. It is <strong>not meaningful</strong> in context — no station is at sea level, so this is an extrapolation outside the data range.</li>
+</ul>
+<p><strong>Prediction (5):</strong> <span class="math display">\[\widehat{y}\,\big|_{x=1.8} = 17.4 - 4.8(1.8) = \mathbf{8.76}\text{ °C}\]</span></p>
+</section>
+<section id="practice-solution-cont." class="slide level2 smaller">
+<h2>Practice: Solution (cont.)</h2>
+<p><strong>Fitted values and residuals (4)</strong> (<span class="math inline">\(\widehat{y}_i = 17.4 - 4.8\,x_i\)</span>, verify <span class="math inline">\(\sum e_i = 0\)</span>):</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(x_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(y_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\widehat{y}_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(e_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.5</td>
+<td style="text-align: center;">15.2</td>
+<td style="text-align: center;">15.0</td>
+<td style="text-align: center;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1.0</td>
+<td style="text-align: center;">12.1</td>
+<td style="text-align: center;">12.6</td>
+<td style="text-align: center;">−0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1.5</td>
+<td style="text-align: center;">10.8</td>
+<td style="text-align: center;">10.2</td>
+<td style="text-align: center;">0.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: center;">7.3</td>
+<td style="text-align: center;">7.8</td>
+<td style="text-align: center;">−0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">2.5</td>
+<td style="text-align: center;">5.6</td>
+<td style="text-align: center;">5.4</td>
+<td style="text-align: center;">0.2</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(\textstyle\sum e_i = 0.2 - 0.5 + 0.6 - 0.5 + 0.2 = 0\)</span> ✓</p>
+<p><strong>Error estimates (6):</strong> <span class="math display">\[\text{RSS} = 0.04+0.25+0.36+0.25+0.04 = 0.94\]</span> <span class="math display">\[\widehat{\sigma}^2 = \frac{0.94}{3} \approx 0.313, \quad \widehat{\sigma} \approx 0.560\text{ °C}, \quad \text{SE}(\widehat{\beta}_1) = \frac{0.560}{\sqrt{2.5}} \approx 0.354\]</span></p>
+<p><span class="math inline">\(\widehat{\sigma} \approx 0.56\)</span>°C — the model’s predictions are typically off by about <strong>0.56°C</strong>, which is small relative to the 9.6°C range of <span class="math inline">\(y\)</span>, suggesting a good fit.</p>
 </section>
 <section id="fitting-linear-regression-in-r" class="slide level2" data-background-color="#003660">
 <h2>Fitting Linear Regression in R</h2>

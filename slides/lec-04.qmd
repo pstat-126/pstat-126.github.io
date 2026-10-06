@@ -28,7 +28,7 @@ From last time, the OLS estimators are:
 
 $$\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}}, \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$$
 
-They are **unbiased**, **linear**, and **BLUE** (Gauss-Markov).
+They are **unbiased**, **linear**, and the **B**est **L**inear **U**nbiased **E**stimator (Gauss-Markov).
 
 **Today:** What do the residuals tell us, and how do we estimate the unknown $\sigma^2$?
 
@@ -42,7 +42,6 @@ By the end of today you will be able to:
 - State and prove the four properties of OLS residuals
 - Define RSS and explain its role in regression
 - Compute and interpret $\widehat{\sigma}^2$ and $\widehat{\sigma}$
-- Explain why we divide by $n - 2$ rather than $n$
 
 ---
 
@@ -102,7 +101,9 @@ The error variance $\sigma^2 = \text{Var}(\varepsilon_i)$ is unknown. We estimat
 
 A natural starting point is the average squared residual, but we must divide by $n - 2$, not $n$:
 
-$$\widehat{\sigma}^2 = \frac{\text{RSS}}{n - 2} = \frac{\sum_{i=1}^n e_i^2}{n-2}$$
+$$\widehat{\sigma}^2 = \text{MSE} = \frac{\text{RSS}}{n - 2} = \frac{\sum_{i=1}^n e_i^2}{n-2}$$
+
+This quantity is also called the **Mean Square Error (MSE)**.
 
 **Why $n - 2$?** Estimating $\widehat{\beta}_0$ and $\widehat{\beta}_1$ uses 2 degrees of freedom since two parameters are being used.
 
@@ -128,15 +129,14 @@ It can be shown that $\mathbb{E}(\widehat{\sigma}^2) = \sigma^2$, so $\widehat{\
 ::: {style="font-size: 0.85em;"}
 **Step 3 — evaluate each expectation piece by piece.**
 
-Substitute $y_i - \bar{y} = \beta_1(x_i-\bar{x}) + (\varepsilon_i - \bar{\varepsilon})$ and expand:
+<div style="height: 6em;"></div>
 
-- $\mathbb{E}\!\left\{\sum(y_i-\bar{y})^2\right\} = \beta_1^2 S_{xx} + \mathbb{E}\!\left\{\sum(\varepsilon_i-\bar{\varepsilon})^2\right\} + 0 = \beta_1^2 S_{xx} + (n-1)\sigma^2$
 
-  since $\mathbb{E}\!\left\{\sum(\varepsilon_i - \bar{\varepsilon})^2\right\} = (n-1)\sigma^2$ and the cross term has $\mathbb{E}(\varepsilon_i - \bar{\varepsilon}) = 0$
 
-- $\mathbb{E}(\widehat{\beta}_1^2) = \text{Var}(\widehat{\beta}_1) + \left[\mathbb{E}(\widehat{\beta}_1)\right]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2$, so $\;\mathbb{E}(\widehat{\beta}_1^2 S_{xx}) = \sigma^2 + \beta_1^2 S_{xx}$
+
 
 **Step 4 — combine:**
+
 <div style="height: 4em;"></div>
 
 Therefore:
@@ -149,10 +149,10 @@ Therefore:
 
 ::: {style="font-size: 0.85em;"}
 **Step 1 — expand E(SSE).** Substitute $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$:
-$$\mathbb{E}(\text{SSE}) = \mathbb{E}\!\left\{\sum(y_i - \widehat{y}_i)^2\right\} = \mathbb{E}\!\left\{\sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\right\}$$
+$$\mathbb{E}(\text{SSE}) = \mathbb{E}\!\left(\sum(y_i - \widehat{y}_i)^2\right) = \mathbb{E}\!\left(\sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\right)$$
 
 **Step 2 — expand the square and use** $\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}$:
-$$= \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 + \widehat{\beta}_1^2 S_{xx} - 2\widehat{\beta}_1^2 S_{xx}\right\} = \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 - \widehat{\beta}_1^2 S_{xx}\right\}$$
+$$= \mathbb{E}\!\left(\sum(y_i-\bar{y})^2 + \widehat{\beta}_1^2 S_{xx} - 2\widehat{\beta}_1^2 S_{xx}\right) = \mathbb{E}\!\left(\sum(y_i-\bar{y})^2 - \widehat{\beta}_1^2 S_{xx}\right)$$
 :::
 
 ---
@@ -165,9 +165,9 @@ $$= \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 + \widehat{\beta}_1^2 S_{xx} - 2\wide
 
 Substitute $y_i - \bar{y} = \beta_1(x_i-\bar{x}) + (\varepsilon_i - \bar{\varepsilon})$ and expand:
 
-- $\mathbb{E}\!\left\{\sum(y_i-\bar{y})^2\right\} = \beta_1^2 S_{xx} + \mathbb{E}\!\left\{\sum(\varepsilon_i-\bar{\varepsilon})^2\right\} + 0 = \beta_1^2 S_{xx} + (n-1)\sigma^2$
+- $\mathbb{E}\!\left(\sum(y_i-\bar{y})^2\right) = \beta_1^2 S_{xx} + \mathbb{E}\!\left(\sum(\varepsilon_i-\bar{\varepsilon})^2\right) + 0 = \beta_1^2 S_{xx} + (n-1)\sigma^2$
 
-  since $\mathbb{E}\!\left\{\sum(\varepsilon_i - \bar{\varepsilon})^2\right\} = (n-1)\sigma^2$ and the cross term has $\mathbb{E}(\varepsilon_i - \bar{\varepsilon}) = 0$
+  since $\mathbb{E}\!\left(\sum(\varepsilon_i - \bar{\varepsilon})^2\right) = (n-1)\sigma^2$ and the cross term has $\mathbb{E}(\varepsilon_i - \bar{\varepsilon}) = 0$
 
 - $\mathbb{E}(\widehat{\beta}_1^2) = \text{Var}(\widehat{\beta}_1) + \left[\mathbb{E}(\widehat{\beta}_1)\right]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2$, so $\;\mathbb{E}(\widehat{\beta}_1^2 S_{xx}) = \sigma^2 + \beta_1^2 S_{xx}$
 :::
@@ -177,6 +177,7 @@ Substitute $y_i - \bar{y} = \beta_1(x_i-\bar{x}) + (\varepsilon_i - \bar{\vareps
 ## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (cont.) (Solution) {.smaller}
 
 ::: {style="font-size: 0.85em;"}
+
 **Step 4 — combine:**
 $$\mathbb{E}(\text{SSE}) = \beta_1^2 S_{xx} + (n-1)\sigma^2 - \sigma^2 - \beta_1^2 S_{xx} = (n-2)\sigma^2$$
 
@@ -214,22 +215,39 @@ Standard errors quantify the uncertainty in each estimate — they are the basis
 
 ---
 
-## Practice: Computing $\widehat{\sigma}$ {.smaller}
+## Practice Problem {.smaller}
 
-Using the same dataset ($n = 5$, $S_{xx} = 10$, $\text{RSS} = 6$, fitted line $\widehat{y} = 1 + 2x$):
+Five weather stations record elevation $X$ (km) and average annual temperature $Y$ (°C), with $n=5$, $\bar{x}=1.5$, $\bar{y}=10.2$, $S_{xx}=2.5$, $S_{xy}=-12$:
 
-**Compute:**
+:::: {.columns}
 
-1. $\widehat{\sigma}^2 = \text{RSS} / (n - 2)$
+::: {.column width="52%"}
 
-2. $\widehat{\sigma} = \sqrt{\widehat{\sigma}^2}$
+| $i$ | $x_i$ | $y_i$ | $\widehat{y}_i$ | $e_i$ |
+|:---:|:------:|:------:|:---------------:|:-----:|
+| 1 | 0.5 | 15.2 | | |
+| 2 | 1.0 | 12.1 | | |
+| 3 | 1.5 | 10.8 | | |
+| 4 | 2.0 | 7.3 | | |
+| 5 | 2.5 | 5.6 | | |
 
-3. $\text{SE}(\widehat{\beta}_1) = \widehat{\sigma} / \sqrt{S_{xx}}$
+:::
+
+::: {.column width="48%"}
+
+**Compute & Interpret:**
+
+1. Write the formula for $\widehat{\text{Temperature}}$
+2. Interpret $\widehat{\beta}_1$ in context
+3. Is $\widehat{\beta}_0$ meaningful here?
+4. Fill in $\widehat{y}_i$ and $e_i$; verify $\sum e_i = 0$
+5. Predict temperature at $x = 1.8$ km
+6. Compute RSS, $\widehat{\sigma}^2$, $\widehat{\sigma}$, and $\text{SE}(\widehat{\beta}_1)$; interpret $\widehat{\sigma}$
 
 ```{r}
 #| echo: false
 countdown::countdown(
-  minutes = 3,
+  minutes = 10,
   play_sound = TRUE,
   color_border              = "#FEBC11",
   color_text                = "#003660",
@@ -241,20 +259,47 @@ countdown::countdown(
 )
 ```
 
+:::
+
+::::
+
 ---
 
 ## Practice: Solution {.smaller}
 
-**Step 1 — estimate $\sigma^2$:**
-$$\widehat{\sigma}^2 = \frac{\text{RSS}}{n-2} = \frac{6}{5-2} = \frac{6}{3} = 2$$
+**Model (1):**
+$$Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i, \quad X = \text{elevation (km)},\quad Y = \text{avg. temp. (°C)},\quad \varepsilon_i \overset{\text{iid}}{\sim}(0,\sigma^2)$$
 
-**Step 2 — residual standard deviation:**
-$$\widehat{\sigma} = \sqrt{2} \approx 1.41$$
+**Estimates (2–3):**
+$$\widehat{\beta}_1 = \frac{-12}{2.5} = -4.8, \qquad \widehat{\beta}_0 = 10.2 - (-4.8)(1.5) = 17.4$$
 
-**Step 3 — standard error of $\widehat{\beta}_1$:**
-$$\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}} = \frac{\sqrt{2}}{\sqrt{10}} = \sqrt{\frac{2}{10}} = \sqrt{0.2} \approx 0.45$$
+- $\widehat{\beta}_1$: each additional km of elevation is associated with a **4.8°C decrease** in avg. temperature.
+- $\widehat{\beta}_0 = 17.4$°C is the predicted temperature at 0 km elevation. It is **not meaningful** in context — no station is at sea level, so this is an extrapolation outside the data range.
 
-**Interpretation:** the slope estimate $\widehat{\beta}_1 = 2$ has a typical uncertainty of about $\pm 0.45$ wellness points per hour of exercise.
+**Prediction (5):**
+$$\widehat{y}\,\big|_{x=1.8} = 17.4 - 4.8(1.8) = \mathbf{8.76}\text{ °C}$$
+
+---
+
+## Practice: Solution (cont.) {.smaller}
+
+**Fitted values and residuals (4)** ($\widehat{y}_i = 17.4 - 4.8\,x_i$, verify $\sum e_i = 0$):
+
+| $i$ | $x_i$ | $y_i$ | $\widehat{y}_i$ | $e_i$ |
+|:---:|:------:|:------:|:---------------:|:-----:|
+| 1 | 0.5 | 15.2 | 15.0 | 0.2 |
+| 2 | 1.0 | 12.1 | 12.6 | −0.5 |
+| 3 | 1.5 | 10.8 | 10.2 | 0.6 |
+| 4 | 2.0 | 7.3 | 7.8 | −0.5 |
+| 5 | 2.5 | 5.6 | 5.4 | 0.2 |
+
+$\textstyle\sum e_i = 0.2 - 0.5 + 0.6 - 0.5 + 0.2 = 0$ ✓
+
+**Error estimates (6):**
+$$\text{RSS} = 0.04+0.25+0.36+0.25+0.04 = 0.94$$
+$$\widehat{\sigma}^2 = \frac{0.94}{3} \approx 0.313, \quad \widehat{\sigma} \approx 0.560\text{ °C}, \quad \text{SE}(\widehat{\beta}_1) = \frac{0.560}{\sqrt{2.5}} \approx 0.354$$
+
+$\widehat{\sigma} \approx 0.56$°C — the model's predictions are typically off by about **0.56°C**, which is small relative to the 9.6°C range of $y$, suggesting a good fit.
 
 ---
 
