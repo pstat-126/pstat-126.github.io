@@ -16,6 +16,12 @@ format:
       data-background-color: "#003660"
 ---
 
+## Course Reminders 
+- Labs are due Mondays by 11:59 PM
+- HW 1 released today and due next Saturday, October 17th at 11:59 PM
+- Quiz 1 on Monday in class 
+
+
 ## Review: OLS Estimators
 
 From last time, the OLS estimators are:
@@ -116,17 +122,6 @@ It can be shown that $\mathbb{E}(\widehat{\sigma}^2) = \sigma^2$, so $\widehat{\
 
 ---
 
-## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (Solution) {.smaller}
-
-::: {style="font-size: 0.85em;"}
-**Step 1 — expand E(SSE).** Substitute $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$:
-$$\mathbb{E}(\text{SSE}) = \mathbb{E}\!\left\{\sum(y_i - \widehat{y}_i)^2\right\} = \mathbb{E}\!\left\{\sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\right\}$$
-
-**Step 2 — expand the square and use** $\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}$:
-$$= \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 + \widehat{\beta}_1^2 S_{xx} - 2\widehat{\beta}_1^2 S_{xx}\right\} = \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 - \widehat{\beta}_1^2 S_{xx}\right\}$$
-:::
-
----
 
 ## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (cont.) {.smaller}
 
@@ -150,6 +145,19 @@ Therefore:
 
 ---
 
+## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (Solution) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Step 1 — expand E(SSE).** Substitute $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$:
+$$\mathbb{E}(\text{SSE}) = \mathbb{E}\!\left\{\sum(y_i - \widehat{y}_i)^2\right\} = \mathbb{E}\!\left\{\sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\right\}$$
+
+**Step 2 — expand the square and use** $\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}$:
+$$= \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 + \widehat{\beta}_1^2 S_{xx} - 2\widehat{\beta}_1^2 S_{xx}\right\} = \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 - \widehat{\beta}_1^2 S_{xx}\right\}$$
+:::
+
+---
+
+
 ## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (cont.) (Solution) {.smaller}
 
 ::: {style="font-size: 0.85em;"}
@@ -162,7 +170,13 @@ Substitute $y_i - \bar{y} = \beta_1(x_i-\bar{x}) + (\varepsilon_i - \bar{\vareps
   since $\mathbb{E}\!\left\{\sum(\varepsilon_i - \bar{\varepsilon})^2\right\} = (n-1)\sigma^2$ and the cross term has $\mathbb{E}(\varepsilon_i - \bar{\varepsilon}) = 0$
 
 - $\mathbb{E}(\widehat{\beta}_1^2) = \text{Var}(\widehat{\beta}_1) + \left[\mathbb{E}(\widehat{\beta}_1)\right]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2$, so $\;\mathbb{E}(\widehat{\beta}_1^2 S_{xx}) = \sigma^2 + \beta_1^2 S_{xx}$
+:::
 
+---
+
+## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (cont.) (Solution) {.smaller}
+
+::: {style="font-size: 0.85em;"}
 **Step 4 — combine:**
 $$\mathbb{E}(\text{SSE}) = \beta_1^2 S_{xx} + (n-1)\sigma^2 - \sigma^2 - \beta_1^2 S_{xx} = (n-2)\sigma^2$$
 
@@ -244,6 +258,142 @@ $$\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}} = \frac{
 
 ---
 
+## Fitting Linear Regression in R {background-color="#003660"}
+
+---
+
+## The `lm()` Function {.smaller}
+
+In R, we fit a linear regression model using `lm()`:
+
+```r
+lm(y ~ x, data = your_data)
+```
+
+- `y` is the **response** variable
+- `x` is the **predictor** variable
+- The `~` reads as "is modeled as a function of"
+- The result is an object we can pass to `summary()`, `fitted()`, `residuals()`, etc.
+
+---
+
+## Example: Air Quality in New York {.smaller}
+
+The built-in `airquality` dataset records daily air quality measurements in New York (May–September 1973).
+
+- **X**: Temperature (°F)
+- **Y**: Ozone concentration (ppb)
+
+```{r}
+#| echo: true
+aq <- na.omit(airquality[, c("Temp", "Ozone")])
+
+plot(aq$Temp, aq$Ozone,
+     xlab = "Temperature (°F)",
+     ylab = "Ozone (ppb)")
+```
+
+---
+
+## Fitting the Model {.smaller}
+
+```{r}
+#| echo: true
+fit <- lm(Ozone ~ Temp, data = aq)
+summary(fit)
+```
+
+---
+
+## Understanding `summary()` Output {.smaller}
+
+```{r}
+#| echo: false
+summary(fit)
+```
+
+::: {.fragment .absolute top="322px" left="120px" width="88px" height="70px" fragment-index=1 style="border:3px solid #E8A838; border-radius:4px; background:rgba(232,168,56,0.2);"}
+:::
+::: {.fragment .absolute top="312px" left="595px" fragment-index=1 style="font-size:0.58em; color:#7D5A00; font-weight:bold; border-left:3px solid #E8A838; padding-left:8px; line-height:1.5;"}
+**Estimates**
+$\widehat\beta_0=-147.0,\;\widehat\beta_1=2.43$
+:::
+
+::: {.fragment .absolute top="322px" left="210px" width="95px" height="70px" fragment-index=2 style="border:3px solid #5BA4CF; border-radius:4px; background:rgba(91,164,207,0.2);"}
+:::
+::: {.fragment .absolute top="356px" left="595px" fragment-index=2 style="font-size:0.58em; color:#1A5276; font-weight:bold; border-left:3px solid #5BA4CF; padding-left:8px; line-height:1.5;"}
+**Std. Errors**
+SE($\widehat\beta_0$), SE($\widehat\beta_1$)
+:::
+
+::: {.fragment .absolute top="445px" left="0px" width="570px" height="26px" fragment-index=3 style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);"}
+:::
+::: {.fragment .absolute top="428px" left="595px" fragment-index=3 style="font-size:0.58em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.5;"}
+$\widehat\sigma=23.71$ — residual std. deviation
+:::
+
+::: {.fragment .absolute top="473px" left="0px" width="570px" height="23px" fragment-index=4 style="border:3px solid #C0392B; border-radius:4px; background:rgba(192,57,43,0.2);"}
+:::
+::: {.fragment .absolute top="461px" left="595px" fragment-index=4 style="font-size:0.58em; color:#922B21; font-weight:bold; border-left:3px solid #C0392B; padding-left:8px;"}
+$R^2=0.488$ — variation explained by model
+:::
+
+---
+
+## Interpreting the Output 
+::: {style="font-size: 0.55em;"}
+
+From the output above, we read off the key values directly:
+
+::: {.callout-note title="Air Quality Example"}
+We have $\widehat{\beta}_0 = -147.65$, $\widehat{\beta}_1 = 2.44$, and $\widehat{\sigma} = 23.71$.
+Thus $\widehat{\sigma}^2 = 23.71^2 \approx 562.2$.
+
+Fitted model: $\widehat{\text{Ozone}} = -147.65 + 2.44 \times \text{Temp}$
+:::
+
+**The intercept is included by default.** Use formula shortcuts to change this:
+
+| Formula | Model |
+|:---|:---|
+| `lm(y ~ x)` | $Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i$ — intercept included |
+| `lm(y ~ x - 1)` | $Y_i = \beta_1 X_i + \varepsilon_i$ — no intercept (line through origin) |
+| `lm(y ~ 1)` | $Y_i = \beta_0 + \varepsilon_i$ — intercept only (estimates the mean of $Y$) |
+:::
+---
+
+## Adding the Fitted Line {.smaller}
+
+Use `abline()` to overlay the OLS regression line:
+
+```{r}
+#| echo: true
+plot(aq$Temp, aq$Ozone,
+     xlab = "Temperature (°F)",
+     ylab = "Ozone (ppb)")
+abline(fit, col = "red")
+```
+
+---
+
+## Extracting Key Quantities {.smaller}
+
+Once a model is fit, R gives us easy access to the components we have been computing by hand:
+
+```{r}
+#| echo: true
+coef(fit)        # beta_0 hat and beta_1 hat
+fitted(fit)      # y-hat values
+residuals(fit)   # e_i = y_i - y-hat_i
+sigma(fit)       # sigma-hat (residual standard deviation)
+```
+
+::: {.callout-tip}
+`sigma()` returns $\widehat{\sigma} = \sqrt{\text{RSS}/(n-2)}$ — the same quantity we computed by hand today.
+:::
+
+---
+
 ## Summary {.smaller}
 
 ::: {.incremental}
@@ -253,6 +403,7 @@ $$\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}} = \frac{
 - **$\widehat{\sigma}^2 = \text{RSS}/(n-2)$** is an unbiased estimate of $\sigma^2$; dividing by $n-2$ corrects for two constraints placed on the residuals
 - **$\widehat{\sigma}$** is the residual standard deviation — the typical prediction error on the scale of $y$
 - **Standard errors** replace $\sigma$ with $\widehat{\sigma}$ in the variance formulas — the foundation for inference
+- Use `lm()` in R to fit the model and `summary()`, `residuals()`, `sigma()` to extract results
 :::
 
 ---

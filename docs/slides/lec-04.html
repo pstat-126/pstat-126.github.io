@@ -35,6 +35,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-69270963cbea74292a2e047a5aecd8f9.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -154,6 +220,14 @@ Annie Adams
 
   <p class="date">2026-10-07</p>
 </section>
+<section id="course-reminders" class="slide level2">
+<h2>Course Reminders</h2>
+<ul>
+<li>Labs are due Mondays by 11:59 PM</li>
+<li>HW 1 released today and due next Saturday, October 17th at 11:59 PM</li>
+<li>Quiz 1 on Monday in class</li>
+</ul>
+</section>
 <section id="review-ols-estimators" class="slide level2">
 <h2>Review: OLS Estimators</h2>
 <p>From last time, the OLS estimators are:</p>
@@ -242,13 +316,6 @@ Annie Adams
 </div>
 </div>
 </section>
-<section id="proof-mathbbetextmse-sigma2-solution" class="slide level2 smaller">
-<h2>Proof: <span class="math inline">\(\mathbb{E}(\text{MSE}) = \sigma^2\)</span> (Solution)</h2>
-<div style="font-size: 0.85em;">
-<p><strong>Step 1 — expand E(SSE).</strong> Substitute <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span>: <span class="math display">\[\mathbb{E}(\text{SSE}) = \mathbb{E}\!\left\{\sum(y_i - \widehat{y}_i)^2\right\} = \mathbb{E}\!\left\{\sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\right\}\]</span></p>
-<p><strong>Step 2 — expand the square and use</strong> <span class="math inline">\(\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}\)</span>: <span class="math display">\[= \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 + \widehat{\beta}_1^2 S_{xx} - 2\widehat{\beta}_1^2 S_{xx}\right\} = \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 - \widehat{\beta}_1^2 S_{xx}\right\}\]</span></p>
-</div>
-</section>
 <section id="proof-mathbbetextmse-sigma2-cont." class="slide level2 smaller">
 <h2>Proof: <span class="math inline">\(\mathbb{E}(\text{MSE}) = \sigma^2\)</span> (cont.)</h2>
 <div style="font-size: 0.85em;">
@@ -269,6 +336,13 @@ Therefore:
 </div>
 </div>
 </section>
+<section id="proof-mathbbetextmse-sigma2-solution" class="slide level2 smaller">
+<h2>Proof: <span class="math inline">\(\mathbb{E}(\text{MSE}) = \sigma^2\)</span> (Solution)</h2>
+<div style="font-size: 0.85em;">
+<p><strong>Step 1 — expand E(SSE).</strong> Substitute <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span>: <span class="math display">\[\mathbb{E}(\text{SSE}) = \mathbb{E}\!\left\{\sum(y_i - \widehat{y}_i)^2\right\} = \mathbb{E}\!\left\{\sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\right\}\]</span></p>
+<p><strong>Step 2 — expand the square and use</strong> <span class="math inline">\(\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}\)</span>: <span class="math display">\[= \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 + \widehat{\beta}_1^2 S_{xx} - 2\widehat{\beta}_1^2 S_{xx}\right\} = \mathbb{E}\!\left\{\sum(y_i-\bar{y})^2 - \widehat{\beta}_1^2 S_{xx}\right\}\]</span></p>
+</div>
+</section>
 <section id="proof-mathbbetextmse-sigma2-cont.-solution" class="slide level2 smaller">
 <h2>Proof: <span class="math inline">\(\mathbb{E}(\text{MSE}) = \sigma^2\)</span> (cont.) (Solution)</h2>
 <div style="font-size: 0.85em;">
@@ -279,6 +353,11 @@ Therefore:
 <p>since <span class="math inline">\(\mathbb{E}\!\left\{\sum(\varepsilon_i - \bar{\varepsilon})^2\right\} = (n-1)\sigma^2\)</span> and the cross term has <span class="math inline">\(\mathbb{E}(\varepsilon_i - \bar{\varepsilon}) = 0\)</span></p></li>
 <li><p><span class="math inline">\(\mathbb{E}(\widehat{\beta}_1^2) = \text{Var}(\widehat{\beta}_1) + \left[\mathbb{E}(\widehat{\beta}_1)\right]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2\)</span>, so <span class="math inline">\(\;\mathbb{E}(\widehat{\beta}_1^2 S_{xx}) = \sigma^2 + \beta_1^2 S_{xx}\)</span></p></li>
 </ul>
+</div>
+</section>
+<section id="proof-mathbbetextmse-sigma2-cont.-solution-1" class="slide level2 smaller">
+<h2>Proof: <span class="math inline">\(\mathbb{E}(\text{MSE}) = \sigma^2\)</span> (cont.) (Solution)</h2>
+<div style="font-size: 0.85em;">
 <p><strong>Step 4 — combine:</strong> <span class="math display">\[\mathbb{E}(\text{SSE}) = \beta_1^2 S_{xx} + (n-1)\sigma^2 - \sigma^2 - \beta_1^2 S_{xx} = (n-2)\sigma^2\]</span></p>
 <p>Therefore: <span class="math display">\[\mathbb{E}(\text{MSE}) = \mathbb{E}\!\left(\frac{\text{SSE}}{n-2}\right) = \frac{(n-2)\sigma^2}{n-2} = \sigma^2 \qquad \blacksquare\]</span></p>
 </div>
@@ -321,7 +400,7 @@ Therefore:
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_18c5105a" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_b9c70c5e" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -332,6 +411,276 @@ Therefore:
 <p><strong>Step 3 — standard error of <span class="math inline">\(\widehat{\beta}_1\)</span>:</strong> <span class="math display">\[\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}} = \frac{\sqrt{2}}{\sqrt{10}} = \sqrt{\frac{2}{10}} = \sqrt{0.2} \approx 0.45\]</span></p>
 <p><strong>Interpretation:</strong> the slope estimate <span class="math inline">\(\widehat{\beta}_1 = 2\)</span> has a typical uncertainty of about <span class="math inline">\(\pm 0.45\)</span> wellness points per hour of exercise.</p>
 </section>
+<section id="fitting-linear-regression-in-r" class="slide level2" data-background-color="#003660">
+<h2>Fitting Linear Regression in R</h2>
+</section>
+<section id="the-lm-function" class="slide level2 smaller">
+<h2>The <code>lm()</code> Function</h2>
+<p>In R, we fit a linear regression model using <code>lm()</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> your_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>y</code> is the <strong>response</strong> variable</li>
+<li><code>x</code> is the <strong>predictor</strong> variable</li>
+<li>The <code>~</code> reads as “is modeled as a function of”</li>
+<li>The result is an object we can pass to <code>summary()</code>, <code>fitted()</code>, <code>residuals()</code>, etc.</li>
+</ul>
+</section>
+<section id="example-air-quality-in-new-york" class="slide level2 smaller">
+<h2>Example: Air Quality in New York</h2>
+<p>The built-in <code>airquality</code> dataset records daily air quality measurements in New York (May–September 1973).</p>
+<ul>
+<li><strong>X</strong>: Temperature (°F)</li>
+<li><strong>Y</strong>: Ozone concentration (ppb)</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a>aq <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(airquality[, <span class="fu">c</span>(<span class="st">"Temp"</span>, <span class="st">"Ozone"</span>)])</span>
+<span id="cb2-2"><a aria-label="2"></a></span>
+<span id="cb2-3"><a aria-label="3"></a><span class="fu">plot</span>(aq<span class="sc">$</span>Temp, aq<span class="sc">$</span>Ozone,</span>
+<span id="cb2-4"><a aria-label="4"></a>     <span class="at">xlab =</span> <span class="st">"Temperature (°F)"</span>,</span>
+<span id="cb2-5"><a aria-label="5"></a>     <span class="at">ylab =</span> <span class="st">"Ozone (ppb)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="lec-04_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"></section>
+<section id="fitting-the-model" class="slide level2 smaller">
+<h2>Fitting the Model</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Ozone <span class="sc">~</span> Temp, <span class="at">data =</span> aq)</span>
+<span id="cb3-2"><a aria-label="2"></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Ozone ~ Temp, data = aq)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-40.729 -17.409  -0.587  11.306 118.271 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -146.9955    18.2872  -8.038 9.37e-13 ***
+Temp           2.4287     0.2331  10.418  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 23.71 on 114 degrees of freedom
+Multiple R-squared:  0.4877,    Adjusted R-squared:  0.4832 
+F-statistic: 108.5 on 1 and 114 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="understanding-summary-output" class="slide level2 smaller">
+<h2>Understanding <code>summary()</code> Output</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Ozone ~ Temp, data = aq)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-40.729 -17.409  -0.587  11.306 118.271 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -146.9955    18.2872  -8.038 9.37e-13 ***
+Temp           2.4287     0.2331  10.418  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 23.71 on 114 degrees of freedom
+Multiple R-squared:  0.4877,    Adjusted R-squared:  0.4832 
+F-statistic: 108.5 on 1 and 114 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="fragment absolute" data-fragment-index="1" style="border:3px solid #E8A838; border-radius:4px; background:rgba(232,168,56,0.2);top: 322px; left: 120px; width: 88px; height: 70px; ">
+
+</div>
+<div class="fragment absolute" data-fragment-index="1" style="font-size:0.58em; color:#7D5A00; font-weight:bold; border-left:3px solid #E8A838; padding-left:8px; line-height:1.5;top: 312px; left: 595px; ">
+<p><strong>Estimates</strong> <span class="math inline">\(\widehat\beta_0=-147.0,\;\widehat\beta_1=2.43\)</span></p>
+</div>
+<div class="fragment absolute" data-fragment-index="2" style="border:3px solid #5BA4CF; border-radius:4px; background:rgba(91,164,207,0.2);top: 322px; left: 210px; width: 95px; height: 70px; ">
+
+</div>
+<div class="fragment absolute" data-fragment-index="2" style="font-size:0.58em; color:#1A5276; font-weight:bold; border-left:3px solid #5BA4CF; padding-left:8px; line-height:1.5;top: 356px; left: 595px; ">
+<p><strong>Std. Errors</strong> SE(<span class="math inline">\(\widehat\beta_0\)</span>), SE(<span class="math inline">\(\widehat\beta_1\)</span>)</p>
+</div>
+<div class="fragment absolute" data-fragment-index="3" style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);top: 445px; left: 0px; width: 570px; height: 26px; ">
+
+</div>
+<div class="fragment absolute" data-fragment-index="3" style="font-size:0.58em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.5;top: 428px; left: 595px; ">
+<p><span class="math inline">\(\widehat\sigma=23.71\)</span> — residual std. deviation</p>
+</div>
+<div class="fragment absolute" data-fragment-index="4" style="border:3px solid #C0392B; border-radius:4px; background:rgba(192,57,43,0.2);top: 473px; left: 0px; width: 570px; height: 23px; ">
+
+</div>
+<div class="fragment absolute" data-fragment-index="4" style="font-size:0.58em; color:#922B21; font-weight:bold; border-left:3px solid #C0392B; padding-left:8px;top: 461px; left: 595px; ">
+<p><span class="math inline">\(R^2=0.488\)</span> — variation explained by model</p>
+</div>
+</section>
+<section id="interpreting-the-output" class="slide level2">
+<h2>Interpreting the Output</h2>
+<div style="font-size: 0.55em;">
+<p>From the output above, we read off the key values directly:</p>
+<div title="Air Quality Example">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Air Quality Example</strong></p>
+</div>
+<div class="callout-content">
+<p>We have <span class="math inline">\(\widehat{\beta}_0 = -147.65\)</span>, <span class="math inline">\(\widehat{\beta}_1 = 2.44\)</span>, and <span class="math inline">\(\widehat{\sigma} = 23.71\)</span>. Thus <span class="math inline">\(\widehat{\sigma}^2 = 23.71^2 \approx 562.2\)</span>.</p>
+<p>Fitted model: <span class="math inline">\(\widehat{\text{Ozone}} = -147.65 + 2.44 \times \text{Temp}\)</span></p>
+</div>
+</div>
+</div>
+</div>
+<p><strong>The intercept is included by default.</strong> Use formula shortcuts to change this:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Formula</th>
+<th style="text-align: left;">Model</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>lm(y ~ x)</code></td>
+<td style="text-align: left;"><span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i\)</span> — intercept included</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>lm(y ~ x - 1)</code></td>
+<td style="text-align: left;"><span class="math inline">\(Y_i = \beta_1 X_i + \varepsilon_i\)</span> — no intercept (line through origin)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>lm(y ~ 1)</code></td>
+<td style="text-align: left;"><span class="math inline">\(Y_i = \beta_0 + \varepsilon_i\)</span> — intercept only (estimates the mean of <span class="math inline">\(Y\)</span>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="adding-the-fitted-line" class="slide level2 smaller">
+<h2>Adding the Fitted Line</h2>
+<p>Use <code>abline()</code> to overlay the OLS regression line:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="fu">plot</span>(aq<span class="sc">$</span>Temp, aq<span class="sc">$</span>Ozone,</span>
+<span id="cb6-2"><a aria-label="2"></a>     <span class="at">xlab =</span> <span class="st">"Temperature (°F)"</span>,</span>
+<span id="cb6-3"><a aria-label="3"></a>     <span class="at">ylab =</span> <span class="st">"Ozone (ppb)"</span>)</span>
+<span id="cb6-4"><a aria-label="4"></a><span class="fu">abline</span>(fit, <span class="at">col =</span> <span class="st">"red"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="lec-04_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
+<section id="extracting-key-quantities" class="slide level2 smaller">
+<h2>Extracting Key Quantities</h2>
+<p>Once a model is fit, R gives us easy access to the components we have been computing by hand:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="fu">coef</span>(fit)        <span class="co"># beta_0 hat and beta_1 hat</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)        Temp 
+-146.995491    2.428703 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="fu">fitted</span>(fit)      <span class="co"># y-hat values</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        1         2         3         4         6         7         8         9 
+15.727630 27.871147 32.728554  3.584114 13.298927 10.870224 -3.701996  1.155411 
+       11        12        13        14        15        16        17        18 
+32.728554 20.585037 13.298927 18.156334 -6.130699  8.441521 13.298927 -8.559403 
+       19        20        21        22        23        24        28        29 
+18.156334  3.584114 -3.701996 30.299850  1.155411  1.155411 15.727630 49.729477 
+       30        31        38        40        41        44        47        48 
+44.872070 37.585960 52.158180 71.587806 64.301697 52.158180 40.014664 27.871147 
+       49        50        51        62        63        64        66        67 
+10.870224 30.299850 37.585960 57.015587 59.444290 49.729477 54.586883 54.586883 
+       68        69        70        71        73        74        76        77 
+66.730400 76.445213 76.445213 69.159103 30.299850 49.729477 47.300773 49.729477 
+       78        79        80        81        82        85        86        87 
+52.158180 57.015587 64.301697 59.444290 32.728554 61.872993 59.444290 52.158180 
+       88        89        90        91        92        93        94        95 
+61.872993 66.730400 61.872993 54.586883 49.729477 49.729477 49.729477 52.158180 
+       96        97        98        99       100       101       104       105 
+61.872993 59.444290 64.301697 69.159103 71.587806 71.587806 61.872993 52.158180 
+      106       108       109       110       111       112       113       114 
+47.300773 40.014664 44.872070 37.585960 42.443367 42.443367 40.014664 27.871147 
+      116       117       118       120       121       122       123       124 
+44.872070 49.729477 61.872993 88.588730 81.302620 86.160026 81.302620 74.016510 
+      125       126       127       128       129       130       131       132 
+76.445213 78.873916 78.873916 64.301697 57.015587 47.300773 42.443367 35.157257 
+      133       134       135       136       137       138       139       140 
+30.299850 49.729477 37.585960 40.014664 25.442444 25.442444 42.443367 15.727630 
+      141       142       143       144       145       146       147       148 
+37.585960 18.156334 52.158180  8.441521 25.442444 49.729477 20.585037  6.012817 
+      149       151       152       153 
+23.013740 35.157257 37.585960 18.156334 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="fu">residuals</span>(fit)   <span class="co"># e_i = y_i - y-hat_i</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          1           2           3           4           6           7 
+ 25.2723695   8.1288530 -20.7285536  14.4158861  14.7010729  12.1297762 
+          8           9          11          12          13          14 
+ 22.7019960   6.8445894 -25.7285536  -4.5850371  -2.2989271  -4.1563338 
+         15          16          17          18          19          20 
+ 24.1306993   5.5584795  20.7010729  14.5594026  11.8436662   7.4158861 
+         21          22          23          24          28          29 
+  4.7019960 -19.2998503   2.8445894  30.8445894   7.2723695  -4.7294767 
+         30          31          38          40          41          44 
+ 70.1279299  -0.5859602 -23.1581800  -0.5878065 -25.3016966 -29.1581800 
+         47          48          49          50          51          62 
+-19.0146635   9.1288530   9.1297762 -18.2998503 -24.5859602  77.9844134 
+         63          64          66          67          68          69 
+-10.4442899 -17.7294767   9.4131167 -14.5868833  10.2696001  20.5547869 
+         70          71          73          74          76          77 
+ 20.5547869  15.8408968 -20.2998503 -22.7294767 -40.3007734  -1.7294767 
+         78          79          80          81          82          85 
+-17.1581800   3.9844134  14.6983034   3.5557101 -16.7285536  18.1270068 
+         86          87          88          89          90          91 
+ 48.5557101 -32.1581800  -9.8729932  15.2696001 -11.8729932   9.4131167 
+         92          93          94          95          96          97 
+  9.2705233 -10.7294767 -40.7294767 -36.1581800  16.1270068 -24.4442899 
+         98          99         100         101         104         105 
+  1.6983034  52.8408968  17.4121935  38.4121935 -17.8729932 -24.1581800 
+        106         108         109         110         111         112 
+ 17.6992266 -18.0146635  14.1279299 -14.5859602 -11.4433668   1.5566332 
+        113         114         116         117         118         120 
+-19.0146635 -18.8711470   0.1279299 118.2705233  11.1270068 -12.5887296 
+        121         122         123         124         125         126 
+ 36.6973803  -2.1600263   3.6973803  21.9834902   1.5547869  -5.8739164 
+        127         128         129         130         131         132 
+ 12.1260836 -17.3016966 -25.0155866 -27.3007734 -19.4433668 -14.1572569 
+        133         134         135         136         137         138 
+ -6.2998503  -5.7294767 -16.5859602 -12.0146635 -16.4424437 -12.4424437 
+        139         140         141         142         143         144 
+  3.5566332   2.2723695 -24.5859602   5.8436662 -36.1581800   4.5584795 
+        145         146         147         148         149         151 
+ -2.4424437 -13.7294767 -13.5850371   7.9871828   6.9862596 -21.1572569 
+        152         153 
+-19.5859602   1.8436662 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="fu">sigma</span>(fit)       <span class="co"># sigma-hat (residual standard deviation)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23.71429</code></pre>
+</div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p><code>sigma()</code> returns <span class="math inline">\(\widehat{\sigma} = \sqrt{\text{RSS}/(n-2)}\)</span> — the same quantity we computed by hand today.</p>
+</div>
+</div>
+</div>
+</section>
 <section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>
 <ul>
@@ -341,6 +690,7 @@ Therefore:
 <li class="fragment"><strong><span class="math inline">\(\widehat{\sigma}^2 = \text{RSS}/(n-2)\)</span></strong> is an unbiased estimate of <span class="math inline">\(\sigma^2\)</span>; dividing by <span class="math inline">\(n-2\)</span> corrects for two constraints placed on the residuals</li>
 <li class="fragment"><strong><span class="math inline">\(\widehat{\sigma}\)</span></strong> is the residual standard deviation — the typical prediction error on the scale of <span class="math inline">\(y\)</span></li>
 <li class="fragment"><strong>Standard errors</strong> replace <span class="math inline">\(\sigma\)</span> with <span class="math inline">\(\widehat{\sigma}\)</span> in the variance formulas — the foundation for inference</li>
+<li class="fragment">Use <code>lm()</code> in R to fit the model and <code>summary()</code>, <code>residuals()</code>, <code>sigma()</code> to extract results</li>
 </ul>
 </section>
 <section id="questions" class="slide level2" data-background-color="#003660">
