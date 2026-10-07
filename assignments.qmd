@@ -29,9 +29,9 @@ toc: false
 
     <tr class="week-row"><td colspan="5">Homework</td></tr>
     <tr>
-      <td><a href="hw/hw-01.html">Homework 1</a></td>
+      <td><a href="hw/">Homework 1</a></td>
       <td class="date-cell"></td>
-      <td class="date-cell"></td>
+      <td class="date-cell">Fri, Oct 17</td>
       <td></td>
       <td></td>
     </tr>

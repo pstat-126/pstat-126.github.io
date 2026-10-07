@@ -1,8 +1,8 @@
 ---
 title: "Homework Assignment 1"
 author: "your name"
-date: today
-format: html
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: pdf_document
 ---
 
 ```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
@@ -13,7 +13,7 @@ options(digits = 4)
 
 **Getting Started:** Download the `.Rmd` template and datasets for this assignment from [this Google Drive folder](https://drive.google.com/drive/folders/1Xv2OuDCwXBH1jj8rt7sqf4FjdmOLO2mL?usp=drive_link). Save all files in the same folder before beginning.
 
-**Instructions:** Complete all answers in this `.qmd` file and render it to a PDF to submit on Gradescope by 10/17 at 11:59 PM. For problems that involve a lot of math (e.g., derivations or proofs), you may handwrite your solution, take a photo, and insert the image instead. To insert an image, add a code chunk with the following line and replace `"filename.jpg"` with your image's filename, updating the file path if your image is not saved in the same folder as your `.qmd`:
+**Instructions:** Complete all answers in this `.Rmd` file and knit it to a PDF to submit on Gradescope by 10/17 at 11:59 PM. For problems that involve a lot of math (e.g., derivations or proofs), you may handwrite your solution, take a photo, and insert the image instead. To insert an image, add a code chunk with the following line and replace `"filename.jpg"` with your image's filename, updating the file path if your image is not saved in the same folder as your `.Rmd`:
 
 ```{r image-example, eval=FALSE, echo=TRUE}
 knitr::include_graphics("filename.jpg")
@@ -91,7 +91,7 @@ $$\hat{\beta}_1 = \frac{\sum_{i=1}^{n}(X_i - \bar{X})(Y_i - \bar{Y})}{\sum_{i=1}
 
 $$\hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{X}$$
 
-where $\bar{X} = \sum_{i=1}^{n} X_i / n$ and $\bar{Y} = \sum_{i=1}^{n} Y_i / n$.
+where $\bar{X} = \sum_{i=1}^{n} X_i / n$ and $\bar{Y} = \sum_{i=1}^{n} Y_i / n$. 
 
 
 **(b)** (5 pts) Show that $\hat{\beta}_0$ and $\hat{\beta}_1$ are unbiased estimators.

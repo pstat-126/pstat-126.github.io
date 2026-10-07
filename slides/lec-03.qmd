@@ -15,10 +15,6 @@ format:
     title-slide-attributes:
       data-background-color: "#003660"
 ---
-## Course Reminders {.smaller}
-- Labs are due Mondays by 11:59 PM
-- HW 1 released today and due next Saturday, October 17th at 11:59 PM
-- Quiz 1 on Monday in class 
 
 
 ## Properties of the OLS Estimators {.smaller}

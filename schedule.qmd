@@ -71,7 +71,7 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
        <tr class="due-row">
       <td class="date-cell">Sat, Oct 17</td>
       <td colspan="3"></td>
-      <td><a class="badge-optional" href="">Homework 1</em></a></td>
+      <td><a class="badge-optional" href="hw/">Homework 1</em></a></td>
     </tr>
     <!--
       <td class="date-cell">Mon, Oct 12</td>
