@@ -291,7 +291,7 @@ Standard errors quantify the uncertainty in each estimate — they are the basis
 
 ## Practice Problem {.smaller}
 
-Five weather stations record elevation $X$ (km) and average annual temperature $Y$ (°C), with $n=5$, $\bar{x}=3$, $\bar{y}=12$, $S_{xx}=10$, $S_{xy}=-30$:
+Five students record the number of classes missed $X$ and their exam score $Y$, with $n=5$, $\bar{x}=3$, $\bar{y}=12$, $S_{xx}=10$, $S_{xy}=-30$:
 
 :::: {.columns}
 
@@ -311,11 +311,11 @@ Five weather stations record elevation $X$ (km) and average annual temperature $
 
 **Compute & Interpret:**
 
-1. Write the formula for $\widehat{\text{Temperature}}$
+1. Write the formula for $\widehat{\text{Score}}$
 2. Interpret $\widehat{\beta}_1$ in context
 3. Is $\widehat{\beta}_0$ meaningful here?
 4. Fill in $\widehat{y}_i$ and $e_i$; verify $\sum e_i = 0$
-5. Predict temperature at $x = 2.5$ km
+5. Predict score for a student who misses 2.5 classes
 6. Compute RSS, $\widehat{\sigma}^2$, $\widehat{\sigma}$, and $\text{SE}(\widehat{\beta}_1)$; interpret $\widehat{\sigma}$
 
 ```{r}
