@@ -111,78 +111,141 @@ It can be shown that $\mathbb{E}(\widehat{\sigma}^2) = \sigma^2$, so $\widehat{\
 
 ---
 
-## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ {.smaller}
+
+
+## Proof: Steps 1 & 2 {.smaller}
+
+**Goal:** Show $\mathbb{E}(\text{MSE}) = \sigma^2$, i.e., $\mathbb{E}(\text{SSE}) = (n-2)\sigma^2$.
 
 ::: {style="font-size: 0.85em;"}
-**Step 1 — expand E(SSE).** Substitute $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$:
-<div style="height: 8em;"></div>
+**Step 1 — rewrite SSE.** Substitute $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$ to center the residuals:
 
-**Step 2 — expand the square and use** $\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}$:
-<div style="height: 8em;"></div>
+<div style="height: 6em;"></div>
+
+**Step 2 — expand the square.** Use $\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}$, then take expectations:
+
+<div style="height: 5em;"></div>
+
+
 :::
 
 ---
 
-
-## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (cont.) {.smaller}
+## Proof: Step 3 — Piece 1 {.smaller}
 
 ::: {style="font-size: 0.85em;"}
-**Step 3 — evaluate each expectation piece by piece.**
+**Evaluate Piece 1:** $\mathbb{E}\!\left(\sum(y_i - \bar{y})^2\right)$
+
+Substitute $y_i - \bar{y} = \beta_1(x_i - \bar{x}) + (\varepsilon_i - \bar{\varepsilon})$ and expand the square:
+
+<div style="height: 8em;"></div>
+
+
+:::
+
+---
+
+## Proof: Step 3 — Piece 2 {.smaller}
+
+::: {style="font-size: 0.85em;"}
+**Evaluate Piece 2:** $\mathbb{E}\!\left(\widehat{\beta}_1^2\, S_{xx}\right)$
+
+Since $S_{xx}$ is non-random, this reduces to finding $\mathbb{E}(\widehat{\beta}_1^2)$.
+
+Use the identity: $\mathbb{E}(Z^2) = \text{Var}(Z) + \left[\mathbb{E}(Z)\right]^2$
+
+<div style="height: 7em;"></div>
+
+
+:::
+
+---
+
+## Proof: Step 4 — Combine {.smaller}
+
+::: {style="font-size: 0.85em;"}
+We now have both pieces. Plug them into $\mathbb{E}(\text{SSE}) = \text{Piece 1} - \text{Piece 2}$:
+
+
+
+
+
 
 <div style="height: 6em;"></div>
 
 
 
+<div style="height: 3em;"></div>
 
-
-**Step 4 — combine:**
-
-<div style="height: 4em;"></div>
-
-Therefore:
-<div style="height: 4em;"></div>
+$\mathbb{E}(\text{MSE}) = \mathbb{E}\!\left(\dfrac{\text{SSE}}{n-2}\right) =$
 :::
 
 ---
 
-## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (Solution) {.smaller}
+## Proof: Steps 1 & 2 (Solution) {.smaller}
 
 ::: {style="font-size: 0.85em;"}
-**Step 1 — expand E(SSE).** Substitute $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$:
-$$\mathbb{E}(\text{SSE}) = \mathbb{E}\!\left(\sum(y_i - \widehat{y}_i)^2\right) = \mathbb{E}\!\left(\sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\right)$$
+**Step 1 — rewrite SSE.** Substitute $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$:
 
-**Step 2 — expand the square and use** $\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}$:
-$$= \mathbb{E}\!\left(\sum(y_i-\bar{y})^2 + \widehat{\beta}_1^2 S_{xx} - 2\widehat{\beta}_1^2 S_{xx}\right) = \mathbb{E}\!\left(\sum(y_i-\bar{y})^2 - \widehat{\beta}_1^2 S_{xx}\right)$$
+$$\text{SSE} = \sum(y_i - \widehat{y}_i)^2 = \sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2$$
+
+**Step 2 — expand the square.** Since $\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}$:
+
+$$= \sum(y_i-\bar{y})^2 - 2\widehat{\beta}_1^2 S_{xx} + \widehat{\beta}_1^2 S_{xx} = \sum(y_i-\bar{y})^2 - \widehat{\beta}_1^2 S_{xx}$$
+
 :::
 
 ---
 
-
-## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (cont.) (Solution) {.smaller}
+## Proof: Step 3 — Piece 1 (Solution) {.smaller}
 
 ::: {style="font-size: 0.85em;"}
-**Step 3 — evaluate each expectation piece by piece.**
+**Evaluate Piece 1:** $\mathbb{E}\!\left(\sum(y_i - \bar{y})^2\right)$
 
 Substitute $y_i - \bar{y} = \beta_1(x_i-\bar{x}) + (\varepsilon_i - \bar{\varepsilon})$ and expand:
 
-- $\mathbb{E}\!\left(\sum(y_i-\bar{y})^2\right) = \beta_1^2 S_{xx} + \mathbb{E}\!\left(\sum(\varepsilon_i-\bar{\varepsilon})^2\right) + 0 = \beta_1^2 S_{xx} + (n-1)\sigma^2$
+$$\sum(y_i-\bar{y})^2 = \beta_1^2 S_{xx} + 2\beta_1\!\sum(x_i-\bar{x})(\varepsilon_i-\bar{\varepsilon}) + \sum(\varepsilon_i-\bar{\varepsilon})^2$$
 
-  since $\mathbb{E}\!\left(\sum(\varepsilon_i - \bar{\varepsilon})^2\right) = (n-1)\sigma^2$ and the cross term has $\mathbb{E}(\varepsilon_i - \bar{\varepsilon}) = 0$
+Taking expectations — the cross term vanishes since $\mathbb{E}(\varepsilon_i - \bar\varepsilon) = 0$:
 
-- $\mathbb{E}(\widehat{\beta}_1^2) = \text{Var}(\widehat{\beta}_1) + \left[\mathbb{E}(\widehat{\beta}_1)\right]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2$, so $\;\mathbb{E}(\widehat{\beta}_1^2 S_{xx}) = \sigma^2 + \beta_1^2 S_{xx}$
+$$\mathbb{E}\!\left(\sum(y_i-\bar{y})^2\right) = \beta_1^2 S_{xx} + (n-1)\sigma^2$$
+
+
 :::
 
 ---
 
-## Proof: $\mathbb{E}(\text{MSE}) = \sigma^2$ (cont.) (Solution) {.smaller}
+## Proof: Step 3 — Piece 2 (Solution) {.smaller}
 
 ::: {style="font-size: 0.85em;"}
+**Evaluate Piece 2:** $\mathbb{E}\!\left(\widehat{\beta}_1^2\, S_{xx}\right)$
 
-**Step 4 — combine:**
-$$\mathbb{E}(\text{SSE}) = \beta_1^2 S_{xx} + (n-1)\sigma^2 - \sigma^2 - \beta_1^2 S_{xx} = (n-2)\sigma^2$$
+Since $S_{xx}$ is non-random: $\mathbb{E}(\widehat{\beta}_1^2 S_{xx}) = S_{xx} \cdot \mathbb{E}(\widehat{\beta}_1^2)$.
 
-Therefore:
-$$\mathbb{E}(\text{MSE}) = \mathbb{E}\!\left(\frac{\text{SSE}}{n-2}\right) = \frac{(n-2)\sigma^2}{n-2} = \sigma^2 \qquad \blacksquare$$
+Apply $\mathbb{E}(Z^2) = \text{Var}(Z) + [\mathbb{E}(Z)]^2$ with $Z = \widehat{\beta}_1$:
+
+$$\mathbb{E}(\widehat{\beta}_1^2) = \text{Var}(\widehat{\beta}_1) + \left[\mathbb{E}(\widehat{\beta}_1)\right]^2 = \frac{\sigma^2}{S_{xx}} + \beta_1^2$$
+
+Therefore: $\mathbb{E}(\widehat{\beta}_1^2 S_{xx}) = \sigma^2 + \beta_1^2 S_{xx}$
+
+
+
+:::
+
+---
+
+## Proof: Step 4 — Combine (Solution) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+Now plug both pieces in:
+
+$$\mathbb{E}(\text{SSE}) = \Big[\beta_1^2 S_{xx} + (n-1)\sigma^2\Big] - \Big[\sigma^2 + \beta_1^2 S_{xx}\Big]$$
+
+The $\beta_1^2 S_{xx}$ terms cancel, leaving:
+
+$$= (n-1)\sigma^2 - \sigma^2 = (n-2)\sigma^2$$
+
+$$\mathbb{E}(\text{MSE}) = \mathbb{E}\!\left(\frac{\text{SSE}}{n-2}\right) = \frac{(n-2)\sigma^2}{n-2} = \sigma^2 \qquad $$
 :::
 
 ---
@@ -217,7 +280,7 @@ Standard errors quantify the uncertainty in each estimate — they are the basis
 
 ## Practice Problem {.smaller}
 
-Five weather stations record elevation $X$ (km) and average annual temperature $Y$ (°C), with $n=5$, $\bar{x}=1.5$, $\bar{y}=10.2$, $S_{xx}=2.5$, $S_{xy}=-12$:
+Five weather stations record elevation $X$ (km) and average annual temperature $Y$ (°C), with $n=5$, $\bar{x}=3$, $\bar{y}=12$, $S_{xx}=10$, $S_{xy}=-30$:
 
 :::: {.columns}
 
@@ -225,11 +288,11 @@ Five weather stations record elevation $X$ (km) and average annual temperature $
 
 | $i$ | $x_i$ | $y_i$ | $\widehat{y}_i$ | $e_i$ |
 |:---:|:------:|:------:|:---------------:|:-----:|
-| 1 | 0.5 | 15.2 | | |
-| 2 | 1.0 | 12.1 | | |
-| 3 | 1.5 | 10.8 | | |
-| 4 | 2.0 | 7.3 | | |
-| 5 | 2.5 | 5.6 | | |
+| 1 | 1 | 19 | | |
+| 2 | 2 | 13 | | |
+| 3 | 3 | 13 | | |
+| 4 | 4 | 9 | | |
+| 5 | 5 | 6 | | |
 
 :::
 
@@ -241,7 +304,7 @@ Five weather stations record elevation $X$ (km) and average annual temperature $
 2. Interpret $\widehat{\beta}_1$ in context
 3. Is $\widehat{\beta}_0$ meaningful here?
 4. Fill in $\widehat{y}_i$ and $e_i$; verify $\sum e_i = 0$
-5. Predict temperature at $x = 1.8$ km
+5. Predict temperature at $x = 2.5$ km
 6. Compute RSS, $\widehat{\sigma}^2$, $\widehat{\sigma}$, and $\text{SE}(\widehat{\beta}_1)$; interpret $\widehat{\sigma}$
 
 ```{r}
@@ -265,43 +328,6 @@ countdown::countdown(
 
 ---
 
-## Practice: Solution {.smaller}
-
-**Model (1):**
-$$Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i, \quad X = \text{elevation (km)},\quad Y = \text{avg. temp. (°C)},\quad \varepsilon_i \overset{\text{iid}}{\sim}(0,\sigma^2)$$
-
-**Estimates (2–3):**
-$$\widehat{\beta}_1 = \frac{-12}{2.5} = -4.8, \qquad \widehat{\beta}_0 = 10.2 - (-4.8)(1.5) = 17.4$$
-
-- $\widehat{\beta}_1$: each additional km of elevation is associated with a **4.8°C decrease** in avg. temperature.
-- $\widehat{\beta}_0 = 17.4$°C is the predicted temperature at 0 km elevation. It is **not meaningful** in context — no station is at sea level, so this is an extrapolation outside the data range.
-
-**Prediction (5):**
-$$\widehat{y}\,\big|_{x=1.8} = 17.4 - 4.8(1.8) = \mathbf{8.76}\text{ °C}$$
-
----
-
-## Practice: Solution (cont.) {.smaller}
-
-**Fitted values and residuals (4)** ($\widehat{y}_i = 17.4 - 4.8\,x_i$, verify $\sum e_i = 0$):
-
-| $i$ | $x_i$ | $y_i$ | $\widehat{y}_i$ | $e_i$ |
-|:---:|:------:|:------:|:---------------:|:-----:|
-| 1 | 0.5 | 15.2 | 15.0 | 0.2 |
-| 2 | 1.0 | 12.1 | 12.6 | −0.5 |
-| 3 | 1.5 | 10.8 | 10.2 | 0.6 |
-| 4 | 2.0 | 7.3 | 7.8 | −0.5 |
-| 5 | 2.5 | 5.6 | 5.4 | 0.2 |
-
-$\textstyle\sum e_i = 0.2 - 0.5 + 0.6 - 0.5 + 0.2 = 0$ ✓
-
-**Error estimates (6):**
-$$\text{RSS} = 0.04+0.25+0.36+0.25+0.04 = 0.94$$
-$$\widehat{\sigma}^2 = \frac{0.94}{3} \approx 0.313, \quad \widehat{\sigma} \approx 0.560\text{ °C}, \quad \text{SE}(\widehat{\beta}_1) = \frac{0.560}{\sqrt{2.5}} \approx 0.354$$
-
-$\widehat{\sigma} \approx 0.56$°C — the model's predictions are typically off by about **0.56°C**, which is small relative to the 9.6°C range of $y$, suggesting a good fit.
-
----
 
 ## Fitting Linear Regression in R {background-color="#003660"}
 

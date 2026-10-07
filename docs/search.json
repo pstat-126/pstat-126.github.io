@@ -158,7 +158,7 @@
     "href": "slides/lec-04.html#practice-solution",
     "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Practice: Solution",
-    "text": "Practice: Solution\nModel (1): \\[Y_i = \\beta_0 + \\beta_1 X_i + \\varepsilon_i, \\quad X = \\text{elevation (km)},\\quad Y = \\text{avg. temp. (°C)},\\quad \\varepsilon_i \\overset{\\text{iid}}{\\sim}(0,\\sigma^2)\\]\nEstimates (2–3): \\[\\widehat{\\beta}_1 = \\frac{-12}{2.5} = -4.8, \\qquad \\widehat{\\beta}_0 = 10.2 - (-4.8)(1.5) = 17.4\\]\n\n\\(\\widehat{\\beta}_1\\): each additional km of elevation is associated with a 4.8°C decrease in avg. temperature.\n\\(\\widehat{\\beta}_0 = 17.4\\)°C is the predicted temperature at 0 km elevation. It is not meaningful in context — no station is at sea level, so this is an extrapolation outside the data range.\n\nPrediction (5): \\[\\widehat{y}\\,\\big|_{x=1.8} = 17.4 - 4.8(1.8) = \\mathbf{8.76}\\text{ °C}\\]"
+    "text": "Practice: Solution\nFitted formula (1): \\(\\widehat{\\beta}_1 = -30/10 = -3\\), \\(\\;\\widehat{\\beta}_0 = 12-(-3)(3) = 21\\)\n\\[\\widehat{\\text{Temperature}} = 21 - 3 \\times \\text{Elevation}\\]\nSlope (2): Each additional km of elevation is associated with a 3°C decrease in avg. temperature.\nIntercept (3): \\(\\widehat{\\beta}_0 = 21\\)°C is the predicted temperature at 0 km elevation. Not meaningful — no stations are near sea level, so this extrapolates well outside the data."
   },
   {
     "objectID": "slides/lec-04.html#summary",
@@ -1472,13 +1472,83 @@
     "href": "slides/lec-04.html#practice-solution-cont.",
     "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Practice: Solution (cont.)",
-    "text": "Practice: Solution (cont.)\nFitted values and residuals (4) (\\(\\widehat{y}_i = 17.4 - 4.8\\,x_i\\), verify \\(\\sum e_i = 0\\)):\n\n\n\n\\(i\\)\n\\(x_i\\)\n\\(y_i\\)\n\\(\\widehat{y}_i\\)\n\\(e_i\\)\n\n\n\n\n1\n0.5\n15.2\n15.0\n0.2\n\n\n2\n1.0\n12.1\n12.6\n−0.5\n\n\n3\n1.5\n10.8\n10.2\n0.6\n\n\n4\n2.0\n7.3\n7.8\n−0.5\n\n\n5\n2.5\n5.6\n5.4\n0.2\n\n\n\n\\(\\textstyle\\sum e_i = 0.2 - 0.5 + 0.6 - 0.5 + 0.2 = 0\\) ✓\nError estimates (6): \\[\\text{RSS} = 0.04+0.25+0.36+0.25+0.04 = 0.94\\] \\[\\widehat{\\sigma}^2 = \\frac{0.94}{3} \\approx 0.313, \\quad \\widehat{\\sigma} \\approx 0.560\\text{ °C}, \\quad \\text{SE}(\\widehat{\\beta}_1) = \\frac{0.560}{\\sqrt{2.5}} \\approx 0.354\\]\n\\(\\widehat{\\sigma} \\approx 0.56\\)°C — the model’s predictions are typically off by about 0.56°C, which is small relative to the 9.6°C range of \\(y\\), suggesting a good fit."
+    "text": "Practice: Solution (cont.)\nFitted values and residuals (4) (\\(\\widehat{y}_i = 21 - 3\\,x_i\\), verify \\(\\sum e_i = 0\\)):\n\n\n\n\\(i\\)\n\\(x_i\\)\n\\(y_i\\)\n\\(\\widehat{y}_i\\)\n\\(e_i\\)\n\n\n\n\n1\n1\n19\n18\n1\n\n\n2\n2\n13\n15\n−2\n\n\n3\n3\n13\n12\n1\n\n\n4\n4\n9\n9\n0\n\n\n5\n5\n6\n6\n0\n\n\n\n\\(\\textstyle\\sum e_i = 1 - 2 + 1 + 0 + 0 = 0\\) ✓\nPrediction (5): \\(\\widehat{y}\\,\\big|_{x=2.5} = 21 - 3(2.5) = \\mathbf{13.5}\\)°C\nError estimates (6): \\[\\text{RSS} = 1+4+1+0+0 = 6, \\quad \\widehat{\\sigma}^2 = \\frac{6}{3} = 2, \\quad \\widehat{\\sigma} = \\sqrt{2} \\approx 1.41\\text{ °C}, \\quad \\text{SE}(\\widehat{\\beta}_1) = \\frac{\\sqrt{2}}{\\sqrt{10}} \\approx 0.447\\]\n\\(\\widehat{\\sigma} \\approx 1.41\\)°C — typically off by about 1.4°C, small relative to the 13°C range of \\(y\\)."
   },
   {
     "objectID": "slides/lec-04.html#practice-problem",
     "href": "slides/lec-04.html#practice-problem",
     "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Practice Problem",
-    "text": "Practice Problem\nFive weather stations record elevation \\(X\\) (km) and average annual temperature \\(Y\\) (°C), with \\(n=5\\), \\(\\bar{x}=1.5\\), \\(\\bar{y}=10.2\\), \\(S_{xx}=2.5\\), \\(S_{xy}=-12\\):\n\n\n\n\n\n\\(i\\)\n\\(x_i\\)\n\\(y_i\\)\n\\(\\widehat{y}_i\\)\n\\(e_i\\)\n\n\n\n\n1\n0.5\n15.2\n\n\n\n\n2\n1.0\n12.1\n\n\n\n\n3\n1.5\n10.8\n\n\n\n\n4\n2.0\n7.3\n\n\n\n\n5\n2.5\n5.6\n\n\n\n\n\n\nCompute & Interpret:\n\nWrite the formula for \\(\\widehat{\\text{Temperature}}\\)\nInterpret \\(\\widehat{\\beta}_1\\) in context\nIs \\(\\widehat{\\beta}_0\\) meaningful here?\nFill in \\(\\widehat{y}_i\\) and \\(e_i\\); verify \\(\\sum e_i = 0\\)\nPredict temperature at \\(x = 1.8\\) km\nCompute RSS, \\(\\widehat{\\sigma}^2\\), \\(\\widehat{\\sigma}\\), and \\(\\text{SE}(\\widehat{\\beta}_1)\\); interpret \\(\\widehat{\\sigma}\\)"
+    "text": "Practice Problem\nFive weather stations record elevation \\(X\\) (km) and average annual temperature \\(Y\\) (°C), with \\(n=5\\), \\(\\bar{x}=3\\), \\(\\bar{y}=12\\), \\(S_{xx}=10\\), \\(S_{xy}=-30\\):\n\n\n\n\n\n\\(i\\)\n\\(x_i\\)\n\\(y_i\\)\n\\(\\widehat{y}_i\\)\n\\(e_i\\)\n\n\n\n\n1\n1\n19\n\n\n\n\n2\n2\n13\n\n\n\n\n3\n3\n13\n\n\n\n\n4\n4\n9\n\n\n\n\n5\n5\n6\n\n\n\n\n\n\nCompute & Interpret:\n\nWrite the formula for \\(\\widehat{\\text{Temperature}}\\)\nInterpret \\(\\widehat{\\beta}_1\\) in context\nIs \\(\\widehat{\\beta}_0\\) meaningful here?\nFill in \\(\\widehat{y}_i\\) and \\(e_i\\); verify \\(\\sum e_i = 0\\)\nPredict temperature at \\(x = 2.5\\) km\nCompute RSS, \\(\\widehat{\\sigma}^2\\), \\(\\widehat{\\sigma}\\), and \\(\\text{SE}(\\widehat{\\beta}_1)\\); interpret \\(\\widehat{\\sigma}\\)"
+  },
+  {
+    "objectID": "slides/lec-04.html#proof-strategy-mathbbetextmse-sigma2",
+    "href": "slides/lec-04.html#proof-strategy-mathbbetextmse-sigma2",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
+    "section": "Proof Strategy: \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\)",
+    "text": "Proof Strategy: \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\)\nGoal: Show \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\), i.e., \\(\\mathbb{E}(\\text{SSE}) = (n-2)\\sigma^2\\).\nAfter the algebra, SSE splits into two pieces we evaluate separately, then combine:\n\\[\\mathbb{E}(\\text{SSE}) = \\underbrace{\\mathbb{E}\\!\\left(\\textstyle\\sum(y_i-\\bar{y})^2\\right)}_{\\textbf{Piece 1}} \\;-\\; \\underbrace{\\mathbb{E}\\!\\left(\\widehat{\\beta}_1^2\\, S_{xx}\\right)}_{\\textbf{Piece 2}}\\]\nWatch for the \\(\\beta_1^2 S_{xx}\\) terms — they appear in both pieces and cancel in Step 4, leaving only \\(\\sigma^2\\) terms."
+  },
+  {
+    "objectID": "slides/lec-04.html#proof-steps-1-2",
+    "href": "slides/lec-04.html#proof-steps-1-2",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
+    "section": "Proof: Steps 1 & 2",
+    "text": "Proof: Steps 1 & 2\nGoal: Show \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\), i.e., \\(\\mathbb{E}(\\text{SSE}) = (n-2)\\sigma^2\\).\n\nStep 1 — rewrite SSE. Substitute \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) to center the residuals:\n\n\n\nStep 2 — expand the square. Use \\(\\sum(y_i-\\bar{y})(x_i-\\bar{x}) = \\widehat{\\beta}_1 S_{xx}\\), then take expectations:"
+  },
+  {
+    "objectID": "slides/lec-04.html#proof-step-3-piece-1",
+    "href": "slides/lec-04.html#proof-step-3-piece-1",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
+    "section": "Proof: Step 3 — Piece 1",
+    "text": "Proof: Step 3 — Piece 1\n\nEvaluate Piece 1: \\(\\mathbb{E}\\!\\left(\\sum(y_i - \\bar{y})^2\\right)\\)\nSubstitute \\(y_i - \\bar{y} = \\beta_1(x_i - \\bar{x}) + (\\varepsilon_i - \\bar{\\varepsilon})\\) and expand the square:"
+  },
+  {
+    "objectID": "slides/lec-04.html#proof-step-3-piece-2",
+    "href": "slides/lec-04.html#proof-step-3-piece-2",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
+    "section": "Proof: Step 3 — Piece 2",
+    "text": "Proof: Step 3 — Piece 2\n\nEvaluate Piece 2: \\(\\mathbb{E}\\!\\left(\\widehat{\\beta}_1^2\\, S_{xx}\\right)\\)\nSince \\(S_{xx}\\) is non-random, this reduces to finding \\(\\mathbb{E}(\\widehat{\\beta}_1^2)\\).\nUse the identity: \\(\\mathbb{E}(Z^2) = \\text{Var}(Z) + \\left[\\mathbb{E}(Z)\\right]^2\\)"
+  },
+  {
+    "objectID": "slides/lec-04.html#proof-step-4-combine",
+    "href": "slides/lec-04.html#proof-step-4-combine",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
+    "section": "Proof: Step 4 — Combine",
+    "text": "Proof: Step 4 — Combine\n\nWe now have both pieces. Plug them into \\(\\mathbb{E}(\\text{SSE}) = \\text{Piece 1} - \\text{Piece 2}\\):\n\n\n\n\n\n\n\\(\\mathbb{E}(\\text{MSE}) = \\mathbb{E}\\!\\left(\\dfrac{\\text{SSE}}{n-2}\\right) =\\)"
+  },
+  {
+    "objectID": "slides/lec-04.html#proof-steps-1-2-solution",
+    "href": "slides/lec-04.html#proof-steps-1-2-solution",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
+    "section": "Proof: Steps 1 & 2 (Solution)",
+    "text": "Proof: Steps 1 & 2 (Solution)\n\nStep 1 — rewrite SSE. Substitute \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\):\n\\[\\text{SSE} = \\sum(y_i - \\widehat{y}_i)^2 = \\sum\\!\\left[(y_i - \\bar{y}) - \\widehat{\\beta}_1(x_i - \\bar{x})\\right]^2\\]\nStep 2 — expand the square. Since \\(\\sum(y_i-\\bar{y})(x_i-\\bar{x}) = \\widehat{\\beta}_1 S_{xx}\\):\n\\[= \\sum(y_i-\\bar{y})^2 - 2\\widehat{\\beta}_1^2 S_{xx} + \\widehat{\\beta}_1^2 S_{xx} = \\sum(y_i-\\bar{y})^2 - \\widehat{\\beta}_1^2 S_{xx}\\]"
+  },
+  {
+    "objectID": "slides/lec-04.html#proof-step-3-piece-1-solution",
+    "href": "slides/lec-04.html#proof-step-3-piece-1-solution",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
+    "section": "Proof: Step 3 — Piece 1 (Solution)",
+    "text": "Proof: Step 3 — Piece 1 (Solution)\n\nEvaluate Piece 1: \\(\\mathbb{E}\\!\\left(\\sum(y_i - \\bar{y})^2\\right)\\)\nSubstitute \\(y_i - \\bar{y} = \\beta_1(x_i-\\bar{x}) + (\\varepsilon_i - \\bar{\\varepsilon})\\) and expand:\n\\[\\sum(y_i-\\bar{y})^2 = \\beta_1^2 S_{xx} + 2\\beta_1\\!\\sum(x_i-\\bar{x})(\\varepsilon_i-\\bar{\\varepsilon}) + \\sum(\\varepsilon_i-\\bar{\\varepsilon})^2\\]\nTaking expectations — the cross term vanishes since \\(\\mathbb{E}(\\varepsilon_i - \\bar\\varepsilon) = 0\\):\n\\[\\mathbb{E}\\!\\left(\\sum(y_i-\\bar{y})^2\\right) = \\beta_1^2 S_{xx} + (n-1)\\sigma^2\\]"
+  },
+  {
+    "objectID": "slides/lec-04.html#proof-step-3-piece-2-solution",
+    "href": "slides/lec-04.html#proof-step-3-piece-2-solution",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
+    "section": "Proof: Step 3 — Piece 2 (Solution)",
+    "text": "Proof: Step 3 — Piece 2 (Solution)\n\nEvaluate Piece 2: \\(\\mathbb{E}\\!\\left(\\widehat{\\beta}_1^2\\, S_{xx}\\right)\\)\nSince \\(S_{xx}\\) is non-random: \\(\\mathbb{E}(\\widehat{\\beta}_1^2 S_{xx}) = S_{xx} \\cdot \\mathbb{E}(\\widehat{\\beta}_1^2)\\).\nApply \\(\\mathbb{E}(Z^2) = \\text{Var}(Z) + [\\mathbb{E}(Z)]^2\\) with \\(Z = \\widehat{\\beta}_1\\):\n\\[\\mathbb{E}(\\widehat{\\beta}_1^2) = \\text{Var}(\\widehat{\\beta}_1) + \\left[\\mathbb{E}(\\widehat{\\beta}_1)\\right]^2 = \\frac{\\sigma^2}{S_{xx}} + \\beta_1^2\\]\nTherefore: \\(\\mathbb{E}(\\widehat{\\beta}_1^2 S_{xx}) = \\sigma^2 + \\beta_1^2 S_{xx}\\)"
+  },
+  {
+    "objectID": "slides/lec-04.html#proof-step-4-combine-solution",
+    "href": "slides/lec-04.html#proof-step-4-combine-solution",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
+    "section": "Proof: Step 4 — Combine (Solution)",
+    "text": "Proof: Step 4 — Combine (Solution)\n\nNow plug both pieces in:\n\\[\\mathbb{E}(\\text{SSE}) = \\Big[\\beta_1^2 S_{xx} + (n-1)\\sigma^2\\Big] - \\Big[\\sigma^2 + \\beta_1^2 S_{xx}\\Big]\\]\nThe \\(\\beta_1^2 S_{xx}\\) terms cancel, leaving:\n\\[= (n-1)\\sigma^2 - \\sigma^2 = (n-2)\\sigma^2\\]\n\\[\\mathbb{E}(\\text{MSE}) = \\mathbb{E}\\!\\left(\\frac{\\text{SSE}}{n-2}\\right) = \\frac{(n-2)\\sigma^2}{n-2} = \\sigma^2 \\qquad \\]"
+  },
+  {
+    "objectID": "slides/lec-04.html#practice-solution-cont.-1",
+    "href": "slides/lec-04.html#practice-solution-cont.-1",
+    "title": "Lecture 4: Residuals and Estimating Error Variance",
+    "section": "Practice: Solution (cont.)",
+    "text": "Practice: Solution (cont.)\nError estimates (6): \\[\\text{RSS} = 1+4+1+0+0 = 6, \\quad \\widehat{\\sigma}^2 = \\frac{6}{3} = 2, \\quad \\widehat{\\sigma} = \\sqrt{2} \\approx 1.41\\text{ pts}, \\quad \\text{SE}(\\widehat{\\beta}_1) = \\frac{\\sqrt{2}}{\\sqrt{10}} \\approx 0.447\\]\n\n\\(\\widehat{\\sigma}\\): The model’s predicted exam scores are typically off by about 1.41 points, which is small relative to the 13-point range of scores in the data.\n\\(\\text{SE}(\\widehat{\\beta}_1)\\): The estimated slope of \\(-3\\) has a standard error of approximately 0.447, meaning that if we were to repeat this study many times, our estimates of \\(\\widehat{\\beta}_1\\) would typically vary by about 0.447 points per absence from the true slope."
   }
 ]
