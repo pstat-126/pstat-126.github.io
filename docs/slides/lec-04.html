@@ -305,9 +305,9 @@ Annie Adams
 </section>
 <section id="proof-steps-1-2" class="slide level2 smaller">
 <h2>Proof: Steps 1 &amp; 2</h2>
-<p><strong>Goal:</strong> Show <span class="math inline">\(\mathbb{E}(\text{MSE}) = \sigma^2\)</span>, i.e., <span class="math inline">\(\mathbb{E}(\text{SSE}) = (n-2)\sigma^2\)</span>.</p>
+<p><strong>Goal:</strong> Show <span class="math inline">\(\mathbb{E}(\text{MSE}) = \sigma^2\)</span>, i.e., <span class="math inline">\(\mathbb{E}(\text{RSS}) = (n-2)\sigma^2\)</span>.</p>
 <div style="font-size: 0.85em;">
-<p><strong>Step 1 — rewrite SSE.</strong> Substitute <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span> to center the residuals:</p>
+<p><strong>Step 1 — rewrite RSS.</strong> Substitute <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span> to center the residuals:</p>
 <div style="height: 6em;">
 
 </div>
@@ -322,8 +322,23 @@ Annie Adams
 <div style="font-size: 0.85em;">
 <p><strong>Evaluate Piece 1:</strong> <span class="math inline">\(\mathbb{E}\!\left(\sum(y_i - \bar{y})^2\right)\)</span></p>
 <p>Substitute <span class="math inline">\(y_i - \bar{y} = \beta_1(x_i - \bar{x}) + (\varepsilon_i - \bar{\varepsilon})\)</span> and expand the square:</p>
-<div style="height: 8em;">
+<div style="height: 12em;">
 
+</div>
+<div title="Recall: Model Assumption">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Recall: Model Assumption</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math inline">\(\mathbb{E}(\varepsilon_i) = 0\)</span> is a model assumption (errors are mean-zero). Then by linearity of expectation: <span class="math inline">\(\mathbb{E}(\bar{\varepsilon}) = \frac{1}{n}\sum_{i=1}^n \mathbb{E}(\varepsilon_i) = 0\)</span>.</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -341,21 +356,21 @@ Annie Adams
 <section id="proof-step-4-combine" class="slide level2 smaller">
 <h2>Proof: Step 4 — Combine</h2>
 <div style="font-size: 0.85em;">
-<p>We now have both pieces. Plug them into <span class="math inline">\(\mathbb{E}(\text{SSE}) = \text{Piece 1} - \text{Piece 2}\)</span>:</p>
+<p>We now have both pieces. Plug them into <span class="math inline">\(\mathbb{E}(\text{RSS}) = \text{Piece 1} - \text{Piece 2}\)</span>:</p>
 <div style="height: 6em;">
 
 </div>
 <div style="height: 3em;">
 
 </div>
-<p><span class="math inline">\(\mathbb{E}(\text{MSE}) = \mathbb{E}\!\left(\dfrac{\text{SSE}}{n-2}\right) =\)</span></p>
+<p><span class="math inline">\(\mathbb{E}(\text{MSE}) = \mathbb{E}\!\left(\dfrac{\text{RSS}}{n-2}\right) =\)</span></p>
 </div>
 </section>
 <section id="proof-steps-1-2-solution" class="slide level2 smaller">
 <h2>Proof: Steps 1 &amp; 2 (Solution)</h2>
 <div style="font-size: 0.85em;">
-<p><strong>Step 1 — rewrite SSE.</strong> Substitute <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span>:</p>
-<p><span class="math display">\[\text{SSE} = \sum(y_i - \widehat{y}_i)^2 = \sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\]</span></p>
+<p><strong>Step 1 — rewrite RSS.</strong> Substitute <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\)</span>:</p>
+<p><span class="math display">\[\text{RSS} = \sum(y_i - \widehat{y}_i)^2 = \sum\!\left[(y_i - \bar{y}) - \widehat{\beta}_1(x_i - \bar{x})\right]^2\]</span></p>
 <p><strong>Step 2 — expand the square.</strong> Since <span class="math inline">\(\sum(y_i-\bar{y})(x_i-\bar{x}) = \widehat{\beta}_1 S_{xx}\)</span>:</p>
 <p><span class="math display">\[= \sum(y_i-\bar{y})^2 - 2\widehat{\beta}_1^2 S_{xx} + \widehat{\beta}_1^2 S_{xx} = \sum(y_i-\bar{y})^2 - \widehat{\beta}_1^2 S_{xx}\]</span></p>
 </div>
@@ -384,10 +399,10 @@ Annie Adams
 <h2>Proof: Step 4 — Combine (Solution)</h2>
 <div style="font-size: 0.85em;">
 <p>Now plug both pieces in:</p>
-<p><span class="math display">\[\mathbb{E}(\text{SSE}) = \Big[\beta_1^2 S_{xx} + (n-1)\sigma^2\Big] - \Big[\sigma^2 + \beta_1^2 S_{xx}\Big]\]</span></p>
+<p><span class="math display">\[\mathbb{E}(\text{RSS}) = \Big[\beta_1^2 S_{xx} + (n-1)\sigma^2\Big] - \Big[\sigma^2 + \beta_1^2 S_{xx}\Big]\]</span></p>
 <p>The <span class="math inline">\(\beta_1^2 S_{xx}\)</span> terms cancel, leaving:</p>
 <p><span class="math display">\[= (n-1)\sigma^2 - \sigma^2 = (n-2)\sigma^2\]</span></p>
-<p><span class="math display">\[\mathbb{E}(\text{MSE}) = \mathbb{E}\!\left(\frac{\text{SSE}}{n-2}\right) = \frac{(n-2)\sigma^2}{n-2} = \sigma^2 \qquad \]</span></p>
+<p><span class="math display">\[\mathbb{E}(\text{MSE}) = \mathbb{E}\!\left(\frac{\text{RSS}}{n-2}\right) = \frac{(n-2)\sigma^2}{n-2} = \sigma^2 \qquad \]</span></p>
 </div>
 </section>
 <section id="the-residual-standard-deviation" class="slide level2 smaller">
@@ -482,7 +497,7 @@ Annie Adams
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_a918b2cb" minutes="10" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_510b3567" minutes="10" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div></div>

@@ -1493,14 +1493,14 @@
     "href": "slides/lec-04.html#proof-steps-1-2",
     "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Proof: Steps 1 & 2",
-    "text": "Proof: Steps 1 & 2\nGoal: Show \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\), i.e., \\(\\mathbb{E}(\\text{SSE}) = (n-2)\\sigma^2\\).\n\nStep 1 — rewrite SSE. Substitute \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) to center the residuals:\n\n\n\nStep 2 — expand the square. Use \\(\\sum(y_i-\\bar{y})(x_i-\\bar{x}) = \\widehat{\\beta}_1 S_{xx}\\), then take expectations:"
+    "text": "Proof: Steps 1 & 2\nGoal: Show \\(\\mathbb{E}(\\text{MSE}) = \\sigma^2\\), i.e., \\(\\mathbb{E}(\\text{RSS}) = (n-2)\\sigma^2\\).\n\nStep 1 — rewrite RSS. Substitute \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\) to center the residuals:\n\n\n\nStep 2 — expand the square. Use \\(\\sum(y_i-\\bar{y})(x_i-\\bar{x}) = \\widehat{\\beta}_1 S_{xx}\\), then take expectations:"
   },
   {
     "objectID": "slides/lec-04.html#proof-step-3-piece-1",
     "href": "slides/lec-04.html#proof-step-3-piece-1",
     "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Proof: Step 3 — Piece 1",
-    "text": "Proof: Step 3 — Piece 1\n\nEvaluate Piece 1: \\(\\mathbb{E}\\!\\left(\\sum(y_i - \\bar{y})^2\\right)\\)\nSubstitute \\(y_i - \\bar{y} = \\beta_1(x_i - \\bar{x}) + (\\varepsilon_i - \\bar{\\varepsilon})\\) and expand the square:"
+    "text": "Proof: Step 3 — Piece 1\n\nEvaluate Piece 1: \\(\\mathbb{E}\\!\\left(\\sum(y_i - \\bar{y})^2\\right)\\)\nSubstitute \\(y_i - \\bar{y} = \\beta_1(x_i - \\bar{x}) + (\\varepsilon_i - \\bar{\\varepsilon})\\) and expand the square:\n\n\n\n\n\n\n\n\n\n\nRecall: Model Assumption\n\n\n\\(\\mathbb{E}(\\varepsilon_i) = 0\\) is a model assumption (errors are mean-zero). Then by linearity of expectation: \\(\\mathbb{E}(\\bar{\\varepsilon}) = \\frac{1}{n}\\sum_{i=1}^n \\mathbb{E}(\\varepsilon_i) = 0\\)."
   },
   {
     "objectID": "slides/lec-04.html#proof-step-3-piece-2",
@@ -1514,14 +1514,14 @@
     "href": "slides/lec-04.html#proof-step-4-combine",
     "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Proof: Step 4 — Combine",
-    "text": "Proof: Step 4 — Combine\n\nWe now have both pieces. Plug them into \\(\\mathbb{E}(\\text{SSE}) = \\text{Piece 1} - \\text{Piece 2}\\):\n\n\n\n\n\n\n\\(\\mathbb{E}(\\text{MSE}) = \\mathbb{E}\\!\\left(\\dfrac{\\text{SSE}}{n-2}\\right) =\\)"
+    "text": "Proof: Step 4 — Combine\n\nWe now have both pieces. Plug them into \\(\\mathbb{E}(\\text{RSS}) = \\text{Piece 1} - \\text{Piece 2}\\):\n\n\n\n\n\n\n\\(\\mathbb{E}(\\text{MSE}) = \\mathbb{E}\\!\\left(\\dfrac{\\text{RSS}}{n-2}\\right) =\\)"
   },
   {
     "objectID": "slides/lec-04.html#proof-steps-1-2-solution",
     "href": "slides/lec-04.html#proof-steps-1-2-solution",
     "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Proof: Steps 1 & 2 (Solution)",
-    "text": "Proof: Steps 1 & 2 (Solution)\n\nStep 1 — rewrite SSE. Substitute \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\):\n\\[\\text{SSE} = \\sum(y_i - \\widehat{y}_i)^2 = \\sum\\!\\left[(y_i - \\bar{y}) - \\widehat{\\beta}_1(x_i - \\bar{x})\\right]^2\\]\nStep 2 — expand the square. Since \\(\\sum(y_i-\\bar{y})(x_i-\\bar{x}) = \\widehat{\\beta}_1 S_{xx}\\):\n\\[= \\sum(y_i-\\bar{y})^2 - 2\\widehat{\\beta}_1^2 S_{xx} + \\widehat{\\beta}_1^2 S_{xx} = \\sum(y_i-\\bar{y})^2 - \\widehat{\\beta}_1^2 S_{xx}\\]"
+    "text": "Proof: Steps 1 & 2 (Solution)\n\nStep 1 — rewrite RSS. Substitute \\(\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\):\n\\[\\text{RSS} = \\sum(y_i - \\widehat{y}_i)^2 = \\sum\\!\\left[(y_i - \\bar{y}) - \\widehat{\\beta}_1(x_i - \\bar{x})\\right]^2\\]\nStep 2 — expand the square. Since \\(\\sum(y_i-\\bar{y})(x_i-\\bar{x}) = \\widehat{\\beta}_1 S_{xx}\\):\n\\[= \\sum(y_i-\\bar{y})^2 - 2\\widehat{\\beta}_1^2 S_{xx} + \\widehat{\\beta}_1^2 S_{xx} = \\sum(y_i-\\bar{y})^2 - \\widehat{\\beta}_1^2 S_{xx}\\]"
   },
   {
     "objectID": "slides/lec-04.html#proof-step-3-piece-1-solution",
@@ -1542,7 +1542,7 @@
     "href": "slides/lec-04.html#proof-step-4-combine-solution",
     "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Proof: Step 4 — Combine (Solution)",
-    "text": "Proof: Step 4 — Combine (Solution)\n\nNow plug both pieces in:\n\\[\\mathbb{E}(\\text{SSE}) = \\Big[\\beta_1^2 S_{xx} + (n-1)\\sigma^2\\Big] - \\Big[\\sigma^2 + \\beta_1^2 S_{xx}\\Big]\\]\nThe \\(\\beta_1^2 S_{xx}\\) terms cancel, leaving:\n\\[= (n-1)\\sigma^2 - \\sigma^2 = (n-2)\\sigma^2\\]\n\\[\\mathbb{E}(\\text{MSE}) = \\mathbb{E}\\!\\left(\\frac{\\text{SSE}}{n-2}\\right) = \\frac{(n-2)\\sigma^2}{n-2} = \\sigma^2 \\qquad \\]"
+    "text": "Proof: Step 4 — Combine (Solution)\n\nNow plug both pieces in:\n\\[\\mathbb{E}(\\text{RSS}) = \\Big[\\beta_1^2 S_{xx} + (n-1)\\sigma^2\\Big] - \\Big[\\sigma^2 + \\beta_1^2 S_{xx}\\Big]\\]\nThe \\(\\beta_1^2 S_{xx}\\) terms cancel, leaving:\n\\[= (n-1)\\sigma^2 - \\sigma^2 = (n-2)\\sigma^2\\]\n\\[\\mathbb{E}(\\text{MSE}) = \\mathbb{E}\\!\\left(\\frac{\\text{RSS}}{n-2}\\right) = \\frac{(n-2)\\sigma^2}{n-2} = \\sigma^2 \\qquad \\]"
   },
   {
     "objectID": "slides/lec-04.html#practice-solution-cont.-1",
