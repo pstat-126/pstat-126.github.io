@@ -165,7 +165,7 @@
     "href": "slides/lec-04.html#summary",
     "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Summary",
-    "text": "Summary\n\nResiduals \\(e_i = y_i - \\widehat{y}_i\\) are observed proxies for the unobservable errors \\(\\varepsilon_i\\)\nFive properties of OLS residuals follow from the normal equations: \\(\\sum e_i = 0\\), \\(\\sum \\widehat{y}_i = \\sum y_i\\), \\(\\sum x_i e_i = 0\\), \\(\\sum \\widehat{y}_i e_i = 0\\), and the line passes through \\((\\bar{x}, \\bar{y})\\)\nRSS \\(= \\sum e_i^2\\) measures total unexplained variation — OLS minimizes it by construction\n\\(\\widehat{\\sigma}^2 = \\text{RSS}/(n-2)\\) is an unbiased estimate of \\(\\sigma^2\\); dividing by \\(n-2\\) corrects for two constraints placed on the residuals\n\\(\\widehat{\\sigma}\\) is the residual standard deviation — the typical prediction error on the scale of \\(y\\)\nStandard errors replace \\(\\sigma\\) with \\(\\widehat{\\sigma}\\) in the variance formulas — the foundation for inference\nUse lm() in R to fit the model and summary(), residuals(), sigma() to extract results"
+    "text": "Summary\n\nResiduals \\(e_i = y_i - \\widehat{y}_i\\) are observed proxies for the unobservable errors \\(\\varepsilon_i\\)\nFive properties of OLS residuals follow from the normal equations: \\(\\sum e_i = 0\\), \\(\\sum \\widehat{y}_i = \\sum y_i\\), \\(\\sum x_i e_i = 0\\), \\(\\sum \\widehat{y}_i e_i = 0\\), and the line passes through \\((\\bar{x}, \\bar{y})\\)\nRSS \\(= \\sum e_i^2\\) measures total unexplained variation — OLS minimizes it by construction\n\\(\\widehat{\\sigma}^2 = \\text{RSS}/(n-2)\\) is an unbiased estimate of \\(\\sigma^2\\); dividing by \\(n-2\\) corrects for two constraints placed on the residuals\n\\(\\widehat{\\sigma}\\) is the residual standard deviation — the typical prediction error on the scale of \\(y\\)\nStandard errors replace \\(\\sigma\\) with \\(\\widehat{\\sigma}\\) in the variance formulas\nUse lm() in R to fit the model and summary(), residuals(), sigma() to extract results"
   },
   {
     "objectID": "slides/lec-04.html#questions",
@@ -1500,7 +1500,7 @@
     "href": "slides/lec-04.html#proof-step-3-piece-1",
     "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Proof: Step 3 — Piece 1",
-    "text": "Proof: Step 3 — Piece 1\n\nEvaluate Piece 1: \\(\\mathbb{E}\\!\\left(\\sum(y_i - \\bar{y})^2\\right)\\)\nSubstitute \\(y_i - \\bar{y} = \\beta_1(x_i - \\bar{x}) + (\\varepsilon_i - \\bar{\\varepsilon})\\) and expand the square:\n\n\n\n\n\n\n\n\n\n\nRecall: Model Assumption\n\n\n\\(\\mathbb{E}(\\varepsilon_i) = 0\\) is a model assumption (errors are mean-zero). Then by linearity of expectation: \\(\\mathbb{E}(\\bar{\\varepsilon}) = \\frac{1}{n}\\sum_{i=1}^n \\mathbb{E}(\\varepsilon_i) = 0\\)."
+    "text": "Proof: Step 3 — Piece 1\n\nEvaluate Piece 1: \\(\\mathbb{E}\\!\\left(\\sum(y_i - \\bar{y})^2\\right)\\)\nSubstitute \\(y_i - \\bar{y} = \\beta_1(x_i - \\bar{x}) + (\\varepsilon_i - \\bar{\\varepsilon})\\) and expand the square:\n\n\n\n\n\n\n\n\n\n\nRecall: Model Assumptions\n\n\n\\(\\mathbb{E}(\\varepsilon_i) = 0\\) is a model assumption (errors are mean-zero). Then by linearity of expectation: \\(\\mathbb{E}(\\bar{\\varepsilon}) = \\frac{1}{n}\\sum_{i=1}^n \\mathbb{E}(\\varepsilon_i) = 0\\).\nSince both means are zero, \\(\\mathbb{E}(Z^2) = \\text{Var}(Z) + [\\mathbb{E}(Z)]^2\\) simplifies to \\(\\mathbb{E}(Z^2) = \\text{Var}(Z)\\):\n\\[\\mathbb{E}(\\varepsilon_i^2) = \\text{Var}(\\varepsilon_i) = \\sigma^2 \\qquad \\text{and} \\qquad \\mathbb{E}(\\bar{\\varepsilon}^2) = \\text{Var}(\\bar{\\varepsilon}) = \\frac{\\sigma^2}{n}\\]"
   },
   {
     "objectID": "slides/lec-04.html#proof-step-3-piece-2",
@@ -1514,7 +1514,7 @@
     "href": "slides/lec-04.html#proof-step-4-combine",
     "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Proof: Step 4 — Combine",
-    "text": "Proof: Step 4 — Combine\n\nWe now have both pieces. Plug them into \\(\\mathbb{E}(\\text{RSS}) = \\text{Piece 1} - \\text{Piece 2}\\):\n\n\n\n\n\n\n\\(\\mathbb{E}(\\text{MSE}) = \\mathbb{E}\\!\\left(\\dfrac{\\text{RSS}}{n-2}\\right) =\\)"
+    "text": "Proof: Step 4 — Combine\n\nWe now have both pieces:\n\\[\\text{Piece 1} = \\mathbb{E}\\!\\left(\\sum(y_i-\\bar{y})^2\\right) = \\beta_1^2 S_{xx} + (n-1)\\sigma^2\\]\n\\[\\text{Piece 2} = \\mathbb{E}\\!\\left(\\widehat{\\beta}_1^2 S_{xx}\\right) = \\sigma^2 + \\beta_1^2 S_{xx}\\]\nPlug them into \\(\\mathbb{E}(\\text{RSS}) = \\text{Piece 1} - \\text{Piece 2}\\):\n\n\n\n\n\n\n\\(\\mathbb{E}(\\text{MSE}) = \\mathbb{E}\\!\\left(\\dfrac{\\text{RSS}}{n-2}\\right) =\\)"
   },
   {
     "objectID": "slides/lec-04.html#proof-steps-1-2-solution",

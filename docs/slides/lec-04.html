@@ -322,20 +322,22 @@ Annie Adams
 <div style="font-size: 0.85em;">
 <p><strong>Evaluate Piece 1:</strong> <span class="math inline">\(\mathbb{E}\!\left(\sum(y_i - \bar{y})^2\right)\)</span></p>
 <p>Substitute <span class="math inline">\(y_i - \bar{y} = \beta_1(x_i - \bar{x}) + (\varepsilon_i - \bar{\varepsilon})\)</span> and expand the square:</p>
-<div style="height: 12em;">
+<div style="height: 10em;">
 
 </div>
-<div title="Recall: Model Assumption">
+<div title="Recall: Model Assumptions">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Recall: Model Assumption</strong></p>
+<p><strong>Recall: Model Assumptions</strong></p>
 </div>
 <div class="callout-content">
 <p><span class="math inline">\(\mathbb{E}(\varepsilon_i) = 0\)</span> is a model assumption (errors are mean-zero). Then by linearity of expectation: <span class="math inline">\(\mathbb{E}(\bar{\varepsilon}) = \frac{1}{n}\sum_{i=1}^n \mathbb{E}(\varepsilon_i) = 0\)</span>.</p>
+<p>Since both means are zero, <span class="math inline">\(\mathbb{E}(Z^2) = \text{Var}(Z) + [\mathbb{E}(Z)]^2\)</span> simplifies to <span class="math inline">\(\mathbb{E}(Z^2) = \text{Var}(Z)\)</span>:</p>
+<p><span class="math display">\[\mathbb{E}(\varepsilon_i^2) = \text{Var}(\varepsilon_i) = \sigma^2 \qquad \text{and} \qquad \mathbb{E}(\bar{\varepsilon}^2) = \text{Var}(\bar{\varepsilon}) = \frac{\sigma^2}{n}\]</span></p>
 </div>
 </div>
 </div>
@@ -356,7 +358,10 @@ Annie Adams
 <section id="proof-step-4-combine" class="slide level2 smaller">
 <h2>Proof: Step 4 — Combine</h2>
 <div style="font-size: 0.85em;">
-<p>We now have both pieces. Plug them into <span class="math inline">\(\mathbb{E}(\text{RSS}) = \text{Piece 1} - \text{Piece 2}\)</span>:</p>
+<p>We now have both pieces:</p>
+<p><span class="math display">\[\text{Piece 1} = \mathbb{E}\!\left(\sum(y_i-\bar{y})^2\right) = \beta_1^2 S_{xx} + (n-1)\sigma^2\]</span></p>
+<p><span class="math display">\[\text{Piece 2} = \mathbb{E}\!\left(\widehat{\beta}_1^2 S_{xx}\right) = \sigma^2 + \beta_1^2 S_{xx}\]</span></p>
+<p>Plug them into <span class="math inline">\(\mathbb{E}(\text{RSS}) = \text{Piece 1} - \text{Piece 2}\)</span>:</p>
 <div style="height: 6em;">
 
 </div>
@@ -497,7 +502,7 @@ Annie Adams
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_510b3567" minutes="10" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_b53a231c" minutes="10" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div></div>
@@ -780,7 +785,7 @@ F-statistic: 108.5 on 1 and 114 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li class="fragment"><strong>RSS</strong> <span class="math inline">\(= \sum e_i^2\)</span> measures total unexplained variation — OLS minimizes it by construction</li>
 <li class="fragment"><strong><span class="math inline">\(\widehat{\sigma}^2 = \text{RSS}/(n-2)\)</span></strong> is an unbiased estimate of <span class="math inline">\(\sigma^2\)</span>; dividing by <span class="math inline">\(n-2\)</span> corrects for two constraints placed on the residuals</li>
 <li class="fragment"><strong><span class="math inline">\(\widehat{\sigma}\)</span></strong> is the residual standard deviation — the typical prediction error on the scale of <span class="math inline">\(y\)</span></li>
-<li class="fragment"><strong>Standard errors</strong> replace <span class="math inline">\(\sigma\)</span> with <span class="math inline">\(\widehat{\sigma}\)</span> in the variance formulas — the foundation for inference</li>
+<li class="fragment"><strong>Standard errors</strong> replace <span class="math inline">\(\sigma\)</span> with <span class="math inline">\(\widehat{\sigma}\)</span> in the variance formulas</li>
 <li class="fragment">Use <code>lm()</code> in R to fit the model and <code>summary()</code>, <code>residuals()</code>, <code>sigma()</code> to extract results</li>
 </ul>
 </section>
