@@ -4,7 +4,7 @@
     "href": "schedule.html",
     "title": "Course Schedule",
     "section": "",
-    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDate\nTopic\nMaterials\nLab\nDue\n\n\n\n\nWeek 1 — Introduction & Simple Linear Regression\n\n\nMon, Sep 28\nWelcome to PSTAT 126! Course Information & Overview\nThe Simple Linear Regression Model Linear Regression Intro\nSlides\n\n\n\nSlides\n\n\n\n\nWed, Sep 30\nLeast Squares Estimation Deriving OLS estimators\nSlides\n\n\n\n\nSat, Oct 3\n\nLate Pass Q (optional)\n\n\nWeek 2 — Properties of OLS\n\n\nMon, Oct 5\nProperties of OLS Estimators\nSlides\nLab 1\n\n\n\nWed, Oct 7\n\nSlides",
+    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n  \n    \n      Date\n      Topic\n      Materials\n      Lab\n      Due\n    \n  \n  \n\n    Week 1 — Introduction & Simple Linear Regression\n    \n      Mon, Sep 28\n      Welcome to PSTAT 126!\n        Course Information & Overview\n        The Simple Linear Regression Model\n        Linear Regression Intro\n      SlidesSlides\n      \n      \n    \n    \n      Wed, Sep 30\n      Least Squares Estimation\n        Deriving OLS estimators\n      Slides\n      \n      \n    \n    \n      Sat, Oct 3\n      \n      Late Pass Q (optional)\n    \n\n   \n    Week 2 — Properties of OLS\n    \n      Mon, Oct 5\n      Properties of OLS Estimators\n      Slides\n      Lab 1\n      \n    \n    \n      Wed, Oct 7\n      Residuals and Estimating Error Variance\n      Slides\n      \n      \n\n\n    Week 3 \n    \n          \n      \n       \n      Sat, Oct 17\n      \n      Homework 1",
     "crumbs": [
       "Syllabus",
       "Lecture Materials"
@@ -1550,5 +1550,12 @@
     "title": "Lecture 4: Residuals and Estimating Error Variance",
     "section": "Practice: Solution (cont.)",
     "text": "Practice: Solution (cont.)\nError estimates (6): \\[\\text{RSS} = 1+4+1+0+0 = 6, \\quad \\widehat{\\sigma}^2 = \\frac{6}{3} = 2, \\quad \\widehat{\\sigma} = \\sqrt{2} \\approx 1.41\\text{ pts}, \\quad \\text{SE}(\\widehat{\\beta}_1) = \\frac{\\sqrt{2}}{\\sqrt{10}} \\approx 0.447\\]\n\n\\(\\widehat{\\sigma}\\): The model’s predicted exam scores are typically off by about 1.41 points, which is small relative to the 13-point range of scores in the data.\n\\(\\text{SE}(\\widehat{\\beta}_1)\\): The estimated slope of \\(-3\\) has a standard error of approximately 0.447, meaning that if we were to repeat this study many times, our estimates of \\(\\widehat{\\beta}_1\\) would typically vary by about 0.447 points per absence from the true slope."
+  },
+  {
+    "objectID": "slides/lec-03.html#course-reminders",
+    "href": "slides/lec-03.html#course-reminders",
+    "title": "Lecture 3: OLS Properties",
+    "section": "Course Reminders",
+    "text": "Course Reminders\n\nLabs are due Mondays by 11:59 PM\nHW 1 released today and due next Saturday, October 17th at 11:59 PM\nQuiz 1 on Monday in class"
   }
 ]

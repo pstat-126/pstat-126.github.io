@@ -58,14 +58,22 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
     </tr>
     <tr>
       <td class="date-cell">Wed, Oct 7</td>
-      <td class="topic-cell">
-      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td class="topic-cell">Residuals and Estimating Error Variance
+      <td><a class="badge-slide" href="slides/lec-04.html">Slides</a></td>
       <td></td>
       <td></td>
-    </tr>
-<!--
-    <tr class="week-row"><td colspan="5">Week 3 — ANOVA, F-tests &amp; Prediction</td></tr>
+
+
+    <tr class="week-row"><td colspan="5">Week 3 </td></tr>
     <tr>
+          </tr>
+      </tr>
+       <tr class="due-row">
+      <td class="date-cell">Sat, Oct 17</td>
+      <td colspan="3"></td>
+      <td><a class="badge-optional" href="">Homework 1</em></a></td>
+    </tr>
+    <!--
       <td class="date-cell">Mon, Oct 12</td>
       <td class="topic-cell">Prediction Intervals
         <span class="sub-topic">PI for a new observation vs. CI for mean response</span></td>
@@ -88,12 +96,6 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td><a class="badge-slide" href="#">Slides</a></td>
       <td></td>
       <td></td>
-    </tr>
-    <tr class="due-row">
-      <td class="date-cell">Sat, Oct 17</td>
-      <td colspan="3"></td>
-      <td><a class="badge-hw" href="hw/hw-01.html">HW 1</a></td>
-    </tr>
 
     <tr class="week-row"><td colspan="5">Week 4 — Correlation, R² &amp; Diagnostics</td></tr>
     <tr>
