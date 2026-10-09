@@ -1,0 +1,317 @@
+---
+title: "Lecture 5: Inference in Regression"
+subtitle: "PSTAT 126: Linear Regression"
+author: "Annie Adams"
+institute: "UC Santa Barbara"
+date: "10/12/2026"
+format:
+  revealjs:
+    theme: [default, ../styles.scss]
+    slide-number: true
+    preview-links: auto
+    footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
+    logo: ""
+    chalkboard: true
+    title-slide-attributes:
+      data-background-color: "#003660"
+---
+
+## Course Reminders
+
+- HW 1 due **Saturday, October 17th** at 11:59 PM
+- Lab 2 due **tonight** at 11:59 PM
+
+---
+
+## Learning Objectives
+
+By the end of today you will be able to:
+
+- Recall the key properties of the Normal, $\chi^2$, and $t$ distributions
+- State the normality assumption and explain why it is needed for inference
+- Derive the MLE of $\beta_0$, $\beta_1$, and $\sigma^2$, and compare MLE to OLS
+- Describe the sampling distribution of $\widehat{\beta}_1$ and construct the $t$ pivot used for inference
+
+---
+
+## OLS to MLE {.smaller}
+
+**Where we've been:** OLS gives us estimates $\widehat{\beta}_0$, $\widehat{\beta}_1$, and $\widehat{\sigma}^2$ by minimizing the sum of squared residuals. Under the Gauss-Markov assumptions, these are the best linear unbiased estimators — but that's all we know about them.
+
+**The gap:** OLS tells us *where* our estimates land, but not *how uncertain* they are. To answer questions like "is $\beta_1$ significantly different from zero?" or "what's a plausible range for the true slope?", we need to know the full distribution of $\widehat{\beta}_1$, not just its mean and variance.
+
+**The pivot:** To get those distributions, we need to make a stronger assumption — that the errors are normally distributed. Once we do, we can use **maximum likelihood estimation (MLE)**, a general-purpose estimation framework that requires specifying the full distribution of the data.
+
+**The payoff:** It turns out MLE gives us the same estimates for $\beta_0$ and $\beta_1$ as OLS. But by going through MLE, we learn exactly what distribution $\widehat{\beta}_1$ follows — and that's what lets us build confidence intervals and run hypothesis tests.
+
+---
+
+## Distribution Refresher {background-color="#003660"}
+
+---
+
+## What Is a Distribution? {.smaller}
+
+A **probability distribution** describes how the values of a random variable are spread out. It tells you which outcomes are possible and how likely each one is.
+
+For a **continuous** random variable $X$, the distribution is described by a **probability density function (PDF)** $f(x)$, where:
+
+- $f(x) \geq 0$ for all $x$
+- $\displaystyle\int_{-\infty}^{\infty} f(x)\, dx = 1$ (total probability = 1)
+- $P(a \leq X \leq b) = \displaystyle\int_a^b f(x)\, dx$
+
+
+---
+
+## The Normal Distribution {.smaller}
+
+A random variable $Z$ follows a **normal distribution** $Z \sim N(\mu, \sigma^2)$ if its density is
+
+$$f(z) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\!\left\{-\frac{(z-\mu)^2}{2\sigma^2}\right\}$$
+
+Key facts:
+
+- $E(Z) = \mu$, $\quad \text{Var}(Z) = \sigma^2$
+- Symmetric and bell-shaped around $\mu$
+- The **standard normal** $Z \sim N(0,1)$ has mean 0 and variance 1
+- **Linear combinations** of independent normals are normal:
+  if $Z_1 \sim N(\mu_1, \sigma_1^2)$ and $Z_2 \sim N(\mu_2, \sigma_2^2)$ independently, then
+  $$aZ_1 + bZ_2 \sim N(a\mu_1 + b\mu_2,\; a^2\sigma_1^2 + b^2\sigma_2^2)$$
+
+
+---
+
+## The Chi-Squared Distribution {.smaller}
+
+If $Z_1, \ldots, Z_k$ are **independent** $N(0,1)$ random variables, then
+
+$$V = Z_1^2 + Z_2^2 + \cdots + Z_k^2 \sim \chi^2_k$$
+
+$V$ follows a **chi-squared distribution with $k$ degrees of freedom**.
+
+Key facts:
+
+- $E(V) = k$, $\quad \text{Var}(V) = 2k$
+- Right-skewed; values are always $\geq 0$
+- If $V_1 \sim \chi^2_{k_1}$ and $V_2 \sim \chi^2_{k_2}$ independently, then $V_1 + V_2 \sim \chi^2_{k_1 + k_2}$
+
+
+
+---
+
+## The $t$ Distribution {.smaller}
+
+If $Z \sim N(0,1)$ and $V \sim \chi^2_k$ are **independent**, then
+
+$$T = \frac{Z}{\sqrt{V/k}} \sim t_k$$
+
+$T$ follows a **$t$ distribution with $k$ degrees of freedom**.
+
+Key facts:
+
+- Symmetric around 0, bell-shaped like the normal but with heavier tails
+- As $k \to \infty$, $t_k \to N(0,1)$
+- For small $k$, extreme values are more likely than under the normal
+
+
+---
+
+## Why These Distributions? {.smaller}
+
+So far we have been doing **point estimation** — finding $\widehat{\beta}_0$, $\widehat{\beta}_1$, and $\widehat{\sigma}^2$ without any distributional assumption.
+
+For **inference** (hypothesis tests and confidence intervals) we need to know the *distribution* of our estimators.
+
+
+---
+
+## Normality Assumption and MLE {background-color="#003660"}
+
+---
+
+## The Normality Assumption 
+::: {style="font-size: 0.55em;"}
+
+The simple linear regression model is
+
+$$Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i, \qquad i = 1, \ldots, n$$
+
+**New assumption:** the errors $\varepsilon_i$ are iid $N(0, \sigma^2)$.
+
+This is **stronger** than the Gauss-Markov assumptions:
+
+| Gauss-Markov (OLS is BLUE) | + Normality (enables inference) |
+|:---|:---|
+| $E(\varepsilon_i) = 0$ | $\varepsilon_i \sim N(0, \sigma^2)$ |
+| $\text{Var}(\varepsilon_i) = \sigma^2$ | (implies mean 0 and constant variance) |
+| Errors uncorrelated | Errors independent |
+
+Under the normality assumption, since $Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i$ and a normal plus a constant is still normal:
+
+$$Y_i \sim N(\beta_0 + \beta_1 X_i,\; \sigma^2)$$
+:::
+---
+
+## Maximum Likelihood Estimation {.smaller}
+
+Since the distribution of $Y_i$ is now known, we can write down its density:
+
+$$f_i(Y_i) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\!\left\{-\frac{1}{2\sigma^2}(Y_i - \beta_0 - \beta_1 X_i)^2\right\}$$
+
+The **likelihood function** treats the data as fixed and the parameters as unknowns. For all $n$ independent observations:
+
+$$L(\beta_0, \beta_1, \sigma^2) = \prod_{i=1}^n f_i(Y_i) = \frac{1}{(2\pi\sigma^2)^{n/2}} \exp\!\left\{-\frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2\right\}$$
+
+**Maximum likelihood estimation (MLE):** choose $(\beta_0, \beta_1, \sigma^2)$ to make the observed data as probable as possible.
+
+---
+
+## The Log-Likelihood {.smaller}
+
+Taking the log converts the product to a sum, making maximization tractable:
+
+$$\ell(\beta_0, \beta_1, \sigma^2) = \log L(\beta_0, \beta_1, \sigma^2)$$
+
+$$= -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\sigma^2 - \frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2$$
+
+
+To find the MLE, take partial derivatives of $\ell$ with respect to each parameter and set them to zero.
+
+---
+
+## Derivatives of the Log-Likelihood {.smaller}
+
+::: {style="font-size: 0.9em;"}
+
+$$\frac{\partial \ell}{\partial \beta_0} = \frac{1}{\sigma^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i) = 0$$
+
+$$\frac{\partial \ell}{\partial \beta_1} = \frac{1}{\sigma^2}\sum_{i=1}^n X_i(Y_i - \beta_0 - \beta_1 X_i) = 0$$
+
+$$\frac{\partial \ell}{\partial \sigma^2} = -\frac{n}{2\sigma^2} + \frac{1}{2\sigma^4}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2 = 0$$
+
+The first two equations — after multiplying through by $\sigma^2$ — are exactly:
+
+$$\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i) = 0 \qquad \sum_{i=1}^n X_i(Y_i - \beta_0 - \beta_1 X_i) = 0$$
+
+These are the **OLS normal equations**. So the MLE and OLS solutions for $\beta_0$ and $\beta_1$ are identical.
+
+:::
+
+---
+
+## MLE vs. OLS: What's the Same, What's Different 
+
+::: {style="font-size: 0.5em;"}
+
+| | OLS | MLE (under normality) |
+|:---|:---|:---|
+| **Goal** | Minimize $\sum(Y_i - \widehat{Y}_i)^2$ | Maximize $L(\beta_0, \beta_1, \sigma^2)$ |
+| **$\widehat{\beta}_0$** | $\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1\bar{X}$ | Same $\widehat{\beta}_0$ |
+| **$\widehat{\beta}_1$** | $\widehat{\beta}_1 = S_{xy}/S_{xx}$ | Same $\widehat{\beta}_1$ |
+| **$\widehat{\sigma}^2$** | $\text{MSE} = \text{SSE}/(n-2)$ — **unbiased** | $\text{SSE}/n$ — **biased** |
+:::
+---
+
+## MLE of $\sigma^2$ {.smaller}
+
+Setting $\partial \ell / \partial \sigma^2 = 0$ and solving:
+
+$$\frac{n}{2\sigma^2} = \frac{1}{2\sigma^4}\sum_{i=1}^n (Y_i - \widehat{\beta}_0 - \widehat{\beta}_1 X_i)^2 \implies \widehat{\sigma}^2_{\text{MLE}} = \frac{\text{SSE}}{n}$$
+
+Compare to the unbiased OLS estimate from last lecture:
+
+$$\widehat{\sigma}^2_{\text{OLS}} = \text{MSE} = \frac{\text{SSE}}{n-2}$$
+
+
+
+---
+
+## Inference on $\beta_0$ and $\beta_1$ {background-color="#003660"}
+
+---
+
+## Sampling Distribution of $\widehat{\beta}_1$ 
+::: {style="font-size: 0.6em;"}
+
+Recall from earlier that the OLS slope can be written as a **linear combination** of the $Y_i$'s:
+
+$$\widehat{\beta}_1 = \sum_{i=1}^n \frac{X_i - \bar{X}}{\sum_{i=1}^n (X_i - \bar{X})^2}\, Y_i$$
+
+Since the $Y_i$'s are independent normal random variables, and a linear combination of independent normals is normal, $\widehat{\beta}_1$ is normally distributed.
+
+We showed previously that $E(\widehat{\beta}_1) = \beta_1$ and $\text{Var}(\widehat{\beta}_1) = \dfrac{\sigma^2}{S_{xx}}$, so:
+
+$$\widehat{\beta}_1 \sim N\!\left(\beta_1,\; \frac{\sigma^2}{S_{xx}}\right)$$
+
+where $S_{xx} = \displaystyle\sum_{i=1}^n (X_i - \bar{X})^2$.
+:::
+---
+
+## From Normal to $t$ 
+::: {style="font-size: 0.5em;"}
+
+If $\sigma^2$ were known, we could standardize $\widehat{\beta}_1$ to get a standard normal pivot:
+
+$$\frac{\widehat{\beta}_1 - \beta_1}{\sqrt{\sigma^2 / S_{xx}}} \sim N(0,1)$$
+
+But $\sigma^2$ is unknown. We replace it with $\text{MSE} = \widehat{\sigma}^2$. This introduces additional randomness and changes the distribution.
+
+It can be shown that:
+
+- $\text{SSE}/\sigma^2 \sim \chi^2_{n-2}$
+- $\text{SSE}$ (equivalently $\text{MSE}$) is **independent** of $\widehat{\beta}_1$
+
+Applying the definition of the $t$ distribution ($T = Z / \sqrt{V/k}$):
+
+$$\frac{\widehat{\beta}_1 - \beta_1}{\sqrt{\text{MSE}/S_{xx}}} = \frac{\dfrac{\widehat{\beta}_1-\beta_1}{\sqrt{\sigma^2/S_{xx}}}}{\sqrt{\dfrac{\text{SSE}/\sigma^2}{n-2}}} \sim t_{n-2}$$
+:::
+---
+
+## The Standard Error of $\widehat{\beta}_1$ {.smaller}
+
+Define the **standard error** of $\widehat{\beta}_1$ as
+
+$$\text{SE}(\widehat{\beta}_1) = \sqrt{\frac{\text{MSE}}{S_{xx}}} = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}}$$
+
+This is $\text{SD}(\widehat{\beta}_1)$ with $\sigma$ replaced by $\widehat{\sigma}$.
+
+Then the $t$ pivot can be written compactly as:
+
+$$\frac{\widehat{\beta}_1 - \beta_1}{\text{SE}(\widehat{\beta}_1)} \sim t_{n-2}$$
+
+
+---
+
+## Summary {.smaller}
+
+::: {.incremental}
+- **Three key distributions:** Normal (sums of normals), $\chi^2$ (sums of squared standard normals), $t$ (normal over $\sqrt{\chi^2/k}$) — these underpin all regression inference
+- **Normality assumption** $\varepsilon_i \sim N(0,\sigma^2)$ is needed for inference; it strengthens the Gauss-Markov setup
+- **MLE agrees with OLS** for $\beta_0$ and $\beta_1$ under normality — the normal equations are the same
+- **MLE of $\sigma^2$ is biased** (divides by $n$); we use $\text{MSE} = \text{SSE}/(n-2)$ instead
+- **$\widehat{\beta}_1$ is normal** because it is a linear combination of the normal $Y_i$'s
+- **The $t$ pivot** $\dfrac{\widehat{\beta}_1 - \beta_1}{\text{SE}(\widehat{\beta}_1)} \sim t_{n-2}$ is the key result for CIs and hypothesis tests for $\beta_1$ — coming up next class
+:::
+
+---
+
+## Quiz 1 {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em; font-size: 1.2em;"}
+Please put away all materials and take out a pencil.
+
+Good luck!
+:::
+
+---
+
+## Questions? {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em;"}
+**Annie Adams**
+[aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+Office Hours: Tuesday 10 – 11 AM on [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1)
+
+[Course Website](https://pstat-126.github.io/)
+:::
