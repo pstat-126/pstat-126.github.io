@@ -170,10 +170,10 @@ Annie Adams
 </section>
 <section id="ols-to-mle" class="slide level2 smaller">
 <h2>OLS to MLE</h2>
-<p><strong>Where we’ve been:</strong> OLS gives us estimates <span class="math inline">\(\widehat{\beta}_0\)</span>, <span class="math inline">\(\widehat{\beta}_1\)</span>, and <span class="math inline">\(\widehat{\sigma}^2\)</span> by minimizing the sum of squared residuals. Under the Gauss-Markov assumptions, these are the best linear unbiased estimators — but that’s all we know about them.</p>
+<p><strong>Where we’ve been:</strong> OLS gives us estimates <span class="math inline">\(\widehat{\beta}_0\)</span>, <span class="math inline">\(\widehat{\beta}_1\)</span>, and <span class="math inline">\(\widehat{\sigma}^2\)</span> by minimizing the sum of squared residuals. Under the Gauss-Markov assumptions, these are the best linear unbiased estimators, but that’s all we know about them.</p>
 <p><strong>The gap:</strong> OLS tells us <em>where</em> our estimates land, but not <em>how uncertain</em> they are. To answer questions like “is <span class="math inline">\(\beta_1\)</span> significantly different from zero?” or “what’s a plausible range for the true slope?”, we need to know the full distribution of <span class="math inline">\(\widehat{\beta}_1\)</span>, not just its mean and variance.</p>
-<p><strong>The pivot:</strong> To get those distributions, we need to make a stronger assumption — that the errors are normally distributed. Once we do, we can use <strong>maximum likelihood estimation (MLE)</strong>, a general-purpose estimation framework that requires specifying the full distribution of the data.</p>
-<p><strong>The payoff:</strong> It turns out MLE gives us the same estimates for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> as OLS. But by going through MLE, we learn exactly what distribution <span class="math inline">\(\widehat{\beta}_1\)</span> follows — and that’s what lets us build confidence intervals and run hypothesis tests.</p>
+<p><strong>The pivot:</strong> To get those distributions, we need to make a stronger assumption. We need to assume that the errors are normally distributed. Once we do, we can use <strong>maximum likelihood estimation (MLE)</strong>, a general-purpose estimation framework that requires specifying the full distribution of the data.</p>
+<p><strong>The payoff:</strong> It turns out MLE gives us the same estimates for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> as OLS. But by going through MLE, we learn exactly what distribution <span class="math inline">\(\widehat{\beta}_1\)</span> follows, allowing us to build confidence intervals and run hypothesis tests.</p>
 </section>
 <section id="distribution-refresher" class="slide level2" data-background-color="#003660">
 <h2>Distribution Refresher</h2>
@@ -200,8 +200,9 @@ Annie Adams
 <li><strong>Linear combinations</strong> of independent normals are normal: if <span class="math inline">\(Z_1 \sim N(\mu_1, \sigma_1^2)\)</span> and <span class="math inline">\(Z_2 \sim N(\mu_2, \sigma_2^2)\)</span> independently, then <span class="math display">\[aZ_1 + bZ_2 \sim N(a\mu_1 + b\mu_2,\; a^2\sigma_1^2 + b^2\sigma_2^2)\]</span></li>
 </ul>
 </section>
-<section id="the-chi-squared-distribution" class="slide level2 smaller">
+<section id="the-chi-squared-distribution" class="slide level2">
 <h2>The Chi-Squared Distribution</h2>
+<div style="font-size: 0.50em;">
 <p><strong>Where it comes from:</strong> Start with standard normals and square them.</p>
 <p>If <span class="math inline">\(Z_1, \ldots, Z_k \overset{iid}{\sim} N(0,1)\)</span>, then squaring and summing gives:</p>
 <p><span class="math display">\[V = Z_1^2 + Z_2^2 + \cdots + Z_k^2 \sim \chi^2_k\]</span></p>
@@ -218,12 +219,14 @@ Annie Adams
 <li>Additive: if <span class="math inline">\(V_1 \sim \chi^2_{k_1}\)</span> and <span class="math inline">\(V_2 \sim \chi^2_{k_2}\)</span> independently, then <span class="math inline">\(V_1 + V_2 \sim \chi^2_{k_1 + k_2}\)</span></li>
 </ul>
 <p><strong>In regression:</strong> <span class="math inline">\(\text{RSS}/\sigma^2\)</span> turns out to follow a <span class="math inline">\(\chi^2\)</span> distribution — that’s the link between residuals and inference.</p>
+</div>
 </section>
-<section id="the-t-distribution" class="slide level2 smaller">
+<section id="the-t-distribution" class="slide level2">
 <h2>The <span class="math inline">\(t\)</span> Distribution</h2>
+<div style="font-size: 0.55em;">
 <p><strong>Where it comes from:</strong> A standard normal divided by an estimated spread (a <span class="math inline">\(\chi^2\)</span>).</p>
 <p><span class="math display">\[T = \frac{Z}{\sqrt{V/k}} \sim t_k \qquad Z \sim N(0,1),\quad V \sim \chi^2_k \text{ independent}\]</span></p>
-<p><strong>Where the heavier tails come from:</strong> The denominator <span class="math inline">\(\sqrt{V/k}\)</span> is an <strong>estimate</strong> of <span class="math inline">\(\sigma\)</span> — it is itself random. That extra randomness pushes more probability into the tails.</p>
+<p><strong>Where the heavier tails come from:</strong> The denominator <span class="math inline">\(\sqrt{V/k}\)</span> is an <strong>estimate</strong> of <span class="math inline">\(\sigma\)</span> and is itself random. That extra randomness pushes more probability into the tails.</p>
 <p>Key facts:</p>
 <ul>
 <li>Symmetric and bell-shaped, with <strong>heavier tails</strong> than the normal</li>
@@ -231,6 +234,7 @@ Annie Adams
 <li><strong>For small <span class="math inline">\(k\)</span></strong>, the estimate of <span class="math inline">\(\sigma\)</span> is rough, so the tails are noticeably heavier</li>
 </ul>
 <p><strong>In regression:</strong> When we test <span class="math inline">\(H_0: \beta_1 = 0\)</span>, we don’t know <span class="math inline">\(\sigma\)</span> — we plug in <span class="math inline">\(\widehat{\sigma}\)</span>. That’s exactly the <span class="math inline">\(t\)</span> construction: normal on top, estimated spread on the bottom.</p>
+</div>
 </section>
 <section id="why-these-distributions" class="slide level2 smaller">
 <h2>Why These Distributions?</h2>
@@ -309,7 +313,7 @@ Annie Adams
 <section id="pdf-vs.-likelihood" class="slide level2">
 <h2>PDF vs.&nbsp;Likelihood</h2>
 <div style="font-size: 0.6em;">
-<p>The PDF and the likelihood function use the same equation — the difference is what you treat as known.</p>
+<p>The PDF and the likelihood function use the same equation but differ in what you treat as known.</p>
 <p><strong>PDF:</strong> parameters are known, data is unknown</p>
 <blockquote>
 <p>You know the class average is 75 and the SD is 10. How probable is a score of 80?</p>
@@ -324,7 +328,7 @@ Annie Adams
 <section id="the-log-likelihood-steps-12" class="slide level2">
 <h2>The Log-Likelihood (Steps 1–2)</h2>
 <div style="font-size: 0.6em;">
-<p>Maximizing <span class="math inline">\(L\)</span> directly means differentiating a product of <span class="math inline">\(n\)</span> exponentials — messy. Taking the log turns that product into a sum, which is much easier to differentiate.</p>
+<p>Maximizing <span class="math inline">\(L\)</span> directly means differentiating a product of <span class="math inline">\(n\)</span> exponentials can be messy. Taking the log turns that product into a sum, which is much easier to differentiate.</p>
 <p><strong>Step 1:</strong> Write <span class="math inline">\(\ell = \log L\)</span>:</p>
 <div style="height: 4em;">
 
@@ -351,7 +355,7 @@ Annie Adams
 <section id="the-log-likelihood-steps-12-solution" class="slide level2">
 <h2>The Log-Likelihood (Steps 1–2, Solution)</h2>
 <div style="font-size: 0.55em;">
-<p>Maximizing <span class="math inline">\(L\)</span> directly means differentiating a product of <span class="math inline">\(n\)</span> exponentials — messy. Taking the log turns that product into a sum, which is much easier to differentiate.</p>
+<p>Maximizing <span class="math inline">\(L\)</span> directly means differentiating a product of <span class="math inline">\(n\)</span> exponentials can be messy. Taking the log turns that product into a sum, which is much easier to differentiate.</p>
 <p><strong>Step 1:</strong> Write <span class="math inline">\(\ell = \log L\)</span>:</p>
 <p><span class="math display">\[\ell = \log L = \log \left[ \frac{1}{(2\pi\sigma^2)^{n/2}} \exp\!\left\{-\frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2\right\} \right]\]</span></p>
 <p><strong>Step 2:</strong> Split using <span class="math inline">\(\log(AB) = \log A + \log B\)</span>:</p>
@@ -372,11 +376,11 @@ Annie Adams
 <h2>Derivatives of the Log-Likelihood: <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> (Steps 1–3)</h2>
 <div style="font-size: 0.6em;">
 <p>Take partial derivatives of <span class="math inline">\(\ell = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\sigma^2 - \frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2\)</span> and set each to zero.</p>
-<p><strong>Step 1:</strong> Set <span class="math inline">\(\partial \ell / \partial \beta_0 = 0\)</span> — only the last term depends on <span class="math inline">\(\beta_0\)</span>; apply the chain rule:</p>
+<p><strong>Step 1:</strong> Set <span class="math inline">\(\partial \ell / \partial \beta_0 = 0\)</span> and apply the chain rule:</p>
 <div style="height: 3em;">
 
 </div>
-<p><strong>Step 2:</strong> Set <span class="math inline">\(\partial \ell / \partial \beta_1 = 0\)</span> — same term; chain rule brings down <span class="math inline">\(X_i\)</span>:</p>
+<p><strong>Step 2:</strong> Set <span class="math inline">\(\partial \ell / \partial \beta_1 = 0\)</span> and apply the chain rule:</p>
 <div style="height: 3em;">
 
 </div>
@@ -390,13 +394,13 @@ Annie Adams
 <h2>Derivatives of the Log-Likelihood: <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> (Solution)</h2>
 <div style="font-size: 0.45em;">
 <p>Take partial derivatives of <span class="math inline">\(\ell = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\sigma^2 - \frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2\)</span> and set each to zero.</p>
-<p><strong>Step 1:</strong> <span class="math inline">\(\partial \ell / \partial \beta_0 = 0\)</span> — only the last term depends on <span class="math inline">\(\beta_0\)</span>; chain rule gives:</p>
+<p><strong>Step 1:</strong> <span class="math inline">\(\partial \ell / \partial \beta_0 = 0\)</span>, chain rule gives:</p>
 <p><span class="math display">\[\frac{1}{\sigma^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i) = 0\]</span></p>
-<p><strong>Step 2:</strong> <span class="math inline">\(\partial \ell / \partial \beta_1 = 0\)</span> — same term, chain rule brings down <span class="math inline">\(X_i\)</span>:</p>
+<p><strong>Step 2:</strong> <span class="math inline">\(\partial \ell / \partial \beta_1 = 0\)</span> chain rule brings down <span class="math inline">\(X_i\)</span>:</p>
 <p><span class="math display">\[\frac{1}{\sigma^2}\sum_{i=1}^n X_i(Y_i - \beta_0 - \beta_1 X_i) = 0\]</span></p>
 <p><strong>Step 3:</strong> Since <span class="math inline">\(\sigma^2 &gt; 0\)</span>, multiply both sides by <span class="math inline">\(\sigma^2\)</span> (valid — cancels it):</p>
 <p><span class="math display">\[\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i) = 0 \qquad \sum_{i=1}^n X_i(Y_i - \beta_0 - \beta_1 X_i) = 0\]</span></p>
-<p>These are exactly the <strong>OLS normal equations</strong> — so MLE and OLS give the same <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
+<p>These are exactly the <strong>OLS normal equations</strong> — so MLE and OLS give the same <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>!</p>
 </div>
 </section>
 <section id="derivatives-of-the-log-likelihood-sigma2-steps-12" class="slide level2">
@@ -441,7 +445,7 @@ Annie Adams
 </section>
 <section id="derivatives-of-the-log-likelihood-sigma2-steps-34-solution" class="slide level2">
 <h2>Derivatives of the Log-Likelihood: <span class="math inline">\(\sigma^2\)</span> (Steps 3–4, Solution)</h2>
-<div style="font-size: 0.6em;">
+<div style="font-size: 0.5em;">
 <p>Starting from: <span class="math inline">\(\quad -n\sigma^2 + \sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2 = 0\)</span></p>
 <p><strong>Step 3:</strong> Move <span class="math inline">\(n\sigma^2\)</span> to the other side — the left-hand summation is RSS by definition:</p>
 <p><span class="math display">\[\underbrace{\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2}_{\text{RSS}} = n\sigma^2\]</span></p>
@@ -491,7 +495,7 @@ Annie Adams
 </tbody>
 </table>
 <p><strong>Why <span class="math inline">\(n-2\)</span> for OLS?</strong> Estimating the regression line uses up 2 degrees of freedom — one for <span class="math inline">\(\widehat{\beta}_0\)</span> and one for <span class="math inline">\(\widehat{\beta}_1\)</span>. Once those are fixed, only <span class="math inline">\(n-2\)</span> residuals are free to vary. Dividing by <span class="math inline">\(n-2\)</span> corrects for this and makes <span class="math inline">\(\widehat{\sigma}^2\)</span> unbiased.</p>
-<p><strong>Why <span class="math inline">\(n\)</span> for MLE?</strong> MLE simply maximizes the likelihood with no bias correction — it treats all <span class="math inline">\(n\)</span> observations as free, which causes it to systematically underestimate <span class="math inline">\(\sigma^2\)</span>.</p>
+<p><strong>Why <span class="math inline">\(n\)</span> for MLE?</strong> MLE simply maximizes the likelihood with no bias correction. It treats all <span class="math inline">\(n\)</span> observations as free, which causes it to systematically underestimate <span class="math inline">\(\sigma^2\)</span>.</p>
 </div>
 </section>
 <section id="summary" class="slide level2 smaller">
@@ -499,7 +503,7 @@ Annie Adams
 <ul>
 <li class="fragment"><strong>Three key distributions:</strong> Normal (sums of normals), <span class="math inline">\(\chi^2\)</span> (sums of squared standard normals), <span class="math inline">\(t\)</span> (normal over <span class="math inline">\(\sqrt{\chi^2/k}\)</span>) — these underpin all regression inference</li>
 <li class="fragment"><strong>Normality assumption</strong> <span class="math inline">\(\varepsilon_i \sim N(0,\sigma^2)\)</span> is needed for inference; it strengthens the Gauss-Markov setup</li>
-<li class="fragment"><strong>MLE agrees with OLS</strong> for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> under normality — the normal equations are the same</li>
+<li class="fragment"><strong>MLE agrees with OLS</strong> for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> under normality</li>
 <li class="fragment"><strong>MLE of <span class="math inline">\(\sigma^2\)</span> is biased</strong> (divides by <span class="math inline">\(n\)</span>); we use <span class="math inline">\(\text{MSE} = \text{RSS}/(n-2)\)</span> instead</li>
 </ul>
 </section>

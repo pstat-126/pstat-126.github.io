@@ -35,13 +35,13 @@ By the end of today you will be able to:
 
 ## OLS to MLE {.smaller}
 
-**Where we've been:** OLS gives us estimates $\widehat{\beta}_0$, $\widehat{\beta}_1$, and $\widehat{\sigma}^2$ by minimizing the sum of squared residuals. Under the Gauss-Markov assumptions, these are the best linear unbiased estimators — but that's all we know about them.
+**Where we've been:** OLS gives us estimates $\widehat{\beta}_0$, $\widehat{\beta}_1$, and $\widehat{\sigma}^2$ by minimizing the sum of squared residuals. Under the Gauss-Markov assumptions, these are the best linear unbiased estimators, but that's all we know about them.
 
 **The gap:** OLS tells us *where* our estimates land, but not *how uncertain* they are. To answer questions like "is $\beta_1$ significantly different from zero?" or "what's a plausible range for the true slope?", we need to know the full distribution of $\widehat{\beta}_1$, not just its mean and variance.
 
-**The pivot:** To get those distributions, we need to make a stronger assumption — that the errors are normally distributed. Once we do, we can use **maximum likelihood estimation (MLE)**, a general-purpose estimation framework that requires specifying the full distribution of the data.
+**The pivot:** To get those distributions, we need to make a stronger assumption. We need to assume that the errors are normally distributed. Once we do, we can use **maximum likelihood estimation (MLE)**, a general-purpose estimation framework that requires specifying the full distribution of the data.
 
-**The payoff:** It turns out MLE gives us the same estimates for $\beta_0$ and $\beta_1$ as OLS. But by going through MLE, we learn exactly what distribution $\widehat{\beta}_1$ follows — and that's what lets us build confidence intervals and run hypothesis tests.
+**The payoff:** It turns out MLE gives us the same estimates for $\beta_0$ and $\beta_1$ as OLS. But by going through MLE, we learn exactly what distribution $\widehat{\beta}_1$ follows, allowing us to build confidence intervals and run hypothesis tests.
 
 ---
 
@@ -80,7 +80,9 @@ Key facts:
 
 ---
 
-## The Chi-Squared Distribution {.smaller}
+## The Chi-Squared Distribution 
+::: {style="font-size: 0.50em;"}
+
 
 **Where it comes from:** Start with standard normals and square them.
 
@@ -101,16 +103,17 @@ Key facts:
 - Additive: if $V_1 \sim \chi^2_{k_1}$ and $V_2 \sim \chi^2_{k_2}$ independently, then $V_1 + V_2 \sim \chi^2_{k_1 + k_2}$
 
 **In regression:** $\text{RSS}/\sigma^2$ turns out to follow a $\chi^2$ distribution — that's the link between residuals and inference.
-
+:::
 ---
 
-## The $t$ Distribution {.smaller}
+## The $t$ Distribution 
+::: {style="font-size: 0.55em;"}
 
 **Where it comes from:** A standard normal divided by an estimated spread (a $\chi^2$).
 
 $$T = \frac{Z}{\sqrt{V/k}} \sim t_k \qquad Z \sim N(0,1),\quad V \sim \chi^2_k \text{ independent}$$
 
-**Where the heavier tails come from:** The denominator $\sqrt{V/k}$ is an **estimate** of $\sigma$ — it is itself random. That extra randomness pushes more probability into the tails.
+**Where the heavier tails come from:** The denominator $\sqrt{V/k}$ is an **estimate** of $\sigma$ and is itself random. That extra randomness pushes more probability into the tails.
 
 Key facts:
 
@@ -119,7 +122,7 @@ Key facts:
 - **For small $k$**, the estimate of $\sigma$ is rough, so the tails are noticeably heavier
 
 **In regression:** When we test $H_0: \beta_1 = 0$, we don't know $\sigma$ — we plug in $\widehat{\sigma}$. That's exactly the $t$ construction: normal on top, estimated spread on the bottom.
-
+:::
 
 ---
 
@@ -202,7 +205,7 @@ $$L(\beta_0, \beta_1, \sigma^2) = \prod_{i=1}^n f_i(Y_i) = \frac{1}{(2\pi\sigma^
 ## PDF vs. Likelihood
 ::: {style="font-size: 0.6em;"}
 
-The PDF and the likelihood function use the same equation — the difference is what you treat as known.
+The PDF and the likelihood function use the same equation but differ in what you treat as known.
 
 **PDF:** parameters are known, data is unknown
 
@@ -219,7 +222,7 @@ In regression, we have already collected the data. So we use the likelihood — 
 ## The Log-Likelihood (Steps 1–2)
 ::: {style="font-size: 0.6em;"}
 
-Maximizing $L$ directly means differentiating a product of $n$ exponentials — messy. Taking the log turns that product into a sum, which is much easier to differentiate.
+Maximizing $L$ directly means differentiating a product of $n$ exponentials can be messy. Taking the log turns that product into a sum, which is much easier to differentiate.
 
 **Step 1:** Write $\ell = \log L$:
 
@@ -251,7 +254,7 @@ Maximizing $L$ directly means differentiating a product of $n$ exponentials — 
 ## The Log-Likelihood (Steps 1–2, Solution)
 ::: {style="font-size: 0.55em;"}
 
-Maximizing $L$ directly means differentiating a product of $n$ exponentials — messy. Taking the log turns that product into a sum, which is much easier to differentiate.
+Maximizing $L$ directly means differentiating a product of $n$ exponentials can be messy. Taking the log turns that product into a sum, which is much easier to differentiate.
 
 **Step 1:** Write $\ell = \log L$:
 
@@ -287,11 +290,11 @@ To find the MLE, take partial derivatives of $\ell$ with respect to each paramet
 
 Take partial derivatives of $\ell = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\sigma^2 - \frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2$ and set each to zero.
 
-**Step 1:** Set $\partial \ell / \partial \beta_0 = 0$ — only the last term depends on $\beta_0$; apply the chain rule:
+**Step 1:** Set $\partial \ell / \partial \beta_0 = 0$ and apply the chain rule:
 
 <div style="height: 3em;"></div>
 
-**Step 2:** Set $\partial \ell / \partial \beta_1 = 0$ — same term; chain rule brings down $X_i$:
+**Step 2:** Set $\partial \ell / \partial \beta_1 = 0$ and apply the chain rule:
 
 <div style="height: 3em;"></div>
 
@@ -308,11 +311,11 @@ Take partial derivatives of $\ell = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\sig
 
 Take partial derivatives of $\ell = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\sigma^2 - \frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2$ and set each to zero.
 
-**Step 1:** $\partial \ell / \partial \beta_0 = 0$ — only the last term depends on $\beta_0$; chain rule gives:
+**Step 1:** $\partial \ell / \partial \beta_0 = 0$, chain rule gives:
 
 $$\frac{1}{\sigma^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i) = 0$$
 
-**Step 2:** $\partial \ell / \partial \beta_1 = 0$ — same term, chain rule brings down $X_i$:
+**Step 2:** $\partial \ell / \partial \beta_1 = 0$ chain rule brings down $X_i$:
 
 $$\frac{1}{\sigma^2}\sum_{i=1}^n X_i(Y_i - \beta_0 - \beta_1 X_i) = 0$$
 
@@ -320,7 +323,7 @@ $$\frac{1}{\sigma^2}\sum_{i=1}^n X_i(Y_i - \beta_0 - \beta_1 X_i) = 0$$
 
 $$\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i) = 0 \qquad \sum_{i=1}^n X_i(Y_i - \beta_0 - \beta_1 X_i) = 0$$
 
-These are exactly the **OLS normal equations** — so MLE and OLS give the same $\beta_0$ and $\beta_1$.
+These are exactly the **OLS normal equations** — so MLE and OLS give the same $\beta_0$ and $\beta_1$!
 
 :::
 
@@ -382,7 +385,7 @@ $$-n\sigma^2 + \sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2 = 0$$
 ---
 
 ## Derivatives of the Log-Likelihood: $\sigma^2$ (Steps 3–4, Solution)
-::: {style="font-size: 0.6em;"}
+::: {style="font-size: 0.5em;"}
 
 Starting from: $\quad -n\sigma^2 + \sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2 = 0$
 
@@ -415,7 +418,7 @@ $$\widehat{\sigma}^2_{\text{MLE}} = \frac{\text{RSS}}{n}$$
 
 **Why $n-2$ for OLS?** Estimating the regression line uses up 2 degrees of freedom — one for $\widehat{\beta}_0$ and one for $\widehat{\beta}_1$. Once those are fixed, only $n-2$ residuals are free to vary. Dividing by $n-2$ corrects for this and makes $\widehat{\sigma}^2$ unbiased.
 
-**Why $n$ for MLE?** MLE simply maximizes the likelihood with no bias correction — it treats all $n$ observations as free, which causes it to systematically underestimate $\sigma^2$. 
+**Why $n$ for MLE?** MLE simply maximizes the likelihood with no bias correction. It treats all $n$ observations as free, which causes it to systematically underestimate $\sigma^2$. 
 
 :::
 ---
@@ -426,7 +429,7 @@ $$\widehat{\sigma}^2_{\text{MLE}} = \frac{\text{RSS}}{n}$$
 ::: {.incremental}
 - **Three key distributions:** Normal (sums of normals), $\chi^2$ (sums of squared standard normals), $t$ (normal over $\sqrt{\chi^2/k}$) — these underpin all regression inference
 - **Normality assumption** $\varepsilon_i \sim N(0,\sigma^2)$ is needed for inference; it strengthens the Gauss-Markov setup
-- **MLE agrees with OLS** for $\beta_0$ and $\beta_1$ under normality — the normal equations are the same
+- **MLE agrees with OLS** for $\beta_0$ and $\beta_1$ under normality
 - **MLE of $\sigma^2$ is biased** (divides by $n$); we use $\text{MSE} = \text{RSS}/(n-2)$ instead
 
 :::
