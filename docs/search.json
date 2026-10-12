@@ -1472,7 +1472,7 @@
     "href": "slides/lec-05.html#the-normality-assumption",
     "title": "Lecture 5: Inference in Regression",
     "section": "The Normality Assumption",
-    "text": "The Normality Assumption\n\nThe simple linear regression model is\n\\[Y_i = \\beta_0 + \\beta_1 X_i + \\varepsilon_i, \\qquad i = 1, \\ldots, n\\]\nNew assumption: the errors \\(\\varepsilon_i\\) are iid \\(N(0, \\sigma^2)\\).\nThis is stronger than the Gauss-Markov assumptions:\n\n\n\n\n\n\n\nGauss-Markov (OLS is BLUE)\n+ Normality (enables inference)\n\n\n\n\n\\(E(\\varepsilon_i) = 0\\)\n\\(\\varepsilon_i \\sim N(0, \\sigma^2)\\)\n\n\n\\(\\text{Var}(\\varepsilon_i) = \\sigma^2\\)\n(implies mean 0 and constant variance)\n\n\nErrors uncorrelated\nErrors independent\n\n\n\nUnder the normality assumption, since \\(Y_i = \\beta_0 + \\beta_1 X_i + \\varepsilon_i\\) and a normal plus a constant is still normal:\n\\[Y_i \\sim N(\\beta_0 + \\beta_1 X_i,\\; \\sigma^2)\\]"
+    "text": "The Normality Assumption\n\nThe simple linear regression model is\n\\[Y_i = \\beta_0 + \\beta_1 X_i + \\varepsilon_i, \\qquad i = 1, \\ldots, n\\]\nNew assumption: the errors \\(\\varepsilon_i\\) are iid \\(N(0, \\sigma^2)\\).\nThis is stronger than the Gauss-Markov assumptions:\n\n\n\n\n\n\n\nGauss-Markov (OLS is BLUE)\n+ Normality (enables inference)\n\n\n\n\n\\(E(\\varepsilon_i) = 0\\)\n\\(\\varepsilon_i \\sim N(0, \\sigma^2)\\)\n\n\n\\(\\text{Var}(\\varepsilon_i) = \\sigma^2\\)\n(implies mean 0 and constant variance)\n\n\nErrors uncorrelated (no linear relationship)\nErrors independent ( no relationship of any kind)\n\n\n\nUnder the normality assumption,\n\\[Y_i \\sim N(\\beta_0 + \\beta_1 X_i,\\; \\sigma^2)\\]"
   },
   {
     "objectID": "slides/lec-05.html#maximum-likelihood-estimation-steps-13",

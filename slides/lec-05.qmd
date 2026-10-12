@@ -155,9 +155,9 @@ This is **stronger** than the Gauss-Markov assumptions:
 |:---|:---|
 | $E(\varepsilon_i) = 0$ | $\varepsilon_i \sim N(0, \sigma^2)$ |
 | $\text{Var}(\varepsilon_i) = \sigma^2$ | (implies mean 0 and constant variance) |
-| Errors uncorrelated | Errors independent |
+| Errors uncorrelated (no linear relationship) | Errors independent ( no relationship of any kind) |
 
-Under the normality assumption, since $Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i$ and a normal plus a constant is still normal:
+Under the normality assumption,
 
 $$Y_i \sim N(\beta_0 + \beta_1 X_i,\; \sigma^2)$$
 :::
