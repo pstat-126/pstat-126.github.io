@@ -94,7 +94,7 @@ $$V = Z_1^2 + Z_2^2 + \cdots + Z_k^2 \sim \chi^2_k$$
 
 - $Z$ can be negative; $Z^2$ is always $\geq 0$ — so $\chi^2$ lives on $[0, \infty)$
 - Squaring also kills the symmetry: small values pile up near 0 and the distribution is **right-skewed**
-- $k$ is the **degrees of freedom** — literally the number of squared normals you added
+- $k$ is the **degrees of freedom**: the number of squared normals you added
 
 Key facts:
 
@@ -102,28 +102,29 @@ Key facts:
 - Right-skewed; values are always $\geq 0$
 - Additive: if $V_1 \sim \chi^2_{k_1}$ and $V_2 \sim \chi^2_{k_2}$ independently, then $V_1 + V_2 \sim \chi^2_{k_1 + k_2}$
 
-**In regression:** $\text{RSS}/\sigma^2$ turns out to follow a $\chi^2$ distribution — that's the link between residuals and inference.
 :::
 ---
 
-## The $t$ Distribution 
-::: {style="font-size: 0.55em;"}
+## The $t$ Distribution
+::: {style="font-size: 0.50em;"}
 
-**Where it comes from:** A standard normal divided by an estimated spread (a $\chi^2$).
+**Where it comes from:** Combine the two previous distributions — a standard normal on top, the square root of a scaled $\chi^2$ on the bottom:
 
-$$T = \frac{Z}{\sqrt{V/k}} \sim t_k \qquad Z \sim N(0,1),\quad V \sim \chi^2_k \text{ independent}$$
+$$T = \frac{Z}{\left(V/k\right)^{1/2}} \sim t_k \qquad Z \sim N(0,1),\quad V \sim \chi^2_k$$
 
-**Where the heavier tails come from:** The denominator $\sqrt{V/k}$ is an **estimate** of $\sigma$ and is itself random. That extra randomness pushes more probability into the tails.
+**How the pieces fit together:**
+
+- The **numerator** $Z \sim N(0,1)$ measures how far an estimate is from its true value, in standard units
+- The **denominator** $(V/k)^{1/2}$ with $V \sim \chi^2_k$ estimates the spread
+  - Since $\chi^2$ is built from squared normals, it is measuring variability in the same underlying normal errors
+- Dividing by something **random** (rather than a fixed constant) inflates the tails beyond the normal
 
 Key facts:
 
-- Symmetric and bell-shaped, with **heavier tails** than the normal
-- **As $k \to \infty$**, the estimate of $\sigma$ gets more precise, the extra randomness disappears, and $t_k \to N(0,1)$
-- **For small $k$**, the estimate of $\sigma$ is rough, so the tails are noticeably heavier
-
-**In regression:** When we test $H_0: \beta_1 = 0$, we don't know $\sigma$ — we plug in $\widehat{\sigma}$. That's exactly the $t$ construction: normal on top, estimated spread on the bottom.
+- $E(T) = 0$ for $k > 1$ 
+- $\text{Var}(T) = \dfrac{k}{k-2}$ for $k > 2$ 
+- Symmetric and bell-shaped, but with **heavier tails** than $N(0,1)$
 :::
-
 ---
 
 ## Why These Distributions? {.smaller}
@@ -416,9 +417,9 @@ $$\widehat{\sigma}^2_{\text{MLE}} = \frac{\text{RSS}}{n}$$
 | **$\widehat{\beta}_1$** | $\widehat{\beta}_1 = S_{xy}/S_{xx}$ | $\widehat{\beta}_1 = S_{xy}/S_{xx}$ |
 | **$\widehat{\sigma}^2$** | $\text{MSE} = \text{RSS}/(n-2)$ — **unbiased** | $\text{RSS}/n$ — **biased** |
 
-**Why $n-2$ for OLS?** Estimating the regression line uses up 2 degrees of freedom — one for $\widehat{\beta}_0$ and one for $\widehat{\beta}_1$. Once those are fixed, only $n-2$ residuals are free to vary. Dividing by $n-2$ corrects for this and makes $\widehat{\sigma}^2$ unbiased.
+**Why $n-2$ for OLS?** To compute the residuals $e_i = Y_i - \widehat{Y}_i$, we first had to estimate $\widehat{\beta}_0$ and $\widehat{\beta}_1$ from the same data. Each estimated parameter imposes one constraint on the residuals, leaving only $n - 2$ that carry independent information about $\sigma^2$. Dividing by $n-2$ instead of $n$ corrects for this and makes $\widehat{\sigma}^2$ unbiased.
 
-**Why $n$ for MLE?** MLE simply maximizes the likelihood with no bias correction. It treats all $n$ observations as free, which causes it to systematically underestimate $\sigma^2$. 
+**Why $n$ for MLE?** MLE maximizes the likelihood with no bias correction. It simply divides by $n$. Because it ignores the two constraints imposed by estimating $\widehat{\beta}_0$ and $\widehat{\beta}_1$, it systematically underestimates $\sigma^2$.
 
 :::
 ---
@@ -427,10 +428,10 @@ $$\widehat{\sigma}^2_{\text{MLE}} = \frac{\text{RSS}}{n}$$
 ## Summary {.smaller}
 
 ::: {.incremental}
-- **Three key distributions:** Normal (sums of normals), $\chi^2$ (sums of squared standard normals), $t$ (normal over $\sqrt{\chi^2/k}$) — these underpin all regression inference
+- **Three key distributions:** Normal (sums of normals), $\chi^2$ (sums of squared standard normals), $t$ (normal over $(\chi^2/k)^{1/2}$) — these underpin all regression inference
 - **Normality assumption** $\varepsilon_i \sim N(0,\sigma^2)$ is needed for inference; it strengthens the Gauss-Markov setup
 - **MLE agrees with OLS** for $\beta_0$ and $\beta_1$ under normality
-- **MLE of $\sigma^2$ is biased** (divides by $n$); we use $\text{MSE} = \text{RSS}/(n-2)$ instead
+- **MLE of $\sigma^2$ is biased** (divides by $n$)
 
 :::
 
