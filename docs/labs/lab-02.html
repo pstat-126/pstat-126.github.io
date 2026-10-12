@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="your name">
-<meta name="dcterms.date" content="2026-10-07">
 
-<title>Homework Assignment 1 – PSTAT 126</title>
+<title>Lab 2: Simple Linear Regression in R – PSTAT 126</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -193,7 +191,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Homework Assignment 1</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Lab 2: Simple Linear Regression in R</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -257,7 +255,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../hw/hw-01.pdf" class="sidebar-item-text sidebar-link">
+  <a href="../hw/hw-01.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">HW 1</span></a>
   </div>
 </li>
@@ -332,34 +330,40 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link active" data-scroll-target="#objectives">Objectives</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#exploring-the-data" id="toc-exploring-the-data" class="nav-link" data-scroll-target="#exploring-the-data">1. Exploring the Data</a></li>
+  <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization">2. Visualization</a></li>
+  <li><a href="#manual-ols-calculation" id="toc-manual-ols-calculation" class="nav-link" data-scroll-target="#manual-ols-calculation">3. Manual OLS Calculation</a>
+  <ul class="collapse">
+  <li><a href="#connection-to-correlation" id="toc-connection-to-correlation" class="nav-link" data-scroll-target="#connection-to-correlation">Connection to correlation</a></li>
+  </ul></li>
+  <li><a href="#manually-computing-standard-deviations-and-standard-errors" id="toc-manually-computing-standard-deviations-and-standard-errors" class="nav-link" data-scroll-target="#manually-computing-standard-deviations-and-standard-errors">4. Manually Computing Standard Deviations and Standard Errors</a></li>
+  <li><a href="#fitting-with-lm" id="toc-fitting-with-lm" class="nav-link" data-scroll-target="#fitting-with-lm">5. Fitting with <code>lm()</code></a></li>
+  <li><a href="#adding-the-fitted-line-to-the-plot" id="toc-adding-the-fitted-line-to-the-plot" class="nav-link" data-scroll-target="#adding-the-fitted-line-to-the-plot">6. Adding the Fitted Line to the Plot</a></li>
+  <li><a href="#submission-instructions" id="toc-submission-instructions" class="nav-link" data-scroll-target="#submission-instructions">Submission Instructions</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Homework Assignment 1</h1>
+<h1 class="title">Lab 2: Simple Linear Regression in R</h1>
+<p class="subtitle lead">PSTAT 126 — Mon, Oct 12</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>your name </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">October 7, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -369,117 +373,223 @@ window.Quarto = {
 </header>
 
 
-<p><strong>Getting Started:</strong> Download the <code>.Rmd</code> template and datasets for this assignment from <a href="https://drive.google.com/drive/folders/1Xv2OuDCwXBH1jj8rt7sqf4FjdmOLO2mL?usp=drive_link">this Google Drive folder</a>. Save all files in the same folder before beginning.</p>
-<p><strong>Instructions:</strong> Complete all answers in this <code>.Rmd</code> file and knit it to a PDF to submit on Gradescope by 10/17 at 11:59 PM. For problems that involve a lot of math (e.g., derivations or proofs), you may handwrite your solution, take a photo, and insert the image instead. To insert an image, add a code chunk with the following line and replace <code>"filename.jpg"</code> with your image’s filename, updating the file path if your image is not saved in the same folder as your <code>.Rmd</code>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Download the <code>.Rmd</code> file below, open it in RStudio, and work through the exercises inside.</p>
+</div>
+</div>
+<p><a href="../downloads/lab-02.Rmd" class="btn btn-primary" download="lab-02.Rmd">Download lab-02.Rmd</a></p>
+<section id="objectives" class="level3">
+<h3 class="anchored" data-anchor-id="objectives">Objectives</h3>
+<p>In this lab you will:</p>
+<ul>
+<li>Explore the Palmer Penguins dataset and visualize relationships between variables</li>
+<li>Manually calculate the OLS estimates <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span></li>
+<li>Manually compute standard deviations, RSS, <span class="math inline">\(\widehat{\sigma}^2\)</span>, and standard errors</li>
+<li>Fit a simple linear regression model using <code>lm()</code> in R</li>
+<li>Interpret <code>summary()</code> output and extract key model components</li>
+</ul>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"filename.jpg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
-<p><strong>1.</strong> (3 pt) When asked to state the simple linear regression model, a student wrote it as follows:</p>
-<p><span class="math display">\[E(Y_i) = \beta_0 + \beta_1 X_i + \epsilon_i\]</span></p>
-<p>Do you agree? Explain.</p>
-<p><em>Answer:</em></p>
-<hr>
-<p><strong>2.</strong> Consider the simple linear regression model</p>
-<p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_i + \epsilon_i\]</span></p>
-<p><strong>(a)</strong> (3 pt) Assume that <span class="math inline">\(X = 0\)</span> is within the scope of the model. What is the implication for the regression function if <span class="math inline">\(\beta_0 = 0\)</span>? Write the simplified regression equation and describe how the regression line would appear on a graph.</p>
-<p><em>Answer:</em></p>
-<p><strong>(b)</strong> (4 pt) Under the assumption of <span class="math inline">\(\beta_0 = 0\)</span>, derive the least squares estimate of <span class="math inline">\(\beta_1\)</span>.</p>
-<p><em>Answer:</em></p>
-<p><strong>(c)</strong> (3 pt) How do you fit such a model using the <code>lm</code> function?</p>
-<p><em>Answer:</em></p>
+</section>
+<section id="exploring-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-the-data">1. Exploring the Data</h2>
+<p>The <code>palmerpenguins</code> package provides measurements for 344 penguins across three species collected from three islands in the Palmer Archipelago, Antarctica.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(penguins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For this lab we’ll work with <code>flipper_length_mm</code> as our predictor <span class="math inline">\(x\)</span> and <code>body_mass_g</code> as our response <span class="math inline">\(y\)</span>. Let’s remove any rows with missing values for these two variables.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Observations after removing NAs:"</span>, <span class="fu">nrow</span>(penguins_clean), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
-<p><strong>3.</strong> Consider the simple linear regression model</p>
-<p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_i + \epsilon_i\]</span></p>
-<p><strong>(a)</strong> (3 pt) What is the implication for the regression function if <span class="math inline">\(\beta_1 = 0\)</span>? Write the simplified regression equation and describe how the regression line would appear on a graph.</p>
-<p><em>Answer:</em></p>
-<p><strong>(b)</strong> (4 pt) Under the assumption of <span class="math inline">\(\beta_1 = 0\)</span>, derive the least squares estimate of <span class="math inline">\(\beta_0\)</span>.</p>
-<p><em>Answer:</em></p>
-<p><strong>(c)</strong> (3 pt) How do you fit such a model using the <code>lm</code> function?</p>
-<p><em>Answer:</em></p>
+</section>
+<section id="visualization" class="level2">
+<h2 class="anchored" data-anchor-id="visualization">2. Visualization</h2>
+<p>Before fitting any model, it’s always a good idea to plot the data. We’ll define a custom ggplot2 theme to keep our plots clean and consistent throughout the lab.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>theme_pstat126 <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">base_size =</span> <span class="dv">13</span>) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> base_size) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title    =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"#003660"</span>, <span class="at">size =</span> base_size <span class="sc">+</span> <span class="dv">2</span>),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"#555555"</span>, <span class="at">size =</span> base_size <span class="sc">-</span> <span class="dv">1</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.title    =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"#003660"</span>, <span class="at">size =</span> base_size),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">axis.text     =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"#333333"</span>),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.minor  =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.major  =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"#e8e8e8"</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position   =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.title      =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.caption      =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"#888888"</span>, <span class="at">size =</span> base_size <span class="sc">-</span> <span class="dv">3</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now let’s plot flipper length against body mass, colored by species.</p>
+<p>There is a clear positive linear trend: penguins with longer flippers tend to have greater body mass. For the rest of this lab we’ll fit a single SLR model ignoring species.</p>
+<blockquote class="blockquote">
+<p><strong>Question 1.</strong> Describe the relationship between flipper length and body mass in 2–3 sentences. Comment on the direction, strength, and any patterns you notice across species. Does a simple linear regression model seem appropriate here?</p>
+<p><em>Answer:</em></p>
+</blockquote>
+<hr>
+</section>
+<section id="manual-ols-calculation" class="level2">
+<h2 class="anchored" data-anchor-id="manual-ols-calculation">3. Manual OLS Calculation</h2>
+<p>Recall from Lectures 1 and 2 that the ordinary least squares (OLS) estimators are:</p>
+<p><span class="math display">\[\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}}, \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\]</span></p>
+<p>where</p>
+<p><span class="math display">\[S_{xx} = \sum_{i=1}^{n}(x_i - \bar{x})^2, \qquad S_{xy} = \sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})\]</span></p>
+<p>Using the <code>penguins_clean</code> data, manually calculate the following quantities <strong>in order</strong>:</p>
+<ol type="1">
+<li>The sample size <span class="math inline">\(n\)</span>, sample means <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(\bar{y}\)</span></li>
+<li>The sums of squares <span class="math inline">\(S_{xx}\)</span> and <span class="math inline">\(S_{xy}\)</span></li>
+<li>The slope estimate <span class="math inline">\(\widehat{\beta}_1 = S_{xy} / S_{xx}\)</span></li>
+<li>The intercept estimate <span class="math inline">\(\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1 \bar{x}\)</span></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>x_bar <span class="ot">&lt;-</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>y_bar <span class="ot">&lt;-</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>Sxx <span class="ot">&lt;-</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>Sxy <span class="ot">&lt;-</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>beta1_hat <span class="ot">&lt;-</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>beta0_hat <span class="ot">&lt;-</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="connection-to-correlation" class="level3">
+<h3 class="anchored" data-anchor-id="connection-to-correlation">Connection to correlation</h3>
+<p>From Lecture 2, we know <span class="math inline">\(\widehat{\beta}_1\)</span> can be expressed using the sample correlation <span class="math inline">\(r\)</span> and standard deviations <span class="math inline">\(s_x\)</span>, <span class="math inline">\(s_y\)</span>:</p>
+<p><span class="math display">\[\widehat{\beta}_1 = r \cdot \frac{s_y}{s_x}\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>r  <span class="ot">&lt;-</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sx <span class="ot">&lt;-</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sy <span class="ot">&lt;-</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>beta1_via_cor <span class="ot">&lt;-</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Do both approaches give the same answer?</p>
+<hr>
+</section>
+</section>
+<section id="manually-computing-standard-deviations-and-standard-errors" class="level2">
+<h2 class="anchored" data-anchor-id="manually-computing-standard-deviations-and-standard-errors">4. Manually Computing Standard Deviations and Standard Errors</h2>
+<p>From Lecture 4, we estimate the error variance <span class="math inline">\(\sigma^2\)</span> with:</p>
+<p><span class="math display">\[\widehat{\sigma}^2 = \frac{\text{RSS}}{n - 2}, \qquad \text{RSS} = \sum_{i=1}^{n} e_i^2, \qquad e_i = y_i - \widehat{y}_i\]</span></p>
+<p>We divide by <span class="math inline">\(n - 2\)</span> (not <span class="math inline">\(n\)</span>) because we lose two degrees of freedom estimating <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>y_hat            <span class="ot">&lt;-</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>residuals_manual <span class="ot">&lt;-</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>RSS        <span class="ot">&lt;-</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>sigma2_hat <span class="ot">&lt;-</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>sigma_hat  <span class="ot">&lt;-</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The <strong>standard errors</strong> of the OLS estimates follow from Lectures 3 and 4:</p>
+<p><span class="math display">\[\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}}, \qquad \text{SE}(\widehat{\beta}_0) = \widehat{\sigma}\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>se_beta1 <span class="ot">&lt;-</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>se_beta0 <span class="ot">&lt;-</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The table below collects all manually computed quantities:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Quantity =</span> <span class="fu">c</span>(<span class="st">"n"</span>, <span class="st">"x̄ (mm)"</span>, <span class="st">"ȳ (g)"</span>, <span class="st">"s_x (mm)"</span>, <span class="st">"s_y (g)"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>               <span class="st">"Sxx"</span>, <span class="st">"Sxy"</span>, <span class="st">"r"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>               <span class="st">"RSS"</span>, <span class="st">"σ̂²"</span>, <span class="st">"σ̂ (g)"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>               <span class="st">"β̂₀"</span>, <span class="st">"β̂₁"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>               <span class="st">"SE(β̂₀)"</span>, <span class="st">"SE(β̂₁)"</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Value    =</span> <span class="fu">c</span>(n, <span class="fu">round</span>(x_bar, <span class="dv">3</span>), <span class="fu">round</span>(y_bar, <span class="dv">3</span>),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>               <span class="fu">round</span>(sx, <span class="dv">4</span>), <span class="fu">round</span>(sy, <span class="dv">4</span>),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>               <span class="fu">round</span>(Sxx, <span class="dv">2</span>), <span class="fu">round</span>(Sxy, <span class="dv">2</span>), <span class="fu">round</span>(r, <span class="dv">4</span>),</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>               <span class="fu">round</span>(RSS, <span class="dv">2</span>), <span class="fu">round</span>(sigma2_hat, <span class="dv">4</span>), <span class="fu">round</span>(sigma_hat, <span class="dv">4</span>),</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>               <span class="fu">round</span>(beta0_hat, <span class="dv">4</span>), <span class="fu">round</span>(beta1_hat, <span class="dv">4</span>),</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>               <span class="fu">round</span>(se_beta0, <span class="dv">4</span>), <span class="fu">round</span>(se_beta1, <span class="dv">6</span>))</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Quantity"</span>, <span class="st">"Value"</span>), <span class="at">align =</span> <span class="st">"lr"</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption   =</span> <span class="st">"Summary of all manually computed OLS quantities"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<blockquote class="blockquote">
+<p><strong>Question 2.</strong> Using your computed values of <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span>, write out the fitted regression equation. Then interpret the slope in context: what does a one-millimeter increase in flipper length correspond to in terms of predicted body mass?</p>
+<p><em>Answer:</em></p>
+</blockquote>
+<hr>
+</section>
+<section id="fitting-with-lm" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-with-lm">5. Fitting with <code>lm()</code></h2>
+<p>Now let’s use R’s built-in <code>lm()</code> to fit the same model and verify our manual results.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The table below compares our manual results to the values extracted from <code>lm()</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>lm_coef <span class="ot">&lt;-</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Quantity =</span> <span class="fu">c</span>(<span class="st">"β̂₀"</span>, <span class="st">"β̂₁"</span>, <span class="st">"σ̂ (g)"</span>, <span class="st">"SE(β̂₀)"</span>, <span class="st">"SE(β̂₁)"</span>),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Manual   =</span> <span class="fu">c</span>(<span class="fu">round</span>(beta0_hat, <span class="dv">4</span>), <span class="fu">round</span>(beta1_hat, <span class="dv">4</span>), <span class="fu">round</span>(sigma_hat, <span class="dv">4</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>               <span class="fu">round</span>(se_beta0, <span class="dv">4</span>), <span class="fu">round</span>(se_beta1, <span class="dv">6</span>)),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">lm()</span><span class="st">`</span>   <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">round</span>(lm_coef[<span class="dv">1</span>], <span class="dv">4</span>), <span class="fu">round</span>(lm_coef[<span class="dv">2</span>], <span class="dv">4</span>), <span class="fu">round</span>(<span class="fu">sigma</span>(fit), <span class="dv">4</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>               <span class="fu">round</span>(<span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients[<span class="dv">1</span>, <span class="dv">2</span>], <span class="dv">4</span>),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>               <span class="fu">round</span>(<span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients[<span class="dv">2</span>, <span class="dv">2</span>], <span class="dv">6</span>))</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Quantity"</span>, <span class="st">"Manual"</span>, <span class="st">"lm()"</span>), <span class="at">align =</span> <span class="st">"lrr"</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption   =</span> <span class="st">"Manual calculations vs. lm() output"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
-<p><strong>4.</strong> (3 pt) The summation of residuals equals zero for the simple linear model. Does that imply the summation of random errors <span class="math inline">\(\epsilon_i\)</span> in the model equals zero? Does <span class="math inline">\(E\left(\sum_{i=1}^n \epsilon_i\right) = 0\)</span>? (<em>Hint: think about the difference between residuals <span class="math inline">\(\hat{\epsilon}_i = Y_i - \hat{Y}_i\)</span> and the true errors <span class="math inline">\(\epsilon_i = Y_i - E(Y_i)\)</span>.</em>) Explain your reasoning.</p>
-<p><em>Answer:</em></p>
+</section>
+<section id="adding-the-fitted-line-to-the-plot" class="level2">
+<h2 class="anchored" data-anchor-id="adding-the-fitted-line-to-the-plot">6. Adding the Fitted Line to the Plot</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_clean, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> species), <span class="at">alpha =</span> <span class="fl">0.55</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># TO DO : Add fitted line to plot:</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Adelie"</span> <span class="ot">=</span> <span class="st">"#003660"</span>, <span class="st">"Chinstrap"</span> <span class="ot">=</span> <span class="st">"#FEBC11"</span>, <span class="st">"Gentoo"</span> <span class="ot">=</span> <span class="st">"#09847A"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title    =</span> <span class="st">"Fitted SLR: Flipper Length Predicting Body Mass"</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Shaded band shows 95% confidence interval for the mean response"</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x        =</span> <span class="st">"Flipper Length (mm)"</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y        =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">color    =</span> <span class="st">"Species"</span>,</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption  =</span> <span class="st">"Source: palmerpenguins R package"</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_pstat126</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <hr>
-<p><strong>5.</strong> (15 pt) Consider the simple linear regression model</p>
-<p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_i + \epsilon_i\]</span></p>
-<p><strong>(a)</strong> (10 pts) Show that minimizing the sum of squared residuals leads to the following least squares coefficient estimates:</p>
-<p><span class="math display">\[\hat{\beta}_1 = \frac{\sum_{i=1}^{n}(X_i - \bar{X})(Y_i - \bar{Y})}{\sum_{i=1}^{n}(X_i - \bar{X})^2}\]</span></p>
-<p><span class="math display">\[\hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{X}\]</span></p>
-<p>where <span class="math inline">\(\bar{X} = \sum_{i=1}^{n} X_i / n\)</span> and <span class="math inline">\(\bar{Y} = \sum_{i=1}^{n} Y_i / n\)</span>.</p>
-<p><strong>(b)</strong> (5 pts) Show that <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are unbiased estimators.</p>
-<p><em>Answer:</em></p>
-<hr>
-<p><strong>6.</strong> GPA. The director of admissions of a small college selected 120 students at random from the new freshman class in a study to determine whether a student’s grade point average (GPA) at the end of the freshman year can be predicted from the ACT test score.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the GPA dataset</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># gpa &lt;- read.csv("path/to/gpa_data.csv")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><strong>(a)</strong> (3 pt) In this problem, what is the predictor variable, and what is the response variable?</p>
-<p><em>Answer:</em></p>
-<p><strong>(b)</strong> (3 pt) Construct a scatter plot of the predictor and response variables. Comment on your impression of the relationship.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><em>Answer:</em></p>
-<p><strong>(c)</strong> (3 pt) Fit a simple linear regression model using the <code>lm</code> function and report the estimated regression function.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><em>Answer:</em></p>
-<p><strong>(d)</strong> (3 pt) Add the fitted line to the scatter plot in (b). Does the estimated regression function appear to fit the data well?</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><em>Answer:</em></p>
-<p><strong>(e)</strong> (3 pt) Obtain a point estimate of the mean freshman GPA for students with ACT test score equal to 30.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><em>Answer:</em></p>
-<p><strong>(f)</strong> (3 pt) What is the point estimate of the change in the mean response when the entrance test score increases by one point?</p>
-<p><em>Answer:</em></p>
-<p><strong>(g)</strong> (3 pt) Obtain the residuals and check whether they sum to zero.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><em>Answer:</em></p>
-<p><strong>(h)</strong> (3 pt) Estimate <span class="math inline">\(\sigma^2\)</span> and <span class="math inline">\(\sigma\)</span>. What are the units of them?</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><em>Answer:</em></p>
-<hr>
-<p><strong>7.</strong> Airfreight breakage. A substance used in biological and medical research is shipped by airfreight to users in cartons of 1,000 ampules. Data were collected on the number of times the carton was transferred from one aircraft to another over the shipment route and the number of ampules found to be broken upon arrival.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the airfreight dataset</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># airfreight &lt;- read.csv("path/to/airfreight_data.csv")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><strong>(a)</strong> (6 pt) Obtain the estimated regression function. Plot the estimated regression function and the data. Does a linear regression function appear to give a good fit here?</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><em>Answer:</em></p>
-<p><strong>(b)</strong> (3 pt) Obtain a point estimate of the expected number of broken ampules when 1 transfer is made.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><em>Answer:</em></p>
-<p><strong>(c)</strong> (3 pt) Estimate the increase in the expected number of ampules broken when there are 2 transfers as compared to 1 transfer.</p>
-<p><em>Answer:</em></p>
-<p><strong>(d)</strong> (3 pt) Verify that your fitted regression line goes through the point <span class="math inline">\((\bar{X}, \bar{Y})\)</span>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><em>Answer:</em></p>
+</section>
+<section id="submission-instructions" class="level1">
+<h1>Submission Instructions</h1>
+<p>Before submitting, knit your completed lab to PDF:</p>
+<ol type="1">
+<li>At the top of the file, confirm the output format includes <code>pdf_document: default</code> in the YAML header.</li>
+<li>Click the <strong>Knit</strong> button in RStudio (or use Ctrl/Cmd + Shift + K).</li>
+<li>Review the PDF to confirm all plots, computed values, and written answers appear correctly.</li>
+<li>Upload the PDF to <strong>Gradescope</strong> under the Lab 2 assignment.</li>
+</ol>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

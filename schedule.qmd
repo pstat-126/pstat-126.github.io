@@ -64,10 +64,15 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td></td>
 
 
-    <tr class="week-row"><td colspan="5">Week 3 </td></tr>
+    <tr class="week-row"><td colspan="5">Week 3 — Inference in Regression</td></tr>
     <tr>
-          </tr>
-      </tr>
+      <td class="date-cell">Mon, Oct 12</td>
+      <td class="topic-cell">Inference in Regression
+        <span class="sub-topic">Hypothesis tests and confidence intervals for OLS estimates</span></td>
+      <td><a class="badge-slide" href="slides/lec-05.html">Slides</a></td>
+      <td><a class="badge-lab" href="labs/lab-02.html">Lab 2</a></td>
+      <td></td>
+    </tr>
        <tr class="due-row">
       <td class="date-cell">Sat, Oct 17</td>
       <td colspan="3"></td>

@@ -22,6 +22,12 @@ toc: false
       <td>Getting started with R Markdown</td>
     </tr>
 
+    <tr>
+      <td><a href="labs/lab-02.html"><span class="badge-lab">Lab 2</span></a></td>
+      <td class="date-cell">Mon, Oct 12</td>
+      <td>Simple Linear Regression in R</td>
+    </tr>
+
   </tbody>
 </table>
 </div>

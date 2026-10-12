@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "**/*.qmd"
   resources:
     - late_pass_questionnaire/
   post-render:

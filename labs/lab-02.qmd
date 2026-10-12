@@ -1,0 +1,246 @@
+---
+title: "Lab 2: Simple Linear Regression in R"
+subtitle: "PSTAT 126 — Mon, Oct 12"
+---
+
+::: callout-note
+Download the `.Rmd` file below, open it in RStudio, and work through the exercises inside.
+:::
+
+<a href="../downloads/lab-02.Rmd" class="btn btn-primary" download="lab-02.Rmd">Download lab-02.Rmd</a>
+
+### Objectives
+
+In this lab you will:
+
+-   Explore the Palmer Penguins dataset and visualize relationships between variables
+-   Manually calculate the OLS estimates $\widehat{\beta}_0$ and $\widehat{\beta}_1$
+-   Manually compute standard deviations, RSS, $\widehat{\sigma}^2$, and standard errors
+-   Fit a simple linear regression model using `lm()` in R
+-   Interpret `summary()` output and extract key model components
+
+## Setup
+
+```{r setup, message=FALSE, warning=FALSE, eval=FALSE}
+library(tidyverse)
+library(palmerpenguins)
+library(knitr)
+```
+
+---
+
+## 1. Exploring the Data
+
+The `palmerpenguins` package provides measurements for 344 penguins across three species collected from three islands in the Palmer Archipelago, Antarctica.
+
+```{r glimpse, eval=FALSE}
+glimpse(penguins)
+```
+
+For this lab we'll work with `flipper_length_mm` as our predictor $x$ and `body_mass_g` as our response $y$. Let's remove any rows with missing values for these two variables.
+
+```{r clean, eval=FALSE}
+
+
+cat("Observations after removing NAs:", nrow(penguins_clean), "\n")
+```
+
+---
+
+## 2. Visualization
+
+Before fitting any model, it's always a good idea to plot the data. We'll define a custom ggplot2 theme to keep our plots clean and consistent throughout the lab.
+
+```{r custom-theme, eval=FALSE}
+theme_pstat126 <- function(base_size = 13) {
+  theme_minimal(base_size = base_size) +
+    theme(
+      plot.title    = element_text(face = "bold", color = "#003660", size = base_size + 2),
+      plot.subtitle = element_text(color = "#555555", size = base_size - 1),
+      axis.title    = element_text(color = "#003660", size = base_size),
+      axis.text     = element_text(color = "#333333"),
+      panel.grid.minor  = element_blank(),
+      panel.grid.major  = element_line(color = "#e8e8e8"),
+      legend.position   = "bottom",
+      legend.title      = element_text(face = "bold"),
+      plot.caption      = element_text(color = "#888888", size = base_size - 3)
+    )
+}
+```
+
+Now let's plot flipper length against body mass, colored by species.
+
+```{r scatter, fig.align='center', fig.width=7, fig.height=5, eval=FALSE}
+
+```
+
+There is a clear positive linear trend: penguins with longer flippers tend to have greater body mass. For the rest of this lab we'll fit a single SLR model ignoring species.
+
+> **Question 1.** Describe the relationship between flipper length and body mass in 2–3 sentences. Comment on the direction, strength, and any patterns you notice across species. Does a simple linear regression model seem appropriate here?
+>
+> *Answer:*
+
+---
+
+## 3. Manual OLS Calculation
+
+Recall from Lectures 1 and 2 that the ordinary least squares (OLS) estimators are:
+
+$$\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}}, \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$$
+
+where
+
+$$S_{xx} = \sum_{i=1}^{n}(x_i - \bar{x})^2, \qquad S_{xy} = \sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})$$
+
+Using the `penguins_clean` data, manually calculate the following quantities **in order**:
+
+1.  The sample size $n$, sample means $\bar{x}$ and $\bar{y}$
+2.  The sums of squares $S_{xx}$ and $S_{xy}$
+3.  The slope estimate $\widehat{\beta}_1 = S_{xy} / S_{xx}$
+4.  The intercept estimate $\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1 \bar{x}$
+
+```{r manual-ols, eval=FALSE}
+x <-
+y <-
+n <-
+
+x_bar <-
+y_bar <-
+
+Sxx <-
+Sxy <-
+
+beta1_hat <-
+beta0_hat <-
+```
+
+### Connection to correlation
+
+From Lecture 2, we know $\widehat{\beta}_1$ can be expressed using the sample correlation $r$ and standard deviations $s_x$, $s_y$:
+
+$$\widehat{\beta}_1 = r \cdot \frac{s_y}{s_x}$$
+
+```{r beta1-via-cor, eval=FALSE}
+r  <-
+sx <-
+sy <-
+
+beta1_via_cor <-
+```
+
+Do both approaches give the same answer?
+
+---
+
+## 4. Manually Computing Standard Deviations and Standard Errors
+
+From Lecture 4, we estimate the error variance $\sigma^2$ with:
+
+$$\widehat{\sigma}^2 = \frac{\text{RSS}}{n - 2}, \qquad \text{RSS} = \sum_{i=1}^{n} e_i^2, \qquad e_i = y_i - \widehat{y}_i$$
+
+We divide by $n - 2$ (not $n$) because we lose two degrees of freedom estimating $\beta_0$ and $\beta_1$.
+
+```{r manual-sigma, eval=FALSE}
+y_hat            <-
+residuals_manual <-
+
+RSS        <-
+sigma2_hat <-
+sigma_hat  <-
+```
+
+The **standard errors** of the OLS estimates follow from Lectures 3 and 4:
+
+$$\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}}, \qquad \text{SE}(\widehat{\beta}_0) = \widehat{\sigma}\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}$$
+
+```{r manual-se, eval=FALSE}
+se_beta1 <-
+se_beta0 <-
+```
+
+The table below collects all manually computed quantities:
+
+```{r manual-summary-table, eval=FALSE}
+data.frame(
+  Quantity = c("n", "x̄ (mm)", "ȳ (g)", "s_x (mm)", "s_y (g)",
+               "Sxx", "Sxy", "r",
+               "RSS", "σ̂²", "σ̂ (g)",
+               "β̂₀", "β̂₁",
+               "SE(β̂₀)", "SE(β̂₁)"),
+  Value    = c(n, round(x_bar, 3), round(y_bar, 3),
+               round(sx, 4), round(sy, 4),
+               round(Sxx, 2), round(Sxy, 2), round(r, 4),
+               round(RSS, 2), round(sigma2_hat, 4), round(sigma_hat, 4),
+               round(beta0_hat, 4), round(beta1_hat, 4),
+               round(se_beta0, 4), round(se_beta1, 6))
+) |>
+  kable(col.names = c("Quantity", "Value"), align = "lr",
+        caption   = "Summary of all manually computed OLS quantities")
+```
+
+> **Question 2.** Using your computed values of $\widehat{\beta}_0$ and $\widehat{\beta}_1$, write out the fitted regression equation. Then interpret the slope in context: what does a one-millimeter increase in flipper length correspond to in terms of predicted body mass?
+>
+> *Answer:*
+
+---
+
+## 5. Fitting with `lm()`
+
+Now let's use R's built-in `lm()` to fit the same model and verify our manual results.
+
+```{r lm-fit, eval=FALSE}
+fit <-
+summary(fit)
+```
+
+The table below compares our manual results to the values extracted from `lm()`:
+
+```{r lm-comparison, eval=FALSE}
+lm_coef <-
+
+data.frame(
+  Quantity = c("β̂₀", "β̂₁", "σ̂ (g)", "SE(β̂₀)", "SE(β̂₁)"),
+  Manual   = c(round(beta0_hat, 4), round(beta1_hat, 4), round(sigma_hat, 4),
+               round(se_beta0, 4), round(se_beta1, 6)),
+  `lm()`   = c(round(lm_coef[1], 4), round(lm_coef[2], 4), round(sigma(fit), 4),
+               round(summary(fit)$coefficients[1, 2], 4),
+               round(summary(fit)$coefficients[2, 2], 6))
+) |>
+  kable(col.names = c("Quantity", "Manual", "lm()"), align = "lrr",
+        caption   = "Manual calculations vs. lm() output")
+```
+
+---
+
+## 6. Adding the Fitted Line to the Plot
+
+```{r fitted-plot, fig.align='center', fig.width=7, fig.height=5, message=FALSE, eval=FALSE}
+ggplot(penguins_clean, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species), alpha = 0.55, size = 2) +
+
+  # TO DO : Add fitted line to plot:
+
+  scale_color_manual(
+    values = c("Adelie" = "#003660", "Chinstrap" = "#FEBC11", "Gentoo" = "#09847A")
+  ) +
+  labs(
+    title    = "Fitted SLR: Flipper Length Predicting Body Mass",
+    subtitle = "Shaded band shows 95% confidence interval for the mean response",
+    x        = "Flipper Length (mm)",
+    y        = "Body Mass (g)",
+    color    = "Species",
+    caption  = "Source: palmerpenguins R package"
+  ) +
+  theme_pstat126()
+```
+
+---
+
+# Submission Instructions
+
+Before submitting, knit your completed lab to PDF:
+
+1.  At the top of the file, confirm the output format includes `pdf_document: default` in the YAML header.
+2.  Click the **Knit** button in RStudio (or use Ctrl/Cmd + Shift + K).
+3.  Review the PDF to confirm all plots, computed values, and written answers appear correctly.
+4.  Upload the PDF to **Gradescope** under the Lab 2 assignment.
