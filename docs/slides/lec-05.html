@@ -328,13 +328,13 @@ Annie Adams
 <blockquote>
 <p>You observed scores of 72, 68, 80, 75. Which mean and SD make these four scores most probable?</p>
 </blockquote>
-<p>In regression, we have already collected the data. So we use the likelihood — we fix the <span class="math inline">\(Y_i\)</span>’s and search over <span class="math inline">\((\beta_0, \beta_1, \sigma^2)\)</span> to find the values that best explain what we observed.</p>
+<p>In regression, we have already collected the data. So we use the likelihood. We fix the <span class="math inline">\(Y_i\)</span>’s and search over <span class="math inline">\((\beta_0, \beta_1, \sigma^2)\)</span> to find the values that best explain what we observed.</p>
 </div>
 </section>
 <section id="the-log-likelihood-steps-12" class="slide level2">
 <h2>The Log-Likelihood (Steps 1–2)</h2>
 <div style="font-size: 0.6em;">
-<p>Maximizing <span class="math inline">\(L\)</span> directly means differentiating a product of <span class="math inline">\(n\)</span> exponentials can be messy. Taking the log turns that product into a sum, which is much easier to differentiate.</p>
+<p>Maximizing <span class="math inline">\(L\)</span> directly means differentiating a product of <span class="math inline">\(n\)</span> exponentials, which can be messy! Taking the log turns that product into a sum, which is much easier to differentiate.</p>
 <p><strong>Step 1:</strong> Write <span class="math inline">\(\ell = \log L\)</span>:</p>
 <div style="height: 4em;">
 
@@ -361,7 +361,7 @@ Annie Adams
 <section id="the-log-likelihood-steps-12-solution" class="slide level2">
 <h2>The Log-Likelihood (Steps 1–2, Solution)</h2>
 <div style="font-size: 0.55em;">
-<p>Maximizing <span class="math inline">\(L\)</span> directly means differentiating a product of <span class="math inline">\(n\)</span> exponentials can be messy. Taking the log turns that product into a sum, which is much easier to differentiate.</p>
+<p>Maximizing <span class="math inline">\(L\)</span> directly means differentiating a product of <span class="math inline">\(n\)</span> exponentials, which can be messy! Taking the log turns that product into a sum, which is much easier to differentiate.</p>
 <p><strong>Step 1:</strong> Write <span class="math inline">\(\ell = \log L\)</span>:</p>
 <p><span class="math display">\[\ell = \log L = \log \left[ \frac{1}{(2\pi\sigma^2)^{n/2}} \exp\!\left\{-\frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2\right\} \right]\]</span></p>
 <p><strong>Step 2:</strong> Split using <span class="math inline">\(\log(AB) = \log A + \log B\)</span>:</p>

@@ -1493,14 +1493,14 @@
     "href": "slides/lec-05.html#pdf-vs.-likelihood",
     "title": "Lecture 5: Inference in Regression",
     "section": "PDF vs. Likelihood",
-    "text": "PDF vs. Likelihood\n\nThe PDF and the likelihood function use the same equation but differ in what you treat as known.\nPDF: parameters are known, data is unknown\n\nYou know the class average is 75 and the SD is 10. How probable is a score of 80?\n\nLikelihood: data is known, parameters are unknown\n\nYou observed scores of 72, 68, 80, 75. Which mean and SD make these four scores most probable?\n\nIn regression, we have already collected the data. So we use the likelihood — we fix the \\(Y_i\\)’s and search over \\((\\beta_0, \\beta_1, \\sigma^2)\\) to find the values that best explain what we observed."
+    "text": "PDF vs. Likelihood\n\nThe PDF and the likelihood function use the same equation but differ in what you treat as known.\nPDF: parameters are known, data is unknown\n\nYou know the class average is 75 and the SD is 10. How probable is a score of 80?\n\nLikelihood: data is known, parameters are unknown\n\nYou observed scores of 72, 68, 80, 75. Which mean and SD make these four scores most probable?\n\nIn regression, we have already collected the data. So we use the likelihood. We fix the \\(Y_i\\)’s and search over \\((\\beta_0, \\beta_1, \\sigma^2)\\) to find the values that best explain what we observed."
   },
   {
     "objectID": "slides/lec-05.html#the-log-likelihood-steps-12",
     "href": "slides/lec-05.html#the-log-likelihood-steps-12",
     "title": "Lecture 5: Inference in Regression",
     "section": "The Log-Likelihood (Steps 1–2)",
-    "text": "The Log-Likelihood (Steps 1–2)\n\nMaximizing \\(L\\) directly means differentiating a product of \\(n\\) exponentials can be messy. Taking the log turns that product into a sum, which is much easier to differentiate.\nStep 1: Write \\(\\ell = \\log L\\):\n\n\n\nStep 2: Split using \\(\\log(AB) = \\log A + \\log B\\):"
+    "text": "The Log-Likelihood (Steps 1–2)\n\nMaximizing \\(L\\) directly means differentiating a product of \\(n\\) exponentials, which can be messy! Taking the log turns that product into a sum, which is much easier to differentiate.\nStep 1: Write \\(\\ell = \\log L\\):\n\n\n\nStep 2: Split using \\(\\log(AB) = \\log A + \\log B\\):"
   },
   {
     "objectID": "slides/lec-05.html#the-log-likelihood-steps-34",
@@ -1514,7 +1514,7 @@
     "href": "slides/lec-05.html#the-log-likelihood-steps-12-solution",
     "title": "Lecture 5: Inference in Regression",
     "section": "The Log-Likelihood (Steps 1–2, Solution)",
-    "text": "The Log-Likelihood (Steps 1–2, Solution)\n\nMaximizing \\(L\\) directly means differentiating a product of \\(n\\) exponentials can be messy. Taking the log turns that product into a sum, which is much easier to differentiate.\nStep 1: Write \\(\\ell = \\log L\\):\n\\[\\ell = \\log L = \\log \\left[ \\frac{1}{(2\\pi\\sigma^2)^{n/2}} \\exp\\!\\left\\{-\\frac{1}{2\\sigma^2}\\sum_{i=1}^n (Y_i - \\beta_0 - \\beta_1 X_i)^2\\right\\} \\right]\\]\nStep 2: Split using \\(\\log(AB) = \\log A + \\log B\\):\n\\[= \\log\\!\\left(\\frac{1}{(2\\pi\\sigma^2)^{n/2}}\\right) + \\log\\!\\left(\\exp\\!\\left\\{-\\frac{1}{2\\sigma^2}\\sum_{i=1}^n (Y_i - \\beta_0 - \\beta_1 X_i)^2\\right\\}\\right)\\]"
+    "text": "The Log-Likelihood (Steps 1–2, Solution)\n\nMaximizing \\(L\\) directly means differentiating a product of \\(n\\) exponentials, which can be messy! Taking the log turns that product into a sum, which is much easier to differentiate.\nStep 1: Write \\(\\ell = \\log L\\):\n\\[\\ell = \\log L = \\log \\left[ \\frac{1}{(2\\pi\\sigma^2)^{n/2}} \\exp\\!\\left\\{-\\frac{1}{2\\sigma^2}\\sum_{i=1}^n (Y_i - \\beta_0 - \\beta_1 X_i)^2\\right\\} \\right]\\]\nStep 2: Split using \\(\\log(AB) = \\log A + \\log B\\):\n\\[= \\log\\!\\left(\\frac{1}{(2\\pi\\sigma^2)^{n/2}}\\right) + \\log\\!\\left(\\exp\\!\\left\\{-\\frac{1}{2\\sigma^2}\\sum_{i=1}^n (Y_i - \\beta_0 - \\beta_1 X_i)^2\\right\\}\\right)\\]"
   },
   {
     "objectID": "slides/lec-05.html#the-log-likelihood-steps-34-solution",

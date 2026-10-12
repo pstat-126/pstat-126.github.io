@@ -216,14 +216,14 @@ The PDF and the likelihood function use the same equation but differ in what you
 
 > You observed scores of 72, 68, 80, 75. Which mean and SD make these four scores most probable?
 
-In regression, we have already collected the data. So we use the likelihood — we fix the $Y_i$'s and search over $(\beta_0, \beta_1, \sigma^2)$ to find the values that best explain what we observed.
+In regression, we have already collected the data. So we use the likelihood. We fix the $Y_i$'s and search over $(\beta_0, \beta_1, \sigma^2)$ to find the values that best explain what we observed.
 :::
 ---
 
 ## The Log-Likelihood (Steps 1–2)
 ::: {style="font-size: 0.6em;"}
 
-Maximizing $L$ directly means differentiating a product of $n$ exponentials can be messy. Taking the log turns that product into a sum, which is much easier to differentiate.
+Maximizing $L$ directly means differentiating a product of $n$ exponentials, which can be messy! Taking the log turns that product into a sum, which is much easier to differentiate.
 
 **Step 1:** Write $\ell = \log L$:
 
@@ -255,7 +255,7 @@ Maximizing $L$ directly means differentiating a product of $n$ exponentials can 
 ## The Log-Likelihood (Steps 1–2, Solution)
 ::: {style="font-size: 0.55em;"}
 
-Maximizing $L$ directly means differentiating a product of $n$ exponentials can be messy. Taking the log turns that product into a sum, which is much easier to differentiate.
+Maximizing $L$ directly means differentiating a product of $n$ exponentials, which can be messy! Taking the log turns that product into a sum, which is much easier to differentiate.
 
 **Step 1:** Write $\ell = \log L$:
 
