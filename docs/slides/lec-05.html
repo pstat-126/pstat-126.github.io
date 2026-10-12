@@ -166,7 +166,6 @@ Annie Adams
 <li>Recall the key properties of the Normal, <span class="math inline">\(\chi^2\)</span>, and <span class="math inline">\(t\)</span> distributions</li>
 <li>State the normality assumption and explain why it is needed for inference</li>
 <li>Derive the MLE of <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\sigma^2\)</span>, and compare MLE to OLS</li>
-<li>Describe the sampling distribution of <span class="math inline">\(\widehat{\beta}_1\)</span> and construct the <span class="math inline">\(t\)</span> pivot used for inference</li>
 </ul>
 </section>
 <section id="ols-to-mle" class="slide level2 smaller">
@@ -339,7 +338,7 @@ Annie Adams
 <section id="the-log-likelihood-steps-34" class="slide level2">
 <h2>The Log-Likelihood (Steps 3–4)</h2>
 <div style="font-size: 0.6em;">
-<p><strong>Step 3:</strong> Apply <span class="math inline">\(\log(x^{-n/2}) = -\frac{n}{2}\log x\)</span> and <span class="math inline">\(\log(e^a) = a\)</span>:</p>
+<p><strong>Step 3:</strong> Apply <span class="math inline">\(\log(x^a) = a\log x\)</span> and <span class="math inline">\(\log(e^a) = a\)</span>:</p>
 <div style="height: 4em;">
 
 </div>
@@ -362,7 +361,7 @@ Annie Adams
 <section id="the-log-likelihood-steps-34-solution" class="slide level2">
 <h2>The Log-Likelihood (Steps 3–4, Solution)</h2>
 <div style="font-size: 0.55em;">
-<p><strong>Step 3:</strong> Apply <span class="math inline">\(\log(x^{-n/2}) = -\frac{n}{2}\log x\)</span> and <span class="math inline">\(\log(e^a) = a\)</span>:</p>
+<p><strong>Step 3:</strong> Apply <span class="math inline">\(\log(x^a) = a\log x\)</span> and <span class="math inline">\(\log(e^a) = a\)</span>:</p>
 <p><span class="math display">\[= -\frac{n}{2}\log(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2\]</span></p>
 <p><strong>Step 4:</strong> Expand <span class="math inline">\(\log(2\pi\sigma^2) = \log(2\pi) + \log(\sigma^2)\)</span>:</p>
 <p><span class="math display">\[\ell(\beta_0, \beta_1, \sigma^2) = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\sigma^2 - \frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2\]</span></p>

@@ -30,7 +30,6 @@ By the end of today you will be able to:
 - Recall the key properties of the Normal, $\chi^2$, and $t$ distributions
 - State the normality assumption and explain why it is needed for inference
 - Derive the MLE of $\beta_0$, $\beta_1$, and $\sigma^2$, and compare MLE to OLS
-- Describe the sampling distribution of $\widehat{\beta}_1$ and construct the $t$ pivot used for inference
 
 ---
 
@@ -237,7 +236,7 @@ Maximizing $L$ directly means differentiating a product of $n$ exponentials — 
 ## The Log-Likelihood (Steps 3–4)
 ::: {style="font-size: 0.6em;"}
 
-**Step 3:** Apply $\log(x^{-n/2}) = -\frac{n}{2}\log x$ and $\log(e^a) = a$:
+**Step 3:** Apply $\log(x^a) = a\log x$ and $\log(e^a) = a$:
 
 <div style="height: 4em;"></div>
 
@@ -269,7 +268,7 @@ $$= \log\!\left(\frac{1}{(2\pi\sigma^2)^{n/2}}\right) + \log\!\left(\exp\!\left\
 ## The Log-Likelihood (Steps 3–4, Solution)
 ::: {style="font-size: 0.55em;"}
 
-**Step 3:** Apply $\log(x^{-n/2}) = -\frac{n}{2}\log x$ and $\log(e^a) = a$:
+**Step 3:** Apply $\log(x^a) = a\log x$ and $\log(e^a) = a$:
 
 $$= -\frac{n}{2}\log(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \beta_0 - \beta_1 X_i)^2$$
 

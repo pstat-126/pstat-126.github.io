@@ -1409,7 +1409,7 @@
     "href": "slides/lec-05.html#learning-objectives",
     "title": "Lecture 5: Inference in Regression",
     "section": "Learning Objectives",
-    "text": "Learning Objectives\nBy the end of today you will be able to:\n\nRecall the key properties of the Normal, \\(\\chi^2\\), and \\(t\\) distributions\nState the normality assumption and explain why it is needed for inference\nDerive the MLE of \\(\\beta_0\\), \\(\\beta_1\\), and \\(\\sigma^2\\), and compare MLE to OLS\nDescribe the sampling distribution of \\(\\widehat{\\beta}_1\\) and construct the \\(t\\) pivot used for inference"
+    "text": "Learning Objectives\nBy the end of today you will be able to:\n\nRecall the key properties of the Normal, \\(\\chi^2\\), and \\(t\\) distributions\nState the normality assumption and explain why it is needed for inference\nDerive the MLE of \\(\\beta_0\\), \\(\\beta_1\\), and \\(\\sigma^2\\), and compare MLE to OLS"
   },
   {
     "objectID": "slides/lec-05.html#ols-to-mle",
@@ -1507,7 +1507,7 @@
     "href": "slides/lec-05.html#the-log-likelihood-steps-34",
     "title": "Lecture 5: Inference in Regression",
     "section": "The Log-Likelihood (Steps 3–4)",
-    "text": "The Log-Likelihood (Steps 3–4)\n\nStep 3: Apply \\(\\log(x^{-n/2}) = -\\frac{n}{2}\\log x\\) and \\(\\log(e^a) = a\\):\n\n\n\nStep 4: Expand \\(\\log(2\\pi\\sigma^2) = \\log(2\\pi) + \\log(\\sigma^2)\\):"
+    "text": "The Log-Likelihood (Steps 3–4)\n\nStep 3: Apply \\(\\log(x^a) = a\\log x\\) and \\(\\log(e^a) = a\\):\n\n\n\nStep 4: Expand \\(\\log(2\\pi\\sigma^2) = \\log(2\\pi) + \\log(\\sigma^2)\\):"
   },
   {
     "objectID": "slides/lec-05.html#the-log-likelihood-steps-12-solution",
@@ -1521,7 +1521,7 @@
     "href": "slides/lec-05.html#the-log-likelihood-steps-34-solution",
     "title": "Lecture 5: Inference in Regression",
     "section": "The Log-Likelihood (Steps 3–4, Solution)",
-    "text": "The Log-Likelihood (Steps 3–4, Solution)\n\nStep 3: Apply \\(\\log(x^{-n/2}) = -\\frac{n}{2}\\log x\\) and \\(\\log(e^a) = a\\):\n\\[= -\\frac{n}{2}\\log(2\\pi\\sigma^2) - \\frac{1}{2\\sigma^2}\\sum_{i=1}^n (Y_i - \\beta_0 - \\beta_1 X_i)^2\\]\nStep 4: Expand \\(\\log(2\\pi\\sigma^2) = \\log(2\\pi) + \\log(\\sigma^2)\\):\n\\[\\ell(\\beta_0, \\beta_1, \\sigma^2) = -\\frac{n}{2}\\log(2\\pi) - \\frac{n}{2}\\log\\sigma^2 - \\frac{1}{2\\sigma^2}\\sum_{i=1}^n (Y_i - \\beta_0 - \\beta_1 X_i)^2\\]\nTo find the MLE, take partial derivatives of \\(\\ell\\) with respect to each parameter and set them to zero."
+    "text": "The Log-Likelihood (Steps 3–4, Solution)\n\nStep 3: Apply \\(\\log(x^a) = a\\log x\\) and \\(\\log(e^a) = a\\):\n\\[= -\\frac{n}{2}\\log(2\\pi\\sigma^2) - \\frac{1}{2\\sigma^2}\\sum_{i=1}^n (Y_i - \\beta_0 - \\beta_1 X_i)^2\\]\nStep 4: Expand \\(\\log(2\\pi\\sigma^2) = \\log(2\\pi) + \\log(\\sigma^2)\\):\n\\[\\ell(\\beta_0, \\beta_1, \\sigma^2) = -\\frac{n}{2}\\log(2\\pi) - \\frac{n}{2}\\log\\sigma^2 - \\frac{1}{2\\sigma^2}\\sum_{i=1}^n (Y_i - \\beta_0 - \\beta_1 X_i)^2\\]\nTo find the MLE, take partial derivatives of \\(\\ell\\) with respect to each parameter and set them to zero."
   },
   {
     "objectID": "slides/lec-05.html#derivatives-of-the-log-likelihood-beta_0-and-beta_1-steps-13",
