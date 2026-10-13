@@ -112,7 +112,7 @@ $$\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{-70}{70} = -1 \qquad \wideha
 ::: {style="font-size: 0.50em;"}
 
 
-Fill in $\widehat{y}_i$ and $e_i$ and verify $\sum e_i = 0$. **(7, 2 pts)** Predict run time for a runner with 7 weeks of training.
+Fill in $\widehat{y}_i$ and $e_i$ and verify $\sum e_i = 0$. Predict run time for a runner with 7 weeks of training.
 
 | $i$ | $x_i$ | $y_i$ | $\widehat{y}_i = 15 - x_i$ | $e_i$ |
 |:---:|:---:|:---:|:---:|:---:|
@@ -202,14 +202,14 @@ Standardizing $\widehat{\beta}_1$ gives a standard normal:
 
 $$\frac{\widehat{\beta}_1 - \beta_1}{\sigma / S_{xx}^{1/2}} \sim N(0, 1)$$
 
-**The problem:** $\sigma^2$ is unknown. We replace it with $\text{MSE} = \dfrac{\text{SSE}}{n-2}$.
+**The problem:** $\sigma^2$ is unknown. We replace it with $\text{MSE} = \dfrac{\text{RSS}}{n-2}$.
 
 ::: {.fragment}
-Replacing a fixed constant with a **random** estimate inflates the tails — the result is no longer normal.
+Replacing a fixed constant with a **random** estimate inflates the tails. The result is no longer normal.
 
-Recall from last lecture: $T = Z / (V/k)^{1/2}$ where $Z \sim N(0,1)$ and $V \sim \chi^2_k$. The missing piece is showing that SSE fits the chi-squared structure in the denominator:
+Recall from last lecture: $T = Z / (V/k)^{1/2}$ where $Z \sim N(0,1)$ and $V \sim \chi^2_k$. The missing piece is showing that RSS fits the chi-squared structure in the denominator:
 
-$$\frac{\text{SSE}}{\sigma^2} \sim \chi^2_{n-2} \quad \text{and is independent of } \widehat{\beta}_0 \text{ and } \widehat{\beta}_1$$
+$$\frac{\text{RSS}}{\sigma^2} \sim \chi^2_{n-2} \quad \text{and is independent of } \widehat{\beta}_0 \text{ and } \widehat{\beta}_1$$
 :::
 
 ---
@@ -219,10 +219,10 @@ $$\frac{\text{SSE}}{\sigma^2} \sim \chi^2_{n-2} \quad \text{and is independent o
 We have two pieces:
 
 - $\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma / S_{xx}^{1/2}} \sim N(0,1)$ — the standardized slope
-- $\dfrac{\text{SSE}}{\sigma^2} \sim \chi^2_{n-2}$, independent of $\widehat{\beta}_1$ — the chi-squared denominator
+- $\dfrac{\text{RSS}}{\sigma^2} \sim \chi^2_{n-2}$, independent of $\widehat{\beta}_1$ — the chi-squared denominator
 
 ::: {.fragment}
-Substituting $\text{MSE} = \text{SSE}/(n-2)$ for $\sigma^2$ and applying the $t$-distribution definition ($T = Z / (V/k)^{1/2}$):
+Substituting $\text{MSE} = \text{RSS}/(n-2)$ for $\sigma^2$ and applying the $t$-distribution definition ($T = Z / (V/k)^{1/2}$):
 
 $$\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{N(0,1)}{(\chi^2_{n-2}/(n-2))^{1/2}} \sim t_{n-2}$$
 :::
@@ -323,7 +323,9 @@ Since $\dfrac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} \sim t_{n-
 
 ---
 
-## Confidence Interval for $\beta_1$ (Solution) {.smaller}
+## Confidence Interval for $\beta_1$ (Solution) 
+::: {style="font-size: 0.60em;"}
+
 
 Since $\dfrac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} \sim t_{n-2}$:
 
@@ -338,7 +340,7 @@ $$P\!\left(\widehat{\beta}_1 - t_{1-\alpha/2,\, n-2}\left(\frac{\text{MSE}}{S_{x
 **Result:** A $100(1-\alpha)\%$ confidence interval for $\beta_1$:
 
 $$\widehat{\beta}_1 \;\pm\; t_{1-\alpha/2,\, n-2}\left(\frac{\text{MSE}}{S_{xx}}\right)^{1/2}$$
-
+:::
 ---
 
 ## Interpreting and Using the CI {.smaller}
@@ -507,7 +509,87 @@ Reject $H_0$.
 
 ---
 
-## Inference for $\beta_0$ {.smaller}
+## Practice: One-Sided Test ($H_1: \beta_1 > \beta_{10}$) {.smaller}
+
+A nutritionist believes that each additional gram of daily protein intake increases resting metabolic rate by **more than 2 calories/day**. She fits a regression on $n = 20$ participants and obtains $\widehat{\beta}_1 = 2.8$, $S_{xx} = 500$, $\text{MSE} = 9$.
+
+**Task:** Test $H_0: \beta_1 = 2$ vs. $H_1: \beta_1 > 2$ at $\alpha = 0.05$.
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 3,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em",
+)
+```
+
+::: {.fragment}
+**Step 1:** Compute $\text{SE}(\widehat{\beta}_1) = (\text{MSE}/S_{xx})^{1/2} = (9/500)^{1/2} \approx 0.134$
+
+$$t^* = \frac{\widehat{\beta}_1 - \beta_{10}}{(\text{MSE}/S_{xx})^{1/2}} = \frac{2.8 - 2}{0.134} \approx 5.97$$
+:::
+
+::: {.fragment}
+**Step 2:** Right-sided test — compare to $t_{0.95,\,18} = 1.734$:
+
+$$t^* = 5.97 > 1.734 \quad \Rightarrow \quad \text{Reject } H_0$$
+
+**Conclusion:** At $\alpha = 0.05$, there is sufficient evidence that each additional gram of protein increases metabolic rate by more than 2 calories/day.
+:::
+
+---
+
+## Practice: One-Sided Test ($H_1: \beta_1 < \beta_{10}$) 
+::: {style="font-size: 0.60em;"}
+
+
+An engineer claims a new insulation material reduces heat loss by **fewer than 3 watts per cm of thickness**. A regression on $n = 15$ panels gives $\widehat{\beta}_1 = -2.1$, $S_{xx} = 200$, $\text{MSE} = 4$.
+
+**Task:** Test $H_0: \beta_1 = -3$ vs. $H_1: \beta_1 > -3$ at $\alpha = 0.05$.
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 3,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em",
+)
+```
+
+::: {.fragment}
+**Step 1:** Compute $\text{SE}(\widehat{\beta}_1) = (4/200)^{1/2} = 0.141$
+
+$$t^* = \frac{-2.1 - (-3)}{0.141} = \frac{0.9}{0.141} \approx 6.38$$
+:::
+
+::: {.fragment}
+**Step 2:** Right-sided test — compare to $t_{0.95,\,13} = 1.771$:
+
+$$t^* = 6.38 > 1.771 \quad \Rightarrow \quad \text{Reject } H_0$$
+
+**Conclusion:** At $\alpha = 0.05$, there is sufficient evidence that heat loss reduction per cm is less than 3 watts (i.e., the slope is greater than $-3$).
+:::
+:::
+---
+
+## Inference for $\beta_0$ 
+::: {style="font-size: 0.55em;"}
+
 
 By the same argument, $\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1 \bar{X}$ is also a linear combination of the $Y_i$'s:
 
@@ -526,10 +608,12 @@ $$\widehat{\beta}_0 \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(\frac{1
 
 Hypothesis tests work exactly as they do for $\beta_1$.
 :::
-
+:::
 ---
 
-## Example: Inference for $\beta_0$ (mtcars) {.smaller}
+## Example: Inference for $\beta_0$ (mtcars) 
+::: {style="font-size: 0.60em;"}
+
 
 Using `mpg ~ wt` from `mtcars`: $\widehat{\beta}_0$ is the predicted mpg when weight = 0.
 
@@ -557,9 +641,9 @@ b0 + c(-1, 1) * t_crit * se_b0
 ::: {.fragment}
 **Interpretation:** We are 95% confident that $\beta_0 \in (33.4,\ 41.1)$.
 
-However, a car with weight = 0 is physically impossible — the intercept here is a mathematical anchor for the fitted line, not a practically meaningful quantity. Interpret with caution when $X = 0$ is outside the data range.
+However, a car with weight = 0 is physically impossible. The intercept here is a mathematical anchor for the fitted line, not a practically meaningful quantity. Interpret with caution when $X = 0$ is outside the data range.
 :::
-
+:::
 ---
 
 ## Inference in R {.smaller}

@@ -286,7 +286,7 @@ Annie Adams
 <section id="q67-residuals-and-prediction" class="slide level2">
 <h2>Q6–7: Residuals and Prediction</h2>
 <div style="font-size: 0.50em;">
-<p>Fill in <span class="math inline">\(\widehat{y}_i\)</span> and <span class="math inline">\(e_i\)</span> and verify <span class="math inline">\(\sum e_i = 0\)</span>. <strong>(7, 2 pts)</strong> Predict run time for a runner with 7 weeks of training.</p>
+<p>Fill in <span class="math inline">\(\widehat{y}_i\)</span> and <span class="math inline">\(e_i\)</span> and verify <span class="math inline">\(\sum e_i = 0\)</span>. Predict run time for a runner with 7 weeks of training.</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -397,11 +397,11 @@ Annie Adams
 <h2>From Normal to <span class="math inline">\(t\)</span>: The Problem</h2>
 <p>Standardizing <span class="math inline">\(\widehat{\beta}_1\)</span> gives a standard normal:</p>
 <p><span class="math display">\[\frac{\widehat{\beta}_1 - \beta_1}{\sigma / S_{xx}^{1/2}} \sim N(0, 1)\]</span></p>
-<p><strong>The problem:</strong> <span class="math inline">\(\sigma^2\)</span> is unknown. We replace it with <span class="math inline">\(\text{MSE} = \dfrac{\text{SSE}}{n-2}\)</span>.</p>
+<p><strong>The problem:</strong> <span class="math inline">\(\sigma^2\)</span> is unknown. We replace it with <span class="math inline">\(\text{MSE} = \dfrac{\text{RSS}}{n-2}\)</span>.</p>
 <div class="fragment">
-<p>Replacing a fixed constant with a <strong>random</strong> estimate inflates the tails — the result is no longer normal.</p>
-<p>Recall from last lecture: <span class="math inline">\(T = Z / (V/k)^{1/2}\)</span> where <span class="math inline">\(Z \sim N(0,1)\)</span> and <span class="math inline">\(V \sim \chi^2_k\)</span>. The missing piece is showing that SSE fits the chi-squared structure in the denominator:</p>
-<p><span class="math display">\[\frac{\text{SSE}}{\sigma^2} \sim \chi^2_{n-2} \quad \text{and is independent of } \widehat{\beta}_0 \text{ and } \widehat{\beta}_1\]</span></p>
+<p>Replacing a fixed constant with a <strong>random</strong> estimate inflates the tails. The result is no longer normal.</p>
+<p>Recall from last lecture: <span class="math inline">\(T = Z / (V/k)^{1/2}\)</span> where <span class="math inline">\(Z \sim N(0,1)\)</span> and <span class="math inline">\(V \sim \chi^2_k\)</span>. The missing piece is showing that RSS fits the chi-squared structure in the denominator:</p>
+<p><span class="math display">\[\frac{\text{RSS}}{\sigma^2} \sim \chi^2_{n-2} \quad \text{and is independent of } \widehat{\beta}_0 \text{ and } \widehat{\beta}_1\]</span></p>
 </div>
 </section>
 <section id="from-normal-to-t-putting-it-together" class="slide level2 smaller">
@@ -409,10 +409,10 @@ Annie Adams
 <p>We have two pieces:</p>
 <ul>
 <li><span class="math inline">\(\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma / S_{xx}^{1/2}} \sim N(0,1)\)</span> — the standardized slope</li>
-<li><span class="math inline">\(\dfrac{\text{SSE}}{\sigma^2} \sim \chi^2_{n-2}\)</span>, independent of <span class="math inline">\(\widehat{\beta}_1\)</span> — the chi-squared denominator</li>
+<li><span class="math inline">\(\dfrac{\text{RSS}}{\sigma^2} \sim \chi^2_{n-2}\)</span>, independent of <span class="math inline">\(\widehat{\beta}_1\)</span> — the chi-squared denominator</li>
 </ul>
 <div class="fragment">
-<p>Substituting <span class="math inline">\(\text{MSE} = \text{SSE}/(n-2)\)</span> for <span class="math inline">\(\sigma^2\)</span> and applying the <span class="math inline">\(t\)</span>-distribution definition (<span class="math inline">\(T = Z / (V/k)^{1/2}\)</span>):</p>
+<p>Substituting <span class="math inline">\(\text{MSE} = \text{RSS}/(n-2)\)</span> for <span class="math inline">\(\sigma^2\)</span> and applying the <span class="math inline">\(t\)</span>-distribution definition (<span class="math inline">\(T = Z / (V/k)^{1/2}\)</span>):</p>
 <p><span class="math display">\[\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{N(0,1)}{(\chi^2_{n-2}/(n-2))^{1/2}} \sim t_{n-2}\]</span></p>
 </div>
 </section>
@@ -461,8 +461,9 @@ Annie Adams
 
 </div>
 </section>
-<section id="confidence-interval-for-beta_1-solution" class="slide level2 smaller">
+<section id="confidence-interval-for-beta_1-solution" class="slide level2">
 <h2>Confidence Interval for <span class="math inline">\(\beta_1\)</span> (Solution)</h2>
+<div style="font-size: 0.60em;">
 <p>Since <span class="math inline">\(\dfrac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} \sim t_{n-2}\)</span>:</p>
 <p><strong>Step 1:</strong> Trap the expression between <span class="math inline">\(\pm\, t_{1-\alpha/2,\, n-2}\)</span> with probability <span class="math inline">\(1-\alpha\)</span>:</p>
 <p><span class="math display">\[P\!\left(-t_{1-\alpha/2,\, n-2} \leq \frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} \leq t_{1-\alpha/2,\, n-2}\right) = 1 - \alpha\]</span></p>
@@ -470,6 +471,7 @@ Annie Adams
 <p><span class="math display">\[P\!\left(\widehat{\beta}_1 - t_{1-\alpha/2,\, n-2}\left(\frac{\text{MSE}}{S_{xx}}\right)^{1/2} \;\leq\; \beta_1 \;\leq\; \widehat{\beta}_1 + t_{1-\alpha/2,\, n-2}\left(\frac{\text{MSE}}{S_{xx}}\right)^{1/2}\right) = 1 - \alpha\]</span></p>
 <p><strong>Result:</strong> A <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval for <span class="math inline">\(\beta_1\)</span>:</p>
 <p><span class="math display">\[\widehat{\beta}_1 \;\pm\; t_{1-\alpha/2,\, n-2}\left(\frac{\text{MSE}}{S_{xx}}\right)^{1/2}\]</span></p>
+</div>
 </section>
 <section id="interpreting-and-using-the-ci" class="slide level2 smaller">
 <h2>Interpreting and Using the CI</h2>
@@ -534,7 +536,7 @@ Annie Adams
 <p><strong>Task:</strong> Construct a 95% confidence interval for <span class="math inline">\(\beta_1\)</span>. Does sunlight appear to be a useful predictor?</p>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_8757875e" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:1em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_caa58508" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:1em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div>
@@ -612,7 +614,7 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
 <p><strong>Task:</strong> Test <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_1 \neq 0\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_686c2711" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_b94c6a4a" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 <div class="fragment">
@@ -628,8 +630,49 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
 <p><strong>Conclusion:</strong> At <span class="math inline">\(\alpha = 0.05\)</span>, there is sufficient evidence that sunlight has a linear relationship with plant height (<span class="math inline">\(p &lt; 0.05\)</span>).</p>
 </div>
 </section>
-<section id="inference-for-beta_0" class="slide level2 smaller">
+<section id="practice-one-sided-test-h_1-beta_1-beta_10" class="slide level2 smaller">
+<h2>Practice: One-Sided Test (<span class="math inline">\(H_1: \beta_1 &gt; \beta_{10}\)</span>)</h2>
+<p>A nutritionist believes that each additional gram of daily protein intake increases resting metabolic rate by <strong>more than 2 calories/day</strong>. She fits a regression on <span class="math inline">\(n = 20\)</span> participants and obtains <span class="math inline">\(\widehat{\beta}_1 = 2.8\)</span>, <span class="math inline">\(S_{xx} = 500\)</span>, <span class="math inline">\(\text{MSE} = 9\)</span>.</p>
+<p><strong>Task:</strong> Test <span class="math inline">\(H_0: \beta_1 = 2\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_1 &gt; 2\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<countdown-timer class="countdown" id="timer_2b0c33b2" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+</div>
+</div>
+<div class="fragment">
+<p><strong>Step 1:</strong> Compute <span class="math inline">\(\text{SE}(\widehat{\beta}_1) = (\text{MSE}/S_{xx})^{1/2} = (9/500)^{1/2} \approx 0.134\)</span></p>
+<p><span class="math display">\[t^* = \frac{\widehat{\beta}_1 - \beta_{10}}{(\text{MSE}/S_{xx})^{1/2}} = \frac{2.8 - 2}{0.134} \approx 5.97\]</span></p>
+</div>
+<div class="fragment">
+<p><strong>Step 2:</strong> Right-sided test — compare to <span class="math inline">\(t_{0.95,\,18} = 1.734\)</span>:</p>
+<p><span class="math display">\[t^* = 5.97 &gt; 1.734 \quad \Rightarrow \quad \text{Reject } H_0\]</span></p>
+<p><strong>Conclusion:</strong> At <span class="math inline">\(\alpha = 0.05\)</span>, there is sufficient evidence that each additional gram of protein increases metabolic rate by more than 2 calories/day.</p>
+</div>
+</section>
+<section id="practice-one-sided-test-h_1-beta_1-beta_10-1" class="slide level2">
+<h2>Practice: One-Sided Test (<span class="math inline">\(H_1: \beta_1 &lt; \beta_{10}\)</span>)</h2>
+<div style="font-size: 0.60em;">
+<p>An engineer claims a new insulation material reduces heat loss by <strong>fewer than 3 watts per cm of thickness</strong>. A regression on <span class="math inline">\(n = 15\)</span> panels gives <span class="math inline">\(\widehat{\beta}_1 = -2.1\)</span>, <span class="math inline">\(S_{xx} = 200\)</span>, <span class="math inline">\(\text{MSE} = 4\)</span>.</p>
+<p><strong>Task:</strong> Test <span class="math inline">\(H_0: \beta_1 = -3\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_1 &gt; -3\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<countdown-timer class="countdown" id="timer_3cb44332" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+</div>
+</div>
+<div class="fragment">
+<p><strong>Step 1:</strong> Compute <span class="math inline">\(\text{SE}(\widehat{\beta}_1) = (4/200)^{1/2} = 0.141\)</span></p>
+<p><span class="math display">\[t^* = \frac{-2.1 - (-3)}{0.141} = \frac{0.9}{0.141} \approx 6.38\]</span></p>
+</div>
+<div class="fragment">
+<p><strong>Step 2:</strong> Right-sided test — compare to <span class="math inline">\(t_{0.95,\,13} = 1.771\)</span>:</p>
+<p><span class="math display">\[t^* = 6.38 &gt; 1.771 \quad \Rightarrow \quad \text{Reject } H_0\]</span></p>
+<p><strong>Conclusion:</strong> At <span class="math inline">\(\alpha = 0.05\)</span>, there is sufficient evidence that heat loss reduction per cm is less than 3 watts (i.e., the slope is greater than <span class="math inline">\(-3\)</span>).</p>
+</div>
+</div>
+</section>
+<section id="inference-for-beta_0" class="slide level2">
 <h2>Inference for <span class="math inline">\(\beta_0\)</span></h2>
+<div style="font-size: 0.55em;">
 <p>By the same argument, <span class="math inline">\(\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1 \bar{X}\)</span> is also a linear combination of the <span class="math inline">\(Y_i\)</span>’s:</p>
 <p><span class="math display">\[\widehat{\beta}_0 \sim N\!\left(\beta_0,\ \sigma^2\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{xx}}\right)\right)\]</span></p>
 <div class="fragment">
@@ -641,9 +684,11 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
 <p><span class="math display">\[\widehat{\beta}_0 \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}\]</span></p>
 <p>Hypothesis tests work exactly as they do for <span class="math inline">\(\beta_1\)</span>.</p>
 </div>
+</div>
 </section>
-<section id="example-inference-for-beta_0-mtcars" class="slide level2 smaller">
+<section id="example-inference-for-beta_0-mtcars" class="slide level2">
 <h2>Example: Inference for <span class="math inline">\(\beta_0\)</span> (mtcars)</h2>
+<div style="font-size: 0.60em;">
 <p>Using <code>mpg ~ wt</code> from <code>mtcars</code>: <span class="math inline">\(\widehat{\beta}_0\)</span> is the predicted mpg when weight = 0.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
@@ -669,7 +714,8 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
 </div>
 <div class="fragment">
 <p><strong>Interpretation:</strong> We are 95% confident that <span class="math inline">\(\beta_0 \in (33.4,\ 41.1)\)</span>.</p>
-<p>However, a car with weight = 0 is physically impossible — the intercept here is a mathematical anchor for the fitted line, not a practically meaningful quantity. Interpret with caution when <span class="math inline">\(X = 0\)</span> is outside the data range.</p>
+<p>However, a car with weight = 0 is physically impossible. The intercept here is a mathematical anchor for the fitted line, not a practically meaningful quantity. Interpret with caution when <span class="math inline">\(X = 0\)</span> is outside the data range.</p>
+</div>
 </div>
 </section>
 <section id="inference-in-r" class="slide level2 smaller">
