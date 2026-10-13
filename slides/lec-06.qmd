@@ -1,0 +1,611 @@
+---
+title: "Lecture 6: Inference in Regression"
+subtitle: "PSTAT 126: Linear Regression"
+author: "Annie Adams"
+institute: "UC Santa Barbara"
+date: "10/14/2026"
+format:
+  revealjs:
+    theme: [default, ../styles.scss]
+    slide-number: true
+    preview-links: auto
+    footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
+    logo: ""
+    chalkboard: true
+    title-slide-attributes:
+      data-background-color: "#003660"
+---
+
+## Course Reminders
+
+- HW 1 due **Saturday, October 17th** at 11:59 PM
+
+---
+
+
+## Quiz 1 Review {background-color="#003660"}
+
+---
+
+## Q1: Why Minimize Squared Residuals? {.smaller}
+
+ A student proposes finding the best-fitting line by minimizing $\displaystyle\sum_{i=1}^n e_i$ instead of $\displaystyle\sum_{i=1}^n e_i^2$. Explain why this approach fails.
+
+::: {.fragment}
+Minimizing $\sum e_i$ fails because positive and negative residuals cancel out. In fact, one of the properties of OLS residuals is that $\sum e_i = 0$ **always** — so this criterion places no constraint on the line at all and cannot produce a unique fit.
+
+Squaring the residuals:
+
+- prevents cancellation
+- penalizes large errors more heavily
+- produces a **unique, well-defined solution**
+:::
+
+---
+
+## Q2: Inference vs. Prediction {.smaller}
+
+ For each scenario, state whether the primary goal is **inference** or **prediction** and justify.
+
+**(a)** A researcher wants to know whether students who attend more office hours tend to earn higher exam scores, and by roughly how many points per additional visit.
+
+::: {.fragment}
+→ **Inference.** The goal is to understand the *direction and magnitude* of the relationship (how many points per visit), not just produce a predicted score.
+:::
+
+::: {.fragment}
+**(b)** An app uses a patient's age, weight, and exercise level to estimate their resting heart rate.
+
+→ **Prediction.** The goal is an accurate individual estimate — the coefficient values are not the focus.
+:::
+
+---
+
+## Q3: Errors vs. Residuals; Unbiasedness {.smaller}
+
+The SLR model is $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$.
+
+**(a)** Explain the difference between the true error $\varepsilon_i$ and the residual $e_i$. Which one can we observe, and why?
+
+::: {.fragment}
+$\varepsilon_i$ is the **true, unobservable error**. It is the gap between $y_i$ and the true line $\beta_0 + \beta_1 x_i$.
+
+$e_i = y_i - \widehat{y}_i$ is the **observable residual**. It is the gap between $y_i$ and the *fitted* line. We can compute $e_i$ from data; $\varepsilon_i$ requires knowing the unknown true parameters.
+:::
+
+
+---
+
+## Q3: Errors vs. Residuals; Unbiasedness {.smaller}
+
+**(b)** What does it mean to say the OLS estimators are **unbiased**? Why is unbiasedness a desirable property?
+
+::: {.fragment}
+An estimator is unbiased if its expected value equals the true parameter:
+
+$$E(\widehat{\beta}_1) = \beta_1 \qquad E(\widehat{\beta}_0) = \beta_0$$
+
+On average across many repeated samples, the estimates are correct.
+:::
+
+---
+
+## Q4–5: Computing and Interpreting the Model {.smaller}
+
+A sports scientist records **weeks of training** ($x$) and **one-mile run time in minutes** ($y$) for $n = 6$ runners. Given: $\bar{x} = 7$, $\bar{y} = 8$, $S_{xx} = 70$, $S_{xy} = -70$.
+
+Compute $\widehat{\beta}_1$ and $\widehat{\beta}_0$. **(5, 3 pts)** Write the fitted equation and interpret $\widehat{\beta}_1$ in context.
+
+Given $S_{xy} = -70$, $S_{xx} = 70$, $\bar{x} = 7$, $\bar{y} = 8$:
+
+$$\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{-70}{70} = -1 \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x} = 8 - (-1)(7) = 15$$
+
+::: {.fragment}
+**Fitted model:** $\quad\widehat{\text{time}} = 15 - 1 \cdot \text{weeks}$
+
+**Interpretation of $\widehat{\beta}_1 = -1$:** Each additional week of training is associated with a predicted reduction of **1 minute** in one-mile run time, on average.
+:::
+
+---
+
+## Q6–7: Residuals and Prediction 
+::: {style="font-size: 0.50em;"}
+
+
+Fill in $\widehat{y}_i$ and $e_i$ and verify $\sum e_i = 0$. **(7, 2 pts)** Predict run time for a runner with 7 weeks of training.
+
+| $i$ | $x_i$ | $y_i$ | $\widehat{y}_i = 15 - x_i$ | $e_i$ |
+|:---:|:---:|:---:|:---:|:---:|
+| 1 | 2 | 15 | 13 | 2 |
+| 2 | 4 | 11 | 11 | 0 |
+| 3 | 6 | 7 | 9 | −2 |
+| 4 | 8 | 5 | 7 | −2 |
+| 5 | 10 | 5 | 5 | 0 |
+| 6 | 12 | 5 | 3 | 2 |
+
+$$\sum_{i=1}^6 e_i = 2 + 0 + (-2) + (-2) + 0 + 2 = 0 \checkmark$$
+
+::: {.fragment}
+**Q7:** Predicted time at $x = 7$ weeks: $\quad\widehat{y} = 15 - 7 = \mathbf{8}$ minutes.
+:::
+:::
+---
+
+## Q8: RSS and $\widehat{\sigma}^2$ {.smaller}
+
+Compute RSS, $\widehat{\sigma}^2$, and $\widehat{\sigma}$. Interpret $\widehat{\sigma}$ in context.
+
+$$\text{RSS} = 2^2 + 0^2 + (-2)^2 + (-2)^2 + 0^2 + 2^2 = 16$$
+
+::: {.fragment}
+$$\widehat{\sigma}^2 = \frac{\text{RSS}}{n - 2} = \frac{16}{4} = 4 \text{ min}^2 \qquad \widehat{\sigma} = 2 \text{ min}$$
+
+The model's predictions of one-mile run time are typically off by about **2 minutes**.
+:::
+
+
+
+---
+
+## Learning Objectives
+
+By the end of today you will be able to:
+
+::: {style="font-size: 0.88em;"}
+
+- Derive the sampling distributions of $\widehat{\beta}_0$ and $\widehat{\beta}_1$ under the normality assumption
+- Construct and interpret confidence intervals for $\beta_0$ and $\beta_1$
+- Conduct two-sided and one-sided hypothesis tests for $\beta_0$ and $\beta_1$
+- Construct and interpret confidence intervals and hypothesis tests for $\beta_0$ and $\beta_1$
+:::
+
+---
+
+## Where We Left Off {.smaller}
+
+Last lecture, we added the **normality assumption** $\varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)$, which implies:
+
+$$Y_i \sim N(\beta_0 + \beta_1 X_i,\ \sigma^2)$$
+
+We used MLE to show:
+
+- $\widehat{\beta}_0$ and $\widehat{\beta}_1$ from MLE **equal the OLS estimates**
+- The MLE of $\sigma^2$ **is biased** — it divides by $n$, not $n-2$
+
+**Today:** We use the full distributional setup to derive exact distributions for $\widehat{\beta}_0$ and $\widehat{\beta}_1$ and build confidence intervals and hypothesis tests from them.
+
+---
+
+## Inference on $\beta_0$ and $\beta_1$ {background-color="#003660"}
+
+---
+
+## Sampling Distribution of $\widehat{\beta}_1$ {.smaller}
+
+The OLS slope can be written as a **weighted sum of the $Y_i$'s**:
+
+$$\widehat{\beta}_1 = \sum_{i=1}^n \underbrace{\frac{X_i - \bar{X}}{S_{xx}}}_{c_i} Y_i \qquad \text{where } S_{xx} = \sum_{i=1}^n (X_i - \bar{X})^2$$
+
+::: {.fragment}
+Since each $Y_i \sim N(\beta_0 + \beta_1 X_i, \sigma^2)$, and a **linear combination of independent normals is normal**, we need only find the mean and variance.
+
+We showed earlier: $E(\widehat{\beta}_1) = \beta_1$ and $\text{Var}(\widehat{\beta}_1) = \dfrac{\sigma^2}{S_{xx}}$
+
+$$\boxed{\widehat{\beta}_1 \sim N\!\left(\beta_1,\ \frac{\sigma^2}{S_{xx}}\right)}$$
+:::
+
+---
+
+## From Normal to $t$: The Problem {.smaller}
+
+Standardizing $\widehat{\beta}_1$ gives a standard normal:
+
+$$\frac{\widehat{\beta}_1 - \beta_1}{\sigma / S_{xx}^{1/2}} \sim N(0, 1)$$
+
+**The problem:** $\sigma^2$ is unknown. We replace it with $\text{MSE} = \dfrac{\text{SSE}}{n-2}$.
+
+::: {.fragment}
+Replacing a fixed constant with a **random** estimate inflates the tails — the result is no longer normal.
+
+Recall from last lecture: $T = Z / (V/k)^{1/2}$ where $Z \sim N(0,1)$ and $V \sim \chi^2_k$. The missing piece is showing that SSE fits the chi-squared structure in the denominator:
+
+$$\frac{\text{SSE}}{\sigma^2} \sim \chi^2_{n-2} \quad \text{and is independent of } \widehat{\beta}_0 \text{ and } \widehat{\beta}_1$$
+:::
+
+---
+
+## From Normal to $t$: Putting It Together {.smaller}
+
+We have two pieces:
+
+- $\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma / S_{xx}^{1/2}} \sim N(0,1)$ — the standardized slope
+- $\dfrac{\text{SSE}}{\sigma^2} \sim \chi^2_{n-2}$, independent of $\widehat{\beta}_1$ — the chi-squared denominator
+
+::: {.fragment}
+Substituting $\text{MSE} = \text{SSE}/(n-2)$ for $\sigma^2$ and applying the $t$-distribution definition ($T = Z / (V/k)^{1/2}$):
+
+$$\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{N(0,1)}{(\chi^2_{n-2}/(n-2))^{1/2}} \sim t_{n-2}$$
+:::
+
+---
+
+## Refresher: Confidence Intervals {.smaller}
+
+**$\alpha$ (significance level):** the probability of making an error. Specifically, the probability that the interval *fails* to contain the true parameter. We choose $\alpha$ before looking at the data. Common choices are $0.05$ or $0.01$.
+
+A $100(1-\alpha)\%$ CI traps the true parameter between two data-driven bounds with probability $1-\alpha$.
+
+**Key idea:** choose critical values $\pm\, t_{1-\alpha/2}$ that leave $\alpha/2$ in each tail.
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 8
+#| fig-height: 3.4
+library(ggplot2)
+df_val <- 28
+x <- seq(-4, 4, length.out = 600)
+y <- dt(x, df = df_val)
+t_crit <- qt(0.975, df = df_val)
+df_plot <- data.frame(x = x, y = y)
+
+ggplot(df_plot, aes(x, y)) +
+  geom_area(data = subset(df_plot, x <= -t_crit),
+            fill = "#C8102E", alpha = 0.7) +
+  geom_area(data = subset(df_plot, x >= t_crit),
+            fill = "#C8102E", alpha = 0.7) +
+  geom_area(data = subset(df_plot, x >= -t_crit & x <= t_crit),
+            fill = "#9CB3CE", alpha = 0.5) +
+  geom_line(linewidth = 1, color = "#003660") +
+  geom_vline(xintercept = c(-t_crit, t_crit),
+             linetype = "dashed", color = "#003660", linewidth = 0.8) +
+  annotate("text", x = 0, y = 0.17,
+           label = "1 - α", size = 6, color = "#003660", fontface = "bold") +
+  annotate("text", x = -t_crit - 0.65, y = 0.04,
+           label = "α/2", size = 5, color = "#C8102E", fontface = "bold") +
+  annotate("text", x =  t_crit + 0.65, y = 0.04,
+           label = "α/2", size = 5, color = "#C8102E", fontface = "bold") +
+  annotate("text", x = -t_crit+.5, y = -0.018,
+           label = expression(-t[1-alpha/2]), size = 6, color = "#003660") +
+  annotate("text", x =  t_crit+.5, y = -0.018,
+           label = expression( t[1-alpha/2]), size = 6, color = "#003660") +
+  scale_x_continuous(breaks = NULL) +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.05))) +
+  labs(x = NULL, y = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(axis.text = element_blank(), axis.ticks = element_blank(),
+        panel.grid = element_blank())
+```
+
+For $\alpha = 0.05$: critical values are $\pm\, t_{0.975,\, n-2}$, giving a **95% CI**.
+
+---
+
+## Finding the Critical Value $t_{1-\alpha/2,\, n-2}$ 
+::: {style="font-size: 0.60em;"}
+
+
+$t_{1-\alpha/2,\, n-2}$ is the value that cuts off $\alpha/2$ in the upper tail of a $t$-distribution with $n-2$ degrees of freedom.
+
+::: {.fragment}
+**In R:** use `qt(1 - α/2, df = n - 2)`
+
+```{r}
+#| echo: true
+#| eval: true
+# 95% CI (alpha = 0.05) with n = 30
+qt(0.975, df = 28)
+
+# 99% CI (alpha = 0.01) with n = 30
+qt(0.995, df = 28)
+```
+:::
+
+
+:::
+---
+
+## Confidence Interval for $\beta_1$ (Setup) {.smaller}
+
+Since $\dfrac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} \sim t_{n-2}$:
+
+**Step 1:** Trap the expression between $\pm\, t_{1-\alpha/2,\, n-2}$ with probability $1-\alpha$:
+
+<div style="height: 3.5em;"></div>
+
+**Step 2:** Rearrange the inequality to isolate $\beta_1$:
+
+<div style="height: 3.5em;"></div>
+
+**Result:**
+
+<div style="height: 2em;"></div>
+
+---
+
+## Confidence Interval for $\beta_1$ (Solution) {.smaller}
+
+Since $\dfrac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} \sim t_{n-2}$:
+
+**Step 1:** Trap the expression between $\pm\, t_{1-\alpha/2,\, n-2}$ with probability $1-\alpha$:
+
+$$P\!\left(-t_{1-\alpha/2,\, n-2} \leq \frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} \leq t_{1-\alpha/2,\, n-2}\right) = 1 - \alpha$$
+
+**Step 2:** Multiply through by $(\text{MSE}/S_{xx})^{1/2}$ and flip signs to isolate $\beta_1$:
+
+$$P\!\left(\widehat{\beta}_1 - t_{1-\alpha/2,\, n-2}\left(\frac{\text{MSE}}{S_{xx}}\right)^{1/2} \;\leq\; \beta_1 \;\leq\; \widehat{\beta}_1 + t_{1-\alpha/2,\, n-2}\left(\frac{\text{MSE}}{S_{xx}}\right)^{1/2}\right) = 1 - \alpha$$
+
+**Result:** A $100(1-\alpha)\%$ confidence interval for $\beta_1$:
+
+$$\widehat{\beta}_1 \;\pm\; t_{1-\alpha/2,\, n-2}\left(\frac{\text{MSE}}{S_{xx}}\right)^{1/2}$$
+
+---
+
+## Interpreting and Using the CI {.smaller}
+
+**Correct interpretation:** If we repeated the study many times, $100(1-\alpha)\%$ of the resulting intervals would contain $\beta_1$.
+
+::: {.fragment}
+**Common mistake:** "There is a 95% probability that $\beta_1$ is in this interval." — $\beta_1$ is a fixed (unknown) constant, not random; it either is or isn't in any given interval.
+:::
+
+::: {.fragment}
+**What makes the interval wider or narrower?**
+
+::: {.incremental}
+- Larger **MSE** → noisier data → wider CI
+- Larger **$S_{xx}$** → more spread in $X$ → better slope estimate → narrower CI
+- Larger **$n$** → smaller $t$ critical value → narrower CI
+:::
+:::
+
+::: {.fragment}
+**Practical use:** If the CI for $\beta_1$ **does not contain 0**, we have evidence that $X$ is a useful linear predictor of $Y$ at the chosen significance level.
+:::
+
+---
+
+## Practice: Confidence Interval for $\beta_1$ 
+
+::: {style="font-size: 0.60em;"}
+
+
+A researcher records hours of sunlight ($X$) and plant height in cm ($Y$) for 5 seedlings:
+
+| Plant | $X$ | $Y$ |
+|:---:|:---:|:---:|
+| 1 | 1 | 4 |
+| 2 | 2 | 7 |
+| 3 | 3 | 8 |
+| 4 | 4 | 11 |
+| 5 | 5 | 10 |
+
+**Pre-computed summary statistics:**
+
+$$\widehat{\beta}_1 = 1.6 \qquad S_{xx} = 10 \qquad \text{MSE} = 1.47 \qquad t_{0.975,\,3} = 3.182$$
+
+**Task:** Construct a 95% confidence interval for $\beta_1$. Does sunlight appear to be a useful predictor?
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 3,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "1em",
+)
+```
+:::
+---
+
+## Practice: CI Solution {.smaller}
+
+**Step 1:** Compute the standard error of $\widehat{\beta}_1$:
+
+$$\text{SE}(\widehat{\beta}_1) = \left(\frac{\text{MSE}}{S_{xx}}\right)^{1/2} = \left(\frac{1.47}{10}\right)^{1/2} \approx 0.383$$
+
+::: {.fragment}
+**Step 2:** Apply the CI formula with $t_{0.975,\,3} = 3.182$:
+
+$$1.6 \;\pm\; 3.182 \times 0.383 \;=\; 1.6 \;\pm\; 1.22 \;=\; (0.38,\ 2.82)$$
+:::
+
+::: {.fragment}
+**Conclusion:** The interval $(0.38,\ 2.82)$ does not contain 0, so at $\alpha = 0.05$ there is evidence that sunlight is a useful linear predictor of plant height.
+:::
+
+---
+
+## Hypothesis Test for $\beta_1$ {.smaller}
+
+To test $H_0: \beta_1 = \beta_{10}$ (some fixed value), compute:
+
+$$t^* = \frac{\widehat{\beta}_1 - \beta_{10}}{(\text{MSE}/S_{xx})^{1/2}}$$
+
+Under $H_0$, $t^* \sim t_{n-2}$.
+
+::: {.fragment}
+**Decision rules at significance level $\alpha$:**
+
+| Hypotheses | Reject $H_0$ if |
+|:---|:---|
+| $H_1: \beta_1 \neq \beta_{10}$ (two-sided) | $|t^*| > t_{1-\alpha/2,\, n-2}$ |
+| $H_1: \beta_1 > \beta_{10}$ (right-sided) | $t^* > t_{1-\alpha,\, n-2}$ |
+| $H_1: \beta_1 < \beta_{10}$ (left-sided) | $t^* < -t_{1-\alpha,\, n-2}$ |
+:::
+
+---
+
+## $H_0: \beta_1 = 0$ {.smaller}
+
+$Y$ is **independent of** $X$ if and only if $\beta_1 = 0$. Testing $H_0: \beta_1 = 0$ asks: does $X$ have any linear relationship with $Y$ at all?
+
+$$t^* = \frac{\widehat{\beta}_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{\widehat{\beta}_1}{\text{SE}(\widehat{\beta}_1)}$$
+
+::: {.fragment}
+**This is exactly what R reports under `summary(lm(...))`:**
+
+```{r}
+#| echo: true
+#| eval: true
+fit <- lm(mpg ~ wt, data = mtcars)
+summary(fit)$coefficients
+```
+:::
+
+::: {.fragment}
+The `t value` column is $\widehat{\beta}/\text{SE}(\widehat{\beta})$. The `Pr(>|t|)` column is the two-sided $p$-value. A small $p$-value is evidence against $H_0: \beta_1 = 0$.
+:::
+
+---
+
+## Practice: Hypothesis Test for $\beta_1$ {.smaller}
+
+Using the same sunlight–plant height data ($n = 5$, $\widehat{\beta}_1 = 1.6$, $S_{xx} = 10$, $\text{MSE} = 1.47$):
+
+**Task:** Test $H_0: \beta_1 = 0$ vs. $H_1: \beta_1 \neq 0$ at $\alpha = 0.05$.
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 3,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em",
+)
+```
+
+::: {.fragment}
+**Step 1:** Compute the test statistic:
+
+$$t^* = \frac{\widehat{\beta}_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{1.6}{0.383} \approx 4.18$$
+:::
+
+::: {.fragment}
+**Step 2:** Compare to the critical value $t_{0.975,\,3} = 3.182$:
+
+$$|t^*| = 4.18 > 3.182$$
+
+Reject $H_0$.
+:::
+
+::: {.fragment}
+**Conclusion:** At $\alpha = 0.05$, there is sufficient evidence that sunlight has a linear relationship with plant height ($p < 0.05$).
+:::
+
+---
+
+## Inference for $\beta_0$ {.smaller}
+
+By the same argument, $\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1 \bar{X}$ is also a linear combination of the $Y_i$'s:
+
+$$\widehat{\beta}_0 \sim N\!\left(\beta_0,\ \sigma^2\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{xx}}\right)\right)$$
+
+::: {.fragment}
+It follows that:
+
+$$\frac{\widehat{\beta}_0 - \beta_0}{\left[\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}} \sim t_{n-2}$$
+:::
+
+::: {.fragment}
+A $100(1-\alpha)\%$ confidence interval for $\beta_0$:
+
+$$\widehat{\beta}_0 \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}$$
+
+Hypothesis tests work exactly as they do for $\beta_1$.
+:::
+
+---
+
+## Example: Inference for $\beta_0$ (mtcars) {.smaller}
+
+Using `mpg ~ wt` from `mtcars`: $\widehat{\beta}_0$ is the predicted mpg when weight = 0.
+
+```{r}
+#| echo: true
+#| eval: true
+fit <- lm(mpg ~ wt, data = mtcars)
+summary(fit)$coefficients
+```
+
+::: {.fragment}
+**95% CI for $\beta_0$:**
+
+```{r}
+#| echo: true
+#| eval: true
+n    <- nrow(mtcars)
+b0   <- coef(fit)["(Intercept)"]
+se_b0 <- summary(fit)$coefficients["(Intercept)", "Std. Error"]
+t_crit <- qt(0.975, df = n - 2)
+b0 + c(-1, 1) * t_crit * se_b0
+```
+:::
+
+::: {.fragment}
+**Interpretation:** We are 95% confident that $\beta_0 \in (33.4,\ 41.1)$.
+
+However, a car with weight = 0 is physically impossible — the intercept here is a mathematical anchor for the fitted line, not a practically meaningful quantity. Interpret with caution when $X = 0$ is outside the data range.
+:::
+
+---
+
+## Inference in R {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+fit <- lm(mpg ~ wt, data = mtcars)
+confint(fit, level = 0.95)
+```
+
+::: {.fragment}
+`confint()` applies the CI formula to each coefficient automatically.
+
+```{r}
+#| echo: true
+#| eval: true
+# manually verify the CI for the slope
+b1_hat <- coef(fit)["wt"]
+se_b1  <- summary(fit)$coefficients["wt", "Std. Error"]
+n      <- nrow(mtcars)
+t_crit <- qt(0.975, df = n - 2)
+b1_hat + c(-1, 1) * t_crit * se_b1
+```
+:::
+
+---
+
+## Summary {.smaller}
+
+::: {.incremental}
+- **Sampling distribution of $\widehat{\beta}_1$:** $N(\beta_1, \sigma^2/S_{xx})$; replacing $\sigma^2$ with MSE yields a $t_{n-2}$ distribution
+- **CI for $\beta_1$:** $\widehat{\beta}_1 \pm t_{1-\alpha/2,\,n-2}(\text{MSE}/S_{xx})^{1/2}$; gets narrower with larger $n$ or more spread in $X$
+- **Testing $H_0: \beta_1 = 0$** checks whether $X$ is useful at all; the $t$-value and $p$-value in `summary(lm(...))` are exactly this test
+- **Inference for $\beta_0$** follows the same structure; note the intercept may not be meaningful when $X = 0$ is outside the data range
+:::
+
+---
+
+## Questions? {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em;"}
+**Annie Adams**
+[aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+Office Hours: Tuesday 10 – 11 AM on [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1)
+
+[Course Website](https://pstat-126.github.io/)
+:::

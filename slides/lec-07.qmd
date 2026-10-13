@@ -1,0 +1,258 @@
+---
+title: "Lecture 7: Prediction and Intervals"
+subtitle: "PSTAT 126: Linear Regression"
+author: "Annie Adams"
+institute: "UC Santa Barbara"
+date: "10/16/2026"
+format:
+  revealjs:
+    theme: [default, ../styles.scss]
+    slide-number: true
+    preview-links: auto
+    footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
+    logo: ""
+    chalkboard: true
+    title-slide-attributes:
+      data-background-color: "#003660"
+---
+
+## Learning Objectives
+
+By the end of today you will be able to:
+
+::: {style="font-size: 0.88em;"}
+
+- Distinguish between a CI for the **mean response** and a **prediction interval** for a new observation
+- Derive the variance of the fitted value $\widehat{Y}^*$ at a new input $x^*$
+- Construct and interpret confidence intervals for mean response and prediction intervals
+- Explain why prediction intervals do not collapse to a point as $n \to \infty$
+- Compute and interpret both types of intervals in R
+:::
+
+---
+
+## Confidence Intervals for Mean Response and Prediction {background-color="#003660"}
+
+---
+
+## Two Forecasting Questions {.smaller}
+
+After fitting $\widehat{Y} = \widehat{\beta}_0 + \widehat{\beta}_1 X$, we often want to say something about a **new input value** $x^*$.
+
+There are two fundamentally different questions:
+
+::: {.fragment}
+**Question 1 — Mean response:**
+> "What is the *average* fuel efficiency for **all** cars weighing 3,500 lbs?"
+
+Targets $E(Y \mid X = x^*) = \beta_0 + \beta_1 x^*$ — a fixed (unknown) parameter.
+
+$\longrightarrow$ **Confidence interval for mean response**
+:::
+
+::: {.fragment}
+**Question 2 — New individual observation:**
+> "How many mpg will *this specific* 3,500 lb car get?"
+
+Targets $Y^* = \beta_0 + \beta_1 x^* + \varepsilon^*$ — a random variable with its own noise.
+
+$\longrightarrow$ **Prediction interval**
+:::
+
+::: {.fragment}
+Both are centered at the same point estimate $\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*$. They differ in what **uncertainty** they account for.
+:::
+
+---
+
+## Variance of the Fitted Value $\widehat{Y}^*$ {.smaller}
+
+Our point estimate at $x^*$ is $\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*$. It carries uncertainty from both coefficient estimates.
+
+::: {.fragment}
+Since $\widehat{\beta}_0$ and $\widehat{\beta}_1$ share the same data, they are correlated: $\text{Cov}(\widehat{\beta}_0, \widehat{\beta}_1) = -\bar{X}\sigma^2/S_{xx}$.
+
+Expanding the variance of $\widehat{\beta}_0 + \widehat{\beta}_1 x^*$ and substituting this covariance:
+
+$$\text{Var}(\widehat{Y}^*) = \sigma^2\!\left(\frac{1}{n} + \frac{(x^* - \bar{X})^2}{S_{xx}}\right)$$
+:::
+
+::: {.fragment}
+Two things to notice:
+
+::: {.incremental}
+- **Smallest at $x^* = \bar{X}$** — we're most certain about the fitted value at the center of the data
+- **Grows as $x^*$ moves away from $\bar{X}$** — extrapolation compounds uncertainty
+:::
+:::
+
+---
+
+## Confidence Interval for Mean Response {.smaller}
+
+Replacing $\sigma^2$ with MSE gives a $t_{n-2}$ distribution:
+
+$$\frac{\widehat{Y}^* - (\beta_0 + \beta_1 x^*)}{\left[\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{(x^*-\bar{X})^2}{S_{xx}}\right)\right]^{1/2}} \sim t_{n-2}$$
+
+::: {.fragment}
+A $100(1-\alpha)\%$ **confidence interval for** $E(Y \mid X = x^*)$:
+
+$$\boxed{\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(\frac{1}{n} + \frac{(x^*-\bar{X})^2}{S_{xx}}\right)\right]^{1/2}}$$
+:::
+
+---
+
+## Two Sources of Uncertainty in Prediction {.smaller}
+
+For a **new observation** $Y^* = \beta_0 + \beta_1 x^* + \varepsilon^*$, the prediction error decomposes as:
+
+$$Y^* - \widehat{Y}^* = \underbrace{\left[(\beta_0 + \beta_1 x^*) - \widehat{Y}^*\right]}_{\text{estimation error}} + \underbrace{\varepsilon^*}_{\text{new individual noise}}$$
+
+::: {.fragment}
+These are **independent**, so their variances add:
+
+| Source | Variance |
+|:---|:---|
+| Estimation error in $\widehat{Y}^*$ | $\sigma^2\!\left(\dfrac{1}{n} + \dfrac{(x^*-\bar{X})^2}{S_{xx}}\right)$ |
+| New individual noise $\varepsilon^*$ | $\sigma^2$ |
+| **Total** | $\sigma^2\!\left(1 + \dfrac{1}{n} + \dfrac{(x^*-\bar{X})^2}{S_{xx}}\right)$ |
+
+The extra $\sigma^2$ is irreducible — it exists regardless of how much data we collect.
+:::
+
+---
+
+## Prediction Interval {.smaller}
+
+Replacing $\sigma^2$ with MSE gives the sampling distribution of the prediction error:
+
+$$\frac{Y^* - \widehat{Y}^*}{\left[\text{MSE}\!\left(1 + \dfrac{1}{n} + \dfrac{(x^*-\bar{X})^2}{S_{xx}}\right)\right]^{1/2}} \sim t_{n-2}$$
+
+::: {.fragment}
+A $100(1-\alpha)\%$ **prediction interval** for a new $Y^*$ at $X = x^*$:
+
+$$\boxed{\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(1 + \frac{1}{n} + \frac{(x^*-\bar{X})^2}{S_{xx}}\right)\right]^{1/2}}$$
+
+**The only difference from the CI is the $+\,1$ inside the brackets.**
+:::
+
+::: {.fragment}
+**Key consequence:** Even as $n \to \infty$, the PI does **not** collapse to a point:
+
+$$\text{PI width} \to 2\,t \cdot \text{MSE}^{1/2} \quad \text{as } n \to \infty$$
+
+There will always be irreducible noise in a new individual observation.
+:::
+
+---
+
+## CI vs. PI: Side by Side {.smaller}
+
+::: {style="font-size: 0.88em;"}
+
+| | Confidence Interval | Prediction Interval |
+|:---|:---|:---|
+| **Targets** | $E(Y \mid X = x^*)$ (fixed) | Individual $Y^*$ (random) |
+| **Extra variance** | — | $+\;\sigma^2$ for $\varepsilon^*$ |
+| **Formula** | $\widehat{Y}^* \pm t\left[\text{MSE}\!\left(\tfrac{1}{n}+\tfrac{(x^*-\bar{X})^2}{S_{xx}}\right)\right]^{1/2}$ | $\widehat{Y}^* \pm t\left[\text{MSE}\!\left(1+\tfrac{1}{n}+\tfrac{(x^*-\bar{X})^2}{S_{xx}}\right)\right]^{1/2}$ |
+| **Width as $n\to\infty$** | $\to 0$ | $\to 2t\,\text{MSE}^{1/2}$ |
+| **Narrowest at** | $x^* = \bar{X}$ | $x^* = \bar{X}$ |
+| **R argument** | `interval = "confidence"` | `interval = "prediction"` |
+
+:::
+
+::: {.fragment}
+A **prediction interval is always wider** than a confidence interval at the same $x^*$.
+:::
+
+---
+
+## Visual: CI vs. PI {.smaller}
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 9
+#| fig-height: 4.2
+library(ggplot2)
+data(mtcars)
+fit <- lm(mpg ~ wt, data = mtcars)
+newx <- data.frame(wt = seq(1.5, 5.5, length.out = 200))
+ci <- as.data.frame(predict(fit, newx, interval = "confidence"))
+pi <- as.data.frame(predict(fit, newx, interval = "prediction"))
+ci$wt <- newx$wt
+pi$wt <- newx$wt
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_ribbon(data = pi,
+              aes(x = wt, ymin = lwr, ymax = upr, fill = "95% PI (new obs.)"),
+              alpha = 0.18, inherit.aes = FALSE) +
+  geom_ribbon(data = ci,
+              aes(x = wt, ymin = lwr, ymax = upr, fill = "95% CI (mean response)"),
+              alpha = 0.40, inherit.aes = FALSE) +
+  geom_line(data = ci, aes(x = wt, y = fit),
+            color = "#003660", linewidth = 1.1, inherit.aes = FALSE) +
+  geom_point(size = 2.5, color = "#003660") +
+  scale_fill_manual(
+    values = c("95% CI (mean response)" = "#003660",
+               "95% PI (new obs.)"      = "#9CB3CE"),
+    name = NULL) +
+  labs(x = "Weight (1000 lbs)", y = "Miles per Gallon",
+       title = "CI (inner band) is always narrower than PI (outer band)") +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "bottom")
+```
+
+Both bands are narrowest near $\bar{X} \approx 3.2$ and widen with extrapolation.
+
+---
+
+## CI and PI in R {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+fit <- lm(mpg ~ wt, data = mtcars)
+
+# 95% CI: average mpg for all cars weighing 3500 lbs
+predict(fit, newdata = data.frame(wt = 3.5),
+        interval = "confidence", level = 0.95)
+```
+
+::: {.fragment}
+```{r}
+#| echo: true
+#| eval: true
+# 95% PI: mpg for one new specific car weighing 3500 lbs
+predict(fit, newdata = data.frame(wt = 3.5),
+        interval = "prediction", level = 0.95)
+```
+:::
+
+::: {.fragment}
+The fit (`fit`) is identical. The PI is wider because the only change is adding individual-level noise.
+:::
+
+---
+
+## Summary {.smaller}
+
+::: {.incremental}
+- **CI for mean response** at $x^*$: targets $E(Y \mid X = x^*)$; uncertainty comes only from estimating $\widehat{Y}^*$
+- **PI for new observation** at $x^*$: targets an individual $Y^*$; adds $\sigma^2$ for irreducible noise — always wider than the CI
+- Both intervals are centered at $\widehat{Y}^*$ and are narrowest at $x^* = \bar{X}$, widening with extrapolation
+- PI does not shrink to zero as $n \to \infty$ — individual noise cannot be eliminated with more data
+- In R: `predict(..., interval = "confidence")` vs. `predict(..., interval = "prediction")`
+:::
+
+---
+
+## Questions? {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em;"}
+**Annie Adams**
+[aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+Office Hours: Tuesday 10 – 11 AM on [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1)
+
+[Course Website](https://pstat-126.github.io/)
+:::
