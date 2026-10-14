@@ -233,12 +233,11 @@ Annie Adams
 <h2>Q1: Why Minimize Squared Residuals?</h2>
 <p>A student proposes finding the best-fitting line by minimizing <span class="math inline">\(\displaystyle\sum_{i=1}^n e_i\)</span> instead of <span class="math inline">\(\displaystyle\sum_{i=1}^n e_i^2\)</span>. Explain why this approach fails.</p>
 <div class="fragment">
-<p>Minimizing <span class="math inline">\(\sum e_i\)</span> fails because positive and negative residuals cancel out. In fact, one of the properties of OLS residuals is that <span class="math inline">\(\sum e_i = 0\)</span> <strong>always</strong> — so this criterion places no constraint on the line at all and cannot produce a unique fit.</p>
+<p>Minimizing <span class="math inline">\(\sum e_i\)</span> fails because positive and negative residuals cancel out.</p>
 <p>Squaring the residuals:</p>
 <ul>
 <li>prevents cancellation</li>
 <li>penalizes large errors more heavily</li>
-<li>produces a <strong>unique, well-defined solution</strong></li>
 </ul>
 </div>
 </section>
@@ -251,7 +250,7 @@ Annie Adams
 </div>
 <div class="fragment">
 <p><strong>(b)</strong> An app uses a patient’s age, weight, and exercise level to estimate their resting heart rate.</p>
-<p>→ <strong>Prediction.</strong> The goal is an accurate individual estimate — the coefficient values are not the focus.</p>
+<p>→ <strong>Prediction.</strong> The goal is an accurate individual estimate where the coefficient values are not the focus.</p>
 </div>
 </section>
 <section id="q3-errors-vs.-residuals-unbiasedness" class="slide level2 smaller">
@@ -365,7 +364,6 @@ Annie Adams
 <li>Derive the sampling distributions of <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> under the normality assumption</li>
 <li>Construct and interpret confidence intervals for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span></li>
 <li>Conduct two-sided and one-sided hypothesis tests for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span></li>
-<li>Construct and interpret confidence intervals and hypothesis tests for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span></li>
 </ul>
 </div>
 </section>
@@ -386,15 +384,17 @@ Annie Adams
 <section id="sampling-distribution-of-widehatbeta_1" class="slide level2 smaller">
 <h2>Sampling Distribution of <span class="math inline">\(\widehat{\beta}_1\)</span></h2>
 <p>The OLS slope can be written as a <strong>weighted sum of the <span class="math inline">\(Y_i\)</span>’s</strong>:</p>
-<p><span class="math display">\[\widehat{\beta}_1 = \sum_{i=1}^n c_i Y_i, \qquad c_i = \frac{X_i - \bar{X}}{S_{xx}}, \quad S_{xx} = \sum_{i=1}^n (X_i - \bar{X})^2\]</span></p>
+<p><span class="math display">\[\widehat{\beta}_1 = \sum_{i=1}^n a_i Y_i, \qquad a_i = \frac{X_i - \bar{X}}{S_{xx}}, \quad S_{xx} = \sum_{i=1}^n (X_i - \bar{X})^2\]</span></p>
 <p>Since each <span class="math inline">\(Y_i \sim N(\beta_0 + \beta_1 X_i, \sigma^2)\)</span> and a <strong>linear combination of independent normals is normal</strong>, <span class="math inline">\(\widehat{\beta}_1\)</span> is normal.</p>
 <div class="fragment">
 <p>We previously showed: <span class="math inline">\(E(\widehat{\beta}_1) = \beta_1\)</span> and <span class="math inline">\(\text{Var}(\widehat{\beta}_1) = \dfrac{\sigma^2}{S_{xx}}\)</span></p>
 <p><span class="math display">\[\boxed{\widehat{\beta}_1 \sim N\!\left(\beta_1,\ \frac{\sigma^2}{S_{xx}}\right)}\]</span></p>
 </div>
 </section>
-<section id="from-normal-to-t-the-problem" class="slide level2 smaller">
-<h2>From Normal to <span class="math inline">\(t\)</span>: The Problem</h2>
+<section id="from-normal-to-t" class="slide level2">
+<h2>From Normal to <span class="math inline">\(t\)</span></h2>
+<div style="font-size: 0.55em;">
+<p><strong>Standardization:</strong> subtract the mean and divide by the standard deviation: <span class="math display">\[Z = \frac{X - \mu}{\sigma}\]</span></p>
 <p>Standardizing <span class="math inline">\(\widehat{\beta}_1\)</span> gives a standard normal:</p>
 <p><span class="math display">\[\frac{\widehat{\beta}_1 - \beta_1}{\sigma / S_{xx}^{1/2}} \sim N(0, 1)\]</span></p>
 <p><strong>The problem:</strong> <span class="math inline">\(\sigma^2\)</span> is unknown. We replace it with <span class="math inline">\(\text{MSE} = \dfrac{\text{RSS}}{n-2}\)</span>.</p>
@@ -403,18 +403,57 @@ Annie Adams
 <p>Recall from last lecture: <span class="math inline">\(T = Z / (V/k)^{1/2}\)</span> where <span class="math inline">\(Z \sim N(0,1)\)</span> and <span class="math inline">\(V \sim \chi^2_k\)</span>. The missing piece is showing that RSS fits the chi-squared structure in the denominator:</p>
 <p><span class="math display">\[\frac{\text{RSS}}{\sigma^2} \sim \chi^2_{n-2} \quad \text{and is independent of } \widehat{\beta}_0 \text{ and } \widehat{\beta}_1\]</span></p>
 </div>
+</div>
 </section>
-<section id="from-normal-to-t-putting-it-together" class="slide level2 smaller">
-<h2>From Normal to <span class="math inline">\(t\)</span>: Putting It Together</h2>
-<p>We have two pieces:</p>
-<ul>
-<li><span class="math inline">\(\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma / S_{xx}^{1/2}} \sim N(0,1)\)</span> — the standardized slope</li>
-<li><span class="math inline">\(\dfrac{\text{RSS}}{\sigma^2} \sim \chi^2_{n-2}\)</span>, independent of <span class="math inline">\(\widehat{\beta}_1\)</span> — the chi-squared denominator</li>
-</ul>
-<div class="fragment">
-<p>Write the statistic as a ratio and substitute each piece:</p>
-<p><span class="math display">\[\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}}}{\sqrt{\dfrac{\text{RSS}/\sigma^2}{n-2}}} = \frac{N(0,1)}{\left(\chi^2_{n-2}/(n-2)\right)^{1/2}} \sim t_{n-2}\]</span></p>
-<p>The <span class="math inline">\(\sigma\)</span>’s cancel between numerator and denominator; the <span class="math inline">\(\chi^2_{n-2}\)</span> structure comes from RSS; and independence of RSS and <span class="math inline">\(\widehat{\beta}_1\)</span> makes this exactly <span class="math inline">\(t_{n-2}\)</span>.</p>
+<section id="from-normal-to-t-putting-it-together-steps-13" class="slide level2">
+<h2>From Normal to <span class="math inline">\(t\)</span>: Putting It Together (Steps 1–3)</h2>
+<div style="font-size: 0.55em;">
+<p><strong>Step 1:</strong> Write the test statistic we <em>want</em> — the standardized slope but with <span class="math inline">\(\sigma^2\)</span> replaced by MSE:</p>
+<div style="height: 3em;">
+
+</div>
+<p><strong>Step 2:</strong> Divide numerator and denominator by <span class="math inline">\(\sigma / S_{xx}^{1/2}\)</span> to introduce the standard normal piece in the numerator:</p>
+<div style="height: 3em;">
+
+</div>
+<p><strong>Step 3:</strong> Substitute <span class="math inline">\(\text{MSE} = \text{RSS}/(n-2)\)</span> into the denominator and rearrange to expose the <span class="math inline">\(\chi^2\)</span> piece:</p>
+<div style="height: 2em;">
+
+</div>
+</div>
+</section>
+<section id="from-normal-to-t-putting-it-together-steps-45" class="slide level2">
+<h2>From Normal to <span class="math inline">\(t\)</span>: Putting It Together (Steps 4–5)</h2>
+<div style="font-size: 0.55em;">
+<p>Picking up where we left off:</p>
+<p><span class="math display">\[\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}}}{\left(\dfrac{\text{RSS}/\sigma^2}{n-2}\right)^{1/2}}\]</span></p>
+<p><strong>Step 4:</strong> Label what each piece is — identify the numerator and denominator distributions:</p>
+<div style="height: 3em;">
+
+</div>
+<p><strong>Step 5:</strong> Apply the definition of the <span class="math inline">\(t\)</span> distribution and state the result:</p>
+<div style="height: 3em;">
+
+</div>
+</div>
+</section>
+<section id="from-normal-to-t-putting-it-together-solution-steps-13" class="slide level2">
+<h2>From Normal to <span class="math inline">\(t\)</span>: Putting It Together (Solution, Steps 1–3)</h2>
+<div style="font-size: 0.60em;">
+<p><strong>Step 1:</strong> The statistic we want — replace unknown <span class="math inline">\(\sigma\)</span> with <span class="math inline">\(\sqrt{\text{MSE}}\)</span>:</p>
+<p><span class="math display">\[\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}}\]</span></p>
+<p><strong>Step 2:</strong> Divide numerator and denominator by <span class="math inline">\(\sigma/S_{xx}^{1/2}\)</span>:</p>
+<p><span class="math display">\[\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}}}{\dfrac{(\text{MSE}/S_{xx})^{1/2}}{\sigma/S_{xx}^{1/2}}} = \frac{\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}}}{\left(\dfrac{\text{MSE}}{\sigma^2}\right)^{1/2}}\]</span></p>
+</div>
+</section>
+<section id="from-normal-to-t-putting-it-together-solution-steps-35" class="slide level2">
+<h2>From Normal to <span class="math inline">\(t\)</span>: Putting It Together (Solution, Steps 3–5)</h2>
+<div style="font-size: 0.47em;">
+<p><strong>Step 3:</strong> Substitute <span class="math inline">\(\text{MSE} = \text{RSS}/(n-2)\)</span> to expose the <span class="math inline">\(\chi^2\)</span> piece:</p>
+<p><span class="math display">\[= \frac{\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}}}{\left(\dfrac{\text{RSS}/\sigma^2}{n-2}\right)^{1/2}}\]</span> <strong>Step 4:</strong> Label each piece — numerator <span class="math inline">\(\sim N(0,1)\)</span>; denominator <span class="math inline">\(\sim \left(\chi^2_{n-2}/(n-2)\right)^{1/2}\)</span>, independent of numerator:</p>
+<p><span class="math display">\[\text{Numerator: } \frac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}} \sim N(0,1) \qquad \text{Denominator: } \sqrt{\frac{\text{RSS}/\sigma^2}{n-2}} \sim \sqrt{\frac{\chi^2_{n-2}}{n-2}}\]</span></p>
+<p><strong>Step 5:</strong> By the definition of the <span class="math inline">\(t\)</span> distribution, <span class="math inline">\(T = Z / \sqrt{V/k}\)</span> where <span class="math inline">\(Z \sim N(0,1)\)</span>, <span class="math inline">\(V \sim \chi^2_k\)</span>, independent:</p>
+<p><span class="math display">\[\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} \sim t_{n-2}\]</span></p>
 </div>
 </section>
 <section id="refresher-confidence-intervals" class="slide level2 smaller">
@@ -477,16 +516,9 @@ Annie Adams
 <section id="interpreting-and-using-the-ci" class="slide level2 smaller">
 <h2>Interpreting and Using the CI</h2>
 <p><strong>Correct interpretation:</strong> If we repeated the study many times, <span class="math inline">\(100(1-\alpha)\%\)</span> of the resulting intervals would contain <span class="math inline">\(\beta_1\)</span>.</p>
+<p><strong>Note:</strong> Always state your <span class="math inline">\(\alpha\)</span> level (equivalently, your confidence level) when reporting an interval. “We are 95% confident…” means <span class="math inline">\(\alpha = 0.05\)</span>; without this, the interval has no context.</p>
 <div class="fragment">
 <p><strong>Common mistake:</strong> “There is a 95% probability that <span class="math inline">\(\beta_1\)</span> is in this interval.” — <span class="math inline">\(\beta_1\)</span> is a fixed (unknown) constant, not random; it either is or isn’t in any given interval.</p>
-</div>
-<div class="fragment">
-<p><strong>What makes the interval wider or narrower?</strong></p>
-<ul>
-<li class="fragment">Larger <strong>MSE</strong> → noisier data → wider CI</li>
-<li class="fragment">Larger <strong><span class="math inline">\(S_{xx}\)</span></strong> → more spread in <span class="math inline">\(X\)</span> → better slope estimate → narrower CI</li>
-<li class="fragment">Larger <strong><span class="math inline">\(n\)</span></strong> → smaller <span class="math inline">\(t\)</span> critical value → narrower CI</li>
-</ul>
 </div>
 <div class="fragment">
 <p><strong>Practical use:</strong> If the CI for <span class="math inline">\(\beta_1\)</span> <strong>does not contain 0</strong>, we have evidence that <span class="math inline">\(X\)</span> is a useful linear predictor of <span class="math inline">\(Y\)</span> at the chosen significance level.</p>
@@ -537,7 +569,7 @@ Annie Adams
 <p><strong>Task:</strong> Construct a 95% confidence interval for <span class="math inline">\(\beta_1\)</span>. Does sunlight appear to be a useful predictor?</p>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_7201026b" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:1em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_01940f0b" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:1em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div>
@@ -552,6 +584,7 @@ Annie Adams
 </div>
 <div class="fragment">
 <p><strong>Conclusion:</strong> The interval <span class="math inline">\((0.38,\ 2.82)\)</span> does not contain 0, so at <span class="math inline">\(\alpha = 0.05\)</span> there is evidence that sunlight is a useful linear predictor of plant height.</p>
+<p>We are 95% confident that each additional hour of sunlight is associated with an increase in plant height of between <strong>0.38 and 2.82 cm</strong>, on average.</p>
 </div>
 </section>
 <section id="hypothesis-test-for-beta_1" class="slide level2 smaller">
@@ -593,31 +626,11 @@ Annie Adams
 <h2><span class="math inline">\(H_0: \beta_1 = 0\)</span></h2>
 <p><span class="math inline">\(Y\)</span> is <strong>independent of</strong> <span class="math inline">\(X\)</span> if and only if <span class="math inline">\(\beta_1 = 0\)</span>. Testing <span class="math inline">\(H_0: \beta_1 = 0\)</span> asks: does <span class="math inline">\(X\)</span> have any linear relationship with <span class="math inline">\(Y\)</span> at all?</p>
 <p><span class="math display">\[t^* = \frac{\widehat{\beta}_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{\widehat{\beta}_1}{\text{SE}(\widehat{\beta}_1)}\]</span></p>
-<div class="fragment">
-<p><strong>This is exactly what R reports under <code>summary(lm(...))</code>:</strong></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
-<span id="cb5-2"><a aria-label="2"></a><span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>             Estimate Std. Error   t value     Pr(&gt;|t|)
-(Intercept) 37.285126   1.877627 19.857575 8.241799e-19
-wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>The <code>t value</code> column is <span class="math inline">\(\widehat{\beta}/\text{SE}(\widehat{\beta})\)</span>. The <code>Pr(&gt;|t|)</code> column is the two-sided <span class="math inline">\(p\)</span>-value. A small <span class="math inline">\(p\)</span>-value is evidence against <span class="math inline">\(H_0: \beta_1 = 0\)</span>.</p>
-</div>
 </section>
 <section id="practice-hypothesis-test-for-beta_1" class="slide level2 smaller">
 <h2>Practice: Hypothesis Test for <span class="math inline">\(\beta_1\)</span></h2>
 <p>Using the same sunlight–plant height data (<span class="math inline">\(n = 5\)</span>, <span class="math inline">\(\widehat{\beta}_1 = 1.6\)</span>, <span class="math inline">\(S_{xx} = 10\)</span>, <span class="math inline">\(\text{MSE} = 1.47\)</span>):</p>
 <p><strong>Task:</strong> Test <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_1 \neq 0\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_a5cd36ec" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
-</div>
 <div class="fragment">
 <p><strong>Step 1:</strong> Compute the test statistic:</p>
 <p><span class="math display">\[t^* = \frac{\widehat{\beta}_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{1.6}{0.383} \approx 4.18\]</span></p>
@@ -634,41 +647,20 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
 <section id="practice-one-sided-test-h_1-beta_1-beta_10" class="slide level2 smaller">
 <h2>Practice: One-Sided Test (<span class="math inline">\(H_1: \beta_1 &gt; \beta_{10}\)</span>)</h2>
 <p>A nutritionist believes that each additional gram of daily protein intake increases resting metabolic rate by <strong>more than 2 calories/day</strong>. She fits a regression on <span class="math inline">\(n = 20\)</span> participants and obtains <span class="math inline">\(\widehat{\beta}_1 = 2.8\)</span>, <span class="math inline">\(S_{xx} = 500\)</span>, <span class="math inline">\(\text{MSE} = 9\)</span>.</p>
-<p><strong>Task:</strong> Test <span class="math inline">\(H_0: \beta_1 = 2\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_1 &gt; 2\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p><strong>Pre-computed:</strong> <span class="math inline">\(t_{0.95,\,18} = 1.734\)</span></p>
+<p><strong>Task:</strong> Test <span class="math inline">\(H_0: \beta_1 = 2\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_1 &gt; 2\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>. Compute the test statistic, compare to the critical value, and state a conclusion in context.</p>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_ff06de45" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_ab71d9e5" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
-<div class="fragment">
-<p><strong>Step 1:</strong> Compute <span class="math inline">\(\text{SE}(\widehat{\beta}_1) = (\text{MSE}/S_{xx})^{1/2} = (9/500)^{1/2} \approx 0.134\)</span></p>
-<p><span class="math display">\[t^* = \frac{\widehat{\beta}_1 - \beta_{10}}{(\text{MSE}/S_{xx})^{1/2}} = \frac{2.8 - 2}{0.134} \approx 5.97\]</span></p>
+<p><strong>Step 1:</strong> Compute <span class="math inline">\(\text{SE}(\widehat{\beta}_1) = (\text{MSE}/S_{xx})^{1/2}\)</span> and the test statistic <span class="math inline">\(t^*\)</span>:</p>
+<div style="height: 2.5em;">
+
 </div>
-<div class="fragment">
-<p><strong>Step 2:</strong> Right-sided test — compare to <span class="math inline">\(t_{0.95,\,18} = 1.734\)</span>:</p>
-<p><span class="math display">\[t^* = 5.97 &gt; 1.734 \quad \Rightarrow \quad \text{Reject } H_0\]</span></p>
-<p><strong>Conclusion:</strong> At <span class="math inline">\(\alpha = 0.05\)</span>, there is sufficient evidence that each additional gram of protein increases metabolic rate by more than 2 calories/day.</p>
-</div>
-</section>
-<section id="practice-one-sided-test-h_1-beta_1-beta_10-1" class="slide level2">
-<h2>Practice: One-Sided Test (<span class="math inline">\(H_1: \beta_1 &lt; \beta_{10}\)</span>)</h2>
-<div style="font-size: 0.60em;">
-<p>An engineer claims a new insulation material reduces heat loss by <strong>fewer than 3 watts per cm of thickness</strong>. A regression on <span class="math inline">\(n = 15\)</span> panels gives <span class="math inline">\(\widehat{\beta}_1 = -2.1\)</span>, <span class="math inline">\(S_{xx} = 200\)</span>, <span class="math inline">\(\text{MSE} = 4\)</span>.</p>
-<p><strong>Task:</strong> Test <span class="math inline">\(H_0: \beta_1 = -3\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_1 &gt; -3\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_9dcbfb58" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
-</div>
-<div class="fragment">
-<p><strong>Step 1:</strong> Compute <span class="math inline">\(\text{SE}(\widehat{\beta}_1) = (4/200)^{1/2} = 0.141\)</span></p>
-<p><span class="math display">\[t^* = \frac{-2.1 - (-3)}{0.141} = \frac{0.9}{0.141} \approx 6.38\]</span></p>
-</div>
-<div class="fragment">
-<p><strong>Step 2:</strong> Right-sided test — compare to <span class="math inline">\(t_{0.95,\,13} = 1.771\)</span>:</p>
-<p><span class="math display">\[t^* = 6.38 &gt; 1.771 \quad \Rightarrow \quad \text{Reject } H_0\]</span></p>
-<p><strong>Conclusion:</strong> At <span class="math inline">\(\alpha = 0.05\)</span>, there is sufficient evidence that heat loss reduction per cm is less than 3 watts (i.e., the slope is greater than <span class="math inline">\(-3\)</span>).</p>
-</div>
+<p><strong>Step 2:</strong> Compare <span class="math inline">\(t^*\)</span> to the critical value and state a conclusion in context:</p>
+<div style="height: 2.5em;">
+
 </div>
 </section>
 <section id="sampling-distribution-of-widehatbeta_0" class="slide level2 smaller">
@@ -688,10 +680,46 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
 <p><strong>Step 2:</strong> <span class="math inline">\(\sigma^2\)</span> is unknown. Replace it with <span class="math inline">\(\text{MSE} = \text{RSS}/(n-2)\)</span>. Since <span class="math inline">\(\text{RSS}/\sigma^2 \sim \chi^2_{n-2}\)</span> and is independent of <span class="math inline">\(\widehat{\beta}_0\)</span>:</p>
 <p><span class="math display">\[\frac{\widehat{\beta}_0 - \beta_0}{\left[\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}} = \frac{N(0,1)}{\left(\chi^2_{n-2}/(n-2)\right)^{1/2}} \sim t_{n-2}\]</span></p>
 </div>
+</div>
+</section>
+<section id="confidence-interval-and-hypothesis-test-for-beta_0" class="slide level2">
+<h2>Confidence Interval and Hypothesis Test for <span class="math inline">\(\beta_0\)</span></h2>
+<div style="font-size: 0.42em;">
+<p>Let <span class="math inline">\(\text{SE}(\widehat{\beta}_0) = \left[\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}\)</span></p>
+<p><strong>Confidence interval:</strong> A <span class="math inline">\(100(1-\alpha)\%\)</span> CI for <span class="math inline">\(\beta_0\)</span>:</p>
+<p><span class="math display">\[\widehat{\beta}_0 \;\pm\; t_{1-\alpha/2,\,n-2} \cdot \text{SE}(\widehat{\beta}_0)\]</span></p>
 <div class="fragment">
-<p><strong>Step 3:</strong> A <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval for <span class="math inline">\(\beta_0\)</span>:</p>
-<p><span class="math display">\[\widehat{\beta}_0 \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}\]</span></p>
-<p>Hypothesis tests work exactly as they do for <span class="math inline">\(\beta_1\)</span>.</p>
+<p><strong>Hypothesis test:</strong> To test <span class="math inline">\(H_0: \beta_0 = \beta_{00}\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_0 \neq \beta_{00}\)</span> (or one-sided), compute:</p>
+<p><span class="math display">\[t^* = \frac{\widehat{\beta}_0 - \beta_{00}}{\text{SE}(\widehat{\beta}_0)} \sim t_{n-2} \text{ under } H_0\]</span></p>
+<div class="fragment">
+<p><strong>Decision rules at significance level <span class="math inline">\(\alpha\)</span>:</strong></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Hypotheses</th>
+<th style="text-align: left;">Reject <span class="math inline">\(H_0\)</span> if</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(H_1: \beta_1 \neq \beta_{10}\)</span> (two-sided)</td>
+<td style="text-align: left;"><span class="math inline">\(|t^*| &gt; t_{1-\alpha/2,\, n-2}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(H_1: \beta_1 &gt; \beta_{10}\)</span> (right-sided)</td>
+<td style="text-align: left;"><span class="math inline">\(t^* &gt; t_{1-\alpha,\, n-2}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(H_1: \beta_1 &lt; \beta_{10}\)</span> (left-sided)</td>
+<td style="text-align: left;"><span class="math inline">\(t^* &lt; -t_{1-\alpha,\, n-2}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </section>
@@ -700,8 +728,8 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
 <div style="font-size: 0.60em;">
 <p>Using <code>mpg ~ wt</code> from <code>mtcars</code>: <span class="math inline">\(\widehat{\beta}_0\)</span> is the predicted mpg when weight = 0.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
-<span id="cb7-2"><a aria-label="2"></a><span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
+<span id="cb5-2"><a aria-label="2"></a><span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Estimate Std. Error   t value     Pr(&gt;|t|)
 (Intercept) 37.285126   1.877627 19.857575 8.241799e-19
@@ -711,11 +739,11 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
 <div class="fragment">
 <p><strong>95% CI for <span class="math inline">\(\beta_0\)</span>:</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>n    <span class="ot">&lt;-</span> <span class="fu">nrow</span>(mtcars)</span>
-<span id="cb9-2"><a aria-label="2"></a>b0   <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)[<span class="st">"(Intercept)"</span>]</span>
-<span id="cb9-3"><a aria-label="3"></a>se_b0 <span class="ot">&lt;-</span> <span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients[<span class="st">"(Intercept)"</span>, <span class="st">"Std. Error"</span>]</span>
-<span id="cb9-4"><a aria-label="4"></a>t_crit <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>)</span>
-<span id="cb9-5"><a aria-label="5"></a>b0 <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> t_crit <span class="sc">*</span> se_b0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>n    <span class="ot">&lt;-</span> <span class="fu">nrow</span>(mtcars)</span>
+<span id="cb7-2"><a aria-label="2"></a>b0   <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)[<span class="st">"(Intercept)"</span>]</span>
+<span id="cb7-3"><a aria-label="3"></a>se_b0 <span class="ot">&lt;-</span> <span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients[<span class="st">"(Intercept)"</span>, <span class="st">"Std. Error"</span>]</span>
+<span id="cb7-4"><a aria-label="4"></a>t_crit <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>)</span>
+<span id="cb7-5"><a aria-label="5"></a>b0 <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> t_crit <span class="sc">*</span> se_b0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 33.45050 41.11975</code></pre>
 </div>
@@ -730,8 +758,8 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
 <section id="inference-in-r" class="slide level2 smaller">
 <h2>Inference in R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
-<span id="cb11-2"><a aria-label="2"></a><span class="fu">confint</span>(fit, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
+<span id="cb9-2"><a aria-label="2"></a><span class="fu">confint</span>(fit, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %    97.5 %
 (Intercept) 33.450500 41.119753
@@ -741,12 +769,12 @@ wt          -6.486308 -4.202635</code></pre>
 <div class="fragment">
 <p><code>confint()</code> applies the CI formula to each coefficient automatically.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="co"># manually verify the CI for the slope</span></span>
-<span id="cb13-2"><a aria-label="2"></a>b1_hat <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)[<span class="st">"wt"</span>]</span>
-<span id="cb13-3"><a aria-label="3"></a>se_b1  <span class="ot">&lt;-</span> <span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients[<span class="st">"wt"</span>, <span class="st">"Std. Error"</span>]</span>
-<span id="cb13-4"><a aria-label="4"></a>n      <span class="ot">&lt;-</span> <span class="fu">nrow</span>(mtcars)</span>
-<span id="cb13-5"><a aria-label="5"></a>t_crit <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>)</span>
-<span id="cb13-6"><a aria-label="6"></a>b1_hat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> t_crit <span class="sc">*</span> se_b1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="co"># manually verify the CI for the slope</span></span>
+<span id="cb11-2"><a aria-label="2"></a>b1_hat <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)[<span class="st">"wt"</span>]</span>
+<span id="cb11-3"><a aria-label="3"></a>se_b1  <span class="ot">&lt;-</span> <span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients[<span class="st">"wt"</span>, <span class="st">"Std. Error"</span>]</span>
+<span id="cb11-4"><a aria-label="4"></a>n      <span class="ot">&lt;-</span> <span class="fu">nrow</span>(mtcars)</span>
+<span id="cb11-5"><a aria-label="5"></a>t_crit <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>)</span>
+<span id="cb11-6"><a aria-label="6"></a>b1_hat <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> t_crit <span class="sc">*</span> se_b1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -6.486308 -4.202635</code></pre>
 </div>
@@ -757,8 +785,8 @@ wt          -6.486308 -4.202635</code></pre>
 <h2>Summary</h2>
 <ul>
 <li class="fragment"><strong>Sampling distribution of <span class="math inline">\(\widehat{\beta}_1\)</span>:</strong> <span class="math inline">\(N(\beta_1, \sigma^2/S_{xx})\)</span>; replacing <span class="math inline">\(\sigma^2\)</span> with MSE yields a <span class="math inline">\(t_{n-2}\)</span> distribution</li>
-<li class="fragment"><strong>CI for <span class="math inline">\(\beta_1\)</span>:</strong> <span class="math inline">\(\widehat{\beta}_1 \pm t_{1-\alpha/2,\,n-2}(\text{MSE}/S_{xx})^{1/2}\)</span>; gets narrower with larger <span class="math inline">\(n\)</span> or more spread in <span class="math inline">\(X\)</span></li>
-<li class="fragment"><strong>Testing <span class="math inline">\(H_0: \beta_1 = 0\)</span></strong> checks whether <span class="math inline">\(X\)</span> is useful at all; the <span class="math inline">\(t\)</span>-value and <span class="math inline">\(p\)</span>-value in <code>summary(lm(...))</code> are exactly this test</li>
+<li class="fragment"><strong>CI for <span class="math inline">\(\beta_1\)</span>:</strong> <span class="math inline">\(\widehat{\beta}_1 \pm t_{1-\alpha/2,\,n-2}(\text{MSE}/S_{xx})^{1/2}\)</span></li>
+<li class="fragment"><strong>Testing <span class="math inline">\(H_0: \beta_1 = 0\)</span></strong> checks whether <span class="math inline">\(X\)</span> is useful at all</li>
 <li class="fragment"><strong>Inference for <span class="math inline">\(\beta_0\)</span></strong> follows the same structure; note the intercept may not be meaningful when <span class="math inline">\(X = 0\)</span> is outside the data range</li>
 </ul>
 </section>

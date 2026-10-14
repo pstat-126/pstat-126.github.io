@@ -32,13 +32,13 @@ format:
  A student proposes finding the best-fitting line by minimizing $\displaystyle\sum_{i=1}^n e_i$ instead of $\displaystyle\sum_{i=1}^n e_i^2$. Explain why this approach fails.
 
 ::: {.fragment}
-Minimizing $\sum e_i$ fails because positive and negative residuals cancel out. In fact, one of the properties of OLS residuals is that $\sum e_i = 0$ **always** — so this criterion places no constraint on the line at all and cannot produce a unique fit.
+Minimizing $\sum e_i$ fails because positive and negative residuals cancel out. 
 
 Squaring the residuals:
 
 - prevents cancellation
 - penalizes large errors more heavily
-- produces a **unique, well-defined solution**
+
 :::
 
 ---
@@ -56,7 +56,7 @@ Squaring the residuals:
 ::: {.fragment}
 **(b)** An app uses a patient's age, weight, and exercise level to estimate their resting heart rate.
 
-→ **Prediction.** The goal is an accurate individual estimate — the coefficient values are not the focus.
+→ **Prediction.** The goal is an accurate individual estimate where the coefficient values are not the focus.
 :::
 
 ---
@@ -156,7 +156,6 @@ By the end of today you will be able to:
 - Derive the sampling distributions of $\widehat{\beta}_0$ and $\widehat{\beta}_1$ under the normality assumption
 - Construct and interpret confidence intervals for $\beta_0$ and $\beta_1$
 - Conduct two-sided and one-sided hypothesis tests for $\beta_0$ and $\beta_1$
-- Construct and interpret confidence intervals and hypothesis tests for $\beta_0$ and $\beta_1$
 :::
 
 ---
@@ -184,7 +183,7 @@ We used MLE to show:
 
 The OLS slope can be written as a **weighted sum of the $Y_i$'s**:
 
-$$\widehat{\beta}_1 = \sum_{i=1}^n c_i Y_i, \qquad c_i = \frac{X_i - \bar{X}}{S_{xx}}, \quad S_{xx} = \sum_{i=1}^n (X_i - \bar{X})^2$$
+$$\widehat{\beta}_1 = \sum_{i=1}^n a_i Y_i, \qquad a_i = \frac{X_i - \bar{X}}{S_{xx}}, \quad S_{xx} = \sum_{i=1}^n (X_i - \bar{X})^2$$
 
 Since each $Y_i \sim N(\beta_0 + \beta_1 X_i, \sigma^2)$ and a **linear combination of independent normals is normal**, $\widehat{\beta}_1$ is normal.
 
@@ -196,7 +195,12 @@ $$\boxed{\widehat{\beta}_1 \sim N\!\left(\beta_1,\ \frac{\sigma^2}{S_{xx}}\right
 
 ---
 
-## From Normal to $t$: The Problem {.smaller}
+## From Normal to $t$ 
+::: {style="font-size: 0.55em;"}
+
+
+**Standardization:** subtract the mean and divide by the standard deviation:
+$$Z = \frac{X - \mu}{\sigma}$$
 
 Standardizing $\widehat{\beta}_1$ gives a standard normal:
 
@@ -211,22 +215,80 @@ Recall from last lecture: $T = Z / (V/k)^{1/2}$ where $Z \sim N(0,1)$ and $V \si
 
 $$\frac{\text{RSS}}{\sigma^2} \sim \chi^2_{n-2} \quad \text{and is independent of } \widehat{\beta}_0 \text{ and } \widehat{\beta}_1$$
 :::
+:::
+---
+
+## From Normal to $t$: Putting It Together (Steps 1–3)
+::: {style="font-size: 0.55em;"}
+
+
+**Step 1:** Write the test statistic we *want* — the standardized slope but with $\sigma^2$ replaced by MSE:
+
+<div style="height: 3em;"></div>
+
+**Step 2:** Divide numerator and denominator by $\sigma / S_{xx}^{1/2}$ to introduce the standard normal piece in the numerator:
+
+<div style="height: 3em;"></div>
+
+**Step 3:** Substitute $\text{MSE} = \text{RSS}/(n-2)$ into the denominator and rearrange to expose the $\chi^2$ piece:
+
+<div style="height: 2em;"></div>
+
+:::
 
 ---
 
-## From Normal to $t$: Putting It Together {.smaller}
+## From Normal to $t$: Putting It Together (Steps 4–5)
+::: {style="font-size: 0.55em;"}
 
-We have two pieces:
+Picking up where we left off:
 
-- $\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma / S_{xx}^{1/2}} \sim N(0,1)$ — the standardized slope
-- $\dfrac{\text{RSS}}{\sigma^2} \sim \chi^2_{n-2}$, independent of $\widehat{\beta}_1$ — the chi-squared denominator
+$$\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}}}{\left(\dfrac{\text{RSS}/\sigma^2}{n-2}\right)^{1/2}}$$
 
-::: {.fragment}
-Write the statistic as a ratio and substitute each piece:
+**Step 4:** Label what each piece is — identify the numerator and denominator distributions:
 
-$$\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}}}{\sqrt{\dfrac{\text{RSS}/\sigma^2}{n-2}}} = \frac{N(0,1)}{\left(\chi^2_{n-2}/(n-2)\right)^{1/2}} \sim t_{n-2}$$
+<div style="height: 3em;"></div>
 
-The $\sigma$'s cancel between numerator and denominator; the $\chi^2_{n-2}$ structure comes from RSS; and independence of RSS and $\widehat{\beta}_1$ makes this exactly $t_{n-2}$.
+**Step 5:** Apply the definition of the $t$ distribution and state the result:
+
+<div style="height: 3em;"></div>
+
+:::
+
+---
+
+## From Normal to $t$: Putting It Together (Solution, Steps 1–3)
+::: {style="font-size: 0.60em;"}
+
+
+**Step 1:** The statistic we want — replace unknown $\sigma$ with $\sqrt{\text{MSE}}$:
+
+$$\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}}$$
+
+**Step 2:** Divide numerator and denominator by $\sigma/S_{xx}^{1/2}$:
+
+$$\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}}}{\dfrac{(\text{MSE}/S_{xx})^{1/2}}{\sigma/S_{xx}^{1/2}}} = \frac{\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}}}{\left(\dfrac{\text{MSE}}{\sigma^2}\right)^{1/2}}$$
+
+
+
+:::
+
+---
+
+## From Normal to $t$: Putting It Together (Solution, Steps 3–5)
+::: {style="font-size: 0.47em;"}
+
+**Step 3:** Substitute $\text{MSE} = \text{RSS}/(n-2)$ to expose the $\chi^2$ piece:
+
+$$= \frac{\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}}}{\left(\dfrac{\text{RSS}/\sigma^2}{n-2}\right)^{1/2}}$$
+**Step 4:** Label each piece — numerator $\sim N(0,1)$; denominator $\sim \left(\chi^2_{n-2}/(n-2)\right)^{1/2}$, independent of numerator:
+
+$$\text{Numerator: } \frac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}} \sim N(0,1) \qquad \text{Denominator: } \sqrt{\frac{\text{RSS}/\sigma^2}{n-2}} \sim \sqrt{\frac{\chi^2_{n-2}}{n-2}}$$
+
+**Step 5:** By the definition of the $t$ distribution, $T = Z / \sqrt{V/k}$ where $Z \sim N(0,1)$, $V \sim \chi^2_k$, independent:
+
+$$\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} \sim t_{n-2}$$
+
 :::
 
 ---
@@ -349,19 +411,13 @@ $$\widehat{\beta}_1 \;\pm\; t_{1-\alpha/2,\, n-2}\left(\frac{\text{MSE}}{S_{xx}}
 
 **Correct interpretation:** If we repeated the study many times, $100(1-\alpha)\%$ of the resulting intervals would contain $\beta_1$.
 
+**Note:** Always state your $\alpha$ level (equivalently, your confidence level) when reporting an interval. "We are 95% confident..." means $\alpha = 0.05$; without this, the interval has no context.
+
 ::: {.fragment}
 **Common mistake:** "There is a 95% probability that $\beta_1$ is in this interval." — $\beta_1$ is a fixed (unknown) constant, not random; it either is or isn't in any given interval.
 :::
 
-::: {.fragment}
-**What makes the interval wider or narrower?**
 
-::: {.incremental}
-- Larger **MSE** → noisier data → wider CI
-- Larger **$S_{xx}$** → more spread in $X$ → better slope estimate → narrower CI
-- Larger **$n$** → smaller $t$ critical value → narrower CI
-:::
-:::
 
 ::: {.fragment}
 **Practical use:** If the CI for $\beta_1$ **does not contain 0**, we have evidence that $X$ is a useful linear predictor of $Y$ at the chosen significance level.
@@ -422,6 +478,8 @@ $$1.6 \;\pm\; 3.182 \times 0.383 \;=\; 1.6 \;\pm\; 1.22 \;=\; (0.38,\ 2.82)$$
 
 ::: {.fragment}
 **Conclusion:** The interval $(0.38,\ 2.82)$ does not contain 0, so at $\alpha = 0.05$ there is evidence that sunlight is a useful linear predictor of plant height.
+
+We are 95% confident that each additional hour of sunlight is associated with an increase in plant height of between **0.38 and 2.82 cm**, on average.
 :::
 
 ---
@@ -452,20 +510,6 @@ $Y$ is **independent of** $X$ if and only if $\beta_1 = 0$. Testing $H_0: \beta_
 
 $$t^* = \frac{\widehat{\beta}_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{\widehat{\beta}_1}{\text{SE}(\widehat{\beta}_1)}$$
 
-::: {.fragment}
-**This is exactly what R reports under `summary(lm(...))`:**
-
-```{r}
-#| echo: true
-#| eval: true
-fit <- lm(mpg ~ wt, data = mtcars)
-summary(fit)$coefficients
-```
-:::
-
-::: {.fragment}
-The `t value` column is $\widehat{\beta}/\text{SE}(\widehat{\beta})$. The `Pr(>|t|)` column is the two-sided $p$-value. A small $p$-value is evidence against $H_0: \beta_1 = 0$.
-:::
 
 ---
 
@@ -474,22 +518,6 @@ The `t value` column is $\widehat{\beta}/\text{SE}(\widehat{\beta})$. The `Pr(>|
 Using the same sunlight–plant height data ($n = 5$, $\widehat{\beta}_1 = 1.6$, $S_{xx} = 10$, $\text{MSE} = 1.47$):
 
 **Task:** Test $H_0: \beta_1 = 0$ vs. $H_1: \beta_1 \neq 0$ at $\alpha = 0.05$.
-
-```{r}
-#| echo: false
-#| eval: true
-countdown::countdown(
-  minutes = 3,
-  play_sound = TRUE,
-  color_border              = "#FEBC11",
-  color_text                = "#003660",
-  color_running_background  = "#003660",
-  color_running_text        = "#FFFFFF",
-  color_finished_background = "#FEBC11",
-  color_finished_text       = "#003660",
-  font_size = "2em",
-)
-```
 
 ::: {.fragment}
 **Step 1:** Compute the test statistic:
@@ -515,7 +543,9 @@ Reject $H_0$.
 
 A nutritionist believes that each additional gram of daily protein intake increases resting metabolic rate by **more than 2 calories/day**. She fits a regression on $n = 20$ participants and obtains $\widehat{\beta}_1 = 2.8$, $S_{xx} = 500$, $\text{MSE} = 9$.
 
-**Task:** Test $H_0: \beta_1 = 2$ vs. $H_1: \beta_1 > 2$ at $\alpha = 0.05$.
+**Pre-computed:** $t_{0.95,\,18} = 1.734$
+
+**Task:** Test $H_0: \beta_1 = 2$ vs. $H_1: \beta_1 > 2$ at $\alpha = 0.05$. Compute the test statistic, compare to the critical value, and state a conclusion in context.
 
 ```{r}
 #| echo: false
@@ -533,61 +563,16 @@ countdown::countdown(
 )
 ```
 
-::: {.fragment}
-**Step 1:** Compute $\text{SE}(\widehat{\beta}_1) = (\text{MSE}/S_{xx})^{1/2} = (9/500)^{1/2} \approx 0.134$
+**Step 1:** Compute $\text{SE}(\widehat{\beta}_1) = (\text{MSE}/S_{xx})^{1/2}$ and the test statistic $t^*$:
 
-$$t^* = \frac{\widehat{\beta}_1 - \beta_{10}}{(\text{MSE}/S_{xx})^{1/2}} = \frac{2.8 - 2}{0.134} \approx 5.97$$
-:::
+<div style="height: 2.5em;"></div>
 
-::: {.fragment}
-**Step 2:** Right-sided test — compare to $t_{0.95,\,18} = 1.734$:
+**Step 2:** Compare $t^*$ to the critical value and state a conclusion in context:
 
-$$t^* = 5.97 > 1.734 \quad \Rightarrow \quad \text{Reject } H_0$$
-
-**Conclusion:** At $\alpha = 0.05$, there is sufficient evidence that each additional gram of protein increases metabolic rate by more than 2 calories/day.
-:::
+<div style="height: 2.5em;"></div>
 
 ---
 
-## Practice: One-Sided Test ($H_1: \beta_1 < \beta_{10}$) 
-::: {style="font-size: 0.60em;"}
-
-
-An engineer claims a new insulation material reduces heat loss by **fewer than 3 watts per cm of thickness**. A regression on $n = 15$ panels gives $\widehat{\beta}_1 = -2.1$, $S_{xx} = 200$, $\text{MSE} = 4$.
-
-**Task:** Test $H_0: \beta_1 = -3$ vs. $H_1: \beta_1 > -3$ at $\alpha = 0.05$.
-
-```{r}
-#| echo: false
-#| eval: true
-countdown::countdown(
-  minutes = 3,
-  play_sound = TRUE,
-  color_border              = "#FEBC11",
-  color_text                = "#003660",
-  color_running_background  = "#003660",
-  color_running_text        = "#FFFFFF",
-  color_finished_background = "#FEBC11",
-  color_finished_text       = "#003660",
-  font_size = "2em",
-)
-```
-
-::: {.fragment}
-**Step 1:** Compute $\text{SE}(\widehat{\beta}_1) = (4/200)^{1/2} = 0.141$
-
-$$t^* = \frac{-2.1 - (-3)}{0.141} = \frac{0.9}{0.141} \approx 6.38$$
-:::
-
-::: {.fragment}
-**Step 2:** Right-sided test — compare to $t_{0.95,\,13} = 1.771$:
-
-$$t^* = 6.38 > 1.771 \quad \Rightarrow \quad \text{Reject } H_0$$
-
-**Conclusion:** At $\alpha = 0.05$, there is sufficient evidence that heat loss reduction per cm is less than 3 watts (i.e., the slope is greater than $-3$).
-:::
-:::
----
 
 ## Sampling Distribution of $\widehat{\beta}_0$ {.smaller}
 
@@ -614,12 +599,33 @@ $$\frac{\widehat{\beta}_0 - \beta_0}{\sigma\left(\dfrac{1}{n} + \dfrac{\bar{X}^2
 $$\frac{\widehat{\beta}_0 - \beta_0}{\left[\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}} = \frac{N(0,1)}{\left(\chi^2_{n-2}/(n-2)\right)^{1/2}} \sim t_{n-2}$$
 :::
 
+:::
+---
+
+## Confidence Interval and Hypothesis Test for $\beta_0$ 
+::: {style="font-size: 0.42em;"}
+
+
+Let $\text{SE}(\widehat{\beta}_0) = \left[\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}$
+
+**Confidence interval:** A $100(1-\alpha)\%$ CI for $\beta_0$:
+
+$$\widehat{\beta}_0 \;\pm\; t_{1-\alpha/2,\,n-2} \cdot \text{SE}(\widehat{\beta}_0)$$
+
 ::: {.fragment}
-**Step 3:** A $100(1-\alpha)\%$ confidence interval for $\beta_0$:
+**Hypothesis test:** To test $H_0: \beta_0 = \beta_{00}$ vs. $H_1: \beta_0 \neq \beta_{00}$ (or one-sided), compute:
 
-$$\widehat{\beta}_0 \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}$$
+$$t^* = \frac{\widehat{\beta}_0 - \beta_{00}}{\text{SE}(\widehat{\beta}_0)} \sim t_{n-2} \text{ under } H_0$$
 
-Hypothesis tests work exactly as they do for $\beta_1$.
+::: {.fragment}
+**Decision rules at significance level $\alpha$:**
+
+| Hypotheses | Reject $H_0$ if |
+|:---|:---|
+| $H_1: \beta_1 \neq \beta_{10}$ (two-sided) | $|t^*| > t_{1-\alpha/2,\, n-2}$ |
+| $H_1: \beta_1 > \beta_{10}$ (right-sided) | $t^* > t_{1-\alpha,\, n-2}$ |
+| $H_1: \beta_1 < \beta_{10}$ (left-sided) | $t^* < -t_{1-\alpha,\, n-2}$ |
+:::
 :::
 :::
 ---
@@ -689,8 +695,8 @@ b1_hat + c(-1, 1) * t_crit * se_b1
 
 ::: {.incremental}
 - **Sampling distribution of $\widehat{\beta}_1$:** $N(\beta_1, \sigma^2/S_{xx})$; replacing $\sigma^2$ with MSE yields a $t_{n-2}$ distribution
-- **CI for $\beta_1$:** $\widehat{\beta}_1 \pm t_{1-\alpha/2,\,n-2}(\text{MSE}/S_{xx})^{1/2}$; gets narrower with larger $n$ or more spread in $X$
-- **Testing $H_0: \beta_1 = 0$** checks whether $X$ is useful at all; the $t$-value and $p$-value in `summary(lm(...))` are exactly this test
+- **CI for $\beta_1$:** $\widehat{\beta}_1 \pm t_{1-\alpha/2,\,n-2}(\text{MSE}/S_{xx})^{1/2}$
+- **Testing $H_0: \beta_1 = 0$** checks whether $X$ is useful at all
 - **Inference for $\beta_0$** follows the same structure; note the intercept may not be meaningful when $X = 0$ is outside the data range
 :::
 
