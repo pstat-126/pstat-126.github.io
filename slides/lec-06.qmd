@@ -228,7 +228,7 @@ $$\frac{\text{RSS}}{\sigma^2} \sim \chi^2_{n-2} \quad \text{and is independent o
 
 **Step 2:** Divide numerator and denominator by $\sigma / S_{xx}^{1/2}$ to introduce the standard normal piece in the numerator:
 
-<div style="height: 3em;"></div>
+<div style="height: 5em;"></div>
 
 **Step 3:** Substitute $\text{MSE} = \text{RSS}/(n-2)$ into the denominator and rearrange to expose the $\chi^2$ piece:
 
@@ -241,13 +241,10 @@ $$\frac{\text{RSS}}{\sigma^2} \sim \chi^2_{n-2} \quad \text{and is independent o
 ## From Normal to $t$: Putting It Together (Steps 4–5)
 ::: {style="font-size: 0.55em;"}
 
-Picking up where we left off:
-
-$$\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}}}{\left(\dfrac{\text{RSS}/\sigma^2}{n-2}\right)^{1/2}}$$
 
 **Step 4:** Label what each piece is — identify the numerator and denominator distributions:
 
-<div style="height: 3em;"></div>
+<div style="height: 6em;"></div>
 
 **Step 5:** Apply the definition of the $t$ distribution and state the result:
 

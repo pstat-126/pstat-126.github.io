@@ -2039,7 +2039,7 @@
     "href": "slides/lec-06.html#from-normal-to-t-putting-it-together-steps-45",
     "title": "Lecture 6: Inference in Regression",
     "section": "From Normal to \\(t\\): Putting It Together (Steps 4–5)",
-    "text": "From Normal to \\(t\\): Putting It Together (Steps 4–5)\n\nPicking up where we left off:\n\\[\\frac{\\widehat{\\beta}_1 - \\beta_1}{(\\text{MSE}/S_{xx})^{1/2}} = \\frac{\\dfrac{\\widehat{\\beta}_1 - \\beta_1}{\\sigma/S_{xx}^{1/2}}}{\\left(\\dfrac{\\text{RSS}/\\sigma^2}{n-2}\\right)^{1/2}}\\]\nStep 4: Label what each piece is — identify the numerator and denominator distributions:\n\n\n\nStep 5: Apply the definition of the \\(t\\) distribution and state the result:"
+    "text": "From Normal to \\(t\\): Putting It Together (Steps 4–5)\n\nStep 4: Label what each piece is — identify the numerator and denominator distributions:\n\n\n\nStep 5: Apply the definition of the \\(t\\) distribution and state the result:"
   },
   {
     "objectID": "slides/lec-06.html#from-normal-to-t-putting-it-together-solution-steps-35",
