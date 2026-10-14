@@ -68,9 +68,16 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
     <tr>
       <td class="date-cell">Mon, Oct 12</td>
       <td class="topic-cell">Inference in Regression
-        <span class="sub-topic">Hypothesis tests and confidence intervals for OLS estimates</span></td>
+        <span class="sub-topic">Maximum Likelihood Estimation</span></td>
       <td><a class="badge-slide" href="slides/lec-05.html">Slides</a></td>
       <td><a class="badge-lab" href="labs/lab-02.html">Lab 2</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="date-cell">Wed, Oct 14</td>
+      <td class="topic-cell">Inference in Regression
+        <span class="sub-topic">Hypothesis tests and confidence intervals for OLS estimates</span></td>
+      <td><a class="badge-slide" href="slides/lec-06.html">Slides</a></td>
       <td></td>
     </tr>
        <tr class="due-row">
