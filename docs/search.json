@@ -2054,5 +2054,12 @@
     "title": "Lecture 6: Inference in Regression",
     "section": "Confidence Interval and Hypothesis Test for \\(\\beta_0\\)",
     "text": "Confidence Interval and Hypothesis Test for \\(\\beta_0\\)\n\nLet \\(\\text{SE}(\\widehat{\\beta}_0) = \\left[\\text{MSE}\\!\\left(\\dfrac{1}{n} + \\dfrac{\\bar{X}^2}{S_{xx}}\\right)\\right]^{1/2}\\)\nConfidence interval: A \\(100(1-\\alpha)\\%\\) CI for \\(\\beta_0\\):\n\\[\\widehat{\\beta}_0 \\;\\pm\\; t_{1-\\alpha/2,\\,n-2} \\cdot \\text{SE}(\\widehat{\\beta}_0)\\]\n\nHypothesis test: To test \\(H_0: \\beta_0 = \\beta_{00}\\) vs. \\(H_1: \\beta_0 \\neq \\beta_{00}\\) (or one-sided), compute:\n\\[t^* = \\frac{\\widehat{\\beta}_0 - \\beta_{00}}{\\text{SE}(\\widehat{\\beta}_0)} \\sim t_{n-2} \\text{ under } H_0\\]\n\nDecision rules at significance level \\(\\alpha\\):\n\n\n\n\n\n\n\nHypotheses\nReject \\(H_0\\) if\n\n\n\n\n\\(H_1: \\beta_1 \\neq \\beta_{10}\\) (two-sided)\n\\(|t^*| &gt; t_{1-\\alpha/2,\\, n-2}\\)\n\n\n\\(H_1: \\beta_1 &gt; \\beta_{10}\\) (right-sided)\n\\(t^* &gt; t_{1-\\alpha,\\, n-2}\\)\n\n\n\\(H_1: \\beta_1 &lt; \\beta_{10}\\) (left-sided)\n\\(t^* &lt; -t_{1-\\alpha,\\, n-2}\\)"
+  },
+  {
+    "objectID": "slides/lec-06.html#rejection-regions-visualized",
+    "href": "slides/lec-06.html#rejection-regions-visualized",
+    "title": "Lecture 6: Inference in Regression",
+    "section": "Rejection Regions Visualized",
+    "text": "Rejection Regions Visualized"
   }
 ]
