@@ -184,12 +184,12 @@ We used MLE to show:
 
 The OLS slope can be written as a **weighted sum of the $Y_i$'s**:
 
-$$\widehat{\beta}_1 = \sum_{i=1}^n \underbrace{\frac{X_i - \bar{X}}{S_{xx}}}_{c_i} Y_i \qquad \text{where } S_{xx} = \sum_{i=1}^n (X_i - \bar{X})^2$$
+$$\widehat{\beta}_1 = \sum_{i=1}^n c_i Y_i, \qquad c_i = \frac{X_i - \bar{X}}{S_{xx}}, \quad S_{xx} = \sum_{i=1}^n (X_i - \bar{X})^2$$
+
+Since each $Y_i \sim N(\beta_0 + \beta_1 X_i, \sigma^2)$ and a **linear combination of independent normals is normal**, $\widehat{\beta}_1$ is normal.
 
 ::: {.fragment}
-Since each $Y_i \sim N(\beta_0 + \beta_1 X_i, \sigma^2)$, and a **linear combination of independent normals is normal**, we need only find the mean and variance.
-
-We showed earlier: $E(\widehat{\beta}_1) = \beta_1$ and $\text{Var}(\widehat{\beta}_1) = \dfrac{\sigma^2}{S_{xx}}$
+We previously showed: $E(\widehat{\beta}_1) = \beta_1$ and $\text{Var}(\widehat{\beta}_1) = \dfrac{\sigma^2}{S_{xx}}$
 
 $$\boxed{\widehat{\beta}_1 \sim N\!\left(\beta_1,\ \frac{\sigma^2}{S_{xx}}\right)}$$
 :::
@@ -222,9 +222,11 @@ We have two pieces:
 - $\dfrac{\text{RSS}}{\sigma^2} \sim \chi^2_{n-2}$, independent of $\widehat{\beta}_1$ — the chi-squared denominator
 
 ::: {.fragment}
-Substituting $\text{MSE} = \text{RSS}/(n-2)$ for $\sigma^2$ and applying the $t$-distribution definition ($T = Z / (V/k)^{1/2}$):
+Write the statistic as a ratio and substitute each piece:
 
-$$\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{N(0,1)}{(\chi^2_{n-2}/(n-2))^{1/2}} \sim t_{n-2}$$
+$$\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}}}{\sqrt{\dfrac{\text{RSS}/\sigma^2}{n-2}}} = \frac{N(0,1)}{\left(\chi^2_{n-2}/(n-2)\right)^{1/2}} \sim t_{n-2}$$
+
+The $\sigma$'s cancel between numerator and denominator; the $\chi^2_{n-2}$ structure comes from RSS; and independence of RSS and $\widehat{\beta}_1$ makes this exactly $t_{n-2}$.
 :::
 
 ---
@@ -587,22 +589,33 @@ $$t^* = 6.38 > 1.771 \quad \Rightarrow \quad \text{Reject } H_0$$
 :::
 ---
 
-## Inference for $\beta_0$ 
-::: {style="font-size: 0.55em;"}
+## Sampling Distribution of $\widehat{\beta}_0$ {.smaller}
 
-
-By the same argument, $\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1 \bar{X}$ is also a linear combination of the $Y_i$'s:
-
-$$\widehat{\beta}_0 \sim N\!\left(\beta_0,\ \sigma^2\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{xx}}\right)\right)$$
+Since $\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1 \bar{X}$, it is also a **linear combination of the $Y_i$'s**, so it is normal.
 
 ::: {.fragment}
-It follows that:
+We previously showed: $E(\widehat{\beta}_0) = \beta_0$ and $\text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)$
 
-$$\frac{\widehat{\beta}_0 - \beta_0}{\left[\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}} \sim t_{n-2}$$
+$$\boxed{\widehat{\beta}_0 \sim N\!\left(\beta_0,\ \sigma^2\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{xx}}\right)\right)}$$
+:::
+
+---
+
+## Inference for $\beta_0$
+::: {style="font-size: 0.45em;"}
+
+**Step 1:** Standardize $\widehat{\beta}_0$ using its known variance $\sigma^2\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)$:
+
+$$\frac{\widehat{\beta}_0 - \beta_0}{\sigma\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)^{1/2}} \sim N(0, 1)$$
+
+::: {.fragment}
+**Step 2:** $\sigma^2$ is unknown. Replace it with $\text{MSE} = \text{RSS}/(n-2)$. Since $\text{RSS}/\sigma^2 \sim \chi^2_{n-2}$ and is independent of $\widehat{\beta}_0$:
+
+$$\frac{\widehat{\beta}_0 - \beta_0}{\left[\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}} = \frac{N(0,1)}{\left(\chi^2_{n-2}/(n-2)\right)^{1/2}} \sim t_{n-2}$$
 :::
 
 ::: {.fragment}
-A $100(1-\alpha)\%$ confidence interval for $\beta_0$:
+**Step 3:** A $100(1-\alpha)\%$ confidence interval for $\beta_0$:
 
 $$\widehat{\beta}_0 \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}$$
 

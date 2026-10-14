@@ -1626,7 +1626,7 @@
     "href": "slides/lec-06.html#sampling-distribution-of-widehatbeta_1",
     "title": "Lecture 6: Inference in Regression",
     "section": "Sampling Distribution of \\(\\widehat{\\beta}_1\\)",
-    "text": "Sampling Distribution of \\(\\widehat{\\beta}_1\\)\nThe OLS slope can be written as a weighted sum of the \\(Y_i\\)’s:\n\\[\\widehat{\\beta}_1 = \\sum_{i=1}^n \\underbrace{\\frac{X_i - \\bar{X}}{S_{xx}}}_{c_i} Y_i \\qquad \\text{where } S_{xx} = \\sum_{i=1}^n (X_i - \\bar{X})^2\\]\n\nSince each \\(Y_i \\sim N(\\beta_0 + \\beta_1 X_i, \\sigma^2)\\), and a linear combination of independent normals is normal, we need only find the mean and variance.\nWe showed earlier: \\(E(\\widehat{\\beta}_1) = \\beta_1\\) and \\(\\text{Var}(\\widehat{\\beta}_1) = \\dfrac{\\sigma^2}{S_{xx}}\\)\n\\[\\boxed{\\widehat{\\beta}_1 \\sim N\\!\\left(\\beta_1,\\ \\frac{\\sigma^2}{S_{xx}}\\right)}\\]"
+    "text": "Sampling Distribution of \\(\\widehat{\\beta}_1\\)\nThe OLS slope can be written as a weighted sum of the \\(Y_i\\)’s:\n\\[\\widehat{\\beta}_1 = \\sum_{i=1}^n c_i Y_i, \\qquad c_i = \\frac{X_i - \\bar{X}}{S_{xx}}, \\quad S_{xx} = \\sum_{i=1}^n (X_i - \\bar{X})^2\\]\nSince each \\(Y_i \\sim N(\\beta_0 + \\beta_1 X_i, \\sigma^2)\\) and a linear combination of independent normals is normal, \\(\\widehat{\\beta}_1\\) is normal.\n\nWe previously showed: \\(E(\\widehat{\\beta}_1) = \\beta_1\\) and \\(\\text{Var}(\\widehat{\\beta}_1) = \\dfrac{\\sigma^2}{S_{xx}}\\)\n\\[\\boxed{\\widehat{\\beta}_1 \\sim N\\!\\left(\\beta_1,\\ \\frac{\\sigma^2}{S_{xx}}\\right)}\\]"
   },
   {
     "objectID": "slides/lec-06.html#from-normal-to-t-the-problem",
@@ -1675,7 +1675,7 @@
     "href": "slides/lec-06.html#inference-for-beta_0",
     "title": "Lecture 6: Inference in Regression",
     "section": "Inference for \\(\\beta_0\\)",
-    "text": "Inference for \\(\\beta_0\\)\n\nBy the same argument, \\(\\widehat{\\beta}_0 = \\bar{Y} - \\widehat{\\beta}_1 \\bar{X}\\) is also a linear combination of the \\(Y_i\\)’s:\n\\[\\widehat{\\beta}_0 \\sim N\\!\\left(\\beta_0,\\ \\sigma^2\\!\\left(\\frac{1}{n} + \\frac{\\bar{X}^2}{S_{xx}}\\right)\\right)\\]\n\nIt follows that:\n\\[\\frac{\\widehat{\\beta}_0 - \\beta_0}{\\left[\\text{MSE}\\!\\left(\\dfrac{1}{n} + \\dfrac{\\bar{X}^2}{S_{xx}}\\right)\\right]^{1/2}} \\sim t_{n-2}\\]\n\n\nA \\(100(1-\\alpha)\\%\\) confidence interval for \\(\\beta_0\\):\n\\[\\widehat{\\beta}_0 \\;\\pm\\; t_{1-\\alpha/2,\\, n-2}\\left[\\text{MSE}\\!\\left(\\frac{1}{n} + \\frac{\\bar{X}^2}{S_{xx}}\\right)\\right]^{1/2}\\]\nHypothesis tests work exactly as they do for \\(\\beta_1\\)."
+    "text": "Inference for \\(\\beta_0\\)\n\nStep 1: Standardize \\(\\widehat{\\beta}_0\\) using its known variance \\(\\sigma^2\\!\\left(\\dfrac{1}{n} + \\dfrac{\\bar{X}^2}{S_{xx}}\\right)\\):\n\\[\\frac{\\widehat{\\beta}_0 - \\beta_0}{\\sigma\\left(\\dfrac{1}{n} + \\dfrac{\\bar{X}^2}{S_{xx}}\\right)^{1/2}} \\sim N(0, 1)\\]\n\nStep 2: \\(\\sigma^2\\) is unknown. Replace it with \\(\\text{MSE} = \\text{RSS}/(n-2)\\). Since \\(\\text{RSS}/\\sigma^2 \\sim \\chi^2_{n-2}\\) and is independent of \\(\\widehat{\\beta}_0\\):\n\\[\\frac{\\widehat{\\beta}_0 - \\beta_0}{\\left[\\text{MSE}\\!\\left(\\dfrac{1}{n} + \\dfrac{\\bar{X}^2}{S_{xx}}\\right)\\right]^{1/2}} = \\frac{N(0,1)}{\\left(\\chi^2_{n-2}/(n-2)\\right)^{1/2}} \\sim t_{n-2}\\]\n\n\nStep 3: A \\(100(1-\\alpha)\\%\\) confidence interval for \\(\\beta_0\\):\n\\[\\widehat{\\beta}_0 \\;\\pm\\; t_{1-\\alpha/2,\\, n-2}\\left[\\text{MSE}\\!\\left(\\frac{1}{n} + \\frac{\\bar{X}^2}{S_{xx}}\\right)\\right]^{1/2}\\]\nHypothesis tests work exactly as they do for \\(\\beta_1\\)."
   },
   {
     "objectID": "slides/lec-06.html#inference-in-r",
@@ -1766,7 +1766,7 @@
     "href": "slides/lec-06.html#from-normal-to-t-putting-it-together",
     "title": "Lecture 6: Inference in Regression",
     "section": "From Normal to \\(t\\): Putting It Together",
-    "text": "From Normal to \\(t\\): Putting It Together\nWe have two pieces:\n\n\\(\\dfrac{\\widehat{\\beta}_1 - \\beta_1}{\\sigma / S_{xx}^{1/2}} \\sim N(0,1)\\) — the standardized slope\n\\(\\dfrac{\\text{RSS}}{\\sigma^2} \\sim \\chi^2_{n-2}\\), independent of \\(\\widehat{\\beta}_1\\) — the chi-squared denominator\n\n\nSubstituting \\(\\text{MSE} = \\text{RSS}/(n-2)\\) for \\(\\sigma^2\\) and applying the \\(t\\)-distribution definition (\\(T = Z / (V/k)^{1/2}\\)):\n\\[\\frac{\\widehat{\\beta}_1 - \\beta_1}{(\\text{MSE}/S_{xx})^{1/2}} = \\frac{N(0,1)}{(\\chi^2_{n-2}/(n-2))^{1/2}} \\sim t_{n-2}\\]"
+    "text": "From Normal to \\(t\\): Putting It Together\nWe have two pieces:\n\n\\(\\dfrac{\\widehat{\\beta}_1 - \\beta_1}{\\sigma / S_{xx}^{1/2}} \\sim N(0,1)\\) — the standardized slope\n\\(\\dfrac{\\text{RSS}}{\\sigma^2} \\sim \\chi^2_{n-2}\\), independent of \\(\\widehat{\\beta}_1\\) — the chi-squared denominator\n\n\nWrite the statistic as a ratio and substitute each piece:\n\\[\\frac{\\widehat{\\beta}_1 - \\beta_1}{(\\text{MSE}/S_{xx})^{1/2}} = \\frac{\\dfrac{\\widehat{\\beta}_1 - \\beta_1}{\\sigma/S_{xx}^{1/2}}}{\\sqrt{\\dfrac{\\text{RSS}/\\sigma^2}{n-2}}} = \\frac{N(0,1)}{\\left(\\chi^2_{n-2}/(n-2)\\right)^{1/2}} \\sim t_{n-2}\\]\nThe \\(\\sigma\\)’s cancel between numerator and denominator; the \\(\\chi^2_{n-2}\\) structure comes from RSS; and independence of RSS and \\(\\widehat{\\beta}_1\\) makes this exactly \\(t_{n-2}\\)."
   },
   {
     "objectID": "slides/lec-06.html#refresher-confidence-intervals",
@@ -1984,5 +1984,12 @@
     "title": "Lecture 6: Inference in Regression",
     "section": "Practice: One-Sided Test (\\(H_1: \\beta_1 < \\beta_{10}\\))",
     "text": "Practice: One-Sided Test (\\(H_1: \\beta_1 &lt; \\beta_{10}\\))\n\nAn engineer claims a new insulation material reduces heat loss by fewer than 3 watts per cm of thickness. A regression on \\(n = 15\\) panels gives \\(\\widehat{\\beta}_1 = -2.1\\), \\(S_{xx} = 200\\), \\(\\text{MSE} = 4\\).\nTask: Test \\(H_0: \\beta_1 = -3\\) vs. \\(H_1: \\beta_1 &gt; -3\\) at \\(\\alpha = 0.05\\).\n\n\n\n\n\n\nStep 1: Compute \\(\\text{SE}(\\widehat{\\beta}_1) = (4/200)^{1/2} = 0.141\\)\n\\[t^* = \\frac{-2.1 - (-3)}{0.141} = \\frac{0.9}{0.141} \\approx 6.38\\]\n\n\nStep 2: Right-sided test — compare to \\(t_{0.95,\\,13} = 1.771\\):\n\\[t^* = 6.38 &gt; 1.771 \\quad \\Rightarrow \\quad \\text{Reject } H_0\\]\nConclusion: At \\(\\alpha = 0.05\\), there is sufficient evidence that heat loss reduction per cm is less than 3 watts (i.e., the slope is greater than \\(-3\\))."
+  },
+  {
+    "objectID": "slides/lec-06.html#sampling-distribution-of-widehatbeta_0",
+    "href": "slides/lec-06.html#sampling-distribution-of-widehatbeta_0",
+    "title": "Lecture 6: Inference in Regression",
+    "section": "Sampling Distribution of \\(\\widehat{\\beta}_0\\)",
+    "text": "Sampling Distribution of \\(\\widehat{\\beta}_0\\)\nSince \\(\\widehat{\\beta}_0 = \\bar{Y} - \\widehat{\\beta}_1 \\bar{X}\\), it is also a linear combination of the \\(Y_i\\)’s, so it is normal.\n\nWe previously showed: \\(E(\\widehat{\\beta}_0) = \\beta_0\\) and \\(\\text{Var}(\\widehat{\\beta}_0) = \\sigma^2\\!\\left(\\dfrac{1}{n} + \\dfrac{\\bar{X}^2}{S_{xx}}\\right)\\)\n\\[\\boxed{\\widehat{\\beta}_0 \\sim N\\!\\left(\\beta_0,\\ \\sigma^2\\!\\left(\\frac{1}{n} + \\frac{\\bar{X}^2}{S_{xx}}\\right)\\right)}\\]"
   }
 ]

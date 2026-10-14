@@ -386,10 +386,10 @@ Annie Adams
 <section id="sampling-distribution-of-widehatbeta_1" class="slide level2 smaller">
 <h2>Sampling Distribution of <span class="math inline">\(\widehat{\beta}_1\)</span></h2>
 <p>The OLS slope can be written as a <strong>weighted sum of the <span class="math inline">\(Y_i\)</span>’s</strong>:</p>
-<p><span class="math display">\[\widehat{\beta}_1 = \sum_{i=1}^n \underbrace{\frac{X_i - \bar{X}}{S_{xx}}}_{c_i} Y_i \qquad \text{where } S_{xx} = \sum_{i=1}^n (X_i - \bar{X})^2\]</span></p>
+<p><span class="math display">\[\widehat{\beta}_1 = \sum_{i=1}^n c_i Y_i, \qquad c_i = \frac{X_i - \bar{X}}{S_{xx}}, \quad S_{xx} = \sum_{i=1}^n (X_i - \bar{X})^2\]</span></p>
+<p>Since each <span class="math inline">\(Y_i \sim N(\beta_0 + \beta_1 X_i, \sigma^2)\)</span> and a <strong>linear combination of independent normals is normal</strong>, <span class="math inline">\(\widehat{\beta}_1\)</span> is normal.</p>
 <div class="fragment">
-<p>Since each <span class="math inline">\(Y_i \sim N(\beta_0 + \beta_1 X_i, \sigma^2)\)</span>, and a <strong>linear combination of independent normals is normal</strong>, we need only find the mean and variance.</p>
-<p>We showed earlier: <span class="math inline">\(E(\widehat{\beta}_1) = \beta_1\)</span> and <span class="math inline">\(\text{Var}(\widehat{\beta}_1) = \dfrac{\sigma^2}{S_{xx}}\)</span></p>
+<p>We previously showed: <span class="math inline">\(E(\widehat{\beta}_1) = \beta_1\)</span> and <span class="math inline">\(\text{Var}(\widehat{\beta}_1) = \dfrac{\sigma^2}{S_{xx}}\)</span></p>
 <p><span class="math display">\[\boxed{\widehat{\beta}_1 \sim N\!\left(\beta_1,\ \frac{\sigma^2}{S_{xx}}\right)}\]</span></p>
 </div>
 </section>
@@ -412,8 +412,9 @@ Annie Adams
 <li><span class="math inline">\(\dfrac{\text{RSS}}{\sigma^2} \sim \chi^2_{n-2}\)</span>, independent of <span class="math inline">\(\widehat{\beta}_1\)</span> — the chi-squared denominator</li>
 </ul>
 <div class="fragment">
-<p>Substituting <span class="math inline">\(\text{MSE} = \text{RSS}/(n-2)\)</span> for <span class="math inline">\(\sigma^2\)</span> and applying the <span class="math inline">\(t\)</span>-distribution definition (<span class="math inline">\(T = Z / (V/k)^{1/2}\)</span>):</p>
-<p><span class="math display">\[\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{N(0,1)}{(\chi^2_{n-2}/(n-2))^{1/2}} \sim t_{n-2}\]</span></p>
+<p>Write the statistic as a ratio and substitute each piece:</p>
+<p><span class="math display">\[\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} = \frac{\dfrac{\widehat{\beta}_1 - \beta_1}{\sigma/S_{xx}^{1/2}}}{\sqrt{\dfrac{\text{RSS}/\sigma^2}{n-2}}} = \frac{N(0,1)}{\left(\chi^2_{n-2}/(n-2)\right)^{1/2}} \sim t_{n-2}\]</span></p>
+<p>The <span class="math inline">\(\sigma\)</span>’s cancel between numerator and denominator; the <span class="math inline">\(\chi^2_{n-2}\)</span> structure comes from RSS; and independence of RSS and <span class="math inline">\(\widehat{\beta}_1\)</span> makes this exactly <span class="math inline">\(t_{n-2}\)</span>.</p>
 </div>
 </section>
 <section id="refresher-confidence-intervals" class="slide level2 smaller">
@@ -536,7 +537,7 @@ Annie Adams
 <p><strong>Task:</strong> Construct a 95% confidence interval for <span class="math inline">\(\beta_1\)</span>. Does sunlight appear to be a useful predictor?</p>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_caa58508" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:1em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_7201026b" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:1em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </div>
@@ -614,7 +615,7 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
 <p><strong>Task:</strong> Test <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_1 \neq 0\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_b94c6a4a" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_a5cd36ec" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 <div class="fragment">
@@ -636,7 +637,7 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
 <p><strong>Task:</strong> Test <span class="math inline">\(H_0: \beta_1 = 2\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_1 &gt; 2\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_2b0c33b2" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_ff06de45" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 <div class="fragment">
@@ -656,7 +657,7 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
 <p><strong>Task:</strong> Test <span class="math inline">\(H_0: \beta_1 = -3\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_1 &gt; -3\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_3cb44332" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_9dcbfb58" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 <div class="fragment">
@@ -670,17 +671,25 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
 </div>
 </div>
 </section>
+<section id="sampling-distribution-of-widehatbeta_0" class="slide level2 smaller">
+<h2>Sampling Distribution of <span class="math inline">\(\widehat{\beta}_0\)</span></h2>
+<p>Since <span class="math inline">\(\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1 \bar{X}\)</span>, it is also a <strong>linear combination of the <span class="math inline">\(Y_i\)</span>’s</strong>, so it is normal.</p>
+<div class="fragment">
+<p>We previously showed: <span class="math inline">\(E(\widehat{\beta}_0) = \beta_0\)</span> and <span class="math inline">\(\text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)\)</span></p>
+<p><span class="math display">\[\boxed{\widehat{\beta}_0 \sim N\!\left(\beta_0,\ \sigma^2\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{xx}}\right)\right)}\]</span></p>
+</div>
+</section>
 <section id="inference-for-beta_0" class="slide level2">
 <h2>Inference for <span class="math inline">\(\beta_0\)</span></h2>
-<div style="font-size: 0.55em;">
-<p>By the same argument, <span class="math inline">\(\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1 \bar{X}\)</span> is also a linear combination of the <span class="math inline">\(Y_i\)</span>’s:</p>
-<p><span class="math display">\[\widehat{\beta}_0 \sim N\!\left(\beta_0,\ \sigma^2\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{xx}}\right)\right)\]</span></p>
+<div style="font-size: 0.45em;">
+<p><strong>Step 1:</strong> Standardize <span class="math inline">\(\widehat{\beta}_0\)</span> using its known variance <span class="math inline">\(\sigma^2\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)\)</span>:</p>
+<p><span class="math display">\[\frac{\widehat{\beta}_0 - \beta_0}{\sigma\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)^{1/2}} \sim N(0, 1)\]</span></p>
 <div class="fragment">
-<p>It follows that:</p>
-<p><span class="math display">\[\frac{\widehat{\beta}_0 - \beta_0}{\left[\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}} \sim t_{n-2}\]</span></p>
+<p><strong>Step 2:</strong> <span class="math inline">\(\sigma^2\)</span> is unknown. Replace it with <span class="math inline">\(\text{MSE} = \text{RSS}/(n-2)\)</span>. Since <span class="math inline">\(\text{RSS}/\sigma^2 \sim \chi^2_{n-2}\)</span> and is independent of <span class="math inline">\(\widehat{\beta}_0\)</span>:</p>
+<p><span class="math display">\[\frac{\widehat{\beta}_0 - \beta_0}{\left[\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}} = \frac{N(0,1)}{\left(\chi^2_{n-2}/(n-2)\right)^{1/2}} \sim t_{n-2}\]</span></p>
 </div>
 <div class="fragment">
-<p>A <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval for <span class="math inline">\(\beta_0\)</span>:</p>
+<p><strong>Step 3:</strong> A <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval for <span class="math inline">\(\beta_0\)</span>:</p>
 <p><span class="math display">\[\widehat{\beta}_0 \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}\]</span></p>
 <p>Hypothesis tests work exactly as they do for <span class="math inline">\(\beta_1\)</span>.</p>
 </div>
