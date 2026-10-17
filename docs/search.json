@@ -1892,7 +1892,7 @@
     "href": "slides/lec-07.html#learning-objectives",
     "title": "Lecture 7: Prediction and Intervals",
     "section": "Learning Objectives",
-    "text": "Learning Objectives\nBy the end of today you will be able to:\n\n\nDistinguish between a CI for the mean response and a prediction interval for a new observation\nDerive the variance of the fitted value \\(\\widehat{Y}^*\\) at a new input \\(x^*\\)\nConstruct and interpret confidence intervals for mean response and prediction intervals\nExplain why prediction intervals do not collapse to a point as \\(n \\to \\infty\\)\nCompute and interpret both types of intervals in R"
+    "text": "Learning Objectives\nBy the end of today you will be able to:\n\n\nDistinguish between a CI for the mean response and a prediction interval for a new observation\nDerive the variance of the fitted value \\(\\widehat{Y}^*\\) at a new input \\(x^*\\)\nConstruct and interpret confidence intervals for mean response and prediction intervals\nExplain why prediction intervals do not collapse to a point as \\(n \\to \\infty\\)\nCompute and interpret both types of intervals in R\nPartition total variation into SSR and SSE and read an ANOVA table\nPerform the F-test for \\(H_0: \\beta_1 = 0\\) and connect it to the t-test\nCompute and interpret \\(R^2\\) and adjusted \\(R^2\\)"
   },
   {
     "objectID": "slides/lec-07.html#confidence-intervals-for-mean-response-and-prediction",
@@ -1906,7 +1906,7 @@
     "href": "slides/lec-07.html#two-forecasting-questions",
     "title": "Lecture 7: Prediction and Intervals",
     "section": "Two Forecasting Questions",
-    "text": "Two Forecasting Questions\nAfter fitting \\(\\widehat{Y} = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 X\\), we often want to say something about a new input value \\(x^*\\).\nThere are two fundamentally different questions:\n\nQuestion 1 — Mean response: &gt; “What is the average fuel efficiency for all cars weighing 3,500 lbs?”\nTargets \\(E(Y \\mid X = x^*) = \\beta_0 + \\beta_1 x^*\\) — a fixed (unknown) parameter.\n\\(\\longrightarrow\\) Confidence interval for mean response\n\n\nQuestion 2 — New individual observation: &gt; “How many mpg will this specific 3,500 lb car get?”\nTargets \\(Y^* = \\beta_0 + \\beta_1 x^* + \\varepsilon^*\\) — a random variable with its own noise.\n\\(\\longrightarrow\\) Prediction interval\n\n\nBoth are centered at the same point estimate \\(\\widehat{Y}^* = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x^*\\). They differ in what uncertainty they account for."
+    "text": "Two Forecasting Questions\nAfter fitting \\(\\widehat{Y} = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 X\\), we often want to say something about a new input value \\(x^*\\).\nThere are two fundamentally different questions:\n\nQuestion 1 — Mean response: &gt; “What is the average cancer mortality for all US states at 40° latitude?”\nTargets \\(E(Y \\mid X = x^*) = \\beta_0 + \\beta_1 x^*\\) — a fixed (unknown) parameter.\n\\(\\longrightarrow\\) Confidence interval for mean response\n\n\nQuestion 2 — New individual observation: &gt; “What will skin cancer mortality be in this specific state at 40° latitude?”\nTargets \\(Y^* = \\beta_0 + \\beta_1 x^* + \\varepsilon^*\\) — a random variable with its own noise.\n\\(\\longrightarrow\\) Prediction interval\n\n\nBoth are centered at the same point estimate \\(\\widehat{Y}^* = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x^*\\). They differ in what uncertainty they account for."
   },
   {
     "objectID": "slides/lec-07.html#variance-of-the-fitted-value-widehaty",
@@ -1927,14 +1927,14 @@
     "href": "slides/lec-07.html#two-sources-of-uncertainty-in-prediction",
     "title": "Lecture 7: Prediction and Intervals",
     "section": "Two Sources of Uncertainty in Prediction",
-    "text": "Two Sources of Uncertainty in Prediction\nFor a new observation \\(Y^* = \\beta_0 + \\beta_1 x^* + \\varepsilon^*\\), the prediction error decomposes as:\n\\[Y^* - \\widehat{Y}^* = \\underbrace{\\left[(\\beta_0 + \\beta_1 x^*) - \\widehat{Y}^*\\right]}_{\\text{estimation error}} + \\underbrace{\\varepsilon^*}_{\\text{new individual noise}}\\]\n\nThese are independent, so their variances add:\n\n\n\n\n\n\n\nSource\nVariance\n\n\n\n\nEstimation error in \\(\\widehat{Y}^*\\)\n\\(\\sigma^2\\!\\left(\\dfrac{1}{n} + \\dfrac{(x^*-\\bar{X})^2}{S_{xx}}\\right)\\)\n\n\nNew individual noise \\(\\varepsilon^*\\)\n\\(\\sigma^2\\)\n\n\nTotal\n\\(\\sigma^2\\!\\left(1 + \\dfrac{1}{n} + \\dfrac{(x^*-\\bar{X})^2}{S_{xx}}\\right)\\)\n\n\n\nThe extra \\(\\sigma^2\\) is irreducible — it exists regardless of how much data we collect."
+    "text": "Two Sources of Uncertainty in Prediction\n\nFor a new observation \\(Y^* = \\beta_0 + \\beta_1 x^* + \\varepsilon^*\\), the prediction error decomposes as:\n\\[Y^* - \\widehat{Y}^* = \\underbrace{\\left[(\\beta_0 + \\beta_1 x^*) - \\widehat{Y}^*\\right]}_{\\text{estimation error}} + \\underbrace{\\varepsilon^*}_{\\text{new individual noise}}\\]\n\nThese are independent, so their variances add:\n\n\n\n\n\n\n\nSource\nVariance\n\n\n\n\nEstimation error in \\(\\widehat{Y}^*\\)\n\\(\\sigma^2\\!\\left(\\dfrac{1}{n} + \\dfrac{(x^*-\\bar{X})^2}{S_{xx}}\\right)\\)\n\n\nNew individual noise \\(\\varepsilon^*\\)\n\\(\\sigma^2\\)\n\n\nTotal\n\\(\\sigma^2\\!\\left(1 + \\dfrac{1}{n} + \\dfrac{(x^*-\\bar{X})^2}{S_{xx}}\\right)\\)\n\n\n\nThe extra \\(\\sigma^2\\) is irreducible — it exists regardless of how much data we collect."
   },
   {
     "objectID": "slides/lec-07.html#prediction-interval",
     "href": "slides/lec-07.html#prediction-interval",
     "title": "Lecture 7: Prediction and Intervals",
     "section": "Prediction Interval",
-    "text": "Prediction Interval\nReplacing \\(\\sigma^2\\) with MSE gives the sampling distribution of the prediction error:\n\\[\\frac{Y^* - \\widehat{Y}^*}{\\left[\\text{MSE}\\!\\left(1 + \\dfrac{1}{n} + \\dfrac{(x^*-\\bar{X})^2}{S_{xx}}\\right)\\right]^{1/2}} \\sim t_{n-2}\\]\n\nA \\(100(1-\\alpha)\\%\\) prediction interval for a new \\(Y^*\\) at \\(X = x^*\\):\n\\[\\boxed{\\widehat{Y}^* \\;\\pm\\; t_{1-\\alpha/2,\\, n-2}\\left[\\text{MSE}\\!\\left(1 + \\frac{1}{n} + \\frac{(x^*-\\bar{X})^2}{S_{xx}}\\right)\\right]^{1/2}}\\]\nThe only difference from the CI is the \\(+\\,1\\) inside the brackets.\n\n\nKey consequence: Even as \\(n \\to \\infty\\), the PI does not collapse to a point:\n\\[\\text{PI width} \\to 2\\,t \\cdot \\text{MSE}^{1/2} \\quad \\text{as } n \\to \\infty\\]\nThere will always be irreducible noise in a new individual observation."
+    "text": "Prediction Interval\nReplacing \\(\\sigma^2\\) with MSE gives the sampling distribution of the prediction error:\n\\[\\frac{Y^* - \\widehat{Y}^*}{\\left[\\text{MSE}\\!\\left(1 + \\dfrac{1}{n} + \\dfrac{(x^*-\\bar{X})^2}{S_{xx}}\\right)\\right]^{1/2}} \\sim t_{n-2}\\]\n\nA \\(100(1-\\alpha)\\%\\) prediction interval for a new \\(Y^*\\) at \\(X = x^*\\):\n\\[\\boxed{\\widehat{Y}^* \\;\\pm\\; t_{1-\\alpha/2,\\, n-2}\\left[\\text{MSE}\\!\\left(1 + \\frac{1}{n} + \\frac{(x^*-\\bar{X})^2}{S_{xx}}\\right)\\right]^{1/2}}\\]\n\n\nKey consequence: Even as \\(n \\to \\infty\\), the PI does not collapse to a point. As \\(n \\to \\infty\\), \\(\\frac{1}{n} \\to 0\\) and \\(\\frac{(x^*-\\bar{X})^2}{S_{xx}} \\to 0\\), so the PI becomes:\n\\[\\widehat{Y}^* \\pm t \\cdot \\sqrt{\\text{MSE}\\!\\left(1 + 0 + 0\\right)} = \\widehat{Y}^* \\pm t\\sqrt{\\text{MSE}}\\]\nThe total width is \\(2t\\sqrt{\\text{MSE}}\\). And since MSE \\(\\to \\sigma^2\\) as \\(n \\to \\infty\\):\n\\[\\text{PI width} \\to 2t\\sqrt{\\sigma^2} = 2t\\sigma\\]\nThe \\(\\sigma^2\\) from \\(\\varepsilon^*\\) is irreducible — it cannot be estimated away, no matter how much data we collect."
   },
   {
     "objectID": "slides/lec-07.html#ci-vs.-pi-side-by-side",
@@ -1962,7 +1962,7 @@
     "href": "slides/lec-07.html#summary",
     "title": "Lecture 7: Prediction and Intervals",
     "section": "Summary",
-    "text": "Summary\n\nCI for mean response at \\(x^*\\): targets \\(E(Y \\mid X = x^*)\\); uncertainty comes only from estimating \\(\\widehat{Y}^*\\)\nPI for new observation at \\(x^*\\): targets an individual \\(Y^*\\); adds \\(\\sigma^2\\) for irreducible noise — always wider than the CI\nBoth intervals are centered at \\(\\widehat{Y}^*\\) and are narrowest at \\(x^* = \\bar{X}\\), widening with extrapolation\nPI does not shrink to zero as \\(n \\to \\infty\\) — individual noise cannot be eliminated with more data\nIn R: predict(..., interval = \"confidence\") vs. predict(..., interval = \"prediction\")"
+    "text": "Summary\n\nCI for mean response at \\(x^*\\): targets \\(E(Y \\mid X = x^*)\\); uncertainty comes only from estimating \\(\\widehat{Y}^*\\); width \\(\\to 0\\) as \\(n \\to \\infty\\)\nPI for new observation at \\(x^*\\): targets an individual \\(Y^*\\); adds \\(\\sigma^2\\) for irreducible noise — always wider than the CI; does not shrink to zero as \\(n \\to \\infty\\)\nBoth intervals are centered at \\(\\widehat{Y}^*\\) and are narrowest at \\(x^* = \\bar{X}\\), widening with extrapolation\nIn R: predict(..., interval = \"confidence\") vs. predict(..., interval = \"prediction\")\nANOVA: SSTO = SSR + SSE; F-test uses \\(F^* = \\text{MSR}/\\text{MSE} \\sim F(1, n-2)\\); equivalent to the t-test via \\(F^* = (t^*)^2\\)\n\\(R^2\\): fraction of variance explained; equals \\(r_{XY}^2\\) in SLR; always increases with more predictors — use \\(\\bar{R}^2\\) for model comparison"
   },
   {
     "objectID": "slides/lec-07.html#questions",
@@ -2061,5 +2061,398 @@
     "title": "Lecture 6: Inference in Regression",
     "section": "Rejection Regions Visualized",
     "text": "Rejection Regions Visualized"
+  },
+  {
+    "objectID": "labs/lab-03.html",
+    "href": "labs/lab-03.html",
+    "title": "Lab 3: Inference in Simple Linear Regression",
+    "section": "",
+    "text": "Note\n\n\n\nDownload the .Rmd file below, open it in RStudio, and work through the exercises inside.\nDownload lab-03.Rmd",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 3"
+    ]
+  },
+  {
+    "objectID": "labs/lab-03.html#objectives",
+    "href": "labs/lab-03.html#objectives",
+    "title": "Lab 3: Inference in Simple Linear Regression",
+    "section": "Objectives",
+    "text": "Objectives\nIn this lab you will:\n\nCompare the MLE and OLS estimates of \\(\\sigma^2\\) and explain why MLE is biased\nVisualize the \\(t\\)-distribution and use qt() to find critical values\nConstruct confidence intervals for \\(\\beta_0\\) and \\(\\beta_1\\) manually and with confint()\nConduct two-sided and one-sided hypothesis tests for regression coefficients\nExtract and interpret \\(t\\)-statistics and p-values from summary() output",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 3"
+    ]
+  },
+  {
+    "objectID": "labs/lab-03.html#setup",
+    "href": "labs/lab-03.html#setup",
+    "title": "Lab 3: Inference in Simple Linear Regression",
+    "section": "Setup",
+    "text": "Setup\n\nlibrary(tidyverse)\nlibrary(knitr)",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 3"
+    ]
+  },
+  {
+    "objectID": "labs/lab-03.html#the-data-motor-trend-car-road-tests",
+    "href": "labs/lab-03.html#the-data-motor-trend-car-road-tests",
+    "title": "Lab 3: Inference in Simple Linear Regression",
+    "section": "1. The Data: Motor Trend Car Road Tests",
+    "text": "1. The Data: Motor Trend Car Road Tests\nWe will use the mtcars dataset, which records fuel consumption and design characteristics for 32 automobiles.\nResearch question: Does a car’s weight (in 1000 lbs) predict its fuel efficiency (mpg)?\n\nglimpse(mtcars)\n\n\nggplot(mtcars, aes(x = wt, y = mpg)) +\n  geom_point(color = \"#003660\", alpha = 0.8, size = 2) +\n  labs(\n    title = \"Fuel Efficiency vs. Weight\",\n    x     = \"Weight (1000 lbs)\",\n    y     = \"Miles per Gallon\"\n  ) +\n  theme_minimal()\n\n\nQuestion 1. Describe the relationship between weight and mpg in 2–3 sentences. Comment on direction, strength, and whether a linear model seems appropriate.\nAnswer:",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 3"
+    ]
+  },
+  {
+    "objectID": "labs/lab-03.html#fitting-the-model-and-extracting-key-quantities",
+    "href": "labs/lab-03.html#fitting-the-model-and-extracting-key-quantities",
+    "title": "Lab 3: Inference in Simple Linear Regression",
+    "section": "2. Fitting the Model and Extracting Key Quantities",
+    "text": "2. Fitting the Model and Extracting Key Quantities\n\nfit &lt;- lm(mpg ~ wt, data = mtcars)\nsummary(fit)\n\n\nn      &lt;- nrow(mtcars)\nb0     &lt;- coef(fit)[\"(Intercept)\"]\nb1     &lt;- coef(fit)[\"wt\"]\nx      &lt;- mtcars$wt\nx_bar  &lt;- mean(x)\nRSS    &lt;- sum(residuals(fit)^2)\nSxx    &lt;- sum((x - x_bar)^2)\nMSE    &lt;- RSS / (n - 2)",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 3"
+    ]
+  },
+  {
+    "objectID": "labs/lab-03.html#mle-vs.-ols-estimate-of-sigma2-lec-05",
+    "href": "labs/lab-03.html#mle-vs.-ols-estimate-of-sigma2-lec-05",
+    "title": "Lab 3: Inference in Simple Linear Regression",
+    "section": "3. MLE vs. OLS Estimate of \\(\\sigma^2\\) (Lec 05)",
+    "text": "3. MLE vs. OLS Estimate of \\(\\sigma^2\\) (Lec 05)\nFrom Lecture 5, the two estimates of the error variance are:\n\\[\\widehat{\\sigma}^2_{\\text{OLS}} = \\frac{\\text{RSS}}{n - 2} = \\text{MSE} \\qquad \\text{(unbiased)}\\]\n\\[\\widehat{\\sigma}^2_{\\text{MLE}} = \\frac{\\text{RSS}}{n} \\qquad \\text{(biased — does not correct for the two estimated parameters)}\\]\n\nsigma2_OLS &lt;- RSS / (n - 2)\nsigma2_MLE &lt;- RSS / n\n\ndata.frame(\n  Estimator = c(\"OLS (unbiased)\", \"MLE (biased)\"),\n  Formula   = c(\"RSS / (n - 2)\", \"RSS / n\"),\n  Value     = round(c(sigma2_OLS, sigma2_MLE), 3)\n) |&gt;\n  kable(align = \"llr\", caption = \"Comparing OLS and MLE estimates of σ²\")\n\n\nQuestion 2.\n(a) Which estimate is larger — OLS or MLE? Does this match the direction of bias you would expect from a downward-biased estimator?\n(b) The ratio MLE / OLS equals \\((n - 2)/n\\). Using \\(n = 32\\), compute this ratio. As \\(n\\) grows very large, what happens to the gap between the two estimates?\nAnswer:",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 3"
+    ]
+  },
+  {
+    "objectID": "labs/lab-03.html#the-t-distribution-and-critical-values-lec-0506",
+    "href": "labs/lab-03.html#the-t-distribution-and-critical-values-lec-0506",
+    "title": "Lab 3: Inference in Simple Linear Regression",
+    "section": "4. The \\(t\\)-Distribution and Critical Values (Lec 05/06)",
+    "text": "4. The \\(t\\)-Distribution and Critical Values (Lec 05/06)\nFrom Lecture 5, if \\(Z \\sim N(0,1)\\) and \\(V \\sim \\chi^2_k\\) independently, then\n\\[T = \\frac{Z}{\\sqrt{V / k}} \\sim t_k\\]\nIn regression, replacing the unknown \\(\\sigma^2\\) with MSE produces exactly this structure:\n\\[\\frac{\\widehat{\\beta}_1 - \\beta_1}{(\\text{MSE}/S_{xx})^{1/2}} \\sim t_{n-2}\\]\n\n4.1 Visualizing the \\(t\\)-Distribution\n\nx_vals &lt;- seq(-4, 4, length.out = 500)\n\ndf_dist &lt;- data.frame(\n  x    = rep(x_vals, 4),\n  y    = c(dnorm(x_vals),\n           dt(x_vals, df = 5),\n           dt(x_vals, df = 10),\n           dt(x_vals, df = n - 2)),\n  dist = rep(c(\"Normal\", \"t (df = 5)\", \"t (df = 10)\",\n               paste0(\"t (df = \", n - 2, \", our model)\")),\n             each = 500)\n)\n\nggplot(df_dist, aes(x = x, y = y, color = dist)) +\n  geom_line(linewidth = 0.9) +\n  labs(title = \"t-Distribution vs. Normal\",\n       x = NULL, y = \"Density\", color = \"Distribution\") +\n  theme_minimal() +\n  theme(legend.position = \"bottom\")\n\n\nQuestion 3. Compare the \\(t\\)-distribution with df = 5 to the standard normal. What happens to the tails, and why? How does the shape change as degrees of freedom increase toward infinity?\nAnswer:\n\n\n\n4.2 Finding Critical Values with qt()\n\n# 95% CI critical value  (alpha = 0.05, two-sided -&gt; upper tail = 0.025)\nt_crit_95 &lt;- qt(0.975, df = n - 2)\nt_crit_95\n\n# 99% CI critical value\nt_crit_99 &lt;- qt(0.995, df = n - 2)\nt_crit_99\n\n# One-sided critical value (alpha = 0.05, upper tail = 0.05)\nt_crit_one &lt;- qt(0.95, df = n - 2)\nt_crit_one\n\n\nQuestion 4. We use qt(0.975, ...) to get the critical value for a 95% confidence interval. Why 0.975 rather than 0.95?\nAnswer:",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 3"
+    ]
+  },
+  {
+    "objectID": "labs/lab-03.html#confidence-intervals-for-beta_1-and-beta_0-lec-06",
+    "href": "labs/lab-03.html#confidence-intervals-for-beta_1-and-beta_0-lec-06",
+    "title": "Lab 3: Inference in Simple Linear Regression",
+    "section": "5. Confidence Intervals for \\(\\beta_1\\) and \\(\\beta_0\\) (Lec 06)",
+    "text": "5. Confidence Intervals for \\(\\beta_1\\) and \\(\\beta_0\\) (Lec 06)\nFrom Lecture 6, the \\(100(1-\\alpha)\\%\\) confidence intervals are:\n\\[\\widehat{\\beta}_1 \\pm t_{1-\\alpha/2,\\, n-2} \\cdot \\text{SE}(\\widehat{\\beta}_1), \\qquad \\text{SE}(\\widehat{\\beta}_1) = \\left(\\frac{\\text{MSE}}{S_{xx}}\\right)^{1/2}\\]\n\\[\\widehat{\\beta}_0 \\pm t_{1-\\alpha/2,\\, n-2} \\cdot \\text{SE}(\\widehat{\\beta}_0), \\qquad \\text{SE}(\\widehat{\\beta}_0) = \\left[\\text{MSE}\\!\\left(\\frac{1}{n} + \\frac{\\bar{x}^2}{S_{xx}}\\right)\\right]^{1/2}\\]\n\n5.1 Manual Calculation\n\nse_b1 &lt;- sqrt(MSE / Sxx)\nse_b0 &lt;- sqrt(MSE * (1/n + x_bar^2 / Sxx))\n\ncat(\"SE(β̂₁):\", round(se_b1, 4), \"\\n\")\ncat(\"SE(β̂₀):\", round(se_b0, 4), \"\\n\")\n\n\nCI_b1_95 &lt;- c(b1 - t_crit_95 * se_b1,  b1 + t_crit_95 * se_b1)\nCI_b0_95 &lt;- c(b0 - t_crit_95 * se_b0,  b0 + t_crit_95 * se_b0)\n\ncat(\"95% CI for β₁: (\", round(CI_b1_95[1], 3), \",\", round(CI_b1_95[2], 3), \")\\n\")\ncat(\"95% CI for β₀: (\", round(CI_b0_95[1], 3), \",\", round(CI_b0_95[2], 3), \")\\n\")\n\n\n\n5.2 Verification with confint()\n\nconfint(fit, level = 0.95)\n\nDo your manual results match?\n\nQuestion 5. Interpret the 95% CI for \\(\\beta_1\\) in context. Does the interval contain 0? What does that tell you about the relationship between weight and fuel efficiency?\nAnswer:\n\n\nQuestion 6. The 95% CI for \\(\\beta_0\\) is approximately \\((33.4, 41.1)\\). A car with weight = 0 is physically impossible. What does this tell us about when the intercept has a meaningful real-world interpretation?\nAnswer:\n\nNow compute a 90% confidence interval for \\(\\beta_1\\):\n\n# TODO: replace NULL with qt(...)\nt_crit_90 &lt;- NULL\n\n# TODO: replace NULL with c(b1 - ..., b1 + ...)\nCI_b1_90 &lt;- NULL\n\n\ncat(\"90% CI for β₁: (\", round(CI_b1_90[1], 3), \",\", round(CI_b1_90[2], 3), \")\\n\")\n\n\nQuestion 7. Compare the 90% and 95% CIs for \\(\\beta_1\\). Which is wider? What is the trade-off between a higher confidence level and the width of the interval?\nAnswer:",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 3"
+    ]
+  },
+  {
+    "objectID": "labs/lab-03.html#hypothesis-testing-lec-06",
+    "href": "labs/lab-03.html#hypothesis-testing-lec-06",
+    "title": "Lab 3: Inference in Simple Linear Regression",
+    "section": "6. Hypothesis Testing (Lec 06)",
+    "text": "6. Hypothesis Testing (Lec 06)\n\n6.1 Two-Sided Test: \\(H_0: \\beta_1 = 0\\)\nThe test statistic from Lecture 6 is:\n\\[t^* = \\frac{\\widehat{\\beta}_1 - 0}{\\text{SE}(\\widehat{\\beta}_1)} \\sim t_{n-2} \\quad \\text{under } H_0\\]\n\nt_star_b1 &lt;- b1 / se_b1\nt_star_b1\n\n# Two-sided p-value\np_val_b1 &lt;- 2 * pt(abs(t_star_b1), df = n - 2, lower.tail = FALSE)\np_val_b1\n\n\nQuestion 8. At \\(\\alpha = 0.05\\), do you reject \\(H_0: \\beta_1 = 0\\)? State your conclusion in context.\nAnswer:\n\n\n\n6.2 Reading summary() Output\n\nsummary(fit)$coefficients\n\n\nQuestion 9. Verify that the \\(t\\)-value and p-value in the wt row match your manual calculations above. Then interpret what the p-value for the (Intercept) row is testing.\nAnswer:\n\n\n\n6.3 One-Sided Test: \\(H_1: \\beta_1 &lt; 0\\)\nA car engineer argues that heavier cars always have lower fuel efficiency. Test this directional claim:\n\\[H_0: \\beta_1 = 0 \\quad \\text{vs.} \\quad H_1: \\beta_1 &lt; 0\\]\nWe reject \\(H_0\\) at level \\(\\alpha\\) when \\(t^* &lt; -t_{1-\\alpha,\\, n-2}\\).\n\nt_crit_left &lt;- -qt(0.95, df = n - 2)\n\ncat(\"Test statistic t*   =\", round(t_star_b1, 4), \"\\n\")\ncat(\"Critical value      =\", round(t_crit_left, 4), \"\\n\")\ncat(\"Reject H0?\", t_star_b1 &lt; t_crit_left, \"\\n\")\n\n# One-sided p-value\np_val_left &lt;- pt(t_star_b1, df = n - 2, lower.tail = TRUE)\np_val_left\n\n\nQuestion 10. Compare the one-sided p-value to the two-sided p-value from Section 6.1. How are they related mathematically? When is a one-sided test more appropriate than a two-sided test?\nAnswer:\n\n\n\n6.4 Test Against a Non-Zero Null\nA previous study suggested that each additional 1000 lbs reduces mpg by exactly 6 miles per gallon. Test whether our data are consistent with this claim:\n\\[H_0: \\beta_1 = -6 \\quad \\text{vs.} \\quad H_1: \\beta_1 \\neq -6\\]\n\nbeta10 &lt;- -6\n\n# TODO: replace NULL with (b1 - beta10) / se_b1\nt_star_nz &lt;- NULL\n\n# TODO: replace NULL with 2 * pt(...)\np_val_nz &lt;- NULL\n\n\ncat(\"Test statistic:\", round(t_star_nz, 4), \"\\n\")\ncat(\"p-value:       \", round(p_val_nz, 4), \"\\n\")\n\n\nQuestion 11. At \\(\\alpha = 0.05\\), do you reject \\(H_0: \\beta_1 = -6\\)? What does this conclusion say about the previous study’s claim?\nAnswer:",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 3"
+    ]
+  },
+  {
+    "objectID": "labs/lab-03.html#putting-it-all-together",
+    "href": "labs/lab-03.html#putting-it-all-together",
+    "title": "Lab 3: Inference in Simple Linear Regression",
+    "section": "7. Putting It All Together",
+    "text": "7. Putting It All Together\n\nQuestion 12. Write a 3–4 sentence summary of the mtcars analysis from this lab. Your summary must include:\n\nThe fitted regression equation (state \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\))\nA 95% CI for the slope and a one-sentence interpretation\nThe result of the hypothesis test \\(H_0: \\beta_1 = 0\\) and your conclusion in context\n\nAnswer:",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 3"
+    ]
+  },
+  {
+    "objectID": "slides/lec-07.html#normality-assumption-and-mle",
+    "href": "slides/lec-07.html#normality-assumption-and-mle",
+    "title": "Lecture 7: Inference in Regression",
+    "section": "Normality Assumption and MLE",
+    "text": "Normality Assumption and MLE"
+  },
+  {
+    "objectID": "slides/lec-07.html#why-normality",
+    "href": "slides/lec-07.html#why-normality",
+    "title": "Lecture 7: Inference in Regression",
+    "section": "Why Normality?",
+    "text": "Why Normality?\nSo far we have focused on point estimation — no distributional assumption was needed.\nFor inference (confidence intervals and hypothesis tests), we need the sampling distribution of \\(b_0\\) and \\(b_1\\).\n\nWe now adopt the normality model:\n\\[Y_i = \\beta_0 + \\beta_1 X_i + \\varepsilon_i, \\quad \\varepsilon_i \\overset{\\text{iid}}{\\sim} \\mathrm{N}(0, \\sigma^2), \\quad i = 1, \\ldots, n\\]\nThis implies \\(Y_i \\sim \\mathrm{N}(\\beta_0 + \\beta_1 X_i,\\; \\sigma^2)\\).\n\n\nThis is stronger than the Gauss-Markov assumptions, which only required:\n\n\\(\\mathrm{E}(\\varepsilon_i) = 0\\), \\(\\mathrm{Var}(\\varepsilon_i) = \\sigma^2\\) (homoscedasticity)\nUncorrelated errors\n\n\n\nUnder normality the distribution is fully specified — so we can write down a likelihood function."
+  },
+  {
+    "objectID": "slides/lec-07.html#maximum-likelihood-estimation",
+    "href": "slides/lec-07.html#maximum-likelihood-estimation",
+    "title": "Lecture 7: Inference in Regression",
+    "section": "Maximum Likelihood Estimation",
+    "text": "Maximum Likelihood Estimation\nSince \\(Y_i \\sim \\mathrm{N}(\\beta_0 + \\beta_1 X_i,\\; \\sigma^2)\\), the joint likelihood for \\(n\\) independent observations is:\n\\[L(\\beta_0, \\beta_1, \\sigma^2) = \\frac{1}{(2\\pi\\sigma^2)^{n/2}} \\exp\\!\\left\\{-\\frac{1}{2\\sigma^2}\\sum_{i=1}^n(Y_i - \\beta_0 - \\beta_1 X_i)^2\\right\\}\\]\n\nThe log-likelihood is easier to maximize:\n\\[\\ell(\\beta_0, \\beta_1, \\sigma^2) = -\\frac{n}{2}\\log(2\\pi) - \\frac{n}{2}\\log\\sigma^2 - \\frac{1}{2\\sigma^2}\\sum_{i=1}^n(Y_i - \\beta_0 - \\beta_1 X_i)^2\\]\n\n\nThe MLEs \\(\\hat\\beta_0\\), \\(\\hat\\beta_1\\) maximize \\(\\ell\\) by minimizing the last term — which is exactly the least-squares criterion.\n\nKey result: Under normality, MLE = OLS for \\(\\beta_0\\) and \\(\\beta_1\\)."
+  },
+  {
+    "objectID": "slides/lec-07.html#mle-of-sigma2",
+    "href": "slides/lec-07.html#mle-of-sigma2",
+    "title": "Lecture 7: Inference in Regression",
+    "section": "MLE of \\(\\sigma^2\\)",
+    "text": "MLE of \\(\\sigma^2\\)\nSetting \\(\\partial\\ell/\\partial\\sigma^2 = 0\\) gives:\n\\[\\hat{\\sigma}^2_{\\text{MLE}} = \\frac{1}{n}\\sum_{i=1}^n (Y_i - \\hat{Y}_i)^2 = \\frac{\\text{SSE}}{n}\\]\n\n\n\n\nEstimator\nFormula\nUnbiased?\n\n\n\n\n\\(\\hat\\sigma^2_{\\text{MLE}}\\)\n\\(\\text{SSE}/n\\)\nNo\n\n\nMSE\n\\(\\text{SSE}/(n-2)\\)\nYes\n\n\n\nThe MLE divides by \\(n\\) instead of \\(n - 2\\), losing two degrees of freedom for estimating \\(\\beta_0\\) and \\(\\beta_1\\).\n\n\nWe always use MSE for inference. The MLE of \\(\\sigma^2\\) is biased and is mentioned here because it appears in theoretical derivations."
+  },
+  {
+    "objectID": "slides/lec-07.html#inference-on-beta_0-and-beta_1",
+    "href": "slides/lec-07.html#inference-on-beta_0-and-beta_1",
+    "title": "Lecture 7: Inference in Regression",
+    "section": "Inference on \\(\\beta_0\\) and \\(\\beta_1\\)",
+    "text": "Inference on \\(\\beta_0\\) and \\(\\beta_1\\)"
+  },
+  {
+    "objectID": "slides/lec-07.html#sampling-distribution-of-b_1",
+    "href": "slides/lec-07.html#sampling-distribution-of-b_1",
+    "title": "Lecture 7: Inference in Regression",
+    "section": "Sampling Distribution of \\(b_1\\)",
+    "text": "Sampling Distribution of \\(b_1\\)\nWe can write \\(b_1 = \\sum_{i=1}^n c_i Y_i\\) where \\(c_i = (X_i - \\bar{X})/S_{xx}\\) — a linear combination of the normal \\(Y_i\\)’s.\n\nSince linear combinations of independent normals are normal, with \\(\\mathrm{E}(b_1) = \\beta_1\\) and \\(\\mathrm{Var}(b_1) = \\sigma^2/S_{xx}\\):\n\\[b_1 \\sim \\mathrm{N}\\!\\left(\\beta_1,\\; \\frac{\\sigma^2}{S_{xx}}\\right), \\qquad S_{xx} = \\sum_{i=1}^n (X_i - \\bar{X})^2\\]\n\n\nTwo additional results (without proof):\n\n\\(\\text{SSE}/\\sigma^2 \\sim \\chi^2_{n-2}\\)\n\\(\\text{SSE}\\) is independent of \\(b_0\\) and \\(b_1\\)\n\n\n\nReplacing \\(\\sigma^2\\) with MSE \\(= \\text{SSE}/(n-2)\\) gives the t-pivot:\n\\[\\frac{b_1 - \\beta_1}{\\sqrt{\\text{MSE}/S_{xx}}} \\sim t_{n-2}\\]"
+  },
+  {
+    "objectID": "slides/lec-07.html#confidence-interval-for-beta_1",
+    "href": "slides/lec-07.html#confidence-interval-for-beta_1",
+    "title": "Lecture 7: Inference in Regression",
+    "section": "Confidence Interval for \\(\\beta_1\\)",
+    "text": "Confidence Interval for \\(\\beta_1\\)\nFrom the \\(t_{n-2}\\) pivot, a \\(100(1-\\alpha)\\%\\) CI for \\(\\beta_1\\) is:\n\\[\\boxed{b_1 \\;\\pm\\; t_{1-\\alpha/2,\\; n-2}\\sqrt{\\frac{\\text{MSE}}{S_{xx}}}}\\]\n\nThe term \\(\\sqrt{\\text{MSE}/S_{xx}}\\) is the standard error of \\(b_1\\) — reported in R as Std. Error next to the slope.\n\n\n\nfit &lt;- lm(mpg ~ wt, data = mtcars)\nconfint(fit, level = 0.95)\n\n                2.5 %    97.5 %\n(Intercept) 33.450500 41.119753\nwt          -6.486308 -4.202635\n\n\n\n\nThe 95% CI for \\(\\beta_1\\) does not contain 0 — significant evidence of a negative relationship between weight and fuel efficiency."
+  },
+  {
+    "objectID": "slides/lec-07.html#hypothesis-test-for-beta_1",
+    "href": "slides/lec-07.html#hypothesis-test-for-beta_1",
+    "title": "Lecture 7: Inference in Regression",
+    "section": "Hypothesis Test for \\(\\beta_1\\)",
+    "text": "Hypothesis Test for \\(\\beta_1\\)\nTo test \\(H_0: \\beta_1 = \\beta_{10}\\) vs. \\(H_1: \\beta_1 \\neq \\beta_{10}\\):\n\\[t^* = \\frac{b_1 - \\beta_{10}}{\\sqrt{\\text{MSE}/S_{xx}}} \\sim t_{n-2} \\text{ under } H_0\\]\nReject \\(H_0\\) if \\(|t^*| &gt; t_{1-\\alpha/2,\\, n-2}\\).\n\nThe most common test is \\(H_0: \\beta_1 = 0\\) (no linear relationship):\n\\[t^* = \\frac{b_1}{\\sqrt{\\text{MSE}/S_{xx}}}\\]\nThis is the t value column in summary(lm(...)).\n\n\n\nsummary(fit)$coefficients\n\n             Estimate Std. Error   t value     Pr(&gt;|t|)\n(Intercept) 37.285126   1.877627 19.857575 8.241799e-19\nwt          -5.344472   0.559101 -9.559044 1.293959e-10"
+  },
+  {
+    "objectID": "slides/lec-07.html#inference-for-beta_0",
+    "href": "slides/lec-07.html#inference-for-beta_0",
+    "title": "Lecture 7: Inference in Regression",
+    "section": "Inference for \\(\\beta_0\\)",
+    "text": "Inference for \\(\\beta_0\\)\nBy similar arguments:\n\\[b_0 \\sim \\mathrm{N}\\!\\left(\\beta_0,\\; \\sigma^2\\!\\left(\\frac{1}{n} + \\frac{\\bar{X}^2}{S_{xx}}\\right)\\right)\\]\n\nThe \\(t\\)-pivot:\n\\[\\frac{b_0 - \\beta_0}{\\sqrt{\\text{MSE}\\!\\left(\\dfrac{1}{n} + \\dfrac{\\bar{X}^2}{S_{xx}}\\right)}} \\sim t_{n-2}\\]\n\n\nA \\(100(1-\\alpha)\\%\\) CI for \\(\\beta_0\\):\n\\[\\boxed{b_0 \\;\\pm\\; t_{1-\\alpha/2,\\; n-2}\\sqrt{\\text{MSE}\\!\\left(\\frac{1}{n} + \\frac{\\bar{X}^2}{S_{xx}}\\right)}}\\]\nHypothesis tests for \\(\\beta_0\\) follow the same structure as for \\(\\beta_1\\)."
+  },
+  {
+    "objectID": "slides/lec-07.html#practice-problem-1",
+    "href": "slides/lec-07.html#practice-problem-1",
+    "title": "Lecture 7: Inference in Regression",
+    "section": "Practice Problem 1",
+    "text": "Practice Problem 1\n\nThe mtcars regression of mpg on wt gives \\(b_1 = -5.344\\), \\(\\text{SE}(b_1) = 0.559\\), \\(n = 32\\).\n(a) Construct a 95% CI for \\(\\beta_1\\) by hand using \\(t_{0.975,\\,30} = 2.042\\). Does it contain 0?\n(b) State \\(H_0\\) and \\(H_1\\) to test for a linear relationship. Compute \\(t^*\\) and state your conclusion at \\(\\alpha = 0.05\\).\n(c) The 95% CI for \\(\\beta_0\\) is approximately \\((33.4,\\; 41.1)\\). Interpret it. Why would it generally not make sense to test \\(H_0: \\beta_0 = 0\\) here?"
+  },
+  {
+    "objectID": "slides/lec-07.html#practice-problem-2",
+    "href": "slides/lec-07.html#practice-problem-2",
+    "title": "Lecture 7: Inference in Regression",
+    "section": "Practice Problem 2",
+    "text": "Practice Problem 2\n\nA new car weighs 4,500 lbs (\\(x^* = 4.5\\)). Using the mtcars fit:\npredict(fit, newdata = data.frame(wt = 4.5), interval = \"confidence\")\npredict(fit, newdata = data.frame(wt = 4.5), interval = \"prediction\")\n(a) Before running: which interval will be wider, and why?\n(b) Run the code. Write one sentence interpreting the confidence interval.\n(c) Write one sentence interpreting the prediction interval.\n(d) How does the width of each interval compare to the widths at \\(x^* = 3.2\\) (near \\(\\bar{X}\\))? Why?"
+  },
+  {
+    "objectID": "slides/lec-07.html#analysis-of-variance",
+    "href": "slides/lec-07.html#analysis-of-variance",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Analysis of Variance",
+    "text": "Analysis of Variance"
+  },
+  {
+    "objectID": "slides/lec-07.html#partitioning-total-variation",
+    "href": "slides/lec-07.html#partitioning-total-variation",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Partitioning Total Variation",
+    "text": "Partitioning Total Variation\nEvery observation’s deviation from \\(\\bar{Y}\\) splits into two parts:\n\\[Y_i - \\bar{Y} = (Y_i - \\hat{Y}_i) + (\\hat{Y}_i - \\bar{Y})\\]\n\nSquaring and summing over all \\(i\\):\n\\[\\sum_{i=1}^n (Y_i - \\bar{Y})^2 = \\sum_{i=1}^n \\left[(Y_i - \\hat{Y}_i) + (\\hat{Y}_i - \\bar{Y})\\right]^2\\]\n\\[= \\sum_{i=1}^n (Y_i - \\hat{Y}_i)^2 + \\sum_{i=1}^n (\\hat{Y}_i - \\bar{Y})^2 + 2\\sum_{i=1}^n (Y_i - \\hat{Y}_i)(\\hat{Y}_i - \\bar{Y})\\]\n\n\nThe cross-product term is zero. Writing \\(e_i = Y_i - \\hat{Y}_i\\):\n\\[\\sum_{i=1}^n (Y_i - \\hat{Y}_i)(\\hat{Y}_i - \\bar{Y})\\]\n\\[= \\sum_{i=1}^n (Y_i - \\hat{Y}_i)\\hat{Y}_i - \\sum_{i=1}^n (Y_i - \\hat{Y}_i)\\bar{Y}\\]\n\\[= \\sum_{i=1}^n e_i \\hat{Y}_i - \\bar{Y}\\sum_{i=1}^n e_i = 0\\]\nbecause \\(\\sum_{i=1}^n e_i = 0\\) and \\(\\sum_{i=1}^n e_i \\hat{Y}_i = 0\\) both follow from the normal equations."
+  },
+  {
+    "objectID": "slides/lec-07.html#anova-table",
+    "href": "slides/lec-07.html#anova-table",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "ANOVA Table",
+    "text": "ANOVA Table\nThe ANOVA table organizes the SS decomposition. Each SS is divided by its degrees of freedom (df) to give a mean square (MS) — a per-df average that puts SSR and SSE on a comparable scale.\n\n\n\n\n\n\n\n\n\n\nSource\ndf\nSS\nMS\n\\(\\mathrm{E}(\\text{MS})\\)\n\n\n\n\nModel\n\\(1\\)\nSSR\n\\(\\text{MSR} = \\text{SSR}/1\\)\n\\(\\sigma^2 + \\beta_1^2 S_{xx}\\)\n\n\nError\n\\(n-2\\)\nSSE\n\\(\\text{MSE} = \\text{SSE}/(n-2)\\)\n\\(\\sigma^2\\)\n\n\nTotal\n\\(n-1\\)\nSSTO\n\n\n\n\n\n\nThe \\(\\mathrm{E}(\\text{MS})\\) column shows what each mean square is estimating on average:\n\n\\(\\mathrm{E}(\\text{MSE}) = \\sigma^2\\) always — MSE is an unbiased estimator of the noise variance (same MSE from before)\n\\(\\mathrm{E}(\\text{MSR}) = \\sigma^2 + \\beta_1^2 S_{xx}\\) — MSR estimates \\(\\sigma^2\\) plus a term that grows with \\(\\beta_1^2\\)\nUnder \\(H_0: \\beta_1 = 0\\), \\(\\mathrm{E}(\\text{MSR}) = \\sigma^2\\) — both MS estimate the same thing\nUnder \\(H_1: \\beta_1 \\neq 0\\), \\(\\mathrm{E}(\\text{MSR}) &gt; \\sigma^2\\) — MSR will tend to be larger than MSE"
+  },
+  {
+    "objectID": "slides/lec-07.html#the-f-test",
+    "href": "slides/lec-07.html#the-f-test",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "The F-Test",
+    "text": "The F-Test\n\nGoal: Test \\(H_0: \\beta_1 = 0\\) vs. \\(H_1: \\beta_1 \\neq 0\\) — is there any linear relationship between \\(X\\) and \\(Y\\)?\n\nIntuition: If \\(\\beta_1 \\neq 0\\), the model should explain a lot of variation, so SSR should be large relative to SSE. But SSR alone depends on the scale of \\(Y\\) — a “large” SSR in one dataset might be tiny in another. We need a relative measure.\n\n\nThe F-statistic: Compare each SS scaled by its degrees of freedom (a mean square):\n\\[F^* = \\frac{\\text{MSR}}{\\text{MSE}} = \\frac{\\text{SSR}/1}{\\text{SSE}/(n-2)}\\]\n\n\nWhy does this work? Recall from the ANOVA table:\n\n\n\n\n\n\n\n\n\n\n\\(\\mathrm{E}(\\text{MSR})\\)\n\\(\\mathrm{E}(\\text{MSE})\\)\nExpected \\(F^*\\)\n\n\n\n\nUnder \\(H_0: \\beta_1 = 0\\)\n\\(\\sigma^2\\)\n\\(\\sigma^2\\)\n\\(\\approx 1\\)\n\n\nUnder \\(H_1: \\beta_1 \\neq 0\\)\n\\(\\sigma^2 + \\beta_1^2 S_{xx}\\)\n\\(\\sigma^2\\)\n\\(\\gg 1\\)\n\n\n\nA large \\(F^*\\) means the model explains far more than noise alone would."
+  },
+  {
+    "objectID": "slides/lec-07.html#r2-and-adjusted-r2",
+    "href": "slides/lec-07.html#r2-and-adjusted-r2",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "\\(R^2\\) and Adjusted \\(R^2\\)",
+    "text": "\\(R^2\\) and Adjusted \\(R^2\\)\nThe coefficient of determination measures the fraction of variation in \\(Y\\) explained by the model:\n\\[R^2 = \\frac{\\text{SSR}}{\\text{SSTO}} = 1 - \\frac{\\text{SSE}}{\\text{SSTO}} \\;\\in\\; [0, 1]\\]\n\nIn simple linear regression, \\(R^2 = r_{XY}^2\\) (the squared sample correlation).\nAdding any predictor always increases \\(R^2\\) — it can be inflated by irrelevant variables.\n\n\nAdjusted \\(R^2\\) penalizes for the number of \\(\\beta\\) parameters \\(p\\) (\\(p = 2\\) in SLR):\n\\[\\bar{R}^2 = 1 - \\frac{\\text{SSE}/(n-p)}{\\text{SSTO}/(n-1)}\\]\n\\(\\bar{R}^2\\) can decrease when a weak predictor is added — preferred for model comparison.\n\n\n\nfit &lt;- lm(mpg ~ wt, data = mtcars)\nc(R2     = summary(fit)$r.squared,\n  Adj_R2 = summary(fit)$adj.r.squared,\n  r_sq   = cor(mtcars$wt, mtcars$mpg)^2)\n\n       R2    Adj_R2      r_sq \n0.7528328 0.7445939 0.7528328"
+  },
+  {
+    "objectID": "slides/lec-07.html#practice-problem-3",
+    "href": "slides/lec-07.html#practice-problem-3",
+    "title": "Lecture 7: Inference in Regression",
+    "section": "Practice Problem 3",
+    "text": "Practice Problem 3\n\nA simple linear regression on \\(n = 30\\) observations gives this partial ANOVA table:\n\n\n\nSource\ndf\nSS\nMS\n\\(F^*\\)\n\n\n\n\nModel\n1\n892.4\n?\n?\n\n\nError\n28\n247.6\n?\n\n\n\nTotal\n29\n1140.0\n\n\n\n\n\n(a) Fill in MSR, MSE, and \\(F^*\\).\n(b) Compute \\(R^2\\) and interpret it in one sentence.\n(c) The t-statistic for \\(\\hat\\beta_1\\) is \\(t^* = 10.05\\). Verify \\(F^* \\approx (t^*)^2\\).\n(d) At \\(\\alpha = 0.05\\), do you reject \\(H_0: \\beta_1 = 0\\)? Use \\(F_{0.95}(1, 28) \\approx 4.20\\)."
+  },
+  {
+    "objectID": "slides/lec-07.html#where-we-left-off",
+    "href": "slides/lec-07.html#where-we-left-off",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Where We Left Off",
+    "text": "Where We Left Off\nIn Lectures 5 and 6, we:\n\nAdded the normality assumption \\(\\varepsilon_i \\overset{iid}{\\sim} N(0, \\sigma^2)\\) and derived MLE (Lecture 5)\nUsed the \\(t_{n-2}\\) pivot to build CIs and hypothesis tests for \\(\\beta_0\\) and \\(\\beta_1\\) (Lecture 6)\n\n\nToday we extend inference in two new directions:\n\nPrediction — quantify uncertainty when making predictions at a new \\(x^*\\). Two distinct questions: what do we expect on average, vs. what will one specific new observation be?\nModel fit — partition total variation into what the model explains (SSR) vs. what remains (SSE); use this to test \\(H_0: \\beta_1 = 0\\) via an F-test and summarize fit with \\(R^2\\)."
+  },
+  {
+    "objectID": "slides/lec-07.html#practice-ci-vs.-pi",
+    "href": "slides/lec-07.html#practice-ci-vs.-pi",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Practice: CI vs. PI",
+    "text": "Practice: CI vs. PI\n\nA study of \\(n = 58\\) hospitals examined whether average patient length of stay (days) predicts infection risk (percentage of patients who acquire a hospital infection). The fitted model is:\n\\[\\widehat{\\text{InfRisk}} = -1.160 + 0.5689 \\times \\text{Stay}, \\qquad \\bar{X} = 9.88 \\text{ days}\\]\n(a) A state health official wants to know the expected infection risk across all hospitals with a 10-day average stay. Should she compute a CI or a PI? Write the question being answered.\n(b) A new hospital is opening with a planned average stay of 10 days. The official wants to predict that specific hospital’s infection risk. CI or PI?\n(c) At \\(x^* = 10\\) days, R gives:\n\n\n\n\nfit\nlwr\nupr\n\n\n\n\nCI\n4.529\n4.259\n4.799\n\n\nPI\n4.529\n2.459\n6.599\n\n\n\nWrite one sentence interpreting each interval. Why is the PI so much wider?"
+  },
+  {
+    "objectID": "slides/lec-07.html#practice-ci-vs.-pi-solution",
+    "href": "slides/lec-07.html#practice-ci-vs.-pi-solution",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Practice: CI vs. PI — Solution",
+    "text": "Practice: CI vs. PI — Solution\n(a) CI — targets the mean response for a group: “What is the average infection risk for all hospitals with a 10-day average stay?”\n\n(b) PI — targets one specific new observation: “What infection risk will this particular new hospital have?”\n\n\n(c) - CI (4.259, 4.799): We are 95% confident that the average infection risk for all hospitals with a 10-day stay is between 4.26% and 4.80%. - PI (2.459, 6.599): We are 95% confident that this specific new hospital with a 10-day stay will have an infection risk between 2.46% and 6.60%.\nThe PI is wider because it accounts for both estimation uncertainty in \\(\\widehat{Y}^*\\) and irreducible individual-level noise \\(\\varepsilon^*\\). Even with infinite data, each hospital has its own random error that cannot be predicted away."
+  },
+  {
+    "objectID": "slides/lec-07.html#practice-anova-and-r2",
+    "href": "slides/lec-07.html#practice-anova-and-r2",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Practice: ANOVA and \\(R^2\\)",
+    "text": "Practice: ANOVA and \\(R^2\\)\n\nA simple linear regression on \\(n = 30\\) observations gives this partial ANOVA table:\n\n\n\nSource\ndf\nSS\nMS\n\\(F^*\\)\n\n\n\n\nModel\n1\n892.4\n?\n?\n\n\nError\n28\n247.6\n?\n\n\n\nTotal\n29\n1140.0\n\n\n\n\n\n(a) Fill in the three missing values: MSR, MSE, and \\(F^*\\).\n(b) Compute \\(R^2\\) and interpret it in one sentence.\n(c) The t-statistic for \\(\\hat\\beta_1\\) is \\(t^* = 10.05\\). Verify that \\(F^* \\approx (t^*)^2\\).\n(d) At \\(\\alpha = 0.05\\), do you reject \\(H_0: \\beta_1 = 0\\)? The critical value is \\(F_{0.95}(1, 28) \\approx 4.20\\)."
+  },
+  {
+    "objectID": "slides/lec-07.html#practice-anova-and-r2-solution",
+    "href": "slides/lec-07.html#practice-anova-and-r2-solution",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Practice: ANOVA and \\(R^2\\) — Solution",
+    "text": "Practice: ANOVA and \\(R^2\\) — Solution\n(a)\n\\[\\text{MSR} = \\frac{892.4}{1} = 892.4 \\qquad \\text{MSE} = \\frac{247.6}{28} = 8.84 \\qquad F^* = \\frac{892.4}{8.84} \\approx 100.9\\]\n\n(b) \\(R^2 = 892.4 / 1140.0 \\approx 0.783\\) — about 78.3% of the total variation in \\(Y\\) is explained by the linear relationship with \\(X\\).\n\n\n(c) \\((t^*)^2 = (10.05)^2 = 101.0 \\approx 100.9 = F^*\\) ✓ (difference is rounding)\n\n\n(d) \\(F^* = 100.9 \\gg 4.20\\), so we reject \\(H_0: \\beta_1 = 0\\) at \\(\\alpha = 0.05\\). There is strong evidence of a linear relationship."
+  },
+  {
+    "objectID": "slides/lec-07.html#the-setup-new-points-and-randomness",
+    "href": "slides/lec-07.html#the-setup-new-points-and-randomness",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "The Setup: New Points and Randomness",
+    "text": "The Setup: New Points and Randomness\n\nWhat is \\(x^*\\)? A new, fixed input value — not one of the \\(X_1, \\ldots, X_n\\) used to fit the model. The \\(*\\) marks it as “new.”\n\nExample: A study fits lm(Mort ~ Lat) on 49 US states, where Mort is skin cancer mortality (deaths per 10 million) and Lat is latitude in degrees north. A new state enters at 40° north latitude: \\(x^* = 40\\). What can we say about its cancer mortality?"
+  },
+  {
+    "objectID": "slides/lec-07.html#estimation-of-mean-response",
+    "href": "slides/lec-07.html#estimation-of-mean-response",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Estimation of Mean Response",
+    "text": "Estimation of Mean Response\nWe want to estimate \\(E(Y^*) = E(Y \\mid X = x^*)\\) — the mean response at a new input \\(x^*\\).\nAn obvious estimate is:\n\\[\\widehat{Y}^* = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x^*\\]\n\nSince \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) are both linear combinations of the normal \\(Y_i\\)’s, \\(\\widehat{Y}^*\\) also follows a normal distribution.\nTo build a confidence interval, we follow the same strategy as Lecture 6: find the mean and variance of \\(\\widehat{Y}^*\\), standardize to get a \\(t\\)-pivot, then invert. The mean is straightforward; the variance requires a short derivation."
+  },
+  {
+    "objectID": "slides/lec-07.html#sampling-distribution-of-widehaty_h",
+    "href": "slides/lec-07.html#sampling-distribution-of-widehaty_h",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Sampling Distribution of \\(\\widehat{Y}_h\\)",
+    "text": "Sampling Distribution of \\(\\widehat{Y}_h\\)\n\nWe need to first confirm \\(\\widehat{Y}_h\\) is unbiased, and then derive \\(\\mathrm{Var}(\\widehat{Y}_h)\\).\n\\(\\mathrm{E}(\\widehat{Y}_h) = \\mathrm{E}(\\widehat{\\beta}_0 + \\widehat{\\beta}_1 x^*) = \\beta_0 + \\beta_1 x^*\\) ✓\n\nFor the variance, substitute \\(\\widehat{\\beta}_0 = \\bar{Y} - \\widehat{\\beta}_1\\bar{X}\\):\n\\[\\mathrm{Var}(\\widehat{Y}_h) = \\mathrm{Var}(\\bar{Y} - \\widehat{\\beta}_1\\bar{X} + \\widehat{\\beta}_1 x^*) = \\mathrm{Var}(\\bar{Y} + \\widehat{\\beta}_1(x^* - \\bar{X}))\\]\n\n\nExpanding:\n\\[= \\mathrm{Var}(\\bar{Y}) + (x^* - \\bar{X})^2\\,\\mathrm{Var}(\\widehat{\\beta}_1) + 2(x^* - \\bar{X})\\,\\mathrm{Cov}(\\bar{Y},\\, \\widehat{\\beta}_1)\\]\n\n\nSubstituting known variances from Lectures 5–6:\n\\[\\mathrm{Var}(\\bar{Y}) = \\frac{\\sigma^2}{n}, \\qquad \\mathrm{Var}(\\widehat{\\beta}_1) = \\frac{\\sigma^2}{S_{xx}}\\]\n\n\nThe cross-term vanishes because \\(\\mathrm{Cov}(\\bar{Y}, \\widehat{\\beta}_1) = 0\\) (shown on the next slide):\n\\[= \\frac{\\sigma^2}{n} + (x^* - \\bar{X})^2 \\cdot \\frac{\\sigma^2}{S_{xx}} = \\sigma^2\\!\\left(\\frac{1}{n} + \\frac{(x^* - \\bar{X})^2}{S_{xx}}\\right)\\]"
+  },
+  {
+    "objectID": "slides/lec-07.html#why-mathrmcovbary-b_1-0",
+    "href": "slides/lec-07.html#why-mathrmcovbary-b_1-0",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Why \\(\\mathrm{Cov}(\\bar{Y},\\, b_1) = 0\\)?",
+    "text": "Why \\(\\mathrm{Cov}(\\bar{Y},\\, b_1) = 0\\)?\nRecall \\(b_1 = \\sum_{i=1}^n a_i Y_i\\) where \\(a_i = (X_i - \\bar{X})/S_{xx}\\).\n\\[\\mathrm{Cov}(\\bar{Y},\\, b_1) = \\mathrm{Cov}\\!\\left(\\frac{1}{n}\\sum_{i=1}^n Y_i,\\; \\sum_{i=1}^n a_i Y_i\\right)\\]\n\nSince the \\(Y_i\\) are independent, only the \\(i = j\\) terms survive:\n\\[= \\frac{1}{n}\\sum_{i=1}^n a_i\\,\\mathrm{Var}(Y_i) = \\frac{\\sigma^2}{n}\\sum_{i=1}^n a_i\\]\n\n\nAnd \\(\\displaystyle\\sum_{i=1}^n a_i = \\sum_{i=1}^n \\frac{X_i - \\bar{X}}{S_{xx}} = \\frac{1}{S_{xx}}\\underbrace{\\sum_{i=1}^n (X_i - \\bar{X})}_{=\\;0} = 0\\)\nTherefore \\(\\mathrm{Cov}(\\bar{Y}, b_1) = 0\\). \\(\\square\\)"
+  },
+  {
+    "objectID": "slides/lec-07.html#sampling-distribution-of-widehaty_h-result",
+    "href": "slides/lec-07.html#sampling-distribution-of-widehaty_h-result",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Sampling Distribution of \\(\\widehat{Y}_h\\) — Result",
+    "text": "Sampling Distribution of \\(\\widehat{Y}_h\\) — Result\n\nWe now have both pieces — the mean and the variance. Putting them together gives the full sampling distribution, which we then standardize into a \\(t\\)-pivot to construct the CI:\n\\[\\widehat{Y}_h \\sim N\\!\\left(\\beta_0 + \\beta_1 x^*,\\;\\; \\sigma^2\\!\\left(\\frac{1}{n} + \\frac{(x^* - \\bar{X})^2}{S_{xx}}\\right)\\right)\\]\n\nReplacing \\(\\sigma^2\\) with MSE gives the \\(t_{n-2}\\) pivot:\n\\[\\frac{\\widehat{Y}_h - (\\beta_0 + \\beta_1 x^*)}{\\sqrt{\\text{MSE}\\!\\left(\\dfrac{1}{n} + \\dfrac{(x^*-\\bar{X})^2}{S_{xx}}\\right)}} \\sim t_{n-2}\\]\n\n\nA \\(100(1-\\alpha)\\%\\) confidence interval for \\(E(Y \\mid X = x^*)\\):\n\\[\\boxed{\\widehat{Y}_h \\;\\pm\\; t_{1-\\alpha/2,\\, n-2}\\sqrt{\\text{MSE}\\!\\left(\\frac{1}{n} + \\frac{(x^*-\\bar{X})^2}{S_{xx}}\\right)}}\\]"
+  },
+  {
+    "objectID": "slides/lec-07.html#why-mathrmcovbary-widehatbeta_1-0",
+    "href": "slides/lec-07.html#why-mathrmcovbary-widehatbeta_1-0",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Why \\(\\mathrm{Cov}(\\bar{Y},\\, \\widehat{\\beta}_1) = 0\\)?",
+    "text": "Why \\(\\mathrm{Cov}(\\bar{Y},\\, \\widehat{\\beta}_1) = 0\\)?\nRecall \\(\\widehat{\\beta}_1 = \\sum_{i=1}^n a_i Y_i\\) where \\(a_i = (X_i - \\bar{X})/S_{xx}\\).\n\\[\\mathrm{Cov}(\\bar{Y},\\, \\widehat{\\beta}_1) = \\mathrm{Cov}\\!\\left(\\frac{1}{n}\\sum_{i=1}^n Y_i,\\; \\sum_{i=1}^n a_i Y_i\\right)\\]\n\nSince the \\(Y_i\\) are independent, only the \\(i = j\\) terms survive:\n\\[= \\frac{1}{n}\\sum_{i=1}^n a_i\\,\\mathrm{Var}(Y_i) = \\frac{\\sigma^2}{n}\\sum_{i=1}^n a_i\\]\n\n\nAnd \\(\\displaystyle\\sum_{i=1}^n a_i = \\sum_{i=1}^n \\frac{X_i - \\bar{X}}{S_{xx}} = \\frac{1}{S_{xx}}\\underbrace{\\sum_{i=1}^n (X_i - \\bar{X})}_{=\\;0} = 0\\)\nTherefore \\(\\mathrm{Cov}(\\bar{Y}, \\widehat{\\beta}_1) = 0\\). \\(\\square\\)"
+  },
+  {
+    "objectID": "slides/lec-07.html#worked-example-skin-cancer-and-latitude",
+    "href": "slides/lec-07.html#worked-example-skin-cancer-and-latitude",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Worked Example: Skin Cancer and Latitude",
+    "text": "Worked Example: Skin Cancer and Latitude\nData: Skin cancer mortality (deaths per 10 million) vs. latitude for \\(n = 49\\) US states.\n\\[\\widehat{\\text{Mort}} = 389.19 - 5.978 \\times \\text{Lat}, \\qquad \\bar{X} = 39.5°\\]\n\nAt \\(x^* = 41°\\) north latitude:\n\\[\\widehat{Y}^* = 389.19 - 5.978(41) = \\mathbf{144.1} \\text{ deaths per 10 million}\\]\npredict(fit, newdata = data.frame(Lat = 41), interval = \"confidence\")\n#      fit      lwr      upr\n#  144.092  138.361  149.823\n95% CI: We are 95% confident the average mortality for all states at 41° north is between 138.4 and 149.8 deaths per 10 million.\n\n\npredict(fit, newdata = data.frame(Lat = 41), interval = \"prediction\")\n#      fit      lwr      upr\n#  144.092  105.212  182.972\n95% PI: We predict a new individual state at 41° north will have mortality between 105.2 and 183.0 deaths per 10 million — a range nearly 7× wider than the CI."
+  },
+  {
+    "objectID": "slides/lec-07.html#width-depends-on-distance-from-barx",
+    "href": "slides/lec-07.html#width-depends-on-distance-from-barx",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Width Depends on Distance from \\(\\bar{X}\\)",
+    "text": "Width Depends on Distance from \\(\\bar{X}\\)\nThe CI formula contains \\(\\dfrac{(x^* - \\bar{X})^2}{S_{xx}}\\) — this grows as \\(x^*\\) moves away from \\(\\bar{X}\\).\n\nFor the skin cancer model with \\(\\bar{X} = 39.5°\\):\n\n\n\n\n\n\n\n\n\n\n\\(x^*\\)\nDistance from \\(\\bar{X}\\)\nPoint estimate\n95% CI\nWidth\n\n\n\n\n40°\n0.5° (near center)\n150.1\n(144.6, 155.6)\n11.0 deaths\n\n\n28°\n11.5° (far from center)\n221.8\n(206.9, 236.8)\n29.9 deaths\n\n\n\nThe interval at 28° is nearly 3× wider, even though \\(n\\) is the same.\n\n\nTakeaway: Intervals are narrowest at \\(\\bar{X}\\) and widen with extrapolation. The further you predict from the center of your data, the less certain you should be."
+  },
+  {
+    "objectID": "slides/lec-07.html#two-prediction-questions",
+    "href": "slides/lec-07.html#two-prediction-questions",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Two Prediction Questions",
+    "text": "Two Prediction Questions\nAfter fitting \\(\\widehat{Y} = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 X\\), we often want to say something about a new input value \\(x^*\\).\nThe point estimate \\(\\widehat{Y}^* = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x^*\\) is the same regardless — but to build an interval, we first need to ask: what exactly are we trying to capture? The answer leads to two fundamentally different questions:\n\nQuestion 1 — Mean response: &gt; “What is the average cancer mortality for all US states at 40° latitude?”\nTargets \\(E(Y \\mid X = x^*) = \\beta_0 + \\beta_1 x^*\\) — a fixed (unknown) parameter.\n\\(\\longrightarrow\\) Confidence interval for mean response\n\n\nQuestion 2 — New individual observation: &gt; “What will skin cancer mortality be in this specific state at 40° latitude?”\nTargets \\(Y^* = \\beta_0 + \\beta_1 x^* + \\varepsilon^*\\) — a random variable with its own noise.\n\\(\\longrightarrow\\) Prediction interval\n\n\nBoth are centered at the same point estimate \\(\\widehat{Y}^* = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x^*\\). They differ in what uncertainty they account for."
+  },
+  {
+    "objectID": "slides/lec-07.html#from-prediction-to-model-assessment",
+    "href": "slides/lec-07.html#from-prediction-to-model-assessment",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "From Prediction to Model Assessment",
+    "text": "From Prediction to Model Assessment\nSo far we have focused on making predictions at a specific \\(x^*\\) and building intervals around them.\n\nA separate question is: how well does the model fit the data overall?\n\nDoes the predictor \\(X\\) explain a meaningful share of the variation in \\(Y\\)?\nIs there statistical evidence of any linear relationship?\n\n\n\nAnalysis of Variance (ANOVA) answers this by decomposing the total variation in \\(Y\\) into two parts:\n\nWhat the model explains — variation in the fitted values \\(\\hat{Y}_i\\) around \\(\\bar{Y}\\)\nWhat the model does not explain — the residuals \\(Y_i - \\hat{Y}_i\\)\n\nThis decomposition leads directly to a formal test for \\(H_0: \\beta_1 = 0\\) and a summary of overall fit via \\(R^2\\)."
+  },
+  {
+    "objectID": "slides/lec-07.html#whats-random-and-whats-not",
+    "href": "slides/lec-07.html#whats-random-and-whats-not",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Whats Random and whats not?",
+    "text": "Whats Random and whats not?\n\n\nWhy is \\(Y\\) random? The model \\(Y_i = \\beta_0 + \\beta_1 X_i + \\varepsilon_i\\) treats the \\(X_i\\) as fixed; \\(Y_i\\) is random because \\(\\varepsilon_i \\sim N(0,\\sigma^2)\\).\n\n\nAt \\(x^*\\), keep these three things straight:\n\n\n\n\n\n\n\n\nQuantity\nRandom?\nWhy\n\n\n\n\n\\(\\widehat{Y}^* = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x^*\\)\nYes\n\\(x^*\\) is fixed, but \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) were estimated from random training data — a different sample gives different \\(\\widehat{\\beta}_0, \\widehat{\\beta}_1\\), and thus a different \\(\\widehat{Y}^*\\)\n\n\n\\(\\varepsilon^*\\)\nYes\nNew individual noise — independent of the training data\n\n\n\\(E(Y \\mid X = x^*) = \\beta_0 + \\beta_1 x^*\\)\nNo\nThe true \\(\\beta_0, \\beta_1\\) are fixed constants (we just don’t know them)\n\n\n\nThis is why we need two different types of intervals — one for the fixed mean, one for a new individual observation. We define them on the next slide."
+  },
+  {
+    "objectID": "slides/lec-07.html#sampling-distribution-of-widehaty",
+    "href": "slides/lec-07.html#sampling-distribution-of-widehaty",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Sampling Distribution of \\(\\widehat{Y}^*\\)",
+    "text": "Sampling Distribution of \\(\\widehat{Y}^*\\)\n\nWe need to first confirm \\(\\widehat{Y}^*\\) is unbiased, and then derive \\(\\mathrm{Var}(\\widehat{Y}^*)\\).\n\\(\\mathrm{E}(\\widehat{Y}^*) = \\mathrm{E}(\\widehat{\\beta}_0 + \\widehat{\\beta}_1 x^*) = \\beta_0 + \\beta_1 x^*\\) ✓\n\nFor the variance, substitute \\(\\widehat{\\beta}_0 = \\bar{Y} - \\widehat{\\beta}_1\\bar{X}\\):\n\\[\\mathrm{Var}(\\widehat{Y}^*) = \\mathrm{Var}(\\bar{Y} - \\widehat{\\beta}_1\\bar{X} + \\widehat{\\beta}_1 x^*) = \\mathrm{Var}(\\bar{Y} + \\widehat{\\beta}_1(x^* - \\bar{X}))\\]\n\n\nExpanding:\n\\[= \\mathrm{Var}(\\bar{Y}) + (x^* - \\bar{X})^2\\,\\mathrm{Var}(\\widehat{\\beta}_1) + 2(x^* - \\bar{X})\\,\\mathrm{Cov}(\\bar{Y},\\, \\widehat{\\beta}_1)\\]\n\n\nSubstituting known variances from Lectures 5–6:\n\\[\\mathrm{Var}(\\bar{Y}) = \\frac{\\sigma^2}{n}, \\qquad \\mathrm{Var}(\\widehat{\\beta}_1) = \\frac{\\sigma^2}{S_{xx}}\\]\n\n\nThe cross-term vanishes because \\(\\mathrm{Cov}(\\bar{Y}, \\widehat{\\beta}_1) = 0\\) (shown on the next slide):\n\\[= \\frac{\\sigma^2}{n} + (x^* - \\bar{X})^2 \\cdot \\frac{\\sigma^2}{S_{xx}} = \\sigma^2\\!\\left(\\frac{1}{n} + \\frac{(x^* - \\bar{X})^2}{S_{xx}}\\right)\\]"
+  },
+  {
+    "objectID": "slides/lec-07.html#sampling-distribution-of-widehaty-result",
+    "href": "slides/lec-07.html#sampling-distribution-of-widehaty-result",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Sampling Distribution of \\(\\widehat{Y}^*\\) — Result",
+    "text": "Sampling Distribution of \\(\\widehat{Y}^*\\) — Result\n\nWe now have both pieces — the mean and the variance. Putting them together gives the full sampling distribution, which we then standardize into a \\(t\\)-pivot to construct the CI:\n\\[\\widehat{Y}^* \\sim N\\!\\left(\\beta_0 + \\beta_1 x^*,\\;\\; \\sigma^2\\!\\left(\\frac{1}{n} + \\frac{(x^* - \\bar{X})^2}{S_{xx}}\\right)\\right)\\]\n\nReplacing \\(\\sigma^2\\) with MSE gives the \\(t_{n-2}\\) pivot:\n\\[\\frac{\\widehat{Y}^* - (\\beta_0 + \\beta_1 x^*)}{\\sqrt{\\text{MSE}\\!\\left(\\dfrac{1}{n} + \\dfrac{(x^*-\\bar{X})^2}{S_{xx}}\\right)}} \\sim t_{n-2}\\]\n\n\nA \\(100(1-\\alpha)\\%\\) confidence interval for \\(E(Y \\mid X = x^*)\\):\n\\[\\boxed{\\widehat{Y}^* \\;\\pm\\; t_{1-\\alpha/2,\\, n-2}\\sqrt{\\text{MSE}\\!\\left(\\frac{1}{n} + \\frac{(x^*-\\bar{X})^2}{S_{xx}}\\right)}}\\]"
+  },
+  {
+    "objectID": "slides/lec-07.html#partitioning-total-variation-result",
+    "href": "slides/lec-07.html#partitioning-total-variation-result",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Partitioning Total Variation — Result",
+    "text": "Partitioning Total Variation — Result\nDropping the cross-product term gives:\n\\[\\underbrace{\\sum_{i=1}^n (Y_i - \\bar{Y})^2}_{\\text{SSTO}} = \\underbrace{\\sum_{i=1}^n (\\hat{Y}_i - \\bar{Y})^2}_{\\text{SSR}} + \\underbrace{\\sum_{i=1}^n (Y_i - \\hat{Y}_i)^2}_{\\text{SSE}}\\]\n\n\n\n\nSymbol\nName\nMeaning\n\n\n\n\nSSTO\nTotal SS\nTotal variation in \\(Y\\)\n\n\nSSR\nRegression SS\nVariation explained by \\(X\\)\n\n\nSSE\nError SS\nVariation unexplained (residual)"
+  },
+  {
+    "objectID": "slides/lec-07.html#the-f-test-decision-rule",
+    "href": "slides/lec-07.html#the-f-test-decision-rule",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "The F-Test — Decision Rule",
+    "text": "The F-Test — Decision Rule\nUnder \\(H_0\\), \\(F^* \\sim F(1,\\, n-2)\\). Reject \\(H_0\\) at level \\(\\alpha\\) if:\n\\[F^* &gt; F(1-\\alpha;\\; 1,\\, n-2)\\]\n\nConnection to the t-test: In simple linear regression, \\(F^* = (t^*)^2\\), so the F-test and the t-test for \\(H_0: \\beta_1 = 0\\) are equivalent — they always give the same p-value.\n\n\n\nfit &lt;- lm(mpg ~ wt, data = mtcars)\nanova(fit)\n\nAnalysis of Variance Table\n\nResponse: mpg\n          Df Sum Sq Mean Sq F value    Pr(&gt;F)    \nwt         1 847.73  847.73  91.375 1.294e-10 ***\nResiduals 30 278.32    9.28                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "slides/lec-07.html#why-mathrmetextmsr-sigma2-beta_12-s_xx",
+    "href": "slides/lec-07.html#why-mathrmetextmsr-sigma2-beta_12-s_xx",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "Why \\(\\mathrm{E}(\\text{MSR}) = \\sigma^2 + \\beta_1^2 S_{xx}\\)?",
+    "text": "Why \\(\\mathrm{E}(\\text{MSR}) = \\sigma^2 + \\beta_1^2 S_{xx}\\)?\nStart from \\(SSR = \\sum_{i=1}^n (\\hat{Y}_i - \\bar{Y})^2\\). Since \\(\\bar{Y} = \\hat{\\beta}_0 + \\hat{\\beta}_1\\bar{X}\\):\n\\[\\hat{Y}_i - \\bar{Y} = (\\hat{\\beta}_0 + \\hat{\\beta}_1 X_i) - (\\hat{\\beta}_0 + \\hat{\\beta}_1\\bar{X}) = \\hat{\\beta}_1(X_i - \\bar{X})\\]\n\nTherefore:\n\\[SSR = \\sum_{i=1}^n \\hat{\\beta}_1^2(X_i - \\bar{X})^2 = \\hat{\\beta}_1^2\\, S_{xx}\\]\nSince \\(\\text{MSR} = \\text{SSR}/1\\): \\(\\quad E(\\text{MSR}) = S_{xx}\\, E(\\hat{\\beta}_1^2)\\)\n\n\nUse the identity \\(E(\\hat{\\beta}_1^2) = \\mathrm{Var}(\\hat{\\beta}_1) + [E(\\hat{\\beta}_1)]^2 = \\dfrac{\\sigma^2}{S_{xx}} + \\beta_1^2\\):\n\\[E(\\text{MSR}) = S_{xx}\\!\\left(\\frac{\\sigma^2}{S_{xx}} + \\beta_1^2\\right) = \\sigma^2 + \\beta_1^2 S_{xx}\\]\n\n\nWhen \\(\\beta_1 = 0\\): \\(E(\\text{MSR}) = \\sigma^2 = E(\\text{MSE})\\) — both estimate the same thing.\nWhen \\(\\beta_1 \\neq 0\\): \\(E(\\text{MSR}) &gt; \\sigma^2\\) — MSR is inflated, so \\(F^* = \\text{MSR}/\\text{MSE}\\) will tend to be large."
+  },
+  {
+    "objectID": "slides/lec-07.html#the-f-distribution",
+    "href": "slides/lec-07.html#the-f-distribution",
+    "title": "Lecture 7: Prediction and Intervals",
+    "section": "The F Distribution",
+    "text": "The F Distribution\nThe F distribution is the distribution of a ratio of two independent chi-squared random variables, each divided by their degrees of freedom:\n\\[F(d_1, d_2) = \\frac{\\chi^2_{d_1}/d_1}{\\chi^2_{d_2}/d_2}\\]\n\nIn our setting:\n\n\\(\\text{SSR}/\\sigma^2 \\sim \\chi^2_1\\) — 1 df because there is one slope parameter\n\\(\\text{SSE}/\\sigma^2 \\sim \\chi^2_{n-2}\\) — \\(n-2\\) df, same as before\nThese two are independent\n\n\n\nTaking their ratio:\n\\[F^* = \\frac{\\text{SSR}/1}{\\text{SSE}/(n-2)} \\sim F(1,\\, n-2) \\quad \\text{under } H_0\\]\nThe \\(\\sigma^2\\)’s cancel — we do not need to know \\(\\sigma^2\\) to use the test.\n\n\nThe F distribution is always non-negative and right-skewed. We only reject \\(H_0\\) for large values of \\(F^*\\), because a large ratio means the model explains far more variation than noise alone would."
   }
 ]

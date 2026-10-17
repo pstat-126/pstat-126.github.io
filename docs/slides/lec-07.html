@@ -196,6 +196,8 @@
       margin-right: 0; 
     }
   </style>
+  <link href="../site_libs/countdown-0.6.0/countdown.css" rel="stylesheet">
+  <script src="../site_libs/countdown-0.6.0/countdown.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -228,23 +230,93 @@ Annie Adams
 <li>Construct and interpret confidence intervals for mean response and prediction intervals</li>
 <li>Explain why prediction intervals do not collapse to a point as <span class="math inline">\(n \to \infty\)</span></li>
 <li>Compute and interpret both types of intervals in R</li>
+<li>Partition total variation into SSR and SSE and read an ANOVA table</li>
+<li>Perform the F-test for <span class="math inline">\(H_0: \beta_1 = 0\)</span> and connect it to the t-test</li>
+<li>Compute and interpret <span class="math inline">\(R^2\)</span> and adjusted <span class="math inline">\(R^2\)</span></li>
 </ul>
+</div>
+</section>
+<section id="where-we-left-off" class="slide level2 smaller">
+<h2>Where We Left Off</h2>
+<p>In Lectures 5 and 6, we:</p>
+<ul>
+<li>Added the <strong>normality assumption</strong> <span class="math inline">\(\varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)\)</span> and derived MLE (Lecture 5)</li>
+<li>Used the <span class="math inline">\(t_{n-2}\)</span> pivot to build CIs and hypothesis tests for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> (Lecture 6)</li>
+</ul>
+<div class="fragment">
+<p><strong>Today</strong> we extend inference in two new directions:</p>
+<ol type="1">
+<li><p><strong>Prediction</strong> — quantify uncertainty when making predictions at a new <span class="math inline">\(x^*\)</span>. Two distinct questions: what do we expect <em>on average</em>, vs.&nbsp;what will one <em>specific new observation</em> be?</p></li>
+<li><p><strong>Model fit</strong> — partition total variation into what the model explains (SSR) vs.&nbsp;what remains (SSE); use this to test <span class="math inline">\(H_0: \beta_1 = 0\)</span> via an F-test and summarize fit with <span class="math inline">\(R^2\)</span>.</p></li>
+</ol>
 </div>
 </section>
 <section id="confidence-intervals-for-mean-response-and-prediction" class="slide level2" data-background-color="#003660">
 <h2>Confidence Intervals for Mean Response and Prediction</h2>
 </section>
-<section id="two-forecasting-questions" class="slide level2 smaller">
-<h2>Two Forecasting Questions</h2>
-<p>After fitting <span class="math inline">\(\widehat{Y} = \widehat{\beta}_0 + \widehat{\beta}_1 X\)</span>, we often want to say something about a <strong>new input value</strong> <span class="math inline">\(x^*\)</span>.</p>
-<p>There are two fundamentally different questions:</p>
+<section id="the-setup-new-points-and-randomness" class="slide level2 smaller">
+<h2>The Setup: New Points and Randomness</h2>
+<div style="font-size: 0.82em;">
+<p><strong>What is <span class="math inline">\(x^*\)</span>?</strong> A <strong>new, fixed input value</strong> — not one of the <span class="math inline">\(X_1, \ldots, X_n\)</span> used to fit the model. The <span class="math inline">\(*\)</span> marks it as “new.”</p>
 <div class="fragment">
-<p><strong>Question 1 — Mean response:</strong> &gt; “What is the <em>average</em> fuel efficiency for <strong>all</strong> cars weighing 3,500 lbs?”</p>
+<p><em>Example:</em> A study fits <code>lm(Mort ~ Lat)</code> on 49 US states, where <code>Mort</code> is skin cancer mortality (deaths per 10 million) and <code>Lat</code> is latitude in degrees north. A new state enters at 40° north latitude: <span class="math inline">\(x^* = 40\)</span>. What can we say about its cancer mortality?</p>
+</div>
+</div>
+</section>
+<section id="whats-random-and-whats-not" class="slide level2">
+<h2>Whats Random and whats not?</h2>
+<div style="font-size: 0.53em;">
+<div class="fragment">
+<p><strong>Why is <span class="math inline">\(Y\)</span> random?</strong> The model <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i\)</span> treats the <span class="math inline">\(X_i\)</span> as <strong>fixed</strong>; <span class="math inline">\(Y_i\)</span> is random because <span class="math inline">\(\varepsilon_i \sim N(0,\sigma^2)\)</span>.</p>
+</div>
+<div class="fragment">
+<p>At <span class="math inline">\(x^*\)</span>, keep these three things straight:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 38%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Quantity</th>
+<th style="text-align: center;">Random?</th>
+<th style="text-align: left;">Why</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*\)</span></td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: left;"><span class="math inline">\(x^*\)</span> is fixed, but <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> were estimated from random training data — a different sample gives different <span class="math inline">\(\widehat{\beta}_0, \widehat{\beta}_1\)</span>, and thus a different <span class="math inline">\(\widehat{Y}^*\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\varepsilon^*\)</span></td>
+<td style="text-align: center;"><strong>Yes</strong></td>
+<td style="text-align: left;">New individual noise — independent of the training data</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(E(Y \mid X = x^*) = \beta_0 + \beta_1 x^*\)</span></td>
+<td style="text-align: center;"><strong>No</strong></td>
+<td style="text-align: left;">The true <span class="math inline">\(\beta_0, \beta_1\)</span> are fixed constants (we just don’t know them)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>This is why we need two different types of intervals</strong> — one for the fixed mean, one for a new individual observation. We define them on the next slide.</p>
+</div>
+</div>
+</section>
+<section id="two-prediction-questions" class="slide level2 smaller">
+<h2>Two Prediction Questions</h2>
+<p>After fitting <span class="math inline">\(\widehat{Y} = \widehat{\beta}_0 + \widehat{\beta}_1 X\)</span>, we often want to say something about a <strong>new input value</strong> <span class="math inline">\(x^*\)</span>.</p>
+<p>The point estimate <span class="math inline">\(\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*\)</span> is the same regardless — but to build an interval, we first need to ask: <strong>what exactly are we trying to capture?</strong> The answer leads to two fundamentally different questions:</p>
+<div class="fragment">
+<p><strong>Question 1 — Mean response:</strong> &gt; “What is the <em>average</em> cancer mortality for <strong>all</strong> US states at 40° latitude?”</p>
 <p>Targets <span class="math inline">\(E(Y \mid X = x^*) = \beta_0 + \beta_1 x^*\)</span> — a fixed (unknown) parameter.</p>
 <p><span class="math inline">\(\longrightarrow\)</span> <strong>Confidence interval for mean response</strong></p>
 </div>
 <div class="fragment">
-<p><strong>Question 2 — New individual observation:</strong> &gt; “How many mpg will <em>this specific</em> 3,500 lb car get?”</p>
+<p><strong>Question 2 — New individual observation:</strong> &gt; “What will skin cancer mortality be in <em>this specific</em> state at 40° latitude?”</p>
 <p>Targets <span class="math inline">\(Y^* = \beta_0 + \beta_1 x^* + \varepsilon^*\)</span> — a random variable with its own noise.</p>
 <p><span class="math inline">\(\longrightarrow\)</span> <strong>Prediction interval</strong></p>
 </div>
@@ -252,33 +324,134 @@ Annie Adams
 <p>Both are centered at the same point estimate <span class="math inline">\(\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*\)</span>. They differ in what <strong>uncertainty</strong> they account for.</p>
 </div>
 </section>
-<section id="variance-of-the-fitted-value-widehaty" class="slide level2 smaller">
-<h2>Variance of the Fitted Value <span class="math inline">\(\widehat{Y}^*\)</span></h2>
-<p>Our point estimate at <span class="math inline">\(x^*\)</span> is <span class="math inline">\(\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*\)</span>. It carries uncertainty from both coefficient estimates.</p>
+<section id="estimation-of-mean-response" class="slide level2 smaller">
+<h2>Estimation of Mean Response</h2>
+<p>We want to estimate <span class="math inline">\(E(Y^*) = E(Y \mid X = x^*)\)</span> — the mean response at a new input <span class="math inline">\(x^*\)</span>.</p>
+<p>An obvious estimate is:</p>
+<p><span class="math display">\[\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*\]</span></p>
 <div class="fragment">
-<p>Since <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> share the same data, they are correlated: <span class="math inline">\(\text{Cov}(\widehat{\beta}_0, \widehat{\beta}_1) = -\bar{X}\sigma^2/S_{xx}\)</span>.</p>
-<p>Expanding the variance of <span class="math inline">\(\widehat{\beta}_0 + \widehat{\beta}_1 x^*\)</span> and substituting this covariance:</p>
-<p><span class="math display">\[\text{Var}(\widehat{Y}^*) = \sigma^2\!\left(\frac{1}{n} + \frac{(x^* - \bar{X})^2}{S_{xx}}\right)\]</span></p>
-</div>
-<div class="fragment">
-<p>Two things to notice:</p>
-<ul>
-<li class="fragment"><strong>Smallest at <span class="math inline">\(x^* = \bar{X}\)</span></strong> — we’re most certain about the fitted value at the center of the data</li>
-<li class="fragment"><strong>Grows as <span class="math inline">\(x^*\)</span> moves away from <span class="math inline">\(\bar{X}\)</span></strong> — extrapolation compounds uncertainty</li>
-</ul>
+<p>Since <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> are both linear combinations of the normal <span class="math inline">\(Y_i\)</span>’s, <span class="math inline">\(\widehat{Y}^*\)</span> also follows a <strong>normal distribution</strong>.</p>
+<p>To build a confidence interval, we follow the same strategy as Lecture 6: find the <strong>mean</strong> and <strong>variance</strong> of <span class="math inline">\(\widehat{Y}^*\)</span>, standardize to get a <span class="math inline">\(t\)</span>-pivot, then invert. The mean is straightforward; the variance requires a short derivation.</p>
 </div>
 </section>
-<section id="confidence-interval-for-mean-response" class="slide level2 smaller">
-<h2>Confidence Interval for Mean Response</h2>
-<p>Replacing <span class="math inline">\(\sigma^2\)</span> with MSE gives a <span class="math inline">\(t_{n-2}\)</span> distribution:</p>
-<p><span class="math display">\[\frac{\widehat{Y}^* - (\beta_0 + \beta_1 x^*)}{\left[\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{(x^*-\bar{X})^2}{S_{xx}}\right)\right]^{1/2}} \sim t_{n-2}\]</span></p>
+<section id="sampling-distribution-of-widehaty" class="slide level2 smaller">
+<h2>Sampling Distribution of <span class="math inline">\(\widehat{Y}^*\)</span></h2>
+<div style="font-size: 0.88em;">
+<p>We need to first confirm <span class="math inline">\(\widehat{Y}^*\)</span> is unbiased, and then derive <span class="math inline">\(\mathrm{Var}(\widehat{Y}^*)\)</span>.</p>
+<p><span class="math inline">\(\mathrm{E}(\widehat{Y}^*) = \mathrm{E}(\widehat{\beta}_0 + \widehat{\beta}_1 x^*) = \beta_0 + \beta_1 x^*\)</span> ✓</p>
+<div class="fragment">
+<p>For the variance, substitute <span class="math inline">\(\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1\bar{X}\)</span>:</p>
+<p><span class="math display">\[\mathrm{Var}(\widehat{Y}^*) = \mathrm{Var}(\bar{Y} - \widehat{\beta}_1\bar{X} + \widehat{\beta}_1 x^*) = \mathrm{Var}(\bar{Y} + \widehat{\beta}_1(x^* - \bar{X}))\]</span></p>
+</div>
+<div class="fragment">
+<p>Expanding:</p>
+<p><span class="math display">\[= \mathrm{Var}(\bar{Y}) + (x^* - \bar{X})^2\,\mathrm{Var}(\widehat{\beta}_1) + 2(x^* - \bar{X})\,\mathrm{Cov}(\bar{Y},\, \widehat{\beta}_1)\]</span></p>
+</div>
+<div class="fragment">
+<p>Substituting known variances from Lectures 5–6:</p>
+<p><span class="math display">\[\mathrm{Var}(\bar{Y}) = \frac{\sigma^2}{n}, \qquad \mathrm{Var}(\widehat{\beta}_1) = \frac{\sigma^2}{S_{xx}}\]</span></p>
+</div>
+<div class="fragment">
+<p>The cross-term vanishes because <span class="math inline">\(\mathrm{Cov}(\bar{Y}, \widehat{\beta}_1) = 0\)</span> (shown on the next slide):</p>
+<p><span class="math display">\[= \frac{\sigma^2}{n} + (x^* - \bar{X})^2 \cdot \frac{\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n} + \frac{(x^* - \bar{X})^2}{S_{xx}}\right)\]</span></p>
+</div>
+</div>
+</section>
+<section id="why-mathrmcovbary-widehatbeta_1-0" class="slide level2 smaller">
+<h2>Why <span class="math inline">\(\mathrm{Cov}(\bar{Y},\, \widehat{\beta}_1) = 0\)</span>?</h2>
+<p>Recall <span class="math inline">\(\widehat{\beta}_1 = \sum_{i=1}^n a_i Y_i\)</span> where <span class="math inline">\(a_i = (X_i - \bar{X})/S_{xx}\)</span>.</p>
+<p><span class="math display">\[\mathrm{Cov}(\bar{Y},\, \widehat{\beta}_1) = \mathrm{Cov}\!\left(\frac{1}{n}\sum_{i=1}^n Y_i,\; \sum_{i=1}^n a_i Y_i\right)\]</span></p>
+<div class="fragment">
+<p>Since the <span class="math inline">\(Y_i\)</span> are <strong>independent</strong>, only the <span class="math inline">\(i = j\)</span> terms survive:</p>
+<p><span class="math display">\[= \frac{1}{n}\sum_{i=1}^n a_i\,\mathrm{Var}(Y_i) = \frac{\sigma^2}{n}\sum_{i=1}^n a_i\]</span></p>
+</div>
+<div class="fragment">
+<p>And <span class="math inline">\(\displaystyle\sum_{i=1}^n a_i = \sum_{i=1}^n \frac{X_i - \bar{X}}{S_{xx}} = \frac{1}{S_{xx}}\underbrace{\sum_{i=1}^n (X_i - \bar{X})}_{=\;0} = 0\)</span></p>
+<p>Therefore <span class="math inline">\(\mathrm{Cov}(\bar{Y}, \widehat{\beta}_1) = 0\)</span>. <span class="math inline">\(\square\)</span></p>
+</div>
+</section>
+<section id="sampling-distribution-of-widehaty-result" class="slide level2">
+<h2>Sampling Distribution of <span class="math inline">\(\widehat{Y}^*\)</span> — Result</h2>
+<div style="font-size: 0.55em;">
+<p>We now have both pieces — the mean and the variance. Putting them together gives the full sampling distribution, which we then standardize into a <span class="math inline">\(t\)</span>-pivot to construct the CI:</p>
+<p><span class="math display">\[\widehat{Y}^* \sim N\!\left(\beta_0 + \beta_1 x^*,\;\; \sigma^2\!\left(\frac{1}{n} + \frac{(x^* - \bar{X})^2}{S_{xx}}\right)\right)\]</span></p>
+<div class="fragment">
+<p>Replacing <span class="math inline">\(\sigma^2\)</span> with MSE gives the <span class="math inline">\(t_{n-2}\)</span> pivot:</p>
+<p><span class="math display">\[\frac{\widehat{Y}^* - (\beta_0 + \beta_1 x^*)}{\sqrt{\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{(x^*-\bar{X})^2}{S_{xx}}\right)}} \sim t_{n-2}\]</span></p>
+</div>
 <div class="fragment">
 <p>A <span class="math inline">\(100(1-\alpha)\%\)</span> <strong>confidence interval for</strong> <span class="math inline">\(E(Y \mid X = x^*)\)</span>:</p>
-<p><span class="math display">\[\boxed{\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(\frac{1}{n} + \frac{(x^*-\bar{X})^2}{S_{xx}}\right)\right]^{1/2}}\]</span></p>
+<p><span class="math display">\[\boxed{\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\, n-2}\sqrt{\text{MSE}\!\left(\frac{1}{n} + \frac{(x^*-\bar{X})^2}{S_{xx}}\right)}}\]</span></p>
+</div>
 </div>
 </section>
-<section id="two-sources-of-uncertainty-in-prediction" class="slide level2 smaller">
+<section id="worked-example-skin-cancer-and-latitude" class="slide level2 smaller">
+<h2>Worked Example: Skin Cancer and Latitude</h2>
+<p><strong>Data:</strong> Skin cancer mortality (deaths per 10 million) vs.&nbsp;latitude for <span class="math inline">\(n = 49\)</span> US states.</p>
+<p><span class="math display">\[\widehat{\text{Mort}} = 389.19 - 5.978 \times \text{Lat}, \qquad \bar{X} = 39.5°\]</span></p>
+<div class="fragment">
+<p><strong>At <span class="math inline">\(x^* = 41°\)</span> north latitude:</strong></p>
+<p><span class="math display">\[\widehat{Y}^* = 389.19 - 5.978(41) = \mathbf{144.1} \text{ deaths per 10 million}\]</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">predict</span>(fit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Lat =</span> <span class="dv">41</span>), <span class="at">interval =</span> <span class="st">"confidence"</span>)</span>
+<span id="cb1-2"><a aria-label="2"></a><span class="co">#      fit      lwr      upr</span></span>
+<span id="cb1-3"><a aria-label="3"></a><span class="co">#  144.092  138.361  149.823</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>95% CI:</strong> We are 95% confident the <em>average</em> mortality for all states at 41° north is between <strong>138.4 and 149.8</strong> deaths per 10 million.</p>
+</div>
+<div class="fragment">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="fu">predict</span>(fit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Lat =</span> <span class="dv">41</span>), <span class="at">interval =</span> <span class="st">"prediction"</span>)</span>
+<span id="cb2-2"><a aria-label="2"></a><span class="co">#      fit      lwr      upr</span></span>
+<span id="cb2-3"><a aria-label="3"></a><span class="co">#  144.092  105.212  182.972</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>95% PI:</strong> We predict a new individual state at 41° north will have mortality between <strong>105.2 and 183.0</strong> deaths per 10 million — a range nearly 7× wider than the CI.</p>
+</div>
+</section>
+<section id="width-depends-on-distance-from-barx" class="slide level2 smaller">
+<h2>Width Depends on Distance from <span class="math inline">\(\bar{X}\)</span></h2>
+<p>The CI formula contains <span class="math inline">\(\dfrac{(x^* - \bar{X})^2}{S_{xx}}\)</span> — this grows as <span class="math inline">\(x^*\)</span> moves away from <span class="math inline">\(\bar{X}\)</span>.</p>
+<div class="fragment">
+<p>For the skin cancer model with <span class="math inline">\(\bar{X} = 39.5°\)</span>:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(x^*\)</span></th>
+<th style="text-align: center;">Distance from <span class="math inline">\(\bar{X}\)</span></th>
+<th style="text-align: center;">Point estimate</th>
+<th style="text-align: center;">95% CI</th>
+<th style="text-align: center;">Width</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">40°</td>
+<td style="text-align: center;">0.5° (near center)</td>
+<td style="text-align: center;">150.1</td>
+<td style="text-align: center;">(144.6, 155.6)</td>
+<td style="text-align: center;"><strong>11.0 deaths</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">28°</td>
+<td style="text-align: center;">11.5° (far from center)</td>
+<td style="text-align: center;">221.8</td>
+<td style="text-align: center;">(206.9, 236.8)</td>
+<td style="text-align: center;"><strong>29.9 deaths</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The interval at 28° is nearly <strong>3× wider</strong>, even though <span class="math inline">\(n\)</span> is the same.</p>
+</div>
+<div class="fragment">
+<p><strong>Takeaway:</strong> Intervals are narrowest at <span class="math inline">\(\bar{X}\)</span> and widen with extrapolation. The further you predict from the center of your data, the less certain you should be.</p>
+</div>
+</section>
+<section id="two-sources-of-uncertainty-in-prediction" class="slide level2">
 <h2>Two Sources of Uncertainty in Prediction</h2>
+<div style="font-size: 0.55em;">
 <p>For a <strong>new observation</strong> <span class="math inline">\(Y^* = \beta_0 + \beta_1 x^* + \varepsilon^*\)</span>, the prediction error decomposes as:</p>
 <p><span class="math display">\[Y^* - \widehat{Y}^* = \underbrace{\left[(\beta_0 + \beta_1 x^*) - \widehat{Y}^*\right]}_{\text{estimation error}} + \underbrace{\varepsilon^*}_{\text{new individual noise}}\]</span></p>
 <div class="fragment">
@@ -311,6 +484,7 @@ Annie Adams
 </table>
 <p>The extra <span class="math inline">\(\sigma^2\)</span> is irreducible — it exists regardless of how much data we collect.</p>
 </div>
+</div>
 </section>
 <section id="prediction-interval" class="slide level2 smaller">
 <h2>Prediction Interval</h2>
@@ -319,12 +493,13 @@ Annie Adams
 <div class="fragment">
 <p>A <span class="math inline">\(100(1-\alpha)\%\)</span> <strong>prediction interval</strong> for a new <span class="math inline">\(Y^*\)</span> at <span class="math inline">\(X = x^*\)</span>:</p>
 <p><span class="math display">\[\boxed{\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(1 + \frac{1}{n} + \frac{(x^*-\bar{X})^2}{S_{xx}}\right)\right]^{1/2}}\]</span></p>
-<p><strong>The only difference from the CI is the <span class="math inline">\(+\,1\)</span> inside the brackets.</strong></p>
 </div>
 <div class="fragment">
-<p><strong>Key consequence:</strong> Even as <span class="math inline">\(n \to \infty\)</span>, the PI does <strong>not</strong> collapse to a point:</p>
-<p><span class="math display">\[\text{PI width} \to 2\,t \cdot \text{MSE}^{1/2} \quad \text{as } n \to \infty\]</span></p>
-<p>There will always be irreducible noise in a new individual observation.</p>
+<p><strong>Key consequence:</strong> Even as <span class="math inline">\(n \to \infty\)</span>, the PI does <strong>not</strong> collapse to a point. As <span class="math inline">\(n \to \infty\)</span>, <span class="math inline">\(\frac{1}{n} \to 0\)</span> and <span class="math inline">\(\frac{(x^*-\bar{X})^2}{S_{xx}} \to 0\)</span>, so the PI becomes:</p>
+<p><span class="math display">\[\widehat{Y}^* \pm t \cdot \sqrt{\text{MSE}\!\left(1 + 0 + 0\right)} = \widehat{Y}^* \pm t\sqrt{\text{MSE}}\]</span></p>
+<p>The total width is <span class="math inline">\(2t\sqrt{\text{MSE}}\)</span>. And since MSE <span class="math inline">\(\to \sigma^2\)</span> as <span class="math inline">\(n \to \infty\)</span>:</p>
+<p><span class="math display">\[\text{PI width} \to 2t\sqrt{\sigma^2} = 2t\sigma\]</span></p>
+<p>The <span class="math inline">\(\sigma^2\)</span> from <span class="math inline">\(\varepsilon^*\)</span> is irreducible — it cannot be estimated away, no matter how much data we collect.</p>
 </div>
 </section>
 <section id="ci-vs.-pi-side-by-side" class="slide level2 smaller">
@@ -389,11 +564,11 @@ Annie Adams
 <section id="ci-and-pi-in-r" class="slide level2 smaller">
 <h2>CI and PI in R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
-<span id="cb1-2"><a aria-label="2"></a></span>
-<span id="cb1-3"><a aria-label="3"></a><span class="co"># 95% CI: average mpg for all cars weighing 3500 lbs</span></span>
-<span id="cb1-4"><a aria-label="4"></a><span class="fu">predict</span>(fit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">wt =</span> <span class="fl">3.5</span>),</span>
-<span id="cb1-5"><a aria-label="5"></a>        <span class="at">interval =</span> <span class="st">"confidence"</span>, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
+<span id="cb3-2"><a aria-label="2"></a></span>
+<span id="cb3-3"><a aria-label="3"></a><span class="co"># 95% CI: average mpg for all cars weighing 3500 lbs</span></span>
+<span id="cb3-4"><a aria-label="4"></a><span class="fu">predict</span>(fit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">wt =</span> <span class="fl">3.5</span>),</span>
+<span id="cb3-5"><a aria-label="5"></a>        <span class="at">interval =</span> <span class="st">"confidence"</span>, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 18.57948 17.43342 19.72553</code></pre>
@@ -401,9 +576,9 @@ Annie Adams
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="co"># 95% PI: mpg for one new specific car weighing 3500 lbs</span></span>
-<span id="cb3-2"><a aria-label="2"></a><span class="fu">predict</span>(fit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">wt =</span> <span class="fl">3.5</span>),</span>
-<span id="cb3-3"><a aria-label="3"></a>        <span class="at">interval =</span> <span class="st">"prediction"</span>, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="co"># 95% PI: mpg for one new specific car weighing 3500 lbs</span></span>
+<span id="cb5-2"><a aria-label="2"></a><span class="fu">predict</span>(fit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">wt =</span> <span class="fl">3.5</span>),</span>
+<span id="cb5-3"><a aria-label="3"></a>        <span class="at">interval =</span> <span class="st">"prediction"</span>, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 18.57948 12.25426 24.90469</code></pre>
@@ -414,14 +589,391 @@ Annie Adams
 <p>The fit (<code>fit</code>) is identical. The PI is wider because the only change is adding individual-level noise.</p>
 </div>
 </section>
+<section id="practice-ci-vs.-pi" class="slide level2 smaller">
+<h2>Practice: CI vs.&nbsp;PI</h2>
+<div style="font-size: 0.80em;">
+<p>A study of <span class="math inline">\(n = 58\)</span> hospitals examined whether average patient length of stay (days) predicts infection risk (percentage of patients who acquire a hospital infection). The fitted model is:</p>
+<p><span class="math display">\[\widehat{\text{InfRisk}} = -1.160 + 0.5689 \times \text{Stay}, \qquad \bar{X} = 9.88 \text{ days}\]</span></p>
+<p><strong>(a)</strong> A state health official wants to know the <strong>expected</strong> infection risk across all hospitals with a 10-day average stay. Should she compute a CI or a PI? Write the question being answered.</p>
+<p><strong>(b)</strong> A <strong>new hospital</strong> is opening with a planned average stay of 10 days. The official wants to predict <em>that specific hospital’s</em> infection risk. CI or PI?</p>
+<p><strong>(c)</strong> At <span class="math inline">\(x^* = 10\)</span> days, R gives:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;">fit</th>
+<th style="text-align: center;">lwr</th>
+<th style="text-align: center;">upr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CI</td>
+<td style="text-align: center;">4.529</td>
+<td style="text-align: center;">4.259</td>
+<td style="text-align: center;">4.799</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PI</td>
+<td style="text-align: center;">4.529</td>
+<td style="text-align: center;">2.459</td>
+<td style="text-align: center;">6.599</td>
+</tr>
+</tbody>
+</table>
+<p>Write one sentence interpreting each interval. Why is the PI so much wider?</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<countdown-timer class="countdown" id="timer_922ff979" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+</div>
+</div>
+</section>
+<section id="practice-ci-vs.-pi-solution" class="slide level2 smaller">
+<h2>Practice: CI vs.&nbsp;PI — Solution</h2>
+<p><strong>(a)</strong> <strong>CI</strong> — targets the mean response for a <em>group</em>: “What is the average infection risk for all hospitals with a 10-day average stay?”</p>
+<div class="fragment">
+<p><strong>(b)</strong> <strong>PI</strong> — targets one <em>specific</em> new observation: “What infection risk will <em>this particular new hospital</em> have?”</p>
+</div>
+<div class="fragment">
+<p><strong>(c)</strong> - <strong>CI (4.259, 4.799):</strong> We are 95% confident that the <em>average</em> infection risk for all hospitals with a 10-day stay is between 4.26% and 4.80%. - <strong>PI (2.459, 6.599):</strong> We are 95% confident that <em>this specific new hospital</em> with a 10-day stay will have an infection risk between 2.46% and 6.60%.</p>
+<p>The PI is wider because it accounts for both estimation uncertainty in <span class="math inline">\(\widehat{Y}^*\)</span> <em>and</em> irreducible individual-level noise <span class="math inline">\(\varepsilon^*\)</span>. Even with infinite data, each hospital has its own random error that cannot be predicted away.</p>
+</div>
+</section>
+<section id="analysis-of-variance" class="slide level2" data-background-color="#003660">
+<h2>Analysis of Variance</h2>
+</section>
+<section id="from-prediction-to-model-assessment" class="slide level2 smaller">
+<h2>From Prediction to Model Assessment</h2>
+<p>So far we have focused on <strong>making predictions</strong> at a specific <span class="math inline">\(x^*\)</span> and building intervals around them.</p>
+<div class="fragment">
+<p>A separate question is: <strong>how well does the model fit the data overall?</strong></p>
+<ul>
+<li>Does the predictor <span class="math inline">\(X\)</span> explain a meaningful share of the variation in <span class="math inline">\(Y\)</span>?</li>
+<li>Is there statistical evidence of <em>any</em> linear relationship?</li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>Analysis of Variance (ANOVA)</strong> answers this by decomposing the total variation in <span class="math inline">\(Y\)</span> into two parts:</p>
+<ul>
+<li><strong>What the model explains</strong> — variation in the fitted values <span class="math inline">\(\hat{Y}_i\)</span> around <span class="math inline">\(\bar{Y}\)</span></li>
+<li><strong>What the model does not explain</strong> — the residuals <span class="math inline">\(Y_i - \hat{Y}_i\)</span></li>
+</ul>
+<p>This decomposition leads directly to a formal test for <span class="math inline">\(H_0: \beta_1 = 0\)</span> and a summary of overall fit via <span class="math inline">\(R^2\)</span>.</p>
+</div>
+</section>
+<section id="partitioning-total-variation" class="slide level2 smaller">
+<h2>Partitioning Total Variation</h2>
+<p>Every observation’s deviation from <span class="math inline">\(\bar{Y}\)</span> splits into two parts:</p>
+<p><span class="math display">\[Y_i - \bar{Y} = (Y_i - \hat{Y}_i) + (\hat{Y}_i - \bar{Y})\]</span></p>
+<div class="fragment">
+<p>Squaring and summing over all <span class="math inline">\(i\)</span>:</p>
+<p><span class="math display">\[\sum_{i=1}^n (Y_i - \bar{Y})^2 = \sum_{i=1}^n \left[(Y_i - \hat{Y}_i) + (\hat{Y}_i - \bar{Y})\right]^2\]</span></p>
+<p><span class="math display">\[= \sum_{i=1}^n (Y_i - \hat{Y}_i)^2 + \sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2 + 2\sum_{i=1}^n (Y_i - \hat{Y}_i)(\hat{Y}_i - \bar{Y})\]</span></p>
+</div>
+<div class="fragment">
+<p>The cross-product term is zero. Writing <span class="math inline">\(e_i = Y_i - \hat{Y}_i\)</span>:</p>
+<p><span class="math display">\[\sum_{i=1}^n (Y_i - \hat{Y}_i)(\hat{Y}_i - \bar{Y})\]</span></p>
+<p><span class="math display">\[= \sum_{i=1}^n (Y_i - \hat{Y}_i)\hat{Y}_i - \sum_{i=1}^n (Y_i - \hat{Y}_i)\bar{Y}\]</span></p>
+<p><span class="math display">\[= \sum_{i=1}^n e_i \hat{Y}_i - \bar{Y}\sum_{i=1}^n e_i = 0\]</span></p>
+<p>because <span class="math inline">\(\sum_{i=1}^n e_i = 0\)</span> and <span class="math inline">\(\sum_{i=1}^n e_i \hat{Y}_i = 0\)</span> both follow from the normal equations.</p>
+</div>
+</section>
+<section id="partitioning-total-variation-result" class="slide level2 smaller">
+<h2>Partitioning Total Variation — Result</h2>
+<p>Dropping the cross-product term gives:</p>
+<p><span class="math display">\[\underbrace{\sum_{i=1}^n (Y_i - \bar{Y})^2}_{\text{SSTO}} = \underbrace{\sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2}_{\text{SSR}} + \underbrace{\sum_{i=1}^n (Y_i - \hat{Y}_i)^2}_{\text{SSE}}\]</span></p>
+<div class="fragment">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Symbol</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">SSTO</td>
+<td style="text-align: left;">Total SS</td>
+<td style="text-align: left;">Total variation in <span class="math inline">\(Y\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SSR</td>
+<td style="text-align: left;">Regression SS</td>
+<td style="text-align: left;">Variation <em>explained</em> by <span class="math inline">\(X\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SSE</td>
+<td style="text-align: left;">Error SS</td>
+<td style="text-align: left;">Variation <em>unexplained</em> (residual)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="anova-table" class="slide level2 smaller">
+<h2>ANOVA Table</h2>
+<p>The ANOVA table organizes the SS decomposition. Each SS is divided by its <strong>degrees of freedom (df)</strong> to give a <strong>mean square (MS)</strong> — a per-df average that puts SSR and SSE on a comparable scale.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 55%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Source</th>
+<th style="text-align: center;">df</th>
+<th style="text-align: center;">SS</th>
+<th style="text-align: center;">MS</th>
+<th style="text-align: left;"><span class="math inline">\(\mathrm{E}(\text{MS})\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Model</td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;">SSR</td>
+<td style="text-align: center;"><span class="math inline">\(\text{MSR} = \text{SSR}/1\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sigma^2 + \beta_1^2 S_{xx}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Error</td>
+<td style="text-align: center;"><span class="math inline">\(n-2\)</span></td>
+<td style="text-align: center;">SSE</td>
+<td style="text-align: center;"><span class="math inline">\(\text{MSE} = \text{SSE}/(n-2)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sigma^2\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total</td>
+<td style="text-align: center;"><span class="math inline">\(n-1\)</span></td>
+<td style="text-align: center;">SSTO</td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>The <span class="math inline">\(\mathrm{E}(\text{MS})\)</span> column shows what each mean square is estimating <strong>on average</strong>:</p>
+<ul>
+<li class="fragment"><span class="math inline">\(\mathrm{E}(\text{MSE}) = \sigma^2\)</span> always — MSE is an unbiased estimator of the noise variance (same MSE from before)</li>
+<li class="fragment"><span class="math inline">\(\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}\)</span> — MSR estimates <span class="math inline">\(\sigma^2\)</span> <strong>plus</strong> a term that grows with <span class="math inline">\(\beta_1^2\)</span></li>
+<li class="fragment">Under <span class="math inline">\(H_0: \beta_1 = 0\)</span>, <span class="math inline">\(\mathrm{E}(\text{MSR}) = \sigma^2\)</span> — both MS estimate the same thing</li>
+<li class="fragment">Under <span class="math inline">\(H_1: \beta_1 \neq 0\)</span>, <span class="math inline">\(\mathrm{E}(\text{MSR}) &gt; \sigma^2\)</span> — <strong>MSR will tend to be larger than MSE</strong></li>
+</ul>
+</div>
+</section>
+<section id="why-mathrmetextmsr-sigma2-beta_12-s_xx" class="slide level2 smaller">
+<h2>Why <span class="math inline">\(\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}\)</span>?</h2>
+<p>Start from <span class="math inline">\(SSR = \sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2\)</span>. Since <span class="math inline">\(\bar{Y} = \hat{\beta}_0 + \hat{\beta}_1\bar{X}\)</span>:</p>
+<p><span class="math display">\[\hat{Y}_i - \bar{Y} = (\hat{\beta}_0 + \hat{\beta}_1 X_i) - (\hat{\beta}_0 + \hat{\beta}_1\bar{X}) = \hat{\beta}_1(X_i - \bar{X})\]</span></p>
+<div class="fragment">
+<p>Therefore:</p>
+<p><span class="math display">\[SSR = \sum_{i=1}^n \hat{\beta}_1^2(X_i - \bar{X})^2 = \hat{\beta}_1^2\, S_{xx}\]</span></p>
+<p>Since <span class="math inline">\(\text{MSR} = \text{SSR}/1\)</span>: <span class="math inline">\(\quad E(\text{MSR}) = S_{xx}\, E(\hat{\beta}_1^2)\)</span></p>
+</div>
+<div class="fragment">
+<p>Use the identity <span class="math inline">\(E(\hat{\beta}_1^2) = \mathrm{Var}(\hat{\beta}_1) + [E(\hat{\beta}_1)]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2\)</span>:</p>
+<p><span class="math display">\[E(\text{MSR}) = S_{xx}\!\left(\frac{\sigma^2}{S_{xx}} + \beta_1^2\right) = \sigma^2 + \beta_1^2 S_{xx}\]</span></p>
+</div>
+<div class="fragment">
+<p>When <span class="math inline">\(\beta_1 = 0\)</span>: <span class="math inline">\(E(\text{MSR}) = \sigma^2 = E(\text{MSE})\)</span> — both estimate the same thing.</p>
+<p>When <span class="math inline">\(\beta_1 \neq 0\)</span>: <span class="math inline">\(E(\text{MSR}) &gt; \sigma^2\)</span> — MSR is inflated, so <span class="math inline">\(F^* = \text{MSR}/\text{MSE}\)</span> will tend to be large.</p>
+</div>
+</section>
+<section id="the-f-distribution" class="slide level2 smaller">
+<h2>The F Distribution</h2>
+<p>The <strong>F distribution</strong> is the distribution of a ratio of two independent chi-squared random variables, each divided by their degrees of freedom:</p>
+<p><span class="math display">\[F(d_1, d_2) = \frac{\chi^2_{d_1}/d_1}{\chi^2_{d_2}/d_2}\]</span></p>
+<div class="fragment">
+<p>In our setting:</p>
+<ul>
+<li><span class="math inline">\(\text{SSR}/\sigma^2 \sim \chi^2_1\)</span> — 1 df because there is one slope parameter</li>
+<li><span class="math inline">\(\text{SSE}/\sigma^2 \sim \chi^2_{n-2}\)</span> — <span class="math inline">\(n-2\)</span> df, same as before</li>
+<li>These two are <strong>independent</strong></li>
+</ul>
+</div>
+<div class="fragment">
+<p>Taking their ratio:</p>
+<p><span class="math display">\[F^* = \frac{\text{SSR}/1}{\text{SSE}/(n-2)} \sim F(1,\, n-2) \quad \text{under } H_0\]</span></p>
+<p>The <span class="math inline">\(\sigma^2\)</span>’s cancel — we do not need to know <span class="math inline">\(\sigma^2\)</span> to use the test.</p>
+</div>
+<div class="fragment">
+<p>The F distribution is always <strong>non-negative</strong> and <strong>right-skewed</strong>. We only reject <span class="math inline">\(H_0\)</span> for <strong>large</strong> values of <span class="math inline">\(F^*\)</span>, because a large ratio means the model explains far more variation than noise alone would.</p>
+</div>
+</section>
+<section id="the-f-test" class="slide level2">
+<h2>The F-Test</h2>
+<div style="font-size: 0.55em;">
+<p><strong>Goal:</strong> Test <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_1 \neq 0\)</span> — is there any linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>?</p>
+<div class="fragment">
+<p><strong>Intuition:</strong> If <span class="math inline">\(\beta_1 \neq 0\)</span>, the model should explain a lot of variation, so SSR should be large relative to SSE. But SSR alone depends on the scale of <span class="math inline">\(Y\)</span> — a “large” SSR in one dataset might be tiny in another. We need a <strong>relative</strong> measure.</p>
+</div>
+<div class="fragment">
+<p><strong>The F-statistic:</strong> Compare each SS scaled by its degrees of freedom (a mean square):</p>
+<p><span class="math display">\[F^* = \frac{\text{MSR}}{\text{MSE}} = \frac{\text{SSR}/1}{\text{SSE}/(n-2)}\]</span></p>
+</div>
+<div class="fragment">
+<p><strong>Why does this work?</strong> Recall from the ANOVA table:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;"><span class="math inline">\(\mathrm{E}(\text{MSR})\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(\mathrm{E}(\text{MSE})\)</span></th>
+<th style="text-align: left;">Expected <span class="math inline">\(F^*\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Under <span class="math inline">\(H_0: \beta_1 = 0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sigma^2\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sigma^2\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\approx 1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Under <span class="math inline">\(H_1: \beta_1 \neq 0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sigma^2 + \beta_1^2 S_{xx}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sigma^2\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\gg 1\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>A large <span class="math inline">\(F^*\)</span> means the model explains far more than noise alone would.</p>
+</div>
+</div>
+</section>
+<section id="the-f-test-decision-rule" class="slide level2 smaller">
+<h2>The F-Test — Decision Rule</h2>
+<p>Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(F^* \sim F(1,\, n-2)\)</span>. Reject <span class="math inline">\(H_0\)</span> at level <span class="math inline">\(\alpha\)</span> if:</p>
+<p><span class="math display">\[F^* &gt; F(1-\alpha;\; 1,\, n-2)\]</span></p>
+<div class="fragment">
+<p><strong>Connection to the t-test:</strong> In simple linear regression, <span class="math inline">\(F^* = (t^*)^2\)</span>, so the F-test and the t-test for <span class="math inline">\(H_0: \beta_1 = 0\)</span> are equivalent — they always give the same p-value.</p>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
+<span id="cb7-2"><a aria-label="2"></a><span class="fu">anova</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: mpg
+          Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+wt         1 847.73  847.73  91.375 1.294e-10 ***
+Residuals 30 278.32    9.28                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="r2-and-adjusted-r2" class="slide level2 smaller">
+<h2><span class="math inline">\(R^2\)</span> and Adjusted <span class="math inline">\(R^2\)</span></h2>
+<p>The <strong>coefficient of determination</strong> measures the fraction of variation in <span class="math inline">\(Y\)</span> explained by the model:</p>
+<p><span class="math display">\[R^2 = \frac{\text{SSR}}{\text{SSTO}} = 1 - \frac{\text{SSE}}{\text{SSTO}} \;\in\; [0, 1]\]</span></p>
+<div class="fragment">
+<p>In simple linear regression, <span class="math inline">\(R^2 = r_{XY}^2\)</span> (the squared sample correlation).</p>
+<p>Adding <strong>any</strong> predictor always increases <span class="math inline">\(R^2\)</span> — it can be inflated by irrelevant variables.</p>
+</div>
+<div class="fragment">
+<p><strong>Adjusted <span class="math inline">\(R^2\)</span></strong> penalizes for the number of <span class="math inline">\(\beta\)</span> parameters <span class="math inline">\(p\)</span> (<span class="math inline">\(p = 2\)</span> in SLR):</p>
+<p><span class="math display">\[\bar{R}^2 = 1 - \frac{\text{SSE}/(n-p)}{\text{SSTO}/(n-1)}\]</span></p>
+<p><span class="math inline">\(\bar{R}^2\)</span> can <strong>decrease</strong> when a weak predictor is added — preferred for model comparison.</p>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
+<span id="cb9-2"><a aria-label="2"></a><span class="fu">c</span>(<span class="at">R2     =</span> <span class="fu">summary</span>(fit)<span class="sc">$</span>r.squared,</span>
+<span id="cb9-3"><a aria-label="3"></a>  <span class="at">Adj_R2 =</span> <span class="fu">summary</span>(fit)<span class="sc">$</span>adj.r.squared,</span>
+<span id="cb9-4"><a aria-label="4"></a>  <span class="at">r_sq   =</span> <span class="fu">cor</span>(mtcars<span class="sc">$</span>wt, mtcars<span class="sc">$</span>mpg)<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       R2    Adj_R2      r_sq 
+0.7528328 0.7445939 0.7528328 </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="practice-anova-and-r2" class="slide level2 smaller">
+<h2>Practice: ANOVA and <span class="math inline">\(R^2\)</span></h2>
+<div style="font-size: 0.80em;">
+<p><strong>A simple linear regression on <span class="math inline">\(n = 30\)</span> observations gives this partial ANOVA table:</strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Source</th>
+<th style="text-align: center;">df</th>
+<th style="text-align: center;">SS</th>
+<th style="text-align: center;">MS</th>
+<th style="text-align: center;"><span class="math inline">\(F^*\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Model</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">892.4</td>
+<td style="text-align: center;">?</td>
+<td style="text-align: center;">?</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Error</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">247.6</td>
+<td style="text-align: center;">?</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Total</td>
+<td style="text-align: center;">29</td>
+<td style="text-align: center;">1140.0</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>(a)</strong> Fill in the three missing values: MSR, MSE, and <span class="math inline">\(F^*\)</span>.</p>
+<p><strong>(b)</strong> Compute <span class="math inline">\(R^2\)</span> and interpret it in one sentence.</p>
+<p><strong>(c)</strong> The t-statistic for <span class="math inline">\(\hat\beta_1\)</span> is <span class="math inline">\(t^* = 10.05\)</span>. Verify that <span class="math inline">\(F^* \approx (t^*)^2\)</span>.</p>
+<p><strong>(d)</strong> At <span class="math inline">\(\alpha = 0.05\)</span>, do you reject <span class="math inline">\(H_0: \beta_1 = 0\)</span>? The critical value is <span class="math inline">\(F_{0.95}(1, 28) \approx 4.20\)</span>.</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<countdown-timer class="countdown" id="timer_659f51ae" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+</div>
+</div>
+</section>
+<section id="practice-anova-and-r2-solution" class="slide level2 smaller">
+<h2>Practice: ANOVA and <span class="math inline">\(R^2\)</span> — Solution</h2>
+<p><strong>(a)</strong></p>
+<p><span class="math display">\[\text{MSR} = \frac{892.4}{1} = 892.4 \qquad \text{MSE} = \frac{247.6}{28} = 8.84 \qquad F^* = \frac{892.4}{8.84} \approx 100.9\]</span></p>
+<div class="fragment">
+<p><strong>(b)</strong> <span class="math inline">\(R^2 = 892.4 / 1140.0 \approx 0.783\)</span> — about <strong>78.3%</strong> of the total variation in <span class="math inline">\(Y\)</span> is explained by the linear relationship with <span class="math inline">\(X\)</span>.</p>
+</div>
+<div class="fragment">
+<p><strong>(c)</strong> <span class="math inline">\((t^*)^2 = (10.05)^2 = 101.0 \approx 100.9 = F^*\)</span> ✓ (difference is rounding)</p>
+</div>
+<div class="fragment">
+<p><strong>(d)</strong> <span class="math inline">\(F^* = 100.9 \gg 4.20\)</span>, so we <strong>reject</strong> <span class="math inline">\(H_0: \beta_1 = 0\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>. There is strong evidence of a linear relationship.</p>
+</div>
+</section>
 <section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>
 <ul>
-<li class="fragment"><strong>CI for mean response</strong> at <span class="math inline">\(x^*\)</span>: targets <span class="math inline">\(E(Y \mid X = x^*)\)</span>; uncertainty comes only from estimating <span class="math inline">\(\widehat{Y}^*\)</span></li>
-<li class="fragment"><strong>PI for new observation</strong> at <span class="math inline">\(x^*\)</span>: targets an individual <span class="math inline">\(Y^*\)</span>; adds <span class="math inline">\(\sigma^2\)</span> for irreducible noise — always wider than the CI</li>
+<li class="fragment"><strong>CI for mean response</strong> at <span class="math inline">\(x^*\)</span>: targets <span class="math inline">\(E(Y \mid X = x^*)\)</span>; uncertainty comes only from estimating <span class="math inline">\(\widehat{Y}^*\)</span>; width <span class="math inline">\(\to 0\)</span> as <span class="math inline">\(n \to \infty\)</span></li>
+<li class="fragment"><strong>PI for new observation</strong> at <span class="math inline">\(x^*\)</span>: targets an individual <span class="math inline">\(Y^*\)</span>; adds <span class="math inline">\(\sigma^2\)</span> for irreducible noise — always wider than the CI; does <strong>not</strong> shrink to zero as <span class="math inline">\(n \to \infty\)</span></li>
 <li class="fragment">Both intervals are centered at <span class="math inline">\(\widehat{Y}^*\)</span> and are narrowest at <span class="math inline">\(x^* = \bar{X}\)</span>, widening with extrapolation</li>
-<li class="fragment">PI does not shrink to zero as <span class="math inline">\(n \to \infty\)</span> — individual noise cannot be eliminated with more data</li>
 <li class="fragment">In R: <code>predict(..., interval = "confidence")</code> vs.&nbsp;<code>predict(..., interval = "prediction")</code></li>
+<li class="fragment"><strong>ANOVA</strong>: SSTO = SSR + SSE; F-test uses <span class="math inline">\(F^* = \text{MSR}/\text{MSE} \sim F(1, n-2)\)</span>; equivalent to the t-test via <span class="math inline">\(F^* = (t^*)^2\)</span></li>
+<li class="fragment"><strong><span class="math inline">\(R^2\)</span></strong>: fraction of variance explained; equals <span class="math inline">\(r_{XY}^2\)</span> in SLR; always increases with more predictors — use <span class="math inline">\(\bar{R}^2\)</span> for model comparison</li>
 </ul>
 </section>
 <section id="questions" class="slide level2" data-background-color="#003660">

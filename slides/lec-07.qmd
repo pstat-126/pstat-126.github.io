@@ -27,6 +27,27 @@ By the end of today you will be able to:
 - Construct and interpret confidence intervals for mean response and prediction intervals
 - Explain why prediction intervals do not collapse to a point as $n \to \infty$
 - Compute and interpret both types of intervals in R
+- Partition total variation into SSR and SSE and read an ANOVA table
+- Perform the F-test for $H_0: \beta_1 = 0$ and connect it to the t-test
+- Compute and interpret $R^2$ and adjusted $R^2$
+
+:::
+
+---
+
+## Where We Left Off {.smaller}
+
+In Lectures 5 and 6, we:
+
+- Added the **normality assumption** $\varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)$ and derived MLE (Lecture 5)
+- Used the $t_{n-2}$ pivot to build CIs and hypothesis tests for $\beta_0$ and $\beta_1$ (Lecture 6)
+
+::: {.fragment}
+**Today** we extend inference in two new directions:
+
+1. **Prediction** — quantify uncertainty when making predictions at a new $x^*$. Two distinct questions: what do we expect *on average*, vs. what will one *specific new observation* be?
+
+2. **Model fit** — partition total variation into what the model explains (SSR) vs. what remains (SSE); use this to test $H_0: \beta_1 = 0$ via an F-test and summarize fit with $R^2$.
 :::
 
 ---
@@ -35,15 +56,52 @@ By the end of today you will be able to:
 
 ---
 
-## Two Forecasting Questions {.smaller}
+## The Setup: New Points and Randomness {.smaller}
+
+::: {style="font-size: 0.82em;"}
+
+**What is $x^*$?** A **new, fixed input value** — not one of the $X_1, \ldots, X_n$ used to fit the model. The $*$ marks it as "new."
+
+::: {.fragment}
+*Example:* A study fits `lm(Mort ~ Lat)` on 49 US states, where `Mort` is skin cancer mortality (deaths per 10 million) and `Lat` is latitude in degrees north. A new state enters at 40° north latitude: $x^* = 40$. What can we say about its cancer mortality?
+:::
+:::
+
+--- 
+
+## Whats Random and whats not? 
+::: {style="font-size: 0.53em;"}
+
+
+::: {.fragment}
+**Why is $Y$ random?** The model $Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i$ treats the $X_i$ as **fixed**; $Y_i$ is random because $\varepsilon_i \sim N(0,\sigma^2)$.
+:::
+
+::: {.fragment}
+At $x^*$, keep these three things straight:
+
+| Quantity | Random? | Why |
+|:---|:---:|:---|
+| $\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*$ | **Yes** | $x^*$ is fixed, but $\widehat{\beta}_0$ and $\widehat{\beta}_1$ were estimated from random training data — a different sample gives different $\widehat{\beta}_0, \widehat{\beta}_1$, and thus a different $\widehat{Y}^*$ |
+| $\varepsilon^*$ | **Yes** | New individual noise — independent of the training data |
+| $E(Y \mid X = x^*) = \beta_0 + \beta_1 x^*$ | **No** | The true $\beta_0, \beta_1$ are fixed constants (we just don't know them) |
+
+**This is why we need two different types of intervals** — one for the fixed mean, one for a new individual observation. We define them on the next slide.
+:::
+:::
+
+
+---
+
+## Two Prediction Questions {.smaller}
 
 After fitting $\widehat{Y} = \widehat{\beta}_0 + \widehat{\beta}_1 X$, we often want to say something about a **new input value** $x^*$.
 
-There are two fundamentally different questions:
+The point estimate $\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*$ is the same regardless — but to build an interval, we first need to ask: **what exactly are we trying to capture?** The answer leads to two fundamentally different questions:
 
 ::: {.fragment}
 **Question 1 — Mean response:**
-> "What is the *average* fuel efficiency for **all** cars weighing 3,500 lbs?"
+> "What is the *average* cancer mortality for **all** US states at 40° latitude?"
 
 Targets $E(Y \mid X = x^*) = \beta_0 + \beta_1 x^*$ — a fixed (unknown) parameter.
 
@@ -52,7 +110,7 @@ $\longrightarrow$ **Confidence interval for mean response**
 
 ::: {.fragment}
 **Question 2 — New individual observation:**
-> "How many mpg will *this specific* 3,500 lb car get?"
+> "What will skin cancer mortality be in *this specific* state at 40° latitude?"
 
 Targets $Y^* = \beta_0 + \beta_1 x^* + \varepsilon^*$ — a random variable with its own noise.
 
@@ -65,44 +123,158 @@ Both are centered at the same point estimate $\widehat{Y}^* = \widehat{\beta}_0 
 
 ---
 
-## Variance of the Fitted Value $\widehat{Y}^*$ {.smaller}
+## Estimation of Mean Response {.smaller}
 
-Our point estimate at $x^*$ is $\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*$. It carries uncertainty from both coefficient estimates.
+We want to estimate $E(Y^*) = E(Y \mid X = x^*)$ — the mean response at a new input $x^*$.
 
-::: {.fragment}
-Since $\widehat{\beta}_0$ and $\widehat{\beta}_1$ share the same data, they are correlated: $\text{Cov}(\widehat{\beta}_0, \widehat{\beta}_1) = -\bar{X}\sigma^2/S_{xx}$.
+An obvious estimate is:
 
-Expanding the variance of $\widehat{\beta}_0 + \widehat{\beta}_1 x^*$ and substituting this covariance:
-
-$$\text{Var}(\widehat{Y}^*) = \sigma^2\!\left(\frac{1}{n} + \frac{(x^* - \bar{X})^2}{S_{xx}}\right)$$
-:::
+$$\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*$$
 
 ::: {.fragment}
-Two things to notice:
+Since $\widehat{\beta}_0$ and $\widehat{\beta}_1$ are both linear combinations of the normal $Y_i$'s, $\widehat{Y}^*$ also follows a **normal distribution**.
 
-::: {.incremental}
-- **Smallest at $x^* = \bar{X}$** — we're most certain about the fitted value at the center of the data
-- **Grows as $x^*$ moves away from $\bar{X}$** — extrapolation compounds uncertainty
-:::
+To build a confidence interval, we follow the same strategy as Lecture 6: find the **mean** and **variance** of $\widehat{Y}^*$, standardize to get a $t$-pivot, then invert. The mean is straightforward; the variance requires a short derivation.
 :::
 
 ---
 
-## Confidence Interval for Mean Response {.smaller}
+## Sampling Distribution of $\widehat{Y}^*$ {.smaller}
 
-Replacing $\sigma^2$ with MSE gives a $t_{n-2}$ distribution:
+::: {style="font-size: 0.88em;"}
 
-$$\frac{\widehat{Y}^* - (\beta_0 + \beta_1 x^*)}{\left[\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{(x^*-\bar{X})^2}{S_{xx}}\right)\right]^{1/2}} \sim t_{n-2}$$
+We need to first confirm $\widehat{Y}^*$ is unbiased, and then derive $\mathrm{Var}(\widehat{Y}^*)$.
+
+$\mathrm{E}(\widehat{Y}^*) = \mathrm{E}(\widehat{\beta}_0 + \widehat{\beta}_1 x^*) = \beta_0 + \beta_1 x^*$ ✓
+
+::: {.fragment}
+For the variance, substitute $\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1\bar{X}$:
+
+$$\mathrm{Var}(\widehat{Y}^*) = \mathrm{Var}(\bar{Y} - \widehat{\beta}_1\bar{X} + \widehat{\beta}_1 x^*) = \mathrm{Var}(\bar{Y} + \widehat{\beta}_1(x^* - \bar{X}))$$
+:::
+
+::: {.fragment}
+Expanding:
+
+$$= \mathrm{Var}(\bar{Y}) + (x^* - \bar{X})^2\,\mathrm{Var}(\widehat{\beta}_1) + 2(x^* - \bar{X})\,\mathrm{Cov}(\bar{Y},\, \widehat{\beta}_1)$$
+:::
+
+::: {.fragment}
+Substituting known variances from Lectures 5–6:
+
+$$\mathrm{Var}(\bar{Y}) = \frac{\sigma^2}{n}, \qquad \mathrm{Var}(\widehat{\beta}_1) = \frac{\sigma^2}{S_{xx}}$$
+:::
+
+::: {.fragment}
+The cross-term vanishes because $\mathrm{Cov}(\bar{Y}, \widehat{\beta}_1) = 0$ (shown on the next slide):
+
+$$= \frac{\sigma^2}{n} + (x^* - \bar{X})^2 \cdot \frac{\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n} + \frac{(x^* - \bar{X})^2}{S_{xx}}\right)$$
+:::
+
+:::
+
+---
+
+## Why $\mathrm{Cov}(\bar{Y},\, \widehat{\beta}_1) = 0$? {.smaller}
+
+Recall $\widehat{\beta}_1 = \sum_{i=1}^n a_i Y_i$ where $a_i = (X_i - \bar{X})/S_{xx}$.
+
+$$\mathrm{Cov}(\bar{Y},\, \widehat{\beta}_1) = \mathrm{Cov}\!\left(\frac{1}{n}\sum_{i=1}^n Y_i,\; \sum_{i=1}^n a_i Y_i\right)$$
+
+::: {.fragment}
+Since the $Y_i$ are **independent**, only the $i = j$ terms survive:
+
+$$= \frac{1}{n}\sum_{i=1}^n a_i\,\mathrm{Var}(Y_i) = \frac{\sigma^2}{n}\sum_{i=1}^n a_i$$
+:::
+
+::: {.fragment}
+And $\displaystyle\sum_{i=1}^n a_i = \sum_{i=1}^n \frac{X_i - \bar{X}}{S_{xx}} = \frac{1}{S_{xx}}\underbrace{\sum_{i=1}^n (X_i - \bar{X})}_{=\;0} = 0$
+
+Therefore $\mathrm{Cov}(\bar{Y}, \widehat{\beta}_1) = 0$. $\square$
+:::
+
+---
+
+## Sampling Distribution of $\widehat{Y}^*$ — Result 
+::: {style="font-size: 0.55em;"}
+
+
+We now have both pieces — the mean and the variance. Putting them together gives the full sampling distribution, which we then standardize into a $t$-pivot to construct the CI:
+
+$$\widehat{Y}^* \sim N\!\left(\beta_0 + \beta_1 x^*,\;\; \sigma^2\!\left(\frac{1}{n} + \frac{(x^* - \bar{X})^2}{S_{xx}}\right)\right)$$
+
+::: {.fragment}
+Replacing $\sigma^2$ with MSE gives the $t_{n-2}$ pivot:
+
+$$\frac{\widehat{Y}^* - (\beta_0 + \beta_1 x^*)}{\sqrt{\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{(x^*-\bar{X})^2}{S_{xx}}\right)}} \sim t_{n-2}$$
+:::
 
 ::: {.fragment}
 A $100(1-\alpha)\%$ **confidence interval for** $E(Y \mid X = x^*)$:
 
-$$\boxed{\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(\frac{1}{n} + \frac{(x^*-\bar{X})^2}{S_{xx}}\right)\right]^{1/2}}$$
+$$\boxed{\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\, n-2}\sqrt{\text{MSE}\!\left(\frac{1}{n} + \frac{(x^*-\bar{X})^2}{S_{xx}}\right)}}$$
+
+:::
 :::
 
 ---
 
-## Two Sources of Uncertainty in Prediction {.smaller}
+## Worked Example: Skin Cancer and Latitude {.smaller}
+
+**Data:** Skin cancer mortality (deaths per 10 million) vs. latitude for $n = 49$ US states.
+
+$$\widehat{\text{Mort}} = 389.19 - 5.978 \times \text{Lat}, \qquad \bar{X} = 39.5°$$
+
+::: {.fragment}
+**At $x^* = 41°$ north latitude:**
+
+$$\widehat{Y}^* = 389.19 - 5.978(41) = \mathbf{144.1} \text{ deaths per 10 million}$$
+
+```r
+predict(fit, newdata = data.frame(Lat = 41), interval = "confidence")
+#      fit      lwr      upr
+#  144.092  138.361  149.823
+```
+
+**95% CI:** We are 95% confident the *average* mortality for all states at 41° north is between **138.4 and 149.8** deaths per 10 million.
+:::
+
+::: {.fragment}
+```r
+predict(fit, newdata = data.frame(Lat = 41), interval = "prediction")
+#      fit      lwr      upr
+#  144.092  105.212  182.972
+```
+
+**95% PI:** We predict a new individual state at 41° north will have mortality between **105.2 and 183.0** deaths per 10 million — a range nearly 7× wider than the CI.
+:::
+
+---
+
+## Width Depends on Distance from $\bar{X}$ {.smaller}
+
+The CI formula contains $\dfrac{(x^* - \bar{X})^2}{S_{xx}}$ — this grows as $x^*$ moves away from $\bar{X}$.
+
+::: {.fragment}
+For the skin cancer model with $\bar{X} = 39.5°$:
+
+| $x^*$ | Distance from $\bar{X}$ | Point estimate | 95% CI | Width |
+|:---:|:---:|:---:|:---:|:---:|
+| 40° | 0.5° (near center) | 150.1 | (144.6, 155.6) | **11.0 deaths** |
+| 28° | 11.5° (far from center) | 221.8 | (206.9, 236.8) | **29.9 deaths** |
+
+The interval at 28° is nearly **3× wider**, even though $n$ is the same.
+:::
+
+::: {.fragment}
+**Takeaway:** Intervals are narrowest at $\bar{X}$ and widen with extrapolation. The further you predict from the center of your data, the less certain you should be.
+:::
+
+---
+
+## Two Sources of Uncertainty in Prediction 
+::: {style="font-size: 0.55em;"}
+
 
 For a **new observation** $Y^* = \beta_0 + \beta_1 x^* + \varepsilon^*$, the prediction error decomposes as:
 
@@ -119,7 +291,7 @@ These are **independent**, so their variances add:
 
 The extra $\sigma^2$ is irreducible — it exists regardless of how much data we collect.
 :::
-
+:::
 ---
 
 ## Prediction Interval {.smaller}
@@ -133,15 +305,18 @@ A $100(1-\alpha)\%$ **prediction interval** for a new $Y^*$ at $X = x^*$:
 
 $$\boxed{\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(1 + \frac{1}{n} + \frac{(x^*-\bar{X})^2}{S_{xx}}\right)\right]^{1/2}}$$
 
-**The only difference from the CI is the $+\,1$ inside the brackets.**
 :::
 
 ::: {.fragment}
-**Key consequence:** Even as $n \to \infty$, the PI does **not** collapse to a point:
+**Key consequence:** Even as $n \to \infty$, the PI does **not** collapse to a point. As $n \to \infty$, $\frac{1}{n} \to 0$ and $\frac{(x^*-\bar{X})^2}{S_{xx}} \to 0$, so the PI becomes:
 
-$$\text{PI width} \to 2\,t \cdot \text{MSE}^{1/2} \quad \text{as } n \to \infty$$
+$$\widehat{Y}^* \pm t \cdot \sqrt{\text{MSE}\!\left(1 + 0 + 0\right)} = \widehat{Y}^* \pm t\sqrt{\text{MSE}}$$
 
-There will always be irreducible noise in a new individual observation.
+The total width is $2t\sqrt{\text{MSE}}$. And since MSE $\to \sigma^2$ as $n \to \infty$:
+
+$$\text{PI width} \to 2t\sqrt{\sigma^2} = 2t\sigma$$
+
+The $\sigma^2$ from $\varepsilon^*$ is irreducible — it cannot be estimated away, no matter how much data we collect.
 :::
 
 ---
@@ -234,14 +409,369 @@ The fit (`fit`) is identical. The PI is wider because the only change is adding 
 
 ---
 
+## Practice: CI vs. PI {.smaller}
+
+::: {style="font-size: 0.80em;"}
+
+A study of $n = 58$ hospitals examined whether average patient length of stay (days) predicts infection risk (percentage of patients who acquire a hospital infection). The fitted model is:
+
+$$\widehat{\text{InfRisk}} = -1.160 + 0.5689 \times \text{Stay}, \qquad \bar{X} = 9.88 \text{ days}$$
+
+**(a)** A state health official wants to know the **expected** infection risk across all hospitals with a 10-day average stay. Should she compute a CI or a PI? Write the question being answered.
+
+**(b)** A **new hospital** is opening with a planned average stay of 10 days. The official wants to predict *that specific hospital's* infection risk. CI or PI?
+
+**(c)** At $x^* = 10$ days, R gives:
+
+| | fit | lwr | upr |
+|:---|:---:|:---:|:---:|
+| CI | 4.529 | 4.259 | 4.799 |
+| PI | 4.529 | 2.459 | 6.599 |
+
+Write one sentence interpreting each interval. Why is the PI so much wider?
+
+:::
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 5,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em"
+)
+```
+
+---
+
+## Practice: CI vs. PI — Solution {.smaller}
+
+**(a)** **CI** — targets the mean response for a *group*: "What is the average infection risk for all hospitals with a 10-day average stay?"
+
+::: {.fragment}
+**(b)** **PI** — targets one *specific* new observation: "What infection risk will *this particular new hospital* have?"
+:::
+
+::: {.fragment}
+**(c)**
+- **CI (4.259, 4.799):** We are 95% confident that the *average* infection risk for all hospitals with a 10-day stay is between 4.26% and 4.80%.
+- **PI (2.459, 6.599):** We are 95% confident that *this specific new hospital* with a 10-day stay will have an infection risk between 2.46% and 6.60%.
+
+The PI is wider because it accounts for both estimation uncertainty in $\widehat{Y}^*$ *and* irreducible individual-level noise $\varepsilon^*$. Even with infinite data, each hospital has its own random error that cannot be predicted away.
+:::
+
+---
+
+## Analysis of Variance {background-color="#003660"}
+
+---
+
+## From Prediction to Model Assessment {.smaller}
+
+So far we have focused on **making predictions** at a specific $x^*$ and building intervals around them.
+
+::: {.fragment}
+A separate question is: **how well does the model fit the data overall?**
+
+- Does the predictor $X$ explain a meaningful share of the variation in $Y$?
+- Is there statistical evidence of *any* linear relationship?
+:::
+
+::: {.fragment}
+**Analysis of Variance (ANOVA)** answers this by decomposing the total variation in $Y$ into two parts:
+
+- **What the model explains** — variation in the fitted values $\hat{Y}_i$ around $\bar{Y}$
+- **What the model does not explain** — the residuals $Y_i - \hat{Y}_i$
+
+This decomposition leads directly to a formal test for $H_0: \beta_1 = 0$ and a summary of overall fit via $R^2$.
+:::
+
+---
+
+## Partitioning Total Variation {.smaller}
+
+Every observation's deviation from $\bar{Y}$ splits into two parts:
+
+$$Y_i - \bar{Y} = (Y_i - \hat{Y}_i) + (\hat{Y}_i - \bar{Y})$$
+
+::: {.fragment}
+Squaring and summing over all $i$:
+
+$$\sum_{i=1}^n (Y_i - \bar{Y})^2 = \sum_{i=1}^n \left[(Y_i - \hat{Y}_i) + (\hat{Y}_i - \bar{Y})\right]^2$$
+
+$$= \sum_{i=1}^n (Y_i - \hat{Y}_i)^2 + \sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2 + 2\sum_{i=1}^n (Y_i - \hat{Y}_i)(\hat{Y}_i - \bar{Y})$$
+:::
+
+::: {.fragment}
+The cross-product term is zero. Writing $e_i = Y_i - \hat{Y}_i$:
+
+$$\sum_{i=1}^n (Y_i - \hat{Y}_i)(\hat{Y}_i - \bar{Y})$$
+
+$$= \sum_{i=1}^n (Y_i - \hat{Y}_i)\hat{Y}_i - \sum_{i=1}^n (Y_i - \hat{Y}_i)\bar{Y}$$
+
+$$= \sum_{i=1}^n e_i \hat{Y}_i - \bar{Y}\sum_{i=1}^n e_i = 0$$
+
+because $\sum_{i=1}^n e_i = 0$ and $\sum_{i=1}^n e_i \hat{Y}_i = 0$ both follow from the normal equations.
+:::
+
+---
+
+## Partitioning Total Variation — Result {.smaller}
+
+Dropping the cross-product term gives:
+
+$$\underbrace{\sum_{i=1}^n (Y_i - \bar{Y})^2}_{\text{SSTO}} = \underbrace{\sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2}_{\text{SSR}} + \underbrace{\sum_{i=1}^n (Y_i - \hat{Y}_i)^2}_{\text{SSE}}$$
+
+::: {.fragment}
+
+| Symbol | Name | Meaning |
+|:-------|:-----|:--------|
+| SSTO | Total SS | Total variation in $Y$ |
+| SSR | Regression SS | Variation *explained* by $X$ |
+| SSE | Error SS | Variation *unexplained* (residual) |
+
+:::
+
+---
+
+## ANOVA Table {.smaller}
+
+The ANOVA table organizes the SS decomposition. Each SS is divided by its **degrees of freedom (df)** to give a **mean square (MS)** — a per-df average that puts SSR and SSE on a comparable scale.
+
+| Source | df | SS | MS | $\mathrm{E}(\text{MS})$ |
+|:-------|:--:|:--:|:--:|:------------------------|
+| Model | $1$ | SSR | $\text{MSR} = \text{SSR}/1$ | $\sigma^2 + \beta_1^2 S_{xx}$ |
+| Error | $n-2$ | SSE | $\text{MSE} = \text{SSE}/(n-2)$ | $\sigma^2$ |
+| Total | $n-1$ | SSTO | | |
+
+::: {.fragment}
+The $\mathrm{E}(\text{MS})$ column shows what each mean square is estimating **on average**:
+
+::: {.incremental}
+- $\mathrm{E}(\text{MSE}) = \sigma^2$ always — MSE is an unbiased estimator of the noise variance (same MSE from before)
+- $\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}$ — MSR estimates $\sigma^2$ **plus** a term that grows with $\beta_1^2$
+- Under $H_0: \beta_1 = 0$, $\mathrm{E}(\text{MSR}) = \sigma^2$ — both MS estimate the same thing
+- Under $H_1: \beta_1 \neq 0$, $\mathrm{E}(\text{MSR}) > \sigma^2$ — **MSR will tend to be larger than MSE**
+:::
+
+:::
+
+---
+
+## Why $\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}$? {.smaller}
+
+Start from $SSR = \sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2$. Since $\bar{Y} = \hat{\beta}_0 + \hat{\beta}_1\bar{X}$:
+
+$$\hat{Y}_i - \bar{Y} = (\hat{\beta}_0 + \hat{\beta}_1 X_i) - (\hat{\beta}_0 + \hat{\beta}_1\bar{X}) = \hat{\beta}_1(X_i - \bar{X})$$
+
+::: {.fragment}
+Therefore:
+
+$$SSR = \sum_{i=1}^n \hat{\beta}_1^2(X_i - \bar{X})^2 = \hat{\beta}_1^2\, S_{xx}$$
+
+Since $\text{MSR} = \text{SSR}/1$: $\quad E(\text{MSR}) = S_{xx}\, E(\hat{\beta}_1^2)$
+:::
+
+::: {.fragment}
+Use the identity $E(\hat{\beta}_1^2) = \mathrm{Var}(\hat{\beta}_1) + [E(\hat{\beta}_1)]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2$:
+
+$$E(\text{MSR}) = S_{xx}\!\left(\frac{\sigma^2}{S_{xx}} + \beta_1^2\right) = \sigma^2 + \beta_1^2 S_{xx}$$
+:::
+
+::: {.fragment}
+When $\beta_1 = 0$: $E(\text{MSR}) = \sigma^2 = E(\text{MSE})$ — both estimate the same thing.
+
+When $\beta_1 \neq 0$: $E(\text{MSR}) > \sigma^2$ — MSR is inflated, so $F^* = \text{MSR}/\text{MSE}$ will tend to be large.
+:::
+
+---
+
+## The F Distribution {.smaller}
+
+The **F distribution** is the distribution of a ratio of two independent chi-squared random variables, each divided by their degrees of freedom:
+
+$$F(d_1, d_2) = \frac{\chi^2_{d_1}/d_1}{\chi^2_{d_2}/d_2}$$
+
+::: {.fragment}
+In our setting:
+
+- $\text{SSR}/\sigma^2 \sim \chi^2_1$ — 1 df because there is one slope parameter
+- $\text{SSE}/\sigma^2 \sim \chi^2_{n-2}$ — $n-2$ df, same as before
+- These two are **independent**
+:::
+
+::: {.fragment}
+Taking their ratio:
+
+$$F^* = \frac{\text{SSR}/1}{\text{SSE}/(n-2)} \sim F(1,\, n-2) \quad \text{under } H_0$$
+
+The $\sigma^2$'s cancel — we do not need to know $\sigma^2$ to use the test.
+:::
+
+::: {.fragment}
+The F distribution is always **non-negative** and **right-skewed**. We only reject $H_0$ for **large** values of $F^*$, because a large ratio means the model explains far more variation than noise alone would.
+:::
+
+---
+
+## The F-Test
+::: {style="font-size: 0.55em;"}
+
+
+**Goal:** Test $H_0: \beta_1 = 0$ vs. $H_1: \beta_1 \neq 0$ — is there any linear relationship between $X$ and $Y$?
+
+::: {.fragment}
+**Intuition:** If $\beta_1 \neq 0$, the model should explain a lot of variation, so SSR should be large relative to SSE. But SSR alone depends on the scale of $Y$ — a "large" SSR in one dataset might be tiny in another. We need a **relative** measure.
+:::
+
+::: {.fragment}
+**The F-statistic:** Compare each SS scaled by its degrees of freedom (a mean square):
+
+$$F^* = \frac{\text{MSR}}{\text{MSE}} = \frac{\text{SSR}/1}{\text{SSE}/(n-2)}$$
+:::
+
+::: {.fragment}
+**Why does this work?** Recall from the ANOVA table:
+
+| | $\mathrm{E}(\text{MSR})$ | $\mathrm{E}(\text{MSE})$ | Expected $F^*$ |
+|:--|:--|:--|:--|
+| Under $H_0: \beta_1 = 0$ | $\sigma^2$ | $\sigma^2$ | $\approx 1$ |
+| Under $H_1: \beta_1 \neq 0$ | $\sigma^2 + \beta_1^2 S_{xx}$ | $\sigma^2$ | $\gg 1$ |
+
+A large $F^*$ means the model explains far more than noise alone would.
+:::
+:::
+---
+
+## The F-Test — Decision Rule {.smaller}
+
+Under $H_0$, $F^* \sim F(1,\, n-2)$. Reject $H_0$ at level $\alpha$ if:
+
+$$F^* > F(1-\alpha;\; 1,\, n-2)$$
+
+::: {.fragment}
+**Connection to the t-test:** In simple linear regression, $F^* = (t^*)^2$, so the F-test and the t-test for $H_0: \beta_1 = 0$ are equivalent — they always give the same p-value.
+:::
+
+::: {.fragment}
+```{r}
+#| echo: true
+#| eval: true
+fit <- lm(mpg ~ wt, data = mtcars)
+anova(fit)
+```
+:::
+
+---
+
+## $R^2$ and Adjusted $R^2$ {.smaller}
+
+The **coefficient of determination** measures the fraction of variation in $Y$ explained by the model:
+
+$$R^2 = \frac{\text{SSR}}{\text{SSTO}} = 1 - \frac{\text{SSE}}{\text{SSTO}} \;\in\; [0, 1]$$
+
+::: {.fragment}
+In simple linear regression, $R^2 = r_{XY}^2$ (the squared sample correlation).
+
+Adding **any** predictor always increases $R^2$ — it can be inflated by irrelevant variables.
+:::
+
+::: {.fragment}
+**Adjusted $R^2$** penalizes for the number of $\beta$ parameters $p$ ($p = 2$ in SLR):
+
+$$\bar{R}^2 = 1 - \frac{\text{SSE}/(n-p)}{\text{SSTO}/(n-1)}$$
+
+$\bar{R}^2$ can **decrease** when a weak predictor is added — preferred for model comparison.
+:::
+
+::: {.fragment}
+```{r}
+#| echo: true
+#| eval: true
+fit <- lm(mpg ~ wt, data = mtcars)
+c(R2     = summary(fit)$r.squared,
+  Adj_R2 = summary(fit)$adj.r.squared,
+  r_sq   = cor(mtcars$wt, mtcars$mpg)^2)
+```
+:::
+
+---
+
+## Practice: ANOVA and $R^2$ {.smaller}
+
+::: {style="font-size: 0.80em;"}
+
+**A simple linear regression on $n = 30$ observations gives this partial ANOVA table:**
+
+| Source | df | SS | MS | $F^*$ |
+|:-------|:--:|:---:|:--:|:-----:|
+| Model | 1 | 892.4 | ? | ? |
+| Error | 28 | 247.6 | ? | |
+| Total | 29 | 1140.0 | | |
+
+**(a)** Fill in the three missing values: MSR, MSE, and $F^*$.
+
+**(b)** Compute $R^2$ and interpret it in one sentence.
+
+**(c)** The t-statistic for $\hat\beta_1$ is $t^* = 10.05$. Verify that $F^* \approx (t^*)^2$.
+
+**(d)** At $\alpha = 0.05$, do you reject $H_0: \beta_1 = 0$? The critical value is $F_{0.95}(1, 28) \approx 4.20$.
+
+:::
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 5,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em"
+)
+```
+
+---
+
+## Practice: ANOVA and $R^2$ — Solution {.smaller}
+
+**(a)**
+
+$$\text{MSR} = \frac{892.4}{1} = 892.4 \qquad \text{MSE} = \frac{247.6}{28} = 8.84 \qquad F^* = \frac{892.4}{8.84} \approx 100.9$$
+
+::: {.fragment}
+**(b)** $R^2 = 892.4 / 1140.0 \approx 0.783$ — about **78.3%** of the total variation in $Y$ is explained by the linear relationship with $X$.
+:::
+
+::: {.fragment}
+**(c)** $(t^*)^2 = (10.05)^2 = 101.0 \approx 100.9 = F^*$ ✓ (difference is rounding)
+:::
+
+::: {.fragment}
+**(d)** $F^* = 100.9 \gg 4.20$, so we **reject** $H_0: \beta_1 = 0$ at $\alpha = 0.05$. There is strong evidence of a linear relationship.
+:::
+
+---
+
 ## Summary {.smaller}
 
 ::: {.incremental}
-- **CI for mean response** at $x^*$: targets $E(Y \mid X = x^*)$; uncertainty comes only from estimating $\widehat{Y}^*$
-- **PI for new observation** at $x^*$: targets an individual $Y^*$; adds $\sigma^2$ for irreducible noise — always wider than the CI
+- **CI for mean response** at $x^*$: targets $E(Y \mid X = x^*)$; uncertainty comes only from estimating $\widehat{Y}^*$; width $\to 0$ as $n \to \infty$
+- **PI for new observation** at $x^*$: targets an individual $Y^*$; adds $\sigma^2$ for irreducible noise — always wider than the CI; does **not** shrink to zero as $n \to \infty$
 - Both intervals are centered at $\widehat{Y}^*$ and are narrowest at $x^* = \bar{X}$, widening with extrapolation
-- PI does not shrink to zero as $n \to \infty$ — individual noise cannot be eliminated with more data
 - In R: `predict(..., interval = "confidence")` vs. `predict(..., interval = "prediction")`
+- **ANOVA**: SSTO = SSR + SSE; F-test uses $F^* = \text{MSR}/\text{MSE} \sim F(1, n-2)$; equivalent to the t-test via $F^* = (t^*)^2$
+- **$R^2$**: fraction of variance explained; equals $r_{XY}^2$ in SLR; always increases with more predictors — use $\bar{R}^2$ for model comparison
 :::
 
 ---
