@@ -251,6 +251,51 @@ Annie Adams
 </ol>
 </div>
 </section>
+<section id="roadmap-three-types-of-intervals" class="slide level2 smaller">
+<h2>Roadmap: Three Types of Intervals</h2>
+<div style="font-size: 0.80em;">
+<p>In Lecture 6 we built intervals about the <strong>parameters of the line</strong>. Today we build intervals about <strong>predicted values</strong>.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">What it targets</th>
+<th style="text-align: left;">Question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>CI for <span class="math inline">\(\beta_1\)</span></strong> (Lec 6)</td>
+<td style="text-align: left;">The true slope <span class="math inline">\(\beta_1\)</span></td>
+<td style="text-align: left;">“How steep is the relationship between x and y, and is there evidence it’s non-zero?”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>CI for <span class="math inline">\(\beta_0\)</span></strong> (Lec 6)</td>
+<td style="text-align: left;">The true intercept <span class="math inline">\(\beta_0\)</span></td>
+<td style="text-align: left;">“Where does the line cross <span class="math inline">\(X = 0\)</span>?”</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>CI for mean response</strong> (today)</td>
+<td style="text-align: left;"><span class="math inline">\(E(Y \mid X = x^*) = \beta_0 + \beta_1 x^*\)</span></td>
+<td style="text-align: left;">“What is the <em>average</em> <span class="math inline">\(Y\)</span> for all units at <span class="math inline">\(x^*\)</span>?”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Prediction interval</strong> (today)</td>
+<td style="text-align: left;">A new individual <span class="math inline">\(Y^* = \beta_0 + \beta_1 x^* + \varepsilon^*\)</span></td>
+<td style="text-align: left;">“What will <em>this specific new</em> observation be at <span class="math inline">\(x^*\)</span>?”</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p><strong>Key shift:</strong> Lecture 6 asked <em>what the line looks like</em>. Today we ask <em>what the line predicts at a new point</em> and whether we want the average outcome or one individual outcome.</p>
+</div>
+</div>
+</section>
 <section id="confidence-intervals-for-mean-response-and-prediction" class="slide level2" data-background-color="#003660">
 <h2>Confidence Intervals for Mean Response and Prediction</h2>
 </section>
@@ -306,8 +351,9 @@ Annie Adams
 </div>
 </div>
 </section>
-<section id="two-prediction-questions" class="slide level2 smaller">
+<section id="two-prediction-questions" class="slide level2">
 <h2>Two Prediction Questions</h2>
+<div style="font-size: 0.63em;">
 <p>After fitting <span class="math inline">\(\widehat{Y} = \widehat{\beta}_0 + \widehat{\beta}_1 X\)</span>, we often want to say something about a <strong>new input value</strong> <span class="math inline">\(x^*\)</span>.</p>
 <p>The point estimate <span class="math inline">\(\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*\)</span> is the same regardless — but to build an interval, we first need to ask: <strong>what exactly are we trying to capture?</strong> The answer leads to two fundamentally different questions:</p>
 <div class="fragment">
@@ -320,8 +366,6 @@ Annie Adams
 <p>Targets <span class="math inline">\(Y^* = \beta_0 + \beta_1 x^* + \varepsilon^*\)</span> — a random variable with its own noise.</p>
 <p><span class="math inline">\(\longrightarrow\)</span> <strong>Prediction interval</strong></p>
 </div>
-<div class="fragment">
-<p>Both are centered at the same point estimate <span class="math inline">\(\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*\)</span>. They differ in what <strong>uncertainty</strong> they account for.</p>
 </div>
 </section>
 <section id="estimation-of-mean-response" class="slide level2 smaller">
@@ -331,30 +375,58 @@ Annie Adams
 <p><span class="math display">\[\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*\]</span></p>
 <div class="fragment">
 <p>Since <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> are both linear combinations of the normal <span class="math inline">\(Y_i\)</span>’s, <span class="math inline">\(\widehat{Y}^*\)</span> also follows a <strong>normal distribution</strong>.</p>
-<p>To build a confidence interval, we follow the same strategy as Lecture 6: find the <strong>mean</strong> and <strong>variance</strong> of <span class="math inline">\(\widehat{Y}^*\)</span>, standardize to get a <span class="math inline">\(t\)</span>-pivot, then invert. The mean is straightforward; the variance requires a short derivation.</p>
+<p>To build a confidence interval, we follow the same strategy as Lecture 6: find the <strong>mean</strong> and <strong>variance</strong> of <span class="math inline">\(\widehat{Y}^*\)</span>, standardize to get a <span class="math inline">\(t\)</span>-pivot, then invert.</p>
 </div>
 </section>
-<section id="sampling-distribution-of-widehaty" class="slide level2 smaller">
-<h2>Sampling Distribution of <span class="math inline">\(\widehat{Y}^*\)</span></h2>
-<div style="font-size: 0.88em;">
-<p>We need to first confirm <span class="math inline">\(\widehat{Y}^*\)</span> is unbiased, and then derive <span class="math inline">\(\mathrm{Var}(\widehat{Y}^*)\)</span>.</p>
-<p><span class="math inline">\(\mathrm{E}(\widehat{Y}^*) = \mathrm{E}(\widehat{\beta}_0 + \widehat{\beta}_1 x^*) = \beta_0 + \beta_1 x^*\)</span> ✓</p>
-<div class="fragment">
-<p>For the variance, substitute <span class="math inline">\(\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1\bar{X}\)</span>:</p>
-<p><span class="math display">\[\mathrm{Var}(\widehat{Y}^*) = \mathrm{Var}(\bar{Y} - \widehat{\beta}_1\bar{X} + \widehat{\beta}_1 x^*) = \mathrm{Var}(\bar{Y} + \widehat{\beta}_1(x^* - \bar{X}))\]</span></p>
+<section id="deriving-mathrmvarwidehaty-steps-13" class="slide level2">
+<h2>Deriving <span class="math inline">\(\mathrm{Var}(\widehat{Y}^*)\)</span> (Steps 1–3)</h2>
+<div style="font-size: 0.58em;">
+<p><strong>Step 1:</strong> Confirm <span class="math inline">\(\widehat{Y}^*\)</span> is unbiased — compute <span class="math inline">\(\mathrm{E}(\widehat{Y}^*)\)</span> and check it equals <span class="math inline">\(\beta_0 + \beta_1 x^*\)</span>:</p>
+<div style="height: 3em;">
+
 </div>
-<div class="fragment">
-<p>Expanding:</p>
+<p><strong>Step 2:</strong> Substitute <span class="math inline">\(\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1\bar{X}\)</span> into <span class="math inline">\(\mathrm{Var}(\widehat{Y}^*)\)</span> and simplify:</p>
+<div style="height: 3em;">
+
+</div>
+<p><strong>Step 3:</strong> Write out <span class="math inline">\(\mathrm{Var}(A + cB) = \mathrm{Var}(A) + c^2\,\mathrm{Var}(B) + 2c\,\mathrm{Cov}(A,B)\)</span> and identify <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(c\)</span>. Then expand:</p>
+<div style="height: 3em;">
+
+</div>
+</div>
+</section>
+<section id="deriving-mathrmvarwidehaty-steps-45" class="slide level2">
+<h2>Deriving <span class="math inline">\(\mathrm{Var}(\widehat{Y}^*)\)</span> (Steps 4–5)</h2>
+<div style="font-size: 0.58em;">
+<p><strong>Step 4:</strong> Substitute the known variances from Lectures 5–6 — plug in <span class="math inline">\(\mathrm{Var}(\bar{Y})\)</span> and <span class="math inline">\(\mathrm{Var}(\widehat{\beta}_1)\)</span>:</p>
+<div style="height: 4em;">
+
+</div>
+<p><strong>Step 5:</strong> Use the fact that <span class="math inline">\(\mathrm{Cov}(\bar{Y}, \widehat{\beta}_1) = 0\)</span> to drop the cross-term and write the final expression for <span class="math inline">\(\mathrm{Var}(\widehat{Y}^*)\)</span>:</p>
+<div style="height: 4em;">
+
+</div>
+</div>
+</section>
+<section id="deriving-mathrmvarwidehaty-solution-steps-13" class="slide level2">
+<h2>Deriving <span class="math inline">\(\mathrm{Var}(\widehat{Y}^*)\)</span> (Solution, Steps 1–3)</h2>
+<div style="font-size: 0.58em;">
+<p><strong>Step 1:</strong> Confirm unbiasedness:</p>
+<p><span class="math display">\[\mathrm{E}(\widehat{Y}^*) = \mathrm{E}(\widehat{\beta}_0 + \widehat{\beta}_1 x^*) = \beta_0 + \beta_1 x^* \checkmark\]</span></p>
+<p><strong>Step 2:</strong> Substitute <span class="math inline">\(\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1\bar{X}\)</span>:</p>
+<p><span class="math display">\[\mathrm{Var}(\widehat{Y}^*) = \mathrm{Var}(\bar{Y} - \widehat{\beta}_1\bar{X} + \widehat{\beta}_1 x^*) = \mathrm{Var}(\bar{Y} + \widehat{\beta}_1(x^* - \bar{X}))\]</span></p>
+<p><strong>Step 3:</strong> Apply <span class="math inline">\(\mathrm{Var}(A + cB) = \mathrm{Var}(A) + c^2\,\mathrm{Var}(B) + 2c\,\mathrm{Cov}(A,B)\)</span> with <span class="math inline">\(A = \bar{Y}\)</span>, <span class="math inline">\(B = \widehat{\beta}_1\)</span>, <span class="math inline">\(c = x^* - \bar{X}\)</span>:</p>
 <p><span class="math display">\[= \mathrm{Var}(\bar{Y}) + (x^* - \bar{X})^2\,\mathrm{Var}(\widehat{\beta}_1) + 2(x^* - \bar{X})\,\mathrm{Cov}(\bar{Y},\, \widehat{\beta}_1)\]</span></p>
 </div>
-<div class="fragment">
-<p>Substituting known variances from Lectures 5–6:</p>
+</section>
+<section id="deriving-mathrmvarwidehaty-solution-steps-45" class="slide level2">
+<h2>Deriving <span class="math inline">\(\mathrm{Var}(\widehat{Y}^*)\)</span> (Solution, Steps 4–5)</h2>
+<div style="font-size: 0.58em;">
+<p><strong>Step 4:</strong> Substitute known variances from Lectures 5–6:</p>
 <p><span class="math display">\[\mathrm{Var}(\bar{Y}) = \frac{\sigma^2}{n}, \qquad \mathrm{Var}(\widehat{\beta}_1) = \frac{\sigma^2}{S_{xx}}\]</span></p>
-</div>
-<div class="fragment">
-<p>The cross-term vanishes because <span class="math inline">\(\mathrm{Cov}(\bar{Y}, \widehat{\beta}_1) = 0\)</span> (shown on the next slide):</p>
-<p><span class="math display">\[= \frac{\sigma^2}{n} + (x^* - \bar{X})^2 \cdot \frac{\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n} + \frac{(x^* - \bar{X})^2}{S_{xx}}\right)\]</span></p>
-</div>
+<p><span class="math display">\[= \frac{\sigma^2}{n} + (x^* - \bar{X})^2 \cdot \frac{\sigma^2}{S_{xx}} + 2(x^* - \bar{X})\,\mathrm{Cov}(\bar{Y},\, \widehat{\beta}_1)\]</span></p>
+<p><strong>Step 5:</strong> The cross-term vanishes because <span class="math inline">\(\mathrm{Cov}(\bar{Y}, \widehat{\beta}_1) = 0\)</span> (shown on the next slide):</p>
+<p><span class="math display">\[\mathrm{Var}(\widehat{Y}^*) = \frac{\sigma^2}{n} + (x^* - \bar{X})^2 \cdot \frac{\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n} + \frac{(x^* - \bar{X})^2}{S_{xx}}\right)\]</span></p>
 </div>
 </section>
 <section id="why-mathrmcovbary-widehatbeta_1-0" class="slide level2 smaller">
@@ -385,8 +457,9 @@ Annie Adams
 </div>
 </div>
 </section>
-<section id="worked-example-skin-cancer-and-latitude" class="slide level2 smaller">
+<section id="worked-example-skin-cancer-and-latitude" class="slide level2">
 <h2>Worked Example: Skin Cancer and Latitude</h2>
+<div style="font-size: 0.50em;">
 <p><strong>Data:</strong> Skin cancer mortality (deaths per 10 million) vs.&nbsp;latitude for <span class="math inline">\(n = 49\)</span> US states.</p>
 <p><span class="math display">\[\widehat{\text{Mort}} = 389.19 - 5.978 \times \text{Lat}, \qquad \bar{X} = 39.5°\]</span></p>
 <div class="fragment">
@@ -403,9 +476,11 @@ Annie Adams
 <span id="cb2-3"><a aria-label="3"></a><span class="co">#  144.092  105.212  182.972</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>95% PI:</strong> We predict a new individual state at 41° north will have mortality between <strong>105.2 and 183.0</strong> deaths per 10 million — a range nearly 7× wider than the CI.</p>
 </div>
+</div>
 </section>
-<section id="width-depends-on-distance-from-barx" class="slide level2 smaller">
+<section id="width-depends-on-distance-from-barx" class="slide level2">
 <h2>Width Depends on Distance from <span class="math inline">\(\bar{X}\)</span></h2>
+<div style="font-size: 0.63em;">
 <p>The CI formula contains <span class="math inline">\(\dfrac{(x^* - \bar{X})^2}{S_{xx}}\)</span> — this grows as <span class="math inline">\(x^*\)</span> moves away from <span class="math inline">\(\bar{X}\)</span>.</p>
 <div class="fragment">
 <p>For the skin cancer model with <span class="math inline">\(\bar{X} = 39.5°\)</span>:</p>
@@ -448,6 +523,7 @@ Annie Adams
 <div class="fragment">
 <p><strong>Takeaway:</strong> Intervals are narrowest at <span class="math inline">\(\bar{X}\)</span> and widen with extrapolation. The further you predict from the center of your data, the less certain you should be.</p>
 </div>
+</div>
 </section>
 <section id="two-sources-of-uncertainty-in-prediction" class="slide level2">
 <h2>Two Sources of Uncertainty in Prediction</h2>
@@ -482,7 +558,6 @@ Annie Adams
 </tr>
 </tbody>
 </table>
-<p>The extra <span class="math inline">\(\sigma^2\)</span> is irreducible — it exists regardless of how much data we collect.</p>
 </div>
 </div>
 </section>
@@ -495,11 +570,7 @@ Annie Adams
 <p><span class="math display">\[\boxed{\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(1 + \frac{1}{n} + \frac{(x^*-\bar{X})^2}{S_{xx}}\right)\right]^{1/2}}\]</span></p>
 </div>
 <div class="fragment">
-<p><strong>Key consequence:</strong> Even as <span class="math inline">\(n \to \infty\)</span>, the PI does <strong>not</strong> collapse to a point. As <span class="math inline">\(n \to \infty\)</span>, <span class="math inline">\(\frac{1}{n} \to 0\)</span> and <span class="math inline">\(\frac{(x^*-\bar{X})^2}{S_{xx}} \to 0\)</span>, so the PI becomes:</p>
-<p><span class="math display">\[\widehat{Y}^* \pm t \cdot \sqrt{\text{MSE}\!\left(1 + 0 + 0\right)} = \widehat{Y}^* \pm t\sqrt{\text{MSE}}\]</span></p>
-<p>The total width is <span class="math inline">\(2t\sqrt{\text{MSE}}\)</span>. And since MSE <span class="math inline">\(\to \sigma^2\)</span> as <span class="math inline">\(n \to \infty\)</span>:</p>
-<p><span class="math display">\[\text{PI width} \to 2t\sqrt{\sigma^2} = 2t\sigma\]</span></p>
-<p>The <span class="math inline">\(\sigma^2\)</span> from <span class="math inline">\(\varepsilon^*\)</span> is irreducible — it cannot be estimated away, no matter how much data we collect.</p>
+<p><strong>Key consequence:</strong> Even as <span class="math inline">\(n \to \infty\)</span>, the PI does <strong>not</strong> collapse to a point. The extra <span class="math inline">\(1\)</span> inside the radical comes from <span class="math inline">\(\varepsilon^*\)</span> — irreducible individual noise that is independent of the training data. No amount of data can estimate it away.</p>
 </div>
 </section>
 <section id="ci-vs.-pi-side-by-side" class="slide level2 smaller">
@@ -625,7 +696,7 @@ Annie Adams
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_922ff979" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_62baaede" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -636,7 +707,11 @@ Annie Adams
 <p><strong>(b)</strong> <strong>PI</strong> — targets one <em>specific</em> new observation: “What infection risk will <em>this particular new hospital</em> have?”</p>
 </div>
 <div class="fragment">
-<p><strong>(c)</strong> - <strong>CI (4.259, 4.799):</strong> We are 95% confident that the <em>average</em> infection risk for all hospitals with a 10-day stay is between 4.26% and 4.80%. - <strong>PI (2.459, 6.599):</strong> We are 95% confident that <em>this specific new hospital</em> with a 10-day stay will have an infection risk between 2.46% and 6.60%.</p>
+<p><strong>(c)</strong></p>
+<ul>
+<li><p><strong>CI (4.259, 4.799):</strong> We are 95% confident that the <em>average</em> infection risk for all hospitals with a 10-day stay is between 4.26% and 4.80%.</p></li>
+<li><p><strong>PI (2.459, 6.599):</strong> We are 95% confident that <em>this specific new hospital</em> with a 10-day stay will have an infection risk between 2.46% and 6.60%.</p></li>
+</ul>
 <p>The PI is wider because it accounts for both estimation uncertainty in <span class="math inline">\(\widehat{Y}^*\)</span> <em>and</em> irreducible individual-level noise <span class="math inline">\(\varepsilon^*\)</span>. Even with infinite data, each hospital has its own random error that cannot be predicted away.</p>
 </div>
 </section>
@@ -662,21 +737,33 @@ Annie Adams
 <p>This decomposition leads directly to a formal test for <span class="math inline">\(H_0: \beta_1 = 0\)</span> and a summary of overall fit via <span class="math inline">\(R^2\)</span>.</p>
 </div>
 </section>
-<section id="partitioning-total-variation" class="slide level2 smaller">
-<h2>Partitioning Total Variation</h2>
-<p>Every observation’s deviation from <span class="math inline">\(\bar{Y}\)</span> splits into two parts:</p>
-<p><span class="math display">\[Y_i - \bar{Y} = (Y_i - \hat{Y}_i) + (\hat{Y}_i - \bar{Y})\]</span></p>
-<div class="fragment">
-<p>Squaring and summing over all <span class="math inline">\(i\)</span>:</p>
-<p><span class="math display">\[\sum_{i=1}^n (Y_i - \bar{Y})^2 = \sum_{i=1}^n \left[(Y_i - \hat{Y}_i) + (\hat{Y}_i - \bar{Y})\right]^2\]</span></p>
-<p><span class="math display">\[= \sum_{i=1}^n (Y_i - \hat{Y}_i)^2 + \sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2 + 2\sum_{i=1}^n (Y_i - \hat{Y}_i)(\hat{Y}_i - \bar{Y})\]</span></p>
+<section id="partitioning-total-variation-steps-13" class="slide level2">
+<h2>Partitioning Total Variation (Steps 1–3)</h2>
+<div style="font-size: 0.58em;">
+<p><strong>Step 1:</strong> Write the deviation decomposition for a single observation — split <span class="math inline">\(Y_i - \bar{Y}\)</span> into two pieces:</p>
+<div style="height: 3em;">
+
 </div>
-<div class="fragment">
-<p>The cross-product term is zero. Writing <span class="math inline">\(e_i = Y_i - \hat{Y}_i\)</span>:</p>
-<p><span class="math display">\[\sum_{i=1}^n (Y_i - \hat{Y}_i)(\hat{Y}_i - \bar{Y})\]</span></p>
-<p><span class="math display">\[= \sum_{i=1}^n (Y_i - \hat{Y}_i)\hat{Y}_i - \sum_{i=1}^n (Y_i - \hat{Y}_i)\bar{Y}\]</span></p>
-<p><span class="math display">\[= \sum_{i=1}^n e_i \hat{Y}_i - \bar{Y}\sum_{i=1}^n e_i = 0\]</span></p>
-<p>because <span class="math inline">\(\sum_{i=1}^n e_i = 0\)</span> and <span class="math inline">\(\sum_{i=1}^n e_i \hat{Y}_i = 0\)</span> both follow from the normal equations.</p>
+<p><strong>Step 2:</strong> Square both sides and sum over all <span class="math inline">\(i\)</span>. Expand the square — you should get three terms:</p>
+<div style="height: 4em;">
+
+</div>
+<p><strong>Step 3:</strong> Let <span class="math inline">\(e_i = Y_i - \hat{Y}_i\)</span>. Show the cross-product term equals zero by splitting it and applying the two normal equation results: <span class="math inline">\(\sum e_i = 0\)</span> and <span class="math inline">\(\sum e_i \hat{Y}_i = 0\)</span>:</p>
+<div style="height: 3em;">
+
+</div>
+</div>
+</section>
+<section id="partitioning-total-variation-solution" class="slide level2">
+<h2>Partitioning Total Variation (Solution)</h2>
+<div style="font-size: 0.58em;">
+<p><strong>Step 1:</strong> Every observation’s deviation from <span class="math inline">\(\bar{Y}\)</span> splits into two parts:</p>
+<p><span class="math display">\[Y_i - \bar{Y} = (Y_i - \hat{Y}_i) + (\hat{Y}_i - \bar{Y})\]</span></p>
+<p><strong>Step 2:</strong> Square and sum over all <span class="math inline">\(i\)</span>:</p>
+<p><span class="math display">\[\sum_{i=1}^n (Y_i - \bar{Y})^2 = \sum_{i=1}^n (Y_i - \hat{Y}_i)^2 + \sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2 + 2\sum_{i=1}^n (Y_i - \hat{Y}_i)(\hat{Y}_i - \bar{Y})\]</span></p>
+<p><strong>Step 3:</strong> The cross-product term is zero. Writing <span class="math inline">\(e_i = Y_i - \hat{Y}_i\)</span>:</p>
+<p><span class="math display">\[\sum_{i=1}^n e_i(\hat{Y}_i - \bar{Y}) = \sum_{i=1}^n e_i \hat{Y}_i - \bar{Y}\sum_{i=1}^n e_i = 0 - 0 = 0\]</span></p>
+<p>because <span class="math inline">\(\sum e_i \hat{Y}_i = 0\)</span> and <span class="math inline">\(\sum e_i = 0\)</span> both follow from the normal equations. Dropping the cross-product gives SSTO = SSR + SSE.</p>
 </div>
 </section>
 <section id="partitioning-total-variation-result" class="slide level2 smaller">
@@ -706,14 +793,15 @@ Annie Adams
 <tr class="odd">
 <td style="text-align: left;">SSE</td>
 <td style="text-align: left;">Error SS</td>
-<td style="text-align: left;">Variation <em>unexplained</em> (residual)</td>
+<td style="text-align: left;">Variation <em>unexplained</em> (residual) — same as RSS</td>
 </tr>
 </tbody>
 </table>
 </div>
 </section>
-<section id="anova-table" class="slide level2 smaller">
+<section id="anova-table" class="slide level2">
 <h2>ANOVA Table</h2>
+<div style="font-size: 0.53em;">
 <p>The ANOVA table organizes the SS decomposition. Each SS is divided by its <strong>degrees of freedom (df)</strong> to give a <strong>mean square (MS)</strong> — a per-df average that puts SSR and SSE on a comparable scale.</p>
 <table class="caption-top">
 <colgroup>
@@ -757,31 +845,41 @@ Annie Adams
 </tbody>
 </table>
 <div class="fragment">
-<p>The <span class="math inline">\(\mathrm{E}(\text{MS})\)</span> column shows what each mean square is estimating <strong>on average</strong>:</p>
+<p>The <span class="math inline">\(\mathrm{E}(\text{MS})\)</span> column answers: <em>if we repeated the study many times, what would each mean square average out to?</em></p>
 <ul>
-<li class="fragment"><span class="math inline">\(\mathrm{E}(\text{MSE}) = \sigma^2\)</span> always — MSE is an unbiased estimator of the noise variance (same MSE from before)</li>
-<li class="fragment"><span class="math inline">\(\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}\)</span> — MSR estimates <span class="math inline">\(\sigma^2\)</span> <strong>plus</strong> a term that grows with <span class="math inline">\(\beta_1^2\)</span></li>
-<li class="fragment">Under <span class="math inline">\(H_0: \beta_1 = 0\)</span>, <span class="math inline">\(\mathrm{E}(\text{MSR}) = \sigma^2\)</span> — both MS estimate the same thing</li>
-<li class="fragment">Under <span class="math inline">\(H_1: \beta_1 \neq 0\)</span>, <span class="math inline">\(\mathrm{E}(\text{MSR}) &gt; \sigma^2\)</span> — <strong>MSR will tend to be larger than MSE</strong></li>
+<li class="fragment"><span class="math inline">\(\mathrm{E}(\text{MSE}) = \sigma^2\)</span> always — regardless of whether <span class="math inline">\(\beta_1 = 0\)</span>, MSE is only ever estimating pure noise variance (this is the same MSE we used in Lec 6)</li>
+<li class="fragment"><span class="math inline">\(\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}\)</span> — MSR has <strong>two pieces</strong>: <span class="math inline">\(\sigma^2\)</span> (noise, always present) plus <span class="math inline">\(\beta_1^2 S_{xx}\)</span> (signal from the slope, only present when <span class="math inline">\(\beta_1 \neq 0\)</span>)</li>
 </ul>
 </div>
+</div>
 </section>
-<section id="why-mathrmetextmsr-sigma2-beta_12-s_xx" class="slide level2 smaller">
-<h2>Why <span class="math inline">\(\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}\)</span>?</h2>
-<p>Start from <span class="math inline">\(SSR = \sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2\)</span>. Since <span class="math inline">\(\bar{Y} = \hat{\beta}_0 + \hat{\beta}_1\bar{X}\)</span>:</p>
+<section id="why-mathrmetextmsr-sigma2-beta_12-s_xx-steps-13" class="slide level2">
+<h2>Why <span class="math inline">\(\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}\)</span>? (Steps 1–3)</h2>
+<div style="font-size: 0.58em;">
+<p><strong>Step 1:</strong> Start from <span class="math inline">\(\text{SSR} = \sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2\)</span>. Use <span class="math inline">\(\bar{Y} = \hat{\beta}_0 + \hat{\beta}_1\bar{X}\)</span> to simplify <span class="math inline">\(\hat{Y}_i - \bar{Y}\)</span>:</p>
+<div style="height: 3em;">
+
+</div>
+<p><strong>Step 2:</strong> Substitute back into SSR and factor to write <span class="math inline">\(\text{SSR} = \hat{\beta}_1^2 S_{xx}\)</span>. Then use <span class="math inline">\(\text{MSR} = \text{SSR}/1\)</span> to write <span class="math inline">\(\mathrm{E}(\text{MSR})\)</span> in terms of <span class="math inline">\(\mathrm{E}(\hat{\beta}_1^2)\)</span>:</p>
+<div style="height: 3.5em;">
+
+</div>
+<p><strong>Step 3:</strong> Apply the identity <span class="math inline">\(\mathrm{E}(\hat{\beta}_1^2) = \mathrm{Var}(\hat{\beta}_1) + [\mathrm{E}(\hat{\beta}_1)]^2\)</span> and substitute the known variance and mean of <span class="math inline">\(\hat{\beta}_1\)</span> to reach the final result:</p>
+<div style="height: 3em;">
+
+</div>
+</div>
+</section>
+<section id="why-mathrmetextmsr-sigma2-beta_12-s_xx-solution" class="slide level2">
+<h2>Why <span class="math inline">\(\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}\)</span>? (Solution)</h2>
+<div style="font-size: 0.58em;">
+<p><strong>Step 1:</strong> Since <span class="math inline">\(\bar{Y} = \hat{\beta}_0 + \hat{\beta}_1\bar{X}\)</span>:</p>
 <p><span class="math display">\[\hat{Y}_i - \bar{Y} = (\hat{\beta}_0 + \hat{\beta}_1 X_i) - (\hat{\beta}_0 + \hat{\beta}_1\bar{X}) = \hat{\beta}_1(X_i - \bar{X})\]</span></p>
-<div class="fragment">
-<p>Therefore:</p>
-<p><span class="math display">\[SSR = \sum_{i=1}^n \hat{\beta}_1^2(X_i - \bar{X})^2 = \hat{\beta}_1^2\, S_{xx}\]</span></p>
-<p>Since <span class="math inline">\(\text{MSR} = \text{SSR}/1\)</span>: <span class="math inline">\(\quad E(\text{MSR}) = S_{xx}\, E(\hat{\beta}_1^2)\)</span></p>
-</div>
-<div class="fragment">
-<p>Use the identity <span class="math inline">\(E(\hat{\beta}_1^2) = \mathrm{Var}(\hat{\beta}_1) + [E(\hat{\beta}_1)]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2\)</span>:</p>
-<p><span class="math display">\[E(\text{MSR}) = S_{xx}\!\left(\frac{\sigma^2}{S_{xx}} + \beta_1^2\right) = \sigma^2 + \beta_1^2 S_{xx}\]</span></p>
-</div>
-<div class="fragment">
-<p>When <span class="math inline">\(\beta_1 = 0\)</span>: <span class="math inline">\(E(\text{MSR}) = \sigma^2 = E(\text{MSE})\)</span> — both estimate the same thing.</p>
-<p>When <span class="math inline">\(\beta_1 \neq 0\)</span>: <span class="math inline">\(E(\text{MSR}) &gt; \sigma^2\)</span> — MSR is inflated, so <span class="math inline">\(F^* = \text{MSR}/\text{MSE}\)</span> will tend to be large.</p>
+<p><strong>Step 2:</strong> Substitute back and factor:</p>
+<p><span class="math display">\[\text{SSR} = \sum_{i=1}^n \hat{\beta}_1^2(X_i - \bar{X})^2 = \hat{\beta}_1^2\, S_{xx}\]</span></p>
+<p>Since <span class="math inline">\(\text{MSR} = \text{SSR}/1\)</span>: <span class="math inline">\(\quad \mathrm{E}(\text{MSR}) = S_{xx}\,\mathrm{E}(\hat{\beta}_1^2)\)</span></p>
+<p><strong>Step 3:</strong> Apply <span class="math inline">\(\mathrm{E}(\hat{\beta}_1^2) = \mathrm{Var}(\hat{\beta}_1) + [\mathrm{E}(\hat{\beta}_1)]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2\)</span>:</p>
+<p><span class="math display">\[\mathrm{E}(\text{MSR}) = S_{xx}\!\left(\frac{\sigma^2}{S_{xx}} + \beta_1^2\right) = \sigma^2 + \beta_1^2 S_{xx}\]</span></p>
 </div>
 </section>
 <section id="the-f-distribution" class="slide level2 smaller">
@@ -791,8 +889,8 @@ Annie Adams
 <div class="fragment">
 <p>In our setting:</p>
 <ul>
-<li><span class="math inline">\(\text{SSR}/\sigma^2 \sim \chi^2_1\)</span> — 1 df because there is one slope parameter</li>
-<li><span class="math inline">\(\text{SSE}/\sigma^2 \sim \chi^2_{n-2}\)</span> — <span class="math inline">\(n-2\)</span> df, same as before</li>
+<li><span class="math inline">\(\text{SSR}/\sigma^2 \sim \chi^2_1\)</span> — we showed <span class="math inline">\(\text{SSR} = \hat{\beta}_1^2 S_{xx}\)</span>; under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(\hat{\beta}_1\sqrt{S_{xx}}/\sigma \sim N(0,1)\)</span>, and squaring a standard normal gives <span class="math inline">\(\chi^2_1\)</span></li>
+<li><span class="math inline">\(\text{SSE}/\sigma^2 \sim \chi^2_{n-2}\)</span> — same result as <span class="math inline">\(\text{RSS}/\sigma^2 \sim \chi^2_{n-2}\)</span> stated in Lec 6 (SSE = RSS)</li>
 <li>These two are <strong>independent</strong></li>
 </ul>
 </div>
@@ -947,7 +1045,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_659f51ae" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_991b04e3" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>

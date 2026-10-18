@@ -52,6 +52,27 @@ In Lectures 5 and 6, we:
 
 ---
 
+## Roadmap: Three Types of Intervals {.smaller}
+
+::: {style="font-size: 0.80em;"}
+
+In Lecture 6 we built intervals about the **parameters of the line**. Today we build intervals about **predicted values**.
+
+| | What it targets | Question it answers |
+|:---|:---|:---|
+| **CI for $\beta_1$** (Lec 6) | The true slope $\beta_1$ | "How steep is the relationship between x and y, and is there evidence it's non-zero?" |
+| **CI for $\beta_0$** (Lec 6) | The true intercept $\beta_0$ | "Where does the line cross $X = 0$?" |
+| **CI for mean response** (today) | $E(Y \mid X = x^*) = \beta_0 + \beta_1 x^*$ | "What is the *average* $Y$ for all units at $x^*$?" |
+| **Prediction interval** (today) | A new individual $Y^* = \beta_0 + \beta_1 x^* + \varepsilon^*$ | "What will *this specific new* observation be at $x^*$?" |
+
+::: {.fragment}
+**Key shift:** Lecture 6 asked *what the line looks like*. Today we ask *what the line predicts at a new point* and whether we want the average outcome or one individual outcome.
+:::
+
+:::
+
+---
+
 ## Confidence Intervals for Mean Response and Prediction {background-color="#003660"}
 
 ---
@@ -93,7 +114,8 @@ At $x^*$, keep these three things straight:
 
 ---
 
-## Two Prediction Questions {.smaller}
+## Two Prediction Questions
+::: {style="font-size: 0.63em;"}
 
 After fitting $\widehat{Y} = \widehat{\beta}_0 + \widehat{\beta}_1 X$, we often want to say something about a **new input value** $x^*$.
 
@@ -116,9 +138,6 @@ Targets $Y^* = \beta_0 + \beta_1 x^* + \varepsilon^*$ — a random variable with
 
 $\longrightarrow$ **Prediction interval**
 :::
-
-::: {.fragment}
-Both are centered at the same point estimate $\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*$. They differ in what **uncertainty** they account for.
 :::
 
 ---
@@ -134,42 +153,76 @@ $$\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*$$
 ::: {.fragment}
 Since $\widehat{\beta}_0$ and $\widehat{\beta}_1$ are both linear combinations of the normal $Y_i$'s, $\widehat{Y}^*$ also follows a **normal distribution**.
 
-To build a confidence interval, we follow the same strategy as Lecture 6: find the **mean** and **variance** of $\widehat{Y}^*$, standardize to get a $t$-pivot, then invert. The mean is straightforward; the variance requires a short derivation.
+To build a confidence interval, we follow the same strategy as Lecture 6: find the **mean** and **variance** of $\widehat{Y}^*$, standardize to get a $t$-pivot, then invert. 
 :::
 
 ---
 
-## Sampling Distribution of $\widehat{Y}^*$ {.smaller}
+## Deriving $\mathrm{Var}(\widehat{Y}^*)$ (Steps 1–3)
+::: {style="font-size: 0.58em;"}
 
-::: {style="font-size: 0.88em;"}
+**Step 1:** Confirm $\widehat{Y}^*$ is unbiased — compute $\mathrm{E}(\widehat{Y}^*)$ and check it equals $\beta_0 + \beta_1 x^*$:
 
-We need to first confirm $\widehat{Y}^*$ is unbiased, and then derive $\mathrm{Var}(\widehat{Y}^*)$.
+<div style="height: 3em;"></div>
 
-$\mathrm{E}(\widehat{Y}^*) = \mathrm{E}(\widehat{\beta}_0 + \widehat{\beta}_1 x^*) = \beta_0 + \beta_1 x^*$ ✓
+**Step 2:** Substitute $\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1\bar{X}$ into $\mathrm{Var}(\widehat{Y}^*)$ and simplify:
 
-::: {.fragment}
-For the variance, substitute $\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1\bar{X}$:
+<div style="height: 3em;"></div>
+
+**Step 3:** Write out $\mathrm{Var}(A + cB) = \mathrm{Var}(A) + c^2\,\mathrm{Var}(B) + 2c\,\mathrm{Cov}(A,B)$ and identify $A$, $B$, and $c$. Then expand:
+
+<div style="height: 3em;"></div>
+
+:::
+
+---
+
+## Deriving $\mathrm{Var}(\widehat{Y}^*)$ (Steps 4–5)
+::: {style="font-size: 0.58em;"}
+
+**Step 4:** Substitute the known variances from Lectures 5–6 — plug in $\mathrm{Var}(\bar{Y})$ and $\mathrm{Var}(\widehat{\beta}_1)$:
+
+<div style="height: 4em;"></div>
+
+**Step 5:** Use the fact that $\mathrm{Cov}(\bar{Y}, \widehat{\beta}_1) = 0$ to drop the cross-term and write the final expression for $\mathrm{Var}(\widehat{Y}^*)$:
+
+<div style="height: 4em;"></div>
+
+:::
+
+---
+
+## Deriving $\mathrm{Var}(\widehat{Y}^*)$ (Solution, Steps 1–3)
+::: {style="font-size: 0.58em;"}
+
+**Step 1:** Confirm unbiasedness:
+
+$$\mathrm{E}(\widehat{Y}^*) = \mathrm{E}(\widehat{\beta}_0 + \widehat{\beta}_1 x^*) = \beta_0 + \beta_1 x^* \checkmark$$
+
+**Step 2:** Substitute $\widehat{\beta}_0 = \bar{Y} - \widehat{\beta}_1\bar{X}$:
 
 $$\mathrm{Var}(\widehat{Y}^*) = \mathrm{Var}(\bar{Y} - \widehat{\beta}_1\bar{X} + \widehat{\beta}_1 x^*) = \mathrm{Var}(\bar{Y} + \widehat{\beta}_1(x^* - \bar{X}))$$
-:::
 
-::: {.fragment}
-Expanding:
+**Step 3:** Apply $\mathrm{Var}(A + cB) = \mathrm{Var}(A) + c^2\,\mathrm{Var}(B) + 2c\,\mathrm{Cov}(A,B)$ with $A = \bar{Y}$, $B = \widehat{\beta}_1$, $c = x^* - \bar{X}$:
 
 $$= \mathrm{Var}(\bar{Y}) + (x^* - \bar{X})^2\,\mathrm{Var}(\widehat{\beta}_1) + 2(x^* - \bar{X})\,\mathrm{Cov}(\bar{Y},\, \widehat{\beta}_1)$$
+
 :::
 
-::: {.fragment}
-Substituting known variances from Lectures 5–6:
+---
+
+## Deriving $\mathrm{Var}(\widehat{Y}^*)$ (Solution, Steps 4–5)
+::: {style="font-size: 0.58em;"}
+
+**Step 4:** Substitute known variances from Lectures 5–6:
 
 $$\mathrm{Var}(\bar{Y}) = \frac{\sigma^2}{n}, \qquad \mathrm{Var}(\widehat{\beta}_1) = \frac{\sigma^2}{S_{xx}}$$
-:::
 
-::: {.fragment}
-The cross-term vanishes because $\mathrm{Cov}(\bar{Y}, \widehat{\beta}_1) = 0$ (shown on the next slide):
+$$= \frac{\sigma^2}{n} + (x^* - \bar{X})^2 \cdot \frac{\sigma^2}{S_{xx}} + 2(x^* - \bar{X})\,\mathrm{Cov}(\bar{Y},\, \widehat{\beta}_1)$$
 
-$$= \frac{\sigma^2}{n} + (x^* - \bar{X})^2 \cdot \frac{\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n} + \frac{(x^* - \bar{X})^2}{S_{xx}}\right)$$
-:::
+**Step 5:** The cross-term vanishes because $\mathrm{Cov}(\bar{Y}, \widehat{\beta}_1) = 0$ (shown on the next slide):
+
+$$\mathrm{Var}(\widehat{Y}^*) = \frac{\sigma^2}{n} + (x^* - \bar{X})^2 \cdot \frac{\sigma^2}{S_{xx}} = \sigma^2\!\left(\frac{1}{n} + \frac{(x^* - \bar{X})^2}{S_{xx}}\right)$$
 
 :::
 
@@ -219,7 +272,8 @@ $$\boxed{\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\, n-2}\sqrt{\text{MSE}\!\left(\fra
 
 ---
 
-## Worked Example: Skin Cancer and Latitude {.smaller}
+## Worked Example: Skin Cancer and Latitude 
+::: {style="font-size: 0.50em;"}
 
 **Data:** Skin cancer mortality (deaths per 10 million) vs. latitude for $n = 49$ US states.
 
@@ -248,10 +302,11 @@ predict(fit, newdata = data.frame(Lat = 41), interval = "prediction")
 
 **95% PI:** We predict a new individual state at 41° north will have mortality between **105.2 and 183.0** deaths per 10 million — a range nearly 7× wider than the CI.
 :::
-
+:::
 ---
 
-## Width Depends on Distance from $\bar{X}$ {.smaller}
+## Width Depends on Distance from $\bar{X}$ 
+::: {style="font-size: 0.63em;"}
 
 The CI formula contains $\dfrac{(x^* - \bar{X})^2}{S_{xx}}$ — this grows as $x^*$ moves away from $\bar{X}$.
 
@@ -269,7 +324,7 @@ The interval at 28° is nearly **3× wider**, even though $n$ is the same.
 ::: {.fragment}
 **Takeaway:** Intervals are narrowest at $\bar{X}$ and widen with extrapolation. The further you predict from the center of your data, the less certain you should be.
 :::
-
+:::
 ---
 
 ## Two Sources of Uncertainty in Prediction 
@@ -289,7 +344,6 @@ These are **independent**, so their variances add:
 | New individual noise $\varepsilon^*$ | $\sigma^2$ |
 | **Total** | $\sigma^2\!\left(1 + \dfrac{1}{n} + \dfrac{(x^*-\bar{X})^2}{S_{xx}}\right)$ |
 
-The extra $\sigma^2$ is irreducible — it exists regardless of how much data we collect.
 :::
 :::
 ---
@@ -308,15 +362,7 @@ $$\boxed{\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(1 + 
 :::
 
 ::: {.fragment}
-**Key consequence:** Even as $n \to \infty$, the PI does **not** collapse to a point. As $n \to \infty$, $\frac{1}{n} \to 0$ and $\frac{(x^*-\bar{X})^2}{S_{xx}} \to 0$, so the PI becomes:
-
-$$\widehat{Y}^* \pm t \cdot \sqrt{\text{MSE}\!\left(1 + 0 + 0\right)} = \widehat{Y}^* \pm t\sqrt{\text{MSE}}$$
-
-The total width is $2t\sqrt{\text{MSE}}$. And since MSE $\to \sigma^2$ as $n \to \infty$:
-
-$$\text{PI width} \to 2t\sqrt{\sigma^2} = 2t\sigma$$
-
-The $\sigma^2$ from $\varepsilon^*$ is irreducible — it cannot be estimated away, no matter how much data we collect.
+**Key consequence:** Even as $n \to \infty$, the PI does **not** collapse to a point. The extra $1$ inside the radical comes from $\varepsilon^*$ — irreducible individual noise that is independent of the training data. No amount of data can estimate it away.
 :::
 
 ---
@@ -460,7 +506,9 @@ countdown::countdown(
 
 ::: {.fragment}
 **(c)**
+
 - **CI (4.259, 4.799):** We are 95% confident that the *average* infection risk for all hospitals with a 10-day stay is between 4.26% and 4.80%.
+
 - **PI (2.459, 6.599):** We are 95% confident that *this specific new hospital* with a 10-day stay will have an infection risk between 2.46% and 6.60%.
 
 The PI is wider because it accounts for both estimation uncertainty in $\widehat{Y}^*$ *and* irreducible individual-level noise $\varepsilon^*$. Even with infinite data, each hospital has its own random error that cannot be predicted away.
@@ -494,30 +542,42 @@ This decomposition leads directly to a formal test for $H_0: \beta_1 = 0$ and a 
 
 ---
 
-## Partitioning Total Variation {.smaller}
+## Partitioning Total Variation (Steps 1–3)
+::: {style="font-size: 0.58em;"}
 
-Every observation's deviation from $\bar{Y}$ splits into two parts:
+**Step 1:** Write the deviation decomposition for a single observation — split $Y_i - \bar{Y}$ into two pieces:
+
+<div style="height: 3em;"></div>
+
+**Step 2:** Square both sides and sum over all $i$. Expand the square — you should get three terms:
+
+<div style="height: 4em;"></div>
+
+**Step 3:** Let $e_i = Y_i - \hat{Y}_i$. Show the cross-product term equals zero by splitting it and applying the two normal equation results: $\sum e_i = 0$ and $\sum e_i \hat{Y}_i = 0$:
+
+<div style="height: 3em;"></div>
+
+:::
+
+---
+
+## Partitioning Total Variation (Solution)
+::: {style="font-size: 0.58em;"}
+
+**Step 1:** Every observation's deviation from $\bar{Y}$ splits into two parts:
 
 $$Y_i - \bar{Y} = (Y_i - \hat{Y}_i) + (\hat{Y}_i - \bar{Y})$$
 
-::: {.fragment}
-Squaring and summing over all $i$:
+**Step 2:** Square and sum over all $i$:
 
-$$\sum_{i=1}^n (Y_i - \bar{Y})^2 = \sum_{i=1}^n \left[(Y_i - \hat{Y}_i) + (\hat{Y}_i - \bar{Y})\right]^2$$
+$$\sum_{i=1}^n (Y_i - \bar{Y})^2 = \sum_{i=1}^n (Y_i - \hat{Y}_i)^2 + \sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2 + 2\sum_{i=1}^n (Y_i - \hat{Y}_i)(\hat{Y}_i - \bar{Y})$$
 
-$$= \sum_{i=1}^n (Y_i - \hat{Y}_i)^2 + \sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2 + 2\sum_{i=1}^n (Y_i - \hat{Y}_i)(\hat{Y}_i - \bar{Y})$$
-:::
+**Step 3:** The cross-product term is zero. Writing $e_i = Y_i - \hat{Y}_i$:
 
-::: {.fragment}
-The cross-product term is zero. Writing $e_i = Y_i - \hat{Y}_i$:
+$$\sum_{i=1}^n e_i(\hat{Y}_i - \bar{Y}) = \sum_{i=1}^n e_i \hat{Y}_i - \bar{Y}\sum_{i=1}^n e_i = 0 - 0 = 0$$
 
-$$\sum_{i=1}^n (Y_i - \hat{Y}_i)(\hat{Y}_i - \bar{Y})$$
+because $\sum e_i \hat{Y}_i = 0$ and $\sum e_i = 0$ both follow from the normal equations. Dropping the cross-product gives SSTO = SSR + SSE.
 
-$$= \sum_{i=1}^n (Y_i - \hat{Y}_i)\hat{Y}_i - \sum_{i=1}^n (Y_i - \hat{Y}_i)\bar{Y}$$
-
-$$= \sum_{i=1}^n e_i \hat{Y}_i - \bar{Y}\sum_{i=1}^n e_i = 0$$
-
-because $\sum_{i=1}^n e_i = 0$ and $\sum_{i=1}^n e_i \hat{Y}_i = 0$ both follow from the normal equations.
 :::
 
 ---
@@ -534,13 +594,14 @@ $$\underbrace{\sum_{i=1}^n (Y_i - \bar{Y})^2}_{\text{SSTO}} = \underbrace{\sum_{
 |:-------|:-----|:--------|
 | SSTO | Total SS | Total variation in $Y$ |
 | SSR | Regression SS | Variation *explained* by $X$ |
-| SSE | Error SS | Variation *unexplained* (residual) |
+| SSE | Error SS | Variation *unexplained* (residual) — same as RSS|
 
 :::
 
 ---
 
-## ANOVA Table {.smaller}
+## ANOVA Table 
+::: {style="font-size: 0.53em;"}
 
 The ANOVA table organizes the SS decomposition. Each SS is divided by its **degrees of freedom (df)** to give a **mean square (MS)** — a per-df average that puts SSR and SSE on a comparable scale.
 
@@ -551,43 +612,53 @@ The ANOVA table organizes the SS decomposition. Each SS is divided by its **degr
 | Total | $n-1$ | SSTO | | |
 
 ::: {.fragment}
-The $\mathrm{E}(\text{MS})$ column shows what each mean square is estimating **on average**:
+The $\mathrm{E}(\text{MS})$ column answers: *if we repeated the study many times, what would each mean square average out to?* 
 
 ::: {.incremental}
-- $\mathrm{E}(\text{MSE}) = \sigma^2$ always — MSE is an unbiased estimator of the noise variance (same MSE from before)
-- $\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}$ — MSR estimates $\sigma^2$ **plus** a term that grows with $\beta_1^2$
-- Under $H_0: \beta_1 = 0$, $\mathrm{E}(\text{MSR}) = \sigma^2$ — both MS estimate the same thing
-- Under $H_1: \beta_1 \neq 0$, $\mathrm{E}(\text{MSR}) > \sigma^2$ — **MSR will tend to be larger than MSE**
+- $\mathrm{E}(\text{MSE}) = \sigma^2$ always — regardless of whether $\beta_1 = 0$, MSE is only ever estimating pure noise variance (this is the same MSE we used in Lec 6)
+- $\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}$ — MSR has **two pieces**: $\sigma^2$ (noise, always present) plus $\beta_1^2 S_{xx}$ (signal from the slope, only present when $\beta_1 \neq 0$)
 :::
+
+:::
+:::
+---
+
+## Why $\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}$? (Steps 1–3)
+::: {style="font-size: 0.58em;"}
+
+**Step 1:** Start from $\text{SSR} = \sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2$. Use $\bar{Y} = \hat{\beta}_0 + \hat{\beta}_1\bar{X}$ to simplify $\hat{Y}_i - \bar{Y}$:
+
+<div style="height: 3em;"></div>
+
+**Step 2:** Substitute back into SSR and factor to write $\text{SSR} = \hat{\beta}_1^2 S_{xx}$. Then use $\text{MSR} = \text{SSR}/1$ to write $\mathrm{E}(\text{MSR})$ in terms of $\mathrm{E}(\hat{\beta}_1^2)$:
+
+<div style="height: 3.5em;"></div>
+
+**Step 3:** Apply the identity $\mathrm{E}(\hat{\beta}_1^2) = \mathrm{Var}(\hat{\beta}_1) + [\mathrm{E}(\hat{\beta}_1)]^2$ and substitute the known variance and mean of $\hat{\beta}_1$ to reach the final result:
+
+<div style="height: 3em;"></div>
 
 :::
 
 ---
 
-## Why $\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}$? {.smaller}
+## Why $\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}$? (Solution)
+::: {style="font-size: 0.58em;"}
 
-Start from $SSR = \sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2$. Since $\bar{Y} = \hat{\beta}_0 + \hat{\beta}_1\bar{X}$:
+**Step 1:** Since $\bar{Y} = \hat{\beta}_0 + \hat{\beta}_1\bar{X}$:
 
 $$\hat{Y}_i - \bar{Y} = (\hat{\beta}_0 + \hat{\beta}_1 X_i) - (\hat{\beta}_0 + \hat{\beta}_1\bar{X}) = \hat{\beta}_1(X_i - \bar{X})$$
 
-::: {.fragment}
-Therefore:
+**Step 2:** Substitute back and factor:
 
-$$SSR = \sum_{i=1}^n \hat{\beta}_1^2(X_i - \bar{X})^2 = \hat{\beta}_1^2\, S_{xx}$$
+$$\text{SSR} = \sum_{i=1}^n \hat{\beta}_1^2(X_i - \bar{X})^2 = \hat{\beta}_1^2\, S_{xx}$$
 
-Since $\text{MSR} = \text{SSR}/1$: $\quad E(\text{MSR}) = S_{xx}\, E(\hat{\beta}_1^2)$
-:::
+Since $\text{MSR} = \text{SSR}/1$: $\quad \mathrm{E}(\text{MSR}) = S_{xx}\,\mathrm{E}(\hat{\beta}_1^2)$
 
-::: {.fragment}
-Use the identity $E(\hat{\beta}_1^2) = \mathrm{Var}(\hat{\beta}_1) + [E(\hat{\beta}_1)]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2$:
+**Step 3:** Apply $\mathrm{E}(\hat{\beta}_1^2) = \mathrm{Var}(\hat{\beta}_1) + [\mathrm{E}(\hat{\beta}_1)]^2 = \dfrac{\sigma^2}{S_{xx}} + \beta_1^2$:
 
-$$E(\text{MSR}) = S_{xx}\!\left(\frac{\sigma^2}{S_{xx}} + \beta_1^2\right) = \sigma^2 + \beta_1^2 S_{xx}$$
-:::
+$$\mathrm{E}(\text{MSR}) = S_{xx}\!\left(\frac{\sigma^2}{S_{xx}} + \beta_1^2\right) = \sigma^2 + \beta_1^2 S_{xx}$$
 
-::: {.fragment}
-When $\beta_1 = 0$: $E(\text{MSR}) = \sigma^2 = E(\text{MSE})$ — both estimate the same thing.
-
-When $\beta_1 \neq 0$: $E(\text{MSR}) > \sigma^2$ — MSR is inflated, so $F^* = \text{MSR}/\text{MSE}$ will tend to be large.
 :::
 
 ---
@@ -601,8 +672,8 @@ $$F(d_1, d_2) = \frac{\chi^2_{d_1}/d_1}{\chi^2_{d_2}/d_2}$$
 ::: {.fragment}
 In our setting:
 
-- $\text{SSR}/\sigma^2 \sim \chi^2_1$ — 1 df because there is one slope parameter
-- $\text{SSE}/\sigma^2 \sim \chi^2_{n-2}$ — $n-2$ df, same as before
+- $\text{SSR}/\sigma^2 \sim \chi^2_1$ — we showed $\text{SSR} = \hat{\beta}_1^2 S_{xx}$; under $H_0$, $\hat{\beta}_1\sqrt{S_{xx}}/\sigma \sim N(0,1)$, and squaring a standard normal gives $\chi^2_1$
+- $\text{SSE}/\sigma^2 \sim \chi^2_{n-2}$ — same result as $\text{RSS}/\sigma^2 \sim \chi^2_{n-2}$ stated in Lec 6 (SSE = RSS)
 - These two are **independent**
 :::
 
