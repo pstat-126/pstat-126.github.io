@@ -388,7 +388,7 @@ Annie Adams
 <div style="height: 3em;">
 
 </div>
-<p><strong>Step 3:</strong> Write out <span class="math inline">\(\mathrm{Var}(A + cB) = \mathrm{Var}(A) + c^2\,\mathrm{Var}(B) + 2c\,\mathrm{Cov}(A,B)\)</span> and identify <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(c\)</span>. Then expand:</p>
+<p><strong>Step 3:</strong> Apply <span class="math inline">\(\mathrm{Var}(A + cB) = \mathrm{Var}(A) + c^2\,\mathrm{Var}(B) + 2c\,\mathrm{Cov}(A,B)\)</span> and expand:</p>
 <div style="height: 3em;">
 
 </div>
@@ -397,8 +397,8 @@ Annie Adams
 <section id="deriving-mathrmvarwidehaty-steps-45" class="slide level2">
 <h2>Deriving <span class="math inline">\(\mathrm{Var}(\widehat{Y}^*)\)</span> (Steps 4–5)</h2>
 <div style="font-size: 0.58em;">
-<p><strong>Step 4:</strong> Substitute the known variances from Lectures 5–6 — plug in <span class="math inline">\(\mathrm{Var}(\bar{Y})\)</span> and <span class="math inline">\(\mathrm{Var}(\widehat{\beta}_1)\)</span>:</p>
-<div style="height: 4em;">
+<p><strong>Step 4:</strong> Substitute the known variances,<span class="math inline">\(\mathrm{Var}(\bar{Y}) = \frac{\sigma^2}{n}, \mathrm{Var}(\widehat{\beta}_1) = \frac{\sigma^2}{S_{xx}}\)</span>:</p>
+<div style="height: 5em;">
 
 </div>
 <p><strong>Step 5:</strong> Use the fact that <span class="math inline">\(\mathrm{Cov}(\bar{Y}, \widehat{\beta}_1) = 0\)</span> to drop the cross-term and write the final expression for <span class="math inline">\(\mathrm{Var}(\widehat{Y}^*)\)</span>:</p>
@@ -692,11 +692,11 @@ Annie Adams
 </tr>
 </tbody>
 </table>
-<p>Write one sentence interpreting each interval. Why is the PI so much wider?</p>
+<p>Write one sentence interpreting each interval.</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_983d5aff" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_d8a99a4f" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -712,7 +712,6 @@ Annie Adams
 <li><p><strong>CI (4.259, 4.799):</strong> We are 95% confident that the <em>average</em> infection risk for all hospitals with a 10-day stay is between 4.26% and 4.80%.</p></li>
 <li><p><strong>PI (2.459, 6.599):</strong> We are 95% confident that <em>this specific new hospital</em> with a 10-day stay will have an infection risk between 2.46% and 6.60%.</p></li>
 </ul>
-<p>The PI is wider because it accounts for both estimation uncertainty in <span class="math inline">\(\widehat{Y}^*\)</span> <em>and</em> irreducible individual-level noise <span class="math inline">\(\varepsilon^*\)</span>. Even with infinite data, each hospital has its own random error that cannot be predicted away.</p>
 </div>
 </section>
 <section id="analysis-of-variance" class="slide level2" data-background-color="#003660">
@@ -1043,7 +1042,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_50180d96" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_44066721" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>

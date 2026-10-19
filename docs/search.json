@@ -2313,14 +2313,14 @@
     "href": "slides/lec-07.html#practice-ci-vs.-pi",
     "title": "Lecture 7: Prediction and Intervals",
     "section": "Practice: CI vs. PI",
-    "text": "Practice: CI vs. PI\n\nA study of \\(n = 58\\) hospitals examined whether average patient length of stay (days) predicts infection risk (percentage of patients who acquire a hospital infection). The fitted model is:\n\\[\\widehat{\\text{InfRisk}} = -1.160 + 0.5689 \\times \\text{Stay}, \\qquad \\bar{X} = 9.88 \\text{ days}\\]\n(a) A state health official wants to know the expected infection risk across all hospitals with a 10-day average stay. Should she compute a CI or a PI? Write the question being answered.\n(b) A new hospital is opening with a planned average stay of 10 days. The official wants to predict that specific hospital’s infection risk. CI or PI?\n(c) At \\(x^* = 10\\) days, R gives:\n\n\n\n\nfit\nlwr\nupr\n\n\n\n\nCI\n4.529\n4.259\n4.799\n\n\nPI\n4.529\n2.459\n6.599\n\n\n\nWrite one sentence interpreting each interval. Why is the PI so much wider?"
+    "text": "Practice: CI vs. PI\n\nA study of \\(n = 58\\) hospitals examined whether average patient length of stay (days) predicts infection risk (percentage of patients who acquire a hospital infection). The fitted model is:\n\\[\\widehat{\\text{InfRisk}} = -1.160 + 0.5689 \\times \\text{Stay}, \\qquad \\bar{X} = 9.88 \\text{ days}\\]\n(a) A state health official wants to know the expected infection risk across all hospitals with a 10-day average stay. Should she compute a CI or a PI? Write the question being answered.\n(b) A new hospital is opening with a planned average stay of 10 days. The official wants to predict that specific hospital’s infection risk. CI or PI?\n(c) At \\(x^* = 10\\) days, R gives:\n\n\n\n\nfit\nlwr\nupr\n\n\n\n\nCI\n4.529\n4.259\n4.799\n\n\nPI\n4.529\n2.459\n6.599\n\n\n\nWrite one sentence interpreting each interval."
   },
   {
     "objectID": "slides/lec-07.html#practice-ci-vs.-pi-solution",
     "href": "slides/lec-07.html#practice-ci-vs.-pi-solution",
     "title": "Lecture 7: Prediction and Intervals",
     "section": "Practice: CI vs. PI — Solution",
-    "text": "Practice: CI vs. PI — Solution\n(a) CI — targets the mean response for a group: “What is the average infection risk for all hospitals with a 10-day average stay?”\n\n(b) PI — targets one specific new observation: “What infection risk will this particular new hospital have?”\n\n\n(c)\n\nCI (4.259, 4.799): We are 95% confident that the average infection risk for all hospitals with a 10-day stay is between 4.26% and 4.80%.\nPI (2.459, 6.599): We are 95% confident that this specific new hospital with a 10-day stay will have an infection risk between 2.46% and 6.60%.\n\nThe PI is wider because it accounts for both estimation uncertainty in \\(\\widehat{Y}^*\\) and irreducible individual-level noise \\(\\varepsilon^*\\). Even with infinite data, each hospital has its own random error that cannot be predicted away."
+    "text": "Practice: CI vs. PI — Solution\n(a) CI — targets the mean response for a group: “What is the average infection risk for all hospitals with a 10-day average stay?”\n\n(b) PI — targets one specific new observation: “What infection risk will this particular new hospital have?”\n\n\n(c)\n\nCI (4.259, 4.799): We are 95% confident that the average infection risk for all hospitals with a 10-day stay is between 4.26% and 4.80%.\nPI (2.459, 6.599): We are 95% confident that this specific new hospital with a 10-day stay will have an infection risk between 2.46% and 6.60%."
   },
   {
     "objectID": "slides/lec-07.html#practice-anova-and-r2",
@@ -2467,14 +2467,14 @@
     "href": "slides/lec-07.html#deriving-mathrmvarwidehaty-steps-13",
     "title": "Lecture 7: Prediction and Intervals",
     "section": "Deriving \\(\\mathrm{Var}(\\widehat{Y}^*)\\) (Steps 1–3)",
-    "text": "Deriving \\(\\mathrm{Var}(\\widehat{Y}^*)\\) (Steps 1–3)\n\nStep 1: Confirm \\(\\widehat{Y}^*\\) is unbiased — compute \\(\\mathrm{E}(\\widehat{Y}^*)\\) and check it equals \\(\\beta_0 + \\beta_1 x^*\\):\n\n\n\nStep 2: Substitute \\(\\widehat{\\beta}_0 = \\bar{Y} - \\widehat{\\beta}_1\\bar{X}\\) into \\(\\mathrm{Var}(\\widehat{Y}^*)\\) and simplify:\n\n\n\nStep 3: Write out \\(\\mathrm{Var}(A + cB) = \\mathrm{Var}(A) + c^2\\,\\mathrm{Var}(B) + 2c\\,\\mathrm{Cov}(A,B)\\) and identify \\(A\\), \\(B\\), and \\(c\\). Then expand:"
+    "text": "Deriving \\(\\mathrm{Var}(\\widehat{Y}^*)\\) (Steps 1–3)\n\nStep 1: Confirm \\(\\widehat{Y}^*\\) is unbiased — compute \\(\\mathrm{E}(\\widehat{Y}^*)\\) and check it equals \\(\\beta_0 + \\beta_1 x^*\\):\n\n\n\nStep 2: Substitute \\(\\widehat{\\beta}_0 = \\bar{Y} - \\widehat{\\beta}_1\\bar{X}\\) into \\(\\mathrm{Var}(\\widehat{Y}^*)\\) and simplify:\n\n\n\nStep 3: Apply \\(\\mathrm{Var}(A + cB) = \\mathrm{Var}(A) + c^2\\,\\mathrm{Var}(B) + 2c\\,\\mathrm{Cov}(A,B)\\) and expand:"
   },
   {
     "objectID": "slides/lec-07.html#deriving-mathrmvarwidehaty-steps-45",
     "href": "slides/lec-07.html#deriving-mathrmvarwidehaty-steps-45",
     "title": "Lecture 7: Prediction and Intervals",
     "section": "Deriving \\(\\mathrm{Var}(\\widehat{Y}^*)\\) (Steps 4–5)",
-    "text": "Deriving \\(\\mathrm{Var}(\\widehat{Y}^*)\\) (Steps 4–5)\n\nStep 4: Substitute the known variances from Lectures 5–6 — plug in \\(\\mathrm{Var}(\\bar{Y})\\) and \\(\\mathrm{Var}(\\widehat{\\beta}_1)\\):\n\n\n\nStep 5: Use the fact that \\(\\mathrm{Cov}(\\bar{Y}, \\widehat{\\beta}_1) = 0\\) to drop the cross-term and write the final expression for \\(\\mathrm{Var}(\\widehat{Y}^*)\\):"
+    "text": "Deriving \\(\\mathrm{Var}(\\widehat{Y}^*)\\) (Steps 4–5)\n\nStep 4: Substitute the known variances,\\(\\mathrm{Var}(\\bar{Y}) = \\frac{\\sigma^2}{n}, \\mathrm{Var}(\\widehat{\\beta}_1) = \\frac{\\sigma^2}{S_{xx}}\\):\n\n\n\nStep 5: Use the fact that \\(\\mathrm{Cov}(\\bar{Y}, \\widehat{\\beta}_1) = 0\\) to drop the cross-term and write the final expression for \\(\\mathrm{Var}(\\widehat{Y}^*)\\):"
   },
   {
     "objectID": "slides/lec-07.html#deriving-mathrmvarwidehaty-solution-steps-13",
