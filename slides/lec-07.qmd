@@ -300,7 +300,7 @@ predict(fit, newdata = data.frame(Lat = 41), interval = "prediction")
 #  144.092  105.212  182.972
 ```
 
-**95% PI:** We predict a new individual state at 41° north will have mortality between **105.2 and 183.0** deaths per 10 million — a range nearly 7× wider than the CI.
+**95% PI:** We predict a new individual state at 41° north will have mortality between **105.2 and 183.0** deaths per 10 million.Notice how this range is nearly 7× wider than the CI!
 :::
 :::
 ---
@@ -362,7 +362,7 @@ $$\boxed{\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(1 + 
 :::
 
 ::: {.fragment}
-**Key consequence:** Even as $n \to \infty$, the PI does **not** collapse to a point. The extra $1$ inside the radical comes from $\varepsilon^*$ — irreducible individual noise that is independent of the training data. No amount of data can estimate it away.
+**Key consequence:** Even as $n \to \infty$, the PI does **not** collapse to a point. The extra $1$ inside the radical comes from irreducible individual noise that is independent of the training data ($\varepsilon^*$). No amount of data can estimate it away.
 :::
 
 ---
@@ -427,7 +427,7 @@ Both bands are narrowest near $\bar{X} \approx 3.2$ and widen with extrapolation
 
 ---
 
-## CI and PI in R {.smaller}
+## Confidence Interval and Prediction Interval in R {.smaller}
 
 ```{r}
 #| echo: true
@@ -482,7 +482,7 @@ Write one sentence interpreting each interval. Why is the PI so much wider?
 #| echo: false
 #| eval: true
 countdown::countdown(
-  minutes = 5,
+  minutes = 3,
   play_sound = TRUE,
   color_border              = "#FEBC11",
   color_text                = "#003660",
@@ -537,7 +537,6 @@ A separate question is: **how well does the model fit the data overall?**
 - **What the model explains** — variation in the fitted values $\hat{Y}_i$ around $\bar{Y}$
 - **What the model does not explain** — the residuals $Y_i - \hat{Y}_i$
 
-This decomposition leads directly to a formal test for $H_0: \beta_1 = 0$ and a summary of overall fit via $R^2$.
 :::
 
 ---
@@ -578,6 +577,14 @@ $$\sum_{i=1}^n e_i(\hat{Y}_i - \bar{Y}) = \sum_{i=1}^n e_i \hat{Y}_i - \bar{Y}\s
 
 because $\sum e_i \hat{Y}_i = 0$ and $\sum e_i = 0$ both follow from the normal equations. Dropping the cross-product gives SSTO = SSR + SSE.
 
+:::
+
+::: {.notes}
+Why is $\sum e_i \hat{Y}_i = 0$? Substitute $\hat{Y}_i = \hat{\beta}_0 + \hat{\beta}_1 X_i$ and factor out the constants:
+
+$$\sum_{i=1}^n e_i \hat{Y}_i = \hat{\beta}_0 \sum_{i=1}^n e_i + \hat{\beta}_1 \sum_{i=1}^n e_i X_i = \hat{\beta}_0 \cdot 0 + \hat{\beta}_1 \cdot 0 = 0$$
+
+Both sums are zero by properties 1 and 3 of OLS residuals from Lecture 4: $\sum e_i = 0$ (from $\partial\text{RSS}/\partial\hat{\beta}_0 = 0$) and $\sum e_i X_i = 0$ (from $\partial\text{RSS}/\partial\hat{\beta}_1 = 0$). So $\sum e_i \hat{Y}_i = 0$ is not a separate fact — it is a linear combination of those two normal equation conditions.
 :::
 
 ---

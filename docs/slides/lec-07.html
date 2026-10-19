@@ -474,7 +474,7 @@ Annie Adams
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="fu">predict</span>(fit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">Lat =</span> <span class="dv">41</span>), <span class="at">interval =</span> <span class="st">"prediction"</span>)</span>
 <span id="cb2-2"><a aria-label="2"></a><span class="co">#      fit      lwr      upr</span></span>
 <span id="cb2-3"><a aria-label="3"></a><span class="co">#  144.092  105.212  182.972</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>95% PI:</strong> We predict a new individual state at 41° north will have mortality between <strong>105.2 and 183.0</strong> deaths per 10 million — a range nearly 7× wider than the CI.</p>
+<p><strong>95% PI:</strong> We predict a new individual state at 41° north will have mortality between <strong>105.2 and 183.0</strong> deaths per 10 million.Notice how this range is nearly 7× wider than the CI!</p>
 </div>
 </div>
 </section>
@@ -570,7 +570,7 @@ Annie Adams
 <p><span class="math display">\[\boxed{\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\, n-2}\left[\text{MSE}\!\left(1 + \frac{1}{n} + \frac{(x^*-\bar{X})^2}{S_{xx}}\right)\right]^{1/2}}\]</span></p>
 </div>
 <div class="fragment">
-<p><strong>Key consequence:</strong> Even as <span class="math inline">\(n \to \infty\)</span>, the PI does <strong>not</strong> collapse to a point. The extra <span class="math inline">\(1\)</span> inside the radical comes from <span class="math inline">\(\varepsilon^*\)</span> — irreducible individual noise that is independent of the training data. No amount of data can estimate it away.</p>
+<p><strong>Key consequence:</strong> Even as <span class="math inline">\(n \to \infty\)</span>, the PI does <strong>not</strong> collapse to a point. The extra <span class="math inline">\(1\)</span> inside the radical comes from irreducible individual noise that is independent of the training data (<span class="math inline">\(\varepsilon^*\)</span>). No amount of data can estimate it away.</p>
 </div>
 </section>
 <section id="ci-vs.-pi-side-by-side" class="slide level2 smaller">
@@ -632,8 +632,8 @@ Annie Adams
 
 <img data-src="lec-07_files/figure-revealjs/unnamed-chunk-1-1.png" width="864" class="r-stretch"><p>Both bands are narrowest near <span class="math inline">\(\bar{X} \approx 3.2\)</span> and widen with extrapolation.</p>
 </section>
-<section id="ci-and-pi-in-r" class="slide level2 smaller">
-<h2>CI and PI in R</h2>
+<section id="confidence-interval-and-prediction-interval-in-r" class="slide level2 smaller">
+<h2>Confidence Interval and Prediction Interval in R</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
 <span id="cb3-2"><a aria-label="2"></a></span>
@@ -696,7 +696,7 @@ Annie Adams
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_62baaede" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_3cdfcb7a" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -734,7 +734,6 @@ Annie Adams
 <li><strong>What the model explains</strong> — variation in the fitted values <span class="math inline">\(\hat{Y}_i\)</span> around <span class="math inline">\(\bar{Y}\)</span></li>
 <li><strong>What the model does not explain</strong> — the residuals <span class="math inline">\(Y_i - \hat{Y}_i\)</span></li>
 </ul>
-<p>This decomposition leads directly to a formal test for <span class="math inline">\(H_0: \beta_1 = 0\)</span> and a summary of overall fit via <span class="math inline">\(R^2\)</span>.</p>
 </div>
 </section>
 <section id="partitioning-total-variation-steps-13" class="slide level2">
@@ -765,6 +764,21 @@ Annie Adams
 <p><span class="math display">\[\sum_{i=1}^n e_i(\hat{Y}_i - \bar{Y}) = \sum_{i=1}^n e_i \hat{Y}_i - \bar{Y}\sum_{i=1}^n e_i = 0 - 0 = 0\]</span></p>
 <p>because <span class="math inline">\(\sum e_i \hat{Y}_i = 0\)</span> and <span class="math inline">\(\sum e_i = 0\)</span> both follow from the normal equations. Dropping the cross-product gives SSTO = SSR + SSE.</p>
 </div>
+<aside class="notes">
+<p>Why is <span class="math inline">\(\sum e_i \hat{Y}_i = 0\)</span>? Substitute <span class="math inline">\(\hat{Y}_i = \hat{\beta}_0 + \hat{\beta}_1 X_i\)</span> and factor out the constants:</p>
+<p><span class="math display">\[\sum_{i=1}^n e_i \hat{Y}_i = \hat{\beta}_0 \sum_{i=1}^n e_i + \hat{\beta}_1 \sum_{i=1}^n e_i X_i = \hat{\beta}_0 \cdot 0 + \hat{\beta}_1 \cdot 0 = 0\]</span></p>
+<p>Both sums are zero by properties 1 and 3 of OLS residuals from Lecture 4: <span class="math inline">\(\sum e_i = 0\)</span> (from <span class="math inline">\(\partial\text{RSS}/\partial\hat{\beta}_0 = 0\)</span>) and <span class="math inline">\(\sum e_i X_i = 0\)</span> (from <span class="math inline">\(\partial\text{RSS}/\partial\hat{\beta}_1 = 0\)</span>). So <span class="math inline">\(\sum e_i \hat{Y}_i = 0\)</span> is not a separate fact — it is a linear combination of those two normal equation conditions.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="partitioning-total-variation-result" class="slide level2 smaller">
 <h2>Partitioning Total Variation — Result</h2>
@@ -1045,7 +1059,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_991b04e3" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_091c8d30" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
