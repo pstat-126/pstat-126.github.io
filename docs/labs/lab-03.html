@@ -369,7 +369,6 @@ window.Quarto = {
   <li><a href="#one-sided-test-h_1-beta_1-0" id="toc-one-sided-test-h_1-beta_1-0" class="nav-link" data-scroll-target="#one-sided-test-h_1-beta_1-0">6.3 One-Sided Test: <span class="math inline">\(H_1: \beta_1 &lt; 0\)</span></a></li>
   <li><a href="#test-against-a-non-zero-null" id="toc-test-against-a-non-zero-null" class="nav-link" data-scroll-target="#test-against-a-non-zero-null">6.4 Test Against a Non-Zero Null</a></li>
   </ul></li>
-  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together">7. Putting It All Together</a></li>
   <li><a href="#submission-instructions" id="toc-submission-instructions" class="nav-link" data-scroll-target="#submission-instructions">Submission Instructions</a></li>
   </ul>
 </nav>
@@ -410,7 +409,7 @@ Note
 <p>Download the <code>.Rmd</code> file below, open it in RStudio, and work through the exercises inside.</p>
 </div>
 </div>
-<p><a href="../downloads/lab-03.Rmd" class="btn btn-primary" download="lab-03.Rmd">Download lab-03.Rmd</a></p>
+<p><a href="lab-03.Rmd" class="btn btn-primary" download="lab-03.Rmd">Download lab-03.Rmd</a></p>
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
 <p>In this lab you will:</p>
@@ -419,7 +418,7 @@ Note
 <li>Visualize the <span class="math inline">\(t\)</span>-distribution and use <code>qt()</code> to find critical values</li>
 <li>Construct confidence intervals for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> manually and with <code>confint()</code></li>
 <li>Conduct two-sided and one-sided hypothesis tests for regression coefficients</li>
-<li>Extract and interpret <span class="math inline">\(t\)</span>-statistics and p-values from <code>summary()</code> output</li>
+<li>Extract and interpret <span class="math inline">\(t\)</span>-statistics from <code>summary()</code> output</li>
 </ul>
 </section>
 <section id="setup" class="level2">
@@ -434,9 +433,11 @@ Note
 <h2 class="anchored" data-anchor-id="the-data-motor-trend-car-road-tests">1. The Data: Motor Trend Car Road Tests</h2>
 <p>We will use the <code>mtcars</code> dataset, which records fuel consumption and design characteristics for 32 automobiles.</p>
 <p><strong>Research question:</strong> Does a car’s weight (in 1000 lbs) predict its fuel efficiency (mpg)?</p>
+<p>Run the chunk below to get a quick overview of the dataset’s variables and dimensions.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(mtcars)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Now produce a scatter plot of mpg vs.&nbsp;weight.</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> wt, <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#003660"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
@@ -455,10 +456,12 @@ Note
 </section>
 <section id="fitting-the-model-and-extracting-key-quantities" class="level2">
 <h2 class="anchored" data-anchor-id="fitting-the-model-and-extracting-key-quantities">2. Fitting the Model and Extracting Key Quantities</h2>
+<p>Fit the model and inspect the <code>summary()</code> output. The <code>summary()</code> gives a preview of inference results. We will reconstruct each piece manually in the sections that follow.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> mtcars)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Extract key quantities that are used throughout the rest of the lab. Confirm this chunk runs without errors before continuing.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>n      <span class="ot">&lt;-</span> <span class="fu">nrow</span>(mtcars)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>b0     <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)[<span class="st">"(Intercept)"</span>]</span>
@@ -476,6 +479,7 @@ Note
 <p>From Lecture 5, the two estimates of the error variance are:</p>
 <p><span class="math display">\[\widehat{\sigma}^2_{\text{OLS}} = \frac{\text{RSS}}{n - 2} = \text{MSE} \qquad \text{(unbiased)}\]</span></p>
 <p><span class="math display">\[\widehat{\sigma}^2_{\text{MLE}} = \frac{\text{RSS}}{n} \qquad \text{(biased — does not correct for the two estimated parameters)}\]</span></p>
+<p>Compute both estimates and display them side by side. Notice which estimate is larger and whether this matches the direction of bias described above.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sigma2_OLS <span class="ot">&lt;-</span> RSS <span class="sc">/</span> (n <span class="sc">-</span> <span class="dv">2</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sigma2_MLE <span class="ot">&lt;-</span> RSS <span class="sc">/</span> n</span>
@@ -487,12 +491,6 @@ Note
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">"llr"</span>, <span class="at">caption =</span> <span class="st">"Comparing OLS and MLE estimates of σ²"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<blockquote class="blockquote">
-<p><strong>Question 2.</strong></p>
-<p><strong>(a)</strong> Which estimate is larger — OLS or MLE? Does this match the direction of bias you would expect from a downward-biased estimator?</p>
-<p><strong>(b)</strong> The ratio MLE / OLS equals <span class="math inline">\((n - 2)/n\)</span>. Using <span class="math inline">\(n = 32\)</span>, compute this ratio. As <span class="math inline">\(n\)</span> grows very large, what happens to the gap between the two estimates?</p>
-<p><em>Answer:</em></p>
-</blockquote>
 <hr>
 </section>
 <section id="the-t-distribution-and-critical-values-lec-0506" class="level2">
@@ -503,6 +501,7 @@ Note
 <p><span class="math display">\[\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} \sim t_{n-2}\]</span></p>
 <section id="visualizing-the-t-distribution" class="level3">
 <h3 class="anchored" data-anchor-id="visualizing-the-t-distribution">4.1 Visualizing the <span class="math inline">\(t\)</span>-Distribution</h3>
+<p>The chunk below overlays several distributions. Pay attention to how the tails compare across different degrees of freedom.</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">500</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -525,12 +524,13 @@ Note
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <blockquote class="blockquote">
-<p><strong>Question 3.</strong> Compare the <span class="math inline">\(t\)</span>-distribution with df = 5 to the standard normal. What happens to the tails, and why? How does the shape change as degrees of freedom increase toward infinity?</p>
+<p><strong>Question 2.</strong> Compare the <span class="math inline">\(t\)</span>-distribution with df = 5 to the standard normal. What happens to the tails, and why? How does the shape change as degrees of freedom increase toward infinity?</p>
 <p><em>Answer:</em></p>
 </blockquote>
 </section>
 <section id="finding-critical-values-with-qt" class="level3">
 <h3 class="anchored" data-anchor-id="finding-critical-values-with-qt">4.2 Finding Critical Values with <code>qt()</code></h3>
+<p>Use <code>qt()</code> to find critical values at several confidence levels. Note that <code>t_crit_95</code> is used directly in Section 5 to build confidence intervals.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% CI critical value  (alpha = 0.05, two-sided -&gt; upper tail = 0.025)</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>t_crit_95 <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>)</span>
@@ -545,7 +545,7 @@ Note
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>t_crit_one</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <blockquote class="blockquote">
-<p><strong>Question 4.</strong> We use <code>qt(0.975, ...)</code> to get the critical value for a <strong>95%</strong> confidence interval. Why 0.975 rather than 0.95?</p>
+<p><strong>Question 3.</strong> We use <code>qt(0.975, ...)</code> to get the critical value for a <strong>95%</strong> confidence interval. Why 0.975 rather than 0.95?</p>
 <p><em>Answer:</em></p>
 </blockquote>
 <hr>
@@ -558,48 +558,51 @@ Note
 <p><span class="math display">\[\widehat{\beta}_0 \pm t_{1-\alpha/2,\, n-2} \cdot \text{SE}(\widehat{\beta}_0), \qquad \text{SE}(\widehat{\beta}_0) = \left[\text{MSE}\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)\right]^{1/2}\]</span></p>
 <section id="manual-calculation" class="level3">
 <h3 class="anchored" data-anchor-id="manual-calculation">5.1 Manual Calculation</h3>
+<p>Apply the formulas above to compute SE values and confidence intervals by hand, using the quantities extracted in Section 2.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>se_b1 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(MSE <span class="sc">/</span> Sxx)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>se_b0 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(MSE <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>n <span class="sc">+</span> x_bar<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> Sxx))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: replace NULL with SE of beta_1 hat</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>se_b1 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"SE(β̂₁):"</span>, <span class="fu">round</span>(se_b1, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"SE(β̂₀):"</span>, <span class="fu">round</span>(se_b0, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: replace NULL with SE of beta_0 hat</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>se_b0 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"SE(β̂₁):"</span>, <span class="fu">round</span>(se_b1, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"SE(β̂₀):"</span>, <span class="fu">round</span>(se_b0, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>CI_b1_95 <span class="ot">&lt;-</span> <span class="fu">c</span>(b1 <span class="sc">-</span> t_crit_95 <span class="sc">*</span> se_b1,  b1 <span class="sc">+</span> t_crit_95 <span class="sc">*</span> se_b1)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>CI_b0_95 <span class="ot">&lt;-</span> <span class="fu">c</span>(b0 <span class="sc">-</span> t_crit_95 <span class="sc">*</span> se_b0,  b0 <span class="sc">+</span> t_crit_95 <span class="sc">*</span> se_b0)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: replace NULL with confidence interval for beta 1</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>CI_b1_95 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"95% CI for β₁: ("</span>, <span class="fu">round</span>(CI_b1_95[<span class="dv">1</span>], <span class="dv">3</span>), <span class="st">","</span>, <span class="fu">round</span>(CI_b1_95[<span class="dv">2</span>], <span class="dv">3</span>), <span class="st">")</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"95% CI for β₀: ("</span>, <span class="fu">round</span>(CI_b0_95[<span class="dv">1</span>], <span class="dv">3</span>), <span class="st">","</span>, <span class="fu">round</span>(CI_b0_95[<span class="dv">2</span>], <span class="dv">3</span>), <span class="st">")</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: replace NULL with confidence interval for b0</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>CI_b0_95 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"95% CI for β₁: ("</span>, <span class="fu">round</span>(CI_b1_95[<span class="dv">1</span>], <span class="dv">3</span>), <span class="st">","</span>, <span class="fu">round</span>(CI_b1_95[<span class="dv">2</span>], <span class="dv">3</span>), <span class="st">")</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"95% CI for β₀: ("</span>, <span class="fu">round</span>(CI_b0_95[<span class="dv">1</span>], <span class="dv">3</span>), <span class="st">","</span>, <span class="fu">round</span>(CI_b0_95[<span class="dv">2</span>], <span class="dv">3</span>), <span class="st">")</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="verification-with-confint" class="level3">
 <h3 class="anchored" data-anchor-id="verification-with-confint">5.2 Verification with <code>confint()</code></h3>
+<p>Verify that your manual CIs match the output below.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Do your manual results match?</p>
 <blockquote class="blockquote">
-<p><strong>Question 5.</strong> Interpret the 95% CI for <span class="math inline">\(\beta_1\)</span> in context. Does the interval contain 0? What does that tell you about the relationship between weight and fuel efficiency?</p>
+<p><strong>Question 4.</strong> Interpret the 95% CI for <span class="math inline">\(\beta_1\)</span> in context. Does the interval contain 0? What does that tell you about the relationship between weight and fuel efficiency?</p>
 <p><em>Answer:</em></p>
 </blockquote>
-<blockquote class="blockquote">
-<p><strong>Question 6.</strong> The 95% CI for <span class="math inline">\(\beta_0\)</span> is approximately <span class="math inline">\((33.4, 41.1)\)</span>. A car with weight = 0 is physically impossible. What does this tell us about when the intercept has a meaningful real-world interpretation?</p>
-<p><em>Answer:</em></p>
-</blockquote>
-<p>Now compute a <strong>90% confidence interval</strong> for <span class="math inline">\(\beta_1\)</span>:</p>
+<p>Now complete the chunk below to construct a <strong>90% confidence interval</strong> for <span class="math inline">\(\beta_1\)</span>. Recall that a 90% CI uses <code>qt(0.95, ...)</code> because <span class="math inline">\(1 - \alpha/2 = 0.95\)</span> when <span class="math inline">\(\alpha = 0.10\)</span>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: replace NULL with qt(...)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: replace NULL with critical value for 90% conf interval</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>t_crit_90 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: replace NULL with c(b1 - ..., b1 + ...)</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: replace NULL with 90% confidence interval formula</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>CI_b1_90 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"90% CI for β₁: ("</span>, <span class="fu">round</span>(CI_b1_90[<span class="dv">1</span>], <span class="dv">3</span>), <span class="st">","</span>, <span class="fu">round</span>(CI_b1_90[<span class="dv">2</span>], <span class="dv">3</span>), <span class="st">")</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <blockquote class="blockquote">
-<p><strong>Question 7.</strong> Compare the 90% and 95% CIs for <span class="math inline">\(\beta_1\)</span>. Which is wider? What is the trade-off between a higher confidence level and the width of the interval?</p>
+<p><strong>Question 5.</strong> Compare the 90% and 95% CIs for <span class="math inline">\(\beta_1\)</span>. Which is wider? What is the trade-off between a higher confidence level and the width of the interval?</p>
 <p><em>Answer:</em></p>
 </blockquote>
 <hr>
@@ -607,30 +610,35 @@ Note
 </section>
 <section id="hypothesis-testing-lec-06" class="level2">
 <h2 class="anchored" data-anchor-id="hypothesis-testing-lec-06">6. Hypothesis Testing (Lec 06)</h2>
+<p>For each test below: (1) compute the test statistic <span class="math inline">\(t^*\)</span>, (2) find the critical value using <code>qt()</code>, and (3) compare them to make your decision. We reject <span class="math inline">\(H_0\)</span> when <span class="math inline">\(|t^*|\)</span> exceeds the critical value (two-sided) or <span class="math inline">\(t^*\)</span> falls past the one-sided cutoff.</p>
 <section id="two-sided-test-h_0-beta_1-0" class="level3">
 <h3 class="anchored" data-anchor-id="two-sided-test-h_0-beta_1-0">6.1 Two-Sided Test: <span class="math inline">\(H_0: \beta_1 = 0\)</span></h3>
 <p>The test statistic from Lecture 6 is:</p>
 <p><span class="math display">\[t^* = \frac{\widehat{\beta}_1 - 0}{\text{SE}(\widehat{\beta}_1)} \sim t_{n-2} \quad \text{under } H_0\]</span></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>t_star_b1 <span class="ot">&lt;-</span> b1 <span class="sc">/</span> se_b1</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>t_star_b1</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: replace NULL with test statistic</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>t_star_b1 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-sided p-value</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>p_val_b1 <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="fu">abs</span>(t_star_b1), <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>p_val_b1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-sided critical value at alpha = 0.05</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>t_crit_two <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Test statistic t*   ="</span>, <span class="fu">round</span>(t_star_b1, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Critical value ±t*  ="</span>, <span class="fu">round</span>(t_crit_two, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Reject H0?"</span>, <span class="fu">abs</span>(t_star_b1) <span class="sc">&gt;</span> t_crit_two, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <blockquote class="blockquote">
-<p><strong>Question 8.</strong> At <span class="math inline">\(\alpha = 0.05\)</span>, do you reject <span class="math inline">\(H_0: \beta_1 = 0\)</span>? State your conclusion in context.</p>
+<p><strong>Question 6.</strong> At <span class="math inline">\(\alpha = 0.05\)</span>, do you reject <span class="math inline">\(H_0: \beta_1 = 0\)</span>? State your conclusion in context.</p>
 <p><em>Answer:</em></p>
 </blockquote>
 </section>
 <section id="reading-summary-output" class="level3">
 <h3 class="anchored" data-anchor-id="reading-summary-output">6.2 Reading <code>summary()</code> Output</h3>
+<p>R’s <code>summary()</code> reports the <span class="math inline">\(t\)</span>-value for each coefficient automatically. Use the critical value <code>t_crit_two</code> you already computed to make the reject/fail-to-reject decision for the intercept.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <blockquote class="blockquote">
-<p><strong>Question 9.</strong> Verify that the <span class="math inline">\(t\)</span>-value and p-value in the <code>wt</code> row match your manual calculations above. Then interpret what the p-value for the <code>(Intercept)</code> row is testing.</p>
+<p><strong>Question 7.</strong> Verify that the <span class="math inline">\(t\)</span>-value in the <code>wt</code> row matches your manual calculation above. Then state what hypothesis the <span class="math inline">\(t\)</span>-value for the <code>(Intercept)</code> row is testing, and use the critical value approach to decide whether to reject it at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
 <p><em>Answer:</em></p>
 </blockquote>
 </section>
@@ -639,58 +647,41 @@ Note
 <p>A car engineer argues that heavier cars always have <strong>lower</strong> fuel efficiency. Test this directional claim:</p>
 <p><span class="math display">\[H_0: \beta_1 = 0 \quad \text{vs.} \quad H_1: \beta_1 &lt; 0\]</span></p>
 <p>We reject <span class="math inline">\(H_0\)</span> at level <span class="math inline">\(\alpha\)</span> when <span class="math inline">\(t^* &lt; -t_{1-\alpha,\, n-2}\)</span>.</p>
+<p>Notice that the critical value shifts because all of <span class="math inline">\(\alpha\)</span> is placed in one tail instead of being split between two.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>t_crit_left <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">qt</span>(<span class="fl">0.95</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Test statistic t*   ="</span>, <span class="fu">round</span>(t_star_b1, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Critical value      ="</span>, <span class="fu">round</span>(t_crit_left, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Reject H0?"</span>, t_star_b1 <span class="sc">&lt;</span> t_crit_left, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sided p-value</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>p_val_left <span class="ot">&lt;-</span> <span class="fu">pt</span>(t_star_b1, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">2</span>, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>p_val_left</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: replace NULL with critical value</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>t_crit_left <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Test statistic t*   ="</span>, <span class="fu">round</span>(t_star_b1, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Critical value      ="</span>, <span class="fu">round</span>(t_crit_left, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Reject H0?"</span>, t_star_b1 <span class="sc">&lt;</span> t_crit_left, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<blockquote class="blockquote">
-<p><strong>Question 10.</strong> Compare the one-sided p-value to the two-sided p-value from Section 6.1. How are they related mathematically? When is a one-sided test more appropriate than a two-sided test?</p>
-<p><em>Answer:</em></p>
-</blockquote>
 </section>
 <section id="test-against-a-non-zero-null" class="level3">
 <h3 class="anchored" data-anchor-id="test-against-a-non-zero-null">6.4 Test Against a Non-Zero Null</h3>
 <p>A previous study suggested that each additional 1000 lbs reduces mpg by exactly <strong>6 miles per gallon</strong>. Test whether our data are consistent with this claim:</p>
 <p><span class="math display">\[H_0: \beta_1 = -6 \quad \text{vs.} \quad H_1: \beta_1 \neq -6\]</span></p>
+<p>The only change from Section 6.1 is that the null value in the numerator is <span class="math inline">\(-6\)</span> instead of <span class="math inline">\(0\)</span>: <span class="math inline">\(t^* = (\widehat{\beta}_1 - \beta_{1,0}) / \text{SE}(\widehat{\beta}_1)\)</span>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>beta10 <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">6</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: replace NULL with (b1 - beta10) / se_b1</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>t_star_nz <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: replace NULL with 2 * pt(...)</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>p_val_nz <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: replace NULL with qt(0.975, df = n - 2)</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>t_crit_nz <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Test statistic:"</span>, <span class="fu">round</span>(t_star_nz, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"p-value:       "</span>, <span class="fu">round</span>(p_val_nz, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Critical value:"</span>, <span class="fu">round</span>(t_crit_nz, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Reject H0?"</span>, <span class="fu">abs</span>(t_star_nz) <span class="sc">&gt;</span> t_crit_nz, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <blockquote class="blockquote">
-<p><strong>Question 11.</strong> At <span class="math inline">\(\alpha = 0.05\)</span>, do you reject <span class="math inline">\(H_0: \beta_1 = -6\)</span>? What does this conclusion say about the previous study’s claim?</p>
+<p><strong>Question 8.</strong> At <span class="math inline">\(\alpha = 0.05\)</span>, do you reject <span class="math inline">\(H_0: \beta_1 = -6\)</span>? What does this conclusion say about the previous study’s claim?</p>
 <p><em>Answer:</em></p>
 </blockquote>
 <hr>
 </section>
-</section>
-<section id="putting-it-all-together" class="level2">
-<h2 class="anchored" data-anchor-id="putting-it-all-together">7. Putting It All Together</h2>
-<blockquote class="blockquote">
-<p><strong>Question 12.</strong> Write a 3–4 sentence summary of the <code>mtcars</code> analysis from this lab. Your summary must include:</p>
-<ul>
-<li>The fitted regression equation (state <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span>)</li>
-<li>A 95% CI for the slope and a one-sentence interpretation</li>
-<li>The result of the hypothesis test <span class="math inline">\(H_0: \beta_1 = 0\)</span> and your conclusion in context</li>
-</ul>
-<p><em>Answer:</em></p>
-</blockquote>
-<hr>
 </section>
 <section id="submission-instructions" class="level1">
 <h1>Submission Instructions</h1>
