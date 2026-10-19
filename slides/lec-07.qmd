@@ -20,12 +20,11 @@ format:
 
 By the end of today you will be able to:
 
-::: {style="font-size: 0.88em;"}
+::: {style="font-size: 0.78em;"}
 
 - Distinguish between a CI for the **mean response** and a **prediction interval** for a new observation
 - Derive the variance of the fitted value $\widehat{Y}^*$ at a new input $x^*$
 - Construct and interpret confidence intervals for mean response and prediction intervals
-- Explain why prediction intervals do not collapse to a point as $n \to \infty$
 - Compute and interpret both types of intervals in R
 - Partition total variation into SSR and SSE and read an ANOVA table
 - Perform the F-test for $H_0: \beta_1 = 0$ and connect it to the t-test
@@ -230,12 +229,12 @@ $$\mathrm{Var}(\widehat{Y}^*) = \frac{\sigma^2}{n} + (x^* - \bar{X})^2 \cdot \fr
 
 ## Why $\mathrm{Cov}(\bar{Y},\, \widehat{\beta}_1) = 0$? {.smaller}
 
-Recall $\widehat{\beta}_1 = \sum_{i=1}^n a_i Y_i$ where $a_i = (X_i - \bar{X})/S_{xx}$.
+Recall $\widehat{\beta}_1 = \sum_{j=1}^n a_j Y_j$ where $a_j = (X_j - \bar{X})/S_{xx}$.
 
-$$\mathrm{Cov}(\bar{Y},\, \widehat{\beta}_1) = \mathrm{Cov}\!\left(\frac{1}{n}\sum_{i=1}^n Y_i,\; \sum_{i=1}^n a_i Y_i\right)$$
+$$\mathrm{Cov}(\bar{Y},\, \widehat{\beta}_1) = \mathrm{Cov}\!\left(\frac{1}{n}\sum_{i=1}^n Y_i,\; \sum_{j=1}^n a_j Y_j\right) = \frac{1}{n}\sum_{i=1}^n\sum_{j=1}^n a_j\,\mathrm{Cov}(Y_i, Y_j)$$
 
 ::: {.fragment}
-Since the $Y_i$ are **independent**, only the $i = j$ terms survive:
+Since the $Y_i$ are **independent**, $\mathrm{Cov}(Y_i, Y_j) = 0$ for $i \neq j$ and $\mathrm{Var}(Y_i) = \sigma^2$ for $i = j$, so only the diagonal terms survive:
 
 $$= \frac{1}{n}\sum_{i=1}^n a_i\,\mathrm{Var}(Y_i) = \frac{\sigma^2}{n}\sum_{i=1}^n a_i$$
 :::
@@ -272,15 +271,17 @@ $$\boxed{\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\, n-2}\sqrt{\text{MSE}\!\left(\fra
 
 ---
 
-## Worked Example: Skin Cancer and Latitude 
-::: {style="font-size: 0.50em;"}
+## Example: Skin Cancer & Latitude
+::: {style="font-size: 0.45em;"}
 
-**Data:** Skin cancer mortality (deaths per 10 million) vs. latitude for $n = 49$ US states.
+**Background:** Researchers collected skin cancer mortality rates (deaths per 10 million) and latitude (degrees north) for $n = 49$ US states. Higher latitudes receive less direct sunlight, so we expect mortality to decrease as latitude increases. A simple linear regression was fit, yielding:
 
 $$\widehat{\text{Mort}} = 389.19 - 5.978 \times \text{Lat}, \qquad \bar{X} = 39.5°$$
 
+**Question:** A new state is being added to the dataset with latitude $x^* = 41°$ north. We want to quantify uncertainty about its cancer mortality — both for the *average* state at that latitude and for *this specific* new state.
+
 ::: {.fragment}
-**At $x^* = 41°$ north latitude:**
+**Point estimate at $x^* = 41°$:**
 
 $$\widehat{Y}^* = 389.19 - 5.978(41) = \mathbf{144.1} \text{ deaths per 10 million}$$
 
@@ -300,7 +301,7 @@ predict(fit, newdata = data.frame(Lat = 41), interval = "prediction")
 #  144.092  105.212  182.972
 ```
 
-**95% PI:** We predict a new individual state at 41° north will have mortality between **105.2 and 183.0** deaths per 10 million.Notice how this range is nearly 7× wider than the CI!
+**95% PI:** We predict this specific new state at 41° north will have mortality between **105.2 and 183.0** deaths per 10 million. Notice how this range is nearly 7× wider than the CI — the extra width captures the individual-level noise $\varepsilon^*$ that no amount of data can reduce.
 :::
 :::
 ---
@@ -575,7 +576,7 @@ $$\sum_{i=1}^n (Y_i - \bar{Y})^2 = \sum_{i=1}^n (Y_i - \hat{Y}_i)^2 + \sum_{i=1}
 
 $$\sum_{i=1}^n e_i(\hat{Y}_i - \bar{Y}) = \sum_{i=1}^n e_i \hat{Y}_i - \bar{Y}\sum_{i=1}^n e_i = 0 - 0 = 0$$
 
-because $\sum e_i \hat{Y}_i = 0$ and $\sum e_i = 0$ both follow from the normal equations. Dropping the cross-product gives SSTO = SSR + SSE.
+because $\sum e_i \hat{Y}_i = 0$ and $\sum e_i = 0$ both follow from the normal equations. Dropping the cross-product gives SST = SSR + SSE.
 
 :::
 
@@ -593,13 +594,13 @@ Both sums are zero by properties 1 and 3 of OLS residuals from Lecture 4: $\sum 
 
 Dropping the cross-product term gives:
 
-$$\underbrace{\sum_{i=1}^n (Y_i - \bar{Y})^2}_{\text{SSTO}} = \underbrace{\sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2}_{\text{SSR}} + \underbrace{\sum_{i=1}^n (Y_i - \hat{Y}_i)^2}_{\text{SSE}}$$
+$$\underbrace{\sum_{i=1}^n (Y_i - \bar{Y})^2}_{\text{SST}} = \underbrace{\sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2}_{\text{SSR}} + \underbrace{\sum_{i=1}^n (Y_i - \hat{Y}_i)^2}_{\text{SSE}}$$
 
 ::: {.fragment}
 
 | Symbol | Name | Meaning |
 |:-------|:-----|:--------|
-| SSTO | Total SS | Total variation in $Y$ |
+| SST | Total SS | Total variation in $Y$ |
 | SSR | Regression SS | Variation *explained* by $X$ |
 | SSE | Error SS | Variation *unexplained* (residual) — same as RSS|
 
@@ -616,7 +617,7 @@ The ANOVA table organizes the SS decomposition. Each SS is divided by its **degr
 |:-------|:--:|:--:|:--:|:------------------------|
 | Model | $1$ | SSR | $\text{MSR} = \text{SSR}/1$ | $\sigma^2 + \beta_1^2 S_{xx}$ |
 | Error | $n-2$ | SSE | $\text{MSE} = \text{SSE}/(n-2)$ | $\sigma^2$ |
-| Total | $n-1$ | SSTO | | |
+| Total | $n-1$ | SST | | |
 
 ::: {.fragment}
 The $\mathrm{E}(\text{MS})$ column answers: *if we repeated the study many times, what would each mean square average out to?* 
@@ -630,7 +631,7 @@ The $\mathrm{E}(\text{MS})$ column answers: *if we repeated the study many times
 :::
 ---
 
-## Why $\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}$? (Steps 1–3)
+## Why $\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}$? (Steps 1–3) {visibility="hidden"}
 ::: {style="font-size: 0.58em;"}
 
 **Step 1:** Start from $\text{SSR} = \sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2$. Use $\bar{Y} = \hat{\beta}_0 + \hat{\beta}_1\bar{X}$ to simplify $\hat{Y}_i - \bar{Y}$:
@@ -649,7 +650,7 @@ The $\mathrm{E}(\text{MS})$ column answers: *if we repeated the study many times
 
 ---
 
-## Why $\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}$? (Solution)
+## Why $\mathrm{E}(\text{MSR}) = \sigma^2 + \beta_1^2 S_{xx}$? (Solution) {visibility="hidden"}
 ::: {style="font-size: 0.58em;"}
 
 **Step 1:** Since $\bar{Y} = \hat{\beta}_0 + \hat{\beta}_1\bar{X}$:
@@ -668,9 +669,9 @@ $$\mathrm{E}(\text{MSR}) = S_{xx}\!\left(\frac{\sigma^2}{S_{xx}} + \beta_1^2\rig
 
 :::
 
----
+## The F Distribution 
+::: {style="font-size: 0.46em;"}
 
-## The F Distribution {.smaller}
 
 The **F distribution** is the distribution of a ratio of two independent chi-squared random variables, each divided by their degrees of freedom:
 
@@ -687,13 +688,14 @@ In our setting:
 ::: {.fragment}
 Taking their ratio:
 
-$$F^* = \frac{\text{SSR}/1}{\text{SSE}/(n-2)} \sim F(1,\, n-2) \quad \text{under } H_0$$
+$$F^* = \frac{\text{SSR}/\sigma^2 \;/\; 1}{\text{SSE}/\sigma^2 \;/\; (n-2)} = \frac{\text{SSR}/1}{\text{SSE}/(n-2)} \sim F(1,\, n-2) \quad \text{under } H_0$$
 
 The $\sigma^2$'s cancel — we do not need to know $\sigma^2$ to use the test.
 :::
 
 ::: {.fragment}
 The F distribution is always **non-negative** and **right-skewed**. We only reject $H_0$ for **large** values of $F^*$, because a large ratio means the model explains far more variation than noise alone would.
+:::
 :::
 
 ---
@@ -702,7 +704,7 @@ The F distribution is always **non-negative** and **right-skewed**. We only reje
 ::: {style="font-size: 0.55em;"}
 
 
-**Goal:** Test $H_0: \beta_1 = 0$ vs. $H_1: \beta_1 \neq 0$ — is there any linear relationship between $X$ and $Y$?
+**Goal:** Test $H_0: \beta_1 = 0$ vs. $H_1: \beta_1 \neq 0$ to test if there is any linear relationship between $X$ and $Y$.
 
 ::: {.fragment}
 **Intuition:** If $\beta_1 \neq 0$, the model should explain a lot of variation, so SSR should be large relative to SSE. But SSR alone depends on the scale of $Y$ — a "large" SSR in one dataset might be tiny in another. We need a **relative** measure.
@@ -727,15 +729,15 @@ A large $F^*$ means the model explains far more than noise alone would.
 :::
 ---
 
-## The F-Test — Decision Rule {.smaller}
+## The F-Test — Decision Rule 
+::: {style="font-size: 0.60em;"}
+
 
 Under $H_0$, $F^* \sim F(1,\, n-2)$. Reject $H_0$ at level $\alpha$ if:
 
 $$F^* > F(1-\alpha;\; 1,\, n-2)$$
 
-::: {.fragment}
-**Connection to the t-test:** In simple linear regression, $F^* = (t^*)^2$, so the F-test and the t-test for $H_0: \beta_1 = 0$ are equivalent — they always give the same p-value.
-:::
+where $F(1-\alpha;\; 1,\, n-2)$ is the $(1-\alpha)$ quantile of the $F(1, n-2)$ distribution. 
 
 ::: {.fragment}
 ```{r}
@@ -746,16 +748,44 @@ anova(fit)
 ```
 :::
 
+::: {.fragment}
+```{r}
+#| echo: true
+#| eval: true
+n <- nrow(mtcars)
+qf(0.95, df1 = 1, df2 = n - 2)
+```
+
+Since $F^* = 91.4 > 4.17 = F(0.95;\; 1,\, 30)$, we reject $H_0: \beta_1 = 0$ at $\alpha = 0.05$. There is strong evidence of a linear relationship between vehicle weight and fuel efficiency.
+:::
+:::
 ---
 
-## $R^2$ and Adjusted $R^2$ {.smaller}
+## Connection to the t-Test {.smaller}
+
+In simple linear regression, the F-test for $H_0: \beta_1 = 0$ and the two-sided t-test for $H_0: \beta_1 = 0$ are **exactly equivalent** — they always produce the same p-value. This follows from the identity:
+
+$$F^* = (t^*)^2$$
+
+Squaring a $t_{n-2}$ random variable gives an $F(1, n-2)$ random variable, so the critical values are also linked: $F(1-\alpha;\; 1,\, n-2) = \left[t_{1-\alpha/2,\, n-2}\right]^2$.
+
+::: {.fragment}
+**Practical implication:** In simple linear regression you can use either test — they are the same test. The F-test becomes essential in multiple regression, where it tests whether *any* predictor is useful rather than just one slope.
+:::
+
+---
+
+## $R^2$ and Adjusted $R^2$ 
+::: {style="font-size: 0.60em;"}
+
 
 The **coefficient of determination** measures the fraction of variation in $Y$ explained by the model:
 
-$$R^2 = \frac{\text{SSR}}{\text{SSTO}} = 1 - \frac{\text{SSE}}{\text{SSTO}} \;\in\; [0, 1]$$
+$$R^2 = \frac{\text{SSR}}{\text{SST}} = 1 - \frac{\text{SSE}}{\text{SST}} \;\in\; [0, 1]$$
+
+The equality follows directly from SST = SSR + SSE — dividing both sides by SST gives $1 = \frac{\text{SSR}}{\text{SST}} + \frac{\text{SSE}}{\text{SST}}$, so $\frac{\text{SSR}}{\text{SST}} = 1 - \frac{\text{SSE}}{\text{SST}}$.
 
 ::: {.fragment}
-In simple linear regression, $R^2 = r_{XY}^2$ (the squared sample correlation).
 
 Adding **any** predictor always increases $R^2$ — it can be inflated by irrelevant variables.
 :::
@@ -763,20 +793,10 @@ Adding **any** predictor always increases $R^2$ — it can be inflated by irrele
 ::: {.fragment}
 **Adjusted $R^2$** penalizes for the number of $\beta$ parameters $p$ ($p = 2$ in SLR):
 
-$$\bar{R}^2 = 1 - \frac{\text{SSE}/(n-p)}{\text{SSTO}/(n-1)}$$
+$$\bar{R}^2 = 1 - \frac{\text{SSE}/(n-p)}{\text{SST}/(n-1)}$$
 
-$\bar{R}^2$ can **decrease** when a weak predictor is added — preferred for model comparison.
+$\bar{R}^2$ can **decrease** when a weak predictor is added, making it preferred for model comparison.
 :::
-
-::: {.fragment}
-```{r}
-#| echo: true
-#| eval: true
-fit <- lm(mpg ~ wt, data = mtcars)
-c(R2     = summary(fit)$r.squared,
-  Adj_R2 = summary(fit)$adj.r.squared,
-  r_sq   = cor(mtcars$wt, mtcars$mpg)^2)
-```
 :::
 
 ---
@@ -836,7 +856,7 @@ $$\text{MSR} = \frac{892.4}{1} = 892.4 \qquad \text{MSE} = \frac{247.6}{28} = 8.
 :::
 
 ::: {.fragment}
-**(d)** $F^* = 100.9 \gg 4.20$, so we **reject** $H_0: \beta_1 = 0$ at $\alpha = 0.05$. There is strong evidence of a linear relationship.
+**(d)** $F^* = 100.9 > 4.20$, so we **reject** $H_0: \beta_1 = 0$ at $\alpha = 0.05$. There is strong evidence of a linear relationship.
 :::
 
 ---
@@ -844,12 +864,11 @@ $$\text{MSR} = \frac{892.4}{1} = 892.4 \qquad \text{MSE} = \frac{247.6}{28} = 8.
 ## Summary {.smaller}
 
 ::: {.incremental}
-- **CI for mean response** at $x^*$: targets $E(Y \mid X = x^*)$; uncertainty comes only from estimating $\widehat{Y}^*$; width $\to 0$ as $n \to \infty$
+- **CI for mean response** at $x^*$: targets $E(Y \mid X = x^*)$
 - **PI for new observation** at $x^*$: targets an individual $Y^*$; adds $\sigma^2$ for irreducible noise — always wider than the CI; does **not** shrink to zero as $n \to \infty$
 - Both intervals are centered at $\widehat{Y}^*$ and are narrowest at $x^* = \bar{X}$, widening with extrapolation
-- In R: `predict(..., interval = "confidence")` vs. `predict(..., interval = "prediction")`
-- **ANOVA**: SSTO = SSR + SSE; F-test uses $F^* = \text{MSR}/\text{MSE} \sim F(1, n-2)$; equivalent to the t-test via $F^* = (t^*)^2$
-- **$R^2$**: fraction of variance explained; equals $r_{XY}^2$ in SLR; always increases with more predictors — use $\bar{R}^2$ for model comparison
+- **ANOVA**: SST = SSR + SSE; F-test uses $F^* = \text{MSR}/\text{MSE} \sim F(1, n-2)$; equivalent to the t-test via $F^* = (t^*)^2$
+- **$R^2$**: fraction of variance explained; always increases with more predictors so we use $\bar{R}^2$ for model comparison
 :::
 
 ---
