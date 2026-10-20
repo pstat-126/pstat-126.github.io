@@ -1,0 +1,601 @@
+---
+title: "Lecture 9: Model Diagnostics — Formal Tests and Transformations"
+subtitle: "PSTAT 126: Linear Regression"
+author: "Annie Adams"
+institute: "UC Santa Barbara"
+date: "10/28/2026"
+format:
+  revealjs:
+    theme: [default, ../styles.scss]
+    slide-number: true
+    preview-links: auto
+    footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
+    logo: ""
+    chalkboard: true
+    title-slide-attributes:
+      data-background-color: "#003660"
+---
+
+## Learning Objectives
+
+By the end of today you will be able to:
+
+::: {style="font-size: 0.78em;"}
+
+- Apply the F test for lack of fit using the SSPE/SSLF decomposition to formally test whether a linear model is adequate
+- Explain the extra sum of squares principle and how it underlies the lack of fit F test
+- Select an appropriate transformation of $X$ or $Y$ based on residual plot patterns
+- Use the Box-Cox method to data-adaptively choose a power transformation of $Y$
+- Walk through a complete diagnostics-and-remediation workflow on real data, including outlier handling, transformation, and re-checking diagnostics
+- Back-transform predictions to the original scale after fitting a model on transformed $Y$
+
+:::
+
+---
+
+## F Test for Lack of Fit {background-color="#003660"}
+
+---
+
+## Testing Linearity Formally {.smaller}
+
+The residual plots give us a visual check on Assumption 1. But can we **test** whether the linear relationship fits adequately?
+
+::: {.fragment}
+**Yes** — when there are **replicated observations** (multiple $Y$ values at the same $X$ value), we can use an **F test for lack of fit**.
+
+The idea: compare the fit of
+- a **full model** that allows any mean function (one-way ANOVA)
+- a **restricted model** that imposes the linear relationship $E(Y) = \beta_0 + \beta_1 X$
+:::
+
+---
+
+## Extra Sum of Squares Principle {.smaller}
+
+::: {style="font-size: 0.82em;"}
+
+The general framework for comparing nested models:
+
+1. Fit the **full model** $\rightarrow$ error sum of squares $SSE(F)$
+2. Fit the **restricted model** $\rightarrow$ error sum of squares $SSE(R)$
+3. $SSE(R) \geq SSE(F)$ always — the full model always fits at least as well
+
+::: {.fragment}
+4. The **extra sum of squares** $SSE(R) - SSE(F)$ measures the additional error incurred by the restriction. It should be **small** when $H_0$ is true.
+
+5. The **F statistic**:
+$$F^* = \frac{[SSE(R) - SSE(F)] / (df_R - df_F)}{SSE(F)/df_F} \overset{H_0}{\sim} F_{df_R - df_F,\; df_F}$$
+
+6. Reject $H_0$ if $F^* > F(1-\alpha;\; df_R - df_F,\; df_F)$
+:::
+:::
+
+---
+
+## Setup: Replicated Observations {.smaller}
+
+::: {style="font-size: 0.82em;"}
+
+Denote $X_1, \ldots, X_c$ as the $c$ **distinct** observed values of $X$.
+
+- $j$ indexes each distinct $X$ value ($j = 1, \ldots, c$)
+- $i$ indexes the replicates for a given $X_j$ ($i = 1, \ldots, n_j$)
+- $n_j$ = number of $Y$ values at $X_j$
+
+The full dataset:
+
+$$n_1 \text{ replicates at } X_1: Y_{11}, \ldots, Y_{n_1 1}$$
+$$n_2 \text{ replicates at } X_2: Y_{12}, \ldots, Y_{n_2 2}$$
+$$\vdots$$
+$$n_c \text{ replicates at } X_c: Y_{1c}, \ldots, Y_{n_c c}$$
+
+Total observations: $n = \sum_{j=1}^c n_j$
+
+:::
+
+---
+
+## Full Model and Pure Error SS {.smaller}
+
+**Full model** (one-way ANOVA — no linearity assumption):
+
+$$Y_{ij} = \mu_j + \varepsilon_{ij}, \quad j = 1, \ldots, c;\; i = 1, \ldots, n_j, \quad \varepsilon_{ij} \overset{iid}{\sim} N(0, \sigma^2)$$
+
+::: {.fragment}
+The LS estimates of $\mu_j$ are the group means $\bar{Y}_j = \sum_{i=1}^{n_j} Y_{ij}/n_j$.
+
+**Pure error sum of squares** (within-group variation):
+
+$$SSPE = SSE(F) = \sum_{j=1}^c \sum_{i=1}^{n_j} (Y_{ij} - \bar{Y}_j)^2, \qquad df_F = n - c$$
+
+This is **pure error** because it measures variation around group means — completely free of any linearity assumption.
+:::
+
+---
+
+## Restricted Model and Lack of Fit SS {.smaller}
+
+**Restricted model** (linear regression — imposes linearity):
+
+$$Y_{ij} = \beta_0 + \beta_1 X_j + \varepsilon_{ij}, \qquad df_R = n - 2$$
+
+::: {.fragment}
+Let $\widehat{Y}_{ij} = b_0 + b_1 X_j$ be the fitted values. Then $SSE(R) = \sum_{j}\sum_i (Y_{ij} - \widehat{Y}_{ij})^2$.
+
+**Key decomposition:**
+
+$$SSE(R) = SSPE + SSLF$$
+
+where the **lack of fit sum of squares** is:
+
+$$SSLF = \sum_{j=1}^c \sum_{i=1}^{n_j} (\bar{Y}_j - \widehat{Y}_{ij})^2 = \sum_{j=1}^c n_j(\bar{Y}_j - \widehat{Y}_{ij})^2, \qquad df_{LF} = c - 2$$
+:::
+
+::: {.fragment}
+SSLF measures how far the **group means** deviate from the **fitted line** — it is zero only if the line passes perfectly through every group mean.
+:::
+
+---
+
+## The F Test for Lack of Fit {.smaller}
+
+Applying the extra sum of squares principle:
+
+$$F^* = \frac{[SSE(R) - SSE(F)]/(df_R - df_F)}{SSE(F)/df_F} = \frac{SSLF/(c-2)}{SSPE/(n-c)} = \frac{MSLF}{MSPE} \overset{H_0}{\sim} F_{c-2,\; n-c}$$
+
+::: {.fragment}
+**Decision rule:** Reject $H_0$ (i.e., reject the linear model) if $F^* > F(1-\alpha;\; c-2,\; n-c)$.
+
+This F test is also called the **pure error test**.
+:::
+
+::: {.fragment}
+**ANOVA table with lack of fit decomposition:**
+
+| Source | df | SS | MS | F |
+|:-------|:--:|:--:|:--:|:-:|
+| Model | 1 | SSR | MSR = SSR/1 | MSR/MSE |
+| Error | $n-2$ | SSE | MSE = SSE/$(n-2)$ | |
+| — Lack of fit | $c-2$ | SSLF | MSLF = SSLF/$(c-2)$ | MSLF/MSPE |
+| — Pure error | $n-c$ | SSPE | MSPE = SSPE/$(n-c)$ | |
+| Total | $n-1$ | SSTO | | |
+:::
+
+---
+
+## Bank Example {.smaller}
+
+::: {style="font-size: 0.80em;"}
+
+12 branches of a commercial bank offered gifts for opening money market accounts. The gift value was proportional to the minimum deposit ($X$, in dollars). The goal: does minimum deposit predict number of new accounts ($Y$)?
+
+Data: $c = 6$ distinct deposit sizes ($75, 100, 125, 150, 175, 200$), each with $n_j = 2$ replicates ($n = 11$; one branch dropped after a fire).
+:::
+
+```{r}
+#| echo: true
+#| eval: true
+x <- c(125, 100, 200,  75, 150, 175,  75, 175, 125, 200, 100)
+y <- c(160, 112, 124,  28, 152, 156,  42, 124, 150, 104, 136)
+
+fit.full       <- lm(y ~ factor(x))   # full (ANOVA) model
+fit.restricted <- lm(y ~ x)           # restricted (linear) model
+
+anova(fit.full)
+anova(fit.restricted)
+```
+
+---
+
+## Bank Example: Computing the F Statistic {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+anova(fit.full, fit.restricted, test = "F")
+```
+
+::: {.fragment}
+::: {style="font-size: 0.82em;"}
+- $SSE(F) = SSPE = 1148$, $\; df_F = n - c = 11 - 6 = 5$
+- $SSE(R) = 14741.6$, $\; df_R = n - 2 = 9$
+- $SSLF = 14741.6 - 1148 = 13593.6$, $\; df_{LF} = c - 2 = 4$
+
+$$F^* = \frac{13593.6/4}{1148/5} = \frac{3398.4}{229.6} = 14.8$$
+
+With $p = 0.006$, we **reject the linear model** at $\alpha = 0.05$. The linear function does not adequately describe the relationship between deposit size and new accounts.
+:::
+:::
+
+---
+
+## Practice: Lack of Fit Test {.smaller}
+
+::: {style="font-size: 0.82em;"}
+
+An experiment has $c = 4$ distinct $X$ values with $n_2 = 3$ replicates each ($n = 12$). After fitting the linear regression and the full ANOVA model:
+
+- $SSE(R) = 480.2$ (linear model)
+- $SSE(F) = SSPE = 120.4$ (pure error)
+
+**(a)** Compute $SSLF$ and its degrees of freedom.
+
+**(b)** Compute $MSLF$ and $MSPE$.
+
+**(c)** Compute $F^*$ and state whether you reject the linear model at $\alpha = 0.05$.
+Critical value: $F(0.95;\; 2,\; 8) = 4.46$.
+
+**(d)** What does this result tell you about Assumption 1?
+:::
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 4,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em"
+)
+```
+
+---
+
+## Practice: Lack of Fit Test — Solution {.smaller}
+
+**(a)** $SSLF = SSE(R) - SSE(F) = 480.2 - 120.4 = 359.8$
+
+$df_{LF} = c - 2 = 4 - 2 = 2$; $\quad df_{PE} = n - c = 12 - 4 = 8$
+
+::: {.fragment}
+**(b)**
+$$MSLF = \frac{359.8}{2} = 179.9 \qquad MSPE = \frac{120.4}{8} = 15.05$$
+:::
+
+::: {.fragment}
+**(c)**
+$$F^* = \frac{MSLF}{MSPE} = \frac{179.9}{15.05} = 11.95$$
+
+Since $11.95 > 4.46$, we **reject** the linear model at $\alpha = 0.05$.
+:::
+
+::: {.fragment}
+**(d)** There is statistically significant evidence that the linear function **does not adequately fit** the data — Assumption 1 (linearity) appears to be violated. We should consider a transformation or a more flexible model.
+:::
+
+---
+
+## Transformations {background-color="#003660"}
+
+---
+
+## When and How to Transform {.smaller}
+
+We can transform $X$ and/or $Y$ and hope that the linear regression model is adequate for the transformed variables.
+
+::: {.fragment}
+**Transformations of $X$** — address **nonlinearity** while leaving error variance roughly unchanged:
+
+| Shape of relationship | Try |
+|:----------------------|:----|
+| Concave up (fast growth) | $X' = X^2$ or $X' = e^X$ |
+| Concave down (diminishing returns) | $X' = \log(X)$ or $X' = \sqrt{X}$ |
+| Decreasing, convex | $X' = 1/X$ or $X' = e^{-X}$ |
+:::
+
+::: {.fragment}
+**Transformations of $Y$** — address **nonconstant variance** and/or **nonnormality**:
+
+$$Y' = \sqrt{Y}, \qquad Y' = \log_{10}(Y), \qquad Y' = 1/Y$$
+
+These are called **variance-stabilizing transformations**.
+:::
+
+---
+
+## Box-Cox: Choosing the Transformation of $Y$ {.smaller}
+
+It is often difficult to determine which transformation is most appropriate from diagnostic plots alone. The **Box-Cox method** selects a power transformation data-adaptively.
+
+::: {.fragment}
+Suppose $Y > 0$. Consider the family:
+
+$$Y(\lambda) = \begin{cases} \dfrac{Y^\lambda - 1}{\lambda} & \lambda \neq 0 \\ \log Y & \lambda = 0 \end{cases}$$
+
+where $\lambda$ is treated as a parameter to be estimated.
+:::
+
+::: {.fragment}
+We hope that $Y(\lambda)$ satisfies:
+
+- $E(Y(\lambda)) = \beta_0 + \beta_1 X$
+- $\mathrm{Var}(Y(\lambda)) = \sigma^2$ (constant)
+- $Y(\lambda)$ is approximately normal
+:::
+
+---
+
+## Box-Cox: Estimating $\lambda$ {.smaller}
+
+Treating $Y(\lambda) \overset{\text{approx}}{\sim} N(\beta_0 + \beta_1 X, \sigma^2)$, the **profiled log-likelihood** (after maximizing over $\beta_0, \beta_1, \sigma^2$ for fixed $\lambda$) is:
+
+$$\ell_p(\lambda) = -\frac{n}{2}\log\!\left\{\frac{SSE(\lambda)}{n}\right\} + (\lambda - 1)\sum_{i=1}^n \log Y_i$$
+
+where $SSE(\lambda)$ is the residual sum of squares after fitting $Y(\lambda) = \beta_0 + \beta_1 X$.
+
+::: {.fragment}
+**The MLE of $\lambda$** is the value that maximizes $\ell_p(\lambda)$.
+
+**In practice:**
+
+- Plot $\ell_p(\lambda)$ vs $\lambda$ and find the peak
+- An approximate $100(1-\alpha)\%$ confidence region for $\lambda$: $\{\lambda : \ell_p(\hat\lambda) - \ell_p(\lambda) \leq \frac{1}{2}\chi^2_1(1-\alpha)\}$
+- **Round $\hat\lambda$ to a nearby interpretable value** (e.g., $0.5 \to \sqrt{Y}$, $0 \to \log Y$, $-1 \to 1/Y$)
+:::
+
+---
+
+## Box-Cox in R {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 7
+#| fig-height: 3.5
+library(MASS)
+fit_faithful2 <- lm(eruptions ~ waiting, data = faithful)
+boxcox(fit_faithful2, lambda = seq(-1, 2, len = 100))
+```
+
+::: {.fragment}
+::: {style="font-size: 0.82em;"}
+The peak is near $\hat\lambda \approx 1$, and the 95% confidence region comfortably includes $\lambda = 1$ (no transformation). This suggests the original scale is adequate for the Old Faithful data — consistent with the mostly clean residual plots we saw earlier.
+:::
+:::
+
+---
+
+## Case Example: Plutonium Measurement {background-color="#003660"}
+
+---
+
+## Plutonium Data {.smaller}
+
+**Goal:** Estimate the regression relationship between alpha counts per second ($Y$, #/sec) and plutonium activity ($X$, pCi/g).
+
+Data: $n = 24$ observations. Let's load and explore:
+
+```{r}
+#| echo: true
+#| eval: true
+plutonium <- data.frame(
+  x = c(0.150, 0.004, 0.069, 0.030, 0.011, 0.004, 0.050, 0.033, 0.060, 0.100,
+         0.200, 0.150, 0.004, 0.100, 0.069, 0.011, 0.150, 0.100, 0.033, 0.004,
+         0.004, 0.004, 0.030, 0.004),
+  y = c(20,  0,  10,  5,  0,  0,  5,  5,  10,  20,
+         40,  25,  0,  20,  10,  0,  25,  20,  5,  0,
+          0,  0,   5,   0)
+)
+head(plutonium)
+```
+
+---
+
+## Exploratory Plots {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 3.5
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+plot(plutonium$x, plutonium$y, xlab = "pCi/g", ylab = "# per second",
+     main = "Scatter Plot", pch = 16, col = "#003660")
+text(0.150, 20, "24?", pos = 4, cex = 0.7, col = "red")
+
+# Lowess smoothed curve
+plot(plutonium$x, plutonium$y, xlab = "pCi/g", ylab = "# per second",
+     main = "Lowess Smoothed Curve", pch = 16, col = "#003660")
+lines(lowess(plutonium$x, plutonium$y), col = "red", lwd = 2)
+```
+
+::: {.fragment}
+::: {style="font-size: 0.80em;"}
+**Case 24** (observation 1 in 1-indexed format shown) was caused by an unusual lab condition and will be discarded before fitting.
+:::
+:::
+
+---
+
+## Fit the Linear Model (fit1) {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+# Remove the outlier (observation with x=0.150, y=20 — the first row, index 1)
+plut <- plutonium[-1, ]
+
+fit1 <- lm(y ~ x, data = plut)
+summary(fit1)
+```
+
+---
+
+## Diagnostic Plots for fit1 {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 3.5
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+plot(fitted(fit1), residuals(fit1), xlab = "Fitted", ylab = "Residuals",
+     main = "Residual Plot", pch = 16, col = "#003660")
+abline(h = 0, lty = 2, col = "gray50")
+qqnorm(residuals(fit1), main = "Normal Q-Q Plot", pch = 16, col = "#003660")
+qqline(residuals(fit1), col = "red")
+```
+
+::: {.fragment}
+The residual plot shows a clear **fan shape** — variance increases with fitted value. This is a **nonconstant variance** violation. The Box-Cox method can help us choose a stabilizing transformation.
+:::
+
+---
+
+## Box-Cox Transformation for Plutonium Data {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 6
+#| fig-height: 3.5
+library(MASS)
+boxcox(formula(fit1), lambda = seq(0, 1, len = 20))
+```
+
+::: {.fragment}
+The Box-Cox plot peaks near $\hat\lambda \approx 0.5$, suggesting a **square root transformation**: $Y' = \sqrt{Y}$.
+:::
+
+---
+
+## Fit the Transformed Model (fit2) {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+plut$yp <- sqrt(plut$y)
+fit2 <- lm(yp ~ x, data = plut)
+summary(fit2)
+```
+
+---
+
+## Diagnostic Plots for fit2 {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 3.5
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+plot(fitted(fit2), residuals(fit2), xlab = "Fitted", ylab = "Residuals",
+     main = "Residual Plot (sqrt Y)", pch = 16, col = "#003660")
+abline(h = 0, lty = 2, col = "gray50")
+qqnorm(residuals(fit2), main = "Normal Q-Q Plot", pch = 16, col = "#003660")
+qqline(residuals(fit2), col = "red")
+```
+
+::: {.fragment}
+The fan shape is largely gone, but a slight **nonlinear pattern** remains. This suggests the relationship between $X$ and $\sqrt{Y}$ may not be perfectly linear — a further transformation of $X$ or a polynomial term could be explored in practice.
+:::
+
+---
+
+## Comparing fit1 and fit2 {.smaller}
+
+::: {style="font-size: 0.82em;"}
+
+| | **fit1** (original $Y$) | **fit2** ($Y' = \sqrt{Y}$) |
+|:--|:--|:--|
+| Slope | $\widehat{\beta}_1 = 0.00554$ | $\widehat{\beta}_1 = 0.01336$ |
+| $R^2$ | 0.916 | 0.900 |
+| Residual SE | 0.01257 | 0.0334 |
+| Equal variance? | **Violated** (fan shape) | Much better |
+| Normality? | Borderline | Better |
+
+:::
+
+::: {.fragment}
+**Take-away:** The transformation improved the diagnostic picture substantially. The slight remaining nonlinearity is worth noting but may be acceptable for practical purposes.
+
+When reporting results from **fit2**, all inference is about $\sqrt{Y}$, not $Y$ directly. Predictions must be squared back: $\widehat{Y} = (\widehat{Y}')^2$.
+:::
+
+---
+
+## Practice: Full Workflow {.smaller}
+
+::: {style="font-size: 0.80em;"}
+
+A researcher regresses pollution level $Y$ (ppb) on distance from factory $X$ (km) using $n = 40$ observations.
+
+- The residual-vs-fitted plot shows a clear **decreasing fan** (large residuals at small fitted values, small residuals at large fitted values)
+- The QQ-plot shows a strong **right-skew** (points curve above the line)
+- The lack of fit F test gives $F^* = 1.2$, $p = 0.35$
+
+**(a)** Which assumptions appear violated? Which appears satisfied?
+
+**(b)** What transformation of $Y$ would you try first, and why?
+
+**(c)** After a $\log(Y)$ transformation, the residual-vs-fitted plot looks ideal. Write the fitted model (in terms of $\log Y$) and explain how you would predict $Y$ for a new $X = 5$ km.
+
+:::
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 4,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em"
+)
+```
+
+---
+
+## Practice: Full Workflow — Solution {.smaller}
+
+**(a)**
+
+- **Equal variance (Assumption 3):** **Violated** — the fan shape in the residual-vs-fitted plot indicates nonconstant variance.
+- **Normality (Assumption 4):** **Violated** — right-skew in the QQ-plot.
+- **Linearity (Assumption 1):** **Satisfied** — the lack of fit test does not reject the linear model ($p = 0.35$).
+
+::: {.fragment}
+**(b)** Try $Y' = \log(Y)$. A log transformation is the natural choice for **right-skewed** data with a fan-pattern (variance growing with the mean), which often arises when $Y > 0$ and spans several orders of magnitude.
+:::
+
+::: {.fragment}
+**(c)** The fitted model after transformation: $\widehat{\log Y} = \widehat{\beta}_0 + \widehat{\beta}_1 X$.
+
+To predict $Y$ at $X = 5$: compute $\widehat{\log Y}^* = \widehat{\beta}_0 + 5\widehat{\beta}_1$, then **back-transform**: $\widehat{Y}^* = e^{\widehat{\log Y}^*}$.
+:::
+
+---
+
+## Summary {.smaller}
+
+::: {.incremental}
+- **F test for lack of fit:** When replicates exist, formally test $H_0:$ linearity holds using $F^* = MSLF/MSPE \sim F_{c-2,\; n-c}$; the key decomposition is $SSE(R) = SSPE + SSLF$
+- **Transformations of $X$:** Fix nonlinearity (e.g., $\log X$, $\sqrt{X}$, $X^2$) while leaving error variance roughly unchanged
+- **Transformations of $Y$:** Fix nonconstant variance and nonnormality simultaneously (e.g., $\sqrt{Y}$, $\log Y$); these are variance-stabilizing transformations
+- **Box-Cox:** Estimates the optimal power $\lambda$ for $Y$ data-adaptively; round $\hat\lambda$ to a nearby interpretable value (e.g., $0.5 \to \sqrt{Y}$, $0 \to \log Y$)
+- **After transforming:** Always re-check diagnostics on the transformed model; back-transform predictions to the original scale
+- **Full workflow:** Fit model $\to$ check residual plots $\to$ identify violations $\to$ apply remedy $\to$ re-check $\to$ report
+:::
+
+---
+
+## Questions? {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em;"}
+**Annie Adams**
+[aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+Office Hours: Tuesday 10 – 11 AM on [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1)
+
+[Course Website](https://pstat-126.github.io/)
+:::

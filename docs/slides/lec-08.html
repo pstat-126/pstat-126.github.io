@@ -314,15 +314,12 @@ Annie Adams
 <p>Usually we are not certain in advance whether these hold. We need to <strong>check them before performing inference or prediction</strong>.</p>
 </div>
 </section>
-<section id="residuals-as-diagnostic-tools" class="slide level2 smaller">
+<section id="residuals-as-diagnostic-tools" class="slide level2">
 <h2>Residuals as Diagnostic Tools</h2>
 <p>Recall the residuals <span class="math inline">\(e_i = Y_i - \widehat{Y}_i\)</span>.</p>
 <div class="fragment">
 <p><span class="math inline">\(e_i\)</span> can be regarded as the <strong>observed error</strong> of <span class="math inline">\(\varepsilon_i\)</span>.</p>
 <p>Since several assumptions concern <span class="math inline">\(\varepsilon_i\)</span> — e.g., <span class="math inline">\(E(\varepsilon_i) = 0\)</span>, independence, equal variance, normality — we use the residuals <span class="math inline">\(e_i\)</span> to <strong>check these assumptions</strong>.</p>
-</div>
-<div class="fragment">
-<p><strong>Key idea:</strong> The residuals are not perfectly i.i.d. (they have <span class="math inline">\(n - 2\)</span> degrees of freedom and are constrained by <span class="math inline">\(\sum e_i = 0\)</span>), but for large <span class="math inline">\(n\)</span> they behave approximately like the true errors, making them useful proxies.</p>
 </div>
 </section>
 <section id="four-residual-plots" class="slide level2 smaller">
@@ -363,29 +360,77 @@ Annie Adams
 </tr>
 </tbody>
 </table>
+</section>
+<section id="plot-1-residuals-vs.-x" class="slide level2 smaller">
+<h2>Plot 1: Residuals vs.&nbsp;<span class="math inline">\(X\)</span></h2>
+<p><strong>Checks:</strong> Assumption 1 — Linearity</p>
+<p><strong>What to look for:</strong> Random scatter around zero with no trend is ideal. A systematic curve or pattern remaining in the residuals after fitting indicates the linear function does not adequately capture the relationship.</p>
 <div class="fragment">
-<p><strong>Rule of thumb:</strong> If assumptions 1 and 3 are checked with the fitted-values plot, the residuals-vs-<span class="math inline">\(X\)</span> plot is often redundant in SLR (they carry the same information). Both are shown for completeness.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-1-1.png" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
 </div>
 </section>
-<section id="prototype-residual-plots" class="slide level2 smaller">
-<h2>Prototype Residual Plots</h2>
-
-<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-1-1.png" width="864" class="r-stretch"><p>Top-left is the ideal pattern — random scatter around zero with no trend and constant spread.</p>
-</section>
-<section id="the-qq-plot-normal-probability-plot" class="slide level2 smaller">
-<h2>The QQ-Plot (Normal Probability Plot)</h2>
-<p>If <span class="math inline">\(\varepsilon_1, \ldots, \varepsilon_n \overset{iid}{\sim} N(0, \sigma^2)\)</span>, consider the order statistics <span class="math inline">\(e_{(1)} \leq e_{(2)} \leq \cdots \leq e_{(n)}\)</span>. Then:</p>
-<p><span class="math display">\[E(e_{(k)}) \approx \sqrt{\text{MSE}}\; z\!\left(\frac{k - 0.375}{n + 0.25}\right)\]</span></p>
-<p>where <span class="math inline">\(z(A)\)</span> denotes the <span class="math inline">\(A \times 100\)</span> percentile of the standard normal distribution.</p>
+<section id="plot-2-residuals-vs.-time-order" class="slide level2">
+<h2>Plot 2: Residuals vs.&nbsp;Time Order</h2>
+<div style="font-size: 0.55em;">
+<p><strong>Checks:</strong> Assumption 2 — Independence</p>
+<p><strong>The x-axis</strong> is the <strong>sequential order observations were collected</strong> (row 1, row 2, …, row <span class="math inline">\(n\)</span>) — or actual timestamps if available.</p>
+<p><strong>What to look for:</strong> Random scatter with no trend is ideal. A systematic drift or cyclical pattern suggests <strong>correlated errors</strong> — each observation’s error is related to previous ones. <em>Only construct this plot when data have a natural collection order.</em></p>
 <div class="fragment">
-<p>The <strong>QQ-plot</strong> shows <strong>residuals</strong> (vertical axis) versus <strong>approximated expected normal quantiles</strong> (horizontal axis).</p>
-<p>We expect the points to fall <strong>reasonably close to a straight line</strong> when the errors are close to normal.</p>
+<p>Correlated errors do not bias <span class="math inline">\(\hat{\beta}\)</span> but invalidate standard errors, <span class="math inline">\(t\)</span>-tests, and <span class="math inline">\(F\)</span>-tests.</p>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-2-1.png" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="plot-3-residuals-vs.-fitted-widehaty" class="slide level2 smaller">
+<h2>Plot 3: Residuals vs.&nbsp;Fitted <span class="math inline">\(\widehat{Y}\)</span></h2>
+<p><strong>Checks:</strong> Assumption 3 — Equal variance</p>
+<p><strong>What to look for:</strong> Constant spread around zero across all fitted values is ideal. A <strong>fan shape</strong> (spread increasing or decreasing with <span class="math inline">\(\widehat{Y}\)</span>) indicates <strong>heteroscedasticity</strong> (nonconstant variance).</p>
+<div class="fragment">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-3-1.png" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="plot-4-qq-plot-normal-probability-plot" class="slide level2 smaller">
+<h2>Plot 4: QQ-Plot (Normal Probability Plot)</h2>
+<p><strong>Checks:</strong> Assumption 4 — Normality</p>
+<p>The QQ-plot compares the <strong>observed residuals</strong> (y-axis) to the <strong>quantiles you would expect if the errors were perfectly normal</strong> (x-axis). R computes the expected quantiles automatically.</p>
+<div class="fragment">
+<p><strong>What to look for:</strong> Points falling close to the diagonal reference line indicate normally distributed errors. Systematic departures signal non-normality:</p>
+<ul>
+<li><strong>U-shaped curve:</strong> skewed distribution (right- or left-skewed)</li>
+<li><strong>S-shaped curve:</strong> heavier tails than normal</li>
+</ul>
 </div>
 </section>
 <section id="qq-plots-when-not-normal" class="slide level2 smaller">
 <h2>QQ-Plots When Not Normal</h2>
 
-<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-2-1.png" width="864" class="r-stretch"><div style="font-size: 0.82em;">
+<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-4-1.png" width="864" class="r-stretch"><div style="font-size: 0.82em;">
 <ul>
 <li><strong>U-shaped (skewed right):</strong> Points curve above the line in both tails — right-skewed distribution</li>
 <li><strong>U-shaped (skewed left):</strong> Points curve below the line — left-skewed distribution</li>
@@ -395,13 +440,14 @@ Annie Adams
 </section>
 <section id="outliers-in-residual-plots" class="slide level2 smaller">
 <h2>Outliers in Residual Plots</h2>
-<p>An <strong>outlier</strong> is a point that is far away from the model — it stands out clearly in residual plots and/or the QQ-plot.</p>
+<div style="font-size: 0.65em;">
+<p>An <strong>outlier</strong> is a point that is far away from the model. It stands out clearly in residual plots and/or the QQ-plot.</p>
 <div class="fragment">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-3-1.png" width="864"></p>
+<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-5-1.png" width="864"></p>
 </figure>
 </div>
 </div>
@@ -415,30 +461,36 @@ Annie Adams
 <li><strong>Do not automatically exclude</strong> outliers — try sensitivity analysis and/or robust methods</li>
 </ul>
 </div>
+</div>
 </section>
-<section id="beer-data-diagnostic-plots" class="slide level2 smaller">
-<h2>Beer Data: Diagnostic Plots</h2>
-<div style="font-size: 0.75em;">
-<p><strong>Recall:</strong> BAC (blood alcohol content) was regressed on number of beers consumed (<span class="math inline">\(n = 16\)</span>).</p>
-</div>
+<section id="old-faithful-diagnostic-plots" class="slide level2 smaller">
+<h2>Old Faithful: Diagnostic Plots</h2>
+<p><strong>Data:</strong> <code>faithful</code> (built into R) — <span class="math inline">\(n = 272\)</span> eruptions of the Old Faithful geyser. We regress eruption duration (<span class="math inline">\(Y\)</span>, minutes) on waiting time between eruptions (<span class="math inline">\(X\)</span>, minutes).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>beer <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb1-2"><a aria-label="2"></a>  <span class="at">beers =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">8</span>,<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">1</span>,<span class="dv">4</span>),</span>
-<span id="cb1-3"><a aria-label="3"></a>  <span class="at">bac   =</span> <span class="fu">c</span>(<span class="fl">0.10</span>,<span class="fl">0.03</span>,<span class="fl">0.19</span>,<span class="fl">0.12</span>,<span class="fl">0.04</span>,<span class="fl">0.095</span>,<span class="fl">0.07</span>,<span class="fl">0.06</span>,<span class="fl">0.02</span>,<span class="fl">0.05</span>,<span class="fl">0.07</span>,<span class="fl">0.10</span>,<span class="fl">0.085</span>,<span class="fl">0.09</span>,<span class="fl">0.01</span>,<span class="fl">0.05</span>)</span>
-<span id="cb1-4"><a aria-label="4"></a>)</span>
-<span id="cb1-5"><a aria-label="5"></a>fit_beer <span class="ot">&lt;-</span> <span class="fu">lm</span>(bac <span class="sc">~</span> beers, <span class="at">data =</span> beer)</span>
-<span id="cb1-6"><a aria-label="6"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
-<span id="cb1-7"><a aria-label="7"></a><span class="fu">plot</span>(beer<span class="sc">$</span>beers, <span class="fu">residuals</span>(fit_beer), <span class="at">xlab =</span> <span class="st">"Number of beers"</span>, <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
-<span id="cb1-8"><a aria-label="8"></a>     <span class="at">main =</span> <span class="st">"Residuals vs predictor"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"#003660"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb1-9"><a aria-label="9"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit_beer), <span class="fu">residuals</span>(fit_beer), <span class="at">xlab =</span> <span class="st">"Fitted"</span>, <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
-<span id="cb1-10"><a aria-label="10"></a>     <span class="at">main =</span> <span class="st">"Residuals vs fitted"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"#003660"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb1-11"><a aria-label="11"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fit_beer), <span class="at">main =</span> <span class="st">"QQ-plot"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"#003660"</span>); <span class="fu">qqline</span>(<span class="fu">residuals</span>(fit_beer))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>fit_faithful <span class="ot">&lt;-</span> <span class="fu">lm</span>(eruptions <span class="sc">~</span> waiting, <span class="at">data =</span> faithful)</span>
+<span id="cb1-2"><a aria-label="2"></a></span>
+<span id="cb1-3"><a aria-label="3"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb1-4"><a aria-label="4"></a></span>
+<span id="cb1-5"><a aria-label="5"></a><span class="co"># Plot 1: residuals vs X (checks linearity)</span></span>
+<span id="cb1-6"><a aria-label="6"></a><span class="fu">plot</span>(faithful<span class="sc">$</span>waiting, <span class="fu">residuals</span>(fit_faithful),</span>
+<span id="cb1-7"><a aria-label="7"></a>     <span class="at">xlab =</span> <span class="st">"Waiting time (min)"</span>, <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
+<span id="cb1-8"><a aria-label="8"></a>     <span class="at">main =</span> <span class="st">"Residuals vs X"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"#003660"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb1-9"><a aria-label="9"></a></span>
+<span id="cb1-10"><a aria-label="10"></a><span class="co"># Plot 3: residuals vs fitted (checks equal variance)</span></span>
+<span id="cb1-11"><a aria-label="11"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit_faithful), <span class="fu">residuals</span>(fit_faithful),</span>
+<span id="cb1-12"><a aria-label="12"></a>     <span class="at">xlab =</span> <span class="st">"Fitted"</span>, <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
+<span id="cb1-13"><a aria-label="13"></a>     <span class="at">main =</span> <span class="st">"Residuals vs fitted"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"#003660"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb1-14"><a aria-label="14"></a></span>
+<span id="cb1-15"><a aria-label="15"></a><span class="co"># Plot 4: QQ-plot (checks normality)</span></span>
+<span id="cb1-16"><a aria-label="16"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fit_faithful), <span class="at">main =</span> <span class="st">"QQ-plot"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"#003660"</span>)</span>
+<span id="cb1-17"><a aria-label="17"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(fit_faithful))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="old-faithful-diagnostic-plots-output" class="slide level2 smaller">
+<h2>Old Faithful: Diagnostic Plots — Output</h2>
 
-</div>
-<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-4-1.png" width="864" class="r-stretch"><div class="fragment">
-<div style="font-size: 0.78em;">
-<p>The residuals show no strong pattern — random scatter, roughly constant spread, and points close to the QQ line. The linearity and normality assumptions appear reasonably satisfied here.</p>
-</div>
+<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-7-1.png" width="864" class="r-stretch"><div style="font-size: 0.78em;">
+<p>Both residual plots show a slight <strong>bimodal clustering</strong> — the data has two natural groups (short and long eruptions), and a single line doesn’t capture this perfectly. The QQ-plot tails deviate modestly from the line, consistent with this mild non-normality.</p>
 </div>
 </section>
 <section id="practice-reading-residual-plots" class="slide level2 smaller">
@@ -449,7 +501,7 @@ Annie Adams
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-5-1.png" width="864"></p>
+<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-8-1.png" width="864"></p>
 </figure>
 </div>
 </div>
@@ -460,7 +512,7 @@ Annie Adams
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_8ed526bb" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_bd03f9b6" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -472,232 +524,6 @@ Annie Adams
 </div>
 <div class="fragment">
 <p><strong>(c)</strong> <strong>Plot C</strong> — random scatter around zero with no trend and roughly constant spread. This is the ideal pattern — no obvious violations.</p>
-</div>
-</section>
-<section id="f-test-for-lack-of-fit" class="slide level2" data-background-color="#003660">
-<h2>F Test for Lack of Fit</h2>
-</section>
-<section id="testing-linearity-formally" class="slide level2 smaller">
-<h2>Testing Linearity Formally</h2>
-<p>The residual plots give us a visual check on Assumption 1. But can we <strong>test</strong> whether the linear relationship fits adequately?</p>
-<div class="fragment">
-<p><strong>Yes</strong> — when there are <strong>replicated observations</strong> (multiple <span class="math inline">\(Y\)</span> values at the same <span class="math inline">\(X\)</span> value), we can use an <strong>F test for lack of fit</strong>.</p>
-<p>The idea: compare the fit of - a <strong>full model</strong> that allows any mean function (one-way ANOVA) - a <strong>restricted model</strong> that imposes the linear relationship <span class="math inline">\(E(Y) = \beta_0 + \beta_1 X\)</span></p>
-</div>
-</section>
-<section id="extra-sum-of-squares-principle" class="slide level2 smaller">
-<h2>Extra Sum of Squares Principle</h2>
-<div style="font-size: 0.82em;">
-<p>The general framework for comparing nested models:</p>
-<ol type="1">
-<li>Fit the <strong>full model</strong> <span class="math inline">\(\rightarrow\)</span> error sum of squares <span class="math inline">\(SSE(F)\)</span></li>
-<li>Fit the <strong>restricted model</strong> <span class="math inline">\(\rightarrow\)</span> error sum of squares <span class="math inline">\(SSE(R)\)</span></li>
-<li><span class="math inline">\(SSE(R) \geq SSE(F)\)</span> always — the full model always fits at least as well</li>
-</ol>
-<div class="fragment">
-<ol start="4" type="1">
-<li><p>The <strong>extra sum of squares</strong> <span class="math inline">\(SSE(R) - SSE(F)\)</span> measures the additional error incurred by the restriction. It should be <strong>small</strong> when <span class="math inline">\(H_0\)</span> is true.</p></li>
-<li><p>The <strong>F statistic</strong>: <span class="math display">\[F^* = \frac{[SSE(R) - SSE(F)] / (df_R - df_F)}{SSE(F)/df_F} \overset{H_0}{\sim} F_{df_R - df_F,\; df_F}\]</span></p></li>
-<li><p>Reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(F^* &gt; F(1-\alpha;\; df_R - df_F,\; df_F)\)</span></p></li>
-</ol>
-</div>
-</div>
-</section>
-<section id="setup-replicated-observations" class="slide level2 smaller">
-<h2>Setup: Replicated Observations</h2>
-<div style="font-size: 0.82em;">
-<p>Denote <span class="math inline">\(X_1, \ldots, X_c\)</span> as the <span class="math inline">\(c\)</span> <strong>distinct</strong> observed values of <span class="math inline">\(X\)</span>.</p>
-<ul>
-<li><span class="math inline">\(j\)</span> indexes each distinct <span class="math inline">\(X\)</span> value (<span class="math inline">\(j = 1, \ldots, c\)</span>)</li>
-<li><span class="math inline">\(i\)</span> indexes the replicates for a given <span class="math inline">\(X_j\)</span> (<span class="math inline">\(i = 1, \ldots, n_j\)</span>)</li>
-<li><span class="math inline">\(n_j\)</span> = number of <span class="math inline">\(Y\)</span> values at <span class="math inline">\(X_j\)</span></li>
-</ul>
-<p>The full dataset:</p>
-<p><span class="math display">\[n_1 \text{ replicates at } X_1: Y_{11}, \ldots, Y_{n_1 1}\]</span> <span class="math display">\[n_2 \text{ replicates at } X_2: Y_{12}, \ldots, Y_{n_2 2}\]</span> <span class="math display">\[\vdots\]</span> <span class="math display">\[n_c \text{ replicates at } X_c: Y_{1c}, \ldots, Y_{n_c c}\]</span></p>
-<p>Total observations: <span class="math inline">\(n = \sum_{j=1}^c n_j\)</span></p>
-</div>
-</section>
-<section id="full-model-and-pure-error-ss" class="slide level2 smaller">
-<h2>Full Model and Pure Error SS</h2>
-<p><strong>Full model</strong> (one-way ANOVA — no linearity assumption):</p>
-<p><span class="math display">\[Y_{ij} = \mu_j + \varepsilon_{ij}, \quad j = 1, \ldots, c;\; i = 1, \ldots, n_j, \quad \varepsilon_{ij} \overset{iid}{\sim} N(0, \sigma^2)\]</span></p>
-<div class="fragment">
-<p>The LS estimates of <span class="math inline">\(\mu_j\)</span> are the group means <span class="math inline">\(\bar{Y}_j = \sum_{i=1}^{n_j} Y_{ij}/n_j\)</span>.</p>
-<p><strong>Pure error sum of squares</strong> (within-group variation):</p>
-<p><span class="math display">\[SSPE = SSE(F) = \sum_{j=1}^c \sum_{i=1}^{n_j} (Y_{ij} - \bar{Y}_j)^2, \qquad df_F = n - c\]</span></p>
-<p>This is <strong>pure error</strong> because it measures variation around group means — completely free of any linearity assumption.</p>
-</div>
-</section>
-<section id="restricted-model-and-lack-of-fit-ss" class="slide level2 smaller">
-<h2>Restricted Model and Lack of Fit SS</h2>
-<p><strong>Restricted model</strong> (linear regression — imposes linearity):</p>
-<p><span class="math display">\[Y_{ij} = \beta_0 + \beta_1 X_j + \varepsilon_{ij}, \qquad df_R = n - 2\]</span></p>
-<div class="fragment">
-<p>Let <span class="math inline">\(\widehat{Y}_{ij} = b_0 + b_1 X_j\)</span> be the fitted values. Then <span class="math inline">\(SSE(R) = \sum_{j}\sum_i (Y_{ij} - \widehat{Y}_{ij})^2\)</span>.</p>
-<p><strong>Key decomposition:</strong></p>
-<p><span class="math display">\[SSE(R) = SSPE + SSLF\]</span></p>
-<p>where the <strong>lack of fit sum of squares</strong> is:</p>
-<p><span class="math display">\[SSLF = \sum_{j=1}^c \sum_{i=1}^{n_j} (\bar{Y}_j - \widehat{Y}_{ij})^2 = \sum_{j=1}^c n_j(\bar{Y}_j - \widehat{Y}_{ij})^2, \qquad df_{LF} = c - 2\]</span></p>
-</div>
-<div class="fragment">
-<p>SSLF measures how far the <strong>group means</strong> deviate from the <strong>fitted line</strong> — it is zero only if the line passes perfectly through every group mean.</p>
-</div>
-</section>
-<section id="the-f-test-for-lack-of-fit" class="slide level2 smaller">
-<h2>The F Test for Lack of Fit</h2>
-<p>Applying the extra sum of squares principle:</p>
-<p><span class="math display">\[F^* = \frac{[SSE(R) - SSE(F)]/(df_R - df_F)}{SSE(F)/df_F} = \frac{SSLF/(c-2)}{SSPE/(n-c)} = \frac{MSLF}{MSPE} \overset{H_0}{\sim} F_{c-2,\; n-c}\]</span></p>
-<div class="fragment">
-<p><strong>Decision rule:</strong> Reject <span class="math inline">\(H_0\)</span> (i.e., reject the linear model) if <span class="math inline">\(F^* &gt; F(1-\alpha;\; c-2,\; n-c)\)</span>.</p>
-<p>This F test is also called the <strong>pure error test</strong>.</p>
-</div>
-<div class="fragment">
-<p><strong>ANOVA table with lack of fit decomposition:</strong></p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Source</th>
-<th style="text-align: center;">df</th>
-<th style="text-align: center;">SS</th>
-<th style="text-align: center;">MS</th>
-<th style="text-align: center;">F</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Model</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">SSR</td>
-<td style="text-align: center;">MSR = SSR/1</td>
-<td style="text-align: center;">MSR/MSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Error</td>
-<td style="text-align: center;"><span class="math inline">\(n-2\)</span></td>
-<td style="text-align: center;">SSE</td>
-<td style="text-align: center;">MSE = SSE/<span class="math inline">\((n-2)\)</span></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">— Lack of fit</td>
-<td style="text-align: center;"><span class="math inline">\(c-2\)</span></td>
-<td style="text-align: center;">SSLF</td>
-<td style="text-align: center;">MSLF = SSLF/<span class="math inline">\((c-2)\)</span></td>
-<td style="text-align: center;">MSLF/MSPE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">— Pure error</td>
-<td style="text-align: center;"><span class="math inline">\(n-c\)</span></td>
-<td style="text-align: center;">SSPE</td>
-<td style="text-align: center;">MSPE = SSPE/<span class="math inline">\((n-c)\)</span></td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Total</td>
-<td style="text-align: center;"><span class="math inline">\(n-1\)</span></td>
-<td style="text-align: center;">SSTO</td>
-<td style="text-align: center;"></td>
-<td style="text-align: center;"></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="bank-example" class="slide level2 smaller">
-<h2>Bank Example</h2>
-<div style="font-size: 0.80em;">
-<p>12 branches of a commercial bank offered gifts for opening money market accounts. The gift value was proportional to the minimum deposit (<span class="math inline">\(X\)</span>, in dollars). The goal: does minimum deposit predict number of new accounts (<span class="math inline">\(Y\)</span>)?</p>
-<p>Data: <span class="math inline">\(c = 6\)</span> distinct deposit sizes (<span class="math inline">\(75, 100, 125, 150, 175, 200\)</span>), each with <span class="math inline">\(n_j = 2\)</span> replicates (<span class="math inline">\(n = 11\)</span>; one branch dropped after a fire).</p>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">125</span>, <span class="dv">100</span>, <span class="dv">200</span>,  <span class="dv">75</span>, <span class="dv">150</span>, <span class="dv">175</span>,  <span class="dv">75</span>, <span class="dv">175</span>, <span class="dv">125</span>, <span class="dv">200</span>, <span class="dv">100</span>)</span>
-<span id="cb2-2"><a aria-label="2"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">160</span>, <span class="dv">112</span>, <span class="dv">124</span>,  <span class="dv">28</span>, <span class="dv">152</span>, <span class="dv">156</span>,  <span class="dv">42</span>, <span class="dv">124</span>, <span class="dv">150</span>, <span class="dv">104</span>, <span class="dv">136</span>)</span>
-<span id="cb2-3"><a aria-label="3"></a></span>
-<span id="cb2-4"><a aria-label="4"></a>fit.full       <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">factor</span>(x))   <span class="co"># full (ANOVA) model</span></span>
-<span id="cb2-5"><a aria-label="5"></a>fit.restricted <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)           <span class="co"># restricted (linear) model</span></span>
-<span id="cb2-6"><a aria-label="6"></a></span>
-<span id="cb2-7"><a aria-label="7"></a><span class="fu">anova</span>(fit.full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Variance Table
-
-Response: y
-          Df Sum Sq Mean Sq F value   Pr(&gt;F)   
-factor(x)  5  18735  3747.0   16.32 0.004085 **
-Residuals  5   1148   229.6                    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="fu">anova</span>(fit.restricted)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Variance Table
-
-Response: y
-          Df  Sum Sq Mean Sq F value Pr(&gt;F)
-x          1  5141.3  5141.3  3.1389 0.1102
-Residuals  9 14741.6  1638.0               </code></pre>
-</div>
-</div>
-</section>
-<section id="bank-example-computing-the-f-statistic" class="slide level2 smaller">
-<h2>Bank Example: Computing the F Statistic</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="fu">anova</span>(fit.full, fit.restricted, <span class="at">test =</span> <span class="st">"F"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Variance Table
-
-Model 1: y ~ factor(x)
-Model 2: y ~ x
-  Res.Df   RSS Df Sum of Sq      F   Pr(&gt;F)   
-1      5  1148                                
-2      9 14742 -4    -13594 14.801 0.005594 **
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-</div>
-<div class="fragment">
-<div style="font-size: 0.82em;">
-<ul>
-<li><span class="math inline">\(SSE(F) = SSPE = 1148\)</span>, <span class="math inline">\(\; df_F = n - c = 11 - 6 = 5\)</span></li>
-<li><span class="math inline">\(SSE(R) = 14741.6\)</span>, <span class="math inline">\(\; df_R = n - 2 = 9\)</span></li>
-<li><span class="math inline">\(SSLF = 14741.6 - 1148 = 13593.6\)</span>, <span class="math inline">\(\; df_{LF} = c - 2 = 4\)</span></li>
-</ul>
-<p><span class="math display">\[F^* = \frac{13593.6/4}{1148/5} = \frac{3398.4}{229.6} = 14.8\]</span></p>
-<p>With <span class="math inline">\(p = 0.006\)</span>, we <strong>reject the linear model</strong> at <span class="math inline">\(\alpha = 0.05\)</span>. The linear function does not adequately describe the relationship between deposit size and new accounts.</p>
-</div>
-</div>
-</section>
-<section id="practice-lack-of-fit-test" class="slide level2 smaller">
-<h2>Practice: Lack of Fit Test</h2>
-<div style="font-size: 0.82em;">
-<p>An experiment has <span class="math inline">\(c = 4\)</span> distinct <span class="math inline">\(X\)</span> values with <span class="math inline">\(n_2 = 3\)</span> replicates each (<span class="math inline">\(n = 12\)</span>). After fitting the linear regression and the full ANOVA model:</p>
-<ul>
-<li><span class="math inline">\(SSE(R) = 480.2\)</span> (linear model)</li>
-<li><span class="math inline">\(SSE(F) = SSPE = 120.4\)</span> (pure error)</li>
-</ul>
-<p><strong>(a)</strong> Compute <span class="math inline">\(SSLF\)</span> and its degrees of freedom.</p>
-<p><strong>(b)</strong> Compute <span class="math inline">\(MSLF\)</span> and <span class="math inline">\(MSPE\)</span>.</p>
-<p><strong>(c)</strong> Compute <span class="math inline">\(F^*\)</span> and state whether you reject the linear model at <span class="math inline">\(\alpha = 0.05\)</span>. Critical value: <span class="math inline">\(F(0.95;\; 2,\; 8) = 4.46\)</span>.</p>
-<p><strong>(d)</strong> What does this result tell you about Assumption 1?</p>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_3379a53e" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
-</div>
-</section>
-<section id="practice-lack-of-fit-test-solution" class="slide level2 smaller">
-<h2>Practice: Lack of Fit Test — Solution</h2>
-<p><strong>(a)</strong> <span class="math inline">\(SSLF = SSE(R) - SSE(F) = 480.2 - 120.4 = 359.8\)</span></p>
-<p><span class="math inline">\(df_{LF} = c - 2 = 4 - 2 = 2\)</span>; <span class="math inline">\(\quad df_{PE} = n - c = 12 - 4 = 8\)</span></p>
-<div class="fragment">
-<p><strong>(b)</strong> <span class="math display">\[MSLF = \frac{359.8}{2} = 179.9 \qquad MSPE = \frac{120.4}{8} = 15.05\]</span></p>
-</div>
-<div class="fragment">
-<p><strong>(c)</strong> <span class="math display">\[F^* = \frac{MSLF}{MSPE} = \frac{179.9}{15.05} = 11.95\]</span></p>
-<p>Since <span class="math inline">\(11.95 &gt; 4.46\)</span>, we <strong>reject</strong> the linear model at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
-</div>
-<div class="fragment">
-<p><strong>(d)</strong> There is statistically significant evidence that the linear function <strong>does not adequately fit</strong> the data — Assumption 1 (linearity) appears to be violated. We should consider a transformation or a more flexible model.</p>
 </div>
 </section>
 <section id="remedial-measures" class="slide level2" data-background-color="#003660">
@@ -765,336 +591,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ul>
 </div>
 </section>
-<section id="transformations" class="slide level2" data-background-color="#003660">
-<h2>Transformations</h2>
-</section>
-<section id="when-and-how-to-transform" class="slide level2 smaller">
-<h2>When and How to Transform</h2>
-<p>We can transform <span class="math inline">\(X\)</span> and/or <span class="math inline">\(Y\)</span> and hope that the linear regression model is adequate for the transformed variables.</p>
-<div class="fragment">
-<p><strong>Transformations of <span class="math inline">\(X\)</span></strong> — address <strong>nonlinearity</strong> while leaving error variance roughly unchanged:</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 82%">
-<col style="width: 17%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Shape of relationship</th>
-<th style="text-align: left;">Try</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Concave up (fast growth)</td>
-<td style="text-align: left;"><span class="math inline">\(X' = X^2\)</span> or <span class="math inline">\(X' = e^X\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Concave down (diminishing returns)</td>
-<td style="text-align: left;"><span class="math inline">\(X' = \log(X)\)</span> or <span class="math inline">\(X' = \sqrt{X}\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Decreasing, convex</td>
-<td style="text-align: left;"><span class="math inline">\(X' = 1/X\)</span> or <span class="math inline">\(X' = e^{-X}\)</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="fragment">
-<p><strong>Transformations of <span class="math inline">\(Y\)</span></strong> — address <strong>nonconstant variance</strong> and/or <strong>nonnormality</strong>:</p>
-<p><span class="math display">\[Y' = \sqrt{Y}, \qquad Y' = \log_{10}(Y), \qquad Y' = 1/Y\]</span></p>
-<p>These are called <strong>variance-stabilizing transformations</strong>.</p>
-</div>
-</section>
-<section id="box-cox-choosing-the-transformation-of-y" class="slide level2 smaller">
-<h2>Box-Cox: Choosing the Transformation of <span class="math inline">\(Y\)</span></h2>
-<p>It is often difficult to determine which transformation is most appropriate from diagnostic plots alone. The <strong>Box-Cox method</strong> selects a power transformation data-adaptively.</p>
-<div class="fragment">
-<p>Suppose <span class="math inline">\(Y &gt; 0\)</span>. Consider the family:</p>
-<p><span class="math display">\[Y(\lambda) = \begin{cases} \dfrac{Y^\lambda - 1}{\lambda} &amp; \lambda \neq 0 \\ \log Y &amp; \lambda = 0 \end{cases}\]</span></p>
-<p>where <span class="math inline">\(\lambda\)</span> is treated as a parameter to be estimated.</p>
-</div>
-<div class="fragment">
-<p>We hope that <span class="math inline">\(Y(\lambda)\)</span> satisfies:</p>
-<ul>
-<li><span class="math inline">\(E(Y(\lambda)) = \beta_0 + \beta_1 X\)</span></li>
-<li><span class="math inline">\(\mathrm{Var}(Y(\lambda)) = \sigma^2\)</span> (constant)</li>
-<li><span class="math inline">\(Y(\lambda)\)</span> is approximately normal</li>
-</ul>
-</div>
-</section>
-<section id="box-cox-estimating-lambda" class="slide level2 smaller">
-<h2>Box-Cox: Estimating <span class="math inline">\(\lambda\)</span></h2>
-<p>Treating <span class="math inline">\(Y(\lambda) \overset{\text{approx}}{\sim} N(\beta_0 + \beta_1 X, \sigma^2)\)</span>, the <strong>profiled log-likelihood</strong> (after maximizing over <span class="math inline">\(\beta_0, \beta_1, \sigma^2\)</span> for fixed <span class="math inline">\(\lambda\)</span>) is:</p>
-<p><span class="math display">\[\ell_p(\lambda) = -\frac{n}{2}\log\!\left\{\frac{SSE(\lambda)}{n}\right\} + (\lambda - 1)\sum_{i=1}^n \log Y_i\]</span></p>
-<p>where <span class="math inline">\(SSE(\lambda)\)</span> is the residual sum of squares after fitting <span class="math inline">\(Y(\lambda) = \beta_0 + \beta_1 X\)</span>.</p>
-<div class="fragment">
-<p><strong>The MLE of <span class="math inline">\(\lambda\)</span></strong> is the value that maximizes <span class="math inline">\(\ell_p(\lambda)\)</span>.</p>
-<p><strong>In practice:</strong></p>
-<ul>
-<li>Plot <span class="math inline">\(\ell_p(\lambda)\)</span> vs <span class="math inline">\(\lambda\)</span> and find the peak</li>
-<li>An approximate <span class="math inline">\(100(1-\alpha)\%\)</span> confidence region for <span class="math inline">\(\lambda\)</span>: <span class="math inline">\(\{\lambda : \ell_p(\hat\lambda) - \ell_p(\lambda) \leq \frac{1}{2}\chi^2_1(1-\alpha)\}\)</span></li>
-<li><strong>Round <span class="math inline">\(\hat\lambda\)</span> to a nearby interpretable value</strong> (e.g., <span class="math inline">\(0.5 \to \sqrt{Y}\)</span>, <span class="math inline">\(0 \to \log Y\)</span>, <span class="math inline">\(-1 \to 1/Y\)</span>)</li>
-</ul>
-</div>
-</section>
-<section id="box-cox-in-r" class="slide level2 smaller">
-<h2>Box-Cox in R</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb8-2"><a aria-label="2"></a>fit_beer2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(bac <span class="sc">~</span> beers, <span class="at">data =</span> beer)</span>
-<span id="cb8-3"><a aria-label="3"></a><span class="fu">boxcox</span>(fit_beer2, <span class="at">lambda =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>, <span class="at">len =</span> <span class="dv">100</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-10-1.png" width="672" class="r-stretch"><div class="fragment">
-<div style="font-size: 0.82em;">
-<p>The peak is near <span class="math inline">\(\hat\lambda \approx 0.5\)</span>, suggesting a <strong>square-root transformation</strong> <span class="math inline">\(Y' = \sqrt{Y}\)</span>. The 95% confidence region includes <span class="math inline">\(\lambda = 1\)</span> (no transformation), so for the beer data the linear model on the original scale may still be acceptable — consistent with the clean residual plots we saw earlier.</p>
-</div>
-</div>
-</section>
-<section id="case-example-plutonium-measurement" class="slide level2" data-background-color="#003660">
-<h2>Case Example: Plutonium Measurement</h2>
-</section>
-<section id="plutonium-data" class="slide level2 smaller">
-<h2>Plutonium Data</h2>
-<p><strong>Goal:</strong> Estimate the regression relationship between alpha counts per second (<span class="math inline">\(Y\)</span>, #/sec) and plutonium activity (<span class="math inline">\(X\)</span>, pCi/g).</p>
-<p>Data: <span class="math inline">\(n = 24\)</span> observations. Let’s load and explore:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>plutonium <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb9-2"><a aria-label="2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="fl">0.150</span>, <span class="fl">0.004</span>, <span class="fl">0.069</span>, <span class="fl">0.030</span>, <span class="fl">0.011</span>, <span class="fl">0.004</span>, <span class="fl">0.050</span>, <span class="fl">0.033</span>, <span class="fl">0.060</span>, <span class="fl">0.100</span>,</span>
-<span id="cb9-3"><a aria-label="3"></a>         <span class="fl">0.200</span>, <span class="fl">0.150</span>, <span class="fl">0.004</span>, <span class="fl">0.100</span>, <span class="fl">0.069</span>, <span class="fl">0.011</span>, <span class="fl">0.150</span>, <span class="fl">0.100</span>, <span class="fl">0.033</span>, <span class="fl">0.004</span>,</span>
-<span id="cb9-4"><a aria-label="4"></a>         <span class="fl">0.004</span>, <span class="fl">0.004</span>, <span class="fl">0.030</span>, <span class="fl">0.004</span>),</span>
-<span id="cb9-5"><a aria-label="5"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">20</span>,  <span class="dv">0</span>,  <span class="dv">10</span>,  <span class="dv">5</span>,  <span class="dv">0</span>,  <span class="dv">0</span>,  <span class="dv">5</span>,  <span class="dv">5</span>,  <span class="dv">10</span>,  <span class="dv">20</span>,</span>
-<span id="cb9-6"><a aria-label="6"></a>         <span class="dv">40</span>,  <span class="dv">25</span>,  <span class="dv">0</span>,  <span class="dv">20</span>,  <span class="dv">10</span>,  <span class="dv">0</span>,  <span class="dv">25</span>,  <span class="dv">20</span>,  <span class="dv">5</span>,  <span class="dv">0</span>,</span>
-<span id="cb9-7"><a aria-label="7"></a>          <span class="dv">0</span>,  <span class="dv">0</span>,   <span class="dv">5</span>,   <span class="dv">0</span>)</span>
-<span id="cb9-8"><a aria-label="8"></a>)</span>
-<span id="cb9-9"><a aria-label="9"></a><span class="fu">head</span>(plutonium)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      x  y
-1 0.150 20
-2 0.004  0
-3 0.069 10
-4 0.030  5
-5 0.011  0
-6 0.004  0</code></pre>
-</div>
-</div>
-</section>
-<section id="exploratory-plots" class="slide level2 smaller">
-<h2>Exploratory Plots</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
-<span id="cb11-2"><a aria-label="2"></a><span class="fu">plot</span>(plutonium<span class="sc">$</span>x, plutonium<span class="sc">$</span>y, <span class="at">xlab =</span> <span class="st">"pCi/g"</span>, <span class="at">ylab =</span> <span class="st">"# per second"</span>,</span>
-<span id="cb11-3"><a aria-label="3"></a>     <span class="at">main =</span> <span class="st">"Scatter Plot"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"#003660"</span>)</span>
-<span id="cb11-4"><a aria-label="4"></a><span class="fu">text</span>(<span class="fl">0.150</span>, <span class="dv">20</span>, <span class="st">"24?"</span>, <span class="at">pos =</span> <span class="dv">4</span>, <span class="at">cex =</span> <span class="fl">0.7</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb11-5"><a aria-label="5"></a></span>
-<span id="cb11-6"><a aria-label="6"></a><span class="co"># Lowess smoothed curve</span></span>
-<span id="cb11-7"><a aria-label="7"></a><span class="fu">plot</span>(plutonium<span class="sc">$</span>x, plutonium<span class="sc">$</span>y, <span class="at">xlab =</span> <span class="st">"pCi/g"</span>, <span class="at">ylab =</span> <span class="st">"# per second"</span>,</span>
-<span id="cb11-8"><a aria-label="8"></a>     <span class="at">main =</span> <span class="st">"Lowess Smoothed Curve"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"#003660"</span>)</span>
-<span id="cb11-9"><a aria-label="9"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(plutonium<span class="sc">$</span>x, plutonium<span class="sc">$</span>y), <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-12-1.png" width="768" class="r-stretch"><div class="fragment">
-<div style="font-size: 0.80em;">
-<p><strong>Case 24</strong> (observation 1 in 1-indexed format shown) was caused by an unusual lab condition and will be discarded before fitting.</p>
-</div>
-</div>
-</section>
-<section id="fit-the-linear-model-fit1" class="slide level2 smaller">
-<h2>Fit the Linear Model (fit1)</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a><span class="co"># Remove the outlier (observation with x=0.150, y=20 — the first row, index 1)</span></span>
-<span id="cb12-2"><a aria-label="2"></a>plut <span class="ot">&lt;-</span> plutonium[<span class="sc">-</span><span class="dv">1</span>, ]</span>
-<span id="cb12-3"><a aria-label="3"></a></span>
-<span id="cb12-4"><a aria-label="4"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> plut)</span>
-<span id="cb12-5"><a aria-label="5"></a><span class="fu">summary</span>(fit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = y ~ x, data = plut)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--3.2932 -0.7796  0.5599  0.5690  2.8084 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  -1.3396     0.4756  -2.817   0.0103 *  
-x           192.6557     6.2091  31.028   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 1.641 on 21 degrees of freedom
-Multiple R-squared:  0.9787,    Adjusted R-squared:  0.9776 
-F-statistic: 962.7 on 1 and 21 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-</div>
-</section>
-<section id="diagnostic-plots-for-fit1" class="slide level2 smaller">
-<h2>Diagnostic Plots for fit1</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
-<span id="cb14-2"><a aria-label="2"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit1), <span class="fu">residuals</span>(fit1), <span class="at">xlab =</span> <span class="st">"Fitted"</span>, <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
-<span id="cb14-3"><a aria-label="3"></a>     <span class="at">main =</span> <span class="st">"Residual Plot"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"#003660"</span>)</span>
-<span id="cb14-4"><a aria-label="4"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"gray50"</span>)</span>
-<span id="cb14-5"><a aria-label="5"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fit1), <span class="at">main =</span> <span class="st">"Normal Q-Q Plot"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"#003660"</span>)</span>
-<span id="cb14-6"><a aria-label="6"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(fit1), <span class="at">col =</span> <span class="st">"red"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-14-1.png" width="768" class="r-stretch"><div class="fragment">
-<p>The residual plot shows a clear <strong>fan shape</strong> — variance increases with fitted value. This is a <strong>nonconstant variance</strong> violation. The Box-Cox method can help us choose a stabilizing transformation.</p>
-</div>
-</section>
-<section id="box-cox-transformation-for-plutonium-data" class="slide level2 smaller">
-<h2>Box-Cox Transformation for Plutonium Data</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb15-2"><a aria-label="2"></a><span class="fu">boxcox</span>(<span class="fu">formula</span>(fit1), <span class="at">lambda =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">len =</span> <span class="dv">20</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-15-1.png" width="576" class="r-stretch"><div class="fragment">
-<p>The Box-Cox plot peaks near <span class="math inline">\(\hat\lambda \approx 0.5\)</span>, suggesting a <strong>square root transformation</strong>: <span class="math inline">\(Y' = \sqrt{Y}\)</span>.</p>
-</div>
-</section>
-<section id="fit-the-transformed-model-fit2" class="slide level2 smaller">
-<h2>Fit the Transformed Model (fit2)</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a>plut<span class="sc">$</span>yp <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(plut<span class="sc">$</span>y)</span>
-<span id="cb16-2"><a aria-label="2"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(yp <span class="sc">~</span> x, <span class="at">data =</span> plut)</span>
-<span id="cb16-3"><a aria-label="3"></a><span class="fu">summary</span>(fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = yp ~ x, data = plut)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--1.005 -0.469 -0.469  0.643  0.857 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   0.3290     0.1897   1.734   0.0975 .  
-x            35.0012     2.4765  14.133 3.37e-12 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.6544 on 21 degrees of freedom
-Multiple R-squared:  0.9049,    Adjusted R-squared:  0.9003 
-F-statistic: 199.7 on 1 and 21 DF,  p-value: 3.372e-12</code></pre>
-</div>
-</div>
-</section>
-<section id="diagnostic-plots-for-fit2" class="slide level2 smaller">
-<h2>Diagnostic Plots for fit2</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
-<span id="cb18-2"><a aria-label="2"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit2), <span class="fu">residuals</span>(fit2), <span class="at">xlab =</span> <span class="st">"Fitted"</span>, <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
-<span id="cb18-3"><a aria-label="3"></a>     <span class="at">main =</span> <span class="st">"Residual Plot (sqrt Y)"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"#003660"</span>)</span>
-<span id="cb18-4"><a aria-label="4"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"gray50"</span>)</span>
-<span id="cb18-5"><a aria-label="5"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fit2), <span class="at">main =</span> <span class="st">"Normal Q-Q Plot"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"#003660"</span>)</span>
-<span id="cb18-6"><a aria-label="6"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(fit2), <span class="at">col =</span> <span class="st">"red"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
-</div>
-<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-17-1.png" width="768" class="r-stretch"><div class="fragment">
-<p>The fan shape is largely gone, but a slight <strong>nonlinear pattern</strong> remains. This suggests the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(\sqrt{Y}\)</span> may not be perfectly linear — a further transformation of <span class="math inline">\(X\)</span> or a polynomial term could be explored in practice.</p>
-</div>
-</section>
-<section id="comparing-fit1-and-fit2" class="slide level2 smaller">
-<h2>Comparing fit1 and fit2</h2>
-<div style="font-size: 0.82em;">
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: left;"><strong>fit1</strong> (original <span class="math inline">\(Y\)</span>)</th>
-<th style="text-align: left;"><strong>fit2</strong> (<span class="math inline">\(Y' = \sqrt{Y}\)</span>)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Slope</td>
-<td style="text-align: left;"><span class="math inline">\(\widehat{\beta}_1 = 0.00554\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\widehat{\beta}_1 = 0.01336\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><span class="math inline">\(R^2\)</span></td>
-<td style="text-align: left;">0.916</td>
-<td style="text-align: left;">0.900</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Residual SE</td>
-<td style="text-align: left;">0.01257</td>
-<td style="text-align: left;">0.0334</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Equal variance?</td>
-<td style="text-align: left;"><strong>Violated</strong> (fan shape)</td>
-<td style="text-align: left;">Much better</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Normality?</td>
-<td style="text-align: left;">Borderline</td>
-<td style="text-align: left;">Better</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="fragment">
-<p><strong>Take-away:</strong> The transformation improved the diagnostic picture substantially. The slight remaining nonlinearity is worth noting but may be acceptable for practical purposes.</p>
-<p>When reporting results from <strong>fit2</strong>, all inference is about <span class="math inline">\(\sqrt{Y}\)</span>, not <span class="math inline">\(Y\)</span> directly. Predictions must be squared back: <span class="math inline">\(\widehat{Y} = (\widehat{Y}')^2\)</span>.</p>
-</div>
-</section>
-<section id="practice-full-workflow" class="slide level2 smaller">
-<h2>Practice: Full Workflow</h2>
-<div style="font-size: 0.80em;">
-<p>A researcher regresses pollution level <span class="math inline">\(Y\)</span> (ppb) on distance from factory <span class="math inline">\(X\)</span> (km) using <span class="math inline">\(n = 40\)</span> observations.</p>
-<ul>
-<li>The residual-vs-fitted plot shows a clear <strong>decreasing fan</strong> (large residuals at small fitted values, small residuals at large fitted values)</li>
-<li>The QQ-plot shows a strong <strong>right-skew</strong> (points curve above the line)</li>
-<li>The lack of fit F test gives <span class="math inline">\(F^* = 1.2\)</span>, <span class="math inline">\(p = 0.35\)</span></li>
-</ul>
-<p><strong>(a)</strong> Which assumptions appear violated? Which appears satisfied?</p>
-<p><strong>(b)</strong> What transformation of <span class="math inline">\(Y\)</span> would you try first, and why?</p>
-<p><strong>(c)</strong> After a <span class="math inline">\(\log(Y)\)</span> transformation, the residual-vs-fitted plot looks ideal. Write the fitted model (in terms of <span class="math inline">\(\log Y\)</span>) and explain how you would predict <span class="math inline">\(Y\)</span> for a new <span class="math inline">\(X = 5\)</span> km.</p>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_931613f9" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
-</div>
-</section>
-<section id="practice-full-workflow-solution" class="slide level2 smaller">
-<h2>Practice: Full Workflow — Solution</h2>
-<p><strong>(a)</strong></p>
-<ul>
-<li><strong>Equal variance (Assumption 3):</strong> <strong>Violated</strong> — the fan shape in the residual-vs-fitted plot indicates nonconstant variance.</li>
-<li><strong>Normality (Assumption 4):</strong> <strong>Violated</strong> — right-skew in the QQ-plot.</li>
-<li><strong>Linearity (Assumption 1):</strong> <strong>Satisfied</strong> — the lack of fit test does not reject the linear model (<span class="math inline">\(p = 0.35\)</span>).</li>
-</ul>
-<div class="fragment">
-<p><strong>(b)</strong> Try <span class="math inline">\(Y' = \log(Y)\)</span>. A log transformation is the natural choice for <strong>right-skewed</strong> data with a fan-pattern (variance growing with the mean), which often arises when <span class="math inline">\(Y &gt; 0\)</span> and spans several orders of magnitude.</p>
-</div>
-<div class="fragment">
-<p><strong>(c)</strong> The fitted model after transformation: <span class="math inline">\(\widehat{\log Y} = \widehat{\beta}_0 + \widehat{\beta}_1 X\)</span>.</p>
-<p>To predict <span class="math inline">\(Y\)</span> at <span class="math inline">\(X = 5\)</span>: compute <span class="math inline">\(\widehat{\log Y}^* = \widehat{\beta}_0 + 5\widehat{\beta}_1\)</span>, then <strong>back-transform</strong>: <span class="math inline">\(\widehat{Y}^* = e^{\widehat{\log Y}^*}\)</span>.</p>
-</div>
-</section>
 <section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>
 <ul>
-<li class="fragment"><strong>Diagnostics:</strong> Check all four assumptions (linearity, independence, equal variance, normality) using residual-vs-predictor, residual-vs-fitted, residual-vs-time, and QQ-plots <strong>before performing inference</strong></li>
+<li class="fragment"><strong>Diagnostics:</strong> Check all four assumptions (linearity, independence, equal variance, normality) using residual-vs-X, residual-vs-fitted, residual-vs-time, and QQ-plots <strong>before performing inference</strong></li>
 <li class="fragment"><strong>Outliers:</strong> Investigate first — don’t automatically remove; try sensitivity analysis</li>
-<li class="fragment"><strong>F test for lack of fit:</strong> When replicates exist, formally test <span class="math inline">\(H_0:\)</span> linearity holds using <span class="math inline">\(F^* = MSLF/MSPE \sim F_{c-2,\; n-c}\)</span>; the decomposition is <span class="math inline">\(SSE(R) = SSPE + SSLF\)</span></li>
-<li class="fragment"><strong>Remedial measures:</strong> Two options — develop a better model, or use a transformation</li>
-<li class="fragment"><strong>Transformations of <span class="math inline">\(X\)</span>:</strong> Fix nonlinearity (e.g., <span class="math inline">\(\log X\)</span>, <span class="math inline">\(X^2\)</span>)</li>
-<li class="fragment"><strong>Transformations of <span class="math inline">\(Y\)</span>:</strong> Fix nonconstant variance and nonnormality (e.g., <span class="math inline">\(\sqrt{Y}\)</span>, <span class="math inline">\(\log Y\)</span>)</li>
-<li class="fragment"><strong>Box-Cox:</strong> Estimates the optimal power <span class="math inline">\(\lambda\)</span> for <span class="math inline">\(Y\)</span>; round to a nearby interpretable value</li>
-<li class="fragment"><strong>After transforming:</strong> Re-check diagnostics; back-transform predictions to the original scale</li>
+<li class="fragment"><strong>Remedial measures:</strong> Two options — develop a more appropriate model, or use a transformation</li>
+<li class="fragment"><strong>Remedies by assumption:</strong> Transform <span class="math inline">\(X\)</span> for nonlinearity; use a variance-stabilizing transformation of <span class="math inline">\(Y\)</span> (e.g., <span class="math inline">\(\sqrt{Y}\)</span>, <span class="math inline">\(\log Y\)</span>) for nonconstant variance; correlated-error models for non-independence</li>
 </ul>
 </section>
 <section id="questions" class="slide level2" data-background-color="#003660">

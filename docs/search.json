@@ -2586,14 +2586,14 @@
     "href": "slides/lec-08.html#residuals-as-diagnostic-tools",
     "title": "Lecture 8: Model Diagnostics and Remedial Measures",
     "section": "Residuals as Diagnostic Tools",
-    "text": "Residuals as Diagnostic Tools\nRecall the residuals \\(e_i = Y_i - \\widehat{Y}_i\\).\n\n\\(e_i\\) can be regarded as the observed error of \\(\\varepsilon_i\\).\nSince several assumptions concern \\(\\varepsilon_i\\) — e.g., \\(E(\\varepsilon_i) = 0\\), independence, equal variance, normality — we use the residuals \\(e_i\\) to check these assumptions.\n\n\nKey idea: The residuals are not perfectly i.i.d. (they have \\(n - 2\\) degrees of freedom and are constrained by \\(\\sum e_i = 0\\)), but for large \\(n\\) they behave approximately like the true errors, making them useful proxies."
+    "text": "Residuals as Diagnostic Tools\nRecall the residuals \\(e_i = Y_i - \\widehat{Y}_i\\).\n\n\\(e_i\\) can be regarded as the observed error of \\(\\varepsilon_i\\).\nSince several assumptions concern \\(\\varepsilon_i\\) — e.g., \\(E(\\varepsilon_i) = 0\\), independence, equal variance, normality — we use the residuals \\(e_i\\) to check these assumptions."
   },
   {
     "objectID": "slides/lec-08.html#four-residual-plots",
     "href": "slides/lec-08.html#four-residual-plots",
     "title": "Lecture 8: Model Diagnostics and Remedial Measures",
     "section": "Four Residual Plots",
-    "text": "Four Residual Plots\n\n\n\n\n\n\n\n\nPlot\nChecks\nWhat to look for\n\n\n\n\nResiduals vs. \\(X\\)\nAssumption 1 (linearity)\nA systematic curve or trend indicates nonlinearity\n\n\nResiduals vs. time order\nAssumption 2 (independence)\nA trend over time indicates correlated errors — only relevant when data have a time order\n\n\nResiduals vs. fitted \\(\\widehat{Y}\\)\nAssumption 3 (equal variance)\nA fan shape (variance growing with \\(\\widehat{Y}\\)) indicates heteroscedasticity\n\n\nQQ-plot\nAssumption 4 (normality)\nSystematic deviation from the diagonal indicates non-normality\n\n\n\n\nRule of thumb: If assumptions 1 and 3 are checked with the fitted-values plot, the residuals-vs-\\(X\\) plot is often redundant in SLR (they carry the same information). Both are shown for completeness."
+    "text": "Four Residual Plots\n\n\n\n\n\n\n\n\nPlot\nChecks\nWhat to look for\n\n\n\n\nResiduals vs. \\(X\\)\nAssumption 1 (linearity)\nA systematic curve or trend indicates nonlinearity\n\n\nResiduals vs. time order\nAssumption 2 (independence)\nA trend over time indicates correlated errors — only relevant when data have a time order\n\n\nResiduals vs. fitted \\(\\widehat{Y}\\)\nAssumption 3 (equal variance)\nA fan shape (variance growing with \\(\\widehat{Y}\\)) indicates heteroscedasticity\n\n\nQQ-plot\nAssumption 4 (normality)\nSystematic deviation from the diagonal indicates non-normality"
   },
   {
     "objectID": "slides/lec-08.html#prototype-residual-plots",
@@ -2621,7 +2621,7 @@
     "href": "slides/lec-08.html#outliers-in-residual-plots",
     "title": "Lecture 8: Model Diagnostics and Remedial Measures",
     "section": "Outliers in Residual Plots",
-    "text": "Outliers in Residual Plots\nAn outlier is a point that is far away from the model — it stands out clearly in residual plots and/or the QQ-plot.\n\n\n\n\n\n\n\n\n\n\n\n\nHow to handle outliers:\n\nCorrect or discard if it is a data-entry error\nSometimes the outlier itself is of singular interest (a rare event worth studying)\nDo not automatically exclude outliers — try sensitivity analysis and/or robust methods"
+    "text": "Outliers in Residual Plots\n\nAn outlier is a point that is far away from the model. It stands out clearly in residual plots and/or the QQ-plot.\n\n\n\n\n\n\n\n\n\n\n\n\nHow to handle outliers:\n\nCorrect or discard if it is a data-entry error\nSometimes the outlier itself is of singular interest (a rare event worth studying)\nDo not automatically exclude outliers — try sensitivity analysis and/or robust methods"
   },
   {
     "objectID": "slides/lec-08.html#beer-data-diagnostic-plots",
@@ -2775,7 +2775,7 @@
     "href": "slides/lec-08.html#box-cox-in-r",
     "title": "Lecture 8: Model Diagnostics and Remedial Measures",
     "section": "Box-Cox in R",
-    "text": "Box-Cox in R\n\nlibrary(MASS)\nfit_beer2 &lt;- lm(bac ~ beers, data = beer)\nboxcox(fit_beer2, lambda = seq(-1, 2, len = 100))\n\n\n\n\nThe peak is near \\(\\hat\\lambda \\approx 0.5\\), suggesting a square-root transformation \\(Y' = \\sqrt{Y}\\). The 95% confidence region includes \\(\\lambda = 1\\) (no transformation), so for the beer data the linear model on the original scale may still be acceptable — consistent with the clean residual plots we saw earlier."
+    "text": "Box-Cox in R\n\nlibrary(MASS)\nfit_faithful2 &lt;- lm(eruptions ~ waiting, data = faithful)\nboxcox(fit_faithful2, lambda = seq(-1, 2, len = 100))\n\n\n\n\nThe peak is near \\(\\hat\\lambda \\approx 1\\), and the 95% confidence region comfortably includes \\(\\lambda = 1\\) (no transformation). This suggests the original scale is adequate for the Old Faithful data — consistent with the mostly clean residual plots we saw earlier."
   },
   {
     "objectID": "slides/lec-08.html#case-example-plutonium-measurement",
@@ -2859,7 +2859,7 @@
     "href": "slides/lec-08.html#summary",
     "title": "Lecture 8: Model Diagnostics and Remedial Measures",
     "section": "Summary",
-    "text": "Summary\n\nDiagnostics: Check all four assumptions (linearity, independence, equal variance, normality) using residual-vs-predictor, residual-vs-fitted, residual-vs-time, and QQ-plots before performing inference\nOutliers: Investigate first — don’t automatically remove; try sensitivity analysis\nF test for lack of fit: When replicates exist, formally test \\(H_0:\\) linearity holds using \\(F^* = MSLF/MSPE \\sim F_{c-2,\\; n-c}\\); the decomposition is \\(SSE(R) = SSPE + SSLF\\)\nRemedial measures: Two options — develop a better model, or use a transformation\nTransformations of \\(X\\): Fix nonlinearity (e.g., \\(\\log X\\), \\(X^2\\))\nTransformations of \\(Y\\): Fix nonconstant variance and nonnormality (e.g., \\(\\sqrt{Y}\\), \\(\\log Y\\))\nBox-Cox: Estimates the optimal power \\(\\lambda\\) for \\(Y\\); round to a nearby interpretable value\nAfter transforming: Re-check diagnostics; back-transform predictions to the original scale"
+    "text": "Summary\n\nDiagnostics: Check all four assumptions (linearity, independence, equal variance, normality) using residual-vs-X, residual-vs-fitted, residual-vs-time, and QQ-plots before performing inference\nOutliers: Investigate first — don’t automatically remove; try sensitivity analysis\nRemedial measures: Two options — develop a more appropriate model, or use a transformation\nRemedies by assumption: Transform \\(X\\) for nonlinearity; use a variance-stabilizing transformation of \\(Y\\) (e.g., \\(\\sqrt{Y}\\), \\(\\log Y\\)) for nonconstant variance; correlated-error models for non-independence"
   },
   {
     "objectID": "slides/lec-08.html#questions",
@@ -2867,5 +2867,68 @@
     "title": "Lecture 8: Model Diagnostics and Remedial Measures",
     "section": "Questions?",
     "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
+  },
+  {
+    "objectID": "slides/lec-08.html#plot-1-residuals-vs.-x",
+    "href": "slides/lec-08.html#plot-1-residuals-vs.-x",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "Plot 1: Residuals vs. \\(X\\)",
+    "text": "Plot 1: Residuals vs. \\(X\\)\nChecks: Assumption 1 — Linearity\nWhat to look for: Random scatter around zero with no trend is ideal. A systematic curve or pattern remaining in the residuals after fitting indicates the linear function does not adequately capture the relationship."
+  },
+  {
+    "objectID": "slides/lec-08.html#plot-2-residuals-vs.-time-order",
+    "href": "slides/lec-08.html#plot-2-residuals-vs.-time-order",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "Plot 2: Residuals vs. Time Order",
+    "text": "Plot 2: Residuals vs. Time Order\n\nChecks: Assumption 2 — Independence\nThe x-axis is the sequential order observations were collected (row 1, row 2, …, row \\(n\\)) — or actual timestamps if available.\nWhat to look for: Random scatter with no trend is ideal. A systematic drift or cyclical pattern suggests correlated errors — each observation’s error is related to previous ones. Only construct this plot when data have a natural collection order.\n\nCorrelated errors do not bias \\(\\hat{\\beta}\\) but invalidate standard errors, \\(t\\)-tests, and \\(F\\)-tests."
+  },
+  {
+    "objectID": "slides/lec-08.html#plot-3-residuals-vs.-fitted-widehaty",
+    "href": "slides/lec-08.html#plot-3-residuals-vs.-fitted-widehaty",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "Plot 3: Residuals vs. Fitted \\(\\widehat{Y}\\)",
+    "text": "Plot 3: Residuals vs. Fitted \\(\\widehat{Y}\\)\nChecks: Assumption 3 — Equal variance\nWhat to look for: Constant spread around zero across all fitted values is ideal. A fan shape (spread increasing or decreasing with \\(\\widehat{Y}\\)) indicates heteroscedasticity (nonconstant variance)."
+  },
+  {
+    "objectID": "slides/lec-08.html#plot-4-qq-plot-normal-probability-plot",
+    "href": "slides/lec-08.html#plot-4-qq-plot-normal-probability-plot",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "Plot 4: QQ-Plot (Normal Probability Plot)",
+    "text": "Plot 4: QQ-Plot (Normal Probability Plot)\nChecks: Assumption 4 — Normality\nThe QQ-plot compares the observed residuals (y-axis) to the quantiles you would expect if the errors were perfectly normal (x-axis). R computes the expected quantiles automatically.\n\nWhat to look for: Points falling close to the diagonal reference line indicate normally distributed errors. Systematic departures signal non-normality:\n\nU-shaped curve: skewed distribution (right- or left-skewed)\nS-shaped curve: heavier tails than normal"
+  },
+  {
+    "objectID": "slides/lec-08.html#old-faithful-diagnostic-plots",
+    "href": "slides/lec-08.html#old-faithful-diagnostic-plots",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "Old Faithful: Diagnostic Plots",
+    "text": "Old Faithful: Diagnostic Plots\nData: faithful (built into R) — \\(n = 272\\) eruptions of the Old Faithful geyser. We regress eruption duration (\\(Y\\), minutes) on waiting time between eruptions (\\(X\\), minutes).\n\nfit_faithful &lt;- lm(eruptions ~ waiting, data = faithful)\n\npar(mfrow = c(1, 3), mar = c(4, 4, 3, 1))\n\n# Plot 1: residuals vs X (checks linearity)\nplot(faithful$waiting, residuals(fit_faithful),\n     xlab = \"Waiting time (min)\", ylab = \"Residuals\",\n     main = \"Residuals vs X\", pch = 16, col = \"#003660\"); abline(h = 0, lty = 2)\n\n# Plot 3: residuals vs fitted (checks equal variance)\nplot(fitted(fit_faithful), residuals(fit_faithful),\n     xlab = \"Fitted\", ylab = \"Residuals\",\n     main = \"Residuals vs fitted\", pch = 16, col = \"#003660\"); abline(h = 0, lty = 2)\n\n# Plot 4: QQ-plot (checks normality)\nqqnorm(residuals(fit_faithful), main = \"QQ-plot\", pch = 16, col = \"#003660\")\nqqline(residuals(fit_faithful))"
+  },
+  {
+    "objectID": "slides/lec-08.html#old-faithful-diagnostic-plots-output",
+    "href": "slides/lec-08.html#old-faithful-diagnostic-plots-output",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "Old Faithful: Diagnostic Plots — Output",
+    "text": "Old Faithful: Diagnostic Plots — Output\n\n\nBoth residual plots show a slight bimodal clustering — the data has two natural groups (short and long eruptions), and a single line doesn’t capture this perfectly. The QQ-plot tails deviate modestly from the line, consistent with this mild non-normality."
+  },
+  {
+    "objectID": "slides/lec-08.html#remedial-measures-1",
+    "href": "slides/lec-08.html#remedial-measures-1",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "Remedial Measures",
+    "text": "Remedial Measures"
+  },
+  {
+    "objectID": "slides/lec-08.html#what-to-do-when-assumptions-fail-1",
+    "href": "slides/lec-08.html#what-to-do-when-assumptions-fail-1",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "What to Do When Assumptions Fail",
+    "text": "What to Do When Assumptions Fail\nWhen the linear regression model is not appropriate, there are two general approaches:\n\n1. Develop a more appropriate model\n\nPolynomial regression: \\(E(Y) = \\beta_0 + \\beta_1 X + \\beta_2 X^2\\)\nNonlinear regression: \\(E(Y) = \\beta_0 \\beta_1^X\\)\nNonparametric regression: \\(E(Y) = f(X)\\) where \\(f\\) is estimated from data\nThese can be more flexible but also more complex\n\n\n\n2. Transformation\n\nTransform \\(X\\), \\(Y\\), or both to make the linear model more appropriate\nUsually relatively simple — keeps the familiar OLS framework\nCommon transformations: \\(\\sqrt{\\cdot}\\), \\(\\log(\\cdot)\\), \\(\\exp(\\cdot)\\), \\(1/(\\cdot)\\)"
+  },
+  {
+    "objectID": "slides/lec-08.html#remedies-by-assumption-1",
+    "href": "slides/lec-08.html#remedies-by-assumption-1",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "Remedies by Assumption",
+    "text": "Remedies by Assumption\n\n\n\n\n\n\n\nViolated assumption\nRemedy\n\n\n\n\nLinearity\nTransform \\(X\\) or \\(Y\\); add polynomial terms; use nonlinear/nonparametric model\n\n\nIndependence\nCorrelated-error models (time series, mixed models) — not covered in this course\n\n\nEqual variance\nWeighted least squares; variance-stabilizing transformation of \\(Y\\)\n\n\nNormality\nVariance-stabilizing transformation of \\(Y\\) often helps both at once\n\n\n\n\nOn outliers:\n\nInvestigate the cause before deciding what to do\nIf a data-entry error: correct or remove\nIf a real data point: do not remove automatically; run the analysis with and without the outlier (sensitivity analysis) or use robust regression"
   }
 ]
