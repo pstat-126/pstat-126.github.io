@@ -228,10 +228,7 @@ Annie Adams
 <li>Explain why model diagnostics are necessary before performing inference</li>
 <li>Identify the four key assumptions of simple linear regression and which residual plot checks each</li>
 <li>Read and interpret residual-vs-fitted and QQ-plots to detect assumption violations</li>
-<li>Apply the F test for lack of fit using the SSPE/SSLF decomposition</li>
 <li>Describe remedial measures for nonlinearity, nonconstant variance, and non-independence</li>
-<li>Use Box-Cox to select an appropriate power transformation of <span class="math inline">\(Y\)</span></li>
-<li>Walk through a complete diagnostics-and-remediation workflow on real data</li>
 </ul>
 </div>
 </section>
@@ -496,7 +493,7 @@ Annie Adams
 <section id="practice-reading-residual-plots" class="slide level2 smaller">
 <h2>Practice: Reading Residual Plots</h2>
 <div style="font-size: 0.82em;">
-<p>Below are three residual-vs-fitted plots. For each, state which assumption is violated (if any) and what you would do next.</p>
+<p>Below are three residual-vs-fitted plots. For each, state which assumption is violated (if any).</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -512,15 +509,15 @@ Annie Adams
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_bd03f9b6" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_4948d8aa" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
 <section id="practice-reading-residual-plots-solution" class="slide level2 smaller">
 <h2>Practice: Reading Residual Plots — Solution</h2>
-<p><strong>(a)</strong> <strong>Plot A</strong> — the spread of residuals increases with the fitted value (fan shape), violating equal variance (Assumption 3). A log or square-root transformation of <span class="math inline">\(Y\)</span> may stabilize the variance.</p>
+<p><strong>(a)</strong> <strong>Plot A</strong> — the spread of residuals increases with the fitted value (fan shape), violating equal variance (Assumption 3).</p>
 <div class="fragment">
-<p><strong>(b)</strong> <strong>Plot B</strong> — a curved trend remains in the residuals after fitting a line, violating linearity (Assumption 1). Consider adding a quadratic term or transforming <span class="math inline">\(X\)</span>.</p>
+<p><strong>(b)</strong> <strong>Plot B</strong> — a curved trend remains in the residuals after fitting a line, violating linearity (Assumption 1).</p>
 </div>
 <div class="fragment">
 <p><strong>(c)</strong> <strong>Plot C</strong> — random scatter around zero with no trend and roughly constant spread. This is the ideal pattern — no obvious violations.</p>
@@ -550,45 +547,134 @@ Annie Adams
 </ul>
 </div>
 </section>
-<section id="remedies-by-assumption" class="slide level2 smaller">
-<h2>Remedies by Assumption</h2>
+<section id="remedy-1-nonlinearity" class="slide level2 smaller">
+<h2>Remedy 1: Nonlinearity</h2>
+<p><strong>Violated assumption:</strong> Linearity — residuals vs.&nbsp;<span class="math inline">\(X\)</span> show a curved pattern</p>
+<div class="fragment">
+<p><strong>Transform <span class="math inline">\(X\)</span></strong> — straightens a curved relationship while leaving error variance roughly unchanged:</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 72%">
-<col style="width: 27%">
+<col style="width: 82%">
+<col style="width: 17%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Violated assumption</th>
-<th style="text-align: left;">Remedy</th>
+<th style="text-align: left;">Shape in scatter plot</th>
+<th style="text-align: left;">Try</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><strong>Linearity</strong></td>
-<td style="text-align: left;">Transform <span class="math inline">\(X\)</span> or <span class="math inline">\(Y\)</span>; add polynomial terms; use nonlinear/nonparametric model</td>
+<td style="text-align: left;">Concave up (fast growth)</td>
+<td style="text-align: left;"><span class="math inline">\(X' = X^2\)</span> or <span class="math inline">\(X' = e^X\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>Independence</strong></td>
-<td style="text-align: left;">Correlated-error models (time series, mixed models) — not covered in this course</td>
+<td style="text-align: left;">Concave down (diminishing returns)</td>
+<td style="text-align: left;"><span class="math inline">\(X' = \log(X)\)</span> or <span class="math inline">\(X' = \sqrt{X}\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><strong>Equal variance</strong></td>
-<td style="text-align: left;">Weighted least squares; variance-stabilizing transformation of <span class="math inline">\(Y\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>Normality</strong></td>
-<td style="text-align: left;">Variance-stabilizing transformation of <span class="math inline">\(Y\)</span> often helps both at once</td>
+<td style="text-align: left;">Decreasing, convex</td>
+<td style="text-align: left;"><span class="math inline">\(X' = 1/X\)</span></td>
 </tr>
 </tbody>
 </table>
+</div>
 <div class="fragment">
-<p><strong>On outliers:</strong></p>
+<p><strong>Add polynomial terms</strong> — e.g., <span class="math inline">\(E(Y) = \beta_0 + \beta_1 X + \beta_2 X^2\)</span> (covered later in the course)</p>
+</div>
+</section>
+<section id="remedy-1-before-after" class="slide level2 smaller">
+<h2>Remedy 1: Before &amp; After</h2>
+
+<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-10-1.png" width="864" class="r-stretch"><div style="font-size: 0.82em;">
+<p>The true relationship here is <span class="math inline">\(Y = 2 + 3\log(X) + \varepsilon\)</span>. Fitting a line in <span class="math inline">\(X\)</span> leaves a curved residual pattern (left); refitting with <span class="math inline">\(\log(X)\)</span> as the predictor removes it (right).</p>
+</div>
+</section>
+<section id="remedy-2-non-independence" class="slide level2 smaller">
+<h2>Remedy 2: Non-independence</h2>
+<p><strong>Violated assumption:</strong> Independence — residuals vs.&nbsp;time order show a trend or cyclical pattern</p>
+<div class="fragment">
+<p>Non-independence arises most often in <strong>time-series or spatial data</strong>, where nearby observations are correlated.</p>
+<p>Correlated errors do <strong>not</strong> bias <span class="math inline">\(\hat{\beta}\)</span> but <strong>invalidate</strong> standard errors, <span class="math inline">\(t\)</span>-tests, and <span class="math inline">\(F\)</span>-tests.</p>
+</div>
+<div class="fragment">
+<p><strong>Remedies:</strong></p>
 <ul>
-<li>Investigate the cause before deciding what to do</li>
-<li>If a data-entry error: correct or remove</li>
-<li>If a real data point: do <strong>not</strong> remove automatically; run the analysis with and without the outlier (sensitivity analysis) or use robust regression</li>
+<li><strong>Correlated-error models</strong> — generalized least squares (GLS) with a structured covariance matrix</li>
+<li><strong>Time series models</strong> — ARIMA, autoregressive models</li>
+<li><strong>Mixed models</strong> — for clustered or repeated-measures data</li>
 </ul>
+<p>These methods are <strong>not covered in this course</strong>, but it is important to recognize when they are needed.</p>
+</div>
+</section>
+<section id="remedy-3-nonconstant-variance" class="slide level2 smaller">
+<h2>Remedy 3: Nonconstant Variance</h2>
+<p><strong>Violated assumption:</strong> Equal variance — residuals vs.&nbsp;fitted <span class="math inline">\(\widehat{Y}\)</span> show a fan shape</p>
+<div class="fragment">
+<p><strong>Variance-stabilizing transformation of <span class="math inline">\(Y\)</span></strong> — if variance grows with the mean, a transformation can stabilize it:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 64%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Pattern</th>
+<th style="text-align: left;">Try</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mathrm{Var}(Y) \propto \mu\)</span> (counts)</td>
+<td style="text-align: left;"><span class="math inline">\(Y' = \sqrt{Y}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\mathrm{Var}(Y) \propto \mu^2\)</span> (proportional spread)</td>
+<td style="text-align: left;"><span class="math inline">\(Y' = \log(Y)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mathrm{Var}(Y) \propto \mu^3\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(Y' = 1/\sqrt{Y}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\mathrm{Var}(Y) \propto \mu^4\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(Y' = 1/Y\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>Box-Cox method</strong> (Lecture 9) estimates the best power transformation data-adaptively.</p>
+</div>
+</section>
+<section id="remedy-3-before-after" class="slide level2 smaller">
+<h2>Remedy 3: Before &amp; After</h2>
+
+<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-11-1.png" width="864" class="r-stretch"><div style="font-size: 0.82em;">
+<p>True model: <span class="math inline">\(\log(Y) = 1 + 0.3X + \varepsilon\)</span>, so variance grows exponentially with <span class="math inline">\(X\)</span>. The fan shape disappears after fitting on <span class="math inline">\(\log(Y)\)</span>.</p>
+</div>
+</section>
+<section id="remedy-4-non-normality" class="slide level2 smaller">
+<h2>Remedy 4: Non-normality</h2>
+<p><strong>Violated assumption:</strong> Normality — QQ-plot shows a U-shape (skewed) or S-shape (heavy tails)</p>
+<div class="fragment">
+<p>Normality is the <strong>least critical</strong> assumption — OLS estimates are unbiased and consistent even without it. It mainly affects the validity of <span class="math inline">\(t\)</span>- and <span class="math inline">\(F\)</span>-tests in small samples.</p>
+</div>
+<div class="fragment">
+<p><strong>Variance-stabilizing transformation of <span class="math inline">\(Y\)</span></strong> often fixes non-normality and nonconstant variance simultaneously (e.g., <span class="math inline">\(\log Y\)</span>, <span class="math inline">\(\sqrt{Y}\)</span>).</p>
+</div>
+<div class="fragment">
+<p><strong>When transformation is not enough:</strong></p>
+<ul>
+<li><strong>Generalized linear models (GLMs)</strong> — model non-normal responses directly (e.g., Poisson for counts, logistic for binary outcomes)</li>
+<li><strong>Robust regression</strong> — less sensitive to heavy-tailed errors or outliers</li>
+<li>For large <span class="math inline">\(n\)</span>, the CLT often makes the normality assumption less important in practice</li>
+</ul>
+</div>
+</section>
+<section id="remedy-4-before-after" class="slide level2 smaller">
+<h2>Remedy 4: Before &amp; After</h2>
+
+<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-12-1.png" width="864" class="r-stretch"><div style="font-size: 0.82em;">
+<p>True model: <span class="math inline">\(\log(Y) = 0.5 + 0.2X + \varepsilon\)</span> with <span class="math inline">\(\varepsilon \sim N(0, 0.8^2)\)</span>. Residuals on the raw scale are strongly right-skewed (left); after the <span class="math inline">\(\log(Y)\)</span> transformation they fall nearly on the diagonal (right).</p>
 </div>
 </section>
 <section id="summary" class="slide level2 smaller">
@@ -596,8 +682,8 @@ Annie Adams
 <ul>
 <li class="fragment"><strong>Diagnostics:</strong> Check all four assumptions (linearity, independence, equal variance, normality) using residual-vs-X, residual-vs-fitted, residual-vs-time, and QQ-plots <strong>before performing inference</strong></li>
 <li class="fragment"><strong>Outliers:</strong> Investigate first — don’t automatically remove; try sensitivity analysis</li>
-<li class="fragment"><strong>Remedial measures:</strong> Two options — develop a more appropriate model, or use a transformation</li>
-<li class="fragment"><strong>Remedies by assumption:</strong> Transform <span class="math inline">\(X\)</span> for nonlinearity; use a variance-stabilizing transformation of <span class="math inline">\(Y\)</span> (e.g., <span class="math inline">\(\sqrt{Y}\)</span>, <span class="math inline">\(\log Y\)</span>) for nonconstant variance; correlated-error models for non-independence</li>
+<li class="fragment"><strong>Remedial measures:</strong> Two broad options — develop a more appropriate model, or apply a transformation</li>
+<li class="fragment"><strong>Remedies by assumption:</strong> Transform <span class="math inline">\(X\)</span> (or add polynomial terms) for nonlinearity; use a variance-stabilizing transformation of <span class="math inline">\(Y\)</span> for nonconstant variance; correlated-error models for non-independence</li>
 </ul>
 </section>
 <section id="questions" class="slide level2" data-background-color="#003660">

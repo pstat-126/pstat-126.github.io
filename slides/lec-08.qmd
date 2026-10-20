@@ -25,10 +25,7 @@ By the end of today you will be able to:
 - Explain why model diagnostics are necessary before performing inference
 - Identify the four key assumptions of simple linear regression and which residual plot checks each
 - Read and interpret residual-vs-fitted and QQ-plots to detect assumption violations
-- Apply the F test for lack of fit using the SSPE/SSLF decomposition
 - Describe remedial measures for nonlinearity, nonconstant variance, and non-independence
-- Use Box-Cox to select an appropriate power transformation of $Y$
-- Walk through a complete diagnostics-and-remediation workflow on real data
 
 :::
 
@@ -367,7 +364,7 @@ Both residual plots show a slight **bimodal clustering** — the data has two na
 
 ::: {style="font-size: 0.82em;"}
 
-Below are three residual-vs-fitted plots. For each, state which assumption is violated (if any) and what you would do next.
+Below are three residual-vs-fitted plots. For each, state which assumption is violated (if any).
 
 ```{r}
 #| echo: false
@@ -420,10 +417,10 @@ countdown::countdown(
 
 ## Practice: Reading Residual Plots — Solution {.smaller}
 
-**(a)** **Plot A** — the spread of residuals increases with the fitted value (fan shape), violating equal variance (Assumption 3). A log or square-root transformation of $Y$ may stabilize the variance.
+**(a)** **Plot A** — the spread of residuals increases with the fitted value (fan shape), violating equal variance (Assumption 3). 
 
 ::: {.fragment}
-**(b)** **Plot B** — a curved trend remains in the residuals after fitting a line, violating linearity (Assumption 1). Consider adding a quadratic term or transforming $X$.
+**(b)** **Plot B** — a curved trend remains in the residuals after fitting a line, violating linearity (Assumption 1).
 :::
 
 ::: {.fragment}
@@ -459,21 +456,174 @@ When the linear regression model is not appropriate, there are two general appro
 
 ---
 
-## Remedies by Assumption {.smaller}
+## Remedy 1: Nonlinearity {.smaller}
 
-| Violated assumption | Remedy |
-|:--------------------|:-------|
-| **Linearity** | Transform $X$ or $Y$; add polynomial terms; use nonlinear/nonparametric model |
-| **Independence** | Correlated-error models (time series, mixed models) — not covered in this course |
-| **Equal variance** | Weighted least squares; variance-stabilizing transformation of $Y$ |
-| **Normality** | Variance-stabilizing transformation of $Y$ often helps both at once |
+**Violated assumption:** Linearity — residuals vs. $X$ show a curved pattern
 
 ::: {.fragment}
-**On outliers:**
+**Transform $X$** — straightens a curved relationship while leaving error variance roughly unchanged:
 
-- Investigate the cause before deciding what to do
-- If a data-entry error: correct or remove
-- If a real data point: do **not** remove automatically; run the analysis with and without the outlier (sensitivity analysis) or use robust regression
+| Shape in scatter plot | Try |
+|:----------------------|:----|
+| Concave up (fast growth) | $X' = X^2$ or $X' = e^X$ |
+| Concave down (diminishing returns) | $X' = \log(X)$ or $X' = \sqrt{X}$ |
+| Decreasing, convex | $X' = 1/X$ |
+:::
+
+::: {.fragment}
+**Add polynomial terms** — e.g., $E(Y) = \beta_0 + \beta_1 X + \beta_2 X^2$ (covered later in the course)
+:::
+
+---
+
+## Remedy 1: Before & After {.smaller}
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 9
+#| fig-height: 3.8
+set.seed(42)
+n <- 100
+x <- runif(n, 1, 10)
+y <- 2 + 3 * log(x) + rnorm(n, 0, 0.4)
+
+fit_raw <- lm(y ~ x)
+fit_log <- lm(y ~ log(x))
+
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+plot(x, residuals(fit_raw),
+     xlab = "X", ylab = "Residuals", main = "Before: residuals vs X (curved pattern)",
+     pch = 16, cex = 0.7, col = "#003660"); abline(h = 0, lty = 2)
+plot(log(x), residuals(fit_log),
+     xlab = "log(X)", ylab = "Residuals", main = "After: residuals vs log(X) (random scatter)",
+     pch = 16, cex = 0.7, col = "#003660"); abline(h = 0, lty = 2)
+```
+
+::: {style="font-size: 0.82em;"}
+The true relationship here is $Y = 2 + 3\log(X) + \varepsilon$. Fitting a line in $X$ leaves a curved residual pattern (left); refitting with $\log(X)$ as the predictor removes it (right).
+:::
+
+---
+
+## Remedy 2: Non-independence {.smaller}
+
+**Violated assumption:** Independence — residuals vs. time order show a trend or cyclical pattern
+
+::: {.fragment}
+Non-independence arises most often in **time-series or spatial data**, where nearby observations are correlated.
+
+Correlated errors do **not** bias $\hat{\beta}$ but **invalidate** standard errors, $t$-tests, and $F$-tests.
+:::
+
+::: {.fragment}
+**Remedies:**
+
+- **Correlated-error models** — generalized least squares (GLS) with a structured covariance matrix
+- **Time series models** — ARIMA, autoregressive models
+- **Mixed models** — for clustered or repeated-measures data
+
+These methods are **not covered in this course**, but it is important to recognize when they are needed.
+:::
+
+---
+
+
+## Remedy 3: Nonconstant Variance {.smaller}
+
+**Violated assumption:** Equal variance — residuals vs. fitted $\widehat{Y}$ show a fan shape
+
+::: {.fragment}
+**Variance-stabilizing transformation of $Y$** — if variance grows with the mean, a transformation can stabilize it:
+
+| Pattern | Try |
+|:--------|:----|
+| $\mathrm{Var}(Y) \propto \mu$ (counts) | $Y' = \sqrt{Y}$ |
+| $\mathrm{Var}(Y) \propto \mu^2$ (proportional spread) | $Y' = \log(Y)$ |
+| $\mathrm{Var}(Y) \propto \mu^3$ | $Y' = 1/\sqrt{Y}$ |
+| $\mathrm{Var}(Y) \propto \mu^4$ | $Y' = 1/Y$ |
+
+The **Box-Cox method** (Lecture 9) estimates the best power transformation data-adaptively.
+:::
+
+---
+
+## Remedy 3: Before & After {.smaller}
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 9
+#| fig-height: 3.8
+set.seed(42)
+n <- 100
+x <- runif(n, 0, 10)
+y <- exp(1 + 0.3 * x) * exp(rnorm(n, 0, 0.5))
+
+fit_raw <- lm(y ~ x)
+fit_log <- lm(log(y) ~ x)
+
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+plot(fitted(fit_raw), residuals(fit_raw),
+     xlab = "Fitted", ylab = "Residuals", main = "Before: fan shape (heteroscedastic)",
+     pch = 16, cex = 0.7, col = "#003660"); abline(h = 0, lty = 2)
+plot(fitted(fit_log), residuals(fit_log),
+     xlab = "Fitted (log Y)", ylab = "Residuals", main = "After: log(Y) (constant spread)",
+     pch = 16, cex = 0.7, col = "#003660"); abline(h = 0, lty = 2)
+```
+
+::: {style="font-size: 0.82em;"}
+True model: $\log(Y) = 1 + 0.3X + \varepsilon$, so variance grows exponentially with $X$. The fan shape disappears after fitting on $\log(Y)$.
+:::
+
+---
+
+## Remedy 4: Non-normality {.smaller}
+
+**Violated assumption:** Normality — QQ-plot shows a U-shape (skewed) or S-shape (heavy tails)
+
+::: {.fragment}
+Normality is the **least critical** assumption — OLS estimates are unbiased and consistent even without it. It mainly affects the validity of $t$- and $F$-tests in small samples.
+:::
+
+::: {.fragment}
+**Variance-stabilizing transformation of $Y$** often fixes non-normality and nonconstant variance simultaneously (e.g., $\log Y$, $\sqrt{Y}$).
+:::
+
+::: {.fragment}
+**When transformation is not enough:**
+
+- **Generalized linear models (GLMs)** — model non-normal responses directly (e.g., Poisson for counts, logistic for binary outcomes)
+- **Robust regression** — less sensitive to heavy-tailed errors or outliers
+- For large $n$, the CLT often makes the normality assumption less important in practice
+:::
+
+---
+
+## Remedy 4: Before & After {.smaller}
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 9
+#| fig-height: 3.8
+set.seed(7)
+n <- 150
+x <- runif(n, 1, 10)
+y <- exp(0.5 + 0.2 * x + rnorm(n, 0, 0.8))
+
+fit_raw <- lm(y ~ x)
+fit_log <- lm(log(y) ~ x)
+
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+qqnorm(residuals(fit_raw), main = "Before: right-skewed QQ-plot",
+       pch = 16, cex = 0.7, col = "#003660"); qqline(residuals(fit_raw), col = "red")
+qqnorm(residuals(fit_log), main = "After: log(Y) (near-normal)",
+       pch = 16, cex = 0.7, col = "#003660"); qqline(residuals(fit_log), col = "red")
+```
+
+::: {style="font-size: 0.82em;"}
+True model: $\log(Y) = 0.5 + 0.2X + \varepsilon$ with $\varepsilon \sim N(0, 0.8^2)$. Residuals on the raw scale are strongly right-skewed (left); after the $\log(Y)$ transformation they fall nearly on the diagonal (right).
 :::
 
 ---
@@ -483,8 +633,8 @@ When the linear regression model is not appropriate, there are two general appro
 ::: {.incremental}
 - **Diagnostics:** Check all four assumptions (linearity, independence, equal variance, normality) using residual-vs-X, residual-vs-fitted, residual-vs-time, and QQ-plots **before performing inference**
 - **Outliers:** Investigate first — don't automatically remove; try sensitivity analysis
-- **Remedial measures:** Two options — develop a more appropriate model, or use a transformation
-- **Remedies by assumption:** Transform $X$ for nonlinearity; use a variance-stabilizing transformation of $Y$ (e.g., $\sqrt{Y}$, $\log Y$) for nonconstant variance; correlated-error models for non-independence
+- **Remedial measures:** Two broad options — develop a more appropriate model, or apply a transformation
+- **Remedies by assumption:** Transform $X$ (or add polynomial terms) for nonlinearity; use a variance-stabilizing transformation of $Y$ for nonconstant variance; correlated-error models for non-independence
 :::
 
 ---
