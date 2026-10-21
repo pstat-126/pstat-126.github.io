@@ -33,6 +33,75 @@ By the end of today you will be able to:
 
 ---
 
+## Practice: Reading Residual Plots {.smaller}
+
+::: {style="font-size: 0.82em;"}
+
+Below are three residual-vs-fitted plots. For each, state which assumption is violated (if any).
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 9
+#| fig-height: 3.2
+set.seed(99)
+n <- 80
+xf <- seq(1, 5, length.out = n)
+par(mfrow = c(1, 3), mar = c(4, 4, 2, 1))
+
+# A: fan shape
+plot(xf, rnorm(n, 0, 0.3 * xf), xlab = "Fitted", ylab = "Residuals", main = "Plot A",
+     pch = 16, cex = 0.7, col = "#003660"); abline(h = 0, lty = 2)
+
+# B: curve
+plot(xf, sin(xf * 1.2) + rnorm(n, 0, 0.2), xlab = "Fitted", ylab = "Residuals",
+     main = "Plot B", pch = 16, cex = 0.7, col = "#003660"); abline(h = 0, lty = 2)
+
+# C: ideal
+plot(xf, rnorm(n, 0, 0.5), xlab = "Fitted", ylab = "Residuals", main = "Plot C",
+     pch = 16, cex = 0.7, col = "#003660"); abline(h = 0, lty = 2)
+```
+
+**(a)** Which plot suggests a violation of the equal-variance assumption? What transformation might help?
+
+**(b)** Which plot suggests a violation of the linearity assumption? What would you try?
+
+**(c)** Which plot looks ideal?
+
+:::
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 3,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em"
+)
+```
+
+---
+
+## Practice: Reading Residual Plots — Solution {.smaller}
+
+**(a)** **Plot A** — the spread of residuals increases with the fitted value (fan shape), violating equal variance (Assumption 3).
+
+::: {.fragment}
+**(b)** **Plot B** — a curved trend remains in the residuals after fitting a line, violating linearity (Assumption 1).
+:::
+
+::: {.fragment}
+**(c)** **Plot C** — random scatter around zero with no trend and roughly constant spread. This is the ideal pattern — no obvious violations.
+:::
+
+---
+
 ## F Test for Lack of Fit {background-color="#003660"}
 
 ---

@@ -16,6 +16,12 @@ format:
       data-background-color: "#003660"
 ---
 
+## Course Reminders
+- Quiz 2 on Monday 
+- HW 2 due **Saturday, October 31^st^** at 11:59 PM
+
+
+
 ## Learning Objectives
 
 By the end of today you will be able to:
@@ -120,7 +126,8 @@ Since several assumptions concern $\varepsilon_i$ — e.g., $E(\varepsilon_i) = 
 
 ---
 
-## Plot 1: Residuals vs. $X$ {.smaller}
+## Plot 1: Residuals vs. $X$  {.smaller}
+
 
 **Checks:** Assumption 1 — Linearity
 
@@ -149,7 +156,43 @@ plot(x, e2, xlab = "X", ylab = "Residuals", main = "Violation — curved pattern
 
 ---
 
-## Plot 2: Residuals vs. Time Order 
+## Plot 1: What Produces a Curved Pattern? 
+::: {style="font-size: 0.50em;"}
+
+
+A curved residual pattern arises when the true relationship between $X$ and $Y$ is **nonlinear** but you fit a straight line.
+
+::: {.fragment}
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 9
+#| fig-height: 3.5
+set.seed(42)
+n <- 100
+x <- runif(n, 0, 10)
+y <- 2 + x + (x - 5)^2 / 8 + rnorm(n, 0, 0.5)
+fit_raw <- lm(y ~ x)
+
+par(mfrow = c(1, 2), mar = c(3, 3, 2, 1))
+
+plot(x, y, xlab = "X", ylab = "Y", main = "X vs Y — nonlinear relationship",
+     pch = 16, cex = 0.7, col = "#003660")
+abline(fit_raw, col = "red", lwd = 2)
+
+plot(x, residuals(fit_raw), xlab = "X", ylab = "Residuals",
+     main = "Violation — curved pattern",
+     pch = 16, cex = 0.7, col = "#003660"); abline(h = 0, lty = 2)
+```
+:::
+
+::: {style="font-size: 0.82em;"}
+The scatter plot (left) shows a concave-up (U-shaped) curve — the red line underfits in the middle and at the extremes. This mismatch produces the bowl-shaped residual pattern (right).
+:::
+:::
+---
+
+## Plot 2: Residuals vs. Time Order
 ::: {style="font-size: 0.55em;"}
 
 
@@ -187,6 +230,7 @@ plot(t_idx, e_corr, xlab = "Collection order (index)", ylab = "Residuals", main 
 :::
 ---
 
+
 ## Plot 3: Residuals vs. Fitted $\widehat{Y}$ {.smaller}
 
 **Checks:** Assumption 3 — Equal variance
@@ -214,6 +258,41 @@ e_hetero <- rnorm(n, 0, 0.05 * yhat)
 plot(yhat, e_hetero, xlab = "Fitted", ylab = "Residuals", main = "Violation — fan shape",
      pch = 16, cex = 0.7, col = "#003660"); abline(h = 0, lty = 2)
 ```
+:::
+
+---
+
+## Plot 3: What Produces a Fan Shape? {.smaller}
+
+A fan shape in residuals arises when **the spread of Y grows with X** — larger X values have more variable responses.
+
+::: {.fragment}
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 9
+#| fig-height: 3.5
+set.seed(42)
+n <- 100
+x <- runif(n, 0, 10)
+yhat_true <- 2 + 0.5 * x
+y_hetero <- yhat_true + rnorm(n, 0, 0.05 * yhat_true)
+fit_hetero <- lm(y_hetero ~ x)
+
+par(mfrow = c(1, 2), mar = c(3, 3, 2, 1))
+plot(x, y_hetero, xlab = "X", ylab = "Y",
+     main = "X vs Y — spread grows with X",
+     pch = 16, cex = 0.7, col = "#003660")
+abline(fit_hetero, col = "red", lwd = 2)
+
+plot(fitted(fit_hetero), residuals(fit_hetero), xlab = "Fitted", ylab = "Residuals",
+     main = "Violation — fan shape",
+     pch = 16, cex = 0.7, col = "#003660"); abline(h = 0, lty = 2)
+```
+:::
+
+::: {style="font-size: 0.82em;"}
+The scatter plot (left) shows tightly clustered points at small X that fan outward as X increases. The red line fits well on average, but the growing spread carries into the residuals (right) as the fan-shape violation.
 :::
 
 ---
@@ -260,6 +339,41 @@ qqnorm(rt(200, df = 2), main = "S shape — heavy tails",
 - **U-shaped (skewed right):** Points curve above the line in both tails — right-skewed distribution
 - **U-shaped (skewed left):** Points curve below the line — left-skewed distribution
 - **S-shaped:** Points deviate outward at both extremes — heavier tails than normal
+:::
+
+---
+
+## Plot 4: What Produces Non-Normal Residuals? {.smaller}
+::: {style="font-size: 0.50em;"}
+
+
+
+A QQ-plot violation arises when the **errors themselves have a skewed or heavy-tailed distribution** rather than a bell curve.
+
+::: {.fragment}
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 9
+#| fig-height: 3.5
+set.seed(7)
+n <- 200
+y_skew <- rexp(n, 1) - 1
+
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+hist(y_skew, breaks = 25, col = "#003660", border = "white",
+     main = "Histogram of residuals — right-skewed",
+     xlab = "Residuals", prob = TRUE)
+curve(dnorm(x, mean(y_skew), sd(y_skew)), add = TRUE, col = "red", lwd = 2)
+
+qqnorm(y_skew, main = "QQ-plot — U shape (skewed right)",
+       pch = 16, cex = 0.6, col = "#003660"); qqline(y_skew, col = "red")
+```
+:::
+
+::: {style="font-size: 0.82em;"}
+The histogram (left) shows residuals bunched near zero with a long right tail — far from the symmetric bell curve (red). That asymmetry appears in the QQ-plot (right) as the U-shaped departure from the diagonal.
+:::
 :::
 
 ---
@@ -356,75 +470,6 @@ qqline(residuals(fit_faithful))
 
 ::: {style="font-size: 0.78em;"}
 Both residual plots show a slight **bimodal clustering** — the data has two natural groups (short and long eruptions), and a single line doesn't capture this perfectly. The QQ-plot tails deviate modestly from the line, consistent with this mild non-normality.
-:::
-
----
-
-## Practice: Reading Residual Plots {.smaller}
-
-::: {style="font-size: 0.82em;"}
-
-Below are three residual-vs-fitted plots. For each, state which assumption is violated (if any).
-
-```{r}
-#| echo: false
-#| eval: true
-#| fig-width: 9
-#| fig-height: 3.2
-set.seed(99)
-n <- 80
-xf <- seq(1, 5, length.out = n)
-par(mfrow = c(1, 3), mar = c(4, 4, 2, 1))
-
-# A: fan shape
-plot(xf, rnorm(n, 0, 0.3 * xf), xlab = "Fitted", ylab = "Residuals", main = "Plot A",
-     pch = 16, cex = 0.7, col = "#003660"); abline(h = 0, lty = 2)
-
-# B: curve
-plot(xf, sin(xf * 1.2) + rnorm(n, 0, 0.2), xlab = "Fitted", ylab = "Residuals",
-     main = "Plot B", pch = 16, cex = 0.7, col = "#003660"); abline(h = 0, lty = 2)
-
-# C: ideal
-plot(xf, rnorm(n, 0, 0.5), xlab = "Fitted", ylab = "Residuals", main = "Plot C",
-     pch = 16, cex = 0.7, col = "#003660"); abline(h = 0, lty = 2)
-```
-
-**(a)** Which plot suggests a violation of the equal-variance assumption? What transformation might help?
-
-**(b)** Which plot suggests a violation of the linearity assumption? What would you try?
-
-**(c)** Which plot looks ideal?
-
-:::
-
-```{r}
-#| echo: false
-#| eval: true
-countdown::countdown(
-  minutes = 3,
-  play_sound = TRUE,
-  color_border              = "#FEBC11",
-  color_text                = "#003660",
-  color_running_background  = "#003660",
-  color_running_text        = "#FFFFFF",
-  color_finished_background = "#FEBC11",
-  color_finished_text       = "#003660",
-  font_size = "2em"
-)
-```
-
----
-
-## Practice: Reading Residual Plots — Solution {.smaller}
-
-**(a)** **Plot A** — the spread of residuals increases with the fitted value (fan shape), violating equal variance (Assumption 3). 
-
-::: {.fragment}
-**(b)** **Plot B** — a curved trend remains in the residuals after fitting a line, violating linearity (Assumption 1).
-:::
-
-::: {.fragment}
-**(c)** **Plot C** — random scatter around zero with no trend and roughly constant spread. This is the ideal pattern — no obvious violations.
 :::
 
 ---
@@ -538,10 +583,10 @@ These methods are **not covered in this course**, but it is important to recogni
 
 | Pattern | Try |
 |:--------|:----|
-| $\mathrm{Var}(Y) \propto \mu$ (counts) | $Y' = \sqrt{Y}$ |
-| $\mathrm{Var}(Y) \propto \mu^2$ (proportional spread) | $Y' = \log(Y)$ |
-| $\mathrm{Var}(Y) \propto \mu^3$ | $Y' = 1/\sqrt{Y}$ |
-| $\mathrm{Var}(Y) \propto \mu^4$ | $Y' = 1/Y$ |
+| Mild | $Y' = \sqrt{Y}$ |
+| Moderate | $Y' = \log(Y)$ |
+| Strong | $Y' = 1/\sqrt{Y}$ |
+| Very strong | $Y' = 1/Y$ |
 
 The **Box-Cox method** (Lecture 9) estimates the best power transformation data-adaptively.
 :::
@@ -628,13 +673,12 @@ True model: $\log(Y) = 0.5 + 0.2X + \varepsilon$ with $\varepsilon \sim N(0, 0.8
 
 ---
 
-## Summary {.smaller}
+## Summary 
 
 ::: {.incremental}
 - **Diagnostics:** Check all four assumptions (linearity, independence, equal variance, normality) using residual-vs-X, residual-vs-fitted, residual-vs-time, and QQ-plots **before performing inference**
-- **Outliers:** Investigate first — don't automatically remove; try sensitivity analysis
+- **Outliers:** Investigate first — don't automatically remove
 - **Remedial measures:** Two broad options — develop a more appropriate model, or apply a transformation
-- **Remedies by assumption:** Transform $X$ (or add polynomial terms) for nonlinearity; use a variance-stabilizing transformation of $Y$ for nonconstant variance; correlated-error models for non-independence
 :::
 
 ---

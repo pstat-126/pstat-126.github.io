@@ -196,8 +196,6 @@
       margin-right: 0; 
     }
   </style>
-  <link href="../site_libs/countdown-0.6.0/countdown.css" rel="stylesheet">
-  <script src="../site_libs/countdown-0.6.0/countdown.js"></script>
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -219,6 +217,13 @@ Annie Adams
 </div>
 
   <p class="date">2026-10-21</p>
+</section>
+<section id="course-reminders" class="slide level2">
+<h2>Course Reminders</h2>
+<ul>
+<li>Quiz 2 on Monday</li>
+<li>HW 2 due <strong>Saturday, October 31<sup>st</sup></strong> at 11:59 PM</li>
+</ul>
 </section>
 <section id="learning-objectives" class="slide level2">
 <h2>Learning Objectives</h2>
@@ -374,6 +379,26 @@ Annie Adams
 </div>
 </div>
 </section>
+<section id="plot-1-what-produces-a-curved-pattern" class="slide level2">
+<h2>Plot 1: What Produces a Curved Pattern?</h2>
+<div style="font-size: 0.50em;">
+<p>A curved residual pattern arises when the true relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is <strong>nonlinear</strong> but you fit a straight line.</p>
+<div class="fragment">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-2-1.png" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div style="font-size: 0.82em;">
+<p>The scatter plot (left) shows a concave-up (U-shaped) curve — the red line underfits in the middle and at the extremes. This mismatch produces the bowl-shaped residual pattern (right).</p>
+</div>
+</div>
+</section>
 <section id="plot-2-residuals-vs.-time-order" class="slide level2">
 <h2>Plot 2: Residuals vs.&nbsp;Time Order</h2>
 <div style="font-size: 0.55em;">
@@ -388,7 +413,7 @@ Annie Adams
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-2-1.png" width="864"></p>
+<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-3-1.png" width="864"></p>
 </figure>
 </div>
 </div>
@@ -405,11 +430,29 @@ Annie Adams
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-3-1.png" width="864"></p>
+<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-4-1.png" width="864"></p>
 </figure>
 </div>
 </div>
 </div>
+</div>
+</section>
+<section id="plot-3-what-produces-a-fan-shape" class="slide level2 smaller">
+<h2>Plot 3: What Produces a Fan Shape?</h2>
+<p>A fan shape in residuals arises when <strong>the spread of Y grows with X</strong> — larger X values have more variable responses.</p>
+<div class="fragment">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-5-1.png" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div style="font-size: 0.82em;">
+<p>The scatter plot (left) shows tightly clustered points at small X that fan outward as X increases. The red line fits well on average, but the growing spread carries into the residuals (right) as the fan-shape violation.</p>
 </div>
 </section>
 <section id="plot-4-qq-plot-normal-probability-plot" class="slide level2 smaller">
@@ -427,12 +470,32 @@ Annie Adams
 <section id="qq-plots-when-not-normal" class="slide level2 smaller">
 <h2>QQ-Plots When Not Normal</h2>
 
-<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-4-1.png" width="864" class="r-stretch"><div style="font-size: 0.82em;">
+<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-6-1.png" width="864" class="r-stretch"><div style="font-size: 0.82em;">
 <ul>
 <li><strong>U-shaped (skewed right):</strong> Points curve above the line in both tails — right-skewed distribution</li>
 <li><strong>U-shaped (skewed left):</strong> Points curve below the line — left-skewed distribution</li>
 <li><strong>S-shaped:</strong> Points deviate outward at both extremes — heavier tails than normal</li>
 </ul>
+</div>
+</section>
+<section id="plot-4-what-produces-non-normal-residuals" class="slide level2 smaller">
+<h2>Plot 4: What Produces Non-Normal Residuals?</h2>
+<div style="font-size: 0.50em;">
+<p>A QQ-plot violation arises when the <strong>errors themselves have a skewed or heavy-tailed distribution</strong> rather than a bell curve.</p>
+<div class="fragment">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-7-1.png" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div style="font-size: 0.82em;">
+<p>The histogram (left) shows residuals bunched near zero with a long right tail — far from the symmetric bell curve (red). That asymmetry appears in the QQ-plot (right) as the U-shaped departure from the diagonal.</p>
+</div>
 </div>
 </section>
 <section id="outliers-in-residual-plots" class="slide level2 smaller">
@@ -444,7 +507,7 @@ Annie Adams
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-5-1.png" width="864"></p>
+<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-8-1.png" width="864"></p>
 </figure>
 </div>
 </div>
@@ -486,41 +549,8 @@ Annie Adams
 <section id="old-faithful-diagnostic-plots-output" class="slide level2 smaller">
 <h2>Old Faithful: Diagnostic Plots — Output</h2>
 
-<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-7-1.png" width="864" class="r-stretch"><div style="font-size: 0.78em;">
+<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-10-1.png" width="864" class="r-stretch"><div style="font-size: 0.78em;">
 <p>Both residual plots show a slight <strong>bimodal clustering</strong> — the data has two natural groups (short and long eruptions), and a single line doesn’t capture this perfectly. The QQ-plot tails deviate modestly from the line, consistent with this mild non-normality.</p>
-</div>
-</section>
-<section id="practice-reading-residual-plots" class="slide level2 smaller">
-<h2>Practice: Reading Residual Plots</h2>
-<div style="font-size: 0.82em;">
-<p>Below are three residual-vs-fitted plots. For each, state which assumption is violated (if any).</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="lec-08_files/figure-revealjs/unnamed-chunk-8-1.png" width="864"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>(a)</strong> Which plot suggests a violation of the equal-variance assumption? What transformation might help?</p>
-<p><strong>(b)</strong> Which plot suggests a violation of the linearity assumption? What would you try?</p>
-<p><strong>(c)</strong> Which plot looks ideal?</p>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_4948d8aa" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
-</div>
-</section>
-<section id="practice-reading-residual-plots-solution" class="slide level2 smaller">
-<h2>Practice: Reading Residual Plots — Solution</h2>
-<p><strong>(a)</strong> <strong>Plot A</strong> — the spread of residuals increases with the fitted value (fan shape), violating equal variance (Assumption 3).</p>
-<div class="fragment">
-<p><strong>(b)</strong> <strong>Plot B</strong> — a curved trend remains in the residuals after fitting a line, violating linearity (Assumption 1).</p>
-</div>
-<div class="fragment">
-<p><strong>(c)</strong> <strong>Plot C</strong> — random scatter around zero with no trend and roughly constant spread. This is the ideal pattern — no obvious violations.</p>
 </div>
 </section>
 <section id="remedial-measures" class="slide level2" data-background-color="#003660">
@@ -586,7 +616,7 @@ Annie Adams
 <section id="remedy-1-before-after" class="slide level2 smaller">
 <h2>Remedy 1: Before &amp; After</h2>
 
-<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-10-1.png" width="864" class="r-stretch"><div style="font-size: 0.82em;">
+<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-11-1.png" width="864" class="r-stretch"><div style="font-size: 0.82em;">
 <p>The true relationship here is <span class="math inline">\(Y = 2 + 3\log(X) + \varepsilon\)</span>. Fitting a line in <span class="math inline">\(X\)</span> leaves a curved residual pattern (left); refitting with <span class="math inline">\(\log(X)\)</span> as the predictor removes it (right).</p>
 </div>
 </section>
@@ -613,10 +643,6 @@ Annie Adams
 <div class="fragment">
 <p><strong>Variance-stabilizing transformation of <span class="math inline">\(Y\)</span></strong> — if variance grows with the mean, a transformation can stabilize it:</p>
 <table class="caption-top">
-<colgroup>
-<col style="width: 64%">
-<col style="width: 35%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Pattern</th>
@@ -625,19 +651,19 @@ Annie Adams
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(\mathrm{Var}(Y) \propto \mu\)</span> (counts)</td>
+<td style="text-align: left;">Mild</td>
 <td style="text-align: left;"><span class="math inline">\(Y' = \sqrt{Y}\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math inline">\(\mathrm{Var}(Y) \propto \mu^2\)</span> (proportional spread)</td>
+<td style="text-align: left;">Moderate</td>
 <td style="text-align: left;"><span class="math inline">\(Y' = \log(Y)\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(\mathrm{Var}(Y) \propto \mu^3\)</span></td>
+<td style="text-align: left;">Strong</td>
 <td style="text-align: left;"><span class="math inline">\(Y' = 1/\sqrt{Y}\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><span class="math inline">\(\mathrm{Var}(Y) \propto \mu^4\)</span></td>
+<td style="text-align: left;">Very strong</td>
 <td style="text-align: left;"><span class="math inline">\(Y' = 1/Y\)</span></td>
 </tr>
 </tbody>
@@ -648,7 +674,7 @@ Annie Adams
 <section id="remedy-3-before-after" class="slide level2 smaller">
 <h2>Remedy 3: Before &amp; After</h2>
 
-<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-11-1.png" width="864" class="r-stretch"><div style="font-size: 0.82em;">
+<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-12-1.png" width="864" class="r-stretch"><div style="font-size: 0.82em;">
 <p>True model: <span class="math inline">\(\log(Y) = 1 + 0.3X + \varepsilon\)</span>, so variance grows exponentially with <span class="math inline">\(X\)</span>. The fan shape disappears after fitting on <span class="math inline">\(\log(Y)\)</span>.</p>
 </div>
 </section>
@@ -673,17 +699,16 @@ Annie Adams
 <section id="remedy-4-before-after" class="slide level2 smaller">
 <h2>Remedy 4: Before &amp; After</h2>
 
-<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-12-1.png" width="864" class="r-stretch"><div style="font-size: 0.82em;">
+<img data-src="lec-08_files/figure-revealjs/unnamed-chunk-13-1.png" width="864" class="r-stretch"><div style="font-size: 0.82em;">
 <p>True model: <span class="math inline">\(\log(Y) = 0.5 + 0.2X + \varepsilon\)</span> with <span class="math inline">\(\varepsilon \sim N(0, 0.8^2)\)</span>. Residuals on the raw scale are strongly right-skewed (left); after the <span class="math inline">\(\log(Y)\)</span> transformation they fall nearly on the diagonal (right).</p>
 </div>
 </section>
-<section id="summary" class="slide level2 smaller">
+<section id="summary" class="slide level2">
 <h2>Summary</h2>
 <ul>
 <li class="fragment"><strong>Diagnostics:</strong> Check all four assumptions (linearity, independence, equal variance, normality) using residual-vs-X, residual-vs-fitted, residual-vs-time, and QQ-plots <strong>before performing inference</strong></li>
-<li class="fragment"><strong>Outliers:</strong> Investigate first — don’t automatically remove; try sensitivity analysis</li>
+<li class="fragment"><strong>Outliers:</strong> Investigate first — don’t automatically remove</li>
 <li class="fragment"><strong>Remedial measures:</strong> Two broad options — develop a more appropriate model, or apply a transformation</li>
-<li class="fragment"><strong>Remedies by assumption:</strong> Transform <span class="math inline">\(X\)</span> (or add polynomial terms) for nonlinearity; use a variance-stabilizing transformation of <span class="math inline">\(Y\)</span> for nonconstant variance; correlated-error models for non-independence</li>
 </ul>
 </section>
 <section id="questions" class="slide level2" data-background-color="#003660">

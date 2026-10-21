@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Your Name">
+<meta name="dcterms.date" content="2026-10-21">
 
-<title>Homework 2 – PSTAT 126</title>
+<title>Homework Assignment 2 – PSTAT 126</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +27,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -74,6 +111,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -236,6 +302,18 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Lab 1</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/lab-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/lab-03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab 3</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -266,22 +344,44 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#data-download-instructions" id="toc-data-download-instructions" class="nav-link active" data-scroll-target="#data-download-instructions">Data Download Instructions</a>
+  <ul class="collapse">
+  <li><a href="#dataset-1-world-happiness-report-problem-1" id="toc-dataset-1-world-happiness-report-problem-1" class="nav-link" data-scroll-target="#dataset-1-world-happiness-report-problem-1">Dataset 1 — World Happiness Report (Problem 1)</a></li>
+  <li><a href="#dataset-2-noaa-global-surface-temperature-anomalies-problem-2" id="toc-dataset-2-noaa-global-surface-temperature-anomalies-problem-2" class="nav-link" data-scroll-target="#dataset-2-noaa-global-surface-temperature-anomalies-problem-2">Dataset 2 — NOAA Global Surface Temperature Anomalies (Problem 2)</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../assignments.html">Assignments</a></li><li class="breadcrumb-item"><a href="../hw/hw-02.html">HW 2</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Homework 2</h1>
+<h1 class="title">Homework Assignment 2</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Your Name </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 21, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -291,21 +391,160 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<p><a href="../downloads/hw2.Rmd" class="btn btn-primary" download="hw2.Rmd">Download hw2.Rmd</a></p>
+<p><strong>Instructions:</strong> Download the <code>.Rmd</code> template using the button above. Complete all answers in the <code>.Rmd</code> file and knit it to a PDF to submit on Gradescope by 10/31 at 11:59 PM. When uploading to Gradescope, you must assign pages to each question. <strong>Not assigning pages to the rubric items will deduct 5 points from your overall score.</strong> For problems that involve a lot of math (e.g., derivations or proofs), you may handwrite your solution, take a photo, and insert the image instead. To insert an image, add a code chunk with the following line and replace <code>"filename.jpg"</code> with your image’s filename, updating the file path if your image is not saved in the same folder as your <code>.Rmd</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"filename.jpg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout-title-container flex-fill">
-Note
+<hr>
+<section id="data-download-instructions" class="level2">
+<h2 class="anchored" data-anchor-id="data-download-instructions">Data Download Instructions</h2>
+<section id="dataset-1-world-happiness-report-problem-1" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-1-world-happiness-report-problem-1">Dataset 1 — World Happiness Report (Problem 1)</h3>
+<ol type="1">
+<li><p>Go to <strong><a href="https://www.worldhappiness.report/data-sharing/">https://www.worldhappiness.report/data-sharing/</a></strong></p></li>
+<li><p>Click “Download data for Figure 2.1” — this will download an Excel file (<code>.xlsx</code>)</p></li>
+<li><p>Place the downloaded file in the <strong>same folder</strong> as this <code>.Rmd</code></p></li>
+<li><p>Update the filename (and file path if necessary) in the code chunk below to match what you downloaded</p></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>happy <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/WHR26_Data_Figure_2.1.xlsx"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only the most recent observation per country</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>happy <span class="ot">&lt;-</span> happy <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Country name</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(Year, <span class="at">n =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">country   =</span> <span class="st">`</span><span class="at">Country name</span><span class="st">`</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">year      =</span> Year,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">happiness =</span> <span class="st">`</span><span class="at">Life evaluation (3-year average)</span><span class="st">`</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">log_gdp   =</span> <span class="st">`</span><span class="at">Explained by: Log GDP per capita</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(happiness, log_gdp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</section>
+<section id="dataset-2-noaa-global-surface-temperature-anomalies-problem-2" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-2-noaa-global-surface-temperature-anomalies-problem-2">Dataset 2 — NOAA Global Surface Temperature Anomalies (Problem 2)</h3>
+<ol type="1">
+<li><p>Go to <strong><a href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series">https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series</a></strong></p></li>
+<li><p>Set the following options:</p>
+<ul>
+<li><strong>Region:</strong> Global</li>
+<li><strong>Surface:</strong> Land and Ocean</li>
+<li><strong>Parameter:</strong> Average Temperature Departure</li>
+<li><strong>Time Scale:</strong> 12-Month</li>
+<li><strong>Filter:</strong> No Filter</li>
+<li><strong>Month:</strong> All Months</li>
+<li><strong>Start Year:</strong> 1960 · <strong>End Year:</strong> 2023</li>
+</ul></li>
+<li><p>Click <strong>“Plot”</strong>, then click <strong>“Download: CSV”</strong></p></li>
+<li><p>Place the downloaded file in the <strong>same folder</strong> as this <code>.Rmd</code></p></li>
+<li><p>Update the filename (and file path if necessary) in the code chunk below to match what you downloaded</p></li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>temp_raw <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/NOAA.csv"</span>, <span class="at">skip =</span> <span class="dv">4</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(temp_raw) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"anomaly"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Center year at 1960 so the intercept has a meaningful interpretation</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> temp_raw <span class="sc">%&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year_c =</span> year <span class="sc">-</span> <span class="dv">1960</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout-body-container callout-body">
-<p>This homework has not been released yet. Check back closer to the due date.</p>
+<hr>
+<p><strong>1.</strong> World Happiness: GDP and Life Satisfaction.</p>
+<p>Using the World Happiness Report data loaded above, we examine whether a country’s wealth (log GDP per capita, <span class="math inline">\(X\)</span>) predicts its average happiness score (Life evaluation (3-year average), <span class="math inline">\(Y\)</span>).</p>
+<p><strong>(a)</strong> (3 pt) Fit a simple linear regression model with <code>happiness</code> as the response and <code>log_gdp</code> as the predictor. Report the estimated regression equation <span class="math inline">\(\hat{Y} = \hat{\beta}_0 + \hat{\beta}_1 X\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p><em>Answer:</em></p>
+<p><strong>(b)</strong> (4 pt) Obtain a 99% confidence interval for <span class="math inline">\(\beta_1\)</span>. Interpret this interval in context — what does <span class="math inline">\(\beta_1\)</span> represent here? Based on the interval alone, would you reject <span class="math inline">\(H_0: \beta_1 = 0\)</span> at <span class="math inline">\(\alpha = 0.01\)</span>? Explain.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(c)</strong> (4 pt) Formally test <span class="math inline">\(H_0: \beta_1 = 0\)</span> versus <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> at significance level <span class="math inline">\(\alpha = 0.01\)</span>. Report the test statistic, p-value, and conclusion in context.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(d)</strong> (4 pt) Obtain a 95% <strong>confidence interval</strong> for the mean happiness score of all countries with <span class="math inline">\(\log\)</span> GDP per capita equal to 9.5. Interpret this interval.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(e)</strong> (4 pt) Obtain a 95% <strong>prediction interval</strong> for the happiness score of a single new country with <span class="math inline">\(\log\)</span> GDP per capita equal to 9.5. Interpret this interval.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(f)</strong> (2 pt) Compare the widths of the intervals from (d) and (e). Which is wider, and why? Explain in terms of the sources of uncertainty captured by each interval.</p>
+<p><em>Answer:</em></p>
+<p><strong>(g)</strong> (4 pt) Construct a scatter plot of <code>log_gdp</code> vs.&nbsp;<code>happiness</code>. Add the fitted regression line and a 95% confidence band for the mean response. Comment on whether the linear model appears appropriate.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(h)</strong> (3 pt) Obtain the ANOVA table for this model. Report SSR, SSE, SST, MSR, MSE, and the F-statistic in a table.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>(i)</strong> (3 pt) What quantities do MSR and MSE each estimate? Under what condition on <span class="math inline">\(\beta_1\)</span> do they estimate the same quantity?</p>
+<p><em>Answer:</em></p>
+<p><strong>(j)</strong> (2 pt) In simple linear regression, what is the mathematical relationship between the F-statistic from the ANOVA table and the t-statistic from the test in (c)? Do they lead to the same conclusion?</p>
+<p><em>Answer:</em></p>
+<p><strong>(k)</strong> (4 pt) Report <span class="math inline">\(R^2\)</span> from the model summary and interpret it in context.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<hr>
+<p><strong>2.</strong> Climate Trends: Year and Global Temperature Anomaly.</p>
+<p>Using the NOAA data loaded above, we model how global temperature anomalies (°C, relative to the 20th-century average) have changed over time. The predictor is the <strong>centered year</strong> <code>year_c</code> <span class="math inline">\(= \text{Year} - 1960\)</span>, and the response is the <strong>annual temperature anomaly</strong> <code>anomaly</code>.</p>
+<p><strong>(a)</strong> (6 pt) Fit a simple linear regression model of <code>anomaly</code> on <code>year_c</code>. Plot the data with the estimated regression line. Does a linear fit appear reasonable? Comment on what the slope <span class="math inline">\(\hat{\beta}_1\)</span> tells you about the rate of warming.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(b)</strong> (4 pt) Obtain the 95% confidence interval for <span class="math inline">\(\beta_1\)</span>. Interpret this interval — what does it say about the rate of global warming per year? Does the interval include 0?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(c)</strong> (6 pt) Test <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_1: \beta_1 \neq 0\)</span> <strong>by hand</strong> — extract <span class="math inline">\(\hat{\beta}_1\)</span> and <span class="math inline">\(\text{SE}(\hat{\beta}_1)\)</span> from the model object, compute the t-statistic and two-sided p-value using R arithmetic (not just <code>summary()</code>), and verify your values match <code>summary()</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(d)</strong> (4 pt) Obtain the 95% confidence interval for <span class="math inline">\(\beta_0\)</span>. What does <span class="math inline">\(\beta_0\)</span> represent in this model? (Recall that <code>year_c = 0</code> corresponds to the year 1960.) Does the interval include 0? What does that tell you?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(e)</strong> (5 pt) Test the one-sided hypothesis <span class="math inline">\(H_0: \beta_1 \leq 0\)</span> versus <span class="math inline">\(H_1: \beta_1 &gt; 0\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>. Compute the t-statistic, find the one-sided critical value, report the p-value, and state your conclusion about whether there is statistical evidence of warming.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(f)</strong> (4 pt) Obtain a 99% confidence interval for the <strong>mean</strong> temperature anomaly in the year 2030 (<code>year_c</code> = 70). Interpret this interval.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(g)</strong> (4 pt) Obtain a 99% <strong>prediction interval</strong> for the temperature anomaly in a single year, 2030. Interpret this interval and note that this involves extrapolation beyond the observed data range.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(h)</strong> (4 pt) Plot the data, the fitted regression line, and <strong>both</strong> the 95% confidence band and the 95% prediction band over the range of observed years. Make the two bands visually distinct (e.g., different colors or linetypes) and include a legend.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

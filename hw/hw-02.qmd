@@ -1,7 +1,228 @@
 ---
-title: "Homework 2"
+title: "Homework Assignment 2"
+author: "Your Name"
+date: today
+format: html
 ---
 
-::: callout-note
-This homework has not been released yet. Check back closer to the due date.
-:::
+```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+knitr::opts_chunk$set(fig.width = 7, fig.height = 5, warning = FALSE, message = FALSE)
+options(digits = 4)
+```
+
+<a href="../downloads/hw2.Rmd" class="btn btn-primary" download="hw2.Rmd">Download hw2.Rmd</a>
+
+**Instructions:** Download the `.Rmd` template using the button above. Complete all answers in the `.Rmd` file and knit it to a PDF to submit on Gradescope by 10/31 at 11:59 PM. When uploading to Gradescope, you must assign pages to each question. **Not assigning pages to the rubric items will deduct 5 points from your overall score.** For problems that involve a lot of math (e.g., derivations or proofs), you may handwrite your solution, take a photo, and insert the image instead. To insert an image, add a code chunk with the following line and replace `"filename.jpg"` with your image's filename, updating the file path if your image is not saved in the same folder as your `.Rmd`:
+
+```{r image-example, eval=FALSE, echo=TRUE}
+knitr::include_graphics("filename.jpg")
+```
+
+---
+
+## Data Download Instructions
+
+### Dataset 1 — World Happiness Report (Problem 1)
+
+1. Go to **[https://www.worldhappiness.report/data-sharing/](https://www.worldhappiness.report/data-sharing/)**
+
+2. Click "Download data for Figure 2.1" — this will download an Excel file (`.xlsx`)
+
+3. Place the downloaded file in the **same folder** as this `.Rmd`
+
+4. Update the filename (and file path if necessary) in the code chunk below to match what you downloaded
+
+```{r load-happiness}
+library(readxl)
+library(tidyverse)
+
+happy <- read_excel("data/WHR26_Data_Figure_2.1.xlsx")
+
+# Keep only the most recent observation per country
+happy <- happy %>%
+  group_by(`Country name`) %>%
+  slice_max(Year, n = 1) %>%
+  ungroup() %>%
+  select(country   = `Country name`,
+         year      = Year,
+         happiness = `Life evaluation (3-year average)`,
+         log_gdp   = `Explained by: Log GDP per capita`) %>%
+  drop_na(happiness, log_gdp)
+```
+
+### Dataset 2 — NOAA Global Surface Temperature Anomalies (Problem 2)
+
+1. Go to **[https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series](https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series)**
+
+2. Set the following options:
+   - **Region:** Global
+   - **Surface:** Land and Ocean
+   - **Parameter:** Average Temperature Departure
+   - **Time Scale:** 12-Month
+   - **Filter:** No Filter
+   - **Month:** All Months
+   - **Start Year:** 1960 · **End Year:** 2023
+
+3. Click **"Plot"**, then click **"Download: CSV"**
+
+4. Place the downloaded file in the **same folder** as this `.Rmd`
+
+5. Update the filename (and file path if necessary) in the code chunk below to match what you downloaded
+
+```{r load-temp}
+temp_raw <- read.csv("data/NOAA.csv", skip = 4)
+names(temp_raw) <- c("year", "anomaly")
+
+# Center year at 1960 so the intercept has a meaningful interpretation
+temp <- temp_raw %>%
+  mutate(year_c = year - 1960)
+```
+
+---
+
+**1.** World Happiness: GDP and Life Satisfaction.
+
+Using the World Happiness Report data loaded above, we examine whether a country's wealth (log GDP per capita, $X$) predicts its average happiness score (Life evaluation (3-year average), $Y$).
+
+**(a)** (3 pt) Fit a simple linear regression model with `happiness` as the response and `log_gdp` as the predictor. Report the estimated regression equation $\hat{Y} = \hat{\beta}_0 + \hat{\beta}_1 X$.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(b)** (4 pt) Obtain a 99% confidence interval for $\beta_1$. Interpret this interval in context — what does $\beta_1$ represent here? Based on the interval alone, would you reject $H_0: \beta_1 = 0$ at $\alpha = 0.01$? Explain.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(c)** (4 pt) Formally test $H_0: \beta_1 = 0$ versus $H_1: \beta_1 \neq 0$ at significance level $\alpha = 0.01$. Report the test statistic, p-value, and conclusion in context.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(d)** (4 pt) Obtain a 95% **confidence interval** for the mean happiness score of all countries with $\log$ GDP per capita equal to 9.5. Interpret this interval.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(e)** (4 pt) Obtain a 95% **prediction interval** for the happiness score of a single new country with $\log$ GDP per capita equal to 9.5. Interpret this interval.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(f)** (2 pt) Compare the widths of the intervals from (d) and (e). Which is wider, and why? Explain in terms of the sources of uncertainty captured by each interval.
+
+*Answer:*
+
+**(g)** (4 pt) Construct a scatter plot of `log_gdp` vs. `happiness`. Add the fitted regression line and a 95% confidence band for the mean response. Comment on whether the linear model appears appropriate.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(h)** (3 pt) Obtain the ANOVA table for this model. Report SSR, SSE, SST, MSR, MSE, and the F-statistic in a table.
+
+```{r}
+# Your code here
+```
+
+**(i)** (3 pt) What quantities do MSR and MSE each estimate? Under what condition on $\beta_1$ do they estimate the same quantity?
+
+*Answer:*
+
+**(j)** (2 pt) In simple linear regression, what is the mathematical relationship between the F-statistic from the ANOVA table and the t-statistic from the test in (c)? Do they lead to the same conclusion?
+
+*Answer:*
+
+**(k)** (4 pt) Report $R^2$ from the model summary and interpret it in context.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+---
+
+**2.** Climate Trends: Year and Global Temperature Anomaly.
+
+Using the NOAA data loaded above, we model how global temperature anomalies (°C, relative to the 20th-century average) have changed over time. The predictor is the **centered year** `year_c` $= \text{Year} - 1960$, and the response is the **annual temperature anomaly** `anomaly`.
+
+**(a)** (6 pt) Fit a simple linear regression model of `anomaly` on `year_c`. Plot the data with the estimated regression line. Does a linear fit appear reasonable? Comment on what the slope $\hat{\beta}_1$ tells you about the rate of warming.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(b)** (4 pt) Obtain the 95% confidence interval for $\beta_1$. Interpret this interval — what does it say about the rate of global warming per year? Does the interval include 0?
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(c)** (6 pt) Test $H_0: \beta_1 = 0$ vs. $H_1: \beta_1 \neq 0$ **by hand** — extract $\hat{\beta}_1$ and $\text{SE}(\hat{\beta}_1)$ from the model object, compute the t-statistic and two-sided p-value using R arithmetic (not just `summary()`), and verify your values match `summary()`.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(d)** (4 pt) Obtain the 95% confidence interval for $\beta_0$. What does $\beta_0$ represent in this model? (Recall that `year_c = 0` corresponds to the year 1960.) Does the interval include 0? What does that tell you?
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(e)** (5 pt) Test the one-sided hypothesis $H_0: \beta_1 \leq 0$ versus $H_1: \beta_1 > 0$ at $\alpha = 0.05$. Compute the t-statistic, find the one-sided critical value, report the p-value, and state your conclusion about whether there is statistical evidence of warming.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(f)** (4 pt) Obtain a 99% confidence interval for the **mean** temperature anomaly in the year 2030 (`year_c` = 70). Interpret this interval.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(g)** (4 pt) Obtain a 99% **prediction interval** for the temperature anomaly in a single year, 2030. Interpret this interval and note that this involves extrapolation beyond the observed data range.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(h)** (4 pt) Plot the data, the fitted regression line, and **both** the 95% confidence band and the 95% prediction band over the range of observed years. Make the two bands visually distinct (e.g., different colors or linetypes) and include a legend.
+
+```{r}
+# Your code here
+```

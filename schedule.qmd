@@ -95,13 +95,19 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
     </tr>
     <tr>
       <td class="date-cell">Wed, Oct 19</td>
-      <td class="topic-cell">Model Diagnostics
+      <td class="topic-cell">Model Diagnostics Overview
         <span class="sub-topic"> </span></td>
-      <td><a class="badge-slide" href="#">Slides</a></td>
+      <td><a class="badge-slide" href="slides/lec-08.html">Slides</a></td>
       <td></td>
       <td></td>
     </tr>
-    <tr>
+
+    <tr class="week-row"><td colspan="5">Week 5 — Transformations </td></tr>
+    <tr class="due-row">
+      <td class="date-cell">Sat, Oct 31</td>
+      <td colspan="3"></td>
+      <td><a class="badge-optional" href="hw/hw-02.html">Homework 2</a></td>
+    </tr>
 
   <!--
     <tr class="week-row"><td colspan="5">Week 4 — Correlation, R² &amp; Diagnostics</td></tr>

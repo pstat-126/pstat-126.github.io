@@ -529,7 +529,7 @@
     "href": "schedule.html",
     "title": "Course Schedule",
     "section": "",
-    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n  \n    \n      Date\n      Topic\n      Materials\n      Lab\n      Due\n    \n  \n  \n\n    Week 1 — Introduction & Simple Linear Regression\n    \n      Mon, Sep 28\n      Welcome to PSTAT 126!\n        Course Information & Overview\n        The Simple Linear Regression Model\n        Linear Regression Intro\n      SlidesSlides\n      \n      \n    \n    \n      Wed, Sep 30\n      Least Squares Estimation\n        Deriving OLS estimators\n      Slides\n      \n      \n    \n    \n      Sat, Oct 3\n      \n      Late Pass Q (optional)\n    \n\n   \n    Week 2 — Properties of OLS\n    \n      Mon, Oct 5\n      Properties of OLS Estimators\n      Slides\n      Lab 1\n      \n    \n    \n      Wed, Oct 7\n      Residuals and Estimating Error Variance\n      Slides\n      \n      \n\n\n    Week 3 — Inference in Regression\n    \n      Mon, Oct 12\n      Inference in Regression\n        Maximum Likelihood Estimation\n      Slides\n      Lab 2\n      \n    \n    \n      Wed, Oct 14\n      Inference in Regression\n        Hypothesis tests and confidence intervals for OLS estimates\n      Slides\n      \n    \n       \n      Sat, Oct 17\n      \n      Homework 1\n    \n    Week 4 — Inference in Regression + Model Diagnostics  \n      Mon, Oct 19\n      Prediction Intervals + Model Fit\n        PI for a new observation vs. CI for mean response; SST, SSR, SSE\n      Slides\n      Lab 3\n      \n    \n    \n      Wed, Oct 19\n      Model Diagnostics\n         \n      Slides",
+    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n  \n    \n      Date\n      Topic\n      Materials\n      Lab\n      Due\n    \n  \n  \n\n    Week 1 — Introduction & Simple Linear Regression\n    \n      Mon, Sep 28\n      Welcome to PSTAT 126!\n        Course Information & Overview\n        The Simple Linear Regression Model\n        Linear Regression Intro\n      SlidesSlides\n      \n      \n    \n    \n      Wed, Sep 30\n      Least Squares Estimation\n        Deriving OLS estimators\n      Slides\n      \n      \n    \n    \n      Sat, Oct 3\n      \n      Late Pass Q (optional)\n    \n\n   \n    Week 2 — Properties of OLS\n    \n      Mon, Oct 5\n      Properties of OLS Estimators\n      Slides\n      Lab 1\n      \n    \n    \n      Wed, Oct 7\n      Residuals and Estimating Error Variance\n      Slides\n      \n      \n\n\n    Week 3 — Inference in Regression\n    \n      Mon, Oct 12\n      Inference in Regression\n        Maximum Likelihood Estimation\n      Slides\n      Lab 2\n      \n    \n    \n      Wed, Oct 14\n      Inference in Regression\n        Hypothesis tests and confidence intervals for OLS estimates\n      Slides\n      \n    \n       \n      Sat, Oct 17\n      \n      Homework 1\n    \n    Week 4 — Inference in Regression + Model Diagnostics  \n      Mon, Oct 19\n      Prediction Intervals + Model Fit\n        PI for a new observation vs. CI for mean response; SST, SSR, SSE\n      Slides\n      Lab 3\n      \n    \n    \n      Wed, Oct 19\n      Model Diagnostics Overview\n         \n      Slides\n      \n      \n    \n\n    Week 5 — Transformations \n    \n      Sat, Oct 31\n      \n      Homework 2",
     "crumbs": [
       "Syllabus",
       "Lecture Materials"
@@ -916,9 +916,9 @@
   {
     "objectID": "hw/hw-02.html",
     "href": "hw/hw-02.html",
-    "title": "Homework 2",
+    "title": "Homework Assignment 2",
     "section": "",
-    "text": "Note\n\n\n\nThis homework has not been released yet. Check back closer to the due date.",
+    "text": "Download hw2.Rmd\nInstructions: Download the .Rmd template using the button above. Complete all answers in the .Rmd file and knit it to a PDF to submit on Gradescope by 10/31 at 11:59 PM. When uploading to Gradescope, you must assign pages to each question. Not assigning pages to the rubric items will deduct 5 points from your overall score. For problems that involve a lot of math (e.g., derivations or proofs), you may handwrite your solution, take a photo, and insert the image instead. To insert an image, add a code chunk with the following line and replace \"filename.jpg\" with your image’s filename, updating the file path if your image is not saved in the same folder as your .Rmd:\nknitr::include_graphics(\"filename.jpg\")",
     "crumbs": [
       "Syllabus",
       "Assignments",
@@ -2859,7 +2859,7 @@
     "href": "slides/lec-08.html#summary",
     "title": "Lecture 8: Model Diagnostics and Remedial Measures",
     "section": "Summary",
-    "text": "Summary\n\nDiagnostics: Check all four assumptions (linearity, independence, equal variance, normality) using residual-vs-X, residual-vs-fitted, residual-vs-time, and QQ-plots before performing inference\nOutliers: Investigate first — don’t automatically remove; try sensitivity analysis\nRemedial measures: Two broad options — develop a more appropriate model, or apply a transformation\nRemedies by assumption: Transform \\(X\\) (or add polynomial terms) for nonlinearity; use a variance-stabilizing transformation of \\(Y\\) for nonconstant variance; correlated-error models for non-independence"
+    "text": "Summary\n\nDiagnostics: Check all four assumptions (linearity, independence, equal variance, normality) using residual-vs-X, residual-vs-fitted, residual-vs-time, and QQ-plots before performing inference\nOutliers: Investigate first — don’t automatically remove\nRemedial measures: Two broad options — develop a more appropriate model, or apply a transformation"
   },
   {
     "objectID": "slides/lec-08.html#questions",
@@ -2935,8 +2935,8 @@
     "objectID": "slides/lec-09.html#learning-objectives",
     "href": "slides/lec-09.html#learning-objectives",
     "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
-    "section": "Learning Objectives",
-    "text": "Learning Objectives\nBy the end of today you will be able to:\n\n\nApply the F test for lack of fit using the SSPE/SSLF decomposition to formally test whether a linear model is adequate\nExplain the extra sum of squares principle and how it underlies the lack of fit F test\nSelect an appropriate transformation of \\(X\\) or \\(Y\\) based on residual plot patterns\nUse the Box-Cox method to data-adaptively choose a power transformation of \\(Y\\)\nWalk through a complete diagnostics-and-remediation workflow on real data, including outlier handling, transformation, and re-checking diagnostics\nBack-transform predictions to the original scale after fitting a model on transformed \\(Y\\)"
+    "section": "",
+    "text": "By the end of today you will be able to:\n\n\nApply the F test for lack of fit using the SSPE/SSLF decomposition to formally test whether a linear model is adequate\nExplain the extra sum of squares principle and how it underlies the lack of fit F test\nSelect an appropriate transformation of \\(X\\) or \\(Y\\) based on residual plot patterns\nUse the Box-Cox method to data-adaptively choose a power transformation of \\(Y\\)\nWalk through a complete diagnostics-and-remediation workflow on real data, including outlier handling, transformation, and re-checking diagnostics\nBack-transform predictions to the original scale after fitting a model on transformed \\(Y\\)"
   },
   {
     "objectID": "slides/lec-09.html#f-test-for-lack-of-fit",
@@ -3048,7 +3048,7 @@
     "href": "slides/lec-09.html#box-cox-in-r",
     "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
     "section": "Box-Cox in R",
-    "text": "Box-Cox in R\n\nlibrary(MASS)\nfit_faithful2 &lt;- lm(eruptions ~ waiting, data = faithful)\nboxcox(fit_faithful2, lambda = seq(-1, 2, len = 100))\n\n\n\n\nThe peak is near \\(\\hat\\lambda \\approx 1\\), and the 95% confidence region comfortably includes \\(\\lambda = 1\\) (no transformation). This suggests the original scale is adequate for the Old Faithful data — consistent with the mostly clean residual plots we saw earlier."
+    "text": "Box-Cox in R\n\nlibrary(MASS)\nfit_faithful2 &lt;- lm(eruptions ~ waiting, data = faithful)\nboxcox(fit_faithful2, lambda = seq(-1, 2, len = 100))\n\n\n\n\n\n\n\n\n\n\nThe peak is near \\(\\hat\\lambda \\approx 1\\), and the 95% confidence region comfortably includes \\(\\lambda = 1\\) (no transformation). This suggests the original scale is adequate for the Old Faithful data — consistent with the mostly clean residual plots we saw earlier."
   },
   {
     "objectID": "slides/lec-09.html#case-example-plutonium-measurement",
@@ -3069,7 +3069,7 @@
     "href": "slides/lec-09.html#exploratory-plots",
     "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
     "section": "Exploratory Plots",
-    "text": "Exploratory Plots\n\npar(mfrow = c(1, 2), mar = c(4, 4, 3, 1))\nplot(plutonium$x, plutonium$y, xlab = \"pCi/g\", ylab = \"# per second\",\n     main = \"Scatter Plot\", pch = 16, col = \"#003660\")\ntext(0.150, 20, \"24?\", pos = 4, cex = 0.7, col = \"red\")\n\n# Lowess smoothed curve\nplot(plutonium$x, plutonium$y, xlab = \"pCi/g\", ylab = \"# per second\",\n     main = \"Lowess Smoothed Curve\", pch = 16, col = \"#003660\")\nlines(lowess(plutonium$x, plutonium$y), col = \"red\", lwd = 2)\n\n\n\n\nCase 24 (observation 1 in 1-indexed format shown) was caused by an unusual lab condition and will be discarded before fitting."
+    "text": "Exploratory Plots\n\npar(mfrow = c(1, 2), mar = c(4, 4, 3, 1))\nplot(plutonium$x, plutonium$y, xlab = \"pCi/g\", ylab = \"# per second\",\n     main = \"Scatter Plot\", pch = 16, col = \"#003660\")\ntext(0.150, 20, \"24?\", pos = 4, cex = 0.7, col = \"red\")\n\n# Lowess smoothed curve\nplot(plutonium$x, plutonium$y, xlab = \"pCi/g\", ylab = \"# per second\",\n     main = \"Lowess Smoothed Curve\", pch = 16, col = \"#003660\")\nlines(lowess(plutonium$x, plutonium$y), col = \"red\", lwd = 2)\n\n\n\n\n\n\n\n\n\n\nCase 24 (observation 1 in 1-indexed format shown) was caused by an unusual lab condition and will be discarded before fitting."
   },
   {
     "objectID": "slides/lec-09.html#fit-the-linear-model-fit1",
@@ -3083,14 +3083,14 @@
     "href": "slides/lec-09.html#diagnostic-plots-for-fit1",
     "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
     "section": "Diagnostic Plots for fit1",
-    "text": "Diagnostic Plots for fit1\n\npar(mfrow = c(1, 2), mar = c(4, 4, 3, 1))\nplot(fitted(fit1), residuals(fit1), xlab = \"Fitted\", ylab = \"Residuals\",\n     main = \"Residual Plot\", pch = 16, col = \"#003660\")\nabline(h = 0, lty = 2, col = \"gray50\")\nqqnorm(residuals(fit1), main = \"Normal Q-Q Plot\", pch = 16, col = \"#003660\")\nqqline(residuals(fit1), col = \"red\")\n\n\n\nThe residual plot shows a clear fan shape — variance increases with fitted value. This is a nonconstant variance violation. The Box-Cox method can help us choose a stabilizing transformation."
+    "text": "Diagnostic Plots for fit1\n\npar(mfrow = c(1, 2), mar = c(4, 4, 3, 1))\nplot(fitted(fit1), residuals(fit1), xlab = \"Fitted\", ylab = \"Residuals\",\n     main = \"Residual Plot\", pch = 16, col = \"#003660\")\nabline(h = 0, lty = 2, col = \"gray50\")\nqqnorm(residuals(fit1), main = \"Normal Q-Q Plot\", pch = 16, col = \"#003660\")\nqqline(residuals(fit1), col = \"red\")\n\n\n\n\n\n\n\n\n\nThe residual plot shows a clear fan shape — variance increases with fitted value. This is a nonconstant variance violation. The Box-Cox method can help us choose a stabilizing transformation."
   },
   {
     "objectID": "slides/lec-09.html#box-cox-transformation-for-plutonium-data",
     "href": "slides/lec-09.html#box-cox-transformation-for-plutonium-data",
     "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
     "section": "Box-Cox Transformation for Plutonium Data",
-    "text": "Box-Cox Transformation for Plutonium Data\n\nlibrary(MASS)\nboxcox(formula(fit1), lambda = seq(0, 1, len = 20))\n\n\n\nThe Box-Cox plot peaks near \\(\\hat\\lambda \\approx 0.5\\), suggesting a square root transformation: \\(Y' = \\sqrt{Y}\\)."
+    "text": "Box-Cox Transformation for Plutonium Data\n\nlibrary(MASS)\nboxcox(formula(fit1), lambda = seq(0, 1, len = 20))\n\n\n\n\n\n\n\n\n\nThe Box-Cox plot peaks near \\(\\hat\\lambda \\approx 0.5\\), suggesting a square root transformation: \\(Y' = \\sqrt{Y}\\)."
   },
   {
     "objectID": "slides/lec-09.html#fit-the-transformed-model-fit2",
@@ -3104,7 +3104,7 @@
     "href": "slides/lec-09.html#diagnostic-plots-for-fit2",
     "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
     "section": "Diagnostic Plots for fit2",
-    "text": "Diagnostic Plots for fit2\n\npar(mfrow = c(1, 2), mar = c(4, 4, 3, 1))\nplot(fitted(fit2), residuals(fit2), xlab = \"Fitted\", ylab = \"Residuals\",\n     main = \"Residual Plot (sqrt Y)\", pch = 16, col = \"#003660\")\nabline(h = 0, lty = 2, col = \"gray50\")\nqqnorm(residuals(fit2), main = \"Normal Q-Q Plot\", pch = 16, col = \"#003660\")\nqqline(residuals(fit2), col = \"red\")\n\n\n\nThe fan shape is largely gone, but a slight nonlinear pattern remains. This suggests the relationship between \\(X\\) and \\(\\sqrt{Y}\\) may not be perfectly linear — a further transformation of \\(X\\) or a polynomial term could be explored in practice."
+    "text": "Diagnostic Plots for fit2\n\npar(mfrow = c(1, 2), mar = c(4, 4, 3, 1))\nplot(fitted(fit2), residuals(fit2), xlab = \"Fitted\", ylab = \"Residuals\",\n     main = \"Residual Plot (sqrt Y)\", pch = 16, col = \"#003660\")\nabline(h = 0, lty = 2, col = \"gray50\")\nqqnorm(residuals(fit2), main = \"Normal Q-Q Plot\", pch = 16, col = \"#003660\")\nqqline(residuals(fit2), col = \"red\")\n\n\n\n\n\n\n\n\n\nThe fan shape is largely gone, but a slight nonlinear pattern remains. This suggests the relationship between \\(X\\) and \\(\\sqrt{Y}\\) may not be perfectly linear — a further transformation of \\(X\\) or a polynomial term could be explored in practice."
   },
   {
     "objectID": "slides/lec-09.html#comparing-fit1-and-fit2",
@@ -3132,7 +3132,7 @@
     "href": "slides/lec-09.html#summary",
     "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
     "section": "Summary",
-    "text": "Summary\n\nF test for lack of fit: When replicates exist, formally test \\(H_0:\\) linearity holds using \\(F^* = MSLF/MSPE \\sim F_{c-2,\\; n-c}\\); the key decomposition is \\(SSE(R) = SSPE + SSLF\\)\nTransformations of \\(X\\): Fix nonlinearity (e.g., \\(\\log X\\), \\(\\sqrt{X}\\), \\(X^2\\)) while leaving error variance roughly unchanged\nTransformations of \\(Y\\): Fix nonconstant variance and nonnormality simultaneously (e.g., \\(\\sqrt{Y}\\), \\(\\log Y\\)); these are variance-stabilizing transformations\nBox-Cox: Estimates the optimal power \\(\\lambda\\) for \\(Y\\) data-adaptively; round \\(\\hat\\lambda\\) to a nearby interpretable value (e.g., \\(0.5 \\to \\sqrt{Y}\\), \\(0 \\to \\log Y\\))\nAfter transforming: Always re-check diagnostics on the transformed model; back-transform predictions to the original scale\nFull workflow: Fit model \\(\\to\\) check residual plots \\(\\to\\) identify violations \\(\\to\\) apply remedy \\(\\to\\) re-check \\(\\to\\) report"
+    "text": "Summary\n\n\nF test for lack of fit: When replicates exist, formally test \\(H_0:\\) linearity holds using \\(F^* = MSLF/MSPE \\sim F_{c-2,\\; n-c}\\); the key decomposition is \\(SSE(R) = SSPE + SSLF\\)\nTransformations of \\(X\\): Fix nonlinearity (e.g., \\(\\log X\\), \\(\\sqrt{X}\\), \\(X^2\\)) while leaving error variance roughly unchanged\nTransformations of \\(Y\\): Fix nonconstant variance and nonnormality simultaneously (e.g., \\(\\sqrt{Y}\\), \\(\\log Y\\)); these are variance-stabilizing transformations\nBox-Cox: Estimates the optimal power \\(\\lambda\\) for \\(Y\\) data-adaptively; round \\(\\hat\\lambda\\) to a nearby interpretable value (e.g., \\(0.5 \\to \\sqrt{Y}\\), \\(0 \\to \\log Y\\))\nAfter transforming: Always re-check diagnostics on the transformed model; back-transform predictions to the original scale\nFull workflow: Fit model \\(\\to\\) check residual plots \\(\\to\\) identify violations \\(\\to\\) apply remedy \\(\\to\\) re-check \\(\\to\\) report"
   },
   {
     "objectID": "slides/lec-09.html#questions",
@@ -3160,7 +3160,7 @@
     "href": "slides/lec-08.html#remedy-3-nonconstant-variance",
     "title": "Lecture 8: Model Diagnostics and Remedial Measures",
     "section": "Remedy 3: Nonconstant Variance",
-    "text": "Remedy 3: Nonconstant Variance\nViolated assumption: Equal variance — residuals vs. fitted \\(\\widehat{Y}\\) show a fan shape\n\nVariance-stabilizing transformation of \\(Y\\) — if variance grows with the mean, a transformation can stabilize it:\n\n\n\n\n\n\n\nPattern\nTry\n\n\n\n\n\\(\\mathrm{Var}(Y) \\propto \\mu\\) (counts)\n\\(Y' = \\sqrt{Y}\\)\n\n\n\\(\\mathrm{Var}(Y) \\propto \\mu^2\\) (proportional spread)\n\\(Y' = \\log(Y)\\)\n\n\n\\(\\mathrm{Var}(Y) \\propto \\mu^3\\)\n\\(Y' = 1/\\sqrt{Y}\\)\n\n\n\\(\\mathrm{Var}(Y) \\propto \\mu^4\\)\n\\(Y' = 1/Y\\)\n\n\n\nThe Box-Cox method (Lecture 9) estimates the best power transformation data-adaptively."
+    "text": "Remedy 3: Nonconstant Variance\nViolated assumption: Equal variance — residuals vs. fitted \\(\\widehat{Y}\\) show a fan shape\n\nVariance-stabilizing transformation of \\(Y\\) — if variance grows with the mean, a transformation can stabilize it:\n\n\n\nPattern\nTry\n\n\n\n\nMild\n\\(Y' = \\sqrt{Y}\\)\n\n\nModerate\n\\(Y' = \\log(Y)\\)\n\n\nStrong\n\\(Y' = 1/\\sqrt{Y}\\)\n\n\nVery strong\n\\(Y' = 1/Y\\)\n\n\n\nThe Box-Cox method (Lecture 9) estimates the best power transformation data-adaptively."
   },
   {
     "objectID": "slides/lec-08.html#remedy-4-non-normality",
@@ -3196,5 +3196,80 @@
     "title": "Lecture 8: Model Diagnostics and Remedial Measures",
     "section": "Remedy 4: Before & After",
     "text": "Remedy 4: Before & After\n\n\nTrue model: \\(\\log(Y) = 0.5 + 0.2X + \\varepsilon\\) with \\(\\varepsilon \\sim N(0, 0.8^2)\\). Residuals on the raw scale are strongly right-skewed (left); after the \\(\\log(Y)\\) transformation they fall nearly on the diagonal (right)."
+  },
+  {
+    "objectID": "slides/lec-08.html#course-reminders",
+    "href": "slides/lec-08.html#course-reminders",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "Course Reminders",
+    "text": "Course Reminders\n\nQuiz 2 on Monday\nHW 2 due Saturday, October 31st at 11:59 PM"
+  },
+  {
+    "objectID": "slides/lec-08.html#plot-1-what-produces-a-curved-pattern",
+    "href": "slides/lec-08.html#plot-1-what-produces-a-curved-pattern",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "Plot 1: What Produces a Curved Pattern?",
+    "text": "Plot 1: What Produces a Curved Pattern?\n\nA curved residual pattern arises when the true relationship between \\(X\\) and \\(Y\\) is nonlinear but you fit a straight line.\n\n\n\n\n\n\n\n\n\n\n\n\nThe scatter plot (left) shows a concave-up (U-shaped) curve — the red line underfits in the middle and at the extremes. This mismatch produces the bowl-shaped residual pattern (right)."
+  },
+  {
+    "objectID": "slides/lec-08.html#plot-2-what-produces-correlated-errors",
+    "href": "slides/lec-08.html#plot-2-what-produces-correlated-errors",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "Plot 2: What Produces Correlated Errors?",
+    "text": "Plot 2: What Produces Correlated Errors?\nA drift pattern in residuals arises when observations collected over time influence each other — nearby values are more alike than distant ones.\n\n\n\n\n\n\n\n\n\n\n\n\nThe raw Y values (left) wander slowly over time rather than fluctuating randomly around the fit (red line). That drift survives into the residuals (right) as the correlated-errors violation."
+  },
+  {
+    "objectID": "slides/lec-08.html#plot-3-what-produces-a-fan-shape",
+    "href": "slides/lec-08.html#plot-3-what-produces-a-fan-shape",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "Plot 3: What Produces a Fan Shape?",
+    "text": "Plot 3: What Produces a Fan Shape?\nA fan shape in residuals arises when the spread of Y grows with X — larger X values have more variable responses.\n\n\n\n\n\n\n\n\n\n\n\n\nThe scatter plot (left) shows tightly clustered points at small X that fan outward as X increases. The red line fits well on average, but the growing spread carries into the residuals (right) as the fan-shape violation."
+  },
+  {
+    "objectID": "slides/lec-08.html#plot-4-what-produces-non-normal-residuals",
+    "href": "slides/lec-08.html#plot-4-what-produces-non-normal-residuals",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "Plot 4: What Produces Non-Normal Residuals?",
+    "text": "Plot 4: What Produces Non-Normal Residuals?\n\nA QQ-plot violation arises when the errors themselves have a skewed or heavy-tailed distribution rather than a bell curve.\n\n\n\n\n\n\n\n\n\n\n\n\nThe histogram (left) shows residuals bunched near zero with a long right tail — far from the symmetric bell curve (red). That asymmetry appears in the QQ-plot (right) as the U-shaped departure from the diagonal."
+  },
+  {
+    "objectID": "slides/lec-08.html#old-faithful-what-do-we-do",
+    "href": "slides/lec-08.html#old-faithful-what-do-we-do",
+    "title": "Lecture 8: Model Diagnostics and Remedial Measures",
+    "section": "Old Faithful: What Do We Do?",
+    "text": "Old Faithful: What Do We Do?\n\nIs this a serious violation? Not really — no strong curve, no fan shape, no dramatic QQ departure. The bimodal clustering is a feature of the data (two eruption types), not a model failure per se.\n\nVerdict: the linear model is usable here, especially for prediction. The slope estimate and inference are not badly compromised. But we should be honest about what the model misses.\n\n\nWhat could we do better?\n\n\n\n\n\n\n\n\nOption\nIdea\nWhen to use it\n\n\n\n\nKeep the linear model\nAcknowledge the mild bimodality; use it for rough prediction\nSufficient for the research question\n\n\nAdd a group indicator\nCreate a short/long eruption category and include it as a predictor\nWhen the two groups are substantively meaningful\n\n\nFit separate lines\nOne regression per group (short vs. long eruptions)\nWhen the relationship differs between groups\n\n\nMixture model\nModel the two-group structure explicitly\nMore advanced — beyond this course\n\n\n\n\n\nKey takeaway: Diagnostic plots don’t always demand action — they demand judgment. Ask: how bad is it, and does it affect the conclusions I care about?"
+  },
+  {
+    "objectID": "slides/lec-09.html",
+    "href": "slides/lec-09.html",
+    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "section": "",
+    "text": "By the end of today you will be able to:\n\n\nApply the F test for lack of fit using the SSPE/SSLF decomposition to formally test whether a linear model is adequate\nExplain the extra sum of squares principle and how it underlies the lack of fit F test\nSelect an appropriate transformation of \\(X\\) or \\(Y\\) based on residual plot patterns\nUse the Box-Cox method to data-adaptively choose a power transformation of \\(Y\\)\nWalk through a complete diagnostics-and-remediation workflow on real data, including outlier handling, transformation, and re-checking diagnostics\nBack-transform predictions to the original scale after fitting a model on transformed \\(Y\\)"
+  },
+  {
+    "objectID": "slides/lec-09.html#practice-reading-residual-plots",
+    "href": "slides/lec-09.html#practice-reading-residual-plots",
+    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "section": "Practice: Reading Residual Plots",
+    "text": "Practice: Reading Residual Plots\n\nBelow are three residual-vs-fitted plots. For each, state which assumption is violated (if any).\n\n\n\n\n\n\n\n\n\n(a) Which plot suggests a violation of the equal-variance assumption? What transformation might help?\n(b) Which plot suggests a violation of the linearity assumption? What would you try?\n(c) Which plot looks ideal?"
+  },
+  {
+    "objectID": "slides/lec-09.html#practice-reading-residual-plots-solution",
+    "href": "slides/lec-09.html#practice-reading-residual-plots-solution",
+    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "section": "Practice: Reading Residual Plots — Solution",
+    "text": "Practice: Reading Residual Plots — Solution\n(a) Plot A — the spread of residuals increases with the fitted value (fan shape), violating equal variance (Assumption 3).\n\n(b) Plot B — a curved trend remains in the residuals after fitting a line, violating linearity (Assumption 1).\n\n\n(c) Plot C — random scatter around zero with no trend and roughly constant spread. This is the ideal pattern — no obvious violations."
+  },
+  {
+    "objectID": "hw/hw-02.html#data-download-instructions",
+    "href": "hw/hw-02.html#data-download-instructions",
+    "title": "Homework Assignment 2",
+    "section": "Data Download Instructions",
+    "text": "Data Download Instructions\n\nDataset 1 — World Happiness Report (Problem 1)\n\nGo to https://www.worldhappiness.report/data-sharing/\nClick “Download data for Figure 2.1” — this will download an Excel file (.xlsx)\nPlace the downloaded file in the same folder as this .Rmd\nUpdate the filename (and file path if necessary) in the code chunk below to match what you downloaded\n\n\nlibrary(readxl)\nlibrary(tidyverse)\n\nhappy &lt;- read_excel(\"data/WHR26_Data_Figure_2.1.xlsx\")\n\n# Keep only the most recent observation per country\nhappy &lt;- happy %&gt;%\n  group_by(`Country name`) %&gt;%\n  slice_max(Year, n = 1) %&gt;%\n  ungroup() %&gt;%\n  select(country   = `Country name`,\n         year      = Year,\n         happiness = `Life evaluation (3-year average)`,\n         log_gdp   = `Explained by: Log GDP per capita`) %&gt;%\n  drop_na(happiness, log_gdp)\n\n\n\nDataset 2 — NOAA Global Surface Temperature Anomalies (Problem 2)\n\nGo to https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series\nSet the following options:\n\nRegion: Global\nSurface: Land and Ocean\nParameter: Average Temperature Departure\nTime Scale: 12-Month\nFilter: No Filter\nMonth: All Months\nStart Year: 1960 · End Year: 2023\n\nClick “Plot”, then click “Download: CSV”\nPlace the downloaded file in the same folder as this .Rmd\nUpdate the filename (and file path if necessary) in the code chunk below to match what you downloaded\n\n\ntemp_raw &lt;- read.csv(\"data/NOAA.csv\", skip = 4)\nnames(temp_raw) &lt;- c(\"year\", \"anomaly\")\n\n# Center year at 1960 so the intercept has a meaningful interpretation\ntemp &lt;- temp_raw %&gt;%\n  mutate(year_c = year - 1960)\n\n\n1. World Happiness: GDP and Life Satisfaction.\nUsing the World Happiness Report data loaded above, we examine whether a country’s wealth (log GDP per capita, \\(X\\)) predicts its average happiness score (Life evaluation (3-year average), \\(Y\\)).\n(a) (3 pt) Fit a simple linear regression model with happiness as the response and log_gdp as the predictor. Report the estimated regression equation \\(\\hat{Y} = \\hat{\\beta}_0 + \\hat{\\beta}_1 X\\).\n\n# Your code here\n\nAnswer:\n(b) (4 pt) Obtain a 99% confidence interval for \\(\\beta_1\\). Interpret this interval in context — what does \\(\\beta_1\\) represent here? Based on the interval alone, would you reject \\(H_0: \\beta_1 = 0\\) at \\(\\alpha = 0.01\\)? Explain.\n\n# Your code here\n\nAnswer:\n(c) (4 pt) Formally test \\(H_0: \\beta_1 = 0\\) versus \\(H_1: \\beta_1 \\neq 0\\) at significance level \\(\\alpha = 0.01\\). Report the test statistic, p-value, and conclusion in context.\n\n# Your code here\n\nAnswer:\n(d) (4 pt) Obtain a 95% confidence interval for the mean happiness score of all countries with \\(\\log\\) GDP per capita equal to 9.5. Interpret this interval.\n\n# Your code here\n\nAnswer:\n(e) (4 pt) Obtain a 95% prediction interval for the happiness score of a single new country with \\(\\log\\) GDP per capita equal to 9.5. Interpret this interval.\n\n# Your code here\n\nAnswer:\n(f) (2 pt) Compare the widths of the intervals from (d) and (e). Which is wider, and why? Explain in terms of the sources of uncertainty captured by each interval.\nAnswer:\n(g) (4 pt) Construct a scatter plot of log_gdp vs. happiness. Add the fitted regression line and a 95% confidence band for the mean response. Comment on whether the linear model appears appropriate.\n\n# Your code here\n\nAnswer:\n(h) (3 pt) Obtain the ANOVA table for this model. Report SSR, SSE, SST, MSR, MSE, and the F-statistic in a table.\n\n# Your code here\n\n(i) (3 pt) What quantities do MSR and MSE each estimate? Under what condition on \\(\\beta_1\\) do they estimate the same quantity?\nAnswer:\n(j) (2 pt) In simple linear regression, what is the mathematical relationship between the F-statistic from the ANOVA table and the t-statistic from the test in (c)? Do they lead to the same conclusion?\nAnswer:\n(k) (4 pt) Report \\(R^2\\) from the model summary and interpret it in context.\n\n# Your code here\n\nAnswer:\n\n2. Climate Trends: Year and Global Temperature Anomaly.\nUsing the NOAA data loaded above, we model how global temperature anomalies (°C, relative to the 20th-century average) have changed over time. The predictor is the centered year year_c \\(= \\text{Year} - 1960\\), and the response is the annual temperature anomaly anomaly.\n(a) (6 pt) Fit a simple linear regression model of anomaly on year_c. Plot the data with the estimated regression line. Does a linear fit appear reasonable? Comment on what the slope \\(\\hat{\\beta}_1\\) tells you about the rate of warming.\n\n# Your code here\n\nAnswer:\n(b) (4 pt) Obtain the 95% confidence interval for \\(\\beta_1\\). Interpret this interval — what does it say about the rate of global warming per year? Does the interval include 0?\n\n# Your code here\n\nAnswer:\n(c) (6 pt) Test \\(H_0: \\beta_1 = 0\\) vs. \\(H_1: \\beta_1 \\neq 0\\) by hand — extract \\(\\hat{\\beta}_1\\) and \\(\\text{SE}(\\hat{\\beta}_1)\\) from the model object, compute the t-statistic and two-sided p-value using R arithmetic (not just summary()), and verify your values match summary().\n\n# Your code here\n\nAnswer:\n(d) (4 pt) Obtain the 95% confidence interval for \\(\\beta_0\\). What does \\(\\beta_0\\) represent in this model? (Recall that year_c = 0 corresponds to the year 1960.) Does the interval include 0? What does that tell you?\n\n# Your code here\n\nAnswer:\n(e) (5 pt) Test the one-sided hypothesis \\(H_0: \\beta_1 \\leq 0\\) versus \\(H_1: \\beta_1 &gt; 0\\) at \\(\\alpha = 0.05\\). Compute the t-statistic, find the one-sided critical value, report the p-value, and state your conclusion about whether there is statistical evidence of warming.\n\n# Your code here\n\nAnswer:\n(f) (4 pt) Obtain a 99% confidence interval for the mean temperature anomaly in the year 2030 (year_c = 70). Interpret this interval.\n\n# Your code here\n\nAnswer:\n(g) (4 pt) Obtain a 99% prediction interval for the temperature anomaly in a single year, 2030. Interpret this interval and note that this involves extrapolation beyond the observed data range.\n\n# Your code here\n\nAnswer:\n(h) (4 pt) Plot the data, the fitted regression line, and both the 95% confidence band and the 95% prediction band over the range of observed years. Make the two bands visually distinct (e.g., different colors or linetypes) and include a legend.\n\n# Your code here",
+    "crumbs": [
+      "Syllabus",
+      "Assignments",
+      "HW 2"
+    ]
   }
 ]
