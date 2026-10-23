@@ -1,0 +1,190 @@
+---
+title: "Lecture 10: Case Example and Midterm Review"
+subtitle: "PSTAT 126: Linear Regression"
+author: "Annie Adams"
+institute: "UC Santa Barbara"
+date: "10/30/2026"
+format:
+  revealjs:
+    theme: [default, ../styles.scss]
+    slide-number: true
+    preview-links: auto
+    footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
+    logo: ""
+    chalkboard: true
+    title-slide-attributes:
+      data-background-color: "#003660"
+---
+
+## Case Example: Plutonium Measurement {background-color="#003660"}
+
+---
+
+## Plutonium Data {.smaller}
+
+**Goal:** Estimate the regression relationship between alpha counts per second ($Y$, #/sec) and plutonium activity ($X$, pCi/g).
+
+Data: $n = 24$ observations. Let's load and explore:
+
+```{r}
+#| echo: true
+#| eval: true
+plutonium <- data.frame(
+  x = c(0.150, 0.004, 0.069, 0.030, 0.011, 0.004, 0.050, 0.033, 0.060, 0.100,
+         0.200, 0.150, 0.004, 0.100, 0.069, 0.011, 0.150, 0.100, 0.033, 0.004,
+         0.004, 0.004, 0.030, 0.004),
+  y = c(20,  0,  10,  5,  0,  0,  5,  5,  10,  20,
+         40,  25,  0,  20,  10,  0,  25,  20,  5,  0,
+          0,  0,   5,   0)
+)
+head(plutonium)
+```
+
+---
+
+## Exploratory Plots {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 3.5
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+plot(plutonium$x, plutonium$y, xlab = "pCi/g", ylab = "# per second",
+     main = "Scatter Plot", pch = 16, col = "#003660")
+text(0.150, 20, "24?", pos = 4, cex = 0.7, col = "red")
+
+plot(plutonium$x, plutonium$y, xlab = "pCi/g", ylab = "# per second",
+     main = "Lowess Smoothed Curve", pch = 16, col = "#003660")
+lines(lowess(plutonium$x, plutonium$y), col = "red", lwd = 2)
+```
+
+::: {.fragment}
+::: {style="font-size: 0.80em;"}
+**Case 24** (observation 1 in 1-indexed format shown) was caused by an unusual lab condition and will be discarded before fitting.
+:::
+:::
+
+---
+
+## Fit the Linear Model (fit1) {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+# Remove the outlier (observation with x=0.150, y=20 — the first row, index 1)
+plut <- plutonium[-1, ]
+
+fit1 <- lm(y ~ x, data = plut)
+summary(fit1)
+```
+
+---
+
+## Diagnostic Plots for fit1 {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 3.5
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+plot(fitted(fit1), residuals(fit1), xlab = "Fitted", ylab = "Residuals",
+     main = "Residual Plot", pch = 16, col = "#003660")
+abline(h = 0, lty = 2, col = "gray50")
+qqnorm(residuals(fit1), main = "Normal Q-Q Plot", pch = 16, col = "#003660")
+qqline(residuals(fit1), col = "red")
+```
+
+::: {.fragment}
+The residual plot shows a clear **fan shape** — variance increases with fitted value. This is a **nonconstant variance** violation. The Box-Cox method can help us choose a stabilizing transformation.
+:::
+
+---
+
+## Box-Cox Transformation for Plutonium Data {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 6
+#| fig-height: 3.5
+library(MASS)
+boxcox(formula(fit1), lambda = seq(0, 1, len = 20))
+```
+
+::: {.fragment}
+The Box-Cox plot peaks near $\hat\lambda \approx 0.5$, suggesting a **square root transformation**: $Y' = \sqrt{Y}$.
+:::
+
+---
+
+## Fit the Transformed Model (fit2) {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+plut$yp <- sqrt(plut$y)
+fit2 <- lm(yp ~ x, data = plut)
+summary(fit2)
+```
+
+---
+
+## Diagnostic Plots for fit2 {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-width: 8
+#| fig-height: 3.5
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+plot(fitted(fit2), residuals(fit2), xlab = "Fitted", ylab = "Residuals",
+     main = "Residual Plot (sqrt Y)", pch = 16, col = "#003660")
+abline(h = 0, lty = 2, col = "gray50")
+qqnorm(residuals(fit2), main = "Normal Q-Q Plot", pch = 16, col = "#003660")
+qqline(residuals(fit2), col = "red")
+```
+
+::: {.fragment}
+The fan shape is largely gone, but a slight **nonlinear pattern** remains. This suggests the relationship between $X$ and $\sqrt{Y}$ may not be perfectly linear — a further transformation of $X$ or a polynomial term could be explored in practice.
+:::
+
+---
+
+## Comparing fit1 and fit2 {.smaller}
+
+::: {style="font-size: 0.82em;"}
+
+| | **fit1** (original $Y$) | **fit2** ($Y' = \sqrt{Y}$) |
+|:--|:--|:--|
+| Slope | $\widehat{\beta}_1 = 0.00554$ | $\widehat{\beta}_1 = 0.01336$ |
+| $R^2$ | 0.916 | 0.900 |
+| Residual SE | 0.01257 | 0.0334 |
+| Equal variance? | **Violated** (fan shape) | Much better |
+| Normality? | Borderline | Better |
+
+:::
+
+::: {.fragment}
+**Take-away:** The transformation improved the diagnostic picture substantially. The slight remaining nonlinearity is worth noting but may be acceptable for practical purposes.
+
+When reporting results from **fit2**, all inference is about $\sqrt{Y}$, not $Y$ directly. Predictions must be squared back: $\widehat{Y} = (\widehat{Y}')^2$.
+:::
+
+---
+
+## Midterm Review {background-color="#003660"}
+
+---
+
+## Questions? {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em;"}
+**Annie Adams**
+[aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+Office Hours: Tuesday 10 – 11 AM on [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1)
+
+[Course Website](https://pstat-126.github.io/)
+:::
