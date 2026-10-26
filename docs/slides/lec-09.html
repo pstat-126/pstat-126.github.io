@@ -301,7 +301,7 @@ Annie Adams
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_2f9844fc" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_42f61ca2" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -420,7 +420,7 @@ Annie Adams
 <img data-src="lec-09_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><div class="fragment">
 <div style="font-size: 0.82em;">
 <p>The dashed lines on the plot show the 95% confidence interval for <span class="math inline">\(\lambda\)</span>. If 1 is inside it, no transformation may be needed.</p>
-<p>The peak is near <span class="math inline">\(\hat\lambda \approx 0.4\)</span> and the 95% CI runs from roughly 0.1 to 0.65, excluding <span class="math inline">\(\lambda = 1\)</span>, so a transformation is warranted. Both <span class="math inline">\(\lambda = 0\)</span> (log) and <span class="math inline">\(\lambda = 0.5\)</span> (square root) are close to the CI, but we choose <span class="math inline">\(Y' = \log(\text{Volume})\)</span> because log is more interpretable and the loss in log-likelihood relative to the peak is negligible.</p>
+<p>The peak is near <span class="math inline">\(\hat\lambda \approx 0.4\)</span> and the 95% CI runs from roughly 0.1 to 0.65, excluding <span class="math inline">\(\lambda = 1\)</span>, so a transformation is warranted. We round to <span class="math inline">\(\lambda = 0.5\)</span> (the nearest interpretable value) and use <span class="math inline">\(Y' = \sqrt{\text{Volume}}\)</span>.</p>
 </div>
 </div>
 </section>
@@ -433,8 +433,8 @@ Annie Adams
 <p>When there are <strong>replicated observations</strong> (multiple <span class="math inline">\(Y\)</span> values at the same <span class="math inline">\(X\)</span>), we can formally test whether the linear model is adequate using the <strong>extra sum of squares principle</strong>.</p>
 <p>Compare two nested models:</p>
 <ul>
-<li><strong>Full model</strong> (one-way ANOVA, <span class="math inline">\(df_F = n-c\)</span>): allows any mean function without linearity constraint</li>
-<li><strong>Restricted model</strong> (linear regression, <span class="math inline">\(df_R = n-2\)</span>): imposes <span class="math inline">\(E(Y) = \beta_0 + \beta_1 X\)</span></li>
+<li><strong>Full model</strong> (one-way ANOVA, <span class="math inline">\(df_F = n-c\)</span>): fits a separate mean for each distinct <span class="math inline">\(X\)</span> value with no assumption about how those means relate to each other</li>
+<li><strong>Restricted model</strong> (linear regression, <span class="math inline">\(df_R = n-2\)</span>): forces all group means to lie on a single straight line <span class="math inline">\(\beta_0 + \beta_1 X\)</span></li>
 </ul>
 <div class="fragment">
 <p>Since the full model is more flexible, <span class="math inline">\(SSE(R) \geq SSE(F)\)</span> always. The <strong>extra sum of squares</strong> <span class="math inline">\(SSE(R) - SSE(F)\)</span> quantifies the cost of imposing linearity. The extra sum of squares should be small when the linear model is adequate, since that implies the full model doesn’t have less error than the restricted.</p>
@@ -464,6 +464,10 @@ Annie Adams
 </div>
 </div>
 </section>
+<section id="full-vs.-restricted-model-visualized" class="slide level2 smaller">
+<h2>Full vs.&nbsp;Restricted Model: Visualized</h2>
+
+<img data-src="lec-09_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
 <section id="sser-residuals-from-the-linear-model" class="slide level2 smaller">
 <h2>SSE(R): Residuals from the Linear Model</h2>
 <p><span class="math display">\[SSE(R) = \sum_{i=1}^n (Y_i - \widehat{Y}_i)^2, \qquad df_R = n - 2\]</span></p>
@@ -622,8 +626,9 @@ Residuals  9 14741.6  1638.0               </code></pre>
 </div>
 </div>
 </section>
-<section id="bank-example-computing-the-f-statistic" class="slide level2 smaller">
+<section id="bank-example-computing-the-f-statistic" class="slide level2">
 <h2>Bank Example: Computing the F Statistic</h2>
+<div style="font-size: 0.60em;">
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="fu">anova</span>(fit.full, fit.restricted, <span class="at">test =</span> <span class="st">"F"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -646,7 +651,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><span class="math inline">\(SSLF = 14741.6 - 1148 = 13593.6\)</span>, <span class="math inline">\(\; df_{LF} = c - 2 = 4\)</span></li>
 </ul>
 <p><span class="math display">\[F^* = \frac{13593.6/4}{1148/5} = \frac{3398.4}{229.6} = 14.8\]</span></p>
-<p>With <span class="math inline">\(p = 0.006\)</span>, we <strong>reject the linear model</strong> at <span class="math inline">\(\alpha = 0.05\)</span>. The linear function does not adequately describe the relationship between deposit size and new accounts.</p>
+<p>The critical value is <span class="math inline">\(F(0.95;\; 4,\; 5) = 5.19\)</span>. Since <span class="math inline">\(F^* = 14.8 &gt; 5.19\)</span>, we <strong>reject the linear model</strong> at <span class="math inline">\(\alpha = 0.05\)</span>. The linear function does not adequately describe the relationship between deposit size and new accounts.</p>
+</div>
 </div>
 </div>
 </section>
@@ -665,12 +671,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_75c2dfae" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_07b44fe1" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
-<section id="practice-lack-of-fit-test-solution" class="slide level2 smaller">
+<section id="practice-lack-of-fit-test-solution" class="slide level2">
 <h2>Practice: Lack of Fit Test — Solution</h2>
+<div style="font-size: 0.60em;">
 <p><strong>(a)</strong> <span class="math inline">\(SSLF = SSE(R) - SSE(F) = 480.2 - 120.4 = 359.8\)</span></p>
 <p><span class="math inline">\(df_{LF} = c - 2 = 4 - 2 = 2\)</span>; <span class="math inline">\(\quad df_{PE} = n - c = 12 - 4 = 8\)</span></p>
 <div class="fragment">
@@ -683,6 +690,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="fragment">
 <p><strong>(d)</strong> There is statistically significant evidence that the linear function <strong>does not adequately fit</strong> the data — Assumption 1 (linearity) appears to be violated. We should consider a transformation or a more flexible model.</p>
 </div>
+</div>
 </section>
 <section id="practice-full-workflow" class="slide level2 smaller">
 <h2>Practice: Full Workflow</h2>
@@ -691,7 +699,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <ul>
 <li>The residual-vs-fitted plot shows a clear <strong>decreasing fan</strong> (large residuals at small fitted values, small residuals at large fitted values)</li>
 <li>The QQ-plot shows a strong <strong>right-skew</strong> (points curve above the line)</li>
-<li>The lack of fit F test gives <span class="math inline">\(F^* = 1.2\)</span>, <span class="math inline">\(p = 0.35\)</span></li>
+<li>The lack of fit F test gives <span class="math inline">\(F^* = 1.2\)</span> with <span class="math inline">\(c = 10\)</span> distinct <span class="math inline">\(X\)</span> values; the critical value is <span class="math inline">\(F(0.95;\; 8,\; 30) = 2.27\)</span></li>
 </ul>
 <p><strong>(a)</strong> Which assumptions appear violated? Which appears satisfied?</p>
 <p><strong>(b)</strong> What transformation of <span class="math inline">\(Y\)</span> would you try first, and why?</p>
@@ -699,17 +707,18 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_2195e2fd" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_7f1ab85d" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
-<section id="practice-full-workflow-solution" class="slide level2 smaller">
+<section id="practice-full-workflow-solution" class="slide level2">
 <h2>Practice: Full Workflow — Solution</h2>
+<div style="font-size: 0.65em;">
 <p><strong>(a)</strong></p>
 <ul>
 <li><strong>Equal variance (Assumption 3):</strong> <strong>Violated</strong> — the fan shape in the residual-vs-fitted plot indicates nonconstant variance.</li>
 <li><strong>Normality (Assumption 4):</strong> <strong>Violated</strong> — right-skew in the QQ-plot.</li>
-<li><strong>Linearity (Assumption 1):</strong> <strong>Satisfied</strong> — the lack of fit test does not reject the linear model (<span class="math inline">\(p = 0.35\)</span>).</li>
+<li><strong>Linearity (Assumption 1):</strong> <strong>Satisfied</strong> — <span class="math inline">\(F^* = 1.2 &lt; 2.27 = F(0.95;\; 8,\; 30)\)</span>, so we fail to reject the linear model.</li>
 </ul>
 <div class="fragment">
 <p><strong>(b)</strong> Try <span class="math inline">\(Y' = \log(Y)\)</span>. A log transformation is the natural choice for <strong>right-skewed</strong> data with a fan-pattern (variance growing with the mean), which often arises when <span class="math inline">\(Y &gt; 0\)</span> and spans several orders of magnitude.</p>
@@ -717,6 +726,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="fragment">
 <p><strong>(c)</strong> The fitted model after transformation: <span class="math inline">\(\widehat{\log Y} = \widehat{\beta}_0 + \widehat{\beta}_1 X\)</span>.</p>
 <p>To predict <span class="math inline">\(Y\)</span> at <span class="math inline">\(X = 5\)</span>: compute <span class="math inline">\(\widehat{\log Y}^* = \widehat{\beta}_0 + 5\widehat{\beta}_1\)</span>, then <strong>back-transform</strong>: <span class="math inline">\(\widehat{Y}^* = e^{\widehat{\log Y}^*}\)</span>.</p>
+</div>
 </div>
 </section>
 <section id="summary" class="slide level2 smaller">
@@ -727,7 +737,6 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li class="fragment"><strong>Box-Cox:</strong> Estimates the optimal power <span class="math inline">\(\lambda\)</span> for <span class="math inline">\(Y\)</span> data-adaptively; round <span class="math inline">\(\hat\lambda\)</span> to a nearby interpretable value (e.g., <span class="math inline">\(0.5 \to \sqrt{Y}\)</span>, <span class="math inline">\(0 \to \log Y\)</span>)</li>
 <li class="fragment"><strong>F test for lack of fit:</strong> When replicates exist, formally test <span class="math inline">\(H_0:\)</span> linearity holds using <span class="math inline">\(F^* = MSLF/MSPE \sim F_{c-2,\; n-c}\)</span>; the key decomposition is <span class="math inline">\(SSE(R) = SSPE + SSLF\)</span></li>
 <li class="fragment"><strong>After transforming:</strong> Always re-check diagnostics on the transformed model; back-transform predictions to the original scale</li>
-<li class="fragment"><strong>Full workflow:</strong> Fit model <span class="math inline">\(\to\)</span> check residual plots <span class="math inline">\(\to\)</span> identify violations <span class="math inline">\(\to\)</span> apply remedy <span class="math inline">\(\to\)</span> re-check <span class="math inline">\(\to\)</span> report</li>
 </ul>
 </section>
 <section id="quiz-2" class="slide level2" data-background-color="#003660">

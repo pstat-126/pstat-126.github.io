@@ -216,7 +216,7 @@ boxcox(fit_trees, lambda = seq(-1, 2, len = 100))
 
 The dashed lines on the plot show the 95% confidence interval for $\lambda$. If 1 is inside it, no transformation may be needed.
 
-The peak is near $\hat\lambda \approx 0.4$ and the 95% CI runs from roughly 0.1 to 0.65, excluding $\lambda = 1$, so a transformation is warranted. Both $\lambda = 0$ (log) and $\lambda = 0.5$ (square root) are close to the CI, but we choose $Y' = \log(\text{Volume})$ because log is more interpretable and the loss in log-likelihood relative to the peak is negligible.
+The peak is near $\hat\lambda \approx 0.4$ and the 95% CI runs from roughly 0.1 to 0.65, excluding $\lambda = 1$, so a transformation is warranted. We round to $\lambda = 0.5$ (the nearest interpretable value) and use $Y' = \sqrt{\text{Volume}}$.
 :::
 :::
 
@@ -234,8 +234,8 @@ When there are **replicated observations** (multiple $Y$ values at the same $X$)
 
 Compare two nested models:
 
-- **Full model** (one-way ANOVA, $df_F = n-c$): allows any mean function without linearity constraint
-- **Restricted model** (linear regression, $df_R = n-2$): imposes $E(Y) = \beta_0 + \beta_1 X$
+- **Full model** (one-way ANOVA, $df_F = n-c$): fits a separate mean for each distinct $X$ value with no assumption about how those means relate to each other
+- **Restricted model** (linear regression, $df_R = n-2$): forces all group means to lie on a single straight line $\beta_0 + \beta_1 X$
 
 ::: {.fragment}
 Since the full model is more flexible, $SSE(R) \geq SSE(F)$ always. The **extra sum of squares** $SSE(R) - SSE(F)$ quantifies the cost of imposing linearity. The extra sum of squares should be small when the linear model is adequate, since that implies the full model doesn't have less error than the restricted. 
@@ -275,6 +275,57 @@ The model makes no claim about the relationship between these means.
 :::
 
 :::
+
+---
+
+## Full vs. Restricted Model: Visualized {.smaller}
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 10
+#| fig-height: 4.5
+set.seed(42)
+x_vals <- c(10, 10, 20, 20, 30, 30)
+y_vals <- c(15, 19, 22, 26, 28, 32)
+group_means <- c(17, 17, 24, 24, 30, 30)
+fit_r <- lm(y_vals ~ x_vals)
+
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+
+# Left: Full model — separate group means
+plot(x_vals, y_vals, pch = 16, col = "#003660", cex = 1.4,
+     xlim = c(5, 35), ylim = c(10, 36),
+     xlab = "Fertilizer dose (g)", ylab = "Crop yield (bushels/acre)",
+     main = "Full Model (group means)")
+for (xg in c(10, 20, 30)) {
+  ym <- mean(y_vals[x_vals == xg])
+  segments(xg - 3, ym, xg + 3, ym, col = "#FEBC11", lwd = 2.5)
+}
+for (i in seq_along(x_vals)) {
+  segments(x_vals[i], y_vals[i], x_vals[i], group_means[i],
+           col = "#1F77B4", lty = 2)
+}
+legend("topleft", legend = c("Observations", "Group mean", "Residual"),
+       col = c("#003660", "#FEBC11", "#1F77B4"),
+       pch = c(16, NA, NA), lty = c(NA, 1, 2), lwd = c(NA, 2.5, 1.5),
+       bty = "n", cex = 0.85)
+
+# Right: Restricted model — single regression line
+plot(x_vals, y_vals, pch = 16, col = "#003660", cex = 1.4,
+     xlim = c(5, 35), ylim = c(10, 36),
+     xlab = "Fertilizer dose (g)", ylab = "Crop yield (bushels/acre)",
+     main = "Restricted Model (regression line)")
+abline(fit_r, col = "#D62728", lwd = 2.5)
+for (i in seq_along(x_vals)) {
+  segments(x_vals[i], y_vals[i], x_vals[i], fitted(fit_r)[i],
+           col = "#1F77B4", lty = 2)
+}
+legend("topleft", legend = c("Observations", "Fitted line", "Residual"),
+       col = c("#003660", "#D62728", "#1F77B4"),
+       pch = c(16, NA, NA), lty = c(NA, 1, 2), lwd = c(NA, 2.5, 1.5),
+       bty = "n", cex = 0.85)
+```
 
 ---
 
@@ -382,7 +433,8 @@ anova(fit.restricted)
 
 ---
 
-## Bank Example: Computing the F Statistic {.smaller}
+## Bank Example: Computing the F Statistic 
+::: {style="font-size: 0.60em;"}
 
 ```{r}
 #| echo: true
@@ -398,10 +450,10 @@ anova(fit.full, fit.restricted, test = "F")
 
 $$F^* = \frac{13593.6/4}{1148/5} = \frac{3398.4}{229.6} = 14.8$$
 
-With $p = 0.006$, we **reject the linear model** at $\alpha = 0.05$. The linear function does not adequately describe the relationship between deposit size and new accounts.
+The critical value is $F(0.95;\; 4,\; 5) = 5.19$. Since $F^* = 14.8 > 5.19$, we **reject the linear model** at $\alpha = 0.05$. The linear function does not adequately describe the relationship between deposit size and new accounts.
 :::
 :::
-
+:::
 ---
 
 ## Practice: Lack of Fit Test {.smaller}
@@ -441,7 +493,8 @@ countdown::countdown(
 
 ---
 
-## Practice: Lack of Fit Test — Solution {.smaller}
+## Practice: Lack of Fit Test — Solution 
+::: {style="font-size: 0.60em;"}
 
 **(a)** $SSLF = SSE(R) - SSE(F) = 480.2 - 120.4 = 359.8$
 
@@ -462,6 +515,7 @@ Since $11.95 > 4.46$, we **reject** the linear model at $\alpha = 0.05$.
 ::: {.fragment}
 **(d)** There is statistically significant evidence that the linear function **does not adequately fit** the data — Assumption 1 (linearity) appears to be violated. We should consider a transformation or a more flexible model.
 :::
+:::
 
 ---
 
@@ -473,7 +527,7 @@ A researcher regresses pollution level $Y$ (ppb) on distance from factory $X$ (k
 
 - The residual-vs-fitted plot shows a clear **decreasing fan** (large residuals at small fitted values, small residuals at large fitted values)
 - The QQ-plot shows a strong **right-skew** (points curve above the line)
-- The lack of fit F test gives $F^* = 1.2$, $p = 0.35$
+- The lack of fit F test gives $F^* = 1.2$ with $c = 10$ distinct $X$ values; the critical value is $F(0.95;\; 8,\; 30) = 2.27$
 
 **(a)** Which assumptions appear violated? Which appears satisfied?
 
@@ -501,13 +555,14 @@ countdown::countdown(
 
 ---
 
-## Practice: Full Workflow — Solution {.smaller}
+## Practice: Full Workflow — Solution 
+::: {style="font-size: 0.65em;"}
 
 **(a)**
 
 - **Equal variance (Assumption 3):** **Violated** — the fan shape in the residual-vs-fitted plot indicates nonconstant variance.
 - **Normality (Assumption 4):** **Violated** — right-skew in the QQ-plot.
-- **Linearity (Assumption 1):** **Satisfied** — the lack of fit test does not reject the linear model ($p = 0.35$).
+- **Linearity (Assumption 1):** **Satisfied** — $F^* = 1.2 < 2.27 = F(0.95;\; 8,\; 30)$, so we fail to reject the linear model.
 
 ::: {.fragment}
 **(b)** Try $Y' = \log(Y)$. A log transformation is the natural choice for **right-skewed** data with a fan-pattern (variance growing with the mean), which often arises when $Y > 0$ and spans several orders of magnitude.
@@ -517,6 +572,7 @@ countdown::countdown(
 **(c)** The fitted model after transformation: $\widehat{\log Y} = \widehat{\beta}_0 + \widehat{\beta}_1 X$.
 
 To predict $Y$ at $X = 5$: compute $\widehat{\log Y}^* = \widehat{\beta}_0 + 5\widehat{\beta}_1$, then **back-transform**: $\widehat{Y}^* = e^{\widehat{\log Y}^*}$.
+:::
 :::
 
 ---
@@ -529,7 +585,6 @@ To predict $Y$ at $X = 5$: compute $\widehat{\log Y}^* = \widehat{\beta}_0 + 5\w
 - **Box-Cox:** Estimates the optimal power $\lambda$ for $Y$ data-adaptively; round $\hat\lambda$ to a nearby interpretable value (e.g., $0.5 \to \sqrt{Y}$, $0 \to \log Y$)
 - **F test for lack of fit:** When replicates exist, formally test $H_0:$ linearity holds using $F^* = MSLF/MSPE \sim F_{c-2,\; n-c}$; the key decomposition is $SSE(R) = SSPE + SSLF$
 - **After transforming:** Always re-check diagnostics on the transformed model; back-transform predictions to the original scale
-- **Full workflow:** Fit model $\to$ check residual plots $\to$ identify violations $\to$ apply remedy $\to$ re-check $\to$ report
 :::
 
 ---
