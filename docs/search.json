@@ -2934,14 +2934,14 @@
   {
     "objectID": "slides/lec-09.html#learning-objectives",
     "href": "slides/lec-09.html#learning-objectives",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Learning Objectives",
     "text": "Learning Objectives\nBy the end of today you will be able to:\n\n\nSelect an appropriate transformation of \\(X\\) or \\(Y\\) based on residual plot patterns\nUse the Box-Cox method to data-adaptively choose a power transformation of \\(Y\\)\nBack-transform predictions to the original scale after fitting a model on transformed \\(Y\\)\nApply the F test for lack of fit using the SSPE/SSLF decomposition to formally test whether a linear model is adequate\nExplain the extra sum of squares principle and how it underlies the lack of fit F test"
   },
   {
     "objectID": "slides/lec-09.html#f-test-for-lack-of-fit",
     "href": "slides/lec-09.html#f-test-for-lack-of-fit",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "F Test for Lack of Fit",
     "text": "F Test for Lack of Fit"
   },
@@ -2962,7 +2962,7 @@
   {
     "objectID": "slides/lec-09.html#setup-replicated-observations",
     "href": "slides/lec-09.html#setup-replicated-observations",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Setup: Replicated Observations",
     "text": "Setup: Replicated Observations\n\nDenote \\(X_1, \\ldots, X_c\\) as the \\(c\\) distinct observed values of \\(X\\).\n\n\\(j\\) indexes each distinct \\(X\\) value (\\(j = 1, \\ldots, c\\))\n\\(i\\) indexes the replicates for a given \\(X_j\\) (\\(i = 1, \\ldots, n_j\\))\n\\(n_j\\) = number of \\(Y\\) values at \\(X_j\\)\n\nThe full dataset:\n\\[n_1 \\text{ replicates at } X_1: Y_{11}, \\ldots, Y_{n_1 1}\\] \\[n_2 \\text{ replicates at } X_2: Y_{12}, \\ldots, Y_{n_2 2}\\] \\[\\vdots\\] \\[n_c \\text{ replicates at } X_c: Y_{1c}, \\ldots, Y_{n_c c}\\]\nTotal observations: \\(n = \\sum_{j=1}^c n_j\\)"
   },
@@ -2983,42 +2983,42 @@
   {
     "objectID": "slides/lec-09.html#the-f-test-for-lack-of-fit",
     "href": "slides/lec-09.html#the-f-test-for-lack-of-fit",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "The F Test for Lack of Fit",
-    "text": "The F Test for Lack of Fit\nPlugging the SSPE/SSLF decomposition into the extra SS framework gives the lack of fit F test (also called the pure error test):\n\\[F^* = \\frac{SSLF/(c-2)}{SSPE/(n-c)} = \\frac{MSLF}{MSPE} \\overset{H_0}{\\sim} F_{c-2,\\; n-c}\\]\nReject \\(H_0\\) (the linear model) when group means stray far from the fitted line relative to within-group noise.\n\nANOVA table with lack of fit decomposition:\n\n\n\nSource\ndf\nSS\nMS\nF\n\n\n\n\nModel\n1\nSSR\nMSR = SSR/1\nMSR/MSE\n\n\nError\n\\(n-2\\)\nSSE\nMSE = SSE/\\((n-2)\\)\n\n\n\n— Lack of fit\n\\(c-2\\)\nSSLF\nMSLF = SSLF/\\((c-2)\\)\nMSLF/MSPE\n\n\n— Pure error\n\\(n-c\\)\nSSPE\nMSPE = SSPE/\\((n-c)\\)\n\n\n\nTotal\n\\(n-1\\)\nSSTO"
+    "text": "The F Test for Lack of Fit\nPlugging the SSPE/SSLF decomposition into the extra SS framework gives the lack of fit F test (also called the pure error test):\n\\[F^* = \\frac{SSLF/(c-2)}{SSPE/(n-c)} = \\frac{MSLF}{MSPE} \\overset{H_0}{\\sim} F_{c-2,\\; n-c}\\]\nwhere \\(c\\) is the number of distinct \\(X\\) values and \\(n\\) is the total number of observations. Reject \\(H_0\\) (the linear model) when group means stray far from the fitted line relative to within-group noise."
   },
   {
     "objectID": "slides/lec-09.html#bank-example",
     "href": "slides/lec-09.html#bank-example",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Bank Example",
     "text": "Bank Example\n\n12 branches of a commercial bank offered gifts for opening money market accounts. The gift value was proportional to the minimum deposit (\\(X\\), in dollars). The goal: does minimum deposit predict number of new accounts (\\(Y\\))?\nData: \\(c = 6\\) distinct deposit sizes (\\(75, 100, 125, 150, 175, 200\\)), each with \\(n_j = 2\\) replicates (\\(n = 11\\); one branch dropped after a fire).\n\n\nx &lt;- c(125, 100, 200,  75, 150, 175,  75, 175, 125, 200, 100)\ny &lt;- c(160, 112, 124,  28, 152, 156,  42, 124, 150, 104, 136)\n\nfit.full       &lt;- lm(y ~ factor(x))   # full (ANOVA) model\nfit.restricted &lt;- lm(y ~ x)           # restricted (linear) model\n\nanova(fit.full)\n\nAnalysis of Variance Table\n\nResponse: y\n          Df Sum Sq Mean Sq F value   Pr(&gt;F)   \nfactor(x)  5  18735  3747.0   16.32 0.004085 **\nResiduals  5   1148   229.6                    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nanova(fit.restricted)\n\nAnalysis of Variance Table\n\nResponse: y\n          Df  Sum Sq Mean Sq F value Pr(&gt;F)\nx          1  5141.3  5141.3  3.1389 0.1102\nResiduals  9 14741.6  1638.0"
   },
   {
     "objectID": "slides/lec-09.html#bank-example-computing-the-f-statistic",
     "href": "slides/lec-09.html#bank-example-computing-the-f-statistic",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Bank Example: Computing the F Statistic",
     "text": "Bank Example: Computing the F Statistic\n\nanova(fit.full, fit.restricted, test = \"F\")\n\nAnalysis of Variance Table\n\nModel 1: y ~ factor(x)\nModel 2: y ~ x\n  Res.Df   RSS Df Sum of Sq      F   Pr(&gt;F)   \n1      5  1148                                \n2      9 14742 -4    -13594 14.801 0.005594 **\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\n\n\\(SSE(F) = SSPE = 1148\\), \\(\\; df_F = n - c = 11 - 6 = 5\\)\n\\(SSE(R) = 14741.6\\), \\(\\; df_R = n - 2 = 9\\)\n\\(SSLF = 14741.6 - 1148 = 13593.6\\), \\(\\; df_{LF} = c - 2 = 4\\)\n\n\\[F^* = \\frac{13593.6/4}{1148/5} = \\frac{3398.4}{229.6} = 14.8\\]\nWith \\(p = 0.006\\), we reject the linear model at \\(\\alpha = 0.05\\). The linear function does not adequately describe the relationship between deposit size and new accounts."
   },
   {
     "objectID": "slides/lec-09.html#practice-lack-of-fit-test",
     "href": "slides/lec-09.html#practice-lack-of-fit-test",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Practice: Lack of Fit Test",
     "text": "Practice: Lack of Fit Test\n\nAn experiment has \\(c = 4\\) distinct \\(X\\) values with \\(n_2 = 3\\) replicates each (\\(n = 12\\)). After fitting the linear regression and the full ANOVA model:\n\n\\(SSE(R) = 480.2\\) (linear model)\n\\(SSE(F) = SSPE = 120.4\\) (pure error)\n\n(a) Compute \\(SSLF\\) and its degrees of freedom.\n(b) Compute \\(MSLF\\) and \\(MSPE\\).\n(c) Compute \\(F^*\\) and state whether you reject the linear model at \\(\\alpha = 0.05\\). Critical value: \\(F(0.95;\\; 2,\\; 8) = 4.46\\).\n(d) What does this result tell you about Assumption 1?"
   },
   {
     "objectID": "slides/lec-09.html#practice-lack-of-fit-test-solution",
     "href": "slides/lec-09.html#practice-lack-of-fit-test-solution",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Practice: Lack of Fit Test — Solution",
     "text": "Practice: Lack of Fit Test — Solution\n(a) \\(SSLF = SSE(R) - SSE(F) = 480.2 - 120.4 = 359.8\\)\n\\(df_{LF} = c - 2 = 4 - 2 = 2\\); \\(\\quad df_{PE} = n - c = 12 - 4 = 8\\)\n\n(b) \\[MSLF = \\frac{359.8}{2} = 179.9 \\qquad MSPE = \\frac{120.4}{8} = 15.05\\]\n\n\n(c) \\[F^* = \\frac{MSLF}{MSPE} = \\frac{179.9}{15.05} = 11.95\\]\nSince \\(11.95 &gt; 4.46\\), we reject the linear model at \\(\\alpha = 0.05\\).\n\n\n(d) There is statistically significant evidence that the linear function does not adequately fit the data — Assumption 1 (linearity) appears to be violated. We should consider a transformation or a more flexible model."
   },
   {
     "objectID": "slides/lec-09.html#transformations",
     "href": "slides/lec-09.html#transformations",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Transformations",
     "text": "Transformations"
   },
@@ -3032,9 +3032,9 @@
   {
     "objectID": "slides/lec-09.html#box-cox-choosing-the-transformation-of-y",
     "href": "slides/lec-09.html#box-cox-choosing-the-transformation-of-y",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Box-Cox: Choosing the Transformation of \\(Y\\)",
-    "text": "Box-Cox: Choosing the Transformation of \\(Y\\)\nWhen it’s hard to tell from a residual plot which transformation to use, Box-Cox finds it for you.\n\nThe idea: try every power transformation \\(Y^\\lambda\\) for a range of \\(\\lambda\\) values. For each \\(\\lambda\\), fit the regression and measure how well the residuals behave. Pick the \\(\\lambda\\) that gives the best fit.\n\n\nReading the output: boxcox() plots a likelihood curve over \\(\\lambda\\). Find the peak, then round to the nearest interpretable value:\n\n\n\n\\(\\hat\\lambda\\)\nTransformation\nUse when\n\n\n\n\n1\nnone\nresiduals already look good\n\n\n0.5\n\\(Y' = \\sqrt{Y}\\)\nmild right skew / fan shape\n\n\n0\n\\(Y' = \\log Y\\)\nstrong right skew / variance grows with mean\n\n\n−1\n\\(Y' = 1/Y\\)\nsevere right skew\n\n\n\nThe dashed lines on the plot show the 95% confidence interval for \\(\\lambda\\) — if 1 is inside it, no transformation may be needed.\n\n\n\nUnder the hood: Box-Cox maximizes the profiled log-likelihood \\(\\ell_p(\\lambda) = -\\frac{n}{2}\\log\\{SSE(\\lambda)/n\\} + (\\lambda-1)\\sum \\log Y_i\\) over \\(\\lambda\\), where \\(SSE(\\lambda)\\) is the residual SS after fitting on \\(Y^\\lambda\\)."
+    "text": "Box-Cox: Choosing the Transformation of \\(Y\\)\n\nWhen it’s hard to tell from a residual plot which transformation to use, Box-Cox finds it for you.\n\nThe idea: try every power transformation \\(Y^\\lambda\\) for a range of \\(\\lambda\\) values. For each \\(\\lambda\\), fit the regression and measure how well the residuals behave. Pick the \\(\\lambda\\) that gives the best fit.\n\n\n\n\n\n\\(\\hat\\lambda\\)\nTransformation\nUse when\n\n\n\n\n1\nnone\nresiduals already look good\n\n\n0.5\n\\(Y' = \\sqrt{Y}\\)\nmild right skew / fan shape\n\n\n0\n\\(Y' = \\log Y\\)\nstrong right skew / variance grows with mean\n\n\n−1\n\\(Y' = 1/Y\\)\nsevere right skew\n\n\n\n\n\nUnder the hood: Box-Cox maximizes the profiled log-likelihood \\(\\ell_p(\\lambda) = -\\frac{n}{2}\\log\\{SSE(\\lambda)/n\\} + (\\lambda-1)\\sum \\log Y_i\\) over \\(\\lambda\\), where \\(SSE(\\lambda)\\) is the residual SS after fitting on \\(Y^\\lambda\\)."
   },
   {
     "objectID": "slides/lec-09.html#box-cox-estimating-lambda",
@@ -3046,9 +3046,9 @@
   {
     "objectID": "slides/lec-09.html#box-cox-in-r",
     "href": "slides/lec-09.html#box-cox-in-r",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Box-Cox in R",
-    "text": "Box-Cox in R\nThe trees dataset records girth, height, and timber volume for 31 black cherry trees. Volume is right-skewed — a natural candidate for transformation.\n\nlibrary(MASS)\nfit_trees &lt;- lm(Volume ~ Girth, data = trees)\nboxcox(fit_trees, lambda = seq(-1, 2, len = 100))\n\n\n\n\nThe peak is near \\(\\hat\\lambda \\approx 0.3\\) and the 95% CI excludes \\(\\lambda = 1\\), so a transformation is warranted. Since 0 is inside the CI, we use \\(Y' = \\log(\\text{Volume})\\) — the nearest interpretable value."
+    "text": "Box-Cox in R\nThe trees dataset records girth, height, and timber volume for 31 black cherry trees. Volume is right-skewed, making it a candidate for transformation.\nReading the output: boxcox() plots a likelihood curve over \\(\\lambda\\). Find the peak, then round to the nearest interpretable value:\n\nlibrary(MASS)\nfit_trees &lt;- lm(Volume ~ Girth, data = trees)\nboxcox(fit_trees, lambda = seq(-1, 2, len = 100))"
   },
   {
     "objectID": "slides/lec-09.html#case-example-plutonium-measurement",
@@ -3116,28 +3116,28 @@
   {
     "objectID": "slides/lec-09.html#practice-full-workflow",
     "href": "slides/lec-09.html#practice-full-workflow",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Practice: Full Workflow",
     "text": "Practice: Full Workflow\n\nA researcher regresses pollution level \\(Y\\) (ppb) on distance from factory \\(X\\) (km) using \\(n = 40\\) observations.\n\nThe residual-vs-fitted plot shows a clear decreasing fan (large residuals at small fitted values, small residuals at large fitted values)\nThe QQ-plot shows a strong right-skew (points curve above the line)\nThe lack of fit F test gives \\(F^* = 1.2\\), \\(p = 0.35\\)\n\n(a) Which assumptions appear violated? Which appears satisfied?\n(b) What transformation of \\(Y\\) would you try first, and why?\n(c) After a \\(\\log(Y)\\) transformation, the residual-vs-fitted plot looks ideal. Write the fitted model (in terms of \\(\\log Y\\)) and explain how you would predict \\(Y\\) for a new \\(X = 5\\) km."
   },
   {
     "objectID": "slides/lec-09.html#practice-full-workflow-solution",
     "href": "slides/lec-09.html#practice-full-workflow-solution",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Practice: Full Workflow — Solution",
     "text": "Practice: Full Workflow — Solution\n(a)\n\nEqual variance (Assumption 3): Violated — the fan shape in the residual-vs-fitted plot indicates nonconstant variance.\nNormality (Assumption 4): Violated — right-skew in the QQ-plot.\nLinearity (Assumption 1): Satisfied — the lack of fit test does not reject the linear model (\\(p = 0.35\\)).\n\n\n(b) Try \\(Y' = \\log(Y)\\). A log transformation is the natural choice for right-skewed data with a fan-pattern (variance growing with the mean), which often arises when \\(Y &gt; 0\\) and spans several orders of magnitude.\n\n\n(c) The fitted model after transformation: \\(\\widehat{\\log Y} = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 X\\).\nTo predict \\(Y\\) at \\(X = 5\\): compute \\(\\widehat{\\log Y}^* = \\widehat{\\beta}_0 + 5\\widehat{\\beta}_1\\), then back-transform: \\(\\widehat{Y}^* = e^{\\widehat{\\log Y}^*}\\)."
   },
   {
     "objectID": "slides/lec-09.html#summary",
     "href": "slides/lec-09.html#summary",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Summary",
     "text": "Summary\n\nTransformations of \\(X\\): Fix nonlinearity (e.g., \\(\\log X\\), \\(\\sqrt{X}\\), \\(X^2\\)) while leaving error variance roughly unchanged\nTransformations of \\(Y\\): Fix nonconstant variance and nonnormality simultaneously (e.g., \\(\\sqrt{Y}\\), \\(\\log Y\\)); these are variance-stabilizing transformations\nBox-Cox: Estimates the optimal power \\(\\lambda\\) for \\(Y\\) data-adaptively; round \\(\\hat\\lambda\\) to a nearby interpretable value (e.g., \\(0.5 \\to \\sqrt{Y}\\), \\(0 \\to \\log Y\\))\nF test for lack of fit: When replicates exist, formally test \\(H_0:\\) linearity holds using \\(F^* = MSLF/MSPE \\sim F_{c-2,\\; n-c}\\); the key decomposition is \\(SSE(R) = SSPE + SSLF\\)\nAfter transforming: Always re-check diagnostics on the transformed model; back-transform predictions to the original scale\nFull workflow: Fit model \\(\\to\\) check residual plots \\(\\to\\) identify violations \\(\\to\\) apply remedy \\(\\to\\) re-check \\(\\to\\) report"
   },
   {
     "objectID": "slides/lec-09.html#questions",
     "href": "slides/lec-09.html#questions",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Questions?",
     "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
   },
@@ -3249,16 +3249,16 @@
   {
     "objectID": "slides/lec-09.html#practice-reading-residual-plots",
     "href": "slides/lec-09.html#practice-reading-residual-plots",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Practice: Reading Residual Plots",
     "text": "Practice: Reading Residual Plots\n\nBelow are three residual-vs-fitted plots. For each, state which assumption is violated (if any).\n\n\n\n\n\n\n\n\n\n(a) Which plot suggests a violation of the equal-variance assumption? What transformation might help?\n(b) Which plot suggests a violation of the linearity assumption? What would you try?\n(c) Which plot looks ideal?"
   },
   {
     "objectID": "slides/lec-09.html#practice-reading-residual-plots-solution",
     "href": "slides/lec-09.html#practice-reading-residual-plots-solution",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Practice: Reading Residual Plots — Solution",
-    "text": "Practice: Reading Residual Plots — Solution\n(a) Plot A — the spread of residuals increases with the fitted value (fan shape), violating equal variance (Assumption 3).\n\n(b) Plot B — a curved trend remains in the residuals after fitting a line, violating linearity (Assumption 1).\n\n\n(c) Plot C — random scatter around zero with no trend and roughly constant spread. This is the ideal pattern — no obvious violations."
+    "text": "Practice: Reading Residual Plots — Solution\n(a) Plot A — the spread of residuals increases with the fitted value (fan shape), violating equal variance (Assumption 3). We can try transforming Y to fix this.\n\n(b) Plot B — a curved trend remains in the residuals after fitting a line, violating linearity (Assumption 1). We can try transforming X to fix this.\n\n\n(c) Plot C — random scatter around zero with no trend and roughly constant spread. This is the ideal pattern."
   },
   {
     "objectID": "hw/hw-02.html#data-download-instructions",
@@ -3275,9 +3275,9 @@
   {
     "objectID": "slides/lec-09.html#f-test-for-lack-of-fit-idea",
     "href": "slides/lec-09.html#f-test-for-lack-of-fit-idea",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "F Test for Lack of Fit: Idea",
-    "text": "F Test for Lack of Fit: Idea\n\nWhen there are replicated observations (multiple \\(Y\\) values at the same \\(X\\)), we can formally test whether the linear model is adequate using the extra sum of squares principle.\nCompare two nested models:\n\nFull model (one-way ANOVA, \\(df_F = n-c\\)): allows any mean function without linearity constraint\nRestricted model (linear regression, \\(df_R = n-2\\)): imposes \\(E(Y) = \\beta_0 + \\beta_1 X\\)\n\n\nSince the full model is more flexible, \\(SSE(R) \\geq SSE(F)\\) always. The extra sum of squares \\(SSE(R) - SSE(F)\\) quantifies the cost of imposing linearity — it should be small when the linear model is adequate.\n\\[F^* = \\frac{[SSE(R) - SSE(F)] / (df_R - df_F)}{SSE(F)/df_F} \\overset{H_0}{\\sim} F_{df_R - df_F,\\; df_F}\\]\nReject \\(H_0\\) (reject the linear model) if \\(F^* &gt; F(1-\\alpha;\\; df_R - df_F,\\; df_F)\\)."
+    "text": "F Test for Lack of Fit: Idea\n\nWhen there are replicated observations (multiple \\(Y\\) values at the same \\(X\\)), we can formally test whether the linear model is adequate using the extra sum of squares principle.\nCompare two nested models:\n\nFull model (one-way ANOVA, \\(df_F = n-c\\)): allows any mean function without linearity constraint\nRestricted model (linear regression, \\(df_R = n-2\\)): imposes \\(E(Y) = \\beta_0 + \\beta_1 X\\)\n\n\nSince the full model is more flexible, \\(SSE(R) \\geq SSE(F)\\) always. The extra sum of squares \\(SSE(R) - SSE(F)\\) quantifies the cost of imposing linearity. The extra sum of squares should be small when the linear model is adequate, since that implies the full model doesn’t have less error than the restricted.\n\\[F^* = \\frac{[SSE(R) - SSE(F)] / (df_R - df_F)}{SSE(F)/df_F} \\overset{H_0}{\\sim} F_{df_R - df_F,\\; df_F}\\]\nReject \\(H_0\\) (reject the linear model) if \\(F^* &gt; F(1-\\alpha;\\; df_R - df_F,\\; df_F)\\)."
   },
   {
     "objectID": "slides/lec-09.html#sspe-and-sslf-decomposition",
@@ -3289,70 +3289,70 @@
   {
     "objectID": "slides/lec-09.html#full-vs.-restricted-model",
     "href": "slides/lec-09.html#full-vs.-restricted-model",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Full vs. Restricted Model",
     "text": "Full vs. Restricted Model\n\nA group is all observations that share the same \\(X\\) value. Suppose we measure crop yield (\\(Y\\), bushels/acre) at three fertilizer doses (\\(X\\) = 10, 20, 30 g), with two plots at each dose. Each dose is a group.\n\nFull model (one-way ANOVA) — predicts each group’s mean using only the observations in that group, with no connection across groups:\n\\[X = 10: Y = 15, 19 \\;\\Rightarrow\\; \\hat{Y} = 17 \\qquad X = 20: Y = 22, 26 \\;\\Rightarrow\\; \\hat{Y} = 24 \\qquad X = 30: Y = 28, 32 \\;\\Rightarrow\\; \\hat{Y} = 30\\]\nThe model makes no claim about the relationship between these means.\n\n\nRestricted model (linear regression) — forces all group means to fall on a single line \\(\\beta_0 + \\beta_1 X\\). The predictions at \\(X = 10\\), \\(20\\), and \\(30\\) are now connected through the same slope and intercept — linearity is assumed.\n\n\nKey insight: the difference \\(SSE(R) - SSE(F) = SSLF\\) is entirely due to the linearity constraint.\n\nIf the true relationship is linear: group means already fall near a line, so \\(SSLF \\approx 0\\) and \\(F^* \\approx 1\\)\nIf the true relationship is curved: group means stray from the fitted line, so \\(SSLF\\) is large and \\(F^*\\) is large"
   },
   {
     "objectID": "slides/lec-09.html#sspe-sum-of-squares-pure-error",
     "href": "slides/lec-09.html#sspe-sum-of-squares-pure-error",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "SSPE: Sum of Squares Pure Error",
-    "text": "SSPE: Sum of Squares Pure Error\n\\[SSPE = \\sum_{j=1}^c \\sum_{i=1}^{n_j} (Y_{ij} - \\bar{Y}_j)^2, \\qquad df_{PE} = n - c\\]\nEach term is the squared gap between one observation and its group mean.\n\nThis captures only natural within-group scatter. It is not referencing the fitted line at all. No matter what shape the true relationship is, SSPE stays the same. That is why it is called pure error."
+    "text": "SSPE: Sum of Squares Pure Error\n\\[SSPE = \\sum_{j=1}^c \\sum_{i=1}^{n_j} (Y_{ij} - \\bar{Y}_j)^2, \\qquad df_{PE} = n - c\\]\nEach term is the squared gap between one observation (\\(ij\\)) and its group mean (\\(j\\)), where \\(j\\) indexes each distinct \\(X\\) value and \\(i\\) indexes replicates within that group.\n\nThis captures only natural within-group scatter. It is not referencing the fitted line at all. No matter what shape the true relationship is, SSPE stays the same. That is why it is called pure error."
   },
   {
     "objectID": "slides/lec-09.html#sslf-sum-of-squares-lack-of-fit",
     "href": "slides/lec-09.html#sslf-sum-of-squares-lack-of-fit",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "SSLF: Sum of Squares Lack of Fit",
-    "text": "SSLF: Sum of Squares Lack of Fit\n\\[SSLF = \\sum_{j=1}^c n_j(\\bar{Y}_j - \\widehat{Y}_j)^2, \\qquad df_{LF} = c - 2\\]\nEach term is the squared gap between a group mean and the fitted line, weighted by group size.\n\nThis captures only the failure of linearity — how far the line misses each group mean. Within-group scatter plays no role. If the line passes through every group mean perfectly, \\(SSLF = 0\\)."
+    "text": "SSLF: Sum of Squares Lack of Fit\n\\[SSLF = \\sum_{j=1}^c n_j(\\bar{Y}_j - \\widehat{Y}_j)^2, \\qquad df_{LF} = c - 2\\]\nEach term is the squared gap between a group mean (\\(j\\)) and the fitted line at that \\(X_j\\), weighted by group size (\\(n_j\\)).\n\nThis captures only the failure of linearity — how far the line misses each group mean. If the line passes through every group mean perfectly, \\(SSLF = 0\\)."
   },
   {
     "objectID": "slides/lec-09.html#sser-residuals-from-the-linear-model",
     "href": "slides/lec-09.html#sser-residuals-from-the-linear-model",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "SSE(R): Residuals from the Linear Model",
-    "text": "SSE(R): Residuals from the Linear Model\n\\[SSE(R) = \\sum_{i=1}^n (Y_i - \\widehat{Y}_i)^2, \\qquad df_R = n - 2\\]\nEach term is the squared gap between one observation and the fitted line. This is the same RSS you already know from linear regression."
+    "text": "SSE(R): Residuals from the Linear Model\n\\[SSE(R) = \\sum_{i=1}^n (Y_i - \\widehat{Y}_i)^2, \\qquad df_R = n - 2\\]\nEach term is the squared gap between one observation (\\(i\\)) and the fitted line. This is the same RSS you already know from linear regression."
   },
   {
     "objectID": "slides/lec-09.html#linking-the-three-sser-sspe-sslf",
     "href": "slides/lec-09.html#linking-the-three-sser-sspe-sslf",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Linking the Three: SSE(R) = SSPE + SSLF",
     "text": "Linking the Three: SSE(R) = SSPE + SSLF\nEvery observation’s deviation from the line can be split into two pieces:\n\\[\\underbrace{(Y_i - \\widehat{Y}_i)}_{\\color{#D62728}{\\text{obs to fitted line}}} = \\underbrace{(Y_i - \\bar{Y}_j)}_{\\color{#1F77B4}{\\text{obs to group mean}}} + \\underbrace{(\\bar{Y}_j - \\widehat{Y}_i)}_{\\color{#2CA02C}{\\text{group mean to fitted line}}} \\qquad \\Rightarrow \\qquad SSE(R) = SSPE + SSLF\\]"
   },
   {
     "objectID": "slides/lec-09.html#sser-sspe-and-sslf-summary",
     "href": "slides/lec-09.html#sser-sspe-and-sslf-summary",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "SSE(R), SSPE, and SSLF: Summary",
     "text": "SSE(R), SSPE, and SSLF: Summary\n\n\n\n\nCompares\nCaptures\n\n\n\n\n\\(SSE(R)\\)\neach obs vs. fitted line\ntotal residual error\n\n\n\\(SSPE\\)\neach obs vs. group mean\npure within-group noise\n\n\n\\(SSLF\\)\neach group mean vs. fitted line\nfailure of linearity\n\n\n\nThe F test asks: is SSLF large relative to SSPE, or could it just be noise?"
   },
   {
     "objectID": "slides/lec-09.html#transformations-of-x",
     "href": "slides/lec-09.html#transformations-of-x",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Transformations of \\(X\\)",
     "text": "Transformations of \\(X\\)\nWe can transform \\(X\\) and/or \\(Y\\) and hope that the linear regression model is adequate for the transformed variables.\nTransformations of \\(X\\) address nonlinearity while leaving error variance roughly unchanged:\n\n\n\n\n\n\n\nShape of residual plot\nTry\n\n\n\n\nConcave up (fast growth)\n\\(X' = X^2\\) or \\(X' = e^X\\)\n\n\nConcave down (diminishing returns)\n\\(X' = \\log(X)\\) or \\(X' = \\sqrt{X}\\)\n\n\nDecreasing, convex\n\\(X' = 1/X\\) or \\(X' = e^{-X}\\)"
   },
   {
     "objectID": "slides/lec-09.html#transformations-of-y",
     "href": "slides/lec-09.html#transformations-of-y",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Transformations of \\(Y\\)",
-    "text": "Transformations of \\(Y\\)\nTransformations of \\(Y\\) address nonconstant variance and/or nonnormality:\n\\[Y' = \\sqrt{Y}, \\qquad Y' = \\log_{10}(Y), \\qquad Y' = 1/Y\\]\nThese are called variance-stabilizing transformations.\n\nUnlike \\(X\\) transformations, transforming \\(Y\\) changes the error structure, so it can fix both non-constant variance and non-normality at once.\nAfter fitting the model on \\(Y'\\), predictions must be back-transformed to the original scale (e.g., \\(\\widehat{Y} = (\\widehat{Y}')^2\\) after a square root transformation)."
+    "text": "Transformations of \\(Y\\)\nTransformations of \\(Y\\) address nonconstant variance and/or nonnormality:\n\\[Y' = \\sqrt{Y}, \\qquad Y' = \\log_{10}(Y), \\qquad Y' = 1/Y\\]\nThese are called variance-stabilizing transformations.\n\nUnlike \\(X\\) transformations, transforming \\(Y\\) changes the error structure, so it can fix both non-constant variance and non-normality at once.\nAfter fitting the model on \\(Y'\\), predictions must be back-transformed to the original scale to make predictions interpretable (e.g., \\(\\widehat{Y} = (\\widehat{Y}')^2\\) after a square root transformation)."
   },
   {
     "objectID": "slides/lec-09.html#model-diagnostics-overview",
     "href": "slides/lec-09.html#model-diagnostics-overview",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Model Diagnostics: Overview",
-    "text": "Model Diagnostics: Overview\nBefore applying formal tests or transformations, recall the four assumptions of simple linear regression and how we check them:\n\n\n\n\n\n\n\n\n\nAssumption\nWhat it says\nHow to check\n\n\n\n\n1. Linearity\n\\(E(Y \\mid X) = \\beta_0 + \\beta_1 X\\)\nResidual vs. fitted plot — no curve\n\n\n2. Independence\nErrors are uncorrelated\nStudy design / residual vs. order plot\n\n\n3. Equal variance\n\\(\\text{Var}(\\varepsilon_i) = \\sigma^2\\) (constant)\nResidual vs. fitted plot — no fan shape\n\n\n4. Normality\n\\(\\varepsilon_i \\sim N(0, \\sigma^2)\\)\nNormal Q-Q plot — points on line\n\n\n\n\n\nToday’s toolkit for when violations are found:\n\nNonlinearity → transform \\(X\\), or use the F test for lack of fit to confirm\nNonconstant variance / nonnormality → transform \\(Y\\) (Box-Cox can guide the choice)"
+    "text": "Model Diagnostics: Overview\nBefore applying formal tests or transformations, recall the four assumptions of simple linear regression and how we check them:\n\n\n\n\n\n\n\n\n\nAssumption\nWhat it says\nHow to check\n\n\n\n\n1. Linearity\n\\(E(Y \\mid X) = \\beta_0 + \\beta_1 X\\)\nResidual vs. fitted plot (no curve)\n\n\n2. Independence\nErrors are uncorrelated\nresidual vs. order plot (no trend)\n\n\n3. Equal variance\n\\(\\text{Var}(\\varepsilon_i) = \\sigma^2\\) (constant)\nResidual vs. fitted plot (no fan shape)\n\n\n4. Normality\n\\(\\varepsilon_i \\sim N(0, \\sigma^2)\\)\nNormal Q-Q plot (points on line)\n\n\n\n\n\nWhat to do when violations are found:\n\nNonlinearity → transform \\(X\\), or use the F test for lack of fit to confirm\nNonconstant variance / nonnormality → transform \\(Y\\) (Box-Cox can guide the choice)"
   },
   {
     "objectID": "slides/lec-09.html#quiz-2",
     "href": "slides/lec-09.html#quiz-2",
-    "title": "Lecture 9: Model Diagnostics — Formal Tests and Transformations",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
     "section": "Quiz 2",
     "text": "Quiz 2\n\nPlease put away all materials and take out a pencil and your calculator.\nGood luck!"
   },
@@ -3475,5 +3475,19 @@
       "Labs",
       "Lab 4"
     ]
+  },
+  {
+    "objectID": "slides/lec-09.html#box-cox-in-r-1",
+    "href": "slides/lec-09.html#box-cox-in-r-1",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
+    "section": "Box-Cox in R",
+    "text": "Box-Cox in R\n\n\n\nThe dashed lines on the plot show the 95% confidence interval for \\(\\lambda\\). If 1 is inside it, no transformation may be needed.\nThe peak is near \\(\\hat\\lambda \\approx 0.4\\) and the 95% CI runs from roughly 0.1 to 0.65, excluding \\(\\lambda = 1\\), so a transformation is warranted. Both \\(\\lambda = 0\\) (log) and \\(\\lambda = 0.5\\) (square root) are close to the CI, but we choose \\(Y' = \\log(\\text{Volume})\\) because log is more interpretable and the loss in log-likelihood relative to the peak is negligible."
+  },
+  {
+    "objectID": "slides/lec-09.html#lack-of-fit-decomposition",
+    "href": "slides/lec-09.html#lack-of-fit-decomposition",
+    "title": "Lecture 9: Formal Model Diagnostic Tests and Transformations",
+    "section": "Lack of Fit Decomposition",
+    "text": "Lack of Fit Decomposition\n\n\nSSE = SSLF + SSPE; the Error row is split into its two components.\n\n\n\n\n\n\n\n\n\nSource\ndf\nSS\nMS\nF\n\n\n\n\nModel\n\\(1\\)\nSSR\n\\(\\text{MSR} = \\text{SSR}/1\\)\nMSR/MSE\n\n\nError\n\\(n-2\\)\nSSE\n\\(\\text{MSE} = \\text{SSE}/(n-2)\\)\n\n\n\n  Lack of fit\n\\(c-2\\)\nSSLF\n\\(\\text{MSLF} = \\text{SSLF}/(c-2)\\)\nMSLF/MSPE\n\n\n  Pure error\n\\(n-c\\)\nSSPE\n\\(\\text{MSPE} = \\text{SSPE}/(n-c)\\)\n\n\n\nTotal\n\\(n-1\\)\nSSTO"
   }
 ]

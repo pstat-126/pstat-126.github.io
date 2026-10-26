@@ -10,8 +10,8 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Annie Adams">
-  <meta name="dcterms.date" content="2026-10-28">
-  <title>PSTAT 126 – Lecture 9: Model Diagnostics — Formal Tests and Transformations</title>
+  <meta name="dcterms.date" content="2026-10-26">
+  <title>PSTAT 126 – Lecture 9: Formal Model Diagnostic Tests and Transformations</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -204,7 +204,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-color="#003660" class="quarto-title-block center">
-  <h1 class="title">Lecture 9: Model Diagnostics — Formal Tests and Transformations</h1>
+  <h1 class="title">Lecture 9: Formal Model Diagnostic Tests and Transformations</h1>
   <p class="subtitle">PSTAT 126: Linear Regression</p>
 
 <div class="quarto-title-authors">
@@ -218,7 +218,7 @@ Annie Adams
     </div>
 </div>
 
-  <p class="date">2026-10-28</p>
+  <p class="date">2026-10-26</p>
 </section>
 <section id="learning-objectives" class="slide level2">
 <h2>Learning Objectives</h2>
@@ -254,28 +254,28 @@ Annie Adams
 <tr class="odd">
 <td style="text-align: left;">1. Linearity</td>
 <td style="text-align: left;"><span class="math inline">\(E(Y \mid X) = \beta_0 + \beta_1 X\)</span></td>
-<td style="text-align: left;">Residual vs.&nbsp;fitted plot — no curve</td>
+<td style="text-align: left;">Residual vs.&nbsp;fitted plot (no curve)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2. Independence</td>
 <td style="text-align: left;">Errors are uncorrelated</td>
-<td style="text-align: left;">Study design / residual vs.&nbsp;order plot</td>
+<td style="text-align: left;">residual vs.&nbsp;order plot (no trend)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">3. Equal variance</td>
 <td style="text-align: left;"><span class="math inline">\(\text{Var}(\varepsilon_i) = \sigma^2\)</span> (constant)</td>
-<td style="text-align: left;">Residual vs.&nbsp;fitted plot — no fan shape</td>
+<td style="text-align: left;">Residual vs.&nbsp;fitted plot (no fan shape)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">4. Normality</td>
 <td style="text-align: left;"><span class="math inline">\(\varepsilon_i \sim N(0, \sigma^2)\)</span></td>
-<td style="text-align: left;">Normal Q-Q plot — points on line</td>
+<td style="text-align: left;">Normal Q-Q plot (points on line)</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="fragment">
-<p><strong>Today’s toolkit for when violations are found:</strong></p>
+<p><strong>What to do when violations are found:</strong></p>
 <ul>
 <li><strong>Nonlinearity</strong> → transform <span class="math inline">\(X\)</span>, or use the F test for lack of fit to confirm</li>
 <li><strong>Nonconstant variance / nonnormality</strong> → transform <span class="math inline">\(Y\)</span> (Box-Cox can guide the choice)</li>
@@ -301,18 +301,18 @@ Annie Adams
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_f4693049" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_2f9844fc" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
 <section id="practice-reading-residual-plots-solution" class="slide level2 smaller">
 <h2>Practice: Reading Residual Plots — Solution</h2>
-<p><strong>(a)</strong> <strong>Plot A</strong> — the spread of residuals increases with the fitted value (fan shape), violating equal variance (Assumption 3).</p>
+<p><strong>(a)</strong> <strong>Plot A</strong> — the spread of residuals increases with the fitted value (fan shape), violating equal variance (Assumption 3). We can try transforming Y to fix this.</p>
 <div class="fragment">
-<p><strong>(b)</strong> <strong>Plot B</strong> — a curved trend remains in the residuals after fitting a line, violating linearity (Assumption 1).</p>
+<p><strong>(b)</strong> <strong>Plot B</strong> — a curved trend remains in the residuals after fitting a line, violating linearity (Assumption 1). We can try transforming X to fix this.</p>
 </div>
 <div class="fragment">
-<p><strong>(c)</strong> <strong>Plot C</strong> — random scatter around zero with no trend and roughly constant spread. This is the ideal pattern — no obvious violations.</p>
+<p><strong>(c)</strong> <strong>Plot C</strong> — random scatter around zero with no trend and roughly constant spread. This is the ideal pattern.</p>
 </div>
 </section>
 <section id="transformations" class="slide level2" data-background-color="#003660">
@@ -356,17 +356,17 @@ Annie Adams
 <p>These are called <strong>variance-stabilizing transformations</strong>.</p>
 <div class="fragment">
 <p>Unlike <span class="math inline">\(X\)</span> transformations, transforming <span class="math inline">\(Y\)</span> changes the error structure, so it can fix both non-constant variance and non-normality at once.</p>
-<p>After fitting the model on <span class="math inline">\(Y'\)</span>, predictions must be <strong>back-transformed</strong> to the original scale (e.g., <span class="math inline">\(\widehat{Y} = (\widehat{Y}')^2\)</span> after a square root transformation).</p>
+<p>After fitting the model on <span class="math inline">\(Y'\)</span>, predictions must be <strong>back-transformed</strong> to the original scale to make predictions interpretable (e.g., <span class="math inline">\(\widehat{Y} = (\widehat{Y}')^2\)</span> after a square root transformation).</p>
 </div>
 </section>
-<section id="box-cox-choosing-the-transformation-of-y" class="slide level2 smaller">
+<section id="box-cox-choosing-the-transformation-of-y" class="slide level2">
 <h2>Box-Cox: Choosing the Transformation of <span class="math inline">\(Y\)</span></h2>
+<div style="font-size: 0.55em;">
 <p>When it’s hard to tell from a residual plot which transformation to use, <strong>Box-Cox</strong> finds it for you.</p>
 <div class="fragment">
 <p><strong>The idea:</strong> try every power transformation <span class="math inline">\(Y^\lambda\)</span> for a range of <span class="math inline">\(\lambda\)</span> values. For each <span class="math inline">\(\lambda\)</span>, fit the regression and measure how well the residuals behave. Pick the <span class="math inline">\(\lambda\)</span> that gives the best fit.</p>
 </div>
 <div class="fragment">
-<p><strong>Reading the output:</strong> <code>boxcox()</code> plots a likelihood curve over <span class="math inline">\(\lambda\)</span>. Find the peak, then <strong>round to the nearest interpretable value</strong>:</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -398,26 +398,29 @@ Annie Adams
 </tr>
 </tbody>
 </table>
-<p>The dashed lines on the plot show the 95% confidence interval for <span class="math inline">\(\lambda\)</span> — if 1 is inside it, no transformation may be needed.</p>
 </div>
 <div class="fragment">
-<div style="font-size: 0.78em;">
 <p><strong>Under the hood:</strong> Box-Cox maximizes the profiled log-likelihood <span class="math inline">\(\ell_p(\lambda) = -\frac{n}{2}\log\{SSE(\lambda)/n\} + (\lambda-1)\sum \log Y_i\)</span> over <span class="math inline">\(\lambda\)</span>, where <span class="math inline">\(SSE(\lambda)\)</span> is the residual SS after fitting on <span class="math inline">\(Y^\lambda\)</span>.</p>
 </div>
 </div>
 </section>
 <section id="box-cox-in-r" class="slide level2 smaller">
 <h2>Box-Cox in R</h2>
-<p>The <code>trees</code> dataset records girth, height, and timber volume for 31 black cherry trees. Volume is right-skewed — a natural candidate for transformation.</p>
+<p>The <code>trees</code> dataset records girth, height, and timber volume for 31 black cherry trees. Volume is right-skewed, making it a candidate for transformation.</p>
+<p><strong>Reading the output:</strong> <code>boxcox()</code> plots a likelihood curve over <span class="math inline">\(\lambda\)</span>. Find the peak, then <strong>round to the nearest interpretable value</strong>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">library</span>(MASS)</span>
 <span id="cb1-2"><a aria-label="2"></a>fit_trees <span class="ot">&lt;-</span> <span class="fu">lm</span>(Volume <span class="sc">~</span> Girth, <span class="at">data =</span> trees)</span>
 <span id="cb1-3"><a aria-label="3"></a><span class="fu">boxcox</span>(fit_trees, <span class="at">lambda =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>, <span class="at">len =</span> <span class="dv">100</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-
 </div>
-<img data-src="lec-09_files/figure-revealjs/unnamed-chunk-3-1.png" width="672" class="r-stretch"><div class="fragment">
+</section>
+<section id="box-cox-in-r-1" class="slide level2 smaller">
+<h2>Box-Cox in R</h2>
+
+<img data-src="lec-09_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><div class="fragment">
 <div style="font-size: 0.82em;">
-<p>The peak is near <span class="math inline">\(\hat\lambda \approx 0.3\)</span> and the 95% CI excludes <span class="math inline">\(\lambda = 1\)</span>, so a transformation is warranted. Since 0 is inside the CI, we use <span class="math inline">\(Y' = \log(\text{Volume})\)</span> — the nearest interpretable value.</p>
+<p>The dashed lines on the plot show the 95% confidence interval for <span class="math inline">\(\lambda\)</span>. If 1 is inside it, no transformation may be needed.</p>
+<p>The peak is near <span class="math inline">\(\hat\lambda \approx 0.4\)</span> and the 95% CI runs from roughly 0.1 to 0.65, excluding <span class="math inline">\(\lambda = 1\)</span>, so a transformation is warranted. Both <span class="math inline">\(\lambda = 0\)</span> (log) and <span class="math inline">\(\lambda = 0.5\)</span> (square root) are close to the CI, but we choose <span class="math inline">\(Y' = \log(\text{Volume})\)</span> because log is more interpretable and the loss in log-likelihood relative to the peak is negligible.</p>
 </div>
 </div>
 </section>
@@ -434,7 +437,7 @@ Annie Adams
 <li><strong>Restricted model</strong> (linear regression, <span class="math inline">\(df_R = n-2\)</span>): imposes <span class="math inline">\(E(Y) = \beta_0 + \beta_1 X\)</span></li>
 </ul>
 <div class="fragment">
-<p>Since the full model is more flexible, <span class="math inline">\(SSE(R) \geq SSE(F)\)</span> always. The <strong>extra sum of squares</strong> <span class="math inline">\(SSE(R) - SSE(F)\)</span> quantifies the cost of imposing linearity — it should be small when the linear model is adequate.</p>
+<p>Since the full model is more flexible, <span class="math inline">\(SSE(R) \geq SSE(F)\)</span> always. The <strong>extra sum of squares</strong> <span class="math inline">\(SSE(R) - SSE(F)\)</span> quantifies the cost of imposing linearity. The extra sum of squares should be small when the linear model is adequate, since that implies the full model doesn’t have less error than the restricted.</p>
 <p><span class="math display">\[F^* = \frac{[SSE(R) - SSE(F)] / (df_R - df_F)}{SSE(F)/df_F} \overset{H_0}{\sim} F_{df_R - df_F,\; df_F}\]</span></p>
 <p>Reject <span class="math inline">\(H_0\)</span> (reject the linear model) if <span class="math inline">\(F^* &gt; F(1-\alpha;\; df_R - df_F,\; df_F)\)</span>.</p>
 </div>
@@ -461,29 +464,15 @@ Annie Adams
 </div>
 </div>
 </section>
-<section id="setup-replicated-observations" class="slide level2 smaller">
-<h2>Setup: Replicated Observations</h2>
-<div style="font-size: 0.82em;">
-<p>Denote <span class="math inline">\(X_1, \ldots, X_c\)</span> as the <span class="math inline">\(c\)</span> <strong>distinct</strong> observed values of <span class="math inline">\(X\)</span>.</p>
-<ul>
-<li><span class="math inline">\(j\)</span> indexes each distinct <span class="math inline">\(X\)</span> value (<span class="math inline">\(j = 1, \ldots, c\)</span>)</li>
-<li><span class="math inline">\(i\)</span> indexes the replicates for a given <span class="math inline">\(X_j\)</span> (<span class="math inline">\(i = 1, \ldots, n_j\)</span>)</li>
-<li><span class="math inline">\(n_j\)</span> = number of <span class="math inline">\(Y\)</span> values at <span class="math inline">\(X_j\)</span></li>
-</ul>
-<p>The full dataset:</p>
-<p><span class="math display">\[n_1 \text{ replicates at } X_1: Y_{11}, \ldots, Y_{n_1 1}\]</span> <span class="math display">\[n_2 \text{ replicates at } X_2: Y_{12}, \ldots, Y_{n_2 2}\]</span> <span class="math display">\[\vdots\]</span> <span class="math display">\[n_c \text{ replicates at } X_c: Y_{1c}, \ldots, Y_{n_c c}\]</span></p>
-<p>Total observations: <span class="math inline">\(n = \sum_{j=1}^c n_j\)</span></p>
-</div>
-</section>
 <section id="sser-residuals-from-the-linear-model" class="slide level2 smaller">
 <h2>SSE(R): Residuals from the Linear Model</h2>
 <p><span class="math display">\[SSE(R) = \sum_{i=1}^n (Y_i - \widehat{Y}_i)^2, \qquad df_R = n - 2\]</span></p>
-<p>Each term is the squared gap between <strong>one observation</strong> and the <strong>fitted line</strong>. This is the same RSS you already know from linear regression.</p>
+<p>Each term is the squared gap between <strong>one observation</strong> (<span class="math inline">\(i\)</span>) and the <strong>fitted line</strong>. This is the same RSS you already know from linear regression.</p>
 </section>
 <section id="sspe-sum-of-squares-pure-error" class="slide level2 smaller">
 <h2>SSPE: Sum of Squares Pure Error</h2>
 <p><span class="math display">\[SSPE = \sum_{j=1}^c \sum_{i=1}^{n_j} (Y_{ij} - \bar{Y}_j)^2, \qquad df_{PE} = n - c\]</span></p>
-<p>Each term is the squared gap between <strong>one observation</strong> and its <strong>group mean</strong>.</p>
+<p>Each term is the squared gap between <strong>one observation</strong> (<span class="math inline">\(ij\)</span>) and its <strong>group mean</strong> (<span class="math inline">\(j\)</span>), where <span class="math inline">\(j\)</span> indexes each distinct <span class="math inline">\(X\)</span> value and <span class="math inline">\(i\)</span> indexes replicates within that group.</p>
 <div class="fragment">
 <p>This captures only natural within-group scatter. It is not referencing the fitted line at all. No matter what shape the true relationship is, SSPE stays the same. That is why it is called <strong>pure</strong> error.</p>
 </div>
@@ -491,9 +480,9 @@ Annie Adams
 <section id="sslf-sum-of-squares-lack-of-fit" class="slide level2 smaller">
 <h2>SSLF: Sum of Squares Lack of Fit</h2>
 <p><span class="math display">\[SSLF = \sum_{j=1}^c n_j(\bar{Y}_j - \widehat{Y}_j)^2, \qquad df_{LF} = c - 2\]</span></p>
-<p>Each term is the squared gap between a <strong>group mean</strong> and the <strong>fitted line</strong>, weighted by group size.</p>
+<p>Each term is the squared gap between a <strong>group mean</strong> (<span class="math inline">\(j\)</span>) and the <strong>fitted line</strong> at that <span class="math inline">\(X_j\)</span>, weighted by group size (<span class="math inline">\(n_j\)</span>).</p>
 <div class="fragment">
-<p>This captures only the failure of linearity — how far the line misses each group mean. Within-group scatter plays no role. If the line passes through every group mean perfectly, <span class="math inline">\(SSLF = 0\)</span>.</p>
+<p>This captures only the failure of linearity — how far the line misses each group mean. If the line passes through every group mean perfectly, <span class="math inline">\(SSLF = 0\)</span>.</p>
 </div>
 </section>
 <section id="linking-the-three-sser-sspe-sslf" class="slide level2 smaller">
@@ -535,10 +524,20 @@ Annie Adams
 <h2>The F Test for Lack of Fit</h2>
 <p>Plugging the SSPE/SSLF decomposition into the extra SS framework gives the <strong>lack of fit F test</strong> (also called the <strong>pure error test</strong>):</p>
 <p><span class="math display">\[F^* = \frac{SSLF/(c-2)}{SSPE/(n-c)} = \frac{MSLF}{MSPE} \overset{H_0}{\sim} F_{c-2,\; n-c}\]</span></p>
-<p>Reject <span class="math inline">\(H_0\)</span> (the linear model) when group means stray far from the fitted line relative to within-group noise.</p>
-<div class="fragment">
-<p><strong>ANOVA table with lack of fit decomposition:</strong></p>
+<p>where <span class="math inline">\(c\)</span> is the number of distinct <span class="math inline">\(X\)</span> values and <span class="math inline">\(n\)</span> is the total number of observations. Reject <span class="math inline">\(H_0\)</span> (the linear model) when group means stray far from the fitted line relative to within-group noise.</p>
+</section>
+<section id="lack-of-fit-decomposition" class="slide level2">
+<h2>Lack of Fit Decomposition</h2>
+<div style="font-size: 0.70em;">
 <table class="caption-top">
+<caption>SSE = SSLF + SSPE; the Error row is split into its two components.</caption>
+<colgroup>
+<col style="width: 34%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 13%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Source</th>
@@ -551,30 +550,30 @@ Annie Adams
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Model</td>
-<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
 <td style="text-align: center;">SSR</td>
-<td style="text-align: center;">MSR = SSR/1</td>
+<td style="text-align: center;"><span class="math inline">\(\text{MSR} = \text{SSR}/1\)</span></td>
 <td style="text-align: center;">MSR/MSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Error</td>
 <td style="text-align: center;"><span class="math inline">\(n-2\)</span></td>
 <td style="text-align: center;">SSE</td>
-<td style="text-align: center;">MSE = SSE/<span class="math inline">\((n-2)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\text{MSE} = \text{SSE}/(n-2)\)</span></td>
 <td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">— Lack of fit</td>
+<td style="text-align: left;">  Lack of fit</td>
 <td style="text-align: center;"><span class="math inline">\(c-2\)</span></td>
 <td style="text-align: center;">SSLF</td>
-<td style="text-align: center;">MSLF = SSLF/<span class="math inline">\((c-2)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\text{MSLF} = \text{SSLF}/(c-2)\)</span></td>
 <td style="text-align: center;">MSLF/MSPE</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">— Pure error</td>
+<td style="text-align: left;">  Pure error</td>
 <td style="text-align: center;"><span class="math inline">\(n-c\)</span></td>
 <td style="text-align: center;">SSPE</td>
-<td style="text-align: center;">MSPE = SSPE/<span class="math inline">\((n-c)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\text{MSPE} = \text{SSPE}/(n-c)\)</span></td>
 <td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
@@ -666,7 +665,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_a183fb2f" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_75c2dfae" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -700,7 +699,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_55c237aa" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_2195e2fd" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>

@@ -1,9 +1,9 @@
 ---
-title: "Lecture 9: Model Diagnostics — Formal Tests and Transformations"
+title: "Lecture 9: Formal Model Diagnostic Tests and Transformations"
 subtitle: "PSTAT 126: Linear Regression"
 author: "Annie Adams"
 institute: "UC Santa Barbara"
-date: "10/28/2026"
+date: "10/26/2026"
 format:
   revealjs:
     theme: [default, ../styles.scss]
@@ -40,15 +40,15 @@ Before applying formal tests or transformations, recall the four assumptions of 
 
 | Assumption | What it says | How to check |
 |:--|:--|:--|
-| 1. Linearity | $E(Y \mid X) = \beta_0 + \beta_1 X$ | Residual vs. fitted plot — no curve |
-| 2. Independence | Errors are uncorrelated | Study design / residual vs. order plot |
-| 3. Equal variance | $\text{Var}(\varepsilon_i) = \sigma^2$ (constant) | Residual vs. fitted plot — no fan shape |
-| 4. Normality | $\varepsilon_i \sim N(0, \sigma^2)$ | Normal Q-Q plot — points on line |
+| 1. Linearity | $E(Y \mid X) = \beta_0 + \beta_1 X$ | Residual vs. fitted plot (no curve) |
+| 2. Independence | Errors are uncorrelated | residual vs. order plot (no trend) |
+| 3. Equal variance | $\text{Var}(\varepsilon_i) = \sigma^2$ (constant) | Residual vs. fitted plot (no fan shape) |
+| 4. Normality | $\varepsilon_i \sim N(0, \sigma^2)$ | Normal Q-Q plot (points on line) |
 
 :::
 
 ::: {.fragment}
-**Today's toolkit for when violations are found:**
+**What to do when violations are found:**
 
 - **Nonlinearity** → transform $X$, or use the F test for lack of fit to confirm
 - **Nonconstant variance / nonnormality** → transform $Y$ (Box-Cox can guide the choice)
@@ -113,14 +113,14 @@ countdown::countdown(
 
 ## Practice: Reading Residual Plots — Solution {.smaller}
 
-**(a)** **Plot A** — the spread of residuals increases with the fitted value (fan shape), violating equal variance (Assumption 3).
+**(a)** **Plot A** — the spread of residuals increases with the fitted value (fan shape), violating equal variance (Assumption 3). We can try transforming Y to fix this. 
 
 ::: {.fragment}
-**(b)** **Plot B** — a curved trend remains in the residuals after fitting a line, violating linearity (Assumption 1).
+**(b)** **Plot B** — a curved trend remains in the residuals after fitting a line, violating linearity (Assumption 1). We can try transforming X to fix this. 
 :::
 
 ::: {.fragment}
-**(c)** **Plot C** — random scatter around zero with no trend and roughly constant spread. This is the ideal pattern — no obvious violations.
+**(c)** **Plot C** — random scatter around zero with no trend and roughly constant spread. This is the ideal pattern.
 :::
 
 ---
@@ -154,12 +154,13 @@ These are called **variance-stabilizing transformations**.
 ::: {.fragment}
 Unlike $X$ transformations, transforming $Y$ changes the error structure, so it can fix both non-constant variance and non-normality at once.
 
-After fitting the model on $Y'$, predictions must be **back-transformed** to the original scale (e.g., $\widehat{Y} = (\widehat{Y}')^2$ after a square root transformation).
+After fitting the model on $Y'$, predictions must be **back-transformed** to the original scale to make predictions interpretable (e.g., $\widehat{Y} = (\widehat{Y}')^2$ after a square root transformation).
 :::
 
 ---
 
-## Box-Cox: Choosing the Transformation of $Y$ {.smaller}
+## Box-Cox: Choosing the Transformation of $Y$ 
+::: {style="font-size: 0.55em;"}
 
 When it's hard to tell from a residual plot which transformation to use, **Box-Cox** finds it for you.
 
@@ -168,7 +169,6 @@ When it's hard to tell from a residual plot which transformation to use, **Box-C
 :::
 
 ::: {.fragment}
-**Reading the output:** `boxcox()` plots a likelihood curve over $\lambda$. Find the peak, then **round to the nearest interpretable value**:
 
 | $\hat\lambda$ | Transformation | Use when |
 |:--:|:--|:--|
@@ -176,27 +176,36 @@ When it's hard to tell from a residual plot which transformation to use, **Box-C
 | 0.5 | $Y' = \sqrt{Y}$ | mild right skew / fan shape |
 | 0 | $Y' = \log Y$ | strong right skew / variance grows with mean |
 | −1 | $Y' = 1/Y$ | severe right skew |
-
-The dashed lines on the plot show the 95% confidence interval for $\lambda$ — if 1 is inside it, no transformation may be needed.
 :::
 
-::: {.fragment}
-::: {style="font-size: 0.78em;"}
+:::{.fragment}
 **Under the hood:** Box-Cox maximizes the profiled log-likelihood $\ell_p(\lambda) = -\frac{n}{2}\log\{SSE(\lambda)/n\} + (\lambda-1)\sum \log Y_i$ over $\lambda$, where $SSE(\lambda)$ is the residual SS after fitting on $Y^\lambda$.
 :::
 :::
-
 ---
 
 ## Box-Cox in R {.smaller}
 
-The `trees` dataset records girth, height, and timber volume for 31 black cherry trees. Volume is right-skewed — a natural candidate for transformation.
+The `trees` dataset records girth, height, and timber volume for 31 black cherry trees. Volume is right-skewed, making it a candidate for transformation.
+
+**Reading the output:** `boxcox()` plots a likelihood curve over $\lambda$. Find the peak, then **round to the nearest interpretable value**:
 
 ```{r}
 #| echo: true
+#| eval: false
+#| fig-width: 10
+#| fig-height: 5
+library(MASS)
+fit_trees <- lm(Volume ~ Girth, data = trees)
+boxcox(fit_trees, lambda = seq(-1, 2, len = 100))
+```
+
+## Box-Cox in R {.smaller}
+```{r}
+#| echo: false
 #| eval: true
-#| fig-width: 7
-#| fig-height: 3.2
+#| fig-width: 10
+#| fig-height: 5
 library(MASS)
 fit_trees <- lm(Volume ~ Girth, data = trees)
 boxcox(fit_trees, lambda = seq(-1, 2, len = 100))
@@ -204,7 +213,10 @@ boxcox(fit_trees, lambda = seq(-1, 2, len = 100))
 
 ::: {.fragment}
 ::: {style="font-size: 0.82em;"}
-The peak is near $\hat\lambda \approx 0.3$ and the 95% CI excludes $\lambda = 1$, so a transformation is warranted. Since 0 is inside the CI, we use $Y' = \log(\text{Volume})$ — the nearest interpretable value.
+
+The dashed lines on the plot show the 95% confidence interval for $\lambda$. If 1 is inside it, no transformation may be needed.
+
+The peak is near $\hat\lambda \approx 0.4$ and the 95% CI runs from roughly 0.1 to 0.65, excluding $\lambda = 1$, so a transformation is warranted. Both $\lambda = 0$ (log) and $\lambda = 0.5$ (square root) are close to the CI, but we choose $Y' = \log(\text{Volume})$ because log is more interpretable and the loss in log-likelihood relative to the peak is negligible.
 :::
 :::
 
@@ -226,7 +238,7 @@ Compare two nested models:
 - **Restricted model** (linear regression, $df_R = n-2$): imposes $E(Y) = \beta_0 + \beta_1 X$
 
 ::: {.fragment}
-Since the full model is more flexible, $SSE(R) \geq SSE(F)$ always. The **extra sum of squares** $SSE(R) - SSE(F)$ quantifies the cost of imposing linearity — it should be small when the linear model is adequate.
+Since the full model is more flexible, $SSE(R) \geq SSE(F)$ always. The **extra sum of squares** $SSE(R) - SSE(F)$ quantifies the cost of imposing linearity. The extra sum of squares should be small when the linear model is adequate, since that implies the full model doesn't have less error than the restricted. 
 
 $$F^* = \frac{[SSE(R) - SSE(F)] / (df_R - df_F)}{SSE(F)/df_F} \overset{H_0}{\sim} F_{df_R - df_F,\; df_F}$$
 
@@ -266,34 +278,11 @@ The model makes no claim about the relationship between these means.
 
 ---
 
-## Setup: Replicated Observations {.smaller}
-
-::: {style="font-size: 0.82em;"}
-
-Denote $X_1, \ldots, X_c$ as the $c$ **distinct** observed values of $X$.
-
-- $j$ indexes each distinct $X$ value ($j = 1, \ldots, c$)
-- $i$ indexes the replicates for a given $X_j$ ($i = 1, \ldots, n_j$)
-- $n_j$ = number of $Y$ values at $X_j$
-
-The full dataset:
-
-$$n_1 \text{ replicates at } X_1: Y_{11}, \ldots, Y_{n_1 1}$$
-$$n_2 \text{ replicates at } X_2: Y_{12}, \ldots, Y_{n_2 2}$$
-$$\vdots$$
-$$n_c \text{ replicates at } X_c: Y_{1c}, \ldots, Y_{n_c c}$$
-
-Total observations: $n = \sum_{j=1}^c n_j$
-
-:::
-
----
-
 ## SSE(R): Residuals from the Linear Model {.smaller}
 
 $$SSE(R) = \sum_{i=1}^n (Y_i - \widehat{Y}_i)^2, \qquad df_R = n - 2$$
 
-Each term is the squared gap between **one observation** and the **fitted line**. This is the same RSS you already know from linear regression.
+Each term is the squared gap between **one observation** ($i$) and the **fitted line**. This is the same RSS you already know from linear regression.
 
 ---
 
@@ -301,7 +290,7 @@ Each term is the squared gap between **one observation** and the **fitted line**
 
 $$SSPE = \sum_{j=1}^c \sum_{i=1}^{n_j} (Y_{ij} - \bar{Y}_j)^2, \qquad df_{PE} = n - c$$
 
-Each term is the squared gap between **one observation** and its **group mean**.
+Each term is the squared gap between **one observation** ($ij$) and its **group mean** ($j$), where $j$ indexes each distinct $X$ value and $i$ indexes replicates within that group.
 
 ::: {.fragment}
 This captures only natural within-group scatter. It is not referencing the fitted line at all. No matter what shape the true relationship is, SSPE stays the same. That is why it is called **pure** error.
@@ -313,10 +302,10 @@ This captures only natural within-group scatter. It is not referencing the fitte
 
 $$SSLF = \sum_{j=1}^c n_j(\bar{Y}_j - \widehat{Y}_j)^2, \qquad df_{LF} = c - 2$$
 
-Each term is the squared gap between a **group mean** and the **fitted line**, weighted by group size.
+Each term is the squared gap between a **group mean** ($j$) and the **fitted line** at that $X_j$, weighted by group size ($n_j$).
 
 ::: {.fragment}
-This captures only the failure of linearity — how far the line misses each group mean. Within-group scatter plays no role. If the line passes through every group mean perfectly, $SSLF = 0$.
+This captures only the failure of linearity — how far the line misses each group mean. If the line passes through every group mean perfectly, $SSLF = 0$.
 :::
 
 ---
@@ -347,18 +336,24 @@ Plugging the SSPE/SSLF decomposition into the extra SS framework gives the **lac
 
 $$F^* = \frac{SSLF/(c-2)}{SSPE/(n-c)} = \frac{MSLF}{MSPE} \overset{H_0}{\sim} F_{c-2,\; n-c}$$
 
-Reject $H_0$ (the linear model) when group means stray far from the fitted line relative to within-group noise.
+where $c$ is the number of distinct $X$ values and $n$ is the total number of observations. Reject $H_0$ (the linear model) when group means stray far from the fitted line relative to within-group noise.
 
-::: {.fragment}
-**ANOVA table with lack of fit decomposition:**
+
+---
+
+## Lack of Fit Decomposition
+::: {style="font-size: 0.70em;"}
+
 
 | Source | df | SS | MS | F |
 |:-------|:--:|:--:|:--:|:-:|
-| Model | 1 | SSR | MSR = SSR/1 | MSR/MSE |
-| Error | $n-2$ | SSE | MSE = SSE/$(n-2)$ | |
-| — Lack of fit | $c-2$ | SSLF | MSLF = SSLF/$(c-2)$ | MSLF/MSPE |
-| — Pure error | $n-c$ | SSPE | MSPE = SSPE/$(n-c)$ | |
+| Model | $1$ | SSR | $\text{MSR} = \text{SSR}/1$ | MSR/MSE |
+| Error | $n-2$ | SSE | $\text{MSE} = \text{SSE}/(n-2)$ | |
+| &emsp; Lack of fit | $c-2$ | SSLF | $\text{MSLF} = \text{SSLF}/(c-2)$ | MSLF/MSPE |
+| &emsp; Pure error | $n-c$ | SSPE | $\text{MSPE} = \text{SSPE}/(n-c)$ | |
 | Total | $n-1$ | SSTO | | |
+
+: SSE = SSLF + SSPE; the Error row is split into its two components.
 :::
 
 ---
