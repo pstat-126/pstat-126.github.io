@@ -68,6 +68,8 @@ website:
             href: labs/lab-02.qmd
           - text: "Lab 3"
             href: labs/lab-03.qmd
+          - text: "Lab 4"
+            href: labs/lab-04.qmd
       - section: "Exams"
         contents:
           - text: "Midterm"

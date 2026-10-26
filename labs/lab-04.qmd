@@ -1,0 +1,316 @@
+---
+title: "Lab 4: Prediction, ANOVA, and Model Diagnostics"
+subtitle: "PSTAT 126 — Mon, Oct 26"
+---
+
+::: callout-note
+Download the `.Rmd` file below, open it in RStudio, and work through the exercises inside.
+:::
+
+<a href="lab-04.Rmd" class="btn btn-primary" download="lab-04.Rmd">Download lab-04.Rmd</a>
+
+## Learning goals
+
+In this lab, we will work with the **Palmer Penguins** dataset. Our main goals are:
+
+1. Distinguish between **confidence intervals for the mean response** and **prediction intervals for new observations**.
+2. Compute and visualize CI and PI bands using `predict()`.
+3. Partition variation using the **ANOVA table** and interpret $R^2$.
+4. Verify the $F = t^2$ relationship in simple linear regression.
+5. Check model assumptions using **residual plots** and **QQ-plots**.
+
+## Setup
+
+```{r setup, message=FALSE, warning=FALSE, eval=FALSE}
+library(tidyverse)
+library(palmerpenguins)
+library(ggplot2)
+library(skimr)
+```
+
+---
+
+## Load and inspect the data
+
+We will again use the `penguins` dataset.
+
+```{r, eval=FALSE}
+data("penguins")
+head(penguins)
+```
+
+For this lab, we will focus on the variables:
+
+- `body_mass_g`: body mass in grams
+- `bill_length_mm`: bill length in millimeters
+- `species`: penguin species
+
+Let us keep only the variables we need and remove missing values.
+
+```{r, eval=FALSE}
+penguins_lab <- penguins %>%
+  select(species, bill_length_mm, body_mass_g) %>%
+  drop_na()
+
+head(penguins_lab)
+```
+
+### Quick visual review of the data
+
+```{r, fig.height=4, eval=FALSE}
+ggplot(penguins_lab, aes(x = bill_length_mm, y = body_mass_g, color = species)) +
+  geom_point(alpha = 0.8) +
+  theme_minimal() +
+  labs(
+    title = "Body Mass vs Bill Length",
+    x = "Bill Length (mm)",
+    y = "Body Mass (g)"
+  )
+```
+
+Does the relationship look linear? Does the spread of points appear roughly constant across the range of bill lengths?
+
+## Fitting the model
+
+We model body mass (`body_mass_g`) using bill length (`bill_length_mm`) as the predictor.
+
+```{r, eval=FALSE}
+reg_fit <- lm(body_mass_g ~ bill_length_mm, data = penguins_lab)
+summary(reg_fit)
+```
+
+---
+
+## Confidence and Prediction Intervals
+
+When predicting at a new value $x^*$, there are two distinct questions:
+
+- **Confidence interval for the mean response:** What is the average body mass for *all* penguins with bill length $x^*$? Uncertainty comes only from estimating the regression line.
+- **Prediction interval for a new observation:** What will the body mass of *one new* penguin with bill length $x^*$ be? Uncertainty comes from both the estimated line and irreducible individual noise $\varepsilon^*$.
+
+The formulas are:
+
+$$\text{CI: } \hat{Y}^* \pm t_{1-\alpha/2,\, n-2}\sqrt{\text{MSE}\!\left(\frac{1}{n} + \frac{(x^* - \bar{X})^2}{S_{xx}}\right)}$$
+
+$$\text{PI: } \hat{Y}^* \pm t_{1-\alpha/2,\, n-2}\sqrt{\text{MSE}\!\left(1 + \frac{1}{n} + \frac{(x^* - \bar{X})^2}{S_{xx}}\right)}$$
+
+The extra $1$ under the radical in the PI accounts for the irreducible individual noise $\varepsilon^*$.
+
+### Point prediction
+
+Suppose a new penguin has bill length 45 mm.
+
+```{r, eval=FALSE}
+new_penguin <- data.frame(bill_length_mm = 45)
+predict(reg_fit, newdata = new_penguin)
+```
+
+### Confidence interval for the mean response
+
+```{r, eval=FALSE}
+predict(reg_fit, newdata = new_penguin, interval = "confidence", level = 0.95)
+```
+
+> **Question 1.** Interpret this confidence interval in context.
+>
+> *Answer:*
+
+### Prediction interval for a new observation
+
+```{r, eval=FALSE}
+predict(reg_fit, newdata = new_penguin, interval = "prediction", level = 0.95)
+```
+
+> **Question 2.** Compare the widths of the CI and PI. Which is wider? Why?
+>
+> *Answer:*
+
+### Coding exercise
+
+Obtain a 99% CI and 99% PI for a penguin with bill length 50 mm.
+
+```{r, eval=FALSE}
+new_penguin2 <- data.frame(bill_length_mm = 50)
+
+# TODO: compute 99% CI for the mean response at bill_length_mm = 50
+ci_99 <- NULL
+
+# TODO: compute 99% PI for a new observation at bill_length_mm = 50
+pi_99 <- NULL
+```
+
+### Visualizing both intervals
+
+```{r, fig.height=5, eval=FALSE}
+ci <- predict(reg_fit, interval = "confidence")
+pi <- predict(reg_fit, interval = "prediction")
+
+ggplot(penguins_lab, aes(x = bill_length_mm, y = body_mass_g)) +
+  geom_ribbon(aes(ymin = pi[, "lwr"], ymax = pi[, "upr"]), fill = "orange", alpha = 0.3) +
+  geom_ribbon(aes(ymin = ci[, "lwr"], ymax = ci[, "upr"]), fill = "steelblue", alpha = 0.4) +
+  geom_line(aes(y = ci[, "fit"]), color = "firebrick", linewidth = 1) +
+  geom_point(alpha = 0.5) +
+  theme_minimal() +
+  labs(
+    title = "Regression Line with Confidence and Prediction Bands",
+    x = "Bill Length (mm)",
+    y = "Body Mass (g)"
+  )
+```
+
+> **Question 3.** Where are the bands narrowest on the plot? What happens to the width of both intervals as $x^*$ moves away from $\bar{X}$? What does this say about making predictions far from the center of the data?
+>
+> *Answer:*
+
+---
+
+## Analysis of Variance
+
+ANOVA partitions the total variation in $Y$ into a component explained by the model and a residual component:
+
+$$\underbrace{\sum_{i=1}^n (Y_i - \bar{Y})^2}_{\text{SST}} = \underbrace{\sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2}_{\text{SSR}} + \underbrace{\sum_{i=1}^n (Y_i - \hat{Y}_i)^2}_{\text{SSE}}$$
+
+```{r, eval=FALSE}
+anova(reg_fit)
+```
+
+The ANOVA table includes:
+
+- **Df**: degrees of freedom (1 for model, $n - 2$ for residuals)
+- **Sum Sq**: SSR and SSE
+- **Mean Sq**: $\text{MSR} = \text{SSR}/1$, $\text{MSE} = \text{SSE}/(n-2)$
+- **F value**: $F^* = \text{MSR}/\text{MSE}$
+
+Under $H_0: \beta_1 = 0$, $F^* \sim F_{1,\, n-2}$. We reject $H_0$ at level $\alpha$ when $F^*$ exceeds the critical value $F_{1-\alpha;\, 1,\, n-2}$, found with `qf()`.
+
+```{r, eval=FALSE}
+n <- nrow(penguins_lab)
+F_crit <- qf(0.95, df1 = 1, df2 = n - 2)
+cat("Critical value:", round(F_crit, 4), "\n")
+```
+
+> **Question 4.** Report the F-statistic from the ANOVA table. Compare it to the critical value above and state whether you reject $H_0: \beta_1 = 0$ at $\alpha = 0.05$. State your conclusion in context.
+>
+> *Answer:*
+
+### Extracting ANOVA components
+
+```{r, eval=FALSE}
+anova_tbl <- anova(reg_fit)
+SSR    <- anova_tbl[1, "Sum Sq"]
+SSE    <- anova_tbl[2, "Sum Sq"]
+SST    <- SSR + SSE
+MSR    <- anova_tbl[1, "Mean Sq"]
+MSE    <- anova_tbl[2, "Mean Sq"]
+F_stat <- anova_tbl[1, "F value"]
+
+cat("SSR =", round(SSR, 2), " SSE =", round(SSE, 2), " SST =", round(SST, 2), "\n")
+cat("MSR =", round(MSR, 2), " MSE =", round(MSE, 2), " F =", round(F_stat, 2), "\n")
+```
+
+### $R^2$
+
+$R^2 = \text{SSR}/\text{SST}$ is the proportion of total variation in $Y$ explained by the model.
+
+```{r, eval=FALSE}
+# TODO: compute R-squared as SSR / SST
+R2 <- NULL
+cat("R^2 =", round(R2, 4), "\n")
+```
+
+Verify against `summary()`:
+
+```{r, eval=FALSE}
+summary(reg_fit)$r.squared
+```
+
+> **Question 5.** Interpret $R^2$ in context. Does a high $R^2$ guarantee the linear model is appropriate? Why or why not?
+>
+> *Answer:*
+
+### Connection between $F$ and $t$
+
+In simple linear regression, $F^* = (t^*)^2$. The F-test and the two-sided t-test for $\beta_1 = 0$ always lead to the same conclusion.
+
+```{r, eval=FALSE}
+t_from_model <- summary(reg_fit)$coefficients["bill_length_mm", "t value"]
+cat("t^2 =", round(t_from_model^2, 2), "  F =", round(F_stat, 2), "\n")
+```
+
+---
+
+## Model Diagnostics
+
+All inference (CIs, PIs, F-tests) is only valid if the model assumptions hold. The regression model $Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i$ with $\varepsilon_i \stackrel{iid}{\sim} N(0, \sigma^2)$ encodes four assumptions:
+
+1. **Linearity:** $E(Y) = \beta_0 + \beta_1 X$
+2. **Independence:** observations are uncorrelated
+3. **Equal variance (homoscedasticity):** $\text{Var}(\varepsilon_i) = \sigma^2$ for all $i$
+4. **Normality:** $\varepsilon_i \sim N(0, \sigma^2)$
+
+We check these assumptions using **residual plots**. The key functions are `residuals()` for the residuals $e_i = Y_i - \hat{Y}_i$ and `fitted()` for the fitted values $\hat{Y}_i$.
+
+### Plot 1: Residuals vs. $X$ (linearity)
+
+Random scatter around zero suggests linearity is met. A curved pattern indicates the true relationship is nonlinear.
+
+```{r, fig.height=4, eval=FALSE}
+plot(penguins_lab$bill_length_mm, residuals(reg_fit),
+     xlab = "Bill Length (mm)", ylab = "Residuals",
+     main = "Residuals vs X", pch = 16, col = "#003660")
+abline(h = 0, lty = 2)
+```
+
+### Plot 2: Residuals vs. Fitted Values (equal variance)
+
+Constant vertical spread suggests equal variance. A fan shape — spread increasing or decreasing with fitted values — indicates heteroscedasticity.
+
+```{r, fig.height=4, eval=FALSE}
+plot(fitted(reg_fit), residuals(reg_fit),
+     xlab = "Fitted Values", ylab = "Residuals",
+     main = "Residuals vs Fitted", pch = 16, col = "#003660")
+abline(h = 0, lty = 2)
+```
+
+> **Question 6.** Examine both residual plots. Does the linearity assumption appear to be met? Does the equal variance assumption appear to be met? Describe any patterns you observe.
+>
+> *Answer:*
+
+### Plot 3: QQ-plot (normality)
+
+Points near the diagonal indicate the residuals are approximately normally distributed. A U-shaped or S-shaped curve indicates departures from normality.
+
+```{r, fig.height=4, eval=FALSE}
+# TODO: create a QQ-plot of the residuals using qqnorm(); add the reference line with qqline()
+```
+
+> **Question 7.** Do the residuals appear approximately normal based on the QQ-plot? Describe any departures from the reference line.
+>
+> *Answer:*
+
+> **Question 8.** Based on the three plots, do the linearity, equal variance, and normality assumptions appear to be satisfied for this model? Which assumption, if any, concerns you most?
+>
+> *Answer:*
+
+---
+
+## Wrap-up
+
+In this lab, you practiced:
+
+-   distinguishing between **confidence intervals for the mean response** and **prediction intervals for new observations**,
+-   computing and visualizing CI and PI bands using `predict()`,
+-   partitioning total variation via the **ANOVA table** and interpreting $R^2$,
+-   verifying the $F = t^2$ relationship in simple linear regression,
+-   and checking regression assumptions with **residual plots** and **QQ-plots**.
+
+---
+
+## Submission Instructions
+
+Before submitting, knit your completed lab to PDF:
+
+1.  At the top of the file, confirm the output format includes `pdf_document` in the YAML header.
+2.  Click the **Knit** button in RStudio (or use Ctrl/Cmd + Shift + K).
+3.  Review the PDF to confirm all plots, computed values, and written answers appear correctly.
+4.  Upload the PDF to **Gradescope** under the Lab 4 assignment.
