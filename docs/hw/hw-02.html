@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Your Name">
-<meta name="dcterms.date" content="2026-10-21">
+<meta name="dcterms.date" content="2026-10-26">
 
 <title>Homework Assignment 2 – PSTAT 126</title>
 <style>
@@ -314,6 +314,12 @@ window.Quarto = {
  <span class="menu-text">Lab 3</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/lab-04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab 4</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -349,9 +355,9 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data-download-instructions" id="toc-data-download-instructions" class="nav-link active" data-scroll-target="#data-download-instructions">Data Download Instructions</a>
+  <li><a href="#data" id="toc-data" class="nav-link active" data-scroll-target="#data">Data</a>
   <ul class="collapse">
-  <li><a href="#dataset-1-world-happiness-report-problem-1" id="toc-dataset-1-world-happiness-report-problem-1" class="nav-link" data-scroll-target="#dataset-1-world-happiness-report-problem-1">Dataset 1 — World Happiness Report (Problem 1)</a></li>
+  <li><a href="#dataset-1-world-happiness-problem-1" id="toc-dataset-1-world-happiness-problem-1" class="nav-link" data-scroll-target="#dataset-1-world-happiness-problem-1">Dataset 1 — World Happiness (Problem 1)</a></li>
   <li><a href="#dataset-2-noaa-global-surface-temperature-anomalies-problem-2" id="toc-dataset-2-noaa-global-surface-temperature-anomalies-problem-2" class="nav-link" data-scroll-target="#dataset-2-noaa-global-surface-temperature-anomalies-problem-2">Dataset 2 — NOAA Global Surface Temperature Anomalies (Problem 2)</a></li>
   </ul></li>
   </ul>
@@ -379,7 +385,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 21, 2026</p>
+      <p class="date">October 26, 2026</p>
     </div>
   </div>
   
@@ -397,63 +403,35 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"filename.jpg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
-<section id="data-download-instructions" class="level2">
-<h2 class="anchored" data-anchor-id="data-download-instructions">Data Download Instructions</h2>
-<section id="dataset-1-world-happiness-report-problem-1" class="level3">
-<h3 class="anchored" data-anchor-id="dataset-1-world-happiness-report-problem-1">Dataset 1 — World Happiness Report (Problem 1)</h3>
-<ol type="1">
-<li><p>Go to <strong><a href="https://www.worldhappiness.report/data-sharing/">https://www.worldhappiness.report/data-sharing/</a></strong></p></li>
-<li><p>Click “Download data for Figure 2.1” — this will download an Excel file (<code>.xlsx</code>)</p></li>
-<li><p>Place the downloaded file in the <strong>same folder</strong> as this <code>.Rmd</code></p></li>
-<li><p>Update the filename (and file path if necessary) in the code chunk below to match what you downloaded</p></li>
-</ol>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>Download both data files from this Google Drive folder: <strong><a href="https://drive.google.com/drive/folders/1mVoWddGN_f0kiWmDOpdibV9Rrdx6yxfo?usp=sharing">https://drive.google.com/drive/folders/1mVoWddGN_f0kiWmDOpdibV9Rrdx6yxfo?usp=sharing</a></strong></p>
+<p>Place both files in the <strong>same folder</strong> as this <code>.Rmd</code> before knitting.</p>
+<section id="dataset-1-world-happiness-problem-1" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-1-world-happiness-problem-1">Dataset 1 — World Happiness (Problem 1)</h3>
+<p><code>happiness.csv</code> contains country-level data from the <strong>World Happiness Report</strong>, an annual survey that ranks countries by self-reported well-being. Respondents rate their own lives on the <strong>Cantril ladder</strong> — a 0–10 scale where higher scores reflect greater life satisfaction. The dataset includes one observation per country (most recent available year) with two variables:</p>
+<ul>
+<li><code>log_gdp</code>: log GDP per capita (natural log of GDP per person in international dollars)</li>
+<li><code>happiness</code>: average Cantril ladder score (0–10 scale)</li>
+</ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>happy <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/WHR26_Data_Figure_2.1.xlsx"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only the most recent observation per country</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>happy <span class="ot">&lt;-</span> happy <span class="sc">%&gt;%</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Country name</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(Year, <span class="at">n =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">country   =</span> <span class="st">`</span><span class="at">Country name</span><span class="st">`</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">year      =</span> Year,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">happiness =</span> <span class="st">`</span><span class="at">Life evaluation (3-year average)</span><span class="st">`</span>,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">log_gdp   =</span> <span class="st">`</span><span class="at">Explained by: Log GDP per capita</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(happiness, log_gdp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>happy <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/happiness.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="dataset-2-noaa-global-surface-temperature-anomalies-problem-2" class="level3">
 <h3 class="anchored" data-anchor-id="dataset-2-noaa-global-surface-temperature-anomalies-problem-2">Dataset 2 — NOAA Global Surface Temperature Anomalies (Problem 2)</h3>
-<ol type="1">
-<li><p>Go to <strong><a href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series">https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series</a></strong></p></li>
-<li><p>Set the following options:</p>
+<p><code>noaa_temp.csv</code> contains annual global surface temperature data from the <strong>National Oceanic and Atmospheric Administration (NOAA)</strong>. Each observation is a yearly average of land and ocean temperature anomalies — the departure (in °C) from the 20th-century baseline average (1901–2000). Positive values indicate a warmer-than-average year; negative values indicate a cooler-than-average year. The dataset covers 1960–2023 with three variables:</p>
 <ul>
-<li><strong>Region:</strong> Global</li>
-<li><strong>Surface:</strong> Land and Ocean</li>
-<li><strong>Parameter:</strong> Average Temperature Departure</li>
-<li><strong>Time Scale:</strong> 12-Month</li>
-<li><strong>Filter:</strong> No Filter</li>
-<li><strong>Month:</strong> All Months</li>
-<li><strong>Start Year:</strong> 1960 · <strong>End Year:</strong> 2023</li>
-</ul></li>
-<li><p>Click <strong>“Plot”</strong>, then click <strong>“Download: CSV”</strong></p></li>
-<li><p>Place the downloaded file in the <strong>same folder</strong> as this <code>.Rmd</code></p></li>
-<li><p>Update the filename (and file path if necessary) in the code chunk below to match what you downloaded</p></li>
-</ol>
+<li><code>year</code>: calendar year</li>
+<li><code>anomaly</code>: mean annual temperature departure from the 20th-century average (°C)</li>
+<li><code>year_c</code>: year centered at 1960 (i.e., <code>year - 1960</code>), used as the predictor so the intercept has a meaningful interpretation</li>
+</ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>temp_raw <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/NOAA.csv"</span>, <span class="at">skip =</span> <span class="dv">4</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(temp_raw) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"anomaly"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Center year at 1960 so the intercept has a meaningful interpretation</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> temp_raw <span class="sc">%&gt;%</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year_c =</span> year <span class="sc">-</span> <span class="dv">1960</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/noaa_temp.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 <p><strong>1.</strong> World Happiness: GDP and Life Satisfaction.</p>
-<p>Using the World Happiness Report data loaded above, we examine whether a country’s wealth (log GDP per capita, <span class="math inline">\(X\)</span>) predicts its average happiness score (Life evaluation (3-year average), <span class="math inline">\(Y\)</span>).</p>
+<p>Using the happiness data loaded above, we examine whether a country’s wealth (log GDP per capita, <span class="math inline">\(X\)</span>) predicts its average happiness score (<span class="math inline">\(Y\)</span>, on a 0–10 scale).</p>
 <p><strong>(a)</strong> (3 pt) Fit a simple linear regression model with <code>happiness</code> as the response and <code>log_gdp</code> as the predictor. Report the estimated regression equation <span class="math inline">\(\hat{Y} = \hat{\beta}_0 + \hat{\beta}_1 X\)</span>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

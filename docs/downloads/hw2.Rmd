@@ -7,6 +7,7 @@ output: pdf_document
 
 ```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
 library(knitr)
+library(tidyverse)
 knitr::opts_chunk$set(fig.width = 7, fig.height = 5, warning = FALSE, message = FALSE)
 options(digits = 4)
 ```
@@ -19,62 +20,33 @@ knitr::include_graphics("filename.jpg")
 
 ---
 
-## Data Download Instructions
+## Data
 
-### Dataset 1 — World Happiness Report (Problem 1)
+Download both data files from this Google Drive folder: **[https://drive.google.com/drive/folders/1mVoWddGN_f0kiWmDOpdibV9Rrdx6yxfo?usp=sharing](https://drive.google.com/drive/folders/1mVoWddGN_f0kiWmDOpdibV9Rrdx6yxfo?usp=sharing)**
 
-1. Go to **[https://www.worldhappiness.report/data-sharing/](https://www.worldhappiness.report/data-sharing/)**
+Place both files in the **same folder** as this `.Rmd` before knitting.
 
-2. Click "Download data for Figure 2.1" — this will download an Excel file (`.xlsx`)
+### Dataset 1 — World Happiness (Problem 1)
 
-3. Place the downloaded file in the **same folder** as this `.Rmd`
+`happiness.csv` contains country-level data from the **World Happiness Report**, an annual survey that ranks countries by self-reported well-being. Respondents rate their own lives on the **Cantril ladder** — a 0–10 scale where higher scores reflect greater life satisfaction. The dataset includes one observation per country (most recent available year) with two variables:
 
-4. Update the filename (and file path if necessary) in the code chunk below to match what you downloaded
+- `log_gdp`: log GDP per capita (natural log of GDP per person in international dollars)
+- `happiness`: average Cantril ladder score (0–10 scale)
 
 ```{r load-happiness}
-library(readxl)
-library(tidyverse)
-
-happy <- read_excel("WHR26_Data_Figure_2.1.xlsx")
-
-# Keep only the most recent observation per country
-happy <- happy %>%
-  group_by(`Country name`) %>%
-  slice_max(Year, n = 1) %>%
-  ungroup() %>%
-  select(country   = `Country name`,
-         year      = Year,
-         happiness = `Life evaluation (3-year average)`,
-         log_gdp   = `Explained by: Log GDP per capita`) %>%
-  drop_na(happiness, log_gdp)
+happy <- read.csv("happiness.csv")
 ```
 
-### Dataset 2 — NOAA Global Surface Temperature Anomalies
+### Dataset 2 — NOAA Global Surface Temperature Anomalies (Problem 2)
 
-1. Go to **[https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series](https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series)**
+`noaa_temp.csv` contains annual global surface temperature data from the **National Oceanic and Atmospheric Administration (NOAA)**. Each observation is a yearly average of land and ocean temperature anomalies — the departure (in °C) from the 20th-century baseline average (1901–2000). Positive values indicate a warmer-than-average year; negative values indicate a cooler-than-average year. The dataset covers 1960–2023 with three variables:
 
-2. Set the following options:
-   - **Region:** Global
-   - **Surface:** Land and Ocean
-   - **Parameter:** Average Temperature Departure
-   - **Time Scale:** 12-Month
-   - **Filter:** No Filter
-   - **Month:** All Months
-   - **Start Year:** 1960 · **End Year:** 2023
-
-3. Click **"Plot"**, then click **"Download: CSV"**
-
-4. Place the downloaded file in the **same folder** as this `.Rmd`
-
-5. Update the filename (and file path if necessary) in the code chunk below to match what you downloaded
+- `year`: calendar year
+- `anomaly`: mean annual temperature departure from the 20th-century average (°C)
+- `year_c`: year centered at 1960 (i.e., `year - 1960`), used as the predictor so the intercept has a meaningful interpretation
 
 ```{r load-temp}
-temp_raw <- read.csv("NOAA.csv", skip = 4)   # rename file to NOAA or update this path
-names(temp_raw) <- c("year", "anomaly")
-
-# Center year at 1960 so the intercept has a meaningful interpretation
-temp <- temp_raw %>%
-  mutate(year_c = year - 1960)
+temp <- read.csv("noaa_temp.csv")
 ```
 
 ---
@@ -82,7 +54,7 @@ temp <- temp_raw %>%
 
 **1.** World Happiness: GDP and Life Satisfaction.
 
-Using the World Happiness Report data loaded above, we examine whether a country's wealth (log GDP per capita, $X$) predicts its average happiness score (Life evaluation (3-year average), $Y$).
+Using the happiness data loaded above, we examine whether a country's wealth (log GDP per capita, $X$) predicts its average happiness score ($Y$, on a 0–10 scale).
 
 **(a)** (3 pt) Fit a simple linear regression model with `happiness` as the response and `log_gdp` as the predictor. Report the estimated regression equation $\hat{Y} = \hat{\beta}_0 + \hat{\beta}_1 X$.
 
