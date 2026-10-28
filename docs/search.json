@@ -3508,5 +3508,306 @@
       "Assignments",
       "HW 2"
     ]
+  },
+  {
+    "objectID": "slides/lec-10.html#agenda",
+    "href": "slides/lec-10.html#agenda",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Agenda",
+    "text": "Agenda\n\n\nQuiz 2 Review\nMidterm Review — One timed practice question per topic:\n\nLec 1–2: SLR model & OLS estimation\nLec 3–4: Residuals, MSE, and standard errors\nLec 6: Inference for \\(\\beta_1\\) (CI and \\(t\\)-test)\nLec 7: CI for mean response vs. prediction interval\nLec 7: ANOVA and \\(R^2\\)\nLec 8: Model diagnostics\nLec 9: Lack of fit test"
+  },
+  {
+    "objectID": "slides/lec-10.html#from-lecture-9",
+    "href": "slides/lec-10.html#from-lecture-9",
+    "title": "Lecture 10: Midterm Review",
+    "section": "From Lecture 9",
+    "text": "From Lecture 9"
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-lack-of-fit-test",
+    "href": "slides/lec-10.html#practice-lack-of-fit-test",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: Lack of Fit Test",
+    "text": "Practice: Lack of Fit Test\n\nAn experiment has \\(c = 4\\) distinct \\(X\\) values with \\(n_j = 3\\) replicates each (\\(n = 12\\)). After fitting the linear regression and the full ANOVA model:\n\n\\(SSE(R) = 480.2\\) (linear model)\n\\(SSE(F) = SSPE = 120.4\\) (pure error)\n\n(a) Compute \\(SSLF\\) and its degrees of freedom.\n(b) Compute \\(MSLF\\) and \\(MSPE\\).\n(c) Compute \\(F^*\\) and state whether you reject the linear model at \\(\\alpha = 0.05\\). Critical value: \\(F(0.95;\\; 2,\\; 8) = 4.46\\).\n(d) What does this result tell you about Assumption 1?"
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-lack-of-fit-test-solution",
+    "href": "slides/lec-10.html#practice-lack-of-fit-test-solution",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: Lack of Fit Test — Solution",
+    "text": "Practice: Lack of Fit Test — Solution\n\n(a) \\(SSLF = SSE(R) - SSE(F) = 480.2 - 120.4 = 359.8\\)\n\\(df_{LF} = c - 2 = 4 - 2 = 2\\); \\(\\quad df_{PE} = n - c = 12 - 4 = 8\\)\n\n(b) \\[MSLF = \\frac{359.8}{2} = 179.9 \\qquad MSPE = \\frac{120.4}{8} = 15.05\\]\n\n\n(c) \\[F^* = \\frac{MSLF}{MSPE} = \\frac{179.9}{15.05} = 11.95\\]\nSince \\(11.95 &gt; 4.46\\), we reject the linear model at \\(\\alpha = 0.05\\).\n\n\n(d) There is statistically significant evidence that the linear function does not adequately fit the data — Assumption 1 (linearity) appears to be violated. We should consider a transformation or a more flexible model."
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-full-workflow",
+    "href": "slides/lec-10.html#practice-full-workflow",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: Full Workflow",
+    "text": "Practice: Full Workflow\n\nA researcher regresses pollution level \\(Y\\) (ppb) on distance from factory \\(X\\) (km) using \\(n = 40\\) observations.\n\nThe residual-vs-fitted plot shows a clear decreasing fan (large residuals at small fitted values, small residuals at large fitted values)\nThe QQ-plot shows a strong right-skew (points curve above the line)\nThe lack of fit F test gives \\(F^* = 1.2\\) with \\(c = 10\\) distinct \\(X\\) values; the critical value is \\(F(0.95;\\; 8,\\; 30) = 2.27\\)\n\n(a) Which assumptions appear violated? Which appears satisfied?\n(b) What transformation of \\(Y\\) would you try first, and why?\n(c) After a \\(\\log(Y)\\) transformation, the residual-vs-fitted plot looks ideal. Write the fitted model (in terms of \\(\\log Y\\)) and explain how you would predict \\(Y\\) for a new \\(X = 5\\) km."
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-full-workflow-solution",
+    "href": "slides/lec-10.html#practice-full-workflow-solution",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: Full Workflow — Solution",
+    "text": "Practice: Full Workflow — Solution\n\n(a)\n\nEqual variance (Assumption 3): Violated — the fan shape in the residual-vs-fitted plot indicates nonconstant variance.\nNormality (Assumption 4): Violated — right-skew in the QQ-plot.\nLinearity (Assumption 1): Satisfied — \\(F^* = 1.2 &lt; 2.27 = F(0.95;\\; 8,\\; 30)\\), so we fail to reject the linear model.\n\n\n(b) Try \\(Y' = \\log(Y)\\). A log transformation is the natural choice for right-skewed data with a fan-pattern (variance growing with the mean), which often arises when \\(Y &gt; 0\\) and spans several orders of magnitude.\n\n\n(c) The fitted model after transformation: \\(\\widehat{\\log Y} = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 X\\).\nTo predict \\(Y\\) at \\(X = 5\\): compute \\(\\widehat{\\log Y}^* = \\widehat{\\beta}_0 + 5\\widehat{\\beta}_1\\), then back-transform: \\(\\widehat{Y}^* = e^{\\widehat{\\log Y}^*}\\)."
+  },
+  {
+    "objectID": "slides/lec-10.html#midterm-review",
+    "href": "slides/lec-10.html#midterm-review",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Midterm Review",
+    "text": "Midterm Review"
+  },
+  {
+    "objectID": "slides/lec-10.html#midterm-topics-at-a-glance",
+    "href": "slides/lec-10.html#midterm-topics-at-a-glance",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Midterm Topics at a Glance",
+    "text": "Midterm Topics at a Glance\n\n\n\n\n\n\n\n\n\nLecture(s)\nTopic\nKey ideas\n\n\n\n\n1–2\nSLR model & OLS\nModel form, \\(\\widehat{\\beta}_0\\)/\\(\\widehat{\\beta}_1\\) formulas, interpretation\n\n\n3\nProperties of OLS\nLinearity, unbiasedness, variance, Gauss-Markov (BLUE)\n\n\n4\nResiduals & \\(\\sigma^2\\)\nSSE, MSE, \\(s\\), SE\\((\\widehat{\\beta}_0)\\), SE\\((\\widehat{\\beta}_1)\\)\n\n\n5\nMLE\nSame \\(\\widehat{\\beta}\\)’s as OLS; MLE of \\(\\sigma^2\\) is biased (\\(\\div n\\))\n\n\n6\nInference for \\(\\beta_1\\)\n\\(t\\)-test, CI, one- and two-sided hypotheses\n\n\n7\nCI vs. PI & ANOVA\nMean-response CI, prediction interval, ANOVA table, \\(R^2\\)\n\n\n8\nDiagnostics\nFour residual plots, four assumptions, remedies\n\n\n9\nLack of fit test\n\\(SSE(R) = SSPE + SSLF\\); \\(F^* = MSLF/MSPE \\sim F_{c-2,\\,n-c}\\)"
+  },
+  {
+    "objectID": "slides/lec-10.html#lec-12-slr-model-ols-estimation",
+    "href": "slides/lec-10.html#lec-12-slr-model-ols-estimation",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Lec 1–2: SLR Model & OLS Estimation",
+    "text": "Lec 1–2: SLR Model & OLS Estimation"
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-ols-estimation",
+    "href": "slides/lec-10.html#practice-ols-estimation",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: OLS Estimation",
+    "text": "Practice: OLS Estimation\n\nA statistics instructor collects data on \\(n = 8\\) students, recording daily study hours (\\(X\\)) and quiz score (\\(Y\\), out of 20). The following summary statistics are computed:\n\\[n = 8 \\qquad \\sum x_i = 40 \\qquad \\sum y_i = 72 \\qquad \\sum x_i^2 = 240 \\qquad \\sum x_i y_i = 396\\]\n\n\\[S_{xx} = \\sum x_i^2 - n\\bar{x}^2 \\qquad S_{xy} = \\sum x_i y_i - n\\bar{x}\\bar{y} \\qquad \\widehat{\\beta}_1 = \\frac{S_{xy}}{S_{xx}} \\qquad \\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\]\n\n(a) Compute \\(\\bar{x}\\), \\(\\bar{y}\\), \\(S_{xx}\\), and \\(S_{xy}\\).\n(b) Compute \\(\\widehat{\\beta}_1\\) and \\(\\widehat{\\beta}_0\\).\n(c) Write the fitted regression equation and predict the quiz score for a student who studies 7 hours per day.\n(d) Interpret \\(\\widehat{\\beta}_1\\) in context."
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-ols-estimation-solution",
+    "href": "slides/lec-10.html#practice-ols-estimation-solution",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: OLS Estimation — Solution",
+    "text": "Practice: OLS Estimation — Solution\n\n(a) \\[\\bar{x} = \\frac{40}{8} = 5 \\qquad \\bar{y} = \\frac{72}{8} = 9\\] \\[S_{xx} = \\sum x_i^2 - n\\bar{x}^2 = 240 - 8(5)^2 = 240 - 200 = 40\\] \\[S_{xy} = \\sum x_i y_i - n\\bar{x}\\bar{y} = 396 - 8(5)(9) = 396 - 360 = 36\\]\n\n(b) \\[\\widehat{\\beta}_1 = \\frac{S_{xy}}{S_{xx}} = \\frac{36}{40} = 0.9 \\qquad \\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x} = 9 - 0.9(5) = 4.5\\]\n\n\n(c) Fitted model: \\(\\widehat{Y} = 4.5 + 0.9X\\)\nAt \\(X = 7\\): \\(\\widehat{Y} = 4.5 + 0.9(7) = 4.5 + 6.3 = \\mathbf{10.8}\\) points\n\n\n(d) For each additional hour of study per day, the predicted quiz score increases by 0.9 points, on average."
+  },
+  {
+    "objectID": "slides/lec-10.html#lec-34-residuals-mse-and-standard-errors",
+    "href": "slides/lec-10.html#lec-34-residuals-mse-and-standard-errors",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Lec 3–4: Residuals, MSE, and Standard Errors",
+    "text": "Lec 3–4: Residuals, MSE, and Standard Errors"
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-mse-and-standard-errors",
+    "href": "slides/lec-10.html#practice-mse-and-standard-errors",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: MSE and Standard Errors",
+    "text": "Practice: MSE and Standard Errors\n\nContinue with the study-hours data from the previous problem. After fitting the model, the residual sum of squares is \\(SSE = 6.0\\).\nRecall: \\(n = 8\\), \\(\\bar{x} = 5\\), \\(S_{xx} = 40\\).\n\n\\[\\widehat{\\sigma}^2 = \\frac{SSE}{n-2} \\qquad SE(\\widehat{\\beta}_1) = \\sqrt{\\frac{\\widehat{\\sigma}^2}{S_{xx}}} \\qquad SE(\\widehat{\\beta}_0) = \\sqrt{\\widehat{\\sigma}^2\\!\\left(\\frac{1}{n} + \\frac{\\bar{x}^2}{S_{xx}}\\right)}\\]\n\n(a) Compute \\(\\widehat{\\sigma}^2 = MSE = SSE/(n-2)\\).\n(b) Compute \\(SE(\\widehat{\\beta}_1)\\).\n(c) Compute \\(SE(\\widehat{\\beta}_0)\\).\n(d) The Gauss-Markov theorem says OLS estimators are BLUE. What does BLUE stand for and what does the theorem guarantee?"
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-mse-and-standard-errors-solution",
+    "href": "slides/lec-10.html#practice-mse-and-standard-errors-solution",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: MSE and Standard Errors — Solution",
+    "text": "Practice: MSE and Standard Errors — Solution\n\n(a) \\[\\widehat{\\sigma}^2 = \\frac{SSE}{n-2} = \\frac{6.0}{6} = 1.0\\]\n\n(b) \\[SE(\\widehat{\\beta}_1) = \\sqrt{\\frac{\\widehat{\\sigma}^2}{S_{xx}}} = \\sqrt{\\frac{1.0}{40}} = \\sqrt{0.025} \\approx 0.158\\]\n\n\n(c) \\[SE(\\widehat{\\beta}_0) = \\sqrt{\\widehat{\\sigma}^2\\!\\left(\\frac{1}{n} + \\frac{\\bar{x}^2}{S_{xx}}\\right)} = \\sqrt{1.0\\left(\\frac{1}{8} + \\frac{25}{40}\\right)} = \\sqrt{0.125 + 0.625} = \\sqrt{0.75} \\approx 0.866\\]\n\n\n(d) BLUE = Best Linear Unbiased Estimator. The Gauss-Markov theorem guarantees that, under the SLR assumptions (linearity, independence, constant variance), the OLS estimators \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\) have the smallest variance among all linear unbiased estimators — no competing linear unbiased estimator can be more precise."
+  },
+  {
+    "objectID": "slides/lec-10.html#lec-6-inference-for-beta_1",
+    "href": "slides/lec-10.html#lec-6-inference-for-beta_1",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Lec 6: Inference for \\(\\beta_1\\)",
+    "text": "Lec 6: Inference for \\(\\beta_1\\)"
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-ci-and-t-test-for-beta_1",
+    "href": "slides/lec-10.html#practice-ci-and-t-test-for-beta_1",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: CI and \\(t\\)-Test for \\(\\beta_1\\)",
+    "text": "Practice: CI and \\(t\\)-Test for \\(\\beta_1\\)\n\nA researcher regresses minutes of sleep per night (\\(Y\\)) on cups of coffee consumed per day (\\(X\\)) for \\(n = 22\\) participants. The R output gives:\n\\[\\widehat{\\beta}_1 = -14.2 \\qquad SE(\\widehat{\\beta}_1) = 5.4 \\qquad df = 20\\]\nCritical value: \\(t_{0.975,\\, 20} = 2.086\\).\n\n\\[\\widehat{\\beta}_1 \\pm t_{1-\\alpha/2,\\,n-2} \\cdot SE(\\widehat{\\beta}_1) \\qquad t^* = \\frac{\\widehat{\\beta}_1 - \\beta_{10}}{SE(\\widehat{\\beta}_1)}\\]\n\n(a) Construct a 95% confidence interval for \\(\\beta_1\\).\n(b) Test \\(H_0\\colon \\beta_1 = 0\\) vs. \\(H_1\\colon \\beta_1 \\neq 0\\) at \\(\\alpha = 0.05\\). Compute \\(t^*\\) and state your decision."
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-ci-and-t-test-solution",
+    "href": "slides/lec-10.html#practice-ci-and-t-test-solution",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: CI and \\(t\\)-Test — Solution",
+    "text": "Practice: CI and \\(t\\)-Test — Solution\n\n(a) \\[\\widehat{\\beta}_1 \\pm t_{0.975,\\,20} \\cdot SE(\\widehat{\\beta}_1) = -14.2 \\pm 2.086(5.4) = -14.2 \\pm 11.26\\] \\[\\mathbf{95\\%\\ CI:\\ (-25.46,\\ -2.94)}\\]\n\n(b) \\[t^* = \\frac{\\widehat{\\beta}_1 - 0}{SE(\\widehat{\\beta}_1)} = \\frac{-14.2}{5.4} = -2.63\\]\nSince \\(|t^*| = 2.63 &gt; 2.086 = t_{0.975,\\,20}\\), we reject \\(H_0\\) at \\(\\alpha = 0.05\\)."
+  },
+  {
+    "objectID": "slides/lec-10.html#lec-7-ci-for-mean-response-vs.-prediction-interval",
+    "href": "slides/lec-10.html#lec-7-ci-for-mean-response-vs.-prediction-interval",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Lec 7: CI for Mean Response vs. Prediction Interval",
+    "text": "Lec 7: CI for Mean Response vs. Prediction Interval"
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-ci-vs.-pi",
+    "href": "slides/lec-10.html#practice-ci-vs.-pi",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: CI vs. PI",
+    "text": "Practice: CI vs. PI\n\nA city models ice cream sales per hour (\\(Y\\), servings) as a function of air temperature (\\(X\\), °C). The fitted model and summary statistics are:\n\\[\\widehat{Y} = 5 + 3X \\qquad n = 20 \\qquad \\bar{x} = 15 \\qquad S_{xx} = 200 \\qquad SSE = 648\\]\n\n\\[\\widehat{\\sigma}^2 = \\frac{SSE}{n-2} \\qquad SE(\\widehat{Y}^*) = \\sqrt{\\widehat{\\sigma}^2\\!\\left(\\frac{1}{n} + \\frac{(X^*-\\bar{x})^2}{S_{xx}}\\right)} \\qquad SE(Y_{\\text{new}}) = \\sqrt{\\widehat{\\sigma}^2\\!\\left(1 + \\frac{1}{n} + \\frac{(X^*-\\bar{x})^2}{S_{xx}}\\right)}\\]\n\nCritical value: \\(t_{0.975,\\, 18} = 2.101\\).\n(a) Compute a 95% CI for the mean sales when \\(X^* = 17\\) °C.\n(b) Compute a 95% prediction interval for sales at a single future hour when \\(X^* = 17\\) °C.\n(c) Which interval is wider and why?"
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-ci-vs.-pi-solution",
+    "href": "slides/lec-10.html#practice-ci-vs.-pi-solution",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: CI vs. PI — Solution",
+    "text": "Practice: CI vs. PI — Solution\n\nPoint estimate: \\(\\widehat{Y}^* = 5 + 3(17) = 56\\) servings; \\(\\quad\\widehat{\\sigma}^2 = SSE/(n-2) = 648/18 = 36\\)\n\n(a) Standard error of the mean response: \\[SE(\\widehat{Y}^*) = \\sqrt{\\widehat{\\sigma}^2\\!\\left(\\frac{1}{n} + \\frac{(X^*-\\bar{x})^2}{S_{xx}}\\right)} = \\sqrt{36\\!\\left(\\frac{1}{20} + \\frac{(17-15)^2}{200}\\right)} = \\sqrt{36(0.07)} = \\sqrt{2.52} \\approx 1.59\\] \\[\\mathbf{95\\%\\ CI:}\\ 56 \\pm 2.101(1.59) = 56 \\pm 3.34 = (52.66,\\ 59.34)\\]\n\n\n(b) Standard error for a new individual observation adds the \\(+1\\) term: \\[SE(Y_{\\text{new}}) = \\sqrt{\\widehat{\\sigma}^2\\!\\left(1 + \\frac{1}{n} + \\frac{(X^*-\\bar{x})^2}{S_{xx}}\\right)} = \\sqrt{36(1.07)} = \\sqrt{38.52} \\approx 6.21\\] \\[\\mathbf{95\\%\\ PI:}\\ 56 \\pm 2.101(6.21) = 56 \\pm 13.04 = (42.96,\\ 69.04)\\]\n\n\n(c) The prediction interval is wider. A CI captures uncertainty about the mean response (only estimation error). A PI must also account for the irreducible random variation of a single new observation around that mean (\\(+\\sigma^2\\)), so it is always wider."
+  },
+  {
+    "objectID": "slides/lec-10.html#lec-7-anova-and-r2",
+    "href": "slides/lec-10.html#lec-7-anova-and-r2",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Lec 7: ANOVA and \\(R^2\\)",
+    "text": "Lec 7: ANOVA and \\(R^2\\)"
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-anova-table-and-r2",
+    "href": "slides/lec-10.html#practice-anova-table-and-r2",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: ANOVA Table and \\(R^2\\)",
+    "text": "Practice: ANOVA Table and \\(R^2\\)\n\nA regression of \\(n = 20\\) observations produces the following partial ANOVA table. Fill in all missing values, compute \\(R^2\\), and draw a conclusion.\n\n\n\nSource\ndf\nSS\nMS\nF\n\n\n\n\nModel\n1\n360\n?\n?\n\n\nError\n?\n90\n?\n\n\n\nTotal\n?\n?\n\n\n\n\n\nCritical value: \\(F(0.95;\\; 1,\\; 18) = 4.41\\).\n(a) Complete the ANOVA table.\n(b) Compute \\(R^2\\) and interpret it.\n(c) State the conclusion of the F-test at \\(\\alpha = 0.05\\)."
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-anova-table-and-r2-solution",
+    "href": "slides/lec-10.html#practice-anova-table-and-r2-solution",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: ANOVA Table and \\(R^2\\) — Solution",
+    "text": "Practice: ANOVA Table and \\(R^2\\) — Solution\n\n(a) \\(df_{\\text{Error}} = n - 2 = 18\\); \\(df_{\\text{Total}} = n - 1 = 19\\); \\(SSTO = 360 + 90 = 450\\)\n\n\n\nSource\ndf\nSS\nMS\nF\n\n\n\n\nModel\n1\n360\n360\n72\n\n\nError\n18\n90\n5\n\n\n\nTotal\n19\n450\n\n\n\n\n\n\\(MSR = 360/1 = 360\\); \\(\\quad MSE = 90/18 = 5\\); \\(\\quad F^* = 360/5 = 72\\)\n\n(b) \\[R^2 = \\frac{SSR}{SSTO} = \\frac{360}{450} = 0.80\\]\nThe model explains 80% of the total variation in \\(Y\\).\n\n\n(c) Since \\(F^* = 72 &gt; 4.41 = F(0.95;\\; 1,\\; 18)\\), we reject \\(H_0\\colon \\beta_1 = 0\\) at \\(\\alpha = 0.05\\). There is strong evidence of a linear relationship between \\(X\\) and \\(Y\\)."
+  },
+  {
+    "objectID": "slides/lec-10.html#lec-8-model-diagnostics",
+    "href": "slides/lec-10.html#lec-8-model-diagnostics",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Lec 8: Model Diagnostics",
+    "text": "Lec 8: Model Diagnostics"
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-identifying-assumption-violations",
+    "href": "slides/lec-10.html#practice-identifying-assumption-violations",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: Identifying Assumption Violations",
+    "text": "Practice: Identifying Assumption Violations\n\nFor each residual plot description below, state (i) which SLR assumption is violated and (ii) what you would do to address it.\n(a) The residual-vs-fitted plot shows a clear U-shaped curve. Residuals are positive at low and high fitted values, negative in the middle.\n(b) The residual-vs-fitted plot shows a funnel/fan shape. Residuals spread out as fitted values increase.\n(c) The normal Q-Q plot shows points that curve upward at the right tail (right skew)."
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-identifying-assumption-violations-solution",
+    "href": "slides/lec-10.html#practice-identifying-assumption-violations-solution",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: Identifying Assumption Violations — Solution",
+    "text": "Practice: Identifying Assumption Violations — Solution\n\n(a) Assumption 1 (Linearity) — violated. A curved trend in the residual plot means the true relationship is nonlinear. Fix: try transforming \\(X\\) (e.g., \\(X^2\\), \\(\\log X\\), \\(\\sqrt{X}\\)) or run the F test for lack of fit if replicates exist.\n\n(b) Assumption 3 (Equal variance / homoscedasticity) — violated. The fan shape indicates variance increases with the fitted value (nonconstant variance). Fix: transform \\(Y\\) using a variance-stabilizing transformation (e.g., \\(\\sqrt{Y}\\) for mild skew/fan shape, \\(\\log Y\\) for strong skew).\n\n\n(c) Assumption 4 (Normality) — violated. Right skew in the Q-Q plot suggests the errors are not normally distributed. Fix: transform \\(Y\\) (often \\(\\log Y\\) for right-skewed data); note that a \\(Y\\)-transformation can fix both nonconstant variance and nonnormality simultaneously."
+  },
+  {
+    "objectID": "slides/lec-10.html#lec-9-transformations-and-box-cox",
+    "href": "slides/lec-10.html#lec-9-transformations-and-box-cox",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Lec 9: Transformations and Box-Cox",
+    "text": "Lec 9: Transformations and Box-Cox"
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-box-cox-and-back-transformation",
+    "href": "slides/lec-10.html#practice-box-cox-and-back-transformation",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: Box-Cox and Back-Transformation",
+    "text": "Practice: Box-Cox and Back-Transformation\n\nA regression of annual income (\\(Y\\), thousands of USD) on years of experience (\\(X\\)) yields a fan-shaped residual plot and right-skewed Q-Q plot. A Box-Cox analysis produces the plot below (peak near \\(\\hat\\lambda \\approx 0\\)).\n\n\n\n\n\n\n\n\n\n(a) What transformation of \\(Y\\) does \\(\\hat\\lambda \\approx 0\\) suggest?\n(b) After fitting on \\(Y' = \\log(Y)\\), the model is \\(\\widehat{Y'} = 2.8 + 0.12X\\). Predict income for a worker with \\(X = 10\\) years of experience. Back-transform your answer to the original scale (dollars).\n(c) State one reason why we must back-transform when reporting predictions."
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-box-cox-and-back-transformation-solution",
+    "href": "slides/lec-10.html#practice-box-cox-and-back-transformation-solution",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: Box-Cox and Back-Transformation — Solution",
+    "text": "Practice: Box-Cox and Back-Transformation — Solution\n\n(a) \\(\\hat\\lambda \\approx 0\\) corresponds to \\(Y' = \\log(Y)\\) (the natural log). This is appropriate when data are right-skewed with variance that grows with the mean.\n\n(b) Plug \\(X = 10\\) into the fitted model on the log scale: \\[\\widehat{Y'} = 2.8 + 0.12(10) = 2.8 + 1.2 = 4.0\\]\nBack-transform by exponentiating: \\[\\widehat{Y} = e^{4.0} \\approx 54.6 \\text{ (thousands of USD)} = \\mathbf{\\$54{,}600}\\]\n\n\n(c) The model was fit on \\(\\log(Y)\\), so any prediction it produces is on the log scale, not the original dollar scale. Reporting \\(\\widehat{Y'} = 4.0\\) as a predicted income is uninterpretable to a stakeholder — we must back-transform to give the prediction in units that are meaningful in context."
+  },
+  {
+    "objectID": "slides/lec-10.html#good-luck-on-the-midterm",
+    "href": "slides/lec-10.html#good-luck-on-the-midterm",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Good Luck on the Midterm!",
+    "text": "Good Luck on the Midterm!\n\nKey reminder: Bring a charged, working calculator and your Access Card. A formula sheet will be provided.\nThe midterm covers Lectures 1–9."
+  },
+  {
+    "objectID": "slides/lec-10.html#questions",
+    "href": "slides/lec-10.html#questions",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Questions?",
+    "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
+  },
+  {
+    "objectID": "slides/lec-10.html#lec-9-transformations",
+    "href": "slides/lec-10.html#lec-9-transformations",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Lec 9: Transformations",
+    "text": "Lec 9: Transformations"
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-choosing-and-applying-transformations",
+    "href": "slides/lec-10.html#practice-choosing-and-applying-transformations",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: Choosing and Applying Transformations",
+    "text": "Practice: Choosing and Applying Transformations\n\nA researcher regresses tree height (\\(Y\\), meters) on trunk diameter (\\(X\\), cm) for \\(n = 30\\) trees.\nThe residual-vs-fitted plot and Q-Q plot are shown below:\n\n\n\n\n\n\n\n\n\n(a) What violations do the plots suggest? Which transformation of \\(Y\\) would you try?\n(b) After fitting on \\(Y' = \\log(Y)\\), the model is \\(\\widehat{Y'} = 0.80 + 0.030X\\). Predict tree height for a tree with diameter \\(X = 25\\) cm. Back-transform your answer.\n(c) After the \\(\\log(Y)\\) transformation, what should you do before reporting results?"
+  },
+  {
+    "objectID": "slides/lec-10.html#practice-choosing-and-applying-transformations-solution",
+    "href": "slides/lec-10.html#practice-choosing-and-applying-transformations-solution",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Practice: Choosing and Applying Transformations — Solution",
+    "text": "Practice: Choosing and Applying Transformations — Solution\n\n(a) The residual plot shows a fan shape (Assumption 3, equal variance, violated) and the Q-Q plot shows right skew (Assumption 4, normality, violated). Both suggest transforming \\(Y\\). A \\(\\log(Y)\\) transformation is a natural first choice for right-skewed, positive data.\n\n(b) Plug \\(X = 25\\) into the fitted model on the log scale: \\[\\widehat{Y'} = 0.80 + 0.030(25) = 0.80 + 0.75 = 1.55\\]\nBack-transform by exponentiating: \\[\\widehat{Y} = e^{1.55} \\approx \\mathbf{4.71 \\text{ meters}}\\]\n\n\n(c) Re-check the diagnostic plots on the transformed model (\\(\\log Y\\) vs. \\(X\\)) to confirm that the violations are resolved before reporting. If the new residual plot and Q-Q plot look acceptable, the transformed model is adequate."
+  },
+  {
+    "objectID": "slides/lec-10.html#lec-9-lack-of-fit-test",
+    "href": "slides/lec-10.html#lec-9-lack-of-fit-test",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Lec 9: Lack of Fit Test",
+    "text": "Lec 9: Lack of Fit Test"
+  },
+  {
+    "objectID": "slides/lec-10.html#quiz-2-review",
+    "href": "slides/lec-10.html#quiz-2-review",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Quiz 2 Review",
+    "text": "Quiz 2 Review"
+  },
+  {
+    "objectID": "slides/lec-10.html#q1-ci-for-ey-vs.-prediction-interval",
+    "href": "slides/lec-10.html#q1-ci-for-ey-vs.-prediction-interval",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Q1: CI for \\(E(Y^*)\\) vs. Prediction Interval",
+    "text": "Q1: CI for \\(E(Y^*)\\) vs. Prediction Interval\n\nFor each scenario, state which interval is more appropriate and why.\n(a) A city planner wants to estimate the average daily commute time for all residents who live exactly 10 miles from the city center.\n\nCI for \\(E(Y^*)\\). The planner is estimating the mean response for a population of residents at that distance, not any single individual’s commute. \\[\\widehat{Y}^* \\pm t_{1-\\alpha/2,\\,n-2}\\cdot \\sqrt{\\widehat{\\sigma}^2\\!\\left(\\frac{1}{n} + \\frac{(x^*-\\bar{x})^2}{S_{xx}}\\right)}\\]\n\n(b) A transit app uses a specific commuter’s home-to-work distance to estimate that individual’s travel time tomorrow morning.\n\nPrediction interval for \\(Y^*\\). The app is forecasting a single individual’s travel time, so we must account for both uncertainty in the mean and the natural variability of an individual observation. \\[\\widehat{Y}^* \\pm t_{1-\\alpha/2,\\,n-2}\\cdot \\sqrt{\\widehat{\\sigma}^2\\!\\left(1 + \\frac{1}{n} + \\frac{(x^*-\\bar{x})^2}{S_{xx}}\\right)}\\]"
+  },
+  {
+    "objectID": "slides/lec-10.html#q2-identifying-the-wider-interval",
+    "href": "slides/lec-10.html#q2-identifying-the-wider-interval",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Q2: Identifying the Wider Interval",
+    "text": "Q2: Identifying the Wider Interval\nTwo 95% intervals were computed at the same value \\(x^*\\):\n\nInterval A: \\((65.6,\\ 70.4)\\)\nInterval B: \\((62.0,\\ 74.0)\\)\n\nWhich is the prediction interval?\n\nInterval B is the prediction interval. A PI is always wider than the CI at the same \\(x^*\\) because it adds an extra \\(+1\\) under the square root to account for the variability of a single new observation:\n\\[SE_{\\text{PI}} = \\sqrt{\\widehat{\\sigma}^2\\!\\left(\\mathbf{1} + \\frac{1}{n} + \\frac{(x^*-\\bar{x})^2}{S_{xx}}\\right)} &gt; \\sqrt{\\widehat{\\sigma}^2\\!\\left(\\frac{1}{n} + \\frac{(x^*-\\bar{x})^2}{S_{xx}}\\right)} = SE_{\\text{CI}}\\]"
+  },
+  {
+    "objectID": "slides/lec-10.html#q3-what-does-the-normality-assumption-add",
+    "href": "slides/lec-10.html#q3-what-does-the-normality-assumption-add",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Q3: What Does the Normality Assumption Add?",
+    "text": "Q3: What Does the Normality Assumption Add?\nOLS and MLE produce identical estimates \\(\\widehat{\\beta}_0\\) and \\(\\widehat{\\beta}_1\\), but MLE requires \\(\\varepsilon_i \\overset{iid}{\\sim} N(0, \\sigma^2)\\).\nWhat does this assumption make possible that OLS alone cannot?\n\nThe normality assumption gives the estimators exact sampling distributions, making hypothesis tests and intervals valid:\n\\[\\widehat{\\beta}_1 \\sim N\\!\\left(\\beta_1,\\, \\frac{\\sigma^2}{S_{xx}}\\right) \\quad\\Rightarrow\\quad t^* = \\frac{\\widehat{\\beta}_1 - \\beta_{10}}{SE(\\widehat{\\beta}_1)} \\sim t_{n-2}\\]\nOLS alone guarantees unbiasedness and minimum variance (Gauss–Markov) but provides no distributional results."
+  },
+  {
+    "objectID": "slides/lec-10.html#q4-diagnostic-plots",
+    "href": "slides/lec-10.html#q4-diagnostic-plots",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Q4: Diagnostic Plots",
+    "text": "Q4: Diagnostic Plots\n(a) At what stage of a regression analysis should we examine diagnostic plots, and why?\n\nAfter fitting the model but before drawing inferential conclusions. Residuals are only available post-fitting, and if the plots reveal violated assumptions (nonlinearity, nonconstant variance, nonnormality), any tests or intervals computed from the model would be unreliable.\n\n\n(b) What does an ideal residuals-vs-\\(x\\) plot look like?\nPoints scattered randomly around zero with no discernible trend or curvature."
+  },
+  {
+    "objectID": "slides/lec-10.html#q56-section-2-setup-and-hypothesis-test",
+    "href": "slides/lec-10.html#q56-section-2-setup-and-hypothesis-test",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Q5–6: Section 2 Setup and Hypothesis Test",
+    "text": "Q5–6: Section 2 Setup and Hypothesis Test\n\nA meteorologist regresses daily high temperature (\\(y\\), °F) on cloud cover (\\(x\\), hours) for \\(n = 6\\) days.\n\\[\\bar{x} = 6,\\quad \\bar{y} = 70,\\quad \\widehat{\\beta}_1 = -2,\\quad \\widehat{\\beta}_0 = 82,\\quad S_{xx} = 70,\\quad RSS = 16\\]\n\n\\[\\widehat{\\beta}_1 = \\frac{S_{xy}}{S_{xx}} \\qquad \\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x} \\qquad \\widehat{\\sigma}^2 = \\frac{RSS}{n-2} \\qquad SE(\\widehat{\\beta}_1) = \\sqrt{\\frac{\\widehat{\\sigma}^2}{S_{xx}}} \\qquad t^* = \\frac{\\widehat{\\beta}_1}{SE(\\widehat{\\beta}_1)}\\]\n\nQ5. \\(H_0\\colon \\beta_1 = 0\\) (cloud cover is not a significant predictor) vs. \\(H_a\\colon \\beta_1 \\neq 0\\)\n\nQ6. Compute MSE, \\(SE(\\widehat{\\beta}_1)\\), and \\(t^*\\); critical value \\(t_{0.025,\\,4} = 2.776\\).\n\\[\\widehat{\\sigma}^2 = \\frac{RSS}{n-2} = \\frac{16}{4} = 4 \\qquad SE(\\widehat{\\beta}_1) = \\sqrt{\\frac{\\widehat{\\sigma}^2}{S_{xx}}} = \\sqrt{\\frac{4}{70}} \\approx 0.239 \\qquad t^* = \\frac{\\widehat{\\beta}_1}{SE(\\widehat{\\beta}_1)} = \\frac{-2}{0.239} = -8.37\\]\nSince \\(|t^*| = 8.37 &gt; 2.776\\), we reject \\(H_0\\) at \\(\\alpha = 0.05\\). There is sufficient evidence that cloud cover is a statistically significant linear predictor of daily high temperature."
+  },
+  {
+    "objectID": "slides/lec-10.html#q78-confidence-interval-and-r2",
+    "href": "slides/lec-10.html#q78-confidence-interval-and-r2",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Q7–8: Confidence Interval and \\(R^2\\)",
+    "text": "Q7–8: Confidence Interval and \\(R^2\\)\n\nQ7. Construct a 95% CI for \\(\\beta_1\\). (\\(t_{0.025,\\,4} = 2.776\\), \\(SE(\\widehat{\\beta}_1) \\approx 0.239\\))\n\n\\[\\widehat{\\beta}_1 \\pm t_{1-\\alpha/2,\\,n-2}\\cdot SE(\\widehat{\\beta}_1) = -2 \\pm 2.776(0.239) = -2 \\pm 0.664 = \\mathbf{(-2.664,\\ -1.336)}\\]\nWe are 95% confident that for each additional hour of daily cloud cover, the daily high temperature decreases by between 1.34°F and 2.66°F, on average.\n\n\n\n\nQ8. Interpret \\(R^2 = 0.946\\).\n\\[R^2 = \\frac{SSR}{SSTO} = 1 - \\frac{SSE}{SSTO}\\]\nApproximately 94.6% of the variability in daily high temperature is explained by its linear relationship with daily cloud cover."
+  },
+  {
+    "objectID": "slides/lec-10.html#course-reminders",
+    "href": "slides/lec-10.html#course-reminders",
+    "title": "Lecture 10: Midterm Review",
+    "section": "Course Reminders",
+    "text": "Course Reminders\n\nMidterm Monday!\nNo lab Monday. Office hours instead!\n\nTong: 9 am @ PHELP 1518\nBingjiang: 10 am on Zoom"
   }
 ]
