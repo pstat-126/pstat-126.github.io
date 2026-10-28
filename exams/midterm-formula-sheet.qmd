@@ -7,9 +7,7 @@ format:
   pdf:
     toc: false
     geometry: margin=1in
-    fontsize: 10pt
----
-
+    fontsize: 8pt
 ---
 
 ## 1. The Simple Linear Regression Model
@@ -51,13 +49,8 @@ $$\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$$
 
 $$\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i \qquad e_i = y_i - \widehat{y}_i$$
 
-### Connection to Correlation
 
-$$\widehat{\beta}_1 = r \cdot \frac{s_y}{s_x}$$
 
-where $r$ is the sample correlation and $s_x$, $s_y$ are sample standard deviations.
-
----
 
 ## 3. Properties of OLS Residuals
 
@@ -65,20 +58,17 @@ $$\sum_{i=1}^n e_i = 0 \qquad \sum_{i=1}^n \widehat{y}_i = \sum_{i=1}^n y_i \qqu
 
 The fitted line always passes through $(\bar{x},\ \bar{y})$.
 
----
 
-## 4. Properties of the OLS Estimators
 
-**Linearity:** $\widehat{\beta}_1 = \displaystyle\sum_{i=1}^n a_i y_i$ where $a_i = \dfrac{x_i - \bar{x}}{S_{xx}}$
+## 4. Variances of the OLS Estimators
 
-**Unbiasedness:** $\mathbb{E}(\widehat{\beta}_0) = \beta_0 \qquad \mathbb{E}(\widehat{\beta}_1) = \beta_1$
+
 
 **Variances:**
 $$\text{Var}(\widehat{\beta}_1) = \frac{\sigma^2}{S_{xx}} \qquad \text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)$$
 
-**Gauss-Markov (BLUE):** OLS has the smallest variance among all linear unbiased estimators.
 
----
+
 
 ## 5. Estimating Error Variance
 
@@ -96,7 +86,7 @@ $$\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}} \qquad \
 
 **MLE of $\sigma^2$ (biased):** $\quad\widehat{\sigma}^2_{\text{MLE}} = \dfrac{\text{RSS}}{n}$
 
----
+
 
 ## 6. Sampling Distributions
 
@@ -110,7 +100,7 @@ $$\frac{\text{RSS}}{\sigma^2} \sim \chi^2_{n-2}$$
 
 $$\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} \sim t_{n-2} \qquad \frac{\widehat{\beta}_0 - \beta_0}{\left[\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}} \sim t_{n-2}$$
 
----
+
 
 ## 7. Confidence Intervals
 
@@ -120,7 +110,7 @@ $$\widehat{\beta}_1 \;\pm\; t_{1-\alpha/2,\; n-2} \cdot \text{SE}(\widehat{\beta
 **$100(1-\alpha)\%$ CI for $\beta_0$:**
 $$\widehat{\beta}_0 \;\pm\; t_{1-\alpha/2,\; n-2} \cdot \text{SE}(\widehat{\beta}_0)$$
 
----
+
 
 ## 8. Hypothesis Tests
 
@@ -138,7 +128,7 @@ $$t^* = \frac{\widehat{\beta}_0 - \beta_{00}}{\text{SE}(\widehat{\beta}_0)} \sim
 | $H_1: \beta_j > \beta_{j0}$ (right-sided) | $t^* > t_{1-\alpha,\; n-2}$ |
 | $H_1: \beta_j < \beta_{j0}$ (left-sided) | $t^* < -t_{1-\alpha,\; n-2}$ |
 
----
+
 
 ## 9. Prediction Intervals
 
@@ -154,13 +144,14 @@ $$\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\; n-2}\sqrt{\text{MSE}\!\left(\frac{1}{n}
 **$100(1-\alpha)\%$ Prediction interval** for a new individual $Y^*$:
 $$\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\; n-2}\sqrt{\text{MSE}\!\left(1 + \frac{1}{n} + \frac{(x^*-\bar{X})^2}{S_{xx}}\right)}$$
 
----
+
 
 ## 10. Analysis of Variance (ANOVA)
 
 **Sums of squares decomposition:** $\quad\text{SST} = \text{SSR} + \text{SSE}$
 
 $$\text{SST} = \sum_{i=1}^n (Y_i - \bar{Y})^2 \qquad \text{SSR} = \sum_{i=1}^n (\widehat{Y}_i - \bar{Y})^2 = \widehat{\beta}_1^2\, S_{xx} \qquad \text{SSE} = \sum_{i=1}^n (Y_i - \widehat{Y}_i)^2$$
+\newpage
 
 **ANOVA Table:**
 
@@ -177,13 +168,11 @@ Reject $H_0$ if $F^* > F(1-\alpha;\; 1,\; n-2)$.
 
 **Connection to the $t$-test:** $\quad F^* = (t^*)^2$
 
----
 
-## 11. Coefficient of Determination
+
+## 11. R^2^
 
 $$R^2 = \frac{\text{SSR}}{\text{SST}} = 1 - \frac{\text{SSE}}{\text{SST}} \;\in\; [0, 1]$$
-
----
 
 ## 12. F Test for Lack of Fit
 

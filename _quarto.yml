@@ -73,7 +73,7 @@ website:
       - section: "Exams"
         contents:
           - text: "Midterm"
-            href: exams/midterm.qmd
+            href: exams/midterm-formula-sheet.qmd
           - text: "Final"
             href: exams/final.qmd
 
