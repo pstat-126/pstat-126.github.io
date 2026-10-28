@@ -1,0 +1,214 @@
+---
+title: "Midterm Formula Sheet"
+subtitle: "PSTAT 126: Linear Regression"
+date: today
+date-format: "[Fall 2026]"
+format:
+  pdf:
+    toc: false
+    geometry: margin=1in
+    fontsize: 10pt
+---
+
+---
+
+## 1. The Simple Linear Regression Model
+
+$$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \qquad \varepsilon_i \overset{\text{iid}}{\sim} N(0, \sigma^2)$$
+
+| Symbol | Meaning |
+|:-------|:--------|
+| $y_i$ | Observed response for unit $i$ |
+| $x_i$ | Predictor for unit $i$ |
+| $\beta_0$ | Intercept |
+| $\beta_1$ | Slope|
+| $\varepsilon_i$ | Random error |
+| $\sigma^2$ | Error variance |
+
+**Implied distribution:** Under normality, $\quad Y_i \sim N(\beta_0 + \beta_1 X_i,\ \sigma^2)$
+
+**Model implications:**
+
+$$\mathbb{E}(Y_i) = \beta_0 + \beta_1 X_i \qquad \text{Var}(Y_i) = \sigma^2 \qquad \text{Cov}(Y_i, Y_j) = 0 \text{ for } i \neq j$$
+
+---
+
+## 2. OLS Estimation
+
+### Key Quantities
+
+$$S_{xx} = \sum_{i=1}^n (x_i - \bar{x})^2 = \sum_{i=1}^n x_i^2 - n\bar{x}^2$$
+
+$$S_{xy} = \sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y}) = \sum_{i=1}^n x_i y_i - n\bar{x}\bar{y}$$
+
+### OLS Estimators
+
+$$\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{\displaystyle\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\displaystyle\sum_{i=1}^n (x_i - \bar{x})^2}$$
+
+$$\widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}$$
+
+### Fitted Values and Residuals
+
+$$\widehat{y}_i = \widehat{\beta}_0 + \widehat{\beta}_1 x_i \qquad e_i = y_i - \widehat{y}_i$$
+
+### Connection to Correlation
+
+$$\widehat{\beta}_1 = r \cdot \frac{s_y}{s_x}$$
+
+where $r$ is the sample correlation and $s_x$, $s_y$ are sample standard deviations.
+
+---
+
+## 3. Properties of OLS Residuals
+
+$$\sum_{i=1}^n e_i = 0 \qquad \sum_{i=1}^n \widehat{y}_i = \sum_{i=1}^n y_i \qquad \sum_{i=1}^n x_i e_i = 0 \qquad \sum_{i=1}^n \widehat{y}_i e_i = 0$$
+
+The fitted line always passes through $(\bar{x},\ \bar{y})$.
+
+---
+
+## 4. Properties of the OLS Estimators
+
+**Linearity:** $\widehat{\beta}_1 = \displaystyle\sum_{i=1}^n a_i y_i$ where $a_i = \dfrac{x_i - \bar{x}}{S_{xx}}$
+
+**Unbiasedness:** $\mathbb{E}(\widehat{\beta}_0) = \beta_0 \qquad \mathbb{E}(\widehat{\beta}_1) = \beta_1$
+
+**Variances:**
+$$\text{Var}(\widehat{\beta}_1) = \frac{\sigma^2}{S_{xx}} \qquad \text{Var}(\widehat{\beta}_0) = \sigma^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)$$
+
+**Gauss-Markov (BLUE):** OLS has the smallest variance among all linear unbiased estimators.
+
+---
+
+## 5. Estimating Error Variance
+
+**Residual Sum of Squares:**
+$$\text{RSS} = \sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i - \widehat{y}_i)^2$$
+
+**Mean Square Error (unbiased estimator of $\sigma^2$):**
+$$\widehat{\sigma}^2 = \text{MSE} = \frac{\text{RSS}}{n - 2}, \qquad \mathbb{E}(\widehat{\sigma}^2) = \sigma^2$$
+
+**Residual standard deviation:**
+$$\widehat{\sigma} = \sqrt{\frac{\text{RSS}}{n-2}}$$
+
+**Standard errors:**
+$$\text{SE}(\widehat{\beta}_1) = \frac{\widehat{\sigma}}{\sqrt{S_{xx}}} \qquad \text{SE}(\widehat{\beta}_0) = \widehat{\sigma}\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}$$
+
+**MLE of $\sigma^2$ (biased):** $\quad\widehat{\sigma}^2_{\text{MLE}} = \dfrac{\text{RSS}}{n}$
+
+---
+
+## 6. Sampling Distributions
+
+**Under the normality assumption** $(\varepsilon_i \overset{iid}{\sim} N(0,\sigma^2))$:
+
+$$\widehat{\beta}_1 \sim N\!\left(\beta_1,\ \frac{\sigma^2}{S_{xx}}\right) \qquad \widehat{\beta}_0 \sim N\!\left(\beta_0,\ \sigma^2\!\left(\frac{1}{n} + \frac{\bar{X}^2}{S_{xx}}\right)\right)$$
+
+$$\frac{\text{RSS}}{\sigma^2} \sim \chi^2_{n-2}$$
+
+**$t$-pivots** (replacing $\sigma^2$ with $\text{MSE}$):
+
+$$\frac{\widehat{\beta}_1 - \beta_1}{(\text{MSE}/S_{xx})^{1/2}} \sim t_{n-2} \qquad \frac{\widehat{\beta}_0 - \beta_0}{\left[\text{MSE}\!\left(\dfrac{1}{n} + \dfrac{\bar{X}^2}{S_{xx}}\right)\right]^{1/2}} \sim t_{n-2}$$
+
+---
+
+## 7. Confidence Intervals
+
+**$100(1-\alpha)\%$ CI for $\beta_1$:**
+$$\widehat{\beta}_1 \;\pm\; t_{1-\alpha/2,\; n-2} \cdot \text{SE}(\widehat{\beta}_1)$$
+
+**$100(1-\alpha)\%$ CI for $\beta_0$:**
+$$\widehat{\beta}_0 \;\pm\; t_{1-\alpha/2,\; n-2} \cdot \text{SE}(\widehat{\beta}_0)$$
+
+---
+
+## 8. Hypothesis Tests
+
+**Test statistic for $H_0: \beta_1 = \beta_{10}$:**
+$$t^* = \frac{\widehat{\beta}_1 - \beta_{10}}{(\text{MSE}/S_{xx})^{1/2}} \sim t_{n-2} \text{ under } H_0$$
+
+**Test statistic for $H_0: \beta_0 = \beta_{00}$:**
+$$t^* = \frac{\widehat{\beta}_0 - \beta_{00}}{\text{SE}(\widehat{\beta}_0)} \sim t_{n-2} \text{ under } H_0$$
+
+**Decision rules at significance level $\alpha$:**
+
+| Hypotheses | Reject $H_0$ if |
+|:-----------|:----------------|
+| $H_1: \beta_j \neq \beta_{j0}$ (two-sided) | $|t^*| > t_{1-\alpha/2,\; n-2}$ |
+| $H_1: \beta_j > \beta_{j0}$ (right-sided) | $t^* > t_{1-\alpha,\; n-2}$ |
+| $H_1: \beta_j < \beta_{j0}$ (left-sided) | $t^* < -t_{1-\alpha,\; n-2}$ |
+
+---
+
+## 9. Prediction Intervals
+
+**Point estimate at a new input $x^*$:**
+$$\widehat{Y}^* = \widehat{\beta}_0 + \widehat{\beta}_1 x^*$$
+
+**Variance of fitted value:**
+$$\text{Var}(\widehat{Y}^*) = \sigma^2\!\left(\frac{1}{n} + \frac{(x^* - \bar{X})^2}{S_{xx}}\right)$$
+
+**$100(1-\alpha)\%$ CI for mean response** $E(Y \mid X = x^*)$:
+$$\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\; n-2}\sqrt{\text{MSE}\!\left(\frac{1}{n} + \frac{(x^*-\bar{X})^2}{S_{xx}}\right)}$$
+
+**$100(1-\alpha)\%$ Prediction interval** for a new individual $Y^*$:
+$$\widehat{Y}^* \;\pm\; t_{1-\alpha/2,\; n-2}\sqrt{\text{MSE}\!\left(1 + \frac{1}{n} + \frac{(x^*-\bar{X})^2}{S_{xx}}\right)}$$
+
+---
+
+## 10. Analysis of Variance (ANOVA)
+
+**Sums of squares decomposition:** $\quad\text{SST} = \text{SSR} + \text{SSE}$
+
+$$\text{SST} = \sum_{i=1}^n (Y_i - \bar{Y})^2 \qquad \text{SSR} = \sum_{i=1}^n (\widehat{Y}_i - \bar{Y})^2 = \widehat{\beta}_1^2\, S_{xx} \qquad \text{SSE} = \sum_{i=1}^n (Y_i - \widehat{Y}_i)^2$$
+
+**ANOVA Table:**
+
+| Source | df | SS | MS | $\mathbb{E}(\text{MS})$ |
+|:-------|:--:|:--:|:--:|:------------------------|
+| Model  | $1$   | SSR | $\text{MSR} = \text{SSR}/1$ | $\sigma^2 + \beta_1^2 S_{xx}$ |
+| Error  | $n-2$ | SSE | $\text{MSE} = \text{SSE}/(n-2)$ | $\sigma^2$ |
+| Total  | $n-1$ | SST | | |
+
+**F-statistic for $H_0: \beta_1 = 0$:**
+$$F^* = \frac{\text{MSR}}{\text{MSE}} = \frac{\text{SSR}/1}{\text{SSE}/(n-2)} \;\overset{H_0}{\sim}\; F(1,\; n-2)$$
+
+Reject $H_0$ if $F^* > F(1-\alpha;\; 1,\; n-2)$.
+
+**Connection to the $t$-test:** $\quad F^* = (t^*)^2$
+
+---
+
+## 11. Coefficient of Determination
+
+$$R^2 = \frac{\text{SSR}}{\text{SST}} = 1 - \frac{\text{SSE}}{\text{SST}} \;\in\; [0, 1]$$
+
+---
+
+## 12. F Test for Lack of Fit
+
+*Requires replicated observations (multiple $Y$ values at the same $X$).*
+
+**Notation:** $c$ = number of distinct $X$ values; $n_j$ = replicates at group $j$; $\bar{Y}_j$ = group mean.
+
+$$\text{SSPE} = \sum_{j=1}^c \sum_{i=1}^{n_j} (Y_{ij} - \bar{Y}_j)^2, \qquad df_{PE} = n - c$$
+
+$$\text{SSLF} = \sum_{j=1}^c n_j(\bar{Y}_j - \widehat{Y}_j)^2, \qquad df_{LF} = c - 2$$
+
+$$\text{SSE}(R) = \text{SSPE} + \text{SSLF}$$
+
+**Lack of Fit F-statistic:**
+$$F^* = \frac{\text{MSLF}}{\text{MSPE}} = \frac{\text{SSLF}/(c-2)}{\text{SSPE}/(n-c)} \;\overset{H_0}{\sim}\; F_{c-2,\; n-c}$$
+
+Reject $H_0$ (reject linearity) if $F^* > F(1-\alpha;\; c-2,\; n-c)$.
+
+**Expanded ANOVA Table:**
+
+| Source | df | SS | MS |
+|:-------|:--:|:--:|:--:|
+| Model | $1$ | SSR | MSR |
+| Error | $n-2$ | SSE | MSE |
+| $\quad$ Lack of fit | $c-2$ | SSLF | MSLF |
+| $\quad$ Pure error | $n-c$ | SSPE | MSPE |
+| Total | $n-1$ | SST | |
+

@@ -3809,5 +3809,103 @@
     "title": "Lecture 10: Midterm Review",
     "section": "Course Reminders",
     "text": "Course Reminders\n\nMidterm Monday!\nNo lab Monday. Office hours instead!\n\nTong: 9 am @ PHELP 1518\nBingjiang: 10 am on Zoom"
+  },
+  {
+    "objectID": "exams/midterm-formula-sheet.html#the-simple-linear-regression-model",
+    "href": "exams/midterm-formula-sheet.html#the-simple-linear-regression-model",
+    "title": "Midterm Formula Sheet",
+    "section": "1. The Simple Linear Regression Model",
+    "text": "1. The Simple Linear Regression Model\n\\[y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i, \\qquad \\varepsilon_i \\overset{\\text{iid}}{\\sim} N(0, \\sigma^2)\\]\n\n\n\nSymbol\nMeaning\n\n\n\n\n\\(y_i\\)\nObserved response for unit \\(i\\)\n\n\n\\(x_i\\)\nPredictor for unit \\(i\\)\n\n\n\\(\\beta_0\\)\nIntercept\n\n\n\\(\\beta_1\\)\nSlope\n\n\n\\(\\varepsilon_i\\)\nRandom error\n\n\n\\(\\sigma^2\\)\nError variance\n\n\n\nImplied distribution: Under normality, \\(\\quad Y_i \\sim N(\\beta_0 + \\beta_1 X_i,\\ \\sigma^2)\\)\nModel implications:\n\\[\\mathbb{E}(Y_i) = \\beta_0 + \\beta_1 X_i \\qquad \\text{Var}(Y_i) = \\sigma^2 \\qquad \\text{Cov}(Y_i, Y_j) = 0 \\text{ for } i \\neq j\\]"
+  },
+  {
+    "objectID": "exams/midterm-formula-sheet.html#ols-estimation",
+    "href": "exams/midterm-formula-sheet.html#ols-estimation",
+    "title": "Midterm Formula Sheet",
+    "section": "2. OLS Estimation",
+    "text": "2. OLS Estimation\n\nKey Quantities\n\\[S_{xx} = \\sum_{i=1}^n (x_i - \\bar{x})^2 = \\sum_{i=1}^n x_i^2 - n\\bar{x}^2\\]\n\\[S_{xy} = \\sum_{i=1}^n (x_i - \\bar{x})(y_i - \\bar{y}) = \\sum_{i=1}^n x_i y_i - n\\bar{x}\\bar{y}\\]\n\n\nOLS Estimators\n\\[\\widehat{\\beta}_1 = \\frac{S_{xy}}{S_{xx}} = \\frac{\\displaystyle\\sum_{i=1}^n (x_i - \\bar{x})(y_i - \\bar{y})}{\\displaystyle\\sum_{i=1}^n (x_i - \\bar{x})^2}\\]\n\\[\\widehat{\\beta}_0 = \\bar{y} - \\widehat{\\beta}_1\\bar{x}\\]\n\n\nFitted Values and Residuals\n\\[\\widehat{y}_i = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x_i \\qquad e_i = y_i - \\widehat{y}_i\\]\n\n\nConnection to Correlation\n\\[\\widehat{\\beta}_1 = r \\cdot \\frac{s_y}{s_x}\\]\nwhere \\(r\\) is the sample correlation and \\(s_x\\), \\(s_y\\) are sample standard deviations."
+  },
+  {
+    "objectID": "exams/midterm-formula-sheet.html#properties-of-ols-residuals",
+    "href": "exams/midterm-formula-sheet.html#properties-of-ols-residuals",
+    "title": "Midterm Formula Sheet",
+    "section": "3. Properties of OLS Residuals",
+    "text": "3. Properties of OLS Residuals\n\\[\\sum_{i=1}^n e_i = 0 \\qquad \\sum_{i=1}^n \\widehat{y}_i = \\sum_{i=1}^n y_i \\qquad \\sum_{i=1}^n x_i e_i = 0 \\qquad \\sum_{i=1}^n \\widehat{y}_i e_i = 0\\]\nThe fitted line always passes through \\((\\bar{x},\\ \\bar{y})\\)."
+  },
+  {
+    "objectID": "exams/midterm-formula-sheet.html#properties-of-the-ols-estimators",
+    "href": "exams/midterm-formula-sheet.html#properties-of-the-ols-estimators",
+    "title": "Midterm Formula Sheet",
+    "section": "4. Properties of the OLS Estimators",
+    "text": "4. Properties of the OLS Estimators\nLinearity: \\(\\widehat{\\beta}_1 = \\displaystyle\\sum_{i=1}^n a_i y_i\\) where \\(a_i = \\dfrac{x_i - \\bar{x}}{S_{xx}}\\)\nUnbiasedness: \\(\\mathbb{E}(\\widehat{\\beta}_0) = \\beta_0 \\qquad \\mathbb{E}(\\widehat{\\beta}_1) = \\beta_1\\)\nVariances: \\[\\text{Var}(\\widehat{\\beta}_1) = \\frac{\\sigma^2}{S_{xx}} \\qquad \\text{Var}(\\widehat{\\beta}_0) = \\sigma^2\\!\\left(\\frac{1}{n} + \\frac{\\bar{x}^2}{S_{xx}}\\right)\\]\nGauss-Markov (BLUE): OLS has the smallest variance among all linear unbiased estimators."
+  },
+  {
+    "objectID": "exams/midterm-formula-sheet.html#estimating-error-variance",
+    "href": "exams/midterm-formula-sheet.html#estimating-error-variance",
+    "title": "Midterm Formula Sheet",
+    "section": "5. Estimating Error Variance",
+    "text": "5. Estimating Error Variance\nResidual Sum of Squares: \\[\\text{RSS} = \\sum_{i=1}^n e_i^2 = \\sum_{i=1}^n (y_i - \\widehat{y}_i)^2\\]\nMean Square Error (unbiased estimator of \\(\\sigma^2\\)): \\[\\widehat{\\sigma}^2 = \\text{MSE} = \\frac{\\text{RSS}}{n - 2}, \\qquad \\mathbb{E}(\\widehat{\\sigma}^2) = \\sigma^2\\]\nResidual standard deviation: \\[\\widehat{\\sigma} = \\sqrt{\\frac{\\text{RSS}}{n-2}}\\]\nStandard errors: \\[\\text{SE}(\\widehat{\\beta}_1) = \\frac{\\widehat{\\sigma}}{\\sqrt{S_{xx}}} \\qquad \\text{SE}(\\widehat{\\beta}_0) = \\widehat{\\sigma}\\sqrt{\\frac{1}{n} + \\frac{\\bar{x}^2}{S_{xx}}}\\]\nMLE of \\(\\sigma^2\\) (biased): \\(\\quad\\widehat{\\sigma}^2_{\\text{MLE}} = \\dfrac{\\text{RSS}}{n}\\)"
+  },
+  {
+    "objectID": "exams/midterm-formula-sheet.html#sampling-distributions",
+    "href": "exams/midterm-formula-sheet.html#sampling-distributions",
+    "title": "Midterm Formula Sheet",
+    "section": "6. Sampling Distributions",
+    "text": "6. Sampling Distributions\nUnder the normality assumption \\((\\varepsilon_i \\overset{iid}{\\sim} N(0,\\sigma^2))\\):\n\\[\\widehat{\\beta}_1 \\sim N\\!\\left(\\beta_1,\\ \\frac{\\sigma^2}{S_{xx}}\\right) \\qquad \\widehat{\\beta}_0 \\sim N\\!\\left(\\beta_0,\\ \\sigma^2\\!\\left(\\frac{1}{n} + \\frac{\\bar{X}^2}{S_{xx}}\\right)\\right)\\]\n\\[\\frac{\\text{RSS}}{\\sigma^2} \\sim \\chi^2_{n-2}\\]\n\\(t\\)-pivots (replacing \\(\\sigma^2\\) with \\(\\text{MSE}\\)):\n\\[\\frac{\\widehat{\\beta}_1 - \\beta_1}{(\\text{MSE}/S_{xx})^{1/2}} \\sim t_{n-2} \\qquad \\frac{\\widehat{\\beta}_0 - \\beta_0}{\\left[\\text{MSE}\\!\\left(\\dfrac{1}{n} + \\dfrac{\\bar{X}^2}{S_{xx}}\\right)\\right]^{1/2}} \\sim t_{n-2}\\]"
+  },
+  {
+    "objectID": "exams/midterm-formula-sheet.html#confidence-intervals",
+    "href": "exams/midterm-formula-sheet.html#confidence-intervals",
+    "title": "Midterm Formula Sheet",
+    "section": "7. Confidence Intervals",
+    "text": "7. Confidence Intervals\n\\(100(1-\\alpha)\\%\\) CI for \\(\\beta_1\\): \\[\\widehat{\\beta}_1 \\;\\pm\\; t_{1-\\alpha/2,\\; n-2} \\cdot \\text{SE}(\\widehat{\\beta}_1)\\]\n\\(100(1-\\alpha)\\%\\) CI for \\(\\beta_0\\): \\[\\widehat{\\beta}_0 \\;\\pm\\; t_{1-\\alpha/2,\\; n-2} \\cdot \\text{SE}(\\widehat{\\beta}_0)\\]"
+  },
+  {
+    "objectID": "exams/midterm-formula-sheet.html#hypothesis-tests",
+    "href": "exams/midterm-formula-sheet.html#hypothesis-tests",
+    "title": "Midterm Formula Sheet",
+    "section": "8. Hypothesis Tests",
+    "text": "8. Hypothesis Tests\nTest statistic for \\(H_0: \\beta_1 = \\beta_{10}\\): \\[t^* = \\frac{\\widehat{\\beta}_1 - \\beta_{10}}{(\\text{MSE}/S_{xx})^{1/2}} \\sim t_{n-2} \\text{ under } H_0\\]\nTest statistic for \\(H_0: \\beta_0 = \\beta_{00}\\): \\[t^* = \\frac{\\widehat{\\beta}_0 - \\beta_{00}}{\\text{SE}(\\widehat{\\beta}_0)} \\sim t_{n-2} \\text{ under } H_0\\]\nDecision rules at significance level \\(\\alpha\\):\n\n\n\n\n\n\n\nHypotheses\nReject \\(H_0\\) if\n\n\n\n\n\\(H_1: \\beta_j \\neq \\beta_{j0}\\) (two-sided)\n\\(|t^*| &gt; t_{1-\\alpha/2,\\; n-2}\\)\n\n\n\\(H_1: \\beta_j &gt; \\beta_{j0}\\) (right-sided)\n\\(t^* &gt; t_{1-\\alpha,\\; n-2}\\)\n\n\n\\(H_1: \\beta_j &lt; \\beta_{j0}\\) (left-sided)\n\\(t^* &lt; -t_{1-\\alpha,\\; n-2}\\)"
+  },
+  {
+    "objectID": "exams/midterm-formula-sheet.html#prediction-intervals",
+    "href": "exams/midterm-formula-sheet.html#prediction-intervals",
+    "title": "Midterm Formula Sheet",
+    "section": "9. Prediction Intervals",
+    "text": "9. Prediction Intervals\nPoint estimate at a new input \\(x^*\\): \\[\\widehat{Y}^* = \\widehat{\\beta}_0 + \\widehat{\\beta}_1 x^*\\]\nVariance of fitted value: \\[\\text{Var}(\\widehat{Y}^*) = \\sigma^2\\!\\left(\\frac{1}{n} + \\frac{(x^* - \\bar{X})^2}{S_{xx}}\\right)\\]\n\\(100(1-\\alpha)\\%\\) CI for mean response \\(E(Y \\mid X = x^*)\\): \\[\\widehat{Y}^* \\;\\pm\\; t_{1-\\alpha/2,\\; n-2}\\sqrt{\\text{MSE}\\!\\left(\\frac{1}{n} + \\frac{(x^*-\\bar{X})^2}{S_{xx}}\\right)}\\]\n\\(100(1-\\alpha)\\%\\) Prediction interval for a new individual \\(Y^*\\): \\[\\widehat{Y}^* \\;\\pm\\; t_{1-\\alpha/2,\\; n-2}\\sqrt{\\text{MSE}\\!\\left(1 + \\frac{1}{n} + \\frac{(x^*-\\bar{X})^2}{S_{xx}}\\right)}\\]"
+  },
+  {
+    "objectID": "exams/midterm-formula-sheet.html#analysis-of-variance-anova",
+    "href": "exams/midterm-formula-sheet.html#analysis-of-variance-anova",
+    "title": "Midterm Formula Sheet",
+    "section": "10. Analysis of Variance (ANOVA)",
+    "text": "10. Analysis of Variance (ANOVA)\nSums of squares decomposition: \\(\\quad\\text{SST} = \\text{SSR} + \\text{SSE}\\)\n\\[\\text{SST} = \\sum_{i=1}^n (Y_i - \\bar{Y})^2 \\qquad \\text{SSR} = \\sum_{i=1}^n (\\widehat{Y}_i - \\bar{Y})^2 = \\widehat{\\beta}_1^2\\, S_{xx} \\qquad \\text{SSE} = \\sum_{i=1}^n (Y_i - \\widehat{Y}_i)^2\\]\nANOVA Table:\n\n\n\n\n\n\n\n\n\n\nSource\ndf\nSS\nMS\n\\(\\mathbb{E}(\\text{MS})\\)\n\n\n\n\nModel\n\\(1\\)\nSSR\n\\(\\text{MSR} = \\text{SSR}/1\\)\n\\(\\sigma^2 + \\beta_1^2 S_{xx}\\)\n\n\nError\n\\(n-2\\)\nSSE\n\\(\\text{MSE} = \\text{SSE}/(n-2)\\)\n\\(\\sigma^2\\)\n\n\nTotal\n\\(n-1\\)\nSST\n\n\n\n\n\nF-statistic for \\(H_0: \\beta_1 = 0\\): \\[F^* = \\frac{\\text{MSR}}{\\text{MSE}} = \\frac{\\text{SSR}/1}{\\text{SSE}/(n-2)} \\;\\overset{H_0}{\\sim}\\; F(1,\\; n-2)\\]\nReject \\(H_0\\) if \\(F^* &gt; F(1-\\alpha;\\; 1,\\; n-2)\\).\nConnection to the \\(t\\)-test: \\(\\quad F^* = (t^*)^2\\)"
+  },
+  {
+    "objectID": "exams/midterm-formula-sheet.html#coefficient-of-determination",
+    "href": "exams/midterm-formula-sheet.html#coefficient-of-determination",
+    "title": "Midterm Formula Sheet",
+    "section": "11. Coefficient of Determination",
+    "text": "11. Coefficient of Determination\n\\[R^2 = \\frac{\\text{SSR}}{\\text{SST}} = 1 - \\frac{\\text{SSE}}{\\text{SST}} \\;\\in\\; [0, 1]\\]"
+  },
+  {
+    "objectID": "exams/midterm-formula-sheet.html#transformations-and-diagnostics",
+    "href": "exams/midterm-formula-sheet.html#transformations-and-diagnostics",
+    "title": "Midterm Formula Sheet",
+    "section": "12. Transformations and Diagnostics",
+    "text": "12. Transformations and Diagnostics\n\nTransformations of \\(X\\) (fix nonlinearity)\n\n\n\n\n\n\n\nResidual pattern\nTransformation to try\n\n\n\n\nConcave up (fast growth)\n\\(X' = X^2\\) or \\(X' = e^X\\)\n\n\nConcave down (diminishing returns)\n\\(X' = \\log(X)\\) or \\(X' = \\sqrt{X}\\)\n\n\nDecreasing, convex\n\\(X' = 1/X\\) or \\(X' = e^{-X}\\)\n\n\n\n\n\nTransformations of \\(Y\\) (fix nonconstant variance / nonnormality)\n\n\n\nSeverity\nTransformation\n\n\n\n\nMild right skew\n\\(Y' = \\sqrt{Y}\\)\n\n\nModerate right skew\n\\(Y' = \\log(Y)\\)\n\n\nSevere right skew\n\\(Y' = 1/\\sqrt{Y}\\)\n\n\nVery severe\n\\(Y' = 1/Y\\)\n\n\n\nBack-transforming: If the model is fit on \\(\\log(Y)\\), then \\(\\widehat{Y} = e^{\\widehat{\\log Y}}\\).\n\n\nBox-Cox Profile Log-Likelihood\n\\[\\ell_p(\\lambda) = -\\frac{n}{2}\\log\\!\\left\\{\\frac{SSE(\\lambda)}{n}\\right\\} + (\\lambda - 1)\\sum_{i=1}^n \\log Y_i\\]\nChoose \\(\\hat{\\lambda}\\) that maximizes \\(\\ell_p(\\lambda)\\); round to nearest interpretable value (\\(0 \\to \\log Y\\), \\(0.5 \\to \\sqrt{Y}\\), \\(1 \\to\\) none)."
+  },
+  {
+    "objectID": "exams/midterm-formula-sheet.html#f-test-for-lack-of-fit",
+    "href": "exams/midterm-formula-sheet.html#f-test-for-lack-of-fit",
+    "title": "Midterm Formula Sheet",
+    "section": "12. F Test for Lack of Fit",
+    "text": "12. F Test for Lack of Fit\nRequires replicated observations (multiple \\(Y\\) values at the same \\(X\\)).\nNotation: \\(c\\) = number of distinct \\(X\\) values; \\(n_j\\) = replicates at group \\(j\\); \\(\\bar{Y}_j\\) = group mean.\n\\[\\text{SSPE} = \\sum_{j=1}^c \\sum_{i=1}^{n_j} (Y_{ij} - \\bar{Y}_j)^2, \\qquad df_{PE} = n - c\\]\n\\[\\text{SSLF} = \\sum_{j=1}^c n_j(\\bar{Y}_j - \\widehat{Y}_j)^2, \\qquad df_{LF} = c - 2\\]\n\\[\\text{SSE}(R) = \\text{SSPE} + \\text{SSLF}\\]\nLack of Fit F-statistic: \\[F^* = \\frac{\\text{MSLF}}{\\text{MSPE}} = \\frac{\\text{SSLF}/(c-2)}{\\text{SSPE}/(n-c)} \\;\\overset{H_0}{\\sim}\\; F_{c-2,\\; n-c}\\]\nReject \\(H_0\\) (reject linearity) if \\(F^* &gt; F(1-\\alpha;\\; c-2,\\; n-c)\\).\nExpanded ANOVA Table:\n\n\n\nSource\ndf\nSS\nMS\n\n\n\n\nModel\n\\(1\\)\nSSR\nMSR\n\n\nError\n\\(n-2\\)\nSSE\nMSE\n\n\n\\(\\quad\\) Lack of fit\n\\(c-2\\)\nSSLF\nMSLF\n\n\n\\(\\quad\\) Pure error\n\\(n-c\\)\nSSPE\nMSPE\n\n\nTotal\n\\(n-1\\)\nSST"
+  },
+  {
+    "objectID": "exams/midterm-formula-sheet.html#quick-reference-key-distributions",
+    "href": "exams/midterm-formula-sheet.html#quick-reference-key-distributions",
+    "title": "Midterm Formula Sheet",
+    "section": "Quick Reference: Key Distributions",
+    "text": "Quick Reference: Key Distributions\n\n\n\n\n\n\n\nDistribution\nWhen it arises in regression\n\n\n\n\n\\(\\widehat{\\beta}_1 \\sim N(\\beta_1,\\; \\sigma^2/S_{xx})\\)\nSampling distribution of the OLS slope\n\n\n\\(\\widehat{\\beta}_0 \\sim N\\!\\left(\\beta_0,\\; \\sigma^2(1/n + \\bar{X}^2/S_{xx})\\right)\\)\nSampling distribution of the OLS intercept\n\n\n\\(\\text{RSS}/\\sigma^2 \\sim \\chi^2_{n-2}\\)\nUsed to build \\(t\\)-pivots\n\n\n\\((\\widehat{\\beta}_1 - \\beta_1)/(\\text{MSE}/S_{xx})^{1/2} \\sim t_{n-2}\\)\n\\(t\\)-pivot for slope inference\n\n\n\\(F^* = \\text{MSR}/\\text{MSE} \\sim F(1, n-2)\\) under \\(H_0\\)\nF-test for overall model fit\n\n\n\\(F^* = \\text{MSLF}/\\text{MSPE} \\sim F_{c-2,\\; n-c}\\) under \\(H_0\\)\nF-test for lack of fit"
   }
 ]
