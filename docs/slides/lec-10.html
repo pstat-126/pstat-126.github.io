@@ -157,6 +157,7 @@ Annie Adams
 <section id="course-reminders" class="slide level2">
 <h2>Course Reminders</h2>
 <ul>
+<li>HW data correction</li>
 <li>Midterm Monday!</li>
 <li>No lab Monday. Office hours instead!
 <ul>
@@ -192,11 +193,11 @@ Annie Adams
 <p>For each scenario, state which interval is more appropriate and why.</p>
 <p><strong>(a)</strong> A city planner wants to estimate the <strong>average</strong> daily commute time for all residents who live exactly 10 miles from the city center.</p>
 <div class="fragment">
-<p><strong>CI for <span class="math inline">\(E(Y^*)\)</span>.</strong> The planner is estimating the mean response for a population of residents at that distance, not any single individual’s commute. <span class="math display">\[\widehat{Y}^* \pm t_{1-\alpha/2,\,n-2}\cdot \sqrt{\widehat{\sigma}^2\!\left(\frac{1}{n} + \frac{(x^*-\bar{x})^2}{S_{xx}}\right)}\]</span></p>
+<p><strong>CI for <span class="math inline">\(E(Y^*)\)</span>.</strong> The planner is estimating the mean response for a population of residents at that distance, not any single individual’s commute.</p>
 </div>
 <p><strong>(b)</strong> A transit app uses a specific commuter’s home-to-work distance to estimate <strong>that individual’s</strong> travel time tomorrow morning.</p>
 <div class="fragment">
-<p><strong>Prediction interval for <span class="math inline">\(Y^*\)</span>.</strong> The app is forecasting a single individual’s travel time, so we must account for both uncertainty in the mean and the natural variability of an individual observation. <span class="math display">\[\widehat{Y}^* \pm t_{1-\alpha/2,\,n-2}\cdot \sqrt{\widehat{\sigma}^2\!\left(1 + \frac{1}{n} + \frac{(x^*-\bar{x})^2}{S_{xx}}\right)}\]</span></p>
+<p><strong>Prediction interval for <span class="math inline">\(Y^*\)</span>.</strong> The app is forecasting a single individual’s travel time, so we must account for both uncertainty in the mean and the natural variability of an individual observation.</p>
 </div>
 </div>
 </section>
@@ -348,33 +349,17 @@ Annie Adams
 <div style="font-size: 0.82em;">
 <p>A statistics instructor collects data on <span class="math inline">\(n = 8\)</span> students, recording daily study hours (<span class="math inline">\(X\)</span>) and quiz score (<span class="math inline">\(Y\)</span>, out of 20). The following summary statistics are computed:</p>
 <p><span class="math display">\[n = 8 \qquad \sum x_i = 40 \qquad \sum y_i = 72 \qquad \sum x_i^2 = 240 \qquad \sum x_i y_i = 396\]</span></p>
-<div style="font-size: 0.78em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-bottom: 0.5em;">
-<p><span class="math display">\[S_{xx} = \sum x_i^2 - n\bar{x}^2 \qquad S_{xy} = \sum x_i y_i - n\bar{x}\bar{y} \qquad \widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x}\]</span></p>
-</div>
 <p><strong>(a)</strong> Compute <span class="math inline">\(\bar{x}\)</span>, <span class="math inline">\(\bar{y}\)</span>, <span class="math inline">\(S_{xx}\)</span>, and <span class="math inline">\(S_{xy}\)</span>.</p>
+<p><br><br></p>
 <p><strong>(b)</strong> Compute <span class="math inline">\(\widehat{\beta}_1\)</span> and <span class="math inline">\(\widehat{\beta}_0\)</span>.</p>
+<p><br><br></p>
 <p><strong>(c)</strong> Write the fitted regression equation and predict the quiz score for a student who studies 7 hours per day.</p>
+<p><br><br></p>
 <p><strong>(d)</strong> Interpret <span class="math inline">\(\widehat{\beta}_1\)</span> in context.</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_fab52769" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
-</div>
-</section>
-<section id="practice-ols-estimation-solution" class="slide level2 smaller">
-<h2>Practice: OLS Estimation — Solution</h2>
-<div style="font-size: 0.72em;">
-<p><strong>(a)</strong> <span class="math display">\[\bar{x} = \frac{40}{8} = 5 \qquad \bar{y} = \frac{72}{8} = 9\]</span> <span class="math display">\[S_{xx} = \sum x_i^2 - n\bar{x}^2 = 240 - 8(5)^2 = 240 - 200 = 40\]</span> <span class="math display">\[S_{xy} = \sum x_i y_i - n\bar{x}\bar{y} = 396 - 8(5)(9) = 396 - 360 = 36\]</span></p>
-<div class="fragment">
-<p><strong>(b)</strong> <span class="math display">\[\widehat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{36}{40} = 0.9 \qquad \widehat{\beta}_0 = \bar{y} - \widehat{\beta}_1\bar{x} = 9 - 0.9(5) = 4.5\]</span></p>
-</div>
-<div class="fragment">
-<p><strong>(c)</strong> Fitted model: <span class="math inline">\(\widehat{Y} = 4.5 + 0.9X\)</span></p>
-<p>At <span class="math inline">\(X = 7\)</span>: <span class="math inline">\(\widehat{Y} = 4.5 + 0.9(7) = 4.5 + 6.3 = \mathbf{10.8}\)</span> points</p>
-</div>
-<div class="fragment">
-<p><strong>(d)</strong> For each additional hour of study per day, the predicted quiz score increases by <strong>0.9 points</strong>, on average.</p>
+<countdown-timer class="countdown" id="timer_b560f5b9" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -386,32 +371,17 @@ Annie Adams
 <div style="font-size: 0.82em;">
 <p>Continue with the study-hours data from the previous problem. After fitting the model, the residual sum of squares is <span class="math inline">\(SSE = 6.0\)</span>.</p>
 <p>Recall: <span class="math inline">\(n = 8\)</span>, <span class="math inline">\(\bar{x} = 5\)</span>, <span class="math inline">\(S_{xx} = 40\)</span>.</p>
-<div style="font-size: 0.78em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-bottom: 0.5em;">
-<p><span class="math display">\[\widehat{\sigma}^2 = \frac{SSE}{n-2} \qquad SE(\widehat{\beta}_1) = \sqrt{\frac{\widehat{\sigma}^2}{S_{xx}}} \qquad SE(\widehat{\beta}_0) = \sqrt{\widehat{\sigma}^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)}\]</span></p>
-</div>
 <p><strong>(a)</strong> Compute <span class="math inline">\(\widehat{\sigma}^2 = MSE = SSE/(n-2)\)</span>.</p>
+<p><br><br></p>
 <p><strong>(b)</strong> Compute <span class="math inline">\(SE(\widehat{\beta}_1)\)</span>.</p>
+<p><br><br></p>
 <p><strong>(c)</strong> Compute <span class="math inline">\(SE(\widehat{\beta}_0)\)</span>.</p>
+<p><br><br></p>
 <p><strong>(d)</strong> The Gauss-Markov theorem says OLS estimators are BLUE. What does BLUE stand for and what does the theorem guarantee?</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_e1075b3c" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
-</div>
-</section>
-<section id="practice-mse-and-standard-errors-solution" class="slide level2 smaller">
-<h2>Practice: MSE and Standard Errors — Solution</h2>
-<div style="font-size: 0.72em;">
-<p><strong>(a)</strong> <span class="math display">\[\widehat{\sigma}^2 = \frac{SSE}{n-2} = \frac{6.0}{6} = 1.0\]</span></p>
-<div class="fragment">
-<p><strong>(b)</strong> <span class="math display">\[SE(\widehat{\beta}_1) = \sqrt{\frac{\widehat{\sigma}^2}{S_{xx}}} = \sqrt{\frac{1.0}{40}} = \sqrt{0.025} \approx 0.158\]</span></p>
-</div>
-<div class="fragment">
-<p><strong>(c)</strong> <span class="math display">\[SE(\widehat{\beta}_0) = \sqrt{\widehat{\sigma}^2\!\left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right)} = \sqrt{1.0\left(\frac{1}{8} + \frac{25}{40}\right)} = \sqrt{0.125 + 0.625} = \sqrt{0.75} \approx 0.866\]</span></p>
-</div>
-<div class="fragment">
-<p><strong>(d)</strong> <strong>BLUE</strong> = <strong>B</strong>est <strong>L</strong>inear <strong>U</strong>nbiased <strong>E</strong>stimator. The Gauss-Markov theorem guarantees that, under the SLR assumptions (linearity, independence, constant variance), the OLS estimators <span class="math inline">\(\widehat{\beta}_0\)</span> and <span class="math inline">\(\widehat{\beta}_1\)</span> have the <strong>smallest variance</strong> among all linear unbiased estimators — no competing linear unbiased estimator can be more precise.</p>
+<countdown-timer class="countdown" id="timer_19fc9ae8" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -424,25 +394,13 @@ Annie Adams
 <p>A researcher regresses minutes of sleep per night (<span class="math inline">\(Y\)</span>) on cups of coffee consumed per day (<span class="math inline">\(X\)</span>) for <span class="math inline">\(n = 22\)</span> participants. The R output gives:</p>
 <p><span class="math display">\[\widehat{\beta}_1 = -14.2 \qquad SE(\widehat{\beta}_1) = 5.4 \qquad df = 20\]</span></p>
 <p>Critical value: <span class="math inline">\(t_{0.975,\, 20} = 2.086\)</span>.</p>
-<div style="font-size: 0.78em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-bottom: 0.5em;">
-<p><span class="math display">\[\widehat{\beta}_1 \pm t_{1-\alpha/2,\,n-2} \cdot SE(\widehat{\beta}_1) \qquad t^* = \frac{\widehat{\beta}_1 - \beta_{10}}{SE(\widehat{\beta}_1)}\]</span></p>
-</div>
 <p><strong>(a)</strong> Construct a 95% confidence interval for <span class="math inline">\(\beta_1\)</span>.</p>
+<p><br><br></p>
 <p><strong>(b)</strong> Test <span class="math inline">\(H_0\colon \beta_1 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_1\colon \beta_1 \neq 0\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>. Compute <span class="math inline">\(t^*\)</span> and state your decision.</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_7754cd03" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
-</div>
-</section>
-<section id="practice-ci-and-t-test-solution" class="slide level2 smaller">
-<h2>Practice: CI and <span class="math inline">\(t\)</span>-Test — Solution</h2>
-<div style="font-size: 0.72em;">
-<p><strong>(a)</strong> <span class="math display">\[\widehat{\beta}_1 \pm t_{0.975,\,20} \cdot SE(\widehat{\beta}_1) = -14.2 \pm 2.086(5.4) = -14.2 \pm 11.26\]</span> <span class="math display">\[\mathbf{95\%\ CI:\ (-25.46,\ -2.94)}\]</span></p>
-<div class="fragment">
-<p><strong>(b)</strong> <span class="math display">\[t^* = \frac{\widehat{\beta}_1 - 0}{SE(\widehat{\beta}_1)} = \frac{-14.2}{5.4} = -2.63\]</span></p>
-<p>Since <span class="math inline">\(|t^*| = 2.63 &gt; 2.086 = t_{0.975,\,20}\)</span>, we <strong>reject</strong> <span class="math inline">\(H_0\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<countdown-timer class="countdown" id="timer_27158598" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -454,32 +412,16 @@ Annie Adams
 <div style="font-size: 0.82em;">
 <p>A city models ice cream sales per hour (<span class="math inline">\(Y\)</span>, servings) as a function of air temperature (<span class="math inline">\(X\)</span>, °C). The fitted model and summary statistics are:</p>
 <p><span class="math display">\[\widehat{Y} = 5 + 3X \qquad n = 20 \qquad \bar{x} = 15 \qquad S_{xx} = 200 \qquad SSE = 648\]</span></p>
-<div style="font-size: 0.78em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-bottom: 0.5em;">
-<p><span class="math display">\[\widehat{\sigma}^2 = \frac{SSE}{n-2} \qquad SE(\widehat{Y}^*) = \sqrt{\widehat{\sigma}^2\!\left(\frac{1}{n} + \frac{(X^*-\bar{x})^2}{S_{xx}}\right)} \qquad SE(Y_{\text{new}}) = \sqrt{\widehat{\sigma}^2\!\left(1 + \frac{1}{n} + \frac{(X^*-\bar{x})^2}{S_{xx}}\right)}\]</span></p>
-</div>
 <p>Critical value: <span class="math inline">\(t_{0.975,\, 18} = 2.101\)</span>.</p>
 <p><strong>(a)</strong> Compute a 95% CI for the <strong>mean</strong> sales when <span class="math inline">\(X^* = 17\)</span> °C.</p>
+<p><br><br></p>
 <p><strong>(b)</strong> Compute a 95% <strong>prediction interval</strong> for sales at a single future hour when <span class="math inline">\(X^* = 17\)</span> °C.</p>
+<p><br><br></p>
 <p><strong>(c)</strong> Which interval is wider and why?</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_48759085" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
-</div>
-</section>
-<section id="practice-ci-vs.-pi-solution" class="slide level2 smaller">
-<h2>Practice: CI vs.&nbsp;PI — Solution</h2>
-<div style="font-size: 0.65em;">
-<p>Point estimate: <span class="math inline">\(\widehat{Y}^* = 5 + 3(17) = 56\)</span> servings; <span class="math inline">\(\quad\widehat{\sigma}^2 = SSE/(n-2) = 648/18 = 36\)</span></p>
-<div class="fragment">
-<p><strong>(a)</strong> Standard error of the mean response: <span class="math display">\[SE(\widehat{Y}^*) = \sqrt{\widehat{\sigma}^2\!\left(\frac{1}{n} + \frac{(X^*-\bar{x})^2}{S_{xx}}\right)} = \sqrt{36\!\left(\frac{1}{20} + \frac{(17-15)^2}{200}\right)} = \sqrt{36(0.07)} = \sqrt{2.52} \approx 1.59\]</span> <span class="math display">\[\mathbf{95\%\ CI:}\ 56 \pm 2.101(1.59) = 56 \pm 3.34 = (52.66,\ 59.34)\]</span></p>
-</div>
-<div class="fragment">
-<p><strong>(b)</strong> Standard error for a new individual observation adds the <span class="math inline">\(+1\)</span> term: <span class="math display">\[SE(Y_{\text{new}}) = \sqrt{\widehat{\sigma}^2\!\left(1 + \frac{1}{n} + \frac{(X^*-\bar{x})^2}{S_{xx}}\right)} = \sqrt{36(1.07)} = \sqrt{38.52} \approx 6.21\]</span> <span class="math display">\[\mathbf{95\%\ PI:}\ 56 \pm 2.101(6.21) = 56 \pm 13.04 = (42.96,\ 69.04)\]</span></p>
-</div>
-<div class="fragment">
-<p><strong>(c)</strong> The <strong>prediction interval is wider</strong>. A CI captures uncertainty about the mean response (only estimation error). A PI must also account for the <strong>irreducible random variation</strong> of a single new observation around that mean (<span class="math inline">\(+\sigma^2\)</span>), so it is always wider.</p>
+<countdown-timer class="countdown" id="timer_11ed7ee3" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -488,7 +430,7 @@ Annie Adams
 </section>
 <section id="practice-anova-table-and-r2" class="slide level2 smaller">
 <h2>Practice: ANOVA Table and <span class="math inline">\(R^2\)</span></h2>
-<div style="font-size: 0.82em;">
+<div style="font-size: 0.62em;">
 <p>A regression of <span class="math inline">\(n = 20\)</span> observations produces the following partial ANOVA table. Fill in all missing values, compute <span class="math inline">\(R^2\)</span>, and draw a conclusion.</p>
 <table class="caption-top">
 <thead>
@@ -526,60 +468,14 @@ Annie Adams
 </table>
 <p>Critical value: <span class="math inline">\(F(0.95;\; 1,\; 18) = 4.41\)</span>.</p>
 <p><strong>(a)</strong> Complete the ANOVA table.</p>
+<p><br><br></p>
 <p><strong>(b)</strong> Compute <span class="math inline">\(R^2\)</span> and interpret it.</p>
+<p><br><br></p>
 <p><strong>(c)</strong> State the conclusion of the F-test at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_7cf5f444" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
-</div>
-</section>
-<section id="practice-anova-table-and-r2-solution" class="slide level2 smaller">
-<h2>Practice: ANOVA Table and <span class="math inline">\(R^2\)</span> — Solution</h2>
-<div style="font-size: 0.70em;">
-<p><strong>(a)</strong> <span class="math inline">\(df_{\text{Error}} = n - 2 = 18\)</span>; <span class="math inline">\(df_{\text{Total}} = n - 1 = 19\)</span>; <span class="math inline">\(SSTO = 360 + 90 = 450\)</span></p>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Source</th>
-<th style="text-align: center;">df</th>
-<th style="text-align: right;">SS</th>
-<th style="text-align: right;">MS</th>
-<th style="text-align: right;">F</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Model</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: right;">360</td>
-<td style="text-align: right;">360</td>
-<td style="text-align: right;"><strong>72</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Error</td>
-<td style="text-align: center;">18</td>
-<td style="text-align: right;">90</td>
-<td style="text-align: right;"><strong>5</strong></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Total</td>
-<td style="text-align: center;">19</td>
-<td style="text-align: right;"><strong>450</strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-</tbody>
-</table>
-<p><span class="math inline">\(MSR = 360/1 = 360\)</span>; <span class="math inline">\(\quad MSE = 90/18 = 5\)</span>; <span class="math inline">\(\quad F^* = 360/5 = 72\)</span></p>
-<div class="fragment">
-<p><strong>(b)</strong> <span class="math display">\[R^2 = \frac{SSR}{SSTO} = \frac{360}{450} = 0.80\]</span></p>
-<p>The model explains <strong>80%</strong> of the total variation in <span class="math inline">\(Y\)</span>.</p>
-</div>
-<div class="fragment">
-<p><strong>(c)</strong> Since <span class="math inline">\(F^* = 72 &gt; 4.41 = F(0.95;\; 1,\; 18)\)</span>, we <strong>reject <span class="math inline">\(H_0\colon \beta_1 = 0\)</span></strong> at <span class="math inline">\(\alpha = 0.05\)</span>. There is strong evidence of a linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<countdown-timer class="countdown" id="timer_eda29ae3" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -591,24 +487,14 @@ Annie Adams
 <div style="font-size: 0.82em;">
 <p>For each residual plot description below, state <strong>(i)</strong> which SLR assumption is violated and <strong>(ii)</strong> what you would do to address it.</p>
 <p><strong>(a)</strong> The residual-vs-fitted plot shows a clear <strong>U-shaped curve</strong>. Residuals are positive at low and high fitted values, negative in the middle.</p>
+<p><br><br></p>
 <p><strong>(b)</strong> The residual-vs-fitted plot shows a <strong>funnel/fan shape</strong>. Residuals spread out as fitted values increase.</p>
+<p><br><br></p>
 <p><strong>(c)</strong> The <strong>normal Q-Q plot</strong> shows points that curve upward at the right tail (right skew).</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_e3c22419" minutes="3" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
-</div>
-</section>
-<section id="practice-identifying-assumption-violations-solution" class="slide level2 smaller">
-<h2>Practice: Identifying Assumption Violations — Solution</h2>
-<div style="font-size: 0.72em;">
-<p><strong>(a)</strong> <strong>Assumption 1 (Linearity) — violated.</strong> A curved trend in the residual plot means the true relationship is nonlinear. <strong>Fix:</strong> try transforming <span class="math inline">\(X\)</span> (e.g., <span class="math inline">\(X^2\)</span>, <span class="math inline">\(\log X\)</span>, <span class="math inline">\(\sqrt{X}\)</span>) or run the F test for lack of fit if replicates exist.</p>
-<div class="fragment">
-<p><strong>(b)</strong> <strong>Assumption 3 (Equal variance / homoscedasticity) — violated.</strong> The fan shape indicates variance increases with the fitted value (nonconstant variance). <strong>Fix:</strong> transform <span class="math inline">\(Y\)</span> using a variance-stabilizing transformation (e.g., <span class="math inline">\(\sqrt{Y}\)</span> for mild skew/fan shape, <span class="math inline">\(\log Y\)</span> for strong skew).</p>
-</div>
-<div class="fragment">
-<p><strong>(c)</strong> <strong>Assumption 4 (Normality) — violated.</strong> Right skew in the Q-Q plot suggests the errors are not normally distributed. <strong>Fix:</strong> transform <span class="math inline">\(Y\)</span> (often <span class="math inline">\(\log Y\)</span> for right-skewed data); note that a <span class="math inline">\(Y\)</span>-transformation can fix both nonconstant variance and nonnormality simultaneously.</p>
+<countdown-timer class="countdown" id="timer_e2895cd4" minutes="2" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -617,37 +503,23 @@ Annie Adams
 </section>
 <section id="practice-lack-of-fit-test" class="slide level2 smaller">
 <h2>Practice: Lack of Fit Test</h2>
-<div style="font-size: 0.82em;">
+<div style="font-size: 0.72em;">
 <p>An experiment has <span class="math inline">\(c = 4\)</span> distinct <span class="math inline">\(X\)</span> values with <span class="math inline">\(n_j = 3\)</span> replicates each (<span class="math inline">\(n = 12\)</span>). After fitting the linear regression and the full ANOVA model:</p>
 <ul>
 <li><span class="math inline">\(SSE(R) = 480.2\)</span> (linear model)</li>
 <li><span class="math inline">\(SSE(F) = SSPE = 120.4\)</span> (pure error)</li>
 </ul>
 <p><strong>(a)</strong> Compute <span class="math inline">\(SSLF\)</span> and its degrees of freedom.</p>
+<p><br><br></p>
 <p><strong>(b)</strong> Compute <span class="math inline">\(MSLF\)</span> and <span class="math inline">\(MSPE\)</span>.</p>
+<p><br><br></p>
 <p><strong>(c)</strong> Compute <span class="math inline">\(F^*\)</span> and state whether you reject the linear model at <span class="math inline">\(\alpha = 0.05\)</span>. Critical value: <span class="math inline">\(F(0.95;\; 2,\; 8) = 4.46\)</span>.</p>
+<p><br><br></p>
 <p><strong>(d)</strong> What does this result tell you about Assumption 1?</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_d42ce12f" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
-</div>
-</section>
-<section id="practice-lack-of-fit-test-solution" class="slide level2 smaller">
-<h2>Practice: Lack of Fit Test — Solution</h2>
-<div style="font-size: 0.60em;">
-<p><strong>(a)</strong> <span class="math inline">\(SSLF = SSE(R) - SSE(F) = 480.2 - 120.4 = 359.8\)</span></p>
-<p><span class="math inline">\(df_{LF} = c - 2 = 4 - 2 = 2\)</span>; <span class="math inline">\(\quad df_{PE} = n - c = 12 - 4 = 8\)</span></p>
-<div class="fragment">
-<p><strong>(b)</strong> <span class="math display">\[MSLF = \frac{359.8}{2} = 179.9 \qquad MSPE = \frac{120.4}{8} = 15.05\]</span></p>
-</div>
-<div class="fragment">
-<p><strong>(c)</strong> <span class="math display">\[F^* = \frac{MSLF}{MSPE} = \frac{179.9}{15.05} = 11.95\]</span></p>
-<p>Since <span class="math inline">\(11.95 &gt; 4.46\)</span>, we <strong>reject</strong> the linear model at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
-</div>
-<div class="fragment">
-<p><strong>(d)</strong> There is statistically significant evidence that the linear function <strong>does not adequately fit</strong> the data — Assumption 1 (linearity) appears to be violated. We should consider a transformation or a more flexible model.</p>
+<countdown-timer class="countdown" id="timer_d3843d85" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
