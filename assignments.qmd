@@ -20,13 +20,19 @@ toc: false
 
     <tr class="week-row"><td colspan="5">Optional</td></tr>
     <tr>
-      <td><a href="https://docs.google.com/document/d/1Pof9S4uuy5uUBTCQY95d5jJpExjRXXVdpZA2zfaQZAI/edit?usp=sharing">Late Pass Questionnaire</a></td>
+      <td><a href="https://docs.google.com/document/d/1Pof9S4uuy5uUBTCQY95d5jJpExjRXXVdpZA2zfaQZAI/edit?usp=sharing">Late Pass Questionnaire #1</a></td>
       <td class="date-cell">Mon, Sep 28</td>
       <td class="date-cell">Sat, Oct 3</td>
       <td><a href="https://www.gradescope.com/courses/1392258/assignments/8711953">Submission Portal</a></td>
       <td><span class="sub-topic" style="color:#2e7d32;font-size:0.85rem">Optional Assignmnet. Complete to receive a late pass for a future HW assignment</span></td>
     </tr>
-
+    <tr>
+      <td><a href="https://docs.google.com/document/d/1i98S-nAKDZVmXBWezBcUOK0pKUZmLzxD_Lv62Qbxr_s/edit?usp=sharing">Late Pass Questionnaire #2</a></td>
+      <td class="date-cell">Mon, Nov 2</td>
+      <td class="date-cell">Sat, Nov 7</td>
+      <td><a href="https://www.gradescope.com/courses/1392258/assignments/8987499/">Submission Portal</a></td>
+      <td><span class="sub-topic" style="color:#2e7d32;font-size:0.85rem">Optional Assignmnet. Complete to receive a late pass for a future HW assignment</span></td>
+    </tr>
     <tr class="week-row"><td colspan="5">Homework</td></tr>
     <tr>
       <td><a href="hw/hw-01.html">Homework 1</a></td>
