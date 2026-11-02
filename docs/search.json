@@ -3907,5 +3907,26 @@
     "title": "Midterm Formula Sheet",
     "section": "Quick Reference: Key Distributions",
     "text": "Quick Reference: Key Distributions\n\n\n\n\n\n\n\nDistribution\nWhen it arises in regression\n\n\n\n\n\\(\\widehat{\\beta}_1 \\sim N(\\beta_1,\\; \\sigma^2/S_{xx})\\)\nSampling distribution of the OLS slope\n\n\n\\(\\widehat{\\beta}_0 \\sim N\\!\\left(\\beta_0,\\; \\sigma^2(1/n + \\bar{X}^2/S_{xx})\\right)\\)\nSampling distribution of the OLS intercept\n\n\n\\(\\text{RSS}/\\sigma^2 \\sim \\chi^2_{n-2}\\)\nUsed to build \\(t\\)-pivots\n\n\n\\((\\widehat{\\beta}_1 - \\beta_1)/(\\text{MSE}/S_{xx})^{1/2} \\sim t_{n-2}\\)\n\\(t\\)-pivot for slope inference\n\n\n\\(F^* = \\text{MSR}/\\text{MSE} \\sim F(1, n-2)\\) under \\(H_0\\)\nF-test for overall model fit\n\n\n\\(F^* = \\text{MSLF}/\\text{MSPE} \\sim F_{c-2,\\; n-c}\\) under \\(H_0\\)\nF-test for lack of fit"
+  },
+  {
+    "objectID": "slides/lec-midterm.html#midterm",
+    "href": "slides/lec-midterm.html#midterm",
+    "title": "Midterm",
+    "section": "Midterm",
+    "text": "Midterm\n\nPlease find a seat, leaving at least one empty seat between you and the person next to you. Put everything away except your calculator and a pen or pencil. Good luck!!"
+  },
+  {
+    "objectID": "slides/lec-midterm.html#course-reminders",
+    "href": "slides/lec-midterm.html#course-reminders",
+    "title": "Midterm",
+    "section": "Course Reminders",
+    "text": "Course Reminders\n\n(Optional) Late Pass Questionnaire #2 due this Saturday"
+  },
+  {
+    "objectID": "slides/lec-midterm.html#questions",
+    "href": "slides/lec-midterm.html#questions",
+    "title": "Midterm",
+    "section": "Questions?",
+    "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
   }
 ]

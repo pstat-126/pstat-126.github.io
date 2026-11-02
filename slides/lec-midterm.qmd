@@ -1,0 +1,40 @@
+---
+title: "Midterm"
+subtitle: "PSTAT 126: Linear Regression"
+author: "Annie Adams"
+institute: "UC Santa Barbara"
+date: "11/02/2026"
+format:
+  revealjs:
+    theme: [default, ../styles.scss]
+    slide-number: true
+    preview-links: auto
+    footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
+    logo: ""
+    chalkboard: true
+    title-slide-attributes:
+      data-background-color: "#003660"
+---
+
+## Midterm {background-color="#003660"}
+
+::: {style="font-size: 1.4em;"}
+Please find a seat, leaving at least one empty seat between you and the person next to you. Put everything away except your calculator and a pen or pencil. Good luck!!
+:::
+
+
+## Course Reminders
+- (Optional) Late Pass Questionnaire #2 due this Saturday
+
+
+
+## Questions? {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em;"}
+**Annie Adams**
+[aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+Office Hours: Tuesday 10 – 11 AM on [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1)
+
+[Course Website](https://pstat-126.github.io/)
+:::
