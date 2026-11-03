@@ -1,0 +1,763 @@
+---
+title: "Lecture 12: Multiple Regression I"
+subtitle: "PSTAT 126: Linear Regression"
+author: "Annie Adams"
+institute: "UC Santa Barbara"
+date: "11/03/2026"
+format:
+  revealjs:
+    theme: [default, ../styles.scss]
+    slide-number: true
+    preview-links: auto
+    footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
+    logo: ""
+    chalkboard: true
+    title-slide-attributes:
+      data-background-color: "#003660"
+---
+
+## Learning Objectives
+
+By the end of today you will be able to:
+
+::: {style="font-size: 0.80em;"}
+
+- Explain why we extend simple linear regression to multiple predictors
+- Write a general linear regression model and state its assumptions
+- Identify polynomial, interaction, and transformed-variable models as special cases of the general linear model
+- Create dummy variables to encode a qualitative predictor with $k$ levels
+- Explain what "linear" means in the phrase "general linear regression model"
+- Express the multiple regression model in matrix form $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$
+- Derive the least squares estimate $\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$ from the normal equations
+
+:::
+
+---
+
+## Today's Roadmap
+
+::: {style="font-size: 0.88em;"}
+
+1. **Multiple Regression Models** — the setup, special cases, dummy variables, matrix form
+2. **Least Squares Estimation** — minimizing $Q$, normal equations, matrix solution
+
+:::
+
+---
+
+## From SLR to Multiple Regression {background-color="#003660"}
+
+---
+
+## Where We've Been: Simple Linear Regression
+::: {style="font-size: 0.80em;"}
+
+
+So far, we have modeled one response variable using **one predictor**:
+
+$$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$
+
+::: {.fragment}
+With it, we can estimate slopes, run $t$-tests, build prediction intervals, and diagnose model fit.
+
+But it rests on a strong implicit assumption: **one variable is enough to explain $Y$.**
+:::
+
+::: {.fragment}
+In practice, that assumption rarely holds.
+:::
+:::
+
+---
+
+## A Motivating Example: Predicting House Prices {.smaller}
+
+Suppose we want to predict the **sale price** of a house ($Y$, in \$1000s).
+
+We start with SLR using **square footage** alone:
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-width: 9
+#| fig-height: 3.8
+set.seed(7)
+n <- 80
+sqft     <- round(runif(n, 800, 3500))
+bedrooms <- sample(2:5, n, replace = TRUE)
+age      <- round(runif(n, 0, 40))
+price    <- 50 + 0.12 * sqft + 18 * bedrooms - 1.2 * age + rnorm(n, 0, 35)
+
+par(mfrow = c(1, 2), mar = c(4, 4, 2.5, 1))
+
+# SLR: price ~ sqft
+fit_slr <- lm(price ~ sqft)
+plot(sqft, price, pch = 16, col = "#003660", cex = 0.8,
+     xlab = "Square footage", ylab = "Sale price ($1000s)",
+     main = "SLR: Price ~ Sq. Ft.")
+abline(fit_slr, col = "#D62728", lwd = 2)
+
+# Residuals from SLR, colored by bedrooms
+resid_slr <- residuals(fit_slr)
+cols <- c("#FEBC11", "#003660", "#2CA02C", "#D62728")[bedrooms - 1]
+plot(sqft, resid_slr, pch = 16, col = cols, cex = 0.8,
+     xlab = "Square footage", ylab = "Residuals from SLR",
+     main = "Residuals colored by # bedrooms")
+abline(h = 0, lty = 2, col = "gray50")
+legend("topright", legend = paste(2:5, "bed"), col = c("#FEBC11","#003660","#2CA02C","#D62728"),
+       pch = 16, bty = "n", cex = 0.75)
+```
+
+::: {.fragment}
+::: {style="font-size: 0.82em;"}
+The residual plot shows a clear pattern: **houses with more bedrooms tend to have positive residuals** even after accounting for size. Square footage alone is leaving out important information.
+:::
+:::
+
+---
+
+## What SLR Misses
+::: {style="font-size: 0.72em;"}
+
+
+Consider two houses with identical square footage:
+
+| House | Sq. Ft. | Bedrooms | Age (yrs) | Actual Price |
+|:-----:|:-------:|:--------:|:---------:|:------------:|
+| A | 2000 | 2 | 30 | \$280k |
+| B | 2000 | 5 | 5  | \$410k |
+
+Our SLR model is $\widehat{\text{Price}}_i = \widehat{\beta}_0 + \widehat{\beta}_1 \cdot \text{SqFt}_i$.
+
+Since both houses have $\text{SqFt} = 2000$, SLR produces **the same prediction for both**:
+
+$$\widehat{\text{Price}}_A = \widehat{\text{Price}}_B = \widehat{\beta}_0 + \widehat{\beta}_1 \cdot 2000$$
+
+The \$130k gap is completely invisible to the model.
+:::
+---
+
+## The Fix: Multiple Regression
+
+**Multiple regression** lets us include all three predictors at once:
+
+$$\text{Price}_i = \beta_0 + \beta_1 \cdot \text{SqFt}_i + \beta_2 \cdot \text{Bedrooms}_i + \beta_3 \cdot \text{Age}_i + \epsilon_i$$
+
+Now the model can distinguish House A and House B and estimate the effect of each variable while **holding the others constant**.
+
+::: {.fragment}
+This "holding others constant" idea is one of the most powerful features of multiple regression. We'll return to it throughout the unit.
+:::
+
+---
+
+## Multiple Regression Models {background-color="#003660"}
+
+---
+
+## Why Multiple Regression?
+::: {style="font-size: 0.72em;"}
+
+
+In most real applications, a response variable depends on **more than one** predictor.
+
+::: {.fragment}
+**Examples:**
+
+- Weight may depend on height, age, and sex
+- House price may depend on size, location, and age
+- Blood pressure may depend on BMI, age, sodium intake, and exercise
+:::
+
+::: {.fragment}
+Even when we care about only **one** predictor's effect, we often need to **control** (adjust) for other variables to get an accurate estimate.
+
+The goals of multiple regression are to:
+
+- Assess the relationship between $Y$ and several predictors simultaneously
+- Predict $Y$ using multiple independent variables
+:::
+:::
+---
+
+## Setup: Data Structure
+
+Suppose we have $n$ observations on response $Y$ and $p - 1$ independent variables $X_1, \ldots, X_{p-1}$:
+
+::: {style="font-size: 0.82em;"}
+
+| Observation | $Y$ | $X_1$ | $X_2$ | $\cdots$ | $X_{p-1}$ |
+|:-----------:|:---:|:------:|:------:|:--------:|:----------:|
+| 1 | $Y_1$ | $X_{11}$ | $X_{12}$ | $\cdots$ | $X_{1,p-1}$ |
+| 2 | $Y_2$ | $X_{21}$ | $X_{22}$ | $\cdots$ | $X_{2,p-1}$ |
+| $\vdots$ | $\vdots$ | $\vdots$ | $\vdots$ | $\vdots$ | $\vdots$ |
+| $n$ | $Y_n$ | $X_{n1}$ | $X_{n2}$ | $\cdots$ | $X_{n,p-1}$ |
+
+:::
+
+
+
+---
+
+## The General Linear Regression Model
+::: {style="font-size: 0.72em;"}
+
+
+The **general linear regression model** assumes:
+
+$$Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \cdots + \beta_{p-1} X_{i,p-1} + \epsilon_i, \quad i = 1, \ldots, n$$
+
+where $\epsilon_i$'s are random errors.
+
+::: {.fragment}
+**Assumptions:**
+
+- **For LS estimation:** $\epsilon_i$ are iid with $E(\epsilon_i) = 0$ and $\text{Var}(\epsilon_i) = \sigma^2$
+- **For inference** (tests and CIs): $\epsilon_i \overset{iid}{\sim} N(0, \sigma^2)$
+
+These are the same as SLR. We just extended to multiple predictors.
+:::
+
+::: {.fragment}
+It follows that $E(Y_i) = \beta_0 + \beta_1 X_{i1} + \cdots + \beta_{p-1} X_{i,p-1}$ and $\text{Var}(Y_i) = \sigma^2$.
+:::
+:::
+---
+
+## Special Cases: First-Order and Polynomial
+::: {style="font-size: 0.72em;"}
+
+
+**First-order model:** All $X_1, \ldots, X_{p-1}$ represent distinct original predictors with no transformations.
+
+$$Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \cdots + \beta_{p-1} X_{i,p-1} + \epsilon_i$$
+
+::: {.fragment}
+**Polynomial regression:** Model a nonlinear effect using powers of a single predictor.
+
+$$Y_i = \beta_0 + \beta_1 X_i + \beta_2 X_i^2 + \epsilon_i$$
+
+This is a general linear model by setting $X_{i1} = X_i$ and $X_{i2} = X_i^2$.
+
+The model is **not linear in $X$** — but it is still linear in the parameters $\beta_0, \beta_1, \beta_2$.
+:::
+:::
+
+---
+
+## Special Case: Transformed Variables
+::: {style="font-size: 0.72em;"}
+
+
+**Transformed variables:** We can apply any transformation to $X$ or $Y$ and still fit a general linear model.
+
+**Example:** Suppose pollution decreases rapidly with distance. We might try:
+
+$$Y_i' = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \epsilon_i$$
+
+where $Y_i' = \log Y_i$ (log-transform the response) and $X_{i2} = \exp(X_{i1})$ (transform a predictor).
+
+::: {.fragment}
+Even though $\log$ and $\exp$ are nonlinear functions, the model is still a general linear model — every $\beta$ enters linearly. The transformed columns simply become new columns in the design matrix $\mathbf{X}$.
+:::
+:::
+
+---
+
+## Special Case: Interaction Model
+
+**Interaction:** The effect of one predictor on $Y$ **depends on the level of another predictor**.
+
+$$Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i1} X_{i2} + \epsilon_i$$
+
+This fits the general linear model by defining a new column $X_{i3} = X_{i1} X_{i2}$ (the product of the two predictors).
+
+---
+
+## What Does "Linear" Really Mean?
+
+"Linear" in **general linear regression model** means the model depends **linearly on the unknown parameters $\beta$**, not on the predictors $X$.
+
+::: {.fragment}
+This makes the model quite flexible — it can capture nonlinear effects and interactions while still being linear in parameters.
+
+**Examples we've already seen:**
+
+- $Y_i = \beta_0 + \beta_1 X_i + \beta_2 X_i^2 + \epsilon_i$ — polynomial, linear in $\beta$
+- $Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i1}X_{i2} + \epsilon_i$ — interaction, linear in $\beta$
+- $Y_i' = \beta_0 + \beta_1 X_{i1} + \beta_2 \log X_{i2} + \epsilon_i$ — transformed predictor, linear in $\beta$
+:::
+
+---
+
+## Quick Check: Is It a General Linear Model?
+
+For each model below, decide: **general linear model — yes or no?**
+
+$$Y = \beta_1 + \beta_2 X_1 + \beta_3 X_1^2 + \beta_4 X_1 X_2 + \epsilon$$
+
+$$Y = \beta_1 + \beta_2 X_1 + \beta_3 \log X_2 + \epsilon$$
+
+$$Y = \beta_1 + \beta_2 X^{\beta_3} + \epsilon$$
+
+::: {.fragment}
+**Answers:** The first two **are** — every $\beta$ enters linearly. The third is **not** — $\beta_3$ appears as an exponent, making it a nonlinear model.
+:::
+
+---
+
+## Qualitative Independent Variables
+
+**Qualitative** (categorical) variables cannot enter a regression model as numbers directly. We encode them using **indicator (dummy) variables**.
+
+::: {.fragment}
+For a qualitative variable with $k$ levels, we create **$k - 1$ dummy variables** (one level becomes the baseline).
+
+**Example — Sex** (2 levels: Female, Male):
+
+$$X = \begin{cases} 1 & \text{if female} \\ 0 & \text{if male} \end{cases}$$
+
+Male is the **baseline**. The coefficient of $X$ represents the average difference in $Y$ between females and males, all else equal.
+:::
+
+---
+
+## Dummy Variables: Hair Color Example
+
+For **hair color** with 5 levels (Blond, Brown, Gray, Red, Black), we need $5 - 1 = 4$ dummy variables. Black is the baseline.
+
+::: {style="font-size: 0.88em;"}
+
+$$X_1 = \begin{cases} 1 & \text{if Blond} \\ 0 & \text{otherwise} \end{cases} \qquad X_2 = \begin{cases} 1 & \text{if Brown} \\ 0 & \text{otherwise} \end{cases}$$
+
+$$X_3 = \begin{cases} 1 & \text{if Gray} \\ 0 & \text{otherwise} \end{cases} \qquad X_4 = \begin{cases} 1 & \text{if Red} \\ 0 & \text{otherwise} \end{cases}$$
+
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.82em;"}
+- The **choice of baseline is arbitrary** — results are equivalent regardless of which level is omitted
+- Each coefficient $\beta_j$ represents the **average difference** in $Y$ between that level and the baseline, given all other predictors are held fixed
+:::
+:::
+
+---
+
+## Dummy Variables: Interpreting Coefficients {.smaller}
+
+::: {style="font-size: 0.82em;"}
+
+Suppose we model salary ($Y$) with sex and experience ($X_{\text{exp}}$):
+
+$$Y_i = \beta_0 + \beta_1 X_i + \beta_2 X_{i,\text{exp}} + \epsilon_i$$
+
+where $X_i = 1$ if female, 0 if male.
+
+| | Male | Female |
+|:--|:--|:--|
+| $E(Y_i)$ | $\beta_0 + \beta_2 X_{i,\text{exp}}$ | $\beta_0 + \beta_1 + \beta_2 X_{i,\text{exp}}$ |
+
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.82em;"}
+$\beta_1$ is the **average salary difference between females and males** at the same level of experience. The two groups share the same slope $\beta_2$ for experience (parallel lines).
+:::
+:::
+
+---
+
+## Practice: Setting Up a Multiple Regression Model {.smaller}
+
+::: {style="font-size: 0.82em;"}
+
+A researcher wants to model a student's exam score ($Y$, out of 100) using the following predictors:
+
+- $X_1$: hours studied (quantitative)
+- $X_2$: section (A, B, or C — qualitative, 3 levels)
+- $X_3$: hours studied $\times$ section interaction
+
+**(a)** How many dummy variables are needed to encode section? Identify the baseline and write out each dummy variable.
+
+<br>
+
+**(b)** Write the full model equation, identifying every term. How many total parameters $\beta$ does it have?
+
+<br>
+
+**(c)** Interpret the interaction term in plain language.
+
+:::
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 5,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em"
+)
+```
+
+---
+
+## Practice: Setting Up a Model — Solution {.smaller}
+
+::: {style="font-size: 0.78em;"}
+
+**(a)** 3 levels $\Rightarrow$ $3 - 1 = 2$ dummy variables. Using Section A as baseline:
+
+$$D_1 = \begin{cases} 1 & \text{if Section B} \\ 0 & \text{otherwise} \end{cases} \qquad D_2 = \begin{cases} 1 & \text{if Section C} \\ 0 & \text{otherwise} \end{cases}$$
+
+::: {.fragment}
+**(b)** The full model with interactions between hours and section:
+
+$$Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 D_{i1} + \beta_3 D_{i2} + \beta_4 X_{i1} D_{i1} + \beta_5 X_{i1} D_{i2} + \epsilon_i$$
+
+There are **6 parameters**: $\beta_0, \beta_1, \ldots, \beta_5$.
+:::
+
+::: {.fragment}
+**(c)** The interaction terms $\beta_4$ and $\beta_5$ allow the **effect of study hours to differ by section**. If $\beta_4 \neq 0$, each additional study hour predicts a different score gain in Section B vs. Section A.
+:::
+
+:::
+
+---
+
+## The Matrix Form {.smaller}
+
+Define vectors and a matrix:
+
+$$\mathbf{Y}_{n \times 1} = \begin{pmatrix} Y_1 \\ \vdots \\ Y_n \end{pmatrix}, \quad \boldsymbol{\epsilon}_{n \times 1} = \begin{pmatrix} \epsilon_1 \\ \vdots \\ \epsilon_n \end{pmatrix}, \quad \boldsymbol{\beta}_{p \times 1} = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \vdots \\ \beta_{p-1} \end{pmatrix}$$
+
+$$\mathbf{X}_{n \times p} = \begin{pmatrix} 1 & X_{11} & \cdots & X_{1,p-1} \\ \vdots & \vdots & \ddots & \vdots \\ 1 & X_{n1} & \cdots & X_{n,p-1} \end{pmatrix}$$
+
+::: {.fragment}
+The general linear regression model becomes:
+
+$$\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$$
+
+The first column of $\mathbf{X}$ is all 1s — this corresponds to the intercept $\beta_0$.
+:::
+
+---
+
+## Why the Matrix Form Matters
+
+::: {style="font-size: 0.88em;"}
+
+The compact notation $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$ is not just shorthand — it unlocks powerful tools:
+
+:::
+
+::: {.incremental}
+::: {style="font-size: 0.85em;"}
+- **Estimation:** One formula $\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$ works for any number of predictors
+- **Geometry:** $\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}$ is the projection of $\mathbf{Y}$ onto the column space of $\mathbf{X}$
+- **Inference:** Standard errors and test statistics have clean matrix expressions
+- **Generality:** The same framework handles SLR, polynomial, interaction, and mixed models
+:::
+:::
+
+---
+
+## Least Squares Estimation {background-color="#003660"}
+
+---
+
+## The LS Criterion
+
+We estimate $\boldsymbol{\beta}$ by minimizing the **sum of squared residuals**:
+
+$$Q = \sum_{i=1}^n \left(Y_i - \beta_0 - \beta_1 X_{i1} - \cdots - \beta_{p-1} X_{i,p-1}\right)^2 = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2$$
+
+::: {.fragment}
+This is the same principle as SLR — minimize the total squared vertical distance between the observed $Y_i$ and the fitted surface.
+
+In SLR we had $p = 2$ (intercept + one slope). Now $p$ can be anything.
+:::
+
+---
+
+## Deriving the Normal Equations
+
+Take the derivative of $Q = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2$ with respect to $\boldsymbol{\beta}$ and set it to zero:
+
+$$\frac{\partial Q}{\partial \boldsymbol{\beta}} = -2\mathbf{X}^T(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}) = \mathbf{0}$$
+
+::: {.fragment}
+This gives the **normal equations**:
+
+$$\mathbf{X}^T \mathbf{X} \boldsymbol{\beta} = \mathbf{X}^T \mathbf{Y}$$
+
+These are $p$ equations in $p$ unknowns $(\beta_0, \beta_1, \ldots, \beta_{p-1})$.
+:::
+
+---
+
+## The LS Estimate
+
+If $\mathbf{X}$ is **full column rank** (no predictor is a perfect linear combination of others), then $\mathbf{X}^T\mathbf{X}$ is invertible and the unique solution is:
+
+$$\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$$
+
+::: {.fragment}
+::: {style="font-size: 0.82em;"}
+- $\mathbf{b} = (b_0, b_1, \ldots, b_{p-1})^T$ are the LS estimates of $(\beta_0, \beta_1, \ldots, \beta_{p-1})$
+- The **fitted values** are $\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}$
+- The **residuals** are $\mathbf{e} = \mathbf{Y} - \hat{\mathbf{Y}} = \mathbf{Y} - \mathbf{X}\mathbf{b}$
+:::
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.78em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660;"}
+**When is $\mathbf{X}$ NOT full column rank?** Perfect multicollinearity: e.g., one predictor is a linear combination of others, or you accidentally include all $k$ dummy variables for a $k$-level factor instead of $k-1$.
+:::
+:::
+
+---
+
+## Connecting Back to SLR
+
+In simple linear regression ($p = 2$, predictors: just $X$):
+
+$$\mathbf{X} = \begin{pmatrix} 1 & X_1 \\ \vdots & \vdots \\ 1 & X_n \end{pmatrix}, \qquad \mathbf{X}^T\mathbf{X} = \begin{pmatrix} n & \sum X_i \\ \sum X_i & \sum X_i^2 \end{pmatrix}, \qquad \mathbf{X}^T\mathbf{Y} = \begin{pmatrix} \sum Y_i \\ \sum X_i Y_i \end{pmatrix}$$
+
+::: {.fragment}
+Solving $(\mathbf{X}^T\mathbf{X})\mathbf{b} = \mathbf{X}^T\mathbf{Y}$ recovers exactly the SLR formulas:
+
+$$b_1 = \frac{S_{xy}}{S_{xx}}, \qquad b_0 = \bar{Y} - b_1\bar{X}$$
+
+The matrix formula is a **generalization** of what you already know.
+:::
+
+---
+
+## Properties of the LS Estimator
+
+::: {style="font-size: 0.88em;"}
+
+Under $E(\boldsymbol{\epsilon}) = \mathbf{0}$ and $\text{Cov}(\boldsymbol{\epsilon}) = \sigma^2 \mathbf{I}$:
+
+:::
+
+::: {.incremental}
+::: {style="font-size: 0.85em;"}
+- **Unbiasedness:** $E(\mathbf{b}) = \boldsymbol{\beta}$
+- **Covariance matrix:** $\text{Cov}(\mathbf{b}) = \sigma^2 (\mathbf{X}^T\mathbf{X})^{-1}$
+- **Gauss-Markov theorem:** $\mathbf{b}$ is BLUE — the Best Linear Unbiased Estimator among all linear estimators
+- **Normality (with normal errors):** $\mathbf{b} \sim N\!\left(\boldsymbol{\beta},\; \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\right)$
+:::
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.82em;"}
+The diagonal entries of $\sigma^2 (\mathbf{X}^T\mathbf{X})^{-1}$ give $\text{Var}(b_j)$, which we use to compute standard errors for inference.
+:::
+:::
+
+---
+
+## Practice: LS Estimation by Hand {.smaller}
+
+::: {style="font-size: 0.80em;"}
+
+A study records miles driven per day ($X$) and fuel cost per day in dollars ($Y$) for $n = 3$ days, and also includes a dummy variable $D$ for city driving (1 = city, 0 = highway):
+
+| $i$ | $X_i$ | $D_i$ | $Y_i$ |
+|:---:|:-----:|:------:|:-----:|
+| 1 | 10 | 1 | 8 |
+| 2 | 20 | 0 | 12 |
+| 3 | 15 | 1 | 11 |
+
+The model is $Y_i = \beta_0 + \beta_1 X_i + \beta_2 D_i + \epsilon_i$.
+
+**(a)** Write out the design matrix $\mathbf{X}$, the response vector $\mathbf{Y}$, and $\boldsymbol{\beta}$.
+
+<br>
+
+**(b)** Compute $\mathbf{X}^T\mathbf{X}$ and $\mathbf{X}^T\mathbf{Y}$.
+
+<br>
+
+**(c)** What would $b_2$ measure in this context?
+
+:::
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 6,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em"
+)
+```
+
+---
+
+## Practice: LS Estimation — Solution {.smaller}
+
+::: {style="font-size: 0.78em;"}
+
+**(a)**
+
+$$\mathbf{X} = \begin{pmatrix} 1 & 10 & 1 \\ 1 & 20 & 0 \\ 1 & 15 & 1 \end{pmatrix}, \qquad \mathbf{Y} = \begin{pmatrix} 8 \\ 12 \\ 11 \end{pmatrix}, \qquad \boldsymbol{\beta} = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{pmatrix}$$
+
+::: {.fragment}
+**(b)**
+
+$$\mathbf{X}^T\mathbf{X} = \begin{pmatrix} 3 & 45 & 2 \\ 45 & 725 & 25 \\ 2 & 25 & 2 \end{pmatrix}, \qquad \mathbf{X}^T\mathbf{Y} = \begin{pmatrix} 31 \\ 475 \\ 19 \end{pmatrix}$$
+:::
+
+::: {.fragment}
+**(c)** $b_2$ estimates the **average difference in daily fuel cost between city and highway driving**, holding miles driven fixed. A positive $b_2$ means city driving costs more per day than highway driving for the same number of miles.
+:::
+
+:::
+
+---
+
+## LS in R: Multiple Regression {.smaller}
+
+The formula syntax in R extends naturally from SLR:
+
+```{r}
+#| echo: true
+#| eval: true
+# Simulated fuel cost data
+miles <- c(10, 20, 15, 25, 18, 30)
+city  <- c(1, 0, 1, 0, 1, 0)
+cost  <- c(8, 12, 11, 17, 13, 19)
+
+fit <- lm(cost ~ miles + city)
+summary(fit)
+```
+
+---
+
+## Reading the Output {.smaller}
+
+::: {style="font-size: 0.82em;"}
+
+From `summary(fit)`:
+
+- **Coefficients table:** `Estimate` column gives $\mathbf{b}$; each row is one $b_j$
+- **Std. Error:** $SE(b_j) = \sqrt{\hat\sigma^2 [(\mathbf{X}^T\mathbf{X})^{-1}]_{jj}}$
+- **Residual standard error:** $\hat\sigma = \sqrt{MSE}$, where $MSE = SSE/(n-p)$
+- **Multiple R-squared:** $R^2 = SSR/SSTO = 1 - SSE/SSTO$
+
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.82em;"}
+**Key difference from SLR:** degrees of freedom for error are now $n - p$ (we estimated $p$ parameters $\beta_0, \beta_1, \ldots, \beta_{p-1}$). In SLR, $p = 2$ so df was $n - 2$.
+:::
+:::
+
+---
+
+## Practice: Interpreting R Output {.smaller}
+
+::: {style="font-size: 0.82em;"}
+
+A researcher fits the model $\widehat{\text{Cost}} = b_0 + b_1 \cdot \text{Miles} + b_2 \cdot \text{City}$ and gets:
+
+```
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)
+(Intercept)    2.000      1.200    1.67    0.194
+miles          0.550      0.062    8.87    0.003
+city           1.800      0.950    1.89    0.156
+```
+
+$n = 6$, $\hat\sigma = 0.71$, $R^2 = 0.979$.
+
+**(a)** Write the fitted model equation and interpret $b_1$ and $b_2$.
+
+<br>
+
+**(b)** Predict the fuel cost for a 20-mile city trip.
+
+<br>
+
+**(c)** Interpret $R^2 = 0.979$ in context.
+
+:::
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 4,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em"
+)
+```
+
+---
+
+## Practice: Interpreting R Output — Solution {.smaller}
+
+::: {style="font-size: 0.78em;"}
+
+**(a)** $\widehat{\text{Cost}} = 2.00 + 0.55 \cdot \text{Miles} + 1.80 \cdot \text{City}$
+
+- $b_1 = 0.55$: Each additional mile driven is associated with an **increase of \$0.55** in daily fuel cost, on average, holding driving type fixed.
+- $b_2 = 1.80$: City driving is associated with **\$1.80 more** in daily fuel cost than highway driving, on average, for the same number of miles.
+
+::: {.fragment}
+**(b)** For Miles = 20, City = 1:
+$$\widehat{\text{Cost}} = 2.00 + 0.55(20) + 1.80(1) = 2.00 + 11.00 + 1.80 = \mathbf{14.80}$$
+:::
+
+::: {.fragment}
+**(c)** Approximately **97.9%** of the variability in daily fuel cost is explained by the linear relationship with miles driven and driving type (city vs. highway).
+:::
+
+:::
+
+---
+
+## Summary
+
+::: {.incremental}
+- **Why multiple regression:** most responses depend on several predictors; we also need to control for confounders to isolate individual effects
+- **General linear model:** $Y_i = \beta_0 + \beta_1 X_{i1} + \cdots + \beta_{p-1}X_{i,p-1} + \epsilon_i$; "linear" refers to linearity in the **parameters**, not the predictors
+- **Special cases:** polynomial, interaction ($X_{i3} = X_{i1}X_{i2}$), and transformed-variable models all fit within this framework
+- **Qualitative variables:** encoded with $k - 1$ dummy variables for $k$ levels; omitted level is the baseline; coefficients measure average group differences
+- **Matrix form:** $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$; design matrix $\mathbf{X}$ has a leading column of 1s
+- **LS estimation:** minimize $Q = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2$; normal equations give $\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$; unbiased with $\text{Cov}(\mathbf{b}) = \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}$
+:::
+
+---
+
+## Questions? {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em;"}
+**Annie Adams**
+[aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+Office Hours: Tuesday 10 – 11 AM on [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1)
+
+[Course Website](https://pstat-126.github.io/)
+:::
