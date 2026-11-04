@@ -529,7 +529,7 @@
     "href": "schedule.html",
     "title": "Course Schedule",
     "section": "",
-    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n  \n    \n      Date\n      Topic\n      Materials\n      Lab\n      Due\n    \n  \n  \n\n    Week 1 — Introduction & Simple Linear Regression\n    \n      Mon, Sep 28\n      Welcome to PSTAT 126!\n        Course Information & Overview\n        The Simple Linear Regression Model\n        Linear Regression Intro\n      SlidesSlides\n      \n      \n    \n    \n      Wed, Sep 30\n      Least Squares Estimation\n        Deriving OLS estimators\n      Slides\n      \n      \n    \n    \n      Sat, Oct 3\n      \n      Late Pass Q (optional)\n    \n\n   \n    Week 2 — Properties of OLS\n    \n      Mon, Oct 5\n      Properties of OLS Estimators\n      Slides\n      Lab 1\n      \n    \n    \n      Wed, Oct 7\n      Residuals and Estimating Error Variance\n      Slides\n      \n      \n\n\n    Week 3 — Inference in Regression\n    \n      Mon, Oct 12\n      Inference in Regression\n        Maximum Likelihood Estimation\n      Slides\n      Lab 2\n      \n    \n    \n      Wed, Oct 14\n      Inference in Regression\n        Hypothesis tests and confidence intervals for OLS estimates\n      Slides\n      \n    \n       \n      Sat, Oct 17\n      \n      Homework 1\n    \n    Week 4 — Inference in Regression + Model Diagnostics  \n      Mon, Oct 19\n      Prediction Intervals + Model Fit\n        PI for a new observation vs. CI for mean response; SST, SSR, SSE\n      Slides\n      Lab 3\n      \n    \n    \n      Wed, Oct 19\n      Model Diagnostics Overview\n         \n      Slides\n      \n      \n    \n\n    Week 5 — Transformations \n    \n      Mon, Oct 26\n       Formal Model Diagnostic Tests and Transformations\n        F Test for Lack of Fit, Box Cox\n      Slides\n      Lab 4\n      \n    \n    \n      Wed, Oct 28\n       Midterm Review\n      Slides\n      \n      \n    \n    \n      Sat, Oct 31\n      \n      Homework 2\n    \n\n    Week 6 — Midterm & Multiple Linear Regression\n    \n      Mon, Nov 28\n       Midterm!\n      No Lab Today. Office Hours Instead\n\n      \n      \n    \n    \n      Wed, Nov 4\n      Multiple Linear Regression\n      Slides\n      \n      \n    \n    \n      Sat, Nov 7\n      \n      Late Pass Q #2 (optional)",
+    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n  \n    \n      Date\n      Topic\n      Materials\n      Lab\n      Due\n    \n  \n  \n\n    Week 1 — Introduction & Simple Linear Regression\n    \n      Mon, Sep 28\n      Welcome to PSTAT 126!\n        Course Information & Overview\n        The Simple Linear Regression Model\n        Linear Regression Intro\n      SlidesSlides\n      \n      \n    \n    \n      Wed, Sep 30\n      Least Squares Estimation\n        Deriving OLS estimators\n      Slides\n      \n      \n    \n    \n      Sat, Oct 3\n      \n      Late Pass Q (optional)\n    \n\n   \n    Week 2 — Properties of OLS\n    \n      Mon, Oct 5\n      Properties of OLS Estimators\n      Slides\n      Lab 1\n      \n    \n    \n      Wed, Oct 7\n      Residuals and Estimating Error Variance\n      Slides\n      \n      \n\n\n    Week 3 — Inference in Regression\n    \n      Mon, Oct 12\n      Inference in Regression\n        Maximum Likelihood Estimation\n      Slides\n      Lab 2\n      \n    \n    \n      Wed, Oct 14\n      Inference in Regression\n        Hypothesis tests and confidence intervals for OLS estimates\n      Slides\n      \n    \n       \n      Sat, Oct 17\n      \n      Homework 1\n    \n    Week 4 — Inference in Regression + Model Diagnostics  \n      Mon, Oct 19\n      Prediction Intervals + Model Fit\n        PI for a new observation vs. CI for mean response; SST, SSR, SSE\n      Slides\n      Lab 3\n      \n    \n    \n      Wed, Oct 19\n      Model Diagnostics Overview\n         \n      Slides\n      \n      \n    \n\n    Week 5 — Transformations \n    \n      Mon, Oct 26\n       Formal Model Diagnostic Tests and Transformations\n        F Test for Lack of Fit, Box Cox\n      Slides\n      Lab 4\n      \n    \n    \n      Wed, Oct 28\n       Midterm Review\n      Slides\n      \n      \n    \n    \n      Sat, Oct 31\n      \n      Homework 2\n    \n\n    Week 6 — Midterm & Multiple Linear Regression\n    \n      Mon, Nov 28\n       Midterm!\n      No Lab Today. Office Hours Instead\n\n      \n      \n    \n    \n      Wed, Nov 4\n      Multiple Linear Regression\n      Intro to MLR, Dummy Variables\n      Slides\n      \n      \n    \n    \n      Sat, Nov 7\n      \n      Late Pass Q #2 (optional)",
     "crumbs": [
       "Syllabus",
       "Lecture Materials"
@@ -712,9 +712,9 @@
   {
     "objectID": "hw/hw-03.html",
     "href": "hw/hw-03.html",
-    "title": "Homework 3",
+    "title": "Homework Assignment 3",
     "section": "",
-    "text": "Note\n\n\n\nThis homework has not been released yet. Check back closer to the due date.",
+    "text": "Instructions: Complete all answers in this .qmd file and render it to a PDF to submit on Gradescope by 11/19 at 11:59 PM. When uploading to Gradescope, you must assign pages to each question. Not assigning pages to the rubric items will deduct 5 points from your overall score. For problems that involve a lot of math (e.g., derivations or proofs), you may handwrite your solution, take a photo, and insert the image instead. To insert an image, add a code chunk with the following line and replace \"filename.jpg\" with your image’s filename, updating the file path if your image is not saved in the same folder as your .qmd:\n\nknitr::include_graphics(\"filename.jpg\")\n\nData note: All data for this assignment is either embedded directly in the problem or built into R. No external files need to be downloaded.\n\n1. Model Diagnostics.\n(a) (10 pt) For each of the five scenarios below, identify: (i) which assumption is violated, and (ii) the appropriate remedial action.\n\n\n\n\n\n\n\n\nScenario\nDiagnostic plot\nWhat you see\n\n\n\n\n1\nResiduals vs. fitted \\(\\hat{Y}\\)\nResiduals fan out as \\(\\hat{Y}\\) increases\n\n\n2\nResiduals vs. \\(X\\)\nA curved U-shape where residuals are negative at the ends, positive in the middle\n\n\n3\nResiduals vs. time order\nResiduals alternate in a cyclical pattern\n\n\n4\nNormal QQ-plot\nPoints follow the line in the middle but curve upward sharply at both ends (heavy tails)\n\n\n5\nResiduals vs. fitted \\(\\hat{Y}\\)\nPoints are randomly scattered around zero with no pattern\n\n\n\nAnswer:\n\nFor parts (b)–(e), use the cars dataset built into R. This dataset records the speed (speed, in mph) and braking distance (dist, in feet) of 50 cars from the 1920s.\n\ndata(cars)\n\n(b) (8 pt) Fit a simple linear regression of dist on speed. Then produce three diagnostic plots: (i) residuals vs. speed, (ii) residuals vs. fitted \\(\\hat{Y}\\), and (iii) a Normal QQ-plot. For each plot, describe what pattern you see (if any) and state which assumption — if any — appears to be violated.\n\n# Your code here\n\nAnswer:\n(c) (6 pt) Based on your diagnostic plots in (b), which transformation — of \\(X\\), of \\(Y\\), or of both — seems most appropriate as a first remedy? Explain your reasoning using the diagnostic patterns you observed and the guidance from lecture.\nAnswer:\n(d) (8 pt) Use boxcox() from the MASS package to find the best power transformation of dist. Plot the Box-Cox profile likelihood. Identify \\(\\hat{\\lambda}\\) from the plot, state which common transformation it corresponds to (e.g., \\(\\sqrt{Y}\\), \\(\\log Y\\), \\(1/Y\\)), and explain how you chose it.\n\nlibrary(MASS)\n# Your code here\n\nAnswer:\n(e) (8 pt) Refit the regression using the transformation you identified in (d) as the response. Reproduce the same three diagnostic plots from part (b). Has the model improved? Be specific about which assumption violations (if any) remain.\n\n# Your code here\n\nAnswer:\n\n2. F Test for Lack of Fit.\nA researcher studying athletic training records the improvement in sprint time (seconds faster than baseline) for athletes at four different training volumes. Each training level was assigned to two athletes.\n\n\n\nTraining weeks (\\(X\\))\nSprint improvement (\\(Y\\), sec)\n\n\n\n\n2\n1.2, 0.8\n\n\n4\n3.1, 2.9\n\n\n6\n6.0, 5.6\n\n\n8\n9.5, 10.1\n\n\n\n\nx &lt;- c(2, 2, 4, 4, 6, 6, 8, 8)\ny &lt;- c(1.2, 0.8, 3.1, 2.9, 6.0, 5.6, 9.5, 10.1)\n\n(a) (4 pt) State the null and alternative hypotheses for the lack of fit F test. Identify which model is “full” and which is “restricted,” and explain what each model assumes about the relationship between \\(X\\) and \\(Y\\).\nAnswer:\n(b) (8 pt) Compute SSPE by hand. Show your work for each group: (1) identify the group mean \\(\\bar{Y}_j\\), (2) compute the squared deviations within each group, and (3) sum them. How many degrees of freedom does SSPE have?\nAnswer:\n(c) (5 pt) Fit the restricted model (simple linear regression of \\(Y\\) on \\(X\\)) in R and obtain \\(SSE(R)\\). Using the identity \\(SSE(R) = SSPE + SSLF\\), compute SSLF and its degrees of freedom.\n\n# Your code here\n\nAnswer:\n(d) (6 pt) Compute the F statistic \\(F^* = MSLF/MSPE\\). Find the critical value \\(F(0.95;\\, df_{LF},\\, df_{PE})\\) using qf(). State your decision and conclusion at \\(\\alpha = 0.05\\). Does the linear model adequately fit these data?\n\n# Your code here\n\nAnswer:\n(e) (5 pt) Using your results from parts (b)–(d), complete the lack-of-fit ANOVA table below. Fill in every entry.\n\n\n\nSource\ndf\nSS\nMS\n\\(F^*\\)\n\n\n\n\nRegression\n\n\n\n\n\n\nError\n\n\n\n\n\n\n  Lack of fit\n\n\n\n\n\n\n  Pure error\n\n\n\n\n\n\nTotal\n\n\n\n\n\n\n\nAnswer:\n(f) (4 pt) Verify your result by fitting the full model (treat \\(X\\) as a factor) and running anova(fit.full, fit.restricted) in R. Confirm that the F statistic and p-value match your by-hand calculation.\n\n# Your code here\n\nAnswer:\n(f) (3 pt) The scatter plot of this data suggests a quadratic curve (improvement accelerates over time). Based on the test result, what would you recommend as a next step for modeling? Give one specific alternative.\nAnswer:\n\n3. Introduction to Multiple Regression.\n(a) (8 pt) For each model below, state whether it is a general linear model. Justify each answer in one sentence by identifying whether every \\(\\beta\\) parameter enters the model linearly (linear in the parameters, not necessarily in the predictors).\n\\[\\text{(i)}\\quad Y = \\beta_0 + \\beta_1 X_1 + \\beta_2 X_1^2 + \\beta_3 X_2 + \\epsilon\\]\n\\[\\text{(ii)}\\quad Y = \\beta_0 + \\beta_1 X_1^{\\,\\beta_2} + \\epsilon\\]\n\\[\\text{(iii)}\\quad Y = \\beta_0 + \\beta_1 \\log(X_1) + \\beta_2 X_1 X_2 + \\epsilon\\]\n\\[\\text{(iv)}\\quad Y = \\frac{\\beta_0 + \\beta_1 X_1}{1 + \\beta_2 X_2} + \\epsilon\\]\nAnswer:\n\nFor parts (b)–(d), use the following scenario.\nA sociologist models annual salary (\\(Y\\), in thousands of dollars) using years of work experience (\\(X_1\\)) and industry type, which has three levels: Finance, Technology, and Healthcare. Use Healthcare as the baseline throughout.\n(b) (8 pt)\n\nHow many dummy variables are needed to encode industry type? Define each one.\nWrite the full first-order linear regression model equation, labeling every term.\nWhat does \\(\\beta_0\\) represent in this model?\n\nAnswer:\n(c) (4 pt) Interpret the coefficient on the Finance dummy variable. Be explicit about what comparison is being made and what is held constant.\nAnswer:\n(d) (5 pt) A new employee has 5 years of experience and works in Technology. Write out the row of the design matrix \\(\\mathbf{X}\\) corresponding to this observation (include the intercept column). Then write out the row for a Finance employee with the same years of experience.\nAnswer:",
     "crumbs": [
       "Syllabus",
       "Assignments",
@@ -3934,14 +3934,14 @@
     "href": "slides/lec-12.html#learning-objectives",
     "title": "Lecture 12: Multiple Regression I",
     "section": "Learning Objectives",
-    "text": "Learning Objectives\nBy the end of today you will be able to:\n\n\nExplain why we extend simple linear regression to multiple predictors\nWrite a general linear regression model and state its assumptions\nIdentify polynomial, interaction, and transformed-variable models as special cases of the general linear model\nCreate dummy variables to encode a qualitative predictor with \\(k\\) levels\nExplain what “linear” means in the phrase “general linear regression model”\nExpress the multiple regression model in matrix form \\(\\mathbf{Y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\)\nDerive the least squares estimate \\(\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\) from the normal equations"
+    "text": "Learning Objectives\nBy the end of today you will be able to:\n\n\nExplain why we extend simple linear regression to multiple predictors\nWrite a general linear regression model and state its assumptions\nIdentify polynomial and interaction models as special cases of the general linear model\nCreate dummy variables to encode a qualitative predictor with \\(k\\) levels\nExplain what “linear” means in the phrase “general linear regression model”"
   },
   {
     "objectID": "slides/lec-12.html#todays-roadmap",
     "href": "slides/lec-12.html#todays-roadmap",
     "title": "Lecture 12: Multiple Regression I",
     "section": "Today’s Roadmap",
-    "text": "Today’s Roadmap\n\n\nMultiple Regression Models — the setup, special cases, dummy variables, matrix form\nLeast Squares Estimation — minimizing \\(Q\\), normal equations, matrix solution"
+    "text": "Today’s Roadmap\n\n\nMidterm Review\nMultiple Regression Models"
   },
   {
     "objectID": "slides/lec-12.html#multiple-regression-models",
@@ -3955,7 +3955,7 @@
     "href": "slides/lec-12.html#why-multiple-regression",
     "title": "Lecture 12: Multiple Regression I",
     "section": "Why Multiple Regression?",
-    "text": "Why Multiple Regression?\n\nIn most real applications, a response variable depends on more than one predictor.\n\nExamples:\n\nWeight may depend on height, age, and sex\nHouse price may depend on size, location, and age\nBlood pressure may depend on BMI, age, sodium intake, and exercise\n\n\n\nEven when we care about only one predictor’s effect, we often need to control (adjust) for other variables to get an accurate estimate.\nThe goals of multiple regression are to:\n\nAssess the relationship between \\(Y\\) and several predictors simultaneously\nPredict \\(Y\\) using multiple independent variables"
+    "text": "Why Multiple Regression?\n\nIn most real applications, a response variable depends on more than one predictor.\n\nExamples:\n\nWeight may depend on height, age, and diet\nHouse price may depend on size, location, and age\nBlood pressure may depend on BMI, age, sodium intake, and exercise\n\n\n\nEven when we care about only one predictor’s effect, we often need to control (adjust) for other variables to get an accurate estimate.\nThe goals of multiple regression are to:\n\nAssess the relationship between \\(Y\\) and several predictors simultaneously\nPredict \\(Y\\) using multiple independent variables"
   },
   {
     "objectID": "slides/lec-12.html#setup-data-structure",
@@ -3976,7 +3976,7 @@
     "href": "slides/lec-12.html#special-cases-first-order-and-polynomial",
     "title": "Lecture 12: Multiple Regression I",
     "section": "Special Cases: First-Order and Polynomial",
-    "text": "Special Cases: First-Order and Polynomial\n\nFirst-order model: All \\(X_1, \\ldots, X_{p-1}\\) represent distinct original predictors with no transformations.\n\\[Y_i = \\beta_0 + \\beta_1 X_{i1} + \\beta_2 X_{i2} + \\cdots + \\beta_{p-1} X_{i,p-1} + \\epsilon_i\\]\n\nPolynomial regression: Model a nonlinear effect using powers of a single predictor.\n\\[Y_i = \\beta_0 + \\beta_1 X_i + \\beta_2 X_i^2 + \\epsilon_i\\]\nThis is a general linear model by setting \\(X_{i1} = X_i\\) and \\(X_{i2} = X_i^2\\).\nThe model is not linear in \\(X\\) — but it is still linear in the parameters \\(\\beta_0, \\beta_1, \\beta_2\\)."
+    "text": "Special Cases: First-Order and Polynomial\n\nFirst-order model: All \\(X_1, \\ldots, X_{p-1}\\) represent distinct original predictors with no transformations.\n\\[Y_i = \\beta_0 + \\beta_1 X_{i1} + \\beta_2 X_{i2} + \\cdots + \\beta_{p-1} X_{i,p-1} + \\epsilon_i\\]\n\nPolynomial regression: Model a nonlinear effect using powers of a single predictor.\n\\[Y_i = \\beta_0 + \\beta_1 X_i + \\beta_2 X_i^2 + \\epsilon_i\\]\nThis is a general linear model by setting \\(X_{i1} = X_i\\) and \\(X_{i2} = X_i^2\\).\nThe model is not linear in \\(X\\). However, it is still linear in the parameters \\(\\beta_0, \\beta_1, \\beta_2\\)."
   },
   {
     "objectID": "slides/lec-12.html#special-cases-transformed-and-interaction",
@@ -3990,42 +3990,42 @@
     "href": "slides/lec-12.html#what-does-linear-really-mean",
     "title": "Lecture 12: Multiple Regression I",
     "section": "What Does “Linear” Really Mean?",
-    "text": "What Does “Linear” Really Mean?\n“Linear” in general linear regression model means the model depends linearly on the unknown parameters \\(\\beta\\), not on the predictors \\(X\\).\n\nThis makes the model quite flexible — it can capture nonlinear effects and interactions while still being linear in parameters.\nExamples we’ve already seen:\n\n\\(Y_i = \\beta_0 + \\beta_1 X_i + \\beta_2 X_i^2 + \\epsilon_i\\) — polynomial, linear in \\(\\beta\\)\n\\(Y_i = \\beta_0 + \\beta_1 X_{i1} + \\beta_2 X_{i1}X_{i2} + \\epsilon_i\\) — interaction, linear in \\(\\beta\\)\n\\(Y_i' = \\beta_0 + \\beta_1 X_{i1} + \\beta_2 \\log X_{i2} + \\epsilon_i\\) — transformed predictor, linear in \\(\\beta\\)"
+    "text": "What Does “Linear” Really Mean?\n\n“Linear” in general linear regression model means the model depends linearly on the unknown parameters \\(\\beta\\), not on the predictors \\(X\\).\n\nThis makes the model quite flexible. It can capture nonlinear effects and interactions while still being linear in parameters.\nExamples we’ve already seen:\n\n\\(Y_i = \\beta_0 + \\beta_1 X_i + \\beta_2 X_i^2 + \\epsilon_i\\) — polynomial, linear in \\(\\beta\\)\n\\(Y_i = \\beta_0 + \\beta_1 X_{i1} + \\beta_2 X_{i1}X_{i2} + \\epsilon_i\\) — interaction, linear in \\(\\beta\\)\n\\(Y_i' = \\beta_0 + \\beta_1 X_{i1} + \\beta_2 \\log X_{i2} + \\epsilon_i\\) — transformed predictor, linear in \\(\\beta\\)"
   },
   {
     "objectID": "slides/lec-12.html#qualitative-independent-variables",
     "href": "slides/lec-12.html#qualitative-independent-variables",
     "title": "Lecture 12: Multiple Regression I",
     "section": "Qualitative Independent Variables",
-    "text": "Qualitative Independent Variables\nQualitative (categorical) variables cannot enter a regression model as numbers directly. We encode them using indicator (dummy) variables.\n\nFor a qualitative variable with \\(k\\) levels, we create \\(k - 1\\) dummy variables (one level becomes the baseline).\nExample — Sex (2 levels: Female, Male):\n\\[X = \\begin{cases} 1 & \\text{if female} \\\\ 0 & \\text{if male} \\end{cases}\\]\nMale is the baseline. The coefficient of \\(X\\) represents the average difference in \\(Y\\) between females and males, all else equal."
+    "text": "Qualitative Independent Variables\n\nQualitative (categorical) variables cannot enter a regression model as numbers directly. We encode them using indicator (dummy) variables.\n\nFor a qualitative variable with \\(k\\) levels, we create \\(k - 1\\) dummy variables (one level becomes the baseline).\nExample — Degree Type (2 levels: Graduate, Undergraduate):\n\\[X = \\begin{cases} 1 & \\text{if graduate} \\\\ 0 & \\text{if undergraduate} \\end{cases}\\]\nUndergraduate is the baseline. The coefficient of \\(X\\) represents the average difference in \\(Y\\) between graduate and undergraduate students, all else equal."
   },
   {
     "objectID": "slides/lec-12.html#dummy-variables-hair-color-example",
     "href": "slides/lec-12.html#dummy-variables-hair-color-example",
     "title": "Lecture 12: Multiple Regression I",
     "section": "Dummy Variables: Hair Color Example",
-    "text": "Dummy Variables: Hair Color Example\nFor hair color with 5 levels (Blond, Brown, Gray, Red, Black), we need \\(5 - 1 = 4\\) dummy variables. Black is the baseline.\n\n\\[X_1 = \\begin{cases} 1 & \\text{if Blond} \\\\ 0 & \\text{otherwise} \\end{cases} \\qquad X_2 = \\begin{cases} 1 & \\text{if Brown} \\\\ 0 & \\text{otherwise} \\end{cases}\\]\n\\[X_3 = \\begin{cases} 1 & \\text{if Gray} \\\\ 0 & \\text{otherwise} \\end{cases} \\qquad X_4 = \\begin{cases} 1 & \\text{if Red} \\\\ 0 & \\text{otherwise} \\end{cases}\\]\n\n\n\n\nThe choice of baseline is arbitrary — results are equivalent regardless of which level is omitted\nEach coefficient \\(\\beta_j\\) represents the average difference in \\(Y\\) between that level and the baseline, given all other predictors are held fixed"
+    "text": "Dummy Variables: Hair Color Example\n\nFor hair color with 5 levels (Blond, Brown, Gray, Red, Black), we need \\(5 - 1 = 4\\) dummy variables. Black is the baseline.\n\n\\[X_1 = \\begin{cases} 1 & \\text{if Blond} \\\\ 0 & \\text{otherwise} \\end{cases} \\qquad X_2 = \\begin{cases} 1 & \\text{if Brown} \\\\ 0 & \\text{otherwise} \\end{cases}\\]\n\\[X_3 = \\begin{cases} 1 & \\text{if Gray} \\\\ 0 & \\text{otherwise} \\end{cases} \\qquad X_4 = \\begin{cases} 1 & \\text{if Red} \\\\ 0 & \\text{otherwise} \\end{cases}\\]\n\n\n\n\nThe choice of baseline is arbitrary — results are equivalent regardless of which level is omitted\nEach coefficient \\(\\beta_j\\) represents the average difference in \\(Y\\) between that level and the baseline, given all other predictors are held fixed"
   },
   {
     "objectID": "slides/lec-12.html#dummy-variables-interpreting-coefficients",
     "href": "slides/lec-12.html#dummy-variables-interpreting-coefficients",
     "title": "Lecture 12: Multiple Regression I",
     "section": "Dummy Variables: Interpreting Coefficients",
-    "text": "Dummy Variables: Interpreting Coefficients\n\nSuppose we model salary (\\(Y\\)) with sex and experience (\\(X_{\\text{exp}}\\)):\n\\[Y_i = \\beta_0 + \\beta_1 X_i + \\beta_2 X_{i,\\text{exp}} + \\epsilon_i\\]\nwhere \\(X_i = 1\\) if female, 0 if male.\n\n\n\n\n\n\n\n\n\nMale\nFemale\n\n\n\n\n\\(E(Y_i)\\)\n\\(\\beta_0 + \\beta_2 X_{i,\\text{exp}}\\)\n\\(\\beta_0 + \\beta_1 + \\beta_2 X_{i,\\text{exp}}\\)\n\n\n\n\n\n\n\\(\\beta_1\\) is the average salary difference between females and males at the same level of experience. The two groups share the same slope \\(\\beta_2\\) for experience (parallel lines)."
+    "text": "Dummy Variables: Interpreting Coefficients\n\nSuppose we model salary (\\(Y\\)) with degree type and experience (\\(X_{\\text{exp}}\\)):\n\\[Y_i = \\beta_0 + \\beta_1 X_i + \\beta_2 X_{i,\\text{exp}} + \\epsilon_i\\]\nwhere \\(X_i = 1\\) if graduate, 0 if undergraduate.\n\n\n\n\n\n\n\n\n\nUndergraduate\nGraduate\n\n\n\n\n\\(E(Y_i)\\)\n\\(\\beta_0 + \\beta_2 X_{i,\\text{exp}}\\)\n\\(\\beta_0 + \\beta_1 + \\beta_2 X_{i,\\text{exp}}\\)\n\n\n\n\n\n\n\\(\\beta_1\\) is the average salary difference between graduate and undergraduate degree holders at the same level of experience. The two groups share the same slope \\(\\beta_2\\) for experience (parallel lines)."
   },
   {
     "objectID": "slides/lec-12.html#practice-setting-up-a-multiple-regression-model",
     "href": "slides/lec-12.html#practice-setting-up-a-multiple-regression-model",
     "title": "Lecture 12: Multiple Regression I",
     "section": "Practice: Setting Up a Multiple Regression Model",
-    "text": "Practice: Setting Up a Multiple Regression Model\n\nA researcher wants to model a student’s exam score (\\(Y\\), out of 100) using the following predictors:\n\n\\(X_1\\): hours studied (quantitative)\n\\(X_2\\): section (A, B, or C — qualitative, 3 levels)\n\\(X_3\\): hours studied \\(\\times\\) section interaction\n\n(a) How many dummy variables are needed to encode section? Identify the baseline and write out each dummy variable.\n\n(b) Write the full model equation, identifying every term. How many total parameters \\(\\beta\\) does it have?\n\n(c) Interpret the interaction term in plain language."
+    "text": "Practice: Setting Up a Multiple Regression Model\n\nA researcher wants to model a student’s exam score (\\(Y\\), out of 100) using the following predictors:\n\n\\(X_1\\): hours studied (quantitative)\n\\(X_2\\): section (A, B, or C — qualitative, 3 levels)\n\n(a) How many dummy variables are needed to encode section? Identify the baseline and write out each dummy variable.\n\n(b) Write the full model equation, identifying every term. How many total parameters \\(\\beta\\) does it have?\n\n(c) Interpret \\(\\beta_1\\) and \\(\\beta_2\\) in plain language.\n\n(d) Suppose the fitted model is \\(\\hat{Y} = 50 + 8X_1 + 5D_1 + 2D_2\\). Predict the exam score for a Section A student who studied 3 hours."
   },
   {
     "objectID": "slides/lec-12.html#practice-setting-up-a-model-solution",
     "href": "slides/lec-12.html#practice-setting-up-a-model-solution",
     "title": "Lecture 12: Multiple Regression I",
     "section": "Practice: Setting Up a Model — Solution",
-    "text": "Practice: Setting Up a Model — Solution\n\n(a) 3 levels \\(\\Rightarrow\\) \\(3 - 1 = 2\\) dummy variables. Using Section A as baseline:\n\\[D_1 = \\begin{cases} 1 & \\text{if Section B} \\\\ 0 & \\text{otherwise} \\end{cases} \\qquad D_2 = \\begin{cases} 1 & \\text{if Section C} \\\\ 0 & \\text{otherwise} \\end{cases}\\]\n\n(b) The full model with interactions between hours and section:\n\\[Y_i = \\beta_0 + \\beta_1 X_{i1} + \\beta_2 D_{i1} + \\beta_3 D_{i2} + \\beta_4 X_{i1} D_{i1} + \\beta_5 X_{i1} D_{i2} + \\epsilon_i\\]\nThere are 6 parameters: \\(\\beta_0, \\beta_1, \\ldots, \\beta_5\\).\n\n\n(c) The interaction terms \\(\\beta_4\\) and \\(\\beta_5\\) allow the effect of study hours to differ by section. If \\(\\beta_4 \\neq 0\\), each additional study hour predicts a different score gain in Section B vs. Section A."
+    "text": "Practice: Setting Up a Model — Solution\n\n(a) 3 levels \\(\\Rightarrow\\) \\(3 - 1 = 2\\) dummy variables. Using Section A as baseline:\n\\[D_1 = \\begin{cases} 1 & \\text{if Section B} \\\\ 0 & \\text{otherwise} \\end{cases} \\qquad D_2 = \\begin{cases} 1 & \\text{if Section C} \\\\ 0 & \\text{otherwise} \\end{cases}\\]\n\n(b) The model with hours studied and section:\n\\[Y_i = \\beta_0 + \\beta_1 X_{i1} + \\beta_2 D_{i1} + \\beta_3 D_{i2} + \\epsilon_i\\]\nThere are 4 parameters: \\(\\beta_0, \\beta_1, \\beta_2, \\beta_3\\).\n\n\n(c) \\(\\beta_1\\) is the expected increase in exam score for each additional hour studied, holding section constant. \\(\\beta_2\\) is the average difference in exam score between Section B and Section A, among students who studied the same number of hours.\n\n\n(d) Section A is the baseline, so \\(D_1 = 0\\) and \\(D_2 = 0\\). Plugging in \\(X_1 = 3\\):\n\\[\\hat{Y} = 50 + 8(3) + 5(0) + 2(0) = 50 + 24 = \\mathbf{74}\\]"
   },
   {
     "objectID": "slides/lec-12.html#the-matrix-form",
@@ -4130,7 +4130,7 @@
     "href": "slides/lec-12.html#summary",
     "title": "Lecture 12: Multiple Regression I",
     "section": "Summary",
-    "text": "Summary\n\nWhy multiple regression: most responses depend on several predictors; we also need to control for confounders to isolate individual effects\nGeneral linear model: \\(Y_i = \\beta_0 + \\beta_1 X_{i1} + \\cdots + \\beta_{p-1}X_{i,p-1} + \\epsilon_i\\); “linear” refers to linearity in the parameters, not the predictors\nSpecial cases: polynomial, interaction (\\(X_{i3} = X_{i1}X_{i2}\\)), and transformed-variable models all fit within this framework\nQualitative variables: encoded with \\(k - 1\\) dummy variables for \\(k\\) levels; omitted level is the baseline; coefficients measure average group differences\nMatrix form: \\(\\mathbf{Y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\); design matrix \\(\\mathbf{X}\\) has a leading column of 1s\nLS estimation: minimize \\(Q = \\|\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta}\\|^2\\); normal equations give \\(\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\); unbiased with \\(\\text{Cov}(\\mathbf{b}) = \\sigma^2(\\mathbf{X}^T\\mathbf{X})^{-1}\\)"
+    "text": "Summary\n\n\nWhy multiple regression: most responses depend on several predictors\nGeneral linear model: \\(Y_i = \\beta_0 + \\beta_1 X_{i1} + \\cdots + \\beta_{p-1}X_{i,p-1} + \\epsilon_i\\); “linear” refers to linearity in the parameters, not the predictors\nSpecial cases: polynomial and interaction (\\(X_{i3} = X_{i1}X_{i2}\\))\nQualitative variables: encoded with \\(k - 1\\) dummy variables for \\(k\\) levels; omitted level is the baseline; coefficients measure average group differences"
   },
   {
     "objectID": "slides/lec-12.html#questions",
@@ -4172,14 +4172,14 @@
     "href": "slides/lec-12.html#the-fix-multiple-regression",
     "title": "Lecture 12: Multiple Regression I",
     "section": "The Fix: Multiple Regression",
-    "text": "The Fix: Multiple Regression\nMultiple regression lets us include all three predictors at once:\n\\[\\text{Price}_i = \\beta_0 + \\beta_1 \\cdot \\text{SqFt}_i + \\beta_2 \\cdot \\text{Bedrooms}_i + \\beta_3 \\cdot \\text{Age}_i + \\epsilon_i\\]\nNow the model can distinguish House A and House B and estimate the effect of each variable while holding the others constant.\n\nThis “holding others constant” idea is one of the most powerful features of multiple regression. We’ll return to it throughout the unit."
+    "text": "The Fix: Multiple Regression\n\nMultiple regression lets us include all three predictors at once:\n\\[\\text{Price}_i = \\beta_0 + \\beta_1 \\cdot \\text{SqFt}_i + \\beta_2 \\cdot \\text{Bedrooms}_i + \\beta_3 \\cdot \\text{Age}_i + \\epsilon_i\\]\nNow the model can distinguish House A and House B and estimate the effect of each variable while holding the others constant.\n\nWhat does “holding others constant” mean?\n\\(\\beta_2\\) is the expected change in price for each additional bedroom, among houses of the same size and age. We’re isolating the effect of bedrooms by comparing only houses that are alike in every other way."
   },
   {
     "objectID": "slides/lec-12.html#special-case-transformed-variables",
     "href": "slides/lec-12.html#special-case-transformed-variables",
     "title": "Lecture 12: Multiple Regression I",
     "section": "Special Case: Transformed Variables",
-    "text": "Special Case: Transformed Variables\n\nTransformed variables: We can apply any transformation to \\(X\\) or \\(Y\\) and still fit a general linear model.\nExample: Suppose pollution decreases rapidly with distance. We might try:\n\\[Y_i' = \\beta_0 + \\beta_1 X_{i1} + \\beta_2 X_{i2} + \\epsilon_i\\]\nwhere \\(Y_i' = \\log Y_i\\) (log-transform the response) and \\(X_{i2} = \\exp(X_{i1})\\) (transform a predictor).\n\nEven though \\(\\log\\) and \\(\\exp\\) are nonlinear functions, the model is still a general linear model — every \\(\\beta\\) enters linearly. The transformed columns simply become new columns in the design matrix \\(\\mathbf{X}\\)."
+    "text": "Special Case: Transformed Variables\n\nTransformed variables: We can apply any transformation to \\(X\\) or \\(Y\\) and still fit a general linear model.\nExample: Suppose we model pollution (\\(Y\\), ppm) using engine size (\\(X_1\\), liters) and distance from factory (\\(X_2\\), km). The response is right-skewed and distance has a strongly nonlinear effect, so we try:\n\\[\\log Y_i = \\beta_0 + \\beta_1 X_{i1} + \\beta_2 \\log X_{i2} + \\epsilon_i\\]\n\\(X_1\\) enters untransformed; \\(X_2\\) is log-transformed. We can mix and match.\n\nEven though \\(\\log\\) is a nonlinear function, the model is still a general linear model — every \\(\\beta\\) enters linearly. The transformed columns simply become new columns in the design matrix \\(\\mathbf{X}\\)."
   },
   {
     "objectID": "slides/lec-12.html#special-case-interaction-model",
@@ -4193,6 +4193,265 @@
     "href": "slides/lec-12.html#quick-check-is-it-a-general-linear-model",
     "title": "Lecture 12: Multiple Regression I",
     "section": "Quick Check: Is It a General Linear Model?",
-    "text": "Quick Check: Is It a General Linear Model?\nFor each model below, decide: general linear model — yes or no?\n\\[Y = \\beta_1 + \\beta_2 X_1 + \\beta_3 X_1^2 + \\beta_4 X_1 X_2 + \\epsilon\\]\n\\[Y = \\beta_1 + \\beta_2 X_1 + \\beta_3 \\log X_2 + \\epsilon\\]\n\\[Y = \\beta_1 + \\beta_2 X^{\\beta_3} + \\epsilon\\]\n\nAnswers: The first two are — every \\(\\beta\\) enters linearly. The third is not — \\(\\beta_3\\) appears as an exponent, making it a nonlinear model."
+    "text": "Quick Check: Is It a General Linear Model?\n\nFor each model below, decide: general linear model — yes or no?\n\\[Y = \\beta_1 + \\beta_2 X_1 + \\beta_3 X_1^2 + \\beta_4 X_1 X_2 + \\epsilon\\]\n\\[Y = \\beta_1 + \\beta_2 X_1 + \\beta_3 \\log X_2 + \\epsilon\\]\n\\[Y = \\beta_1 + \\beta_2 X^{\\beta_3} + \\epsilon\\]\n\nAnswers: The first two are — every \\(\\beta\\) enters linearly. The third is not. \\(\\beta_3\\) appears as an exponent, making it a nonlinear model."
+  },
+  {
+    "objectID": "slides/lec-12.html#midterm-review",
+    "href": "slides/lec-12.html#midterm-review",
+    "title": "Lecture 12: Multiple Regression I",
+    "section": "Midterm Review",
+    "text": "Midterm Review"
+  },
+  {
+    "objectID": "slides/lec-12.html#q1-ols-properties-and-gauss-markov",
+    "href": "slides/lec-12.html#q1-ols-properties-and-gauss-markov",
+    "title": "Lecture 12: Multiple Regression I",
+    "section": "Q1: OLS Properties and Gauss-Markov",
+    "text": "Q1: OLS Properties and Gauss-Markov\n\n(a) (3 pts) A student proposes minimizing \\(\\sum_{i=1}^n e_i\\) instead of \\(\\sum_{i=1}^n e_i^2\\). Explain why this fails.\n\nPositive and negative residuals cancel. There are infinitely many lines that achieve \\(\\sum e_i = 0\\) (including terrible fits). In fact, \\(\\sum e_i = 0\\) always holds for OLS, so this criterion places no constraint on the line. Squaring the residuals prevents cancellation and penalizes large errors more heavily.\n\n(b) (2 pts) The Gauss-Markov theorem says OLS is BLUE. What does this mean?\n\nBLUE = Best Linear Unbiased Estimator. Among all estimators that are (1) linear functions of \\(Y_1, \\ldots, Y_n\\) and (2) unbiased for \\(\\beta_1\\), OLS has the smallest variance (minimum variance)."
+  },
+  {
+    "objectID": "slides/lec-12.html#q23-mle-vs.-ols-and-sampling-distributions",
+    "href": "slides/lec-12.html#q23-mle-vs.-ols-and-sampling-distributions",
+    "title": "Lecture 12: Multiple Regression I",
+    "section": "Q2–3: MLE vs. OLS and Sampling Distributions",
+    "text": "Q2–3: MLE vs. OLS and Sampling Distributions\n\nQ2. (2 pts) Under \\(\\varepsilon_i \\overset{iid}{\\sim} N(0, \\sigma^2)\\), what does the normality assumption enable that OLS alone cannot?\n\nThe normality assumption gives \\(\\hat{\\beta}_0\\) and \\(\\hat{\\beta}_1\\) exact sampling distributions (\\(t\\)- and \\(F\\)-distributions), making exact hypothesis tests and confidence/prediction intervals possible. OLS alone guarantees unbiasedness and minimum variance (Gauss-Markov) but provides no distributional results.\n\nQ3(a). (2 pts) State the exact sampling distribution of \\(\\hat{\\beta}_1\\).\n\n\\[\\hat{\\beta}_1 \\sim N\\!\\left(\\beta_1,\\; \\frac{\\sigma^2}{S_{xx}}\\right) \\qquad \\text{Mean: } \\beta_1 \\qquad \\text{Variance: } \\frac{\\sigma^2}{S_{xx}}\\]\n\nQ3(b). (3 pts) Why do we use MSE instead of \\(\\sigma^2\\) when constructing test statistics and CIs for \\(\\hat{\\beta}_1\\)?\n\n\\(\\sigma^2\\) is an unknown population parameter. We replace it with \\(\\text{MSE} = \\text{RSS}/(n-2)\\), the unbiased estimator of \\(\\sigma^2\\)."
+  },
+  {
+    "objectID": "slides/lec-12.html#q4-confidence-intervals-vs.-prediction-intervals",
+    "href": "slides/lec-12.html#q4-confidence-intervals-vs.-prediction-intervals",
+    "title": "Lecture 12: Multiple Regression I",
+    "section": "Q4: Confidence Intervals vs. Prediction Intervals",
+    "text": "Q4: Confidence Intervals vs. Prediction Intervals\n\n(a) (1 pt) A researcher wants to estimate the average sleep quality score for all students who spend 7 hours per day on screens. CI or PI?\n\nConfidence interval for \\(E(Y^*)\\). The researcher is estimating the mean response for a population of students at that screen time, not any individual student’s score.\n\n(b) (2 pts) Write the 95% CI and PI formulas side by side and identify the term that makes the PI wider.\n\n\\[\\textbf{CI:}\\quad \\hat{y}^* \\pm t_{0.025,\\,n-2}\\;\\hat{\\sigma}\\sqrt{\\frac{1}{n} + \\frac{(x^*-\\bar{x})^2}{S_{xx}}}\\]\n\\[\\textbf{PI:}\\quad \\hat{y}^* \\pm t_{0.025,\\,n-2}\\;\\hat{\\sigma}\\sqrt{\\boxed{1} + \\frac{1}{n} + \\frac{(x^*-\\bar{x})^2}{S_{xx}}}\\]\nThe extra \\(\\mathbf{1}\\) under the square root in the PI accounts for the variability of a single new observation around the true mean, making the PI always wider than the CI."
+  },
+  {
+    "objectID": "slides/lec-12.html#q5-model-diagnostics",
+    "href": "slides/lec-12.html#q5-model-diagnostics",
+    "title": "Lecture 12: Multiple Regression I",
+    "section": "Q5: Model Diagnostics",
+    "text": "Q5: Model Diagnostics\n\nFor each residual plot description, identify the violated assumption and suggest a remedial measure.\n(a) (2 pts) Residuals vs. \\(\\hat{Y}\\) shows a fan shape (spread increases as \\(\\hat{Y}\\) increases).\n\n\nAssumption violated: Constant variance (Assumption 3): \\(\\text{Var}(\\varepsilon_i) = \\sigma^2\\) for all \\(i\\).\nRemedial measure: Apply a variance-stabilizing transformation to \\(Y\\) (e.g., \\(\\log Y\\) or \\(\\sqrt{Y}\\)).\n\n\n(b) (2 pts) Residuals vs. \\(X\\) shows a systematic increasing trend (negative at low \\(X\\), positive at high \\(X\\)).\n\n\nAssumption violated: Linearity (Assumption 1): \\(E[Y_i] = \\beta_0 + \\beta_1 x_i\\). The systematic pattern indicates the true mean function is not linear in \\(X\\).\nRemedial measure: Apply a transformation to \\(X\\) (e.g., \\(\\log X\\) or \\(X^2\\))."
+  },
+  {
+    "objectID": "slides/lec-12.html#q67-estimates-and-fitted-equation",
+    "href": "slides/lec-12.html#q67-estimates-and-fitted-equation",
+    "title": "Lecture 12: Multiple Regression I",
+    "section": "Q6–7: Estimates and Fitted Equation",
+    "text": "Q6–7: Estimates and Fitted Equation\n\nA researcher studies daily screen time (\\(x\\), hrs/day) and sleep quality (\\(y\\), out of 100) for \\(n = 6\\) students.\n\n\\(\\bar{x} = 7,\\quad \\bar{y} = 70,\\quad S_{xx} = 70,\\quad S_{xy} = -210,\\quad R^2 = 0.946,\\quad t_{0.025,\\,4} = 2.776\\)\n\nQ6. (2 pts) Compute \\(\\hat{\\beta}_1\\) and \\(\\hat{\\beta}_0\\).\n\n\\[\\hat{\\beta}_1 = \\frac{S_{xy}}{S_{xx}} = \\frac{-210}{70} = -3 \\qquad \\hat{\\beta}_0 = \\bar{y} - \\hat{\\beta}_1\\bar{x} = 70 - (-3)(7) = 70 + 21 = 91\\]\n\nQ7. (2 pts) Write the fitted equation and interpret \\(\\hat{\\beta}_1\\) in context.\n\n\\[\\hat{y} = 91 - 3x\\]\nFor each additional hour of daily screen time, sleep quality score decreases by 3 points on average."
+  },
+  {
+    "objectID": "slides/lec-12.html#q8-fitted-values-and-residuals",
+    "href": "slides/lec-12.html#q8-fitted-values-and-residuals",
+    "title": "Lecture 12: Multiple Regression I",
+    "section": "Q8: Fitted Values and Residuals",
+    "text": "Q8: Fitted Values and Residuals\n\nUsing \\(\\hat{y} = 91 - 3x\\), complete the table and verify \\(\\displaystyle\\sum_{i=1}^6 e_i = 0\\).\n\n\n\n\\(i\\)\n1\n2\n3\n4\n5\n6\n\n\n\n\n\\(x_i\\)\n2\n4\n6\n8\n10\n12\n\n\n\\(y_i\\)\n88\n76\n70\n70\n61\n55\n\n\n\\(\\hat{y}_i\\)\n\n\n\n\n\n\n\n\n\\(e_i\\)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(i\\)\n1\n2\n3\n4\n5\n6\n\n\n\n\n\\(x_i\\)\n2\n4\n6\n8\n10\n12\n\n\n\\(y_i\\)\n88\n76\n70\n70\n61\n55\n\n\n\\(\\hat{y}_i\\)\n85\n79\n73\n67\n61\n55\n\n\n\\(e_i\\)\n3\n−3\n−3\n3\n0\n0\n\n\n\nVerify: \\(\\displaystyle\\sum_{i=1}^6 e_i = 3 + (-3) + (-3) + 3 + 0 + 0 = 0\\) ✓"
+  },
+  {
+    "objectID": "slides/lec-12.html#q910-rss-mse-and-hypothesis-test",
+    "href": "slides/lec-12.html#q910-rss-mse-and-hypothesis-test",
+    "title": "Lecture 12: Multiple Regression I",
+    "section": "Q9–10: RSS, MSE, and Hypothesis Test",
+    "text": "Q9–10: RSS, MSE, and Hypothesis Test\n\nQ9. (3 pts) Compute RSS, \\(\\hat{\\sigma}^2\\), and \\(\\hat{\\sigma}\\). Interpret \\(\\hat{\\sigma}\\) in context.\n\n\\[\\text{RSS} = \\sum e_i^2 = 9 + 9 + 9 + 9 + 0 + 0 = 36 \\qquad \\hat{\\sigma}^2 = \\text{MSE} = \\frac{\\text{RSS}}{n-2} = \\frac{36}{4} = 9 \\qquad \\hat{\\sigma} = 3\\]\nThe typical deviation of an observed sleep quality score from its fitted value is about 3 points.\n\nQ10. (4 pts) Test \\(H_0\\colon \\beta_1 = 0\\) vs. \\(H_a\\colon \\beta_1 \\neq 0\\) at \\(\\alpha = 0.05\\).\n\n\\[\\widehat{SE}(\\hat{\\beta}_1) = \\sqrt{\\frac{\\text{MSE}}{S_{xx}}} = \\sqrt{\\frac{9}{70}} = \\frac{3}{\\sqrt{70}} \\approx 0.3586 \\qquad t^* = \\frac{\\hat{\\beta}_1}{\\widehat{SE}(\\hat{\\beta}_1)} = \\frac{-3}{0.3586} \\approx -8.37\\]\nSince \\(|t^*| = 8.37 &gt; t_{0.025,\\,4} = 2.776\\), we reject \\(H_0\\) at \\(\\alpha = 0.05\\). There is sufficient evidence that daily screen time is a statistically significant linear predictor of sleep quality score."
+  },
+  {
+    "objectID": "slides/lec-12.html#q1112-confidence-interval-and-r2",
+    "href": "slides/lec-12.html#q1112-confidence-interval-and-r2",
+    "title": "Lecture 12: Multiple Regression I",
+    "section": "Q11–12: Confidence Interval and \\(R^2\\)",
+    "text": "Q11–12: Confidence Interval and \\(R^2\\)\n\nQ11. (3 pts) Construct a 95% CI for \\(\\beta_1\\) and interpret it in context.\n\n\\[\\hat{\\beta}_1 \\pm t_{0.025,\\,4}\\;\\widehat{SE}(\\hat{\\beta}_1) = -3 \\pm 2.776(0.3586) = -3 \\pm 0.996 \\approx \\mathbf{(-3.996,\\; -2.004)}\\]\nWe are 95% confident that for each additional hour of daily screen time, mean sleep quality score decreases by between 2.0 and 4.0 points.\n\nQ12. (2 pts) Interpret \\(R^2 = 0.946\\) in context.\n\nApproximately 94.6% of the variability in sleep quality scores is explained by the linear relationship with daily screen time."
+  },
+  {
+    "objectID": "slides/lec-12.html#q13-f-test-for-lack-of-fit",
+    "href": "slides/lec-12.html#q13-f-test-for-lack-of-fit",
+    "title": "Lecture 12: Multiple Regression I",
+    "section": "Q13: F Test for Lack of Fit",
+    "text": "Q13: F Test for Lack of Fit\n\n\\(c = 5\\) distinct nitrogen levels, \\(n_j = 3\\) replicates (\\(n = 15\\)); \\(\\text{SSE}(R) = 240\\), \\(\\text{SSPE} = 90\\).\nQ13(a). (2 pts) Compute SSLF, \\(df_{LF}\\), and \\(df_{PE}\\).\n\n\\[\\text{SSLF} = \\text{SSE}(R) - \\text{SSPE} = 240 - 90 = 150 \\qquad df_{LF} = c - 2 = 5 - 2 = 3 \\qquad df_{PE} = n - c = 15 - 5 = 10\\]\n\nQ13(b). (2 pts) Compute MSLF, MSPE, and \\(F^*\\).\n\n\\[\\text{MSLF} = \\frac{150}{3} = 50 \\qquad \\text{MSPE} = \\frac{90}{10} = 9 \\qquad F^* = \\frac{\\text{MSLF}}{\\text{MSPE}} = \\frac{50}{9} \\approx 5.56\\]\n\nQ13(c). Since \\(F^* = 5.56 &gt; F(0.95;\\,3,\\,10) = 3.71\\), we reject the linear model. Assumption 1 (linearity) is violated — the true mean function is not linear in \\(X\\).\nQ13(d). Without replication (multiple \\(Y\\) values at the same \\(X\\)), it is impossible to estimate SSPE (pure error) separately from SSLF."
+  },
+  {
+    "objectID": "slides/lec-12.html#q14-box-cox-transformation",
+    "href": "slides/lec-12.html#q14-box-cox-transformation",
+    "title": "Lecture 12: Multiple Regression I",
+    "section": "Q14: Box-Cox Transformation",
+    "text": "Q14: Box-Cox Transformation\n\nCO\\(_2\\) emissions (\\(Y\\), ppm) on engine displacement (\\(X\\), liters), \\(n = 40\\). Residuals-vs-fitted shows a strong fan shape; QQ-plot shows a pronounced right skew.\n(a) (1 pt) Which two SLR assumptions appear violated?\n\n\nConstant variance (Assumption 3) — violated by the fan shape in the residuals-vs-fitted plot.\nNormality of errors (Assumption 4) — violated by the pronounced right skew in the QQ-plot.\n\n\n(b) (2 pts) A Box-Cox analysis yields \\(\\hat{\\lambda} \\approx 0.5\\), with a 95% CI that excludes \\(\\lambda = 1\\). What transformation does this suggest?\n\n\\(\\hat{\\lambda} \\approx 0.5\\) suggests the square root transformation: \\(Y' = \\sqrt{Y}\\). Because the 95% CI for \\(\\lambda\\) excludes \\(\\lambda = 1\\) (no transformation), there is statistical evidence that the transformation is necessary to stabilize variance and improve normality."
+  },
+  {
+    "objectID": "slides/lec-12.html#q13-anova-table",
+    "href": "slides/lec-12.html#q13-anova-table",
+    "title": "Lecture 12: Multiple Regression I",
+    "section": "Q13: ANOVA Table",
+    "text": "Q13: ANOVA Table\n\n(5 pts) Complete the ANOVA table. Use your computed values for RSS and the identity \\(\\text{SST} = \\text{SSR} + \\text{SSE}\\).\n\n\n\nSource\ndf\nSS\nMS\n\\(F^*\\)\n\n\n\n\nModel\n\n\n\n\n\n\nError\n\n\n\n\n\n\nTotal\n\n\n\n\n\n\n\nUsing \\(F(0.95;\\,1,\\,4) = 7.71\\), do you reject \\(H_0\\colon \\beta_1 = 0\\) at \\(\\alpha = 0.05\\)? Also verify that \\(F^* = (t^*)^2\\) (up to rounding).\n\n\\[\\text{SSR} = \\hat{\\beta}_1 S_{xy} = (-3)(-210) = 630 \\qquad \\text{SSE} = \\text{RSS} = 36 \\qquad \\text{SST} = 630 + 36 = 666\\]\n\n\n\nSource\ndf\nSS\nMS\n\\(F^*\\)\n\n\n\n\nModel\n1\n630\n630\n70\n\n\nError\n4\n36\n9\n\n\n\nTotal\n5\n666\n\n\n\n\n\nSince \\(F^* = 70 &gt; F(0.95;\\,1,\\,4) = 7.71\\), we reject \\(H_0\\) at \\(\\alpha = 0.05\\).\nVerify: \\((t^*)^2 = (-8.37)^2 \\approx 70.06 \\approx 70 = F^*\\) ✓"
+  },
+  {
+    "objectID": "slides/lec-12.html#dummy-variables-a-simple-example",
+    "href": "slides/lec-12.html#dummy-variables-a-simple-example",
+    "title": "Lecture 12: Multiple Regression I",
+    "section": "Dummy Variables: A Simple Example",
+    "text": "Dummy Variables: A Simple Example\n\nSuppose we want to model exam score (\\(Y\\)) using only section (A or B) as the predictor. With Section A as the baseline:\n\\[X_i = \\begin{cases} 1 & \\text{if Section B} \\\\ 0 & \\text{if Section A} \\end{cases}\\]\nThe model is:\n\\[Y_i = \\beta_0 + \\beta_1 X_i + \\epsilon_i\\]\n\n\n\n\n\nSection A\nSection B\n\n\n\n\n\\(E(Y_i)\\)\n\\(\\beta_0\\)\n\\(\\beta_0 + \\beta_1\\)\n\n\n\n\n\\(\\beta_0\\) = mean exam score for Section A (the baseline)\n\\(\\beta_1\\) = mean difference in exam score between Section B and Section A\nIf \\(\\beta_1 &gt; 0\\), Section B scores higher on average; if \\(\\beta_1 &lt; 0\\), Section B scores lower\n\nThis is SLR, but instead of a continuous predictor, we have a single dummy variable encoding section membership."
+  },
+  {
+    "objectID": "slides/lec-12.html#course-reminders",
+    "href": "slides/lec-12.html#course-reminders",
+    "title": "Lecture 12: Multiple Regression I",
+    "section": "Course Reminders",
+    "text": "Course Reminders\n\n(Optional) Late Pass Questionnaire #2 due this Saturday\nHW # 3 released today and due next Saturday, November 14th\nNo class next Wednesday (Veteran’s Day)"
+  },
+  {
+    "objectID": "slides/lec-13.html#learning-objectives",
+    "href": "slides/lec-13.html#learning-objectives",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\nBy the end of today you will be able to:\n\n\nExpress the multiple regression model in matrix form \\(\\mathbf{Y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\) and identify the role of the design matrix\nDerive the least squares estimate \\(\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\) from the normal equations\nState the properties of \\(\\mathbf{b}\\): unbiasedness, covariance matrix, and the Gauss-Markov theorem\nFit a multiple regression model in R and correctly read lm() output\nInterpret estimated coefficients, residual standard error, and \\(R^2\\) in context"
+  },
+  {
+    "objectID": "slides/lec-13.html#todays-roadmap",
+    "href": "slides/lec-13.html#todays-roadmap",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Today’s Roadmap",
+    "text": "Today’s Roadmap\n\n\nMatrix Form — design matrix, matrix notation, why it matters\nLeast Squares Estimation — normal equations, matrix solution, properties of \\(\\mathbf{b}\\)\nMultiple Regression in R — fitting, reading output, interpreting results"
+  },
+  {
+    "objectID": "slides/lec-13.html#the-matrix-form",
+    "href": "slides/lec-13.html#the-matrix-form",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "The Matrix Form",
+    "text": "The Matrix Form"
+  },
+  {
+    "objectID": "slides/lec-13.html#the-matrix-form-1",
+    "href": "slides/lec-13.html#the-matrix-form-1",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "The Matrix Form",
+    "text": "The Matrix Form\nDefine vectors and a matrix:\n\\[\\mathbf{Y}_{n \\times 1} = \\begin{pmatrix} Y_1 \\\\ \\vdots \\\\ Y_n \\end{pmatrix}, \\quad \\boldsymbol{\\epsilon}_{n \\times 1} = \\begin{pmatrix} \\epsilon_1 \\\\ \\vdots \\\\ \\epsilon_n \\end{pmatrix}, \\quad \\boldsymbol{\\beta}_{p \\times 1} = \\begin{pmatrix} \\beta_0 \\\\ \\beta_1 \\\\ \\vdots \\\\ \\beta_{p-1} \\end{pmatrix}\\]\n\\[\\mathbf{X}_{n \\times p} = \\begin{pmatrix} 1 & X_{11} & \\cdots & X_{1,p-1} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ 1 & X_{n1} & \\cdots & X_{n,p-1} \\end{pmatrix}\\]\n\nThe general linear regression model becomes:\n\\[\\mathbf{Y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\]\nThe first column of \\(\\mathbf{X}\\) is all 1s — this corresponds to the intercept \\(\\beta_0\\)."
+  },
+  {
+    "objectID": "slides/lec-13.html#why-the-matrix-form-matters",
+    "href": "slides/lec-13.html#why-the-matrix-form-matters",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Why the Matrix Form Matters",
+    "text": "Why the Matrix Form Matters\n\nThe compact notation \\(\\mathbf{Y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\) is not just shorthand — it unlocks powerful tools:\n\n\n\nEstimation: One formula \\(\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\) works for any number of predictors\nGeometry: \\(\\hat{\\mathbf{Y}} = \\mathbf{X}\\mathbf{b}\\) is the projection of \\(\\mathbf{Y}\\) onto the column space of \\(\\mathbf{X}\\)\nInference: Standard errors and test statistics have clean matrix expressions\nGenerality: The same framework handles SLR, polynomial, interaction, and mixed models"
+  },
+  {
+    "objectID": "slides/lec-13.html#least-squares-estimation",
+    "href": "slides/lec-13.html#least-squares-estimation",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Least Squares Estimation",
+    "text": "Least Squares Estimation"
+  },
+  {
+    "objectID": "slides/lec-13.html#the-ls-criterion",
+    "href": "slides/lec-13.html#the-ls-criterion",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "The LS Criterion",
+    "text": "The LS Criterion\nWe estimate \\(\\boldsymbol{\\beta}\\) by minimizing the sum of squared residuals:\n\\[Q = \\sum_{i=1}^n \\left(Y_i - \\beta_0 - \\beta_1 X_{i1} - \\cdots - \\beta_{p-1} X_{i,p-1}\\right)^2 = \\|\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta}\\|^2\\]\n\nThis is the same principle as SLR — minimize the total squared vertical distance between the observed \\(Y_i\\) and the fitted surface.\nIn SLR we had \\(p = 2\\) (intercept + one slope). Now \\(p\\) can be anything."
+  },
+  {
+    "objectID": "slides/lec-13.html#deriving-the-normal-equations",
+    "href": "slides/lec-13.html#deriving-the-normal-equations",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Deriving the Normal Equations",
+    "text": "Deriving the Normal Equations\nTake the derivative of \\(Q = \\|\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta}\\|^2\\) with respect to \\(\\boldsymbol{\\beta}\\) and set it to zero:\n\\[\\frac{\\partial Q}{\\partial \\boldsymbol{\\beta}} = -2\\mathbf{X}^T(\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta}) = \\mathbf{0}\\]\n\nThis gives the normal equations:\n\\[\\mathbf{X}^T \\mathbf{X} \\boldsymbol{\\beta} = \\mathbf{X}^T \\mathbf{Y}\\]\nThese are \\(p\\) equations in \\(p\\) unknowns \\((\\beta_0, \\beta_1, \\ldots, \\beta_{p-1})\\)."
+  },
+  {
+    "objectID": "slides/lec-13.html#the-ls-estimate",
+    "href": "slides/lec-13.html#the-ls-estimate",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "The LS Estimate",
+    "text": "The LS Estimate\nIf \\(\\mathbf{X}\\) is full column rank (no predictor is a perfect linear combination of others), then \\(\\mathbf{X}^T\\mathbf{X}\\) is invertible and the unique solution is:\n\\[\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\]\n\n\n\n\\(\\mathbf{b} = (b_0, b_1, \\ldots, b_{p-1})^T\\) are the LS estimates of \\((\\beta_0, \\beta_1, \\ldots, \\beta_{p-1})\\)\nThe fitted values are \\(\\hat{\\mathbf{Y}} = \\mathbf{X}\\mathbf{b}\\)\nThe residuals are \\(\\mathbf{e} = \\mathbf{Y} - \\hat{\\mathbf{Y}} = \\mathbf{Y} - \\mathbf{X}\\mathbf{b}\\)\n\n\n\n\n\nWhen is \\(\\mathbf{X}\\) NOT full column rank? Perfect multicollinearity: e.g., one predictor is a linear combination of others, or you accidentally include all \\(k\\) dummy variables for a \\(k\\)-level factor instead of \\(k-1\\)."
+  },
+  {
+    "objectID": "slides/lec-13.html#connecting-back-to-slr",
+    "href": "slides/lec-13.html#connecting-back-to-slr",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Connecting Back to SLR",
+    "text": "Connecting Back to SLR\nIn simple linear regression (\\(p = 2\\), predictors: just \\(X\\)):\n\\[\\mathbf{X} = \\begin{pmatrix} 1 & X_1 \\\\ \\vdots & \\vdots \\\\ 1 & X_n \\end{pmatrix}, \\qquad \\mathbf{X}^T\\mathbf{X} = \\begin{pmatrix} n & \\sum X_i \\\\ \\sum X_i & \\sum X_i^2 \\end{pmatrix}, \\qquad \\mathbf{X}^T\\mathbf{Y} = \\begin{pmatrix} \\sum Y_i \\\\ \\sum X_i Y_i \\end{pmatrix}\\]\n\nSolving \\((\\mathbf{X}^T\\mathbf{X})\\mathbf{b} = \\mathbf{X}^T\\mathbf{Y}\\) recovers exactly the SLR formulas:\n\\[b_1 = \\frac{S_{xy}}{S_{xx}}, \\qquad b_0 = \\bar{Y} - b_1\\bar{X}\\]\nThe matrix formula is a generalization of what you already know."
+  },
+  {
+    "objectID": "slides/lec-13.html#properties-of-the-ls-estimator",
+    "href": "slides/lec-13.html#properties-of-the-ls-estimator",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Properties of the LS Estimator",
+    "text": "Properties of the LS Estimator\n\nUnder \\(E(\\boldsymbol{\\epsilon}) = \\mathbf{0}\\) and \\(\\text{Cov}(\\boldsymbol{\\epsilon}) = \\sigma^2 \\mathbf{I}\\):\n\n\n\nUnbiasedness: \\(E(\\mathbf{b}) = \\boldsymbol{\\beta}\\)\nCovariance matrix: \\(\\text{Cov}(\\mathbf{b}) = \\sigma^2 (\\mathbf{X}^T\\mathbf{X})^{-1}\\)\nGauss-Markov theorem: \\(\\mathbf{b}\\) is BLUE — the Best Linear Unbiased Estimator among all linear estimators\nNormality (with normal errors): \\(\\mathbf{b} \\sim N\\!\\left(\\boldsymbol{\\beta},\\; \\sigma^2(\\mathbf{X}^T\\mathbf{X})^{-1}\\right)\\)\n\n\n\n\nThe diagonal entries of \\(\\sigma^2 (\\mathbf{X}^T\\mathbf{X})^{-1}\\) give \\(\\text{Var}(b_j)\\), which we use to compute standard errors for inference."
+  },
+  {
+    "objectID": "slides/lec-13.html#practice-ls-estimation-by-hand",
+    "href": "slides/lec-13.html#practice-ls-estimation-by-hand",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Practice: LS Estimation by Hand",
+    "text": "Practice: LS Estimation by Hand\n\nA study records miles driven per day (\\(X\\)) and fuel cost per day in dollars (\\(Y\\)) for \\(n = 3\\) days, and also includes a dummy variable \\(D\\) for city driving (1 = city, 0 = highway):\n\n\n\n\\(i\\)\n\\(X_i\\)\n\\(D_i\\)\n\\(Y_i\\)\n\n\n\n\n1\n10\n1\n8\n\n\n2\n20\n0\n12\n\n\n3\n15\n1\n11\n\n\n\nThe model is \\(Y_i = \\beta_0 + \\beta_1 X_i + \\beta_2 D_i + \\epsilon_i\\).\n(a) Write out the design matrix \\(\\mathbf{X}\\), the response vector \\(\\mathbf{Y}\\), and \\(\\boldsymbol{\\beta}\\).\n\n(b) Compute \\(\\mathbf{X}^T\\mathbf{X}\\) and \\(\\mathbf{X}^T\\mathbf{Y}\\).\n\n(c) What would \\(b_2\\) measure in this context?"
+  },
+  {
+    "objectID": "slides/lec-13.html#practice-ls-estimation-solution",
+    "href": "slides/lec-13.html#practice-ls-estimation-solution",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Practice: LS Estimation — Solution",
+    "text": "Practice: LS Estimation — Solution\n\n(a)\n\\[\\mathbf{X} = \\begin{pmatrix} 1 & 10 & 1 \\\\ 1 & 20 & 0 \\\\ 1 & 15 & 1 \\end{pmatrix}, \\qquad \\mathbf{Y} = \\begin{pmatrix} 8 \\\\ 12 \\\\ 11 \\end{pmatrix}, \\qquad \\boldsymbol{\\beta} = \\begin{pmatrix} \\beta_0 \\\\ \\beta_1 \\\\ \\beta_2 \\end{pmatrix}\\]\n\n(b)\n\\[\\mathbf{X}^T\\mathbf{X} = \\begin{pmatrix} 3 & 45 & 2 \\\\ 45 & 725 & 25 \\\\ 2 & 25 & 2 \\end{pmatrix}, \\qquad \\mathbf{X}^T\\mathbf{Y} = \\begin{pmatrix} 31 \\\\ 475 \\\\ 19 \\end{pmatrix}\\]\n\n\n(c) \\(b_2\\) estimates the average difference in daily fuel cost between city and highway driving, holding miles driven fixed. A positive \\(b_2\\) means city driving costs more per day than highway driving for the same number of miles."
+  },
+  {
+    "objectID": "slides/lec-13.html#multiple-regression-in-r",
+    "href": "slides/lec-13.html#multiple-regression-in-r",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Multiple Regression in R",
+    "text": "Multiple Regression in R"
+  },
+  {
+    "objectID": "slides/lec-13.html#ls-in-r-multiple-regression",
+    "href": "slides/lec-13.html#ls-in-r-multiple-regression",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "LS in R: Multiple Regression",
+    "text": "LS in R: Multiple Regression\nThe formula syntax in R extends naturally from SLR:\n\n# Simulated fuel cost data\nmiles &lt;- c(10, 20, 15, 25, 18, 30)\ncity  &lt;- c(1, 0, 1, 0, 1, 0)\ncost  &lt;- c(8, 12, 11, 17, 13, 19)\n\nfit &lt;- lm(cost ~ miles + city)\nsummary(fit)\n\n\nCall:\nlm(formula = cost ~ miles + city)\n\nResiduals:\n      1       2       3       4       5       6 \n 0.2339 -0.6532 -0.1129  1.0000 -0.1210 -0.3468 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)   \n(Intercept) -0.73387    2.07037  -0.354  0.74644   \nmiles        0.66935    0.08105   8.259  0.00372 **\ncity         1.80645    1.05327   1.715  0.18484   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.7369 on 3 degrees of freedom\nMultiple R-squared:   0.98, Adjusted R-squared:  0.9666 \nF-statistic: 73.39 on 2 and 3 DF,  p-value: 0.002835"
+  },
+  {
+    "objectID": "slides/lec-13.html#reading-the-output",
+    "href": "slides/lec-13.html#reading-the-output",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Reading the Output",
+    "text": "Reading the Output\n\nFrom summary(fit):\n\nCoefficients table: Estimate column gives \\(\\mathbf{b}\\); each row is one \\(b_j\\)\nStd. Error: \\(SE(b_j) = \\sqrt{\\hat\\sigma^2 [(\\mathbf{X}^T\\mathbf{X})^{-1}]_{jj}}\\)\nResidual standard error: \\(\\hat\\sigma = \\sqrt{MSE}\\), where \\(MSE = SSE/(n-p)\\)\nMultiple R-squared: \\(R^2 = SSR/SSTO = 1 - SSE/SSTO\\)\n\n\n\n\nKey difference from SLR: degrees of freedom for error are now \\(n - p\\) (we estimated \\(p\\) parameters \\(\\beta_0, \\beta_1, \\ldots, \\beta_{p-1}\\)). In SLR, \\(p = 2\\) so df was \\(n - 2\\)."
+  },
+  {
+    "objectID": "slides/lec-13.html#practice-interpreting-r-output",
+    "href": "slides/lec-13.html#practice-interpreting-r-output",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Practice: Interpreting R Output",
+    "text": "Practice: Interpreting R Output\n\nA researcher fits the model \\(\\widehat{\\text{Cost}} = b_0 + b_1 \\cdot \\text{Miles} + b_2 \\cdot \\text{City}\\) and gets:\nCoefficients:\n             Estimate Std. Error t value Pr(&gt;|t|)\n(Intercept)    2.000      1.200    1.67    0.194\nmiles          0.550      0.062    8.87    0.003\ncity           1.800      0.950    1.89    0.156\n\\(n = 6\\), \\(\\hat\\sigma = 0.71\\), \\(R^2 = 0.979\\).\n(a) Write the fitted model equation and interpret \\(b_1\\) and \\(b_2\\).\n\n(b) Predict the fuel cost for a 20-mile city trip.\n\n(c) Interpret \\(R^2 = 0.979\\) in context."
+  },
+  {
+    "objectID": "slides/lec-13.html#practice-interpreting-r-output-solution",
+    "href": "slides/lec-13.html#practice-interpreting-r-output-solution",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Practice: Interpreting R Output — Solution",
+    "text": "Practice: Interpreting R Output — Solution\n\n(a) \\(\\widehat{\\text{Cost}} = 2.00 + 0.55 \\cdot \\text{Miles} + 1.80 \\cdot \\text{City}\\)\n\n\\(b_1 = 0.55\\): Each additional mile driven is associated with an increase of $0.55 in daily fuel cost, on average, holding driving type fixed.\n\\(b_2 = 1.80\\): City driving is associated with $1.80 more in daily fuel cost than highway driving, on average, for the same number of miles.\n\n\n(b) For Miles = 20, City = 1: \\[\\widehat{\\text{Cost}} = 2.00 + 0.55(20) + 1.80(1) = 2.00 + 11.00 + 1.80 = \\mathbf{14.80}\\]\n\n\n(c) Approximately 97.9% of the variability in daily fuel cost is explained by the linear relationship with miles driven and driving type (city vs. highway)."
+  },
+  {
+    "objectID": "slides/lec-13.html#summary",
+    "href": "slides/lec-13.html#summary",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Summary",
+    "text": "Summary\n\nMatrix form: \\(\\mathbf{Y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\); design matrix \\(\\mathbf{X}\\) has a leading column of 1s for the intercept; \\(\\hat{\\mathbf{Y}} = \\mathbf{X}\\mathbf{b}\\) is the projection of \\(\\mathbf{Y}\\) onto the column space of \\(\\mathbf{X}\\)\nLS criterion: minimize \\(Q = \\|\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta}\\|^2\\)\nNormal equations: setting \\(\\partial Q / \\partial \\boldsymbol{\\beta} = \\mathbf{0}\\) gives \\(\\mathbf{X}^T\\mathbf{X}\\boldsymbol{\\beta} = \\mathbf{X}^T\\mathbf{Y}\\)\nLS estimate: \\(\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\) when \\(\\mathbf{X}\\) is full column rank; \\(\\hat{\\mathbf{Y}} = \\mathbf{X}\\mathbf{b}\\), \\(\\mathbf{e} = \\mathbf{Y} - \\hat{\\mathbf{Y}}\\)\nProperties: \\(E(\\mathbf{b}) = \\boldsymbol{\\beta}\\) (unbiased); \\(\\text{Cov}(\\mathbf{b}) = \\sigma^2(\\mathbf{X}^T\\mathbf{X})^{-1}\\); BLUE by Gauss-Markov; \\(\\mathbf{b} \\sim N(\\boldsymbol{\\beta}, \\sigma^2(\\mathbf{X}^T\\mathbf{X})^{-1})\\) under normality\nIn R: lm(y ~ x1 + x2) fits the model; summary() reports estimates, SEs, \\(\\hat\\sigma\\), and \\(R^2\\) with \\(n - p\\) error df"
+  },
+  {
+    "objectID": "slides/lec-13.html#questions",
+    "href": "slides/lec-13.html#questions",
+    "title": "Lecture 13: Multiple Regression II",
+    "section": "Questions?",
+    "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
+  },
+  {
+    "objectID": "slides/lec-11.html#midterm",
+    "href": "slides/lec-11.html#midterm",
+    "title": "Midterm",
+    "section": "Midterm",
+    "text": "Midterm\n\nPlease find a seat, leaving at least one empty seat between you and the person next to you. Put everything away except your calculator and a pen or pencil. Good luck!!"
+  },
+  {
+    "objectID": "slides/lec-11.html#course-reminders",
+    "href": "slides/lec-11.html#course-reminders",
+    "title": "Midterm",
+    "section": "Course Reminders",
+    "text": "Course Reminders\n\n(Optional) Late Pass Questionnaire #2 due this Saturday"
+  },
+  {
+    "objectID": "slides/lec-11.html#questions",
+    "href": "slides/lec-11.html#questions",
+    "title": "Midterm",
+    "section": "Questions?",
+    "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
   }
 ]

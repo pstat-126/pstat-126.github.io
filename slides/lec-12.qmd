@@ -16,6 +16,11 @@ format:
       data-background-color: "#003660"
 ---
 
+## Course Reminders
+- (Optional) Late Pass Questionnaire #2 due this Saturday
+- HW # 3 released today and due next Saturday, November 14th
+- No class next Wednesday (Veteran's Day)
+
 ## Learning Objectives
 
 By the end of today you will be able to:
@@ -24,11 +29,9 @@ By the end of today you will be able to:
 
 - Explain why we extend simple linear regression to multiple predictors
 - Write a general linear regression model and state its assumptions
-- Identify polynomial, interaction, and transformed-variable models as special cases of the general linear model
+- Identify polynomial and interaction  models as special cases of the general linear model
 - Create dummy variables to encode a qualitative predictor with $k$ levels
 - Explain what "linear" means in the phrase "general linear regression model"
-- Express the multiple regression model in matrix form $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$
-- Derive the least squares estimate $\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$ from the normal equations
 
 :::
 
@@ -38,8 +41,267 @@ By the end of today you will be able to:
 
 ::: {style="font-size: 0.88em;"}
 
-1. **Multiple Regression Models** — the setup, special cases, dummy variables, matrix form
-2. **Least Squares Estimation** — minimizing $Q$, normal equations, matrix solution
+1. **Midterm Review** 
+2. **Multiple Regression Models** 
+
+:::
+
+---
+
+## Midterm Review {background-color="#003660"}
+
+---
+
+## Q1: OLS Properties and Gauss-Markov {.smaller}
+
+::: {style="font-size: 0.72em;"}
+
+**(a)** (3 pts) A student proposes minimizing $\sum_{i=1}^n e_i$ instead of $\sum_{i=1}^n e_i^2$. Explain why this fails.
+
+::: {.fragment}
+Positive and negative residuals cancel. There are infinitely many lines that achieve $\sum e_i = 0$ (including terrible fits). In fact, $\sum e_i = 0$ always holds for OLS, so this criterion places no constraint on the line. **Squaring the residuals prevents cancellation and penalizes large errors more heavily**.
+:::
+
+**(b)** (2 pts) The Gauss-Markov theorem says OLS is **BLUE**. What does this mean?
+
+::: {.fragment}
+**BLUE = Best Linear Unbiased Estimator.** Among all estimators that are (1) linear functions of $Y_1, \ldots, Y_n$ and (2) unbiased for $\beta_1$, OLS has the **smallest variance** (minimum variance).
+:::
+
+:::
+
+---
+
+## Q2–3: MLE vs. OLS and Sampling Distributions {.smaller}
+
+::: {style="font-size: 0.72em;"}
+
+**Q2.** (2 pts) Under $\varepsilon_i \overset{iid}{\sim} N(0, \sigma^2)$, what does the normality assumption enable that OLS alone cannot?
+
+::: {.fragment}
+The normality assumption gives $\hat{\beta}_0$ and $\hat{\beta}_1$ **exact sampling distributions** ($t$- and $F$-distributions), making exact hypothesis tests and confidence/prediction intervals possible. OLS alone guarantees unbiasedness and minimum variance (Gauss-Markov) but provides **no distributional results**.
+:::
+
+**Q3(a).** (2 pts) State the exact sampling distribution of $\hat{\beta}_1$.
+
+::: {.fragment}
+$$\hat{\beta}_1 \sim N\!\left(\beta_1,\; \frac{\sigma^2}{S_{xx}}\right) \qquad \text{Mean: } \beta_1 \qquad \text{Variance: } \frac{\sigma^2}{S_{xx}}$$
+:::
+
+**Q3(b).** (3 pts) Why do we use MSE instead of $\sigma^2$ when constructing test statistics and CIs for $\hat{\beta}_1$?
+
+::: {.fragment}
+$\sigma^2$ is an **unknown population parameter**. We replace it with $\text{MSE} = \text{RSS}/(n-2)$, the unbiased estimator of $\sigma^2$. 
+:::
+
+:::
+
+---
+
+## Q4: Confidence Intervals vs. Prediction Intervals {.smaller}
+
+::: {style="font-size: 0.72em;"}
+
+**(a)** (1 pt) A researcher wants to estimate the **average** sleep quality score for all students who spend 7 hours per day on screens. CI or PI?
+
+::: {.fragment}
+**Confidence interval for $E(Y^*)$.** The researcher is estimating the mean response for a population of students at that screen time, not any individual student's score.
+:::
+
+**(b)** (2 pts) Write the 95% CI and PI formulas side by side and identify the term that makes the PI wider.
+
+::: {.fragment}
+$$\textbf{CI:}\quad \hat{y}^* \pm t_{0.025,\,n-2}\;\hat{\sigma}\sqrt{\frac{1}{n} + \frac{(x^*-\bar{x})^2}{S_{xx}}}$$
+
+$$\textbf{PI:}\quad \hat{y}^* \pm t_{0.025,\,n-2}\;\hat{\sigma}\sqrt{\boxed{1} + \frac{1}{n} + \frac{(x^*-\bar{x})^2}{S_{xx}}}$$
+
+The extra $\mathbf{1}$ under the square root in the PI accounts for the variability of a single new observation around the true mean, making the PI always wider than the CI.
+:::
+
+:::
+
+---
+
+## Q5: Model Diagnostics {.smaller}
+
+::: {style="font-size: 0.72em;"}
+
+For each residual plot description, identify the violated assumption and suggest a remedial measure.
+
+**(a)** (2 pts) Residuals vs. $\hat{Y}$ shows a **fan shape** (spread increases as $\hat{Y}$ increases).
+
+::: {.fragment}
+- **Assumption violated:** Constant variance (Assumption 3): $\text{Var}(\varepsilon_i) = \sigma^2$ for all $i$.
+- **Remedial measure:** Apply a variance-stabilizing transformation to $Y$ (e.g., $\log Y$ or $\sqrt{Y}$).
+:::
+
+**(b)** (2 pts) Residuals vs. $X$ shows a **systematic increasing trend** (negative at low $X$, positive at high $X$).
+
+::: {.fragment}
+- **Assumption violated:** Linearity (Assumption 1): $E[Y_i] = \beta_0 + \beta_1 x_i$. The systematic pattern indicates the true mean function is not linear in $X$.
+- **Remedial measure:** Apply a transformation to $X$ (e.g., $\log X$ or $X^2$).
+:::
+
+:::
+
+---
+
+## Q6–7: Estimates and Fitted Equation {.smaller}
+
+::: {style="font-size: 0.70em;"}
+
+A researcher studies **daily screen time** ($x$, hrs/day) and **sleep quality** ($y$, out of 100) for $n = 6$ students.
+
+::: {style="font-size: 0.78em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-bottom: 0.5em;"}
+$\bar{x} = 7,\quad \bar{y} = 70,\quad S_{xx} = 70,\quad S_{xy} = -210,\quad R^2 = 0.946,\quad t_{0.025,\,4} = 2.776$
+:::
+
+**Q6.** (2 pts) Compute $\hat{\beta}_1$ and $\hat{\beta}_0$.
+
+::: {.fragment}
+$$\hat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{-210}{70} = -3 \qquad \hat{\beta}_0 = \bar{y} - \hat{\beta}_1\bar{x} = 70 - (-3)(7) = 70 + 21 = 91$$
+:::
+
+**Q7.** (2 pts) Write the fitted equation and interpret $\hat{\beta}_1$ in context.
+
+::: {.fragment}
+$$\hat{y} = 91 - 3x$$
+
+For each additional hour of daily screen time, sleep quality score **decreases by 3 points** on average.
+:::
+
+:::
+
+---
+
+## Q8: Fitted Values and Residuals {.smaller}
+
+::: {style="font-size: 0.72em;"}
+
+Using $\hat{y} = 91 - 3x$, complete the table and verify $\displaystyle\sum_{i=1}^6 e_i = 0$.
+
+| $i$ | 1 | 2 | 3 | 4 | 5 | 6 |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| $x_i$ | 2 | 4 | 6 | 8 | 10 | 12 |
+| $y_i$ | 88 | 76 | 70 | 70 | 61 | 55 |
+| $\hat{y}_i$ | | | | | | |
+| $e_i$ | | | | | | |
+
+::: {.fragment}
+
+| $i$ | 1 | 2 | 3 | 4 | 5 | 6 |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| $x_i$ | 2 | 4 | 6 | 8 | 10 | 12 |
+| $y_i$ | 88 | 76 | 70 | 70 | 61 | 55 |
+| $\hat{y}_i$ | **85** | **79** | **73** | **67** | **61** | **55** |
+| $e_i$ | **3** | **−3** | **−3** | **3** | **0** | **0** |
+
+Verify: $\displaystyle\sum_{i=1}^6 e_i = 3 + (-3) + (-3) + 3 + 0 + 0 = 0$ ✓
+
+:::
+
+:::
+
+---
+
+## Q9–10: RSS, MSE, and Hypothesis Test {.smaller}
+
+::: {style="font-size: 0.70em;"}
+
+**Q9.** (3 pts) Compute RSS, $\hat{\sigma}^2$, and $\hat{\sigma}$. Interpret $\hat{\sigma}$ in context.
+
+::: {.fragment}
+$$\text{RSS} = \sum e_i^2 = 9 + 9 + 9 + 9 + 0 + 0 = 36 \qquad \hat{\sigma}^2 = \text{MSE} = \frac{\text{RSS}}{n-2} = \frac{36}{4} = 9 \qquad \hat{\sigma} = 3$$
+
+The typical deviation of an observed sleep quality score from its fitted value is about **3 points**.
+:::
+
+**Q10.** (4 pts) Test $H_0\colon \beta_1 = 0$ vs. $H_a\colon \beta_1 \neq 0$ at $\alpha = 0.05$.
+
+::: {.fragment}
+$$\widehat{SE}(\hat{\beta}_1) = \sqrt{\frac{\text{MSE}}{S_{xx}}} = \sqrt{\frac{9}{70}} = \frac{3}{\sqrt{70}} \approx 0.3586 \qquad t^* = \frac{\hat{\beta}_1}{\widehat{SE}(\hat{\beta}_1)} = \frac{-3}{0.3586} \approx -8.37$$
+
+Since $|t^*| = 8.37 > t_{0.025,\,4} = 2.776$, we **reject $H_0$** at $\alpha = 0.05$. There is sufficient evidence that daily screen time is a statistically significant linear predictor of sleep quality score.
+:::
+
+:::
+
+---
+
+## Q11–12: Confidence Interval and $R^2$ {.smaller}
+
+::: {style="font-size: 0.72em;"}
+
+**Q11.** (3 pts) Construct a 95% CI for $\beta_1$ and interpret it in context.
+
+::: {.fragment}
+$$\hat{\beta}_1 \pm t_{0.025,\,4}\;\widehat{SE}(\hat{\beta}_1) = -3 \pm 2.776(0.3586) = -3 \pm 0.996 \approx \mathbf{(-3.996,\; -2.004)}$$
+
+We are 95% confident that for each additional hour of daily screen time, mean sleep quality score decreases by between **2.0 and 4.0 points**.
+:::
+
+**Q12.** (2 pts) Interpret $R^2 = 0.946$ in context.
+
+::: {.fragment}
+Approximately **94.6%** of the variability in sleep quality scores is explained by the linear relationship with daily screen time.
+:::
+
+:::
+
+---
+
+## Q13: ANOVA Table {.smaller}
+
+::: {style="font-size: 0.70em;"}
+
+**(5 pts)** Complete the ANOVA table. Use your computed values for RSS and the identity $\text{SST} = \text{SSR} + \text{SSE}$.
+
+| Source | df | SS | MS | $F^*$ |
+|:------:|:--:|:--:|:--:|:-----:|
+| Model | | | | |
+| Error | | | | |
+| Total | | | | |
+
+Using $F(0.95;\,1,\,4) = 7.71$, do you reject $H_0\colon \beta_1 = 0$ at $\alpha = 0.05$? Also verify that $F^* = (t^*)^2$ (up to rounding).
+
+::: {.fragment}
+
+$$\text{SSR} = \hat{\beta}_1 S_{xy} = (-3)(-210) = 630 \qquad \text{SSE} = \text{RSS} = 36 \qquad \text{SST} = 630 + 36 = 666$$
+
+| Source | df | SS | MS | $F^*$ |
+|:------:|:--:|:--:|:--:|:-----:|
+| Model | 1 | 630 | 630 | **70** |
+| Error | 4 | 36 | 9 | |
+| Total | 5 | 666 | | |
+
+Since $F^* = 70 > F(0.95;\,1,\,4) = 7.71$, we **reject $H_0$** at $\alpha = 0.05$.
+
+Verify: $(t^*)^2 = (-8.37)^2 \approx 70.06 \approx 70 = F^*$ ✓
+
+:::
+
+:::
+
+---
+
+## Q14: Box-Cox Transformation {.smaller}
+
+::: {style="font-size: 0.72em;"}
+
+CO$_2$ emissions ($Y$, ppm) on engine displacement ($X$, liters), $n = 40$. Residuals-vs-fitted shows a **strong fan shape**; QQ-plot shows a **pronounced right skew**.
+
+**(a)** (1 pt) Which two SLR assumptions appear violated?
+
+::: {.fragment}
+1. **Constant variance (Assumption 3)** — violated by the fan shape in the residuals-vs-fitted plot.
+2. **Normality of errors (Assumption 4)** — violated by the pronounced right skew in the QQ-plot.
+:::
+
+**(b)** (2 pts) A Box-Cox analysis yields $\hat{\lambda} \approx 0.5$, with a 95% CI that excludes $\lambda = 1$. What transformation does this suggest?
+
+::: {.fragment}
+$\hat{\lambda} \approx 0.5$ suggests the **square root transformation**: $Y' = \sqrt{Y}$. Because the 95% CI for $\lambda$ excludes $\lambda = 1$ (no transformation), there is statistical evidence that the transformation is necessary to stabilize variance and improve normality.
+:::
 
 :::
 
@@ -138,6 +400,9 @@ The \$130k gap is completely invisible to the model.
 ---
 
 ## The Fix: Multiple Regression
+::: {style="font-size: 0.72em;"}
+
+
 
 **Multiple regression** lets us include all three predictors at once:
 
@@ -146,9 +411,12 @@ $$\text{Price}_i = \beta_0 + \beta_1 \cdot \text{SqFt}_i + \beta_2 \cdot \text{B
 Now the model can distinguish House A and House B and estimate the effect of each variable while **holding the others constant**.
 
 ::: {.fragment}
-This "holding others constant" idea is one of the most powerful features of multiple regression. We'll return to it throughout the unit.
-:::
+**What does "holding others constant" mean?**
 
+$\beta_2$ is the expected change in price for each additional bedroom, **among houses of the same size and age**. We're isolating the effect of bedrooms by comparing only houses that are alike in every other way.
+
+:::
+:::
 ---
 
 ## Multiple Regression Models {background-color="#003660"}
@@ -164,7 +432,7 @@ In most real applications, a response variable depends on **more than one** pred
 ::: {.fragment}
 **Examples:**
 
-- Weight may depend on height, age, and sex
+- Weight may depend on height, age, and diet
 - House price may depend on size, location, and age
 - Blood pressure may depend on BMI, age, sodium intake, and exercise
 :::
@@ -239,30 +507,12 @@ $$Y_i = \beta_0 + \beta_1 X_i + \beta_2 X_i^2 + \epsilon_i$$
 
 This is a general linear model by setting $X_{i1} = X_i$ and $X_{i2} = X_i^2$.
 
-The model is **not linear in $X$** — but it is still linear in the parameters $\beta_0, \beta_1, \beta_2$.
+The model is **not linear in $X$**. However, it is still linear in the parameters $\beta_0, \beta_1, \beta_2$.
 :::
 :::
 
 ---
 
-## Special Case: Transformed Variables
-::: {style="font-size: 0.72em;"}
-
-
-**Transformed variables:** We can apply any transformation to $X$ or $Y$ and still fit a general linear model.
-
-**Example:** Suppose pollution decreases rapidly with distance. We might try:
-
-$$Y_i' = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \epsilon_i$$
-
-where $Y_i' = \log Y_i$ (log-transform the response) and $X_{i2} = \exp(X_{i1})$ (transform a predictor).
-
-::: {.fragment}
-Even though $\log$ and $\exp$ are nonlinear functions, the model is still a general linear model — every $\beta$ enters linearly. The transformed columns simply become new columns in the design matrix $\mathbf{X}$.
-:::
-:::
-
----
 
 ## Special Case: Interaction Model
 
@@ -275,11 +525,13 @@ This fits the general linear model by defining a new column $X_{i3} = X_{i1} X_{
 ---
 
 ## What Does "Linear" Really Mean?
+::: {style="font-size: 0.72em;"}
+
 
 "Linear" in **general linear regression model** means the model depends **linearly on the unknown parameters $\beta$**, not on the predictors $X$.
 
 ::: {.fragment}
-This makes the model quite flexible — it can capture nonlinear effects and interactions while still being linear in parameters.
+This makes the model quite flexible. It can capture nonlinear effects and interactions while still being linear in parameters.
 
 **Examples we've already seen:**
 
@@ -287,10 +539,12 @@ This makes the model quite flexible — it can capture nonlinear effects and int
 - $Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i1}X_{i2} + \epsilon_i$ — interaction, linear in $\beta$
 - $Y_i' = \beta_0 + \beta_1 X_{i1} + \beta_2 \log X_{i2} + \epsilon_i$ — transformed predictor, linear in $\beta$
 :::
-
+:::
 ---
 
 ## Quick Check: Is It a General Linear Model?
+::: {style="font-size: 0.72em;"}
+
 
 For each model below, decide: **general linear model — yes or no?**
 
@@ -301,32 +555,37 @@ $$Y = \beta_1 + \beta_2 X_1 + \beta_3 \log X_2 + \epsilon$$
 $$Y = \beta_1 + \beta_2 X^{\beta_3} + \epsilon$$
 
 ::: {.fragment}
-**Answers:** The first two **are** — every $\beta$ enters linearly. The third is **not** — $\beta_3$ appears as an exponent, making it a nonlinear model.
+**Answers:** The first two **are** — every $\beta$ enters linearly. The third is **not**. $\beta_3$ appears as an exponent, making it a nonlinear model.
 :::
-
+:::
 ---
 
 ## Qualitative Independent Variables
+::: {style="font-size: 0.72em;"}
+
 
 **Qualitative** (categorical) variables cannot enter a regression model as numbers directly. We encode them using **indicator (dummy) variables**.
 
 ::: {.fragment}
 For a qualitative variable with $k$ levels, we create **$k - 1$ dummy variables** (one level becomes the baseline).
 
-**Example — Sex** (2 levels: Female, Male):
+**Example — Degree Type** (2 levels: Graduate, Undergraduate):
 
-$$X = \begin{cases} 1 & \text{if female} \\ 0 & \text{if male} \end{cases}$$
+$$X = \begin{cases} 1 & \text{if graduate} \\ 0 & \text{if undergraduate} \end{cases}$$
 
-Male is the **baseline**. The coefficient of $X$ represents the average difference in $Y$ between females and males, all else equal.
+Undergraduate is the **baseline**. The coefficient of $X$ represents the average difference in $Y$ between graduate and undergraduate students, all else equal.
+:::
 :::
 
 ---
 
 ## Dummy Variables: Hair Color Example
+::: {style="font-size: 0.72em;"}
+
 
 For **hair color** with 5 levels (Blond, Brown, Gray, Red, Black), we need $5 - 1 = 4$ dummy variables. Black is the baseline.
 
-::: {style="font-size: 0.88em;"}
+::: {style="font-size: 0.95em;"}
 
 $$X_1 = \begin{cases} 1 & \text{if Blond} \\ 0 & \text{otherwise} \end{cases} \qquad X_2 = \begin{cases} 1 & \text{if Brown} \\ 0 & \text{otherwise} \end{cases}$$
 
@@ -340,6 +599,35 @@ $$X_3 = \begin{cases} 1 & \text{if Gray} \\ 0 & \text{otherwise} \end{cases} \qq
 - Each coefficient $\beta_j$ represents the **average difference** in $Y$ between that level and the baseline, given all other predictors are held fixed
 :::
 :::
+:::
+---
+
+## Dummy Variables: A Simple Example {.smaller}
+
+::: {style="font-size: 0.70em;"}
+
+Suppose we want to model **exam score** ($Y$) using only **section** (A or B) as the predictor. With Section A as the baseline:
+
+$$X_i = \begin{cases} 1 & \text{if Section B} \\ 0 & \text{if Section A} \end{cases}$$
+
+The model is:
+
+$$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$
+
+::: {.fragment}
+
+| | Section A | Section B |
+|:--|:--|:--|
+| $E(Y_i)$ | $\beta_0$ | $\beta_0 + \beta_1$ |
+
+- $\beta_0$ = mean exam score for Section A (the baseline)
+- $\beta_1$ = mean difference in exam score between Section B and Section A
+- If $\beta_1 > 0$, Section B scores higher on average; if $\beta_1 < 0$, Section B scores lower
+
+This is SLR, but instead of a continuous predictor, we have a single dummy variable encoding section membership.
+:::
+
+:::
 
 ---
 
@@ -347,13 +635,13 @@ $$X_3 = \begin{cases} 1 & \text{if Gray} \\ 0 & \text{otherwise} \end{cases} \qq
 
 ::: {style="font-size: 0.82em;"}
 
-Suppose we model salary ($Y$) with sex and experience ($X_{\text{exp}}$):
+Suppose we model salary ($Y$) with degree type and experience ($X_{\text{exp}}$):
 
 $$Y_i = \beta_0 + \beta_1 X_i + \beta_2 X_{i,\text{exp}} + \epsilon_i$$
 
-where $X_i = 1$ if female, 0 if male.
+where $X_i = 1$ if graduate, 0 if undergraduate.
 
-| | Male | Female |
+| | Undergraduate | Graduate |
 |:--|:--|:--|
 | $E(Y_i)$ | $\beta_0 + \beta_2 X_{i,\text{exp}}$ | $\beta_0 + \beta_1 + \beta_2 X_{i,\text{exp}}$ |
 
@@ -361,7 +649,7 @@ where $X_i = 1$ if female, 0 if male.
 
 ::: {.fragment}
 ::: {style="font-size: 0.82em;"}
-$\beta_1$ is the **average salary difference between females and males** at the same level of experience. The two groups share the same slope $\beta_2$ for experience (parallel lines).
+$\beta_1$ is the **average salary difference between graduate and undergraduate degree holders** at the same level of experience. The two groups share the same slope $\beta_2$ for experience (parallel lines).
 :::
 :::
 
@@ -369,13 +657,12 @@ $\beta_1$ is the **average salary difference between females and males** at the 
 
 ## Practice: Setting Up a Multiple Regression Model {.smaller}
 
-::: {style="font-size: 0.82em;"}
+::: {style="font-size: 0.72em;"}
 
 A researcher wants to model a student's exam score ($Y$, out of 100) using the following predictors:
 
 - $X_1$: hours studied (quantitative)
 - $X_2$: section (A, B, or C — qualitative, 3 levels)
-- $X_3$: hours studied $\times$ section interaction
 
 **(a)** How many dummy variables are needed to encode section? Identify the baseline and write out each dummy variable.
 
@@ -385,7 +672,11 @@ A researcher wants to model a student's exam score ($Y$, out of 100) using the f
 
 <br>
 
-**(c)** Interpret the interaction term in plain language.
+**(c)** Interpret $\beta_1$ and $\beta_2$ in plain language.
+
+<br>
+
+**(d)** Suppose the fitted model is $\hat{Y} = 50 + 8X_1 + 5D_1 + 2D_2$. Predict the exam score for a Section A student who studied 3 hours.
 
 :::
 
@@ -409,329 +700,29 @@ countdown::countdown(
 
 ## Practice: Setting Up a Model — Solution {.smaller}
 
-::: {style="font-size: 0.78em;"}
+::: {style="font-size: 0.70em;"}
 
 **(a)** 3 levels $\Rightarrow$ $3 - 1 = 2$ dummy variables. Using Section A as baseline:
 
 $$D_1 = \begin{cases} 1 & \text{if Section B} \\ 0 & \text{otherwise} \end{cases} \qquad D_2 = \begin{cases} 1 & \text{if Section C} \\ 0 & \text{otherwise} \end{cases}$$
 
 ::: {.fragment}
-**(b)** The full model with interactions between hours and section:
+**(b)** The model with hours studied and section:
 
-$$Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 D_{i1} + \beta_3 D_{i2} + \beta_4 X_{i1} D_{i1} + \beta_5 X_{i1} D_{i2} + \epsilon_i$$
+$$Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 D_{i1} + \beta_3 D_{i2} + \epsilon_i$$
 
-There are **6 parameters**: $\beta_0, \beta_1, \ldots, \beta_5$.
+There are **4 parameters**: $\beta_0, \beta_1, \beta_2, \beta_3$.
 :::
 
 ::: {.fragment}
-**(c)** The interaction terms $\beta_4$ and $\beta_5$ allow the **effect of study hours to differ by section**. If $\beta_4 \neq 0$, each additional study hour predicts a different score gain in Section B vs. Section A.
-:::
-
-:::
-
----
-
-## The Matrix Form {.smaller}
-
-Define vectors and a matrix:
-
-$$\mathbf{Y}_{n \times 1} = \begin{pmatrix} Y_1 \\ \vdots \\ Y_n \end{pmatrix}, \quad \boldsymbol{\epsilon}_{n \times 1} = \begin{pmatrix} \epsilon_1 \\ \vdots \\ \epsilon_n \end{pmatrix}, \quad \boldsymbol{\beta}_{p \times 1} = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \vdots \\ \beta_{p-1} \end{pmatrix}$$
-
-$$\mathbf{X}_{n \times p} = \begin{pmatrix} 1 & X_{11} & \cdots & X_{1,p-1} \\ \vdots & \vdots & \ddots & \vdots \\ 1 & X_{n1} & \cdots & X_{n,p-1} \end{pmatrix}$$
-
-::: {.fragment}
-The general linear regression model becomes:
-
-$$\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$$
-
-The first column of $\mathbf{X}$ is all 1s — this corresponds to the intercept $\beta_0$.
-:::
-
----
-
-## Why the Matrix Form Matters
-
-::: {style="font-size: 0.88em;"}
-
-The compact notation $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$ is not just shorthand — it unlocks powerful tools:
-
-:::
-
-::: {.incremental}
-::: {style="font-size: 0.85em;"}
-- **Estimation:** One formula $\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$ works for any number of predictors
-- **Geometry:** $\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}$ is the projection of $\mathbf{Y}$ onto the column space of $\mathbf{X}$
-- **Inference:** Standard errors and test statistics have clean matrix expressions
-- **Generality:** The same framework handles SLR, polynomial, interaction, and mixed models
-:::
-:::
-
----
-
-## Least Squares Estimation {background-color="#003660"}
-
----
-
-## The LS Criterion
-
-We estimate $\boldsymbol{\beta}$ by minimizing the **sum of squared residuals**:
-
-$$Q = \sum_{i=1}^n \left(Y_i - \beta_0 - \beta_1 X_{i1} - \cdots - \beta_{p-1} X_{i,p-1}\right)^2 = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2$$
-
-::: {.fragment}
-This is the same principle as SLR — minimize the total squared vertical distance between the observed $Y_i$ and the fitted surface.
-
-In SLR we had $p = 2$ (intercept + one slope). Now $p$ can be anything.
-:::
-
----
-
-## Deriving the Normal Equations
-
-Take the derivative of $Q = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2$ with respect to $\boldsymbol{\beta}$ and set it to zero:
-
-$$\frac{\partial Q}{\partial \boldsymbol{\beta}} = -2\mathbf{X}^T(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}) = \mathbf{0}$$
-
-::: {.fragment}
-This gives the **normal equations**:
-
-$$\mathbf{X}^T \mathbf{X} \boldsymbol{\beta} = \mathbf{X}^T \mathbf{Y}$$
-
-These are $p$ equations in $p$ unknowns $(\beta_0, \beta_1, \ldots, \beta_{p-1})$.
-:::
-
----
-
-## The LS Estimate
-
-If $\mathbf{X}$ is **full column rank** (no predictor is a perfect linear combination of others), then $\mathbf{X}^T\mathbf{X}$ is invertible and the unique solution is:
-
-$$\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$$
-
-::: {.fragment}
-::: {style="font-size: 0.82em;"}
-- $\mathbf{b} = (b_0, b_1, \ldots, b_{p-1})^T$ are the LS estimates of $(\beta_0, \beta_1, \ldots, \beta_{p-1})$
-- The **fitted values** are $\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}$
-- The **residuals** are $\mathbf{e} = \mathbf{Y} - \hat{\mathbf{Y}} = \mathbf{Y} - \mathbf{X}\mathbf{b}$
-:::
+**(c)** $\beta_1$ is the expected increase in exam score for each additional hour studied, **holding section constant**. $\beta_2$ is the average difference in exam score between Section B and Section A, **among students who studied the same number of hours**.
 :::
 
 ::: {.fragment}
-::: {style="font-size: 0.78em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660;"}
-**When is $\mathbf{X}$ NOT full column rank?** Perfect multicollinearity: e.g., one predictor is a linear combination of others, or you accidentally include all $k$ dummy variables for a $k$-level factor instead of $k-1$.
-:::
-:::
+**(d)** Section A is the baseline, so $D_1 = 0$ and $D_2 = 0$. Plugging in $X_1 = 3$:
 
----
+$$\hat{Y} = 50 + 8(3) + 5(0) + 2(0) = 50 + 24 = \mathbf{74}$$
 
-## Connecting Back to SLR
-
-In simple linear regression ($p = 2$, predictors: just $X$):
-
-$$\mathbf{X} = \begin{pmatrix} 1 & X_1 \\ \vdots & \vdots \\ 1 & X_n \end{pmatrix}, \qquad \mathbf{X}^T\mathbf{X} = \begin{pmatrix} n & \sum X_i \\ \sum X_i & \sum X_i^2 \end{pmatrix}, \qquad \mathbf{X}^T\mathbf{Y} = \begin{pmatrix} \sum Y_i \\ \sum X_i Y_i \end{pmatrix}$$
-
-::: {.fragment}
-Solving $(\mathbf{X}^T\mathbf{X})\mathbf{b} = \mathbf{X}^T\mathbf{Y}$ recovers exactly the SLR formulas:
-
-$$b_1 = \frac{S_{xy}}{S_{xx}}, \qquad b_0 = \bar{Y} - b_1\bar{X}$$
-
-The matrix formula is a **generalization** of what you already know.
-:::
-
----
-
-## Properties of the LS Estimator
-
-::: {style="font-size: 0.88em;"}
-
-Under $E(\boldsymbol{\epsilon}) = \mathbf{0}$ and $\text{Cov}(\boldsymbol{\epsilon}) = \sigma^2 \mathbf{I}$:
-
-:::
-
-::: {.incremental}
-::: {style="font-size: 0.85em;"}
-- **Unbiasedness:** $E(\mathbf{b}) = \boldsymbol{\beta}$
-- **Covariance matrix:** $\text{Cov}(\mathbf{b}) = \sigma^2 (\mathbf{X}^T\mathbf{X})^{-1}$
-- **Gauss-Markov theorem:** $\mathbf{b}$ is BLUE — the Best Linear Unbiased Estimator among all linear estimators
-- **Normality (with normal errors):** $\mathbf{b} \sim N\!\left(\boldsymbol{\beta},\; \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\right)$
-:::
-:::
-
-::: {.fragment}
-::: {style="font-size: 0.82em;"}
-The diagonal entries of $\sigma^2 (\mathbf{X}^T\mathbf{X})^{-1}$ give $\text{Var}(b_j)$, which we use to compute standard errors for inference.
-:::
-:::
-
----
-
-## Practice: LS Estimation by Hand {.smaller}
-
-::: {style="font-size: 0.80em;"}
-
-A study records miles driven per day ($X$) and fuel cost per day in dollars ($Y$) for $n = 3$ days, and also includes a dummy variable $D$ for city driving (1 = city, 0 = highway):
-
-| $i$ | $X_i$ | $D_i$ | $Y_i$ |
-|:---:|:-----:|:------:|:-----:|
-| 1 | 10 | 1 | 8 |
-| 2 | 20 | 0 | 12 |
-| 3 | 15 | 1 | 11 |
-
-The model is $Y_i = \beta_0 + \beta_1 X_i + \beta_2 D_i + \epsilon_i$.
-
-**(a)** Write out the design matrix $\mathbf{X}$, the response vector $\mathbf{Y}$, and $\boldsymbol{\beta}$.
-
-<br>
-
-**(b)** Compute $\mathbf{X}^T\mathbf{X}$ and $\mathbf{X}^T\mathbf{Y}$.
-
-<br>
-
-**(c)** What would $b_2$ measure in this context?
-
-:::
-
-```{r}
-#| echo: false
-#| eval: true
-countdown::countdown(
-  minutes = 6,
-  play_sound = TRUE,
-  color_border              = "#FEBC11",
-  color_text                = "#003660",
-  color_running_background  = "#003660",
-  color_running_text        = "#FFFFFF",
-  color_finished_background = "#FEBC11",
-  color_finished_text       = "#003660",
-  font_size = "2em"
-)
-```
-
----
-
-## Practice: LS Estimation — Solution {.smaller}
-
-::: {style="font-size: 0.78em;"}
-
-**(a)**
-
-$$\mathbf{X} = \begin{pmatrix} 1 & 10 & 1 \\ 1 & 20 & 0 \\ 1 & 15 & 1 \end{pmatrix}, \qquad \mathbf{Y} = \begin{pmatrix} 8 \\ 12 \\ 11 \end{pmatrix}, \qquad \boldsymbol{\beta} = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{pmatrix}$$
-
-::: {.fragment}
-**(b)**
-
-$$\mathbf{X}^T\mathbf{X} = \begin{pmatrix} 3 & 45 & 2 \\ 45 & 725 & 25 \\ 2 & 25 & 2 \end{pmatrix}, \qquad \mathbf{X}^T\mathbf{Y} = \begin{pmatrix} 31 \\ 475 \\ 19 \end{pmatrix}$$
-:::
-
-::: {.fragment}
-**(c)** $b_2$ estimates the **average difference in daily fuel cost between city and highway driving**, holding miles driven fixed. A positive $b_2$ means city driving costs more per day than highway driving for the same number of miles.
-:::
-
-:::
-
----
-
-## LS in R: Multiple Regression {.smaller}
-
-The formula syntax in R extends naturally from SLR:
-
-```{r}
-#| echo: true
-#| eval: true
-# Simulated fuel cost data
-miles <- c(10, 20, 15, 25, 18, 30)
-city  <- c(1, 0, 1, 0, 1, 0)
-cost  <- c(8, 12, 11, 17, 13, 19)
-
-fit <- lm(cost ~ miles + city)
-summary(fit)
-```
-
----
-
-## Reading the Output {.smaller}
-
-::: {style="font-size: 0.82em;"}
-
-From `summary(fit)`:
-
-- **Coefficients table:** `Estimate` column gives $\mathbf{b}$; each row is one $b_j$
-- **Std. Error:** $SE(b_j) = \sqrt{\hat\sigma^2 [(\mathbf{X}^T\mathbf{X})^{-1}]_{jj}}$
-- **Residual standard error:** $\hat\sigma = \sqrt{MSE}$, where $MSE = SSE/(n-p)$
-- **Multiple R-squared:** $R^2 = SSR/SSTO = 1 - SSE/SSTO$
-
-:::
-
-::: {.fragment}
-::: {style="font-size: 0.82em;"}
-**Key difference from SLR:** degrees of freedom for error are now $n - p$ (we estimated $p$ parameters $\beta_0, \beta_1, \ldots, \beta_{p-1}$). In SLR, $p = 2$ so df was $n - 2$.
-:::
-:::
-
----
-
-## Practice: Interpreting R Output {.smaller}
-
-::: {style="font-size: 0.82em;"}
-
-A researcher fits the model $\widehat{\text{Cost}} = b_0 + b_1 \cdot \text{Miles} + b_2 \cdot \text{City}$ and gets:
-
-```
-Coefficients:
-             Estimate Std. Error t value Pr(>|t|)
-(Intercept)    2.000      1.200    1.67    0.194
-miles          0.550      0.062    8.87    0.003
-city           1.800      0.950    1.89    0.156
-```
-
-$n = 6$, $\hat\sigma = 0.71$, $R^2 = 0.979$.
-
-**(a)** Write the fitted model equation and interpret $b_1$ and $b_2$.
-
-<br>
-
-**(b)** Predict the fuel cost for a 20-mile city trip.
-
-<br>
-
-**(c)** Interpret $R^2 = 0.979$ in context.
-
-:::
-
-```{r}
-#| echo: false
-#| eval: true
-countdown::countdown(
-  minutes = 4,
-  play_sound = TRUE,
-  color_border              = "#FEBC11",
-  color_text                = "#003660",
-  color_running_background  = "#003660",
-  color_running_text        = "#FFFFFF",
-  color_finished_background = "#FEBC11",
-  color_finished_text       = "#003660",
-  font_size = "2em"
-)
-```
-
----
-
-## Practice: Interpreting R Output — Solution {.smaller}
-
-::: {style="font-size: 0.78em;"}
-
-**(a)** $\widehat{\text{Cost}} = 2.00 + 0.55 \cdot \text{Miles} + 1.80 \cdot \text{City}$
-
-- $b_1 = 0.55$: Each additional mile driven is associated with an **increase of \$0.55** in daily fuel cost, on average, holding driving type fixed.
-- $b_2 = 1.80$: City driving is associated with **\$1.80 more** in daily fuel cost than highway driving, on average, for the same number of miles.
-
-::: {.fragment}
-**(b)** For Miles = 20, City = 1:
-$$\widehat{\text{Cost}} = 2.00 + 0.55(20) + 1.80(1) = 2.00 + 11.00 + 1.80 = \mathbf{14.80}$$
-:::
-
-::: {.fragment}
-**(c)** Approximately **97.9%** of the variability in daily fuel cost is explained by the linear relationship with miles driven and driving type (city vs. highway).
 :::
 
 :::
@@ -739,14 +730,15 @@ $$\widehat{\text{Cost}} = 2.00 + 0.55(20) + 1.80(1) = 2.00 + 11.00 + 1.80 = \mat
 ---
 
 ## Summary
+::: {style="font-size: 0.80em;"}
+
 
 ::: {.incremental}
-- **Why multiple regression:** most responses depend on several predictors; we also need to control for confounders to isolate individual effects
+- **Why multiple regression:** most responses depend on several predictors
 - **General linear model:** $Y_i = \beta_0 + \beta_1 X_{i1} + \cdots + \beta_{p-1}X_{i,p-1} + \epsilon_i$; "linear" refers to linearity in the **parameters**, not the predictors
-- **Special cases:** polynomial, interaction ($X_{i3} = X_{i1}X_{i2}$), and transformed-variable models all fit within this framework
+- **Special cases:** polynomial and interaction ($X_{i3} = X_{i1}X_{i2}$)
 - **Qualitative variables:** encoded with $k - 1$ dummy variables for $k$ levels; omitted level is the baseline; coefficients measure average group differences
-- **Matrix form:** $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$; design matrix $\mathbf{X}$ has a leading column of 1s
-- **LS estimation:** minimize $Q = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2$; normal equations give $\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$; unbiased with $\text{Cov}(\mathbf{b}) = \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}$
+:::
 :::
 
 ---

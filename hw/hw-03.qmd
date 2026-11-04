@@ -1,7 +1,177 @@
 ---
-title: "Homework 3"
+title: "Homework Assignment 3"
+author: "Your Name"
+date: today
+format: html
 ---
 
-::: callout-note
-This homework has not been released yet. Check back closer to the due date.
-:::
+```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+knitr::opts_chunk$set(fig.width = 7, fig.height = 5, warning = FALSE, message = FALSE)
+options(digits = 4)
+```
+
+**Instructions:** Complete all answers in this `.qmd` file and render it to a PDF to submit on Gradescope by 11/19 at 11:59 PM. When uploading to Gradescope, you must assign pages to each question. **Not assigning pages to the rubric items will deduct 5 points from your overall score.** For problems that involve a lot of math (e.g., derivations or proofs), you may handwrite your solution, take a photo, and insert the image instead. To insert an image, add a code chunk with the following line and replace `"filename.jpg"` with your image's filename, updating the file path if your image is not saved in the same folder as your `.qmd`:
+
+```{r image-example, eval=FALSE, echo=TRUE}
+knitr::include_graphics("filename.jpg")
+```
+
+**Data note:** All data for this assignment is either embedded directly in the problem or built into R. No external files need to be downloaded.
+
+---
+
+**1.** Model Diagnostics.
+
+**(a)** (10 pt) For each of the five scenarios below, identify: (i) which assumption is violated, and (ii) the appropriate remedial action. 
+
+| Scenario | Diagnostic plot | What you see |
+|:--------:|:----------------|:-------------|
+| 1 | Residuals vs. fitted $\hat{Y}$ | Residuals fan out as $\hat{Y}$ increases |
+| 2 | Residuals vs. $X$ | A curved U-shape where residuals are negative at the ends, positive in the middle |
+| 3 | Residuals vs. time order | Residuals alternate in a cyclical pattern |
+| 4 | Normal QQ-plot | Points follow the line in the middle but curve upward sharply at both ends (heavy tails) |
+| 5 | Residuals vs. fitted $\hat{Y}$ | Points are randomly scattered around zero with no pattern |
+
+*Answer:*
+
+---
+
+For parts (b)–(e), use the `cars` dataset built into R. This dataset records the speed (`speed`, in mph) and braking distance (`dist`, in feet) of 50 cars from the 1920s.
+
+```{r load-cars}
+data(cars)
+```
+
+**(b)** (8 pt) Fit a simple linear regression of `dist` on `speed`. Then produce three diagnostic plots: (i) residuals vs. `speed`, (ii) residuals vs. fitted $\hat{Y}$, and (iii) a Normal QQ-plot. For each plot, describe what pattern you see (if any) and state which assumption — if any — appears to be violated.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(c)** (6 pt) Based on your diagnostic plots in (b), which transformation — of $X$, of $Y$, or of both — seems most appropriate as a first remedy? Explain your reasoning using the diagnostic patterns you observed and the guidance from lecture.
+
+*Answer:*
+
+**(d)** (8 pt) Use `boxcox()` from the `MASS` package to find the best power transformation of `dist`. Plot the Box-Cox profile likelihood. Identify $\hat{\lambda}$ from the plot, state which common transformation it corresponds to (e.g., $\sqrt{Y}$, $\log Y$, $1/Y$), and explain how you chose it.
+
+```{r}
+library(MASS)
+# Your code here
+```
+
+*Answer:*
+
+**(e)** (8 pt) Refit the regression using the transformation you identified in (d) as the response. Reproduce the same three diagnostic plots from part (b). Has the model improved? Be specific about which assumption violations (if any) remain.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+---
+
+**2.** F Test for Lack of Fit.
+
+A researcher studying athletic training records the **improvement in sprint time** (seconds faster than baseline) for athletes at four different training volumes. Each training level was assigned to two athletes.
+
+| Training weeks ($X$) | Sprint improvement ($Y$, sec) |
+|:-------------------:|:----------------------------:|
+| 2 | 1.2, 0.8 |
+| 4 | 3.1, 2.9 |
+| 6 | 6.0, 5.6 |
+| 8 | 9.5, 10.1 |
+
+```{r load-sprint}
+x <- c(2, 2, 4, 4, 6, 6, 8, 8)
+y <- c(1.2, 0.8, 3.1, 2.9, 6.0, 5.6, 9.5, 10.1)
+```
+
+**(a)** (4 pt) State the null and alternative hypotheses for the lack of fit F test. Identify which model is "full" and which is "restricted," and explain what each model assumes about the relationship between $X$ and $Y$.
+
+*Answer:*
+
+**(b)** (8 pt) Compute **SSPE** by hand. Show your work for each group: (1) identify the group mean $\bar{Y}_j$, (2) compute the squared deviations within each group, and (3) sum them. How many degrees of freedom does SSPE have?
+
+*Answer:*
+
+**(c)** (5 pt) Fit the restricted model (simple linear regression of $Y$ on $X$) in R and obtain $SSE(R)$. Using the identity $SSE(R) = SSPE + SSLF$, compute SSLF and its degrees of freedom.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(d)** (6 pt) Compute the F statistic $F^* = MSLF/MSPE$. Find the critical value $F(0.95;\, df_{LF},\, df_{PE})$ using `qf()`. State your decision and conclusion at $\alpha = 0.05$. Does the linear model adequately fit these data?
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(e)** (5 pt) Using your results from parts (b)–(d), complete the lack-of-fit ANOVA table below. Fill in every entry.
+
+| Source | df | SS | MS | $F^*$ |
+|:-------|:--:|:--:|:--:|:-----:|
+| Regression | | | | |
+| Error | | | | |
+| &emsp; Lack of fit | | | | |
+| &emsp; Pure error | | | | |
+| Total | | | | |
+
+*Answer:*
+
+**(f)** (4 pt) Verify your result by fitting the full model (treat $X$ as a factor) and running `anova(fit.full, fit.restricted)` in R. Confirm that the F statistic and p-value match your by-hand calculation.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(f)** (3 pt) The scatter plot of this data suggests a **quadratic** curve (improvement accelerates over time). Based on the test result, what would you recommend as a next step for modeling? Give one specific alternative.
+
+*Answer:*
+
+---
+
+**3.** Introduction to Multiple Regression.
+
+**(a)** (8 pt) For each model below, state whether it is a **general linear model**. Justify each answer in one sentence by identifying whether every $\beta$ parameter enters the model **linearly** (linear in the parameters, not necessarily in the predictors).
+
+$$\text{(i)}\quad Y = \beta_0 + \beta_1 X_1 + \beta_2 X_1^2 + \beta_3 X_2 + \epsilon$$
+
+$$\text{(ii)}\quad Y = \beta_0 + \beta_1 X_1^{\,\beta_2} + \epsilon$$
+
+$$\text{(iii)}\quad Y = \beta_0 + \beta_1 \log(X_1) + \beta_2 X_1 X_2 + \epsilon$$
+
+$$\text{(iv)}\quad Y = \frac{\beta_0 + \beta_1 X_1}{1 + \beta_2 X_2} + \epsilon$$
+
+*Answer:*
+
+---
+
+For parts (b)–(d), use the following scenario.
+
+A sociologist models annual salary ($Y$, in thousands of dollars) using years of work experience ($X_1$) and industry type, which has three levels: **Finance**, **Technology**, and **Healthcare**. Use **Healthcare as the baseline** throughout.
+
+**(b)** (8 pt)
+
+   - How many dummy variables are needed to encode industry type? Define each one.
+   - Write the full first-order linear regression model equation, labeling every term.
+   - What does $\beta_0$ represent in this model?
+
+*Answer:*
+
+**(c)** (4 pt) Interpret the coefficient on the Finance dummy variable. Be explicit about what comparison is being made and what is held constant.
+
+*Answer:*
+
+**(d)** (5 pt) A new employee has 5 years of experience and works in Technology. Write out the row of the design matrix $\mathbf{X}$ corresponding to this observation (include the intercept column). Then write out the row for a Finance employee with the same years of experience.
+
+*Answer:*
