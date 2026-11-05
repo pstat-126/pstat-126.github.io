@@ -1,0 +1,138 @@
+---
+title: "Homework Assignment 3"
+author: "your name"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: pdf_document
+---
+
+```{r setup, echo=TRUE, message=FALSE, warning=FALSE}
+library(knitr)
+knitr::opts_chunk$set(fig.width = 7, fig.height = 5, warning = FALSE, message = FALSE)
+options(digits = 4)
+```
+
+**Instructions:** Complete all answers in this `.Rmd` file and knit it to a PDF to submit on Gradescope by 11/14 at 11:59 PM. When uploading to Gradescope, you must assign pages to each question. **Not assigning pages to the rubric items will deduct 5 points from your overall score.** For problems that involve a lot of math (e.g., derivations or proofs), you may handwrite your solution, take a photo, and insert the image instead. To insert an image, add a code chunk with the following line and replace `"filename.jpg"` with your image's filename, updating the file path if your image is not saved in the same folder as your `.Rmd`:
+
+```{r image-example, eval=FALSE, echo=TRUE}
+knitr::include_graphics("filename.jpg")
+```
+
+**Data note:** All data for this assignment is either embedded directly in the problem or available in R via built-in datasets or the `MASS` and `car` packages. No external files need to be downloaded.
+
+---
+
+**1.** Model Diagnostics.
+
+For parts (a)–(d), use the `trees` dataset built into R. This dataset records the girth (`Girth`, diameter in inches) and timber volume (`Volume`, in cubic feet) of 31 black cherry trees.
+
+```{r load-trees}
+data(trees)
+```
+
+**(a)** (8 pt) Fit a simple linear regression of `Volume` on `Girth`. Then produce three diagnostic plots: (i) residuals vs. `Girth`, (ii) residuals vs. fitted $\hat{Y}$, and (iii) a Normal QQ-plot. For each plot, describe what pattern you see (if any) and state which assumption — if any — appears to be violated.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(b)** (6 pt) Based on your diagnostic plots in (a), which transformation — of $X$, of $Y$, or of both — seems most appropriate as a first remedy? Explain your reasoning using the diagnostic patterns you observed.
+
+*Answer:*
+
+**(c)** (8 pt) Use `boxcox()` from the `MASS` package to find the best power transformation of `Volume`. Plot the Box-Cox profile likelihood. Identify $\hat{\lambda}$ from the plot, state which common transformation it corresponds to (e.g., $\sqrt{Y}$, $\log Y$, $1/Y$), and explain how you chose it.
+
+```{r}
+#install.packages("MASS")
+library(MASS)
+# Your code here
+```
+
+*Answer:*
+
+**(d)** (8 pt) Refit the regression using the transformation you identified in (c) as the response. Reproduce the same three diagnostic plots from part (a). Has the model improved? Be specific about which assumption violations (if any) remain.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+---
+
+**2.** F Test for Lack of Fit.
+
+A researcher studying athletic training records the **improvement in sprint time** (seconds faster than baseline) for athletes at four different training volumes. Each training level was assigned to two athletes.
+
+| Training weeks ($X$) | Sprint improvement ($Y$, sec) |
+|:-------------------:|:----------------------------:|
+| 2 | 1.2, 0.8 |
+| 4 | 3.1, 2.9 |
+| 6 | 6.0, 5.6 |
+| 8 | 9.5, 10.1 |
+
+```{r load-sprint}
+x <- c(2, 2, 4, 4, 6, 6, 8, 8)
+y <- c(1.2, 0.8, 3.1, 2.9, 6.0, 5.6, 9.5, 10.1)
+```
+
+**(a)** (4 pt) State the null and alternative hypotheses for the lack of fit F test. Identify which model is "full" and which is "restricted," and explain what each model assumes about the relationship between $X$ and $Y$.
+
+*Answer:*
+
+**(b)** (8 pt) Compute **SSPE** in R by fitting the full model (treating $X$ as a factor, `factor(x)`) and extracting its residual sum of squares. Then fit the restricted model (simple linear regression of $Y$ on $X$) to obtain $SSE(R)$. Using the identity $SSE(R) = SSPE + SSLF$, manually compute SSLF and its degrees of freedom. Report the degrees of freedom for SSPE as well.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(c)** (6 pt) Manually compute the F statistic $F^* = MSLF/MSPE$. Find the critical value $F(0.95;\, df_{LF},\, df_{PE})$ using `qf()`. State your decision and conclusion at $\alpha = 0.05$. Does the linear model adequately fit these data?
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+**(d)** (4 pt) Verify your result by running `anova()` with your full and restricted fitted models. Confirm that the F statistic and p-value match your calculation.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
+
+---
+
+**3.** Introduction to Multiple Regression.
+
+For parts (a)–(c), use the `Salaries` dataset from the `car` package. This dataset records annual salary (`salary`, in dollars), years of service (`yrs.service`), and academic rank (`rank`) for 397 university faculty. Rank has three levels: **AsstProf**, **AssocProf**, and **Prof**. Use **AsstProf as the baseline** throughout.
+
+```{r load-salaries}
+#install.packages("car")
+library(car)
+data(Salaries)
+```
+
+**(a)** (8 pt)
+
+   - How many dummy variables are needed to encode `rank`? Define each one.
+   - Write the full first-order linear regression model equation for `salary` on `yrs.service` and your dummy variables.
+   - What does $\beta_0$ represent in this model?
+
+*Answer:*
+
+**(b)** (4 pt) Interpret the coefficient on the AssocProf dummy variable. Be explicit about what comparison is being made and what is held constant.
+
+*Answer:*
+
+**(c)** (8 pt) Using `ifelse()`, explicitly create the two dummy variables for `rank` in the `Salaries` data frame. Fit the multiple regression model for `salary` on `yrs.service` and your two dummy variables. Then use `predict()` to estimate the salary of a new Associate Professor with 10 years of service. Report the predicted salary and interpret it in context.
+
+```{r}
+# Your code here
+```
+
+*Answer:*
