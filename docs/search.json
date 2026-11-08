@@ -4296,140 +4296,140 @@
   {
     "objectID": "slides/lec-13.html#learning-objectives",
     "href": "slides/lec-13.html#learning-objectives",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Learning Objectives",
-    "text": "Learning Objectives\nBy the end of today you will be able to:\n\n\nExpress the multiple regression model in matrix form \\(\\mathbf{Y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\) and identify the role of the design matrix\nDerive the least squares estimate \\(\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\) from the normal equations\nState the properties of \\(\\mathbf{b}\\): unbiasedness, covariance matrix, and the Gauss-Markov theorem\nFit a multiple regression model in R and correctly read lm() output\nInterpret estimated coefficients, residual standard error, and \\(R^2\\) in context"
+    "text": "Learning Objectives\nBy the end of today you will be able to:\n\n\nPerform basic matrix operations — transpose, multiplication, and inverse — and explain when an inverse exists\nExplain why \\(\\mathbf{X}^T\\mathbf{X}\\) must be square and invertible to solve for \\(\\mathbf{b}\\)\nExpress the multiple regression model in matrix form \\(\\mathbf{Y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\) and identify the design matrix\nDerive the LS estimate \\(\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\) by expanding RSS and solving the normal equations\nCompute \\(\\mathbf{X}^T\\mathbf{X}\\) and \\(\\mathbf{X}^T\\mathbf{Y}\\) by hand and solve for \\(\\mathbf{b}\\)\nRead lm() output in R and interpret estimates, standard errors, \\(\\hat\\sigma\\), and \\(R^2\\)"
   },
   {
     "objectID": "slides/lec-13.html#todays-roadmap",
     "href": "slides/lec-13.html#todays-roadmap",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Today’s Roadmap",
     "text": "Today’s Roadmap\n\n\nMatrix Form — design matrix, matrix notation, why it matters\nLeast Squares Estimation — normal equations, matrix solution, properties of \\(\\mathbf{b}\\)\nMultiple Regression in R — fitting, reading output, interpreting results"
   },
   {
     "objectID": "slides/lec-13.html#the-matrix-form",
     "href": "slides/lec-13.html#the-matrix-form",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "The Matrix Form",
     "text": "The Matrix Form"
   },
   {
     "objectID": "slides/lec-13.html#the-matrix-form-1",
     "href": "slides/lec-13.html#the-matrix-form-1",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "The Matrix Form",
-    "text": "The Matrix Form\nDefine vectors and a matrix:\n\\[\\mathbf{Y}_{n \\times 1} = \\begin{pmatrix} Y_1 \\\\ \\vdots \\\\ Y_n \\end{pmatrix}, \\quad \\boldsymbol{\\epsilon}_{n \\times 1} = \\begin{pmatrix} \\epsilon_1 \\\\ \\vdots \\\\ \\epsilon_n \\end{pmatrix}, \\quad \\boldsymbol{\\beta}_{p \\times 1} = \\begin{pmatrix} \\beta_0 \\\\ \\beta_1 \\\\ \\vdots \\\\ \\beta_{p-1} \\end{pmatrix}\\]\n\\[\\mathbf{X}_{n \\times p} = \\begin{pmatrix} 1 & X_{11} & \\cdots & X_{1,p-1} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ 1 & X_{n1} & \\cdots & X_{n,p-1} \\end{pmatrix}\\]\n\nThe general linear regression model becomes:\n\\[\\mathbf{Y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\]\nThe first column of \\(\\mathbf{X}\\) is all 1s — this corresponds to the intercept \\(\\beta_0\\)."
+    "text": "The Matrix Form\n\nDefine vectors and a matrix:\n\\[\\mathbf{Y}_{n \\times 1} = \\begin{pmatrix} Y_1 \\\\ \\vdots \\\\ Y_n \\end{pmatrix}, \\quad \\boldsymbol{\\epsilon}_{n \\times 1} = \\begin{pmatrix} \\epsilon_1 \\\\ \\vdots \\\\ \\epsilon_n \\end{pmatrix}, \\quad \\boldsymbol{\\beta}_{p \\times 1} = \\begin{pmatrix} \\beta_0 \\\\ \\beta_1 \\\\ \\vdots \\\\ \\beta_{p-1} \\end{pmatrix}\\]\n\\[\\mathbf{X}_{n \\times p} = \\begin{pmatrix} 1 & X_{11} & \\cdots & X_{1,p-1} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ 1 & X_{n1} & \\cdots & X_{n,p-1} \\end{pmatrix}\\]\n\nThe general linear regression model becomes:\n\\[\\mathbf{Y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\]\nThe first column of \\(\\mathbf{X}\\) is all 1s, which corresponds to the intercept \\(\\beta_0\\)."
   },
   {
     "objectID": "slides/lec-13.html#why-the-matrix-form-matters",
     "href": "slides/lec-13.html#why-the-matrix-form-matters",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Why the Matrix Form Matters",
     "text": "Why the Matrix Form Matters\n\nThe compact notation \\(\\mathbf{Y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\) is not just shorthand — it unlocks powerful tools:\n\n\n\nEstimation: One formula \\(\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\) works for any number of predictors\nGeometry: \\(\\hat{\\mathbf{Y}} = \\mathbf{X}\\mathbf{b}\\) is the projection of \\(\\mathbf{Y}\\) onto the column space of \\(\\mathbf{X}\\)\nInference: Standard errors and test statistics have clean matrix expressions\nGenerality: The same framework handles SLR, polynomial, interaction, and mixed models"
   },
   {
     "objectID": "slides/lec-13.html#least-squares-estimation",
     "href": "slides/lec-13.html#least-squares-estimation",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Least Squares Estimation",
     "text": "Least Squares Estimation"
   },
   {
     "objectID": "slides/lec-13.html#the-ls-criterion",
     "href": "slides/lec-13.html#the-ls-criterion",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "The LS Criterion",
-    "text": "The LS Criterion\nWe estimate \\(\\boldsymbol{\\beta}\\) by minimizing the sum of squared residuals:\n\\[Q = \\sum_{i=1}^n \\left(Y_i - \\beta_0 - \\beta_1 X_{i1} - \\cdots - \\beta_{p-1} X_{i,p-1}\\right)^2 = \\|\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta}\\|^2\\]\n\nThis is the same principle as SLR — minimize the total squared vertical distance between the observed \\(Y_i\\) and the fitted surface.\nIn SLR we had \\(p = 2\\) (intercept + one slope). Now \\(p\\) can be anything."
+    "text": "The LS Criterion\nWe estimate \\(\\boldsymbol{\\beta}\\) by minimizing the sum of squared residuals:\n\\[\\text{RSS} = \\sum_{i=1}^n \\left(Y_i - \\beta_0 - \\beta_1 X_{i1} - \\cdots - \\beta_{p-1} X_{i,p-1}\\right)^2 = \\|\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta}\\|^2\\]\n\nThis is the same principle as SLR — minimize the total squared vertical distance between the observed \\(Y_i\\) and the fitted surface.\nIn SLR we had \\(p = 2\\) (intercept + one slope). Now \\(p\\) can be anything."
   },
   {
     "objectID": "slides/lec-13.html#deriving-the-normal-equations",
     "href": "slides/lec-13.html#deriving-the-normal-equations",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Deriving the Normal Equations",
-    "text": "Deriving the Normal Equations\nTake the derivative of \\(Q = \\|\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta}\\|^2\\) with respect to \\(\\boldsymbol{\\beta}\\) and set it to zero:\n\\[\\frac{\\partial Q}{\\partial \\boldsymbol{\\beta}} = -2\\mathbf{X}^T(\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta}) = \\mathbf{0}\\]\n\nThis gives the normal equations:\n\\[\\mathbf{X}^T \\mathbf{X} \\boldsymbol{\\beta} = \\mathbf{X}^T \\mathbf{Y}\\]\nThese are \\(p\\) equations in \\(p\\) unknowns \\((\\beta_0, \\beta_1, \\ldots, \\beta_{p-1})\\)."
+    "text": "Deriving the Normal Equations\n\nWe want to minimize \\(\\text{RSS} = \\|\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta}\\|^2\\) with respect to \\(\\boldsymbol{\\beta}\\). Work through each step:\nStep 1. The squared length of a vector \\(\\mathbf{v}\\) is \\(\\|\\mathbf{v}\\|^2 = \\mathbf{v}^T\\mathbf{v}\\). Use this to rewrite RSS as a matrix expression.\n\nStep 2. Expand the product from Step 1."
   },
   {
     "objectID": "slides/lec-13.html#the-ls-estimate",
     "href": "slides/lec-13.html#the-ls-estimate",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "The LS Estimate",
-    "text": "The LS Estimate\nIf \\(\\mathbf{X}\\) is full column rank (no predictor is a perfect linear combination of others), then \\(\\mathbf{X}^T\\mathbf{X}\\) is invertible and the unique solution is:\n\\[\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\]\n\n\n\n\\(\\mathbf{b} = (b_0, b_1, \\ldots, b_{p-1})^T\\) are the LS estimates of \\((\\beta_0, \\beta_1, \\ldots, \\beta_{p-1})\\)\nThe fitted values are \\(\\hat{\\mathbf{Y}} = \\mathbf{X}\\mathbf{b}\\)\nThe residuals are \\(\\mathbf{e} = \\mathbf{Y} - \\hat{\\mathbf{Y}} = \\mathbf{Y} - \\mathbf{X}\\mathbf{b}\\)\n\n\n\n\n\nWhen is \\(\\mathbf{X}\\) NOT full column rank? Perfect multicollinearity: e.g., one predictor is a linear combination of others, or you accidentally include all \\(k\\) dummy variables for a \\(k\\)-level factor instead of \\(k-1\\)."
+    "text": "The LS Estimate\n\nFrom the normal equations: \\(\\mathbf{X}^T\\mathbf{X}\\boldsymbol{\\beta} = \\mathbf{X}^T\\mathbf{Y}\\)\nIf \\(\\mathbf{X}\\) is full column rank, \\(\\mathbf{X}^T\\mathbf{X}\\) is invertible. Multiply both sides on the left by \\((\\mathbf{X}^T\\mathbf{X})^{-1}\\):\n\\[(\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{X}\\boldsymbol{\\beta} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\]\n\\[\\mathbf{I}_p\\,\\boldsymbol{\\beta} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\]\n\n\n\nSo the LS estimate is:\n\\[\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\]\nwhere \\(\\mathbf{b} = (b_0, b_1, \\ldots, b_{p-1})^T\\) estimates \\((\\beta_0, \\beta_1, \\ldots, \\beta_{p-1})\\).\nNote on notation: \\(b_0, b_1, \\ldots\\) are the same as \\(\\hat{\\beta}_0, \\hat{\\beta}_1, \\ldots\\) from SLR — both are least squares estimates. We switch to \\(\\mathbf{b}\\) here because it is more compact in matrix form.\n\n\n\n\n\nFitted values: \\(\\hat{\\mathbf{Y}} = \\mathbf{X}\\mathbf{b}\\)\nResiduals: \\(\\mathbf{e} = \\mathbf{Y} - \\hat{\\mathbf{Y}} = \\mathbf{Y} - \\mathbf{X}\\mathbf{b}\\)"
   },
   {
     "objectID": "slides/lec-13.html#connecting-back-to-slr",
     "href": "slides/lec-13.html#connecting-back-to-slr",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Connecting Back to SLR",
-    "text": "Connecting Back to SLR\nIn simple linear regression (\\(p = 2\\), predictors: just \\(X\\)):\n\\[\\mathbf{X} = \\begin{pmatrix} 1 & X_1 \\\\ \\vdots & \\vdots \\\\ 1 & X_n \\end{pmatrix}, \\qquad \\mathbf{X}^T\\mathbf{X} = \\begin{pmatrix} n & \\sum X_i \\\\ \\sum X_i & \\sum X_i^2 \\end{pmatrix}, \\qquad \\mathbf{X}^T\\mathbf{Y} = \\begin{pmatrix} \\sum Y_i \\\\ \\sum X_i Y_i \\end{pmatrix}\\]\n\nSolving \\((\\mathbf{X}^T\\mathbf{X})\\mathbf{b} = \\mathbf{X}^T\\mathbf{Y}\\) recovers exactly the SLR formulas:\n\\[b_1 = \\frac{S_{xy}}{S_{xx}}, \\qquad b_0 = \\bar{Y} - b_1\\bar{X}\\]\nThe matrix formula is a generalization of what you already know."
+    "text": "Connecting Back to SLR\n\nFor SLR we have one predictor \\(X\\) and an intercept, so \\(p = 2\\). Let’s verify the matrix formula \\(\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\) recovers the formulas we already know.\nStep 1. Write out \\(\\mathbf{X}\\), \\(\\mathbf{Y}\\), and \\(\\boldsymbol{\\beta}\\) for SLR.\n\nStep 2. Compute \\(\\mathbf{X}^T\\mathbf{X}\\)."
   },
   {
     "objectID": "slides/lec-13.html#properties-of-the-ls-estimator",
     "href": "slides/lec-13.html#properties-of-the-ls-estimator",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Properties of the LS Estimator",
     "text": "Properties of the LS Estimator\n\nUnder \\(E(\\boldsymbol{\\epsilon}) = \\mathbf{0}\\) and \\(\\text{Cov}(\\boldsymbol{\\epsilon}) = \\sigma^2 \\mathbf{I}\\):\n\n\n\nUnbiasedness: \\(E(\\mathbf{b}) = \\boldsymbol{\\beta}\\)\nCovariance matrix: \\(\\text{Cov}(\\mathbf{b}) = \\sigma^2 (\\mathbf{X}^T\\mathbf{X})^{-1}\\)\nGauss-Markov theorem: \\(\\mathbf{b}\\) is BLUE — the Best Linear Unbiased Estimator among all linear estimators\nNormality (with normal errors): \\(\\mathbf{b} \\sim N\\!\\left(\\boldsymbol{\\beta},\\; \\sigma^2(\\mathbf{X}^T\\mathbf{X})^{-1}\\right)\\)\n\n\n\n\nThe diagonal entries of \\(\\sigma^2 (\\mathbf{X}^T\\mathbf{X})^{-1}\\) give \\(\\text{Var}(b_j)\\), which we use to compute standard errors for inference."
   },
   {
     "objectID": "slides/lec-13.html#practice-ls-estimation-by-hand",
     "href": "slides/lec-13.html#practice-ls-estimation-by-hand",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Practice: LS Estimation by Hand",
-    "text": "Practice: LS Estimation by Hand\n\nA study records miles driven per day (\\(X\\)) and fuel cost per day in dollars (\\(Y\\)) for \\(n = 3\\) days, and also includes a dummy variable \\(D\\) for city driving (1 = city, 0 = highway):\n\n\n\n\\(i\\)\n\\(X_i\\)\n\\(D_i\\)\n\\(Y_i\\)\n\n\n\n\n1\n10\n1\n8\n\n\n2\n20\n0\n12\n\n\n3\n15\n1\n11\n\n\n\nThe model is \\(Y_i = \\beta_0 + \\beta_1 X_i + \\beta_2 D_i + \\epsilon_i\\).\n(a) Write out the design matrix \\(\\mathbf{X}\\), the response vector \\(\\mathbf{Y}\\), and \\(\\boldsymbol{\\beta}\\).\n\n(b) Compute \\(\\mathbf{X}^T\\mathbf{X}\\) and \\(\\mathbf{X}^T\\mathbf{Y}\\).\n\n(c) What would \\(b_2\\) measure in this context?"
+    "text": "Practice: LS Estimation by Hand\n\nA café records daily high temperature in °C (\\(X\\)), whether it is a weekend (\\(D\\): 1 = weekend, 0 = weekday), and cups of hot coffee sold (\\(Y\\)) for \\(n = 3\\) days. The model is \\(Y_i = \\beta_0 + \\beta_1 X_i + \\beta_2 D_i + \\epsilon_i\\).\n\n\n\n\\(i\\)\n\\(X_i\\) (temp °C)\n\\(D_i\\)\n\\(Y_i\\) (cups sold)\n\n\n\n\n1\n2\n1\n10\n\n\n2\n5\n0\n5\n\n\n3\n3\n1\n9\n\n\n\n(a) Write out the design matrix \\(\\mathbf{X}\\), the response vector \\(\\mathbf{Y}\\), and \\(\\boldsymbol{\\beta}\\).\n\n(b) Compute \\(\\mathbf{X}^T\\mathbf{X}\\) and \\(\\mathbf{X}^T\\mathbf{Y}\\)."
   },
   {
     "objectID": "slides/lec-13.html#practice-ls-estimation-solution",
     "href": "slides/lec-13.html#practice-ls-estimation-solution",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Practice: LS Estimation — Solution",
-    "text": "Practice: LS Estimation — Solution\n\n(a)\n\\[\\mathbf{X} = \\begin{pmatrix} 1 & 10 & 1 \\\\ 1 & 20 & 0 \\\\ 1 & 15 & 1 \\end{pmatrix}, \\qquad \\mathbf{Y} = \\begin{pmatrix} 8 \\\\ 12 \\\\ 11 \\end{pmatrix}, \\qquad \\boldsymbol{\\beta} = \\begin{pmatrix} \\beta_0 \\\\ \\beta_1 \\\\ \\beta_2 \\end{pmatrix}\\]\n\n(b)\n\\[\\mathbf{X}^T\\mathbf{X} = \\begin{pmatrix} 3 & 45 & 2 \\\\ 45 & 725 & 25 \\\\ 2 & 25 & 2 \\end{pmatrix}, \\qquad \\mathbf{X}^T\\mathbf{Y} = \\begin{pmatrix} 31 \\\\ 475 \\\\ 19 \\end{pmatrix}\\]\n\n\n(c) \\(b_2\\) estimates the average difference in daily fuel cost between city and highway driving, holding miles driven fixed. A positive \\(b_2\\) means city driving costs more per day than highway driving for the same number of miles."
+    "text": "Practice: LS Estimation — Solution\n\n(a)\n\\[\\mathbf{X} = \\begin{pmatrix} 1 & 2 & 1 \\\\ 1 & 5 & 0 \\\\ 1 & 3 & 1 \\end{pmatrix}, \\qquad \\mathbf{Y} = \\begin{pmatrix} 10 \\\\ 5 \\\\ 9 \\end{pmatrix}, \\qquad \\boldsymbol{\\beta} = \\begin{pmatrix} \\beta_0 \\\\ \\beta_1 \\\\ \\beta_2 \\end{pmatrix}\\]\n\n\n\n(b)\n\\[\\mathbf{X}^T\\mathbf{X} = \\begin{pmatrix} 3 & 10 & 2 \\\\ 10 & 38 & 5 \\\\ 2 & 5 & 2 \\end{pmatrix}, \\qquad \\mathbf{X}^T\\mathbf{Y} = \\begin{pmatrix} 24 \\\\ 72 \\\\ 19 \\end{pmatrix}\\]"
   },
   {
     "objectID": "slides/lec-13.html#multiple-regression-in-r",
     "href": "slides/lec-13.html#multiple-regression-in-r",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Multiple Regression in R",
     "text": "Multiple Regression in R"
   },
   {
     "objectID": "slides/lec-13.html#ls-in-r-multiple-regression",
     "href": "slides/lec-13.html#ls-in-r-multiple-regression",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "LS in R: Multiple Regression",
     "text": "LS in R: Multiple Regression\nThe formula syntax in R extends naturally from SLR:\n\n# Simulated fuel cost data\nmiles &lt;- c(10, 20, 15, 25, 18, 30)\ncity  &lt;- c(1, 0, 1, 0, 1, 0)\ncost  &lt;- c(8, 12, 11, 17, 13, 19)\n\nfit &lt;- lm(cost ~ miles + city)\nsummary(fit)\n\n\nCall:\nlm(formula = cost ~ miles + city)\n\nResiduals:\n      1       2       3       4       5       6 \n 0.2339 -0.6532 -0.1129  1.0000 -0.1210 -0.3468 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)   \n(Intercept) -0.73387    2.07037  -0.354  0.74644   \nmiles        0.66935    0.08105   8.259  0.00372 **\ncity         1.80645    1.05327   1.715  0.18484   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.7369 on 3 degrees of freedom\nMultiple R-squared:   0.98, Adjusted R-squared:  0.9666 \nF-statistic: 73.39 on 2 and 3 DF,  p-value: 0.002835"
   },
   {
     "objectID": "slides/lec-13.html#reading-the-output",
     "href": "slides/lec-13.html#reading-the-output",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Reading the Output",
-    "text": "Reading the Output\n\nFrom summary(fit):\n\nCoefficients table: Estimate column gives \\(\\mathbf{b}\\); each row is one \\(b_j\\)\nStd. Error: \\(SE(b_j) = \\sqrt{\\hat\\sigma^2 [(\\mathbf{X}^T\\mathbf{X})^{-1}]_{jj}}\\)\nResidual standard error: \\(\\hat\\sigma = \\sqrt{MSE}\\), where \\(MSE = SSE/(n-p)\\)\nMultiple R-squared: \\(R^2 = SSR/SSTO = 1 - SSE/SSTO\\)\n\n\n\n\nKey difference from SLR: degrees of freedom for error are now \\(n - p\\) (we estimated \\(p\\) parameters \\(\\beta_0, \\beta_1, \\ldots, \\beta_{p-1}\\)). In SLR, \\(p = 2\\) so df was \\(n - 2\\)."
+    "text": "Reading the Output\n\n\n\nCall:\nlm(formula = cost ~ miles + city)\n\nResiduals:\n      1       2       3       4       5       6 \n 0.2339 -0.6532 -0.1129  1.0000 -0.1210 -0.3468 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)   \n(Intercept) -0.73387    2.07037  -0.354  0.74644   \nmiles        0.66935    0.08105   8.259  0.00372 **\ncity         1.80645    1.05327   1.715  0.18484   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.7369 on 3 degrees of freedom\nMultiple R-squared:   0.98, Adjusted R-squared:  0.9666 \nF-statistic: 73.39 on 2 and 3 DF,  p-value: 0.002835\n\n\n\n\n\n\nEstimates \\(\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\)\n\n\n\n\n\nStd. Errors \\(SE(b_j) = \\sqrt{\\hat\\sigma^2[(\\mathbf{X}^T\\mathbf{X})^{-1}]_{jj}}\\)\n\n\n\n\n\n\\(\\hat\\sigma = \\sqrt{MSE}\\); df \\(= n - p = 3\\)\n\n\n\n\n\n\\(R^2 = 1 - SSE/SSTO\\)"
   },
   {
     "objectID": "slides/lec-13.html#practice-interpreting-r-output",
     "href": "slides/lec-13.html#practice-interpreting-r-output",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Practice: Interpreting R Output",
     "text": "Practice: Interpreting R Output\n\nA researcher fits the model \\(\\widehat{\\text{Cost}} = b_0 + b_1 \\cdot \\text{Miles} + b_2 \\cdot \\text{City}\\) and gets:\nCoefficients:\n             Estimate Std. Error t value Pr(&gt;|t|)\n(Intercept)    2.000      1.200    1.67    0.194\nmiles          0.550      0.062    8.87    0.003\ncity           1.800      0.950    1.89    0.156\n\\(n = 6\\), \\(\\hat\\sigma = 0.71\\), \\(R^2 = 0.979\\).\n(a) Write the fitted model equation and interpret \\(b_1\\) and \\(b_2\\).\n\n(b) Predict the fuel cost for a 20-mile city trip.\n\n(c) Interpret \\(R^2 = 0.979\\) in context."
   },
   {
     "objectID": "slides/lec-13.html#practice-interpreting-r-output-solution",
     "href": "slides/lec-13.html#practice-interpreting-r-output-solution",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Practice: Interpreting R Output — Solution",
     "text": "Practice: Interpreting R Output — Solution\n\n(a) \\(\\widehat{\\text{Cost}} = 2.00 + 0.55 \\cdot \\text{Miles} + 1.80 \\cdot \\text{City}\\)\n\n\\(b_1 = 0.55\\): Each additional mile driven is associated with an increase of $0.55 in daily fuel cost, on average, holding driving type fixed.\n\\(b_2 = 1.80\\): City driving is associated with $1.80 more in daily fuel cost than highway driving, on average, for the same number of miles.\n\n\n(b) For Miles = 20, City = 1: \\[\\widehat{\\text{Cost}} = 2.00 + 0.55(20) + 1.80(1) = 2.00 + 11.00 + 1.80 = \\mathbf{14.80}\\]\n\n\n(c) Approximately 97.9% of the variability in daily fuel cost is explained by the linear relationship with miles driven and driving type (city vs. highway)."
   },
   {
     "objectID": "slides/lec-13.html#summary",
     "href": "slides/lec-13.html#summary",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Summary",
-    "text": "Summary\n\nMatrix form: \\(\\mathbf{Y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\); design matrix \\(\\mathbf{X}\\) has a leading column of 1s for the intercept; \\(\\hat{\\mathbf{Y}} = \\mathbf{X}\\mathbf{b}\\) is the projection of \\(\\mathbf{Y}\\) onto the column space of \\(\\mathbf{X}\\)\nLS criterion: minimize \\(Q = \\|\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta}\\|^2\\)\nNormal equations: setting \\(\\partial Q / \\partial \\boldsymbol{\\beta} = \\mathbf{0}\\) gives \\(\\mathbf{X}^T\\mathbf{X}\\boldsymbol{\\beta} = \\mathbf{X}^T\\mathbf{Y}\\)\nLS estimate: \\(\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\) when \\(\\mathbf{X}\\) is full column rank; \\(\\hat{\\mathbf{Y}} = \\mathbf{X}\\mathbf{b}\\), \\(\\mathbf{e} = \\mathbf{Y} - \\hat{\\mathbf{Y}}\\)\nProperties: \\(E(\\mathbf{b}) = \\boldsymbol{\\beta}\\) (unbiased); \\(\\text{Cov}(\\mathbf{b}) = \\sigma^2(\\mathbf{X}^T\\mathbf{X})^{-1}\\); BLUE by Gauss-Markov; \\(\\mathbf{b} \\sim N(\\boldsymbol{\\beta}, \\sigma^2(\\mathbf{X}^T\\mathbf{X})^{-1})\\) under normality\nIn R: lm(y ~ x1 + x2) fits the model; summary() reports estimates, SEs, \\(\\hat\\sigma\\), and \\(R^2\\) with \\(n - p\\) error df"
+    "text": "Summary\n\n\nMatrix operations: transpose \\(\\mathbf{A}^T\\) swaps rows and columns; \\(\\|\\mathbf{v}\\|^2 = \\mathbf{v}^T\\mathbf{v}\\); inverse \\(\\mathbf{A}^{-1}\\) satisfies \\(\\mathbf{A}^{-1}\\mathbf{A} = \\mathbf{I}\\) and exists only when \\(\\mathbf{A}\\) is square and full rank\nWhy \\(\\mathbf{X}^T\\): \\(\\mathbf{X}^T\\mathbf{X}\\) is \\(p \\times p\\) (square, invertible when columns are linearly independent); \\(\\mathbf{X}^T\\mathbf{Y}\\) is \\(p \\times 1\\) — same shape as \\(\\boldsymbol{\\beta}\\)\nMatrix form: \\(\\mathbf{Y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\epsilon}\\); design matrix \\(\\mathbf{X}\\) has a leading column of 1s for the intercept\nRSS in matrix form: \\(\\text{RSS} = (\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta})^T(\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta})\\); minimizing gives the normal equations \\(\\mathbf{X}^T\\mathbf{X}\\boldsymbol{\\beta} = \\mathbf{X}^T\\mathbf{Y}\\)\nLS estimate: multiply both sides by \\((\\mathbf{X}^T\\mathbf{X})^{-1}\\) to get \\(\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\); fitted values \\(\\hat{\\mathbf{Y}} = \\mathbf{X}\\mathbf{b}\\), residuals \\(\\mathbf{e} = \\mathbf{Y} - \\hat{\\mathbf{Y}}\\)\nProperties: \\(E(\\mathbf{b}) = \\boldsymbol{\\beta}\\) (unbiased); \\(\\text{Cov}(\\mathbf{b}) = \\sigma^2(\\mathbf{X}^T\\mathbf{X})^{-1}\\); BLUE by Gauss-Markov\nIn R: lm(y ~ x1 + x2); summary() gives \\(\\mathbf{b}\\), \\(SE(b_j)\\), \\(\\hat\\sigma = \\sqrt{MSE}\\) with df \\(= n-p\\), and \\(R^2\\)"
   },
   {
     "objectID": "slides/lec-13.html#questions",
     "href": "slides/lec-13.html#questions",
-    "title": "Lecture 13: Multiple Regression II",
+    "title": "Lecture 13: Multiple Regression",
     "section": "Questions?",
     "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
   },
@@ -4474,5 +4474,131 @@
     "title": "Homework Assignment 3 — Solutions",
     "section": "Question 3. Introduction to Multiple Regression",
     "text": "Question 3. Introduction to Multiple Regression\n\nlibrary(car)\ndata(Salaries)\n\n\nPart (a)\nDummy variables needed: \\(3 - 1 = \\mathbf{2}\\) dummy variables (one for AssocProf, one for Prof; AsstProf is the baseline).\nDefine: \\[D_1 = \\begin{cases} 1 & \\text{if AssocProf} \\\\ 0 & \\text{otherwise} \\end{cases} \\qquad D_2 = \\begin{cases} 1 & \\text{if Prof} \\\\ 0 & \\text{otherwise} \\end{cases}\\]\n(When both \\(D_1 = 0\\) and \\(D_2 = 0\\), the observation is an AsstProf.)\nFull first-order model: \\[Y_i = \\beta_0 + \\beta_1 X_{i1} + \\beta_2 D_{i1} + \\beta_3 D_{i2} + \\epsilon_i\\]\nInterpretation of \\(\\beta_0\\): The expected annual salary for an Assistant Professor with zero years of service.\n\n\n\nPart (b)\n\\(\\beta_2\\) is the expected difference in annual salary between an Associate Professor and an Assistant Professor with the same number of years of service. Holding yrs.service constant, Associate Professors earn \\(\\beta_2\\) dollars more (or less, if negative) than Assistant Professors on average.\n\n\n\nPart (c)\n\n# Explicitly create dummy variables\nSalaries$D_assoc &lt;- ifelse(Salaries$rank == \"AssocProf\", 1, 0)\nSalaries$D_prof  &lt;- ifelse(Salaries$rank == \"Prof\", 1, 0)\n\n# Fit model with explicit dummies\nfit_sal &lt;- lm(salary ~ yrs.service + D_assoc + D_prof, data = Salaries)\nsummary(fit_sal)\n\n\nCall:\nlm(formula = salary ~ yrs.service + D_assoc + D_prof, data = Salaries)\n\nResiduals:\n   Min     1Q Median     3Q    Max \n-64515 -16180  -1234  12181 107174 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)    81151       2897   28.01  &lt; 2e-16 ***\nyrs.service     -158        115   -1.38  0.16971    \nD_assoc        14615       4271    3.42  0.00069 ***\nD_prof         49229       3992   12.33  &lt; 2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 23600 on 393 degrees of freedom\nMultiple R-squared:  0.397, Adjusted R-squared:  0.393 \nF-statistic: 86.3 on 3 and 393 DF,  p-value: &lt;2e-16\n\n# Predict for a new Associate Professor with 10 years of service\nnew_obs &lt;- data.frame(yrs.service = 10, D_assoc = 1, D_prof = 0)\npredict(fit_sal, newdata = new_obs, interval = \"prediction\")\n\n    fit   lwr    upr\n1 94185 47410 140960\n\n\nThe predicted salary is $94,185. This is the estimated mean salary for an Associate Professor with 10 years of service. The 95% prediction interval ($47,410 to $140,960) is wide because it accounts for individual variation around the mean, not just uncertainty in the fitted line."
+  },
+  {
+    "objectID": "slides/lec-13.html#vectors-and-matrices",
+    "href": "slides/lec-13.html#vectors-and-matrices",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Vectors and Matrices",
+    "text": "Vectors and Matrices\n\nA matrix is a rectangular array of numbers. We write \\(\\mathbf{A}_{m \\times n}\\) to indicate \\(m\\) rows and \\(n\\) columns:\n\\[\\mathbf{A}_{m \\times n} = \\begin{pmatrix} a_{11} & a_{12} & \\cdots & a_{1n} \\\\ a_{21} & a_{22} & \\cdots & a_{2n} \\\\ \\vdots & \\vdots & \\ddots & \\vdots \\\\ a_{m1} & a_{m2} & \\cdots & a_{mn} \\end{pmatrix}\\]\n\n\n\nA column vector is an \\(n \\times 1\\) matrix: \\(\\mathbf{v} = (v_1, v_2, \\ldots, v_n)^T\\)\nA scalar is a \\(1 \\times 1\\) matrix — just a single number\nNotation: bold uppercase \\(\\mathbf{A}\\) for matrices, bold lowercase \\(\\mathbf{v}\\) for column vectors, unbolded for scalars"
+  },
+  {
+    "objectID": "slides/lec-13.html#key-matrix-operations",
+    "href": "slides/lec-13.html#key-matrix-operations",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Key Matrix Operations",
+    "text": "Key Matrix Operations\n\nTranspose: \\(\\mathbf{A}^T\\) flips rows and columns — the \\((i,j)\\) entry of \\(\\mathbf{A}\\) becomes the \\((j,i)\\) entry of \\(\\mathbf{A}^T\\).\n\\[\\mathbf{A} = \\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\\\ 5 & 6 \\end{pmatrix}_{3\\times 2} \\implies \\mathbf{A}^T = \\begin{pmatrix} 1 & 3 & 5 \\\\ 2 & 4 & 6 \\end{pmatrix}_{2\\times 3}\\]\n\n\n\nMatrix multiplication: \\(\\mathbf{A}_{m \\times k}\\,\\mathbf{B}_{k \\times n} = \\mathbf{C}_{m \\times n}\\), where \\(C_{ij} = \\sum_{\\ell=1}^k A_{i\\ell}\\,B_{\\ell j}\\). The inner dimensions must match.\n\n\n\n\nMatrix inverse: If \\(\\mathbf{A}\\) is a square \\(p \\times p\\) full-rank matrix, its inverse \\(\\mathbf{A}^{-1}\\) satisfies\n\\[\\mathbf{A}^{-1}\\mathbf{A} = \\mathbf{A}\\mathbf{A}^{-1} = \\mathbf{I}_p\\]\nwhere \\(\\mathbf{I}_p\\) is the \\(p \\times p\\) identity matrix (1s on the diagonal, 0s elsewhere). This is the matrix analogue of dividing by a number."
+  },
+  {
+    "objectID": "slides/lec-13.html#the-transpose",
+    "href": "slides/lec-13.html#the-transpose",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "The Transpose",
+    "text": "The Transpose\n\nThe transpose \\(\\mathbf{A}^T\\) of a matrix \\(\\mathbf{A}\\) swaps its rows and columns: entry \\((i,j)\\) of \\(\\mathbf{A}\\) becomes entry \\((j,i)\\) of \\(\\mathbf{A}^T\\).\n\\[\\mathbf{A} = \\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\\\ 5 & 6 \\end{pmatrix}_{3\\times 2} \\implies \\mathbf{A}^T = \\begin{pmatrix} 1 & 3 & 5 \\\\ 2 & 4 & 6 \\end{pmatrix}_{2\\times 3}\\]\nTransposing swaps the dimensions: an \\(m \\times n\\) matrix becomes \\(n \\times m\\).\n\n\n\nFor a column vector, the transpose turns it into a row vector (and vice versa):\n\\[\\mathbf{v} = \\begin{pmatrix} v_1 \\\\ v_2 \\\\ v_3 \\end{pmatrix}_{3\\times 1} \\implies \\mathbf{v}^T = \\begin{pmatrix} v_1 & v_2 & v_3 \\end{pmatrix}_{1\\times 3}\\]\nThis is why we write column vectors as \\((v_1, v_2, \\ldots, v_n)^T\\) — the \\({}^T\\) signals it is a column, not a row.\n\n\n\n\nSquared length of a vector: multiplying a row vector by its column vector gives a scalar — the sum of squared entries:\n\\[\\|\\mathbf{v}\\|^2 = \\mathbf{v}^T\\mathbf{v} = \\begin{pmatrix} v_1 & v_2 & v_3 \\end{pmatrix}\\begin{pmatrix} v_1 \\\\ v_2 \\\\ v_3 \\end{pmatrix} = v_1^2 + v_2^2 + v_3^2\\]\nWe will use this to write \\(\\text{RSS} = \\|\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta}\\|^2 = (\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta})^T(\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta})\\)."
+  },
+  {
+    "objectID": "slides/lec-13.html#matrix-multiplication-and-inverse",
+    "href": "slides/lec-13.html#matrix-multiplication-and-inverse",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Matrix Multiplication and Inverse",
+    "text": "Matrix Multiplication and Inverse\n\nMatrix multiplication: \\(\\mathbf{A}_{m \\times k}\\,\\mathbf{B}_{k \\times n} = \\mathbf{C}_{m \\times n}\\), where \\(C_{ij} = \\displaystyle\\sum_{\\ell=1}^k A_{i\\ell}\\,B_{\\ell j}\\).\nThe inner dimensions must match — only \\((m \\times k)(k \\times n)\\) is defined.\n\n\n\nMatrix inverse: If \\(\\mathbf{A}\\) is a square \\(p \\times p\\) full-rank matrix, its inverse \\(\\mathbf{A}^{-1}\\) satisfies\n\\[\\mathbf{A}^{-1}\\mathbf{A} = \\mathbf{A}\\mathbf{A}^{-1} = \\mathbf{I}_p\\]\nwhere \\(\\mathbf{I}_p\\) is the identity matrix (1s on the diagonal, 0s elsewhere). This is the matrix analogue of dividing by a number."
+  },
+  {
+    "objectID": "slides/lec-13.html#why-mathbfxt-in-regression",
+    "href": "slides/lec-13.html#why-mathbfxt-in-regression",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Why \\(\\mathbf{X}^T\\) in Regression?",
+    "text": "Why \\(\\mathbf{X}^T\\) in Regression?\n\nThe design matrix \\(\\mathbf{X}\\) has shape \\(n \\times p\\) — \\(n\\) observations, \\(p\\) parameters. We can’t invert it directly (it isn’t square). The transpose is what makes estimation possible.\n\n\n\n\\(\\mathbf{X}^T\\) has shape \\(p \\times n\\)\n\\(\\mathbf{X}^T\\mathbf{X}\\) is \\((p \\times n)(n \\times p) = p \\times p\\) — square, and invertible when \\(\\mathbf{X}\\) has full column rank (i.e., its columns are linearly independent)\n\\(\\mathbf{X}^T\\mathbf{Y}\\) is \\((p \\times n)(n \\times 1) = p \\times 1\\) — same shape as \\(\\boldsymbol{\\beta}\\)\n\n\n\n\nThese two quantities — \\(\\mathbf{X}^T\\mathbf{X}\\) and \\(\\mathbf{X}^T\\mathbf{Y}\\) — appear directly in the normal equations that give us the LS estimate. The transpose is what makes the dimensions work out."
+  },
+  {
+    "objectID": "slides/lec-13.html#matrix-multiplication",
+    "href": "slides/lec-13.html#matrix-multiplication",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Matrix Multiplication",
+    "text": "Matrix Multiplication\n\nMatrix multiplication: \\(\\mathbf{A}_{m \\times k}\\,\\mathbf{B}_{k \\times n} = \\mathbf{C}_{m \\times n}\\), where \\(C_{ij} = \\displaystyle\\sum_{\\ell=1}^k A_{i\\ell}\\,B_{\\ell j}\\).\nThe inner dimensions must match — only \\((m \\times k)(k \\times n)\\) is defined, and the result is \\(m \\times n\\).\n\n\n\nExample: \\[\\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix} \\begin{pmatrix} 5 \\\\ 6 \\end{pmatrix} = \\begin{pmatrix} 1\\cdot5 + 2\\cdot6 \\\\ 3\\cdot5 + 4\\cdot6 \\end{pmatrix} = \\begin{pmatrix} 17 \\\\ 39 \\end{pmatrix}\\]\n\\((2\\times 2)(2\\times 1) = 2\\times 1\\) — inner dimensions both 2, result is \\(2\\times 1\\)."
+  },
+  {
+    "objectID": "slides/lec-13.html#the-matrix-inverse",
+    "href": "slides/lec-13.html#the-matrix-inverse",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "The Matrix Inverse",
+    "text": "The Matrix Inverse\n\nJust as the number \\(5\\) has an inverse \\(5^{-1} = \\frac{1}{5}\\) satisfying \\(5^{-1} \\cdot 5 = 1\\), a square matrix \\(\\mathbf{A}\\) has an inverse \\(\\mathbf{A}^{-1}\\) satisfying:\n\\[\\mathbf{A}^{-1}\\mathbf{A} = \\mathbf{A}\\mathbf{A}^{-1} = \\mathbf{I}_p\\]\nwhere \\(\\mathbf{I}_p\\) is the identity matrix — 1s on the diagonal, 0s elsewhere (the matrix equivalent of the number 1):\n\\[\\mathbf{I}_3 = \\begin{pmatrix} 1 & 0 & 0 \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 1 \\end{pmatrix}\\]"
+  },
+  {
+    "objectID": "slides/lec-13.html#when-does-the-inverse-exist",
+    "href": "slides/lec-13.html#when-does-the-inverse-exist",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "When Does the Inverse Exist?",
+    "text": "When Does the Inverse Exist?\n\nThe inverse \\(\\mathbf{A}^{-1}\\) exists if and only if \\(\\mathbf{A}\\) is square and full rank (no column is a linear combination of the others).\n\n\n\nFull rank \\(\\Leftrightarrow\\) determinant \\(\\neq 0\\) \\(\\Leftrightarrow\\) columns are linearly independent\nIn regression, \\(\\mathbf{X}^T\\mathbf{X}\\) is not always invertible; it fails when predictors are perfectly collinear (e.g., one column of \\(\\mathbf{X}\\) is a multiple of another)\n\n\n\n\nExample of a singular matrix: \\(\\mathbf{A} = \\begin{pmatrix} 1 & 2 \\\\ 2 & 4 \\end{pmatrix}\\) — row 2 is twice row 1, determinant \\(= 1\\cdot4 - 2\\cdot2 = 0\\). No inverse exists."
+  },
+  {
+    "objectID": "slides/lec-13.html#the-matrix-inverse-example",
+    "href": "slides/lec-13.html#the-matrix-inverse-example",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "The Matrix Inverse: Example",
+    "text": "The Matrix Inverse: Example\n\nFor a 2×2 matrix \\(\\mathbf{A} = \\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}\\), the recipe is: swap the diagonal, negate the off-diagonal, divide by \\(ad - bc\\):\n\\[\\mathbf{A}^{-1} = \\frac{1}{ad-bc}\\begin{pmatrix} d & -b \\\\ -c & a \\end{pmatrix}\\]\n\n\n\nLet \\(\\mathbf{A} = \\begin{pmatrix} 3 & 1 \\\\ 2 & 4 \\end{pmatrix}\\). Then \\(ad - bc = 3(4) - 1(2) = 10\\), so\n\\[\\mathbf{A}^{-1} = \\frac{1}{10}\\begin{pmatrix} 4 & -1 \\\\ -2 & 3 \\end{pmatrix}\\]\n\n\n\n\nVerify \\(\\mathbf{A}^{-1}\\mathbf{A} = \\mathbf{I}_2\\):\n\\[\\frac{1}{10}\\begin{pmatrix} 4 & -1 \\\\ -2 & 3 \\end{pmatrix}\\begin{pmatrix} 3 & 1 \\\\ 2 & 4 \\end{pmatrix} = \\frac{1}{10}\\begin{pmatrix} 10 & 0 \\\\ 0 & 10 \\end{pmatrix} = \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix} = \\mathbf{I}_2 \\checkmark\\]"
+  },
+  {
+    "objectID": "slides/lec-13.html#where-does-ad---bc-come-from",
+    "href": "slides/lec-13.html#where-does-ad---bc-come-from",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Where Does \\(ad - bc\\) Come From?",
+    "text": "Where Does \\(ad - bc\\) Come From?\n\nWe want \\(\\mathbf{A}^{-1} = \\begin{pmatrix} w & x \\\\ y & z \\end{pmatrix}\\) such that \\(\\mathbf{A}\\mathbf{A}^{-1} = \\mathbf{I}_2\\):\n\\[\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}\\begin{pmatrix} w & x \\\\ y & z \\end{pmatrix} = \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix}\\]\nThis gives four equations: \\(aw + by = 1\\), \\(\\ ax + bz = 0\\), \\(\\ cw + dy = 0\\), \\(\\ cx + dz = 1\\).\n\n\n\nSolving for \\(w\\): from \\(cw + dy = 0\\) we get \\(y = -cw/d\\). Substituting into \\(aw + by = 1\\):\n\\[aw + b\\!\\left(\\frac{-cw}{d}\\right) = 1 \\implies w\\,\\frac{ad - bc}{d} = 1 \\implies w = \\frac{d}{ad-bc}\\]\nSolving similarly for \\(x\\), \\(y\\), \\(z\\) each produces \\(ad - bc\\) in the denominator. It is simply what falls out when you solve the system — not a formula to memorize, but a result you can derive."
+  },
+  {
+    "objectID": "slides/lec-13.html#deriving-the-normal-equations-solution",
+    "href": "slides/lec-13.html#deriving-the-normal-equations-solution",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Deriving the Normal Equations — Solution",
+    "text": "Deriving the Normal Equations — Solution\n\nStep 1. Write RSS using \\(\\|\\mathbf{v}\\|^2 = \\mathbf{v}^T\\mathbf{v}\\) with \\(\\mathbf{v} = \\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta}\\):\n\\[\\text{RSS} = (\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta})^T(\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta})\\]\n\n\n\nStep 2. Expand:\n\\[\\text{RSS} = \\mathbf{Y}^T\\mathbf{Y} - 2\\boldsymbol{\\beta}^T\\mathbf{X}^T\\mathbf{Y} + \\boldsymbol{\\beta}^T\\mathbf{X}^T\\mathbf{X}\\boldsymbol{\\beta}\\]"
+  },
+  {
+    "objectID": "slides/lec-13.html#deriving-the-normal-equations-cont.",
+    "href": "slides/lec-13.html#deriving-the-normal-equations-cont.",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Deriving the Normal Equations (cont.)",
+    "text": "Deriving the Normal Equations (cont.)\n\nFrom Step 2: \\(\\text{RSS} = \\mathbf{Y}^T\\mathbf{Y} - 2\\boldsymbol{\\beta}^T\\mathbf{X}^T\\mathbf{Y} + \\boldsymbol{\\beta}^T\\mathbf{X}^T\\mathbf{X}\\boldsymbol{\\beta}\\)\nStep 3. Take \\(\\partial\\,\\text{RSS}/\\partial\\boldsymbol{\\beta}\\) and set it equal to \\(\\mathbf{0}\\).\n\nStep 4. Rearrange to isolate \\(\\mathbf{X}^T\\mathbf{X}\\boldsymbol{\\beta}\\) on the left."
+  },
+  {
+    "objectID": "slides/lec-13.html#deriving-the-normal-equations-solution-cont.",
+    "href": "slides/lec-13.html#deriving-the-normal-equations-solution-cont.",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Deriving the Normal Equations — Solution (cont.)",
+    "text": "Deriving the Normal Equations — Solution (cont.)\n\nStep 3. Differentiate and set to zero:\n\\[\\frac{\\partial\\,\\text{RSS}}{\\partial\\boldsymbol{\\beta}} = -2\\mathbf{X}^T\\mathbf{Y} + 2\\mathbf{X}^T\\mathbf{X}\\boldsymbol{\\beta} = \\mathbf{0}\\]\n\n\n\nStep 4. Rearrange — the normal equations:\n\\[\\mathbf{X}^T\\mathbf{X}\\boldsymbol{\\beta} = \\mathbf{X}^T\\mathbf{Y}\\]\nThese are \\(p\\) equations in \\(p\\) unknowns \\((\\beta_0, \\beta_1, \\ldots, \\beta_{p-1})\\)."
+  },
+  {
+    "objectID": "slides/lec-13.html#connecting-back-to-slr-solution",
+    "href": "slides/lec-13.html#connecting-back-to-slr-solution",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Connecting Back to SLR — Solution",
+    "text": "Connecting Back to SLR — Solution\n\nStep 1. For SLR, \\(\\mathbf{X}\\) has a column of 1s (intercept) and a column of \\(X\\) values:\n\\[\\mathbf{X} = \\begin{pmatrix} 1 & X_1 \\\\ 1 & X_2 \\\\ \\vdots & \\vdots \\\\ 1 & X_n \\end{pmatrix}_{n \\times 2}, \\qquad \\mathbf{Y} = \\begin{pmatrix} Y_1 \\\\ \\vdots \\\\ Y_n \\end{pmatrix}_{n \\times 1}, \\qquad \\boldsymbol{\\beta} = \\begin{pmatrix} \\beta_0 \\\\ \\beta_1 \\end{pmatrix}_{2 \\times 1}\\]\n\n\n\nStep 2. Multiply \\(\\mathbf{X}^T\\) (\\(2 \\times n\\)) by \\(\\mathbf{X}\\) (\\(n \\times 2\\)) — result is \\(2 \\times 2\\):\n\\[\\mathbf{X}^T\\mathbf{X} = \\begin{pmatrix} \\sum 1 & \\sum X_i \\\\ \\sum X_i & \\sum X_i^2 \\end{pmatrix} = \\begin{pmatrix} n & \\sum X_i \\\\ \\sum X_i & \\sum X_i^2 \\end{pmatrix}\\]"
+  },
+  {
+    "objectID": "slides/lec-13.html#connecting-back-to-slr-solution-cont.",
+    "href": "slides/lec-13.html#connecting-back-to-slr-solution-cont.",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Connecting Back to SLR — Solution (cont.)",
+    "text": "Connecting Back to SLR — Solution (cont.)\n\nStep 3. Multiply \\(\\mathbf{X}^T\\) (\\(2 \\times n\\)) by \\(\\mathbf{Y}\\) (\\(n \\times 1\\)) — result is \\(2 \\times 1\\):\n\\[\\mathbf{X}^T\\mathbf{Y} = \\begin{pmatrix} \\sum Y_i \\\\ \\sum X_i Y_i \\end{pmatrix}\\]\n\n\n\nStep 4. The normal equations \\(\\mathbf{X}^T\\mathbf{X}\\,\\mathbf{b} = \\mathbf{X}^T\\mathbf{Y}\\) are two equations in \\(b_0\\) and \\(b_1\\):\n\\[\\begin{pmatrix} n & \\sum X_i \\\\ \\sum X_i & \\sum X_i^2 \\end{pmatrix} \\begin{pmatrix} b_0 \\\\ b_1 \\end{pmatrix} = \\begin{pmatrix} \\sum Y_i \\\\ \\sum X_i Y_i \\end{pmatrix}\\]\nSolving these recovers exactly the SLR formulas:\n\\[b_1 = \\frac{S_{xy}}{S_{xx}}, \\qquad b_0 = \\bar{Y} - b_1\\bar{X}\\]\nThe matrix formula is a generalization of what you already know."
+  },
+  {
+    "objectID": "slides/lec-13.html#connecting-back-to-slr-cont.",
+    "href": "slides/lec-13.html#connecting-back-to-slr-cont.",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Connecting Back to SLR (cont.)",
+    "text": "Connecting Back to SLR (cont.)\n\nFrom Step 2: \\(\\mathbf{X}^T\\mathbf{X} = \\begin{pmatrix} n & \\sum X_i \\\\ \\sum X_i & \\sum X_i^2 \\end{pmatrix}\\)\nStep 3. Compute \\(\\mathbf{X}^T\\mathbf{Y}\\).\n\nStep 4. Solve the normal equations \\(\\mathbf{X}^T\\mathbf{X}\\,\\mathbf{b} = \\mathbf{X}^T\\mathbf{Y}\\) for \\(b_0\\) and \\(b_1\\)."
+  },
+  {
+    "objectID": "slides/lec-13.html#practice-ls-estimation-by-hand-cont.",
+    "href": "slides/lec-13.html#practice-ls-estimation-by-hand-cont.",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Practice: LS Estimation by Hand (cont.)",
+    "text": "Practice: LS Estimation by Hand (cont.)\n\n\n\n\n\\(i\\)\n\\(X_i\\) (temp °C)\n\\(D_i\\)\n\\(Y_i\\) (cups sold)\n\n\n\n\n1\n2\n1\n10\n\n\n2\n5\n0\n5\n\n\n3\n3\n1\n9\n\n\n\nThe model is \\(Y_i = \\beta_0 + \\beta_1 X_i + \\beta_2 D_i + \\epsilon_i\\).\n(c) Solve the normal equations \\(\\mathbf{X}^T\\mathbf{X}\\,\\mathbf{b} = \\mathbf{X}^T\\mathbf{Y}\\) for \\(b_0\\), \\(b_1\\), and \\(b_2\\). Interpret \\(b_1\\) and \\(b_2\\) in context."
+  },
+  {
+    "objectID": "slides/lec-13.html#practice-ls-estimation-solution-c",
+    "href": "slides/lec-13.html#practice-ls-estimation-solution-c",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Practice: LS Estimation — Solution (c)",
+    "text": "Practice: LS Estimation — Solution (c)\n\nThe normal equations \\(\\mathbf{X}^T\\mathbf{X}\\,\\mathbf{b} = \\mathbf{X}^T\\mathbf{Y}\\) give three equations:\n\\[\\begin{array}{rcl} 3b_0 + 10b_1 + 2b_2 &=& 24 \\\\ 10b_0 + 38b_1 + 5b_2 &=& 72 \\\\ 2b_0 + 5b_1 + 2b_2 &=& 19 \\end{array}\\]\n\n\n\nEliminate \\(b_0\\): subtract row 3 from row 1:\n\\[(3-2)b_0 + (10-5)b_1 + (2-2)b_2 = 24 - 19 \\implies b_0 + 5b_1 = 5 \\implies b_0 = 5 - 5b_1\\]\n\n\n\n\nSubstitute \\(b_0 = 5 - 5b_1\\) into rows 1 and 2 and simplify to get two equations in \\(b_1\\) and \\(b_2\\):\n\\[-5b_1 + 2b_2 = 9 \\qquad -12b_1 + 5b_2 = 22\\]\nSolving: \\(b_1 = -1\\), \\(\\quad b_2 = 2\\), \\(\\quad b_0 = 10\\).\n\n\n\n\nInterpretation: Each additional °C is associated with 1 fewer cup sold, holding day type fixed. Weekends sell 2 more cups on average than weekdays at the same temperature."
   }
 ]

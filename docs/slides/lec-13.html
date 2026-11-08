@@ -11,7 +11,7 @@
 
   <meta name="author" content="Annie Adams">
   <meta name="dcterms.date" content="2026-11-05">
-  <title>PSTAT 126 – Lecture 13: Multiple Regression II</title>
+  <title>PSTAT 126 – Lecture 13: Multiple Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -204,7 +204,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-color="#003660" class="quarto-title-block center">
-  <h1 class="title">Lecture 13: Multiple Regression II</h1>
+  <h1 class="title">Lecture 13: Multiple Regression</h1>
   <p class="subtitle">PSTAT 126: Linear Regression</p>
 
 <div class="quarto-title-authors">
@@ -225,11 +225,12 @@ Annie Adams
 <p>By the end of today you will be able to:</p>
 <div style="font-size: 0.80em;">
 <ul>
-<li>Express the multiple regression model in matrix form <span class="math inline">\(\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}\)</span> and identify the role of the design matrix</li>
-<li>Derive the least squares estimate <span class="math inline">\(\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\)</span> from the normal equations</li>
-<li>State the properties of <span class="math inline">\(\mathbf{b}\)</span>: unbiasedness, covariance matrix, and the Gauss-Markov theorem</li>
-<li>Fit a multiple regression model in R and correctly read <code>lm()</code> output</li>
-<li>Interpret estimated coefficients, residual standard error, and <span class="math inline">\(R^2\)</span> in context</li>
+<li>Perform basic matrix operations — transpose, multiplication, and inverse — and explain when an inverse exists</li>
+<li>Explain why <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> must be square and invertible to solve for <span class="math inline">\(\mathbf{b}\)</span></li>
+<li>Express the multiple regression model in matrix form <span class="math inline">\(\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}\)</span> and identify the design matrix</li>
+<li>Derive the LS estimate <span class="math inline">\(\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\)</span> by expanding RSS and solving the normal equations</li>
+<li>Compute <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{X}^T\mathbf{Y}\)</span> by hand and solve for <span class="math inline">\(\mathbf{b}\)</span></li>
+<li>Read <code>lm()</code> output in R and interpret estimates, standard errors, <span class="math inline">\(\hat\sigma\)</span>, and <span class="math inline">\(R^2\)</span></li>
 </ul>
 </div>
 </section>
@@ -246,29 +247,129 @@ Annie Adams
 <section id="the-matrix-form" class="slide level2" data-background-color="#003660">
 <h2>The Matrix Form</h2>
 </section>
-<section id="the-matrix-form-1" class="slide level2 smaller">
+<section id="vectors-and-matrices" class="slide level2">
+<h2>Vectors and Matrices</h2>
+<div style="font-size: 0.82em;">
+<p>A <strong>matrix</strong> is a rectangular array of numbers. We write <span class="math inline">\(\mathbf{A}_{m \times n}\)</span> to indicate <span class="math inline">\(m\)</span> rows and <span class="math inline">\(n\)</span> columns:</p>
+<p><span class="math display">\[\mathbf{A}_{m \times n} = \begin{pmatrix} a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\ a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn} \end{pmatrix}\]</span></p>
+</div>
+<div style="font-size: 0.82em;">
+<ul>
+<li class="fragment">A <strong>column vector</strong> is an <span class="math inline">\(n \times 1\)</span> matrix: <span class="math inline">\(\mathbf{v} = (v_1, v_2, \ldots, v_n)^T\)</span></li>
+<li class="fragment">A <strong>scalar</strong> is a <span class="math inline">\(1 \times 1\)</span> matrix — just a single number</li>
+<li class="fragment"><strong>Notation:</strong> bold uppercase <span class="math inline">\(\mathbf{A}\)</span> for matrices, bold lowercase <span class="math inline">\(\mathbf{v}\)</span> for column vectors, unbolded for scalars</li>
+</ul>
+</div>
+</section>
+<section id="the-transpose" class="slide level2">
+<h2>The Transpose</h2>
+<div style="font-size: 0.82em;">
+<p>The <strong>transpose</strong> <span class="math inline">\(\mathbf{A}^T\)</span> of a matrix <span class="math inline">\(\mathbf{A}\)</span> swaps its rows and columns: entry <span class="math inline">\((i,j)\)</span> of <span class="math inline">\(\mathbf{A}\)</span> becomes entry <span class="math inline">\((j,i)\)</span> of <span class="math inline">\(\mathbf{A}^T\)</span>.</p>
+<p><span class="math display">\[\mathbf{A} = \begin{pmatrix} 1 &amp; 2 \\ 3 &amp; 4 \\ 5 &amp; 6 \end{pmatrix}_{3\times 2} \implies \mathbf{A}^T = \begin{pmatrix} 1 &amp; 3 &amp; 5 \\ 2 &amp; 4 &amp; 6 \end{pmatrix}_{2\times 3}\]</span></p>
+<p>Transposing <strong>swaps the dimensions</strong>: an <span class="math inline">\(m \times n\)</span> matrix becomes <span class="math inline">\(n \times m\)</span>.</p>
+</div>
+<div class="fragment">
+<div style="font-size: 0.82em;">
+<p>For a <strong>column vector</strong>, the transpose turns it into a row vector (and vice versa):</p>
+<p><span class="math display">\[\mathbf{v} = \begin{pmatrix} v_1 \\ v_2 \\ v_3 \end{pmatrix}_{3\times 1} \implies \mathbf{v}^T = \begin{pmatrix} v_1 &amp; v_2 &amp; v_3 \end{pmatrix}_{1\times 3}\]</span></p>
+<p>This is why we write column vectors as <span class="math inline">\((v_1, v_2, \ldots, v_n)^T\)</span> — the <span class="math inline">\({}^T\)</span> signals it is a column, not a row.</p>
+</div>
+</div>
+<div class="fragment">
+<div style="font-size: 0.82em;">
+<p><strong>Squared length of a vector:</strong> multiplying a row vector by its column vector gives a scalar — the sum of squared entries:</p>
+<p><span class="math display">\[\|\mathbf{v}\|^2 = \mathbf{v}^T\mathbf{v} = \begin{pmatrix} v_1 &amp; v_2 &amp; v_3 \end{pmatrix}\begin{pmatrix} v_1 \\ v_2 \\ v_3 \end{pmatrix} = v_1^2 + v_2^2 + v_3^2\]</span></p>
+<p>We will use this to write <span class="math inline">\(\text{RSS} = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2 = (\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="matrix-multiplication" class="slide level2">
+<h2>Matrix Multiplication</h2>
+<div style="font-size: 0.82em;">
+<p><strong>Matrix multiplication:</strong> <span class="math inline">\(\mathbf{A}_{m \times k}\,\mathbf{B}_{k \times n} = \mathbf{C}_{m \times n}\)</span>, where <span class="math inline">\(C_{ij} = \displaystyle\sum_{\ell=1}^k A_{i\ell}\,B_{\ell j}\)</span>.</p>
+<p>The <strong>inner dimensions must match</strong> — only <span class="math inline">\((m \times k)(k \times n)\)</span> is defined, and the result is <span class="math inline">\(m \times n\)</span>.</p>
+</div>
+<div class="fragment">
+<div style="font-size: 0.82em;">
+<p><strong>Example:</strong> <span class="math display">\[\begin{pmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{pmatrix} \begin{pmatrix} 5 \\ 6 \end{pmatrix} = \begin{pmatrix} 1\cdot5 + 2\cdot6 \\ 3\cdot5 + 4\cdot6 \end{pmatrix} = \begin{pmatrix} 17 \\ 39 \end{pmatrix}\]</span></p>
+<p><span class="math inline">\((2\times 2)(2\times 1) = 2\times 1\)</span> — inner dimensions both 2, result is <span class="math inline">\(2\times 1\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="the-matrix-inverse" class="slide level2">
+<h2>The Matrix Inverse</h2>
+<div style="font-size: 0.85em;">
+<p>Just as the number <span class="math inline">\(5\)</span> has an inverse <span class="math inline">\(5^{-1} = \frac{1}{5}\)</span> satisfying <span class="math inline">\(5^{-1} \cdot 5 = 1\)</span>, a square matrix <span class="math inline">\(\mathbf{A}\)</span> has an inverse <span class="math inline">\(\mathbf{A}^{-1}\)</span> satisfying:</p>
+<p><span class="math display">\[\mathbf{A}^{-1}\mathbf{A} = \mathbf{A}\mathbf{A}^{-1} = \mathbf{I}_p\]</span></p>
+<p>where <span class="math inline">\(\mathbf{I}_p\)</span> is the <strong>identity matrix</strong> — 1s on the diagonal, 0s elsewhere (the matrix equivalent of the number 1):</p>
+<p><span class="math display">\[\mathbf{I}_3 = \begin{pmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{pmatrix}\]</span></p>
+</div>
+</section>
+<section id="the-matrix-inverse-example" class="slide level2">
+<h2>The Matrix Inverse: Example</h2>
+<div style="font-size: 0.60em;">
+<p>For a 2×2 matrix <span class="math inline">\(\mathbf{A} = \begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix}\)</span>, the recipe is: <strong>swap the diagonal, negate the off-diagonal, divide by <span class="math inline">\(ad - bc\)</span></strong>:</p>
+<p><span class="math display">\[\mathbf{A}^{-1} = \frac{1}{ad-bc}\begin{pmatrix} d &amp; -b \\ -c &amp; a \end{pmatrix}\]</span></p>
+</div>
+<div class="fragment">
+<div style="font-size: 0.60em;">
+<p>Let <span class="math inline">\(\mathbf{A} = \begin{pmatrix} 3 &amp; 1 \\ 2 &amp; 4 \end{pmatrix}\)</span>. Then <span class="math inline">\(ad - bc = 3(4) - 1(2) = 10\)</span>, so</p>
+<p><span class="math display">\[\mathbf{A}^{-1} = \frac{1}{10}\begin{pmatrix} 4 &amp; -1 \\ -2 &amp; 3 \end{pmatrix}\]</span></p>
+</div>
+</div>
+<div class="fragment">
+<div style="font-size: 0.60em;">
+<p><strong>Verify</strong> <span class="math inline">\(\mathbf{A}^{-1}\mathbf{A} = \mathbf{I}_2\)</span>:</p>
+<p><span class="math display">\[\frac{1}{10}\begin{pmatrix} 4 &amp; -1 \\ -2 &amp; 3 \end{pmatrix}\begin{pmatrix} 3 &amp; 1 \\ 2 &amp; 4 \end{pmatrix} = \frac{1}{10}\begin{pmatrix} 10 &amp; 0 \\ 0 &amp; 10 \end{pmatrix} = \begin{pmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix} = \mathbf{I}_2 \checkmark\]</span></p>
+</div>
+</div>
+</section>
+<section id="when-does-the-inverse-exist" class="slide level2">
+<h2>When Does the Inverse Exist?</h2>
+<div style="font-size: 0.85em;">
+<p>The inverse <span class="math inline">\(\mathbf{A}^{-1}\)</span> exists if and only if <span class="math inline">\(\mathbf{A}\)</span> is <strong>square</strong> and <strong>full rank</strong> (no column is a linear combination of the others).</p>
+</div>
+<div style="font-size: 0.85em;">
+<ul>
+<li class="fragment"><strong>Full rank</strong> <span class="math inline">\(\Leftrightarrow\)</span> determinant <span class="math inline">\(\neq 0\)</span> <span class="math inline">\(\Leftrightarrow\)</span> columns are linearly independent</li>
+<li class="fragment">In regression, <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> is not always invertible; it fails when predictors are <strong>perfectly collinear</strong> (e.g., one column of <span class="math inline">\(\mathbf{X}\)</span> is a multiple of another)</li>
+</ul>
+</div>
+<div class="fragment">
+<div style="font-size: 0.82em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660;">
+<p><strong>Example of a singular matrix:</strong> <span class="math inline">\(\mathbf{A} = \begin{pmatrix} 1 &amp; 2 \\ 2 &amp; 4 \end{pmatrix}\)</span> — row 2 is twice row 1, determinant <span class="math inline">\(= 1\cdot4 - 2\cdot2 = 0\)</span>. No inverse exists.</p>
+</div>
+</div>
+</section>
+<section id="why-mathbfxt-in-regression" class="slide level2">
+<h2>Why <span class="math inline">\(\mathbf{X}^T\)</span> in Regression?</h2>
+<div style="font-size: 0.75em;">
+<p>The design matrix <span class="math inline">\(\mathbf{X}\)</span> has shape <span class="math inline">\(n \times p\)</span> — <span class="math inline">\(n\)</span> observations, <span class="math inline">\(p\)</span> parameters. We can’t invert it directly (it isn’t square). The transpose is what makes estimation possible.</p>
+</div>
+<div style="font-size: 0.75em;">
+<ul>
+<li class="fragment"><span class="math inline">\(\mathbf{X}^T\)</span> has shape <span class="math inline">\(p \times n\)</span></li>
+<li class="fragment"><span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> is <span class="math inline">\((p \times n)(n \times p) = p \times p\)</span> — <strong>square, and invertible</strong> when <span class="math inline">\(\mathbf{X}\)</span> has full column rank (i.e., its columns are linearly independent)</li>
+<li class="fragment"><span class="math inline">\(\mathbf{X}^T\mathbf{Y}\)</span> is <span class="math inline">\((p \times n)(n \times 1) = p \times 1\)</span> — <strong>same shape as <span class="math inline">\(\boldsymbol{\beta}\)</span></strong></li>
+</ul>
+</div>
+<div class="fragment">
+<div style="font-size: 0.75em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660;">
+<p>These two quantities — <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{X}^T\mathbf{Y}\)</span> — appear directly in the normal equations that give us the LS estimate. The transpose is what makes the dimensions work out.</p>
+</div>
+</div>
+</section>
+<section id="the-matrix-form-1" class="slide level2">
 <h2>The Matrix Form</h2>
+<div style="font-size: 0.58em;">
 <p>Define vectors and a matrix:</p>
 <p><span class="math display">\[\mathbf{Y}_{n \times 1} = \begin{pmatrix} Y_1 \\ \vdots \\ Y_n \end{pmatrix}, \quad \boldsymbol{\epsilon}_{n \times 1} = \begin{pmatrix} \epsilon_1 \\ \vdots \\ \epsilon_n \end{pmatrix}, \quad \boldsymbol{\beta}_{p \times 1} = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \vdots \\ \beta_{p-1} \end{pmatrix}\]</span></p>
 <p><span class="math display">\[\mathbf{X}_{n \times p} = \begin{pmatrix} 1 &amp; X_{11} &amp; \cdots &amp; X_{1,p-1} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 1 &amp; X_{n1} &amp; \cdots &amp; X_{n,p-1} \end{pmatrix}\]</span></p>
 <div class="fragment">
 <p>The general linear regression model becomes:</p>
 <p><span class="math display">\[\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}\]</span></p>
-<p>The first column of <span class="math inline">\(\mathbf{X}\)</span> is all 1s — this corresponds to the intercept <span class="math inline">\(\beta_0\)</span>.</p>
+<p>The first column of <span class="math inline">\(\mathbf{X}\)</span> is all 1s, which corresponds to the intercept <span class="math inline">\(\beta_0\)</span>.</p>
 </div>
-</section>
-<section id="why-the-matrix-form-matters" class="slide level2">
-<h2>Why the Matrix Form Matters</h2>
-<div style="font-size: 0.88em;">
-<p>The compact notation <span class="math inline">\(\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}\)</span> is not just shorthand — it unlocks powerful tools:</p>
-</div>
-<div style="font-size: 0.85em;">
-<ul>
-<li class="fragment"><strong>Estimation:</strong> One formula <span class="math inline">\(\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\)</span> works for any number of predictors</li>
-<li class="fragment"><strong>Geometry:</strong> <span class="math inline">\(\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}\)</span> is the projection of <span class="math inline">\(\mathbf{Y}\)</span> onto the column space of <span class="math inline">\(\mathbf{X}\)</span></li>
-<li class="fragment"><strong>Inference:</strong> Standard errors and test statistics have clean matrix expressions</li>
-<li class="fragment"><strong>Generality:</strong> The same framework handles SLR, polynomial, interaction, and mixed models</li>
-</ul>
 </div>
 </section>
 <section id="least-squares-estimation" class="slide level2" data-background-color="#003660">
@@ -277,49 +378,127 @@ Annie Adams
 <section id="the-ls-criterion" class="slide level2">
 <h2>The LS Criterion</h2>
 <p>We estimate <span class="math inline">\(\boldsymbol{\beta}\)</span> by minimizing the <strong>sum of squared residuals</strong>:</p>
-<p><span class="math display">\[Q = \sum_{i=1}^n \left(Y_i - \beta_0 - \beta_1 X_{i1} - \cdots - \beta_{p-1} X_{i,p-1}\right)^2 = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2\]</span></p>
+<p><span class="math display">\[\text{RSS} = \sum_{i=1}^n \left(Y_i - \beta_0 - \beta_1 X_{i1} - \cdots - \beta_{p-1} X_{i,p-1}\right)^2 = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2\]</span></p>
 <div class="fragment">
 <p>This is the same principle as SLR — minimize the total squared vertical distance between the observed <span class="math inline">\(Y_i\)</span> and the fitted surface.</p>
 <p>In SLR we had <span class="math inline">\(p = 2\)</span> (intercept + one slope). Now <span class="math inline">\(p\)</span> can be anything.</p>
 </div>
 </section>
-<section id="deriving-the-normal-equations" class="slide level2">
+<section id="deriving-the-normal-equations" class="slide level2 smaller">
 <h2>Deriving the Normal Equations</h2>
-<p>Take the derivative of <span class="math inline">\(Q = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2\)</span> with respect to <span class="math inline">\(\boldsymbol{\beta}\)</span> and set it to zero:</p>
-<p><span class="math display">\[\frac{\partial Q}{\partial \boldsymbol{\beta}} = -2\mathbf{X}^T(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}) = \mathbf{0}\]</span></p>
+<div style="font-size: 0.85em;">
+<p>We want to minimize <span class="math inline">\(\text{RSS} = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2\)</span> with respect to <span class="math inline">\(\boldsymbol{\beta}\)</span>. Work through each step:</p>
+<p><strong>Step 1.</strong> The squared length of a vector <span class="math inline">\(\mathbf{v}\)</span> is <span class="math inline">\(\|\mathbf{v}\|^2 = \mathbf{v}^T\mathbf{v}\)</span>. Use this to rewrite RSS as a matrix expression.</p>
+<p><br><br><br><br></p>
+<p><strong>Step 2.</strong> Expand the product from Step 1.</p>
+</div>
+</section>
+<section id="deriving-the-normal-equations-cont." class="slide level2 smaller">
+<h2>Deriving the Normal Equations (cont.)</h2>
+<div style="font-size: 0.85em;">
+<p>From Step 2: <span class="math inline">\(\text{RSS} = \mathbf{Y}^T\mathbf{Y} - 2\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{Y} + \boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}\)</span></p>
+<p><strong>Step 3.</strong> Take <span class="math inline">\(\partial\,\text{RSS}/\partial\boldsymbol{\beta}\)</span> and set it equal to <span class="math inline">\(\mathbf{0}\)</span>.</p>
+<p><br><br><br><br></p>
+<p><strong>Step 4.</strong> Rearrange to isolate <span class="math inline">\(\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}\)</span> on the left.</p>
+</div>
+</section>
+<section id="deriving-the-normal-equations-solution" class="slide level2">
+<h2>Deriving the Normal Equations — Solution</h2>
+<div style="font-size: 0.85em;">
+<p><strong>Step 1.</strong> Write RSS using <span class="math inline">\(\|\mathbf{v}\|^2 = \mathbf{v}^T\mathbf{v}\)</span> with <span class="math inline">\(\mathbf{v} = \mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\)</span>:</p>
+<p><span class="math display">\[\text{RSS} = (\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})\]</span></p>
+</div>
 <div class="fragment">
-<p>This gives the <strong>normal equations</strong>:</p>
-<p><span class="math display">\[\mathbf{X}^T \mathbf{X} \boldsymbol{\beta} = \mathbf{X}^T \mathbf{Y}\]</span></p>
+<div style="font-size: 0.85em;">
+<p><strong>Step 2.</strong> Expand:</p>
+<p><span class="math display">\[\text{RSS} = \mathbf{Y}^T\mathbf{Y} - 2\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{Y} + \boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}\]</span></p>
+</div>
+</div>
+</section>
+<section id="deriving-the-normal-equations-solution-cont." class="slide level2">
+<h2>Deriving the Normal Equations — Solution (cont.)</h2>
+<div style="font-size: 0.85em;">
+<p><strong>Step 3.</strong> Differentiate and set to zero:</p>
+<p><span class="math display">\[\frac{\partial\,\text{RSS}}{\partial\boldsymbol{\beta}} = -2\mathbf{X}^T\mathbf{Y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{0}\]</span></p>
+</div>
+<div class="fragment">
+<div style="font-size: 0.85em;">
+<p><strong>Step 4.</strong> Rearrange — the <strong>normal equations</strong>:</p>
+<p><span class="math display">\[\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{X}^T\mathbf{Y}\]</span></p>
 <p>These are <span class="math inline">\(p\)</span> equations in <span class="math inline">\(p\)</span> unknowns <span class="math inline">\((\beta_0, \beta_1, \ldots, \beta_{p-1})\)</span>.</p>
+</div>
 </div>
 </section>
 <section id="the-ls-estimate" class="slide level2">
 <h2>The LS Estimate</h2>
-<p>If <span class="math inline">\(\mathbf{X}\)</span> is <strong>full column rank</strong> (no predictor is a perfect linear combination of others), then <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> is invertible and the unique solution is:</p>
-<p><span class="math display">\[\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\]</span></p>
+<div style="font-size: 0.65em;">
+<p>From the normal equations: <span class="math inline">\(\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{X}^T\mathbf{Y}\)</span></p>
+<p>If <span class="math inline">\(\mathbf{X}\)</span> is <strong>full column rank</strong>, <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> is invertible. Multiply both sides on the left by <span class="math inline">\((\mathbf{X}^T\mathbf{X})^{-1}\)</span>:</p>
+<p><span class="math display">\[(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\]</span></p>
+<p><span class="math display">\[\mathbf{I}_p\,\boldsymbol{\beta} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\]</span></p>
+</div>
 <div class="fragment">
-<div style="font-size: 0.82em;">
+<div style="font-size: 0.65em;">
+<p>So the <strong>LS estimate</strong> is:</p>
+<p><span class="math display">\[\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\]</span></p>
+<p>where <span class="math inline">\(\mathbf{b} = (b_0, b_1, \ldots, b_{p-1})^T\)</span> estimates <span class="math inline">\((\beta_0, \beta_1, \ldots, \beta_{p-1})\)</span>.</p>
+<p><strong>Note on notation:</strong> <span class="math inline">\(b_0, b_1, \ldots\)</span> are the same as <span class="math inline">\(\hat{\beta}_0, \hat{\beta}_1, \ldots\)</span> from SLR — both are least squares estimates. We switch to <span class="math inline">\(\mathbf{b}\)</span> here because it is more compact in matrix form.</p>
+</div>
+</div>
+<div class="fragment">
+<div style="font-size: 0.65em;">
 <ul>
-<li><span class="math inline">\(\mathbf{b} = (b_0, b_1, \ldots, b_{p-1})^T\)</span> are the LS estimates of <span class="math inline">\((\beta_0, \beta_1, \ldots, \beta_{p-1})\)</span></li>
-<li>The <strong>fitted values</strong> are <span class="math inline">\(\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}\)</span></li>
-<li>The <strong>residuals</strong> are <span class="math inline">\(\mathbf{e} = \mathbf{Y} - \hat{\mathbf{Y}} = \mathbf{Y} - \mathbf{X}\mathbf{b}\)</span></li>
+<li><strong>Fitted values:</strong> <span class="math inline">\(\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}\)</span></li>
+<li><strong>Residuals:</strong> <span class="math inline">\(\mathbf{e} = \mathbf{Y} - \hat{\mathbf{Y}} = \mathbf{Y} - \mathbf{X}\mathbf{b}\)</span></li>
 </ul>
 </div>
 </div>
+</section>
+<section id="connecting-back-to-slr" class="slide level2 smaller">
+<h2>Connecting Back to SLR</h2>
+<div style="font-size: 0.85em;">
+<p>For SLR we have one predictor <span class="math inline">\(X\)</span> and an intercept, so <span class="math inline">\(p = 2\)</span>. Let’s verify the matrix formula <span class="math inline">\(\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\)</span> recovers the formulas we already know.</p>
+<p><strong>Step 1.</strong> Write out <span class="math inline">\(\mathbf{X}\)</span>, <span class="math inline">\(\mathbf{Y}\)</span>, and <span class="math inline">\(\boldsymbol{\beta}\)</span> for SLR.</p>
+<p><br><br><br><br></p>
+<p><strong>Step 2.</strong> Compute <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span>.</p>
+</div>
+</section>
+<section id="connecting-back-to-slr-cont." class="slide level2 smaller">
+<h2>Connecting Back to SLR (cont.)</h2>
+<div style="font-size: 0.85em;">
+<p>From Step 2: <span class="math inline">\(\mathbf{X}^T\mathbf{X} = \begin{pmatrix} n &amp; \sum X_i \\ \sum X_i &amp; \sum X_i^2 \end{pmatrix}\)</span></p>
+<p><strong>Step 3.</strong> Compute <span class="math inline">\(\mathbf{X}^T\mathbf{Y}\)</span>.</p>
+<p><br><br><br><br></p>
+<p><strong>Step 4.</strong> Solve the normal equations <span class="math inline">\(\mathbf{X}^T\mathbf{X}\,\mathbf{b} = \mathbf{X}^T\mathbf{Y}\)</span> for <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>.</p>
+</div>
+</section>
+<section id="connecting-back-to-slr-solution" class="slide level2 smaller">
+<h2>Connecting Back to SLR — Solution</h2>
+<div style="font-size: 0.85em;">
+<p><strong>Step 1.</strong> For SLR, <span class="math inline">\(\mathbf{X}\)</span> has a column of 1s (intercept) and a column of <span class="math inline">\(X\)</span> values:</p>
+<p><span class="math display">\[\mathbf{X} = \begin{pmatrix} 1 &amp; X_1 \\ 1 &amp; X_2 \\ \vdots &amp; \vdots \\ 1 &amp; X_n \end{pmatrix}_{n \times 2}, \qquad \mathbf{Y} = \begin{pmatrix} Y_1 \\ \vdots \\ Y_n \end{pmatrix}_{n \times 1}, \qquad \boldsymbol{\beta} = \begin{pmatrix} \beta_0 \\ \beta_1 \end{pmatrix}_{2 \times 1}\]</span></p>
+</div>
 <div class="fragment">
-<div style="font-size: 0.78em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660;">
-<p><strong>When is <span class="math inline">\(\mathbf{X}\)</span> NOT full column rank?</strong> Perfect multicollinearity: e.g., one predictor is a linear combination of others, or you accidentally include all <span class="math inline">\(k\)</span> dummy variables for a <span class="math inline">\(k\)</span>-level factor instead of <span class="math inline">\(k-1\)</span>.</p>
+<div style="font-size: 0.85em;">
+<p><strong>Step 2.</strong> Multiply <span class="math inline">\(\mathbf{X}^T\)</span> (<span class="math inline">\(2 \times n\)</span>) by <span class="math inline">\(\mathbf{X}\)</span> (<span class="math inline">\(n \times 2\)</span>) — result is <span class="math inline">\(2 \times 2\)</span>:</p>
+<p><span class="math display">\[\mathbf{X}^T\mathbf{X} = \begin{pmatrix} \sum 1 &amp; \sum X_i \\ \sum X_i &amp; \sum X_i^2 \end{pmatrix} = \begin{pmatrix} n &amp; \sum X_i \\ \sum X_i &amp; \sum X_i^2 \end{pmatrix}\]</span></p>
 </div>
 </div>
 </section>
-<section id="connecting-back-to-slr" class="slide level2">
-<h2>Connecting Back to SLR</h2>
-<p>In simple linear regression (<span class="math inline">\(p = 2\)</span>, predictors: just <span class="math inline">\(X\)</span>):</p>
-<p><span class="math display">\[\mathbf{X} = \begin{pmatrix} 1 &amp; X_1 \\ \vdots &amp; \vdots \\ 1 &amp; X_n \end{pmatrix}, \qquad \mathbf{X}^T\mathbf{X} = \begin{pmatrix} n &amp; \sum X_i \\ \sum X_i &amp; \sum X_i^2 \end{pmatrix}, \qquad \mathbf{X}^T\mathbf{Y} = \begin{pmatrix} \sum Y_i \\ \sum X_i Y_i \end{pmatrix}\]</span></p>
+<section id="connecting-back-to-slr-solution-cont." class="slide level2 smaller">
+<h2>Connecting Back to SLR — Solution (cont.)</h2>
+<div style="font-size: 0.85em;">
+<p><strong>Step 3.</strong> Multiply <span class="math inline">\(\mathbf{X}^T\)</span> (<span class="math inline">\(2 \times n\)</span>) by <span class="math inline">\(\mathbf{Y}\)</span> (<span class="math inline">\(n \times 1\)</span>) — result is <span class="math inline">\(2 \times 1\)</span>:</p>
+<p><span class="math display">\[\mathbf{X}^T\mathbf{Y} = \begin{pmatrix} \sum Y_i \\ \sum X_i Y_i \end{pmatrix}\]</span></p>
+</div>
 <div class="fragment">
-<p>Solving <span class="math inline">\((\mathbf{X}^T\mathbf{X})\mathbf{b} = \mathbf{X}^T\mathbf{Y}\)</span> recovers exactly the SLR formulas:</p>
+<div style="font-size: 0.85em;">
+<p><strong>Step 4.</strong> The normal equations <span class="math inline">\(\mathbf{X}^T\mathbf{X}\,\mathbf{b} = \mathbf{X}^T\mathbf{Y}\)</span> are two equations in <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_1\)</span>:</p>
+<p><span class="math display">\[\begin{pmatrix} n &amp; \sum X_i \\ \sum X_i &amp; \sum X_i^2 \end{pmatrix} \begin{pmatrix} b_0 \\ b_1 \end{pmatrix} = \begin{pmatrix} \sum Y_i \\ \sum X_i Y_i \end{pmatrix}\]</span></p>
+<p>Solving these recovers exactly the SLR formulas:</p>
 <p><span class="math display">\[b_1 = \frac{S_{xy}}{S_{xx}}, \qquad b_0 = \bar{Y} - b_1\bar{X}\]</span></p>
 <p>The matrix formula is a <strong>generalization</strong> of what you already know.</p>
+</div>
 </div>
 </section>
 <section id="properties-of-the-ls-estimator" class="slide level2">
@@ -343,62 +522,115 @@ Annie Adams
 </section>
 <section id="practice-ls-estimation-by-hand" class="slide level2 smaller">
 <h2>Practice: LS Estimation by Hand</h2>
-<div style="font-size: 0.80em;">
-<p>A study records miles driven per day (<span class="math inline">\(X\)</span>) and fuel cost per day in dollars (<span class="math inline">\(Y\)</span>) for <span class="math inline">\(n = 3\)</span> days, and also includes a dummy variable <span class="math inline">\(D\)</span> for city driving (1 = city, 0 = highway):</p>
+<div style="font-size: 0.82em;">
+<p>A café records daily high temperature in °C (<span class="math inline">\(X\)</span>), whether it is a weekend (<span class="math inline">\(D\)</span>: 1 = weekend, 0 = weekday), and cups of hot coffee sold (<span class="math inline">\(Y\)</span>) for <span class="math inline">\(n = 3\)</span> days. The model is <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \beta_2 D_i + \epsilon_i\)</span>.</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
 <th style="text-align: center;"><span class="math inline">\(i\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(X_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(X_i\)</span> (temp °C)</th>
 <th style="text-align: center;"><span class="math inline">\(D_i\)</span></th>
-<th style="text-align: center;"><span class="math inline">\(Y_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(Y_i\)</span> (cups sold)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">10</td>
+<td style="text-align: center;">2</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">8</td>
+<td style="text-align: center;">10</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">2</td>
-<td style="text-align: center;">20</td>
+<td style="text-align: center;">5</td>
 <td style="text-align: center;">0</td>
-<td style="text-align: center;">12</td>
+<td style="text-align: center;">5</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">3</td>
-<td style="text-align: center;">15</td>
+<td style="text-align: center;">3</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">11</td>
+<td style="text-align: center;">9</td>
+</tr>
+</tbody>
+</table>
+<p><strong>(a)</strong> Write out the design matrix <span class="math inline">\(\mathbf{X}\)</span>, the response vector <span class="math inline">\(\mathbf{Y}\)</span>, and <span class="math inline">\(\boldsymbol{\beta}\)</span>.</p>
+<p><br><br><br></p>
+<p><strong>(b)</strong> Compute <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{X}^T\mathbf{Y}\)</span>.</p>
+</div>
+</section>
+<section id="practice-ls-estimation-by-hand-cont." class="slide level2 smaller">
+<h2>Practice: LS Estimation by Hand (cont.)</h2>
+<div style="font-size: 0.82em;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(X_i\)</span> (temp °C)</th>
+<th style="text-align: center;"><span class="math inline">\(D_i\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(Y_i\)</span> (cups sold)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">9</td>
 </tr>
 </tbody>
 </table>
 <p>The model is <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \beta_2 D_i + \epsilon_i\)</span>.</p>
-<p><strong>(a)</strong> Write out the design matrix <span class="math inline">\(\mathbf{X}\)</span>, the response vector <span class="math inline">\(\mathbf{Y}\)</span>, and <span class="math inline">\(\boldsymbol{\beta}\)</span>.</p>
-<p><br></p>
-<p><strong>(b)</strong> Compute <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{X}^T\mathbf{Y}\)</span>.</p>
-<p><br></p>
-<p><strong>(c)</strong> What would <span class="math inline">\(b_2\)</span> measure in this context?</p>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_6561aabc" minutes="6" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
-</div>
+<p><strong>(c)</strong> Solve the normal equations <span class="math inline">\(\mathbf{X}^T\mathbf{X}\,\mathbf{b} = \mathbf{X}^T\mathbf{Y}\)</span> for <span class="math inline">\(b_0\)</span>, <span class="math inline">\(b_1\)</span>, and <span class="math inline">\(b_2\)</span>. Interpret <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span> in context.</p>
 </div>
 </section>
 <section id="practice-ls-estimation-solution" class="slide level2 smaller">
 <h2>Practice: LS Estimation — Solution</h2>
-<div style="font-size: 0.78em;">
+<div style="font-size: 0.82em;">
 <p><strong>(a)</strong></p>
-<p><span class="math display">\[\mathbf{X} = \begin{pmatrix} 1 &amp; 10 &amp; 1 \\ 1 &amp; 20 &amp; 0 \\ 1 &amp; 15 &amp; 1 \end{pmatrix}, \qquad \mathbf{Y} = \begin{pmatrix} 8 \\ 12 \\ 11 \end{pmatrix}, \qquad \boldsymbol{\beta} = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{pmatrix}\]</span></p>
-<div class="fragment">
-<p><strong>(b)</strong></p>
-<p><span class="math display">\[\mathbf{X}^T\mathbf{X} = \begin{pmatrix} 3 &amp; 45 &amp; 2 \\ 45 &amp; 725 &amp; 25 \\ 2 &amp; 25 &amp; 2 \end{pmatrix}, \qquad \mathbf{X}^T\mathbf{Y} = \begin{pmatrix} 31 \\ 475 \\ 19 \end{pmatrix}\]</span></p>
+<p><span class="math display">\[\mathbf{X} = \begin{pmatrix} 1 &amp; 2 &amp; 1 \\ 1 &amp; 5 &amp; 0 \\ 1 &amp; 3 &amp; 1 \end{pmatrix}, \qquad \mathbf{Y} = \begin{pmatrix} 10 \\ 5 \\ 9 \end{pmatrix}, \qquad \boldsymbol{\beta} = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{pmatrix}\]</span></p>
 </div>
 <div class="fragment">
-<p><strong>(c)</strong> <span class="math inline">\(b_2\)</span> estimates the <strong>average difference in daily fuel cost between city and highway driving</strong>, holding miles driven fixed. A positive <span class="math inline">\(b_2\)</span> means city driving costs more per day than highway driving for the same number of miles.</p>
+<div style="font-size: 0.82em;">
+<p><strong>(b)</strong></p>
+<p><span class="math display">\[\mathbf{X}^T\mathbf{X} = \begin{pmatrix} 3 &amp; 10 &amp; 2 \\ 10 &amp; 38 &amp; 5 \\ 2 &amp; 5 &amp; 2 \end{pmatrix}, \qquad \mathbf{X}^T\mathbf{Y} = \begin{pmatrix} 24 \\ 72 \\ 19 \end{pmatrix}\]</span></p>
+</div>
+</div>
+</section>
+<section id="practice-ls-estimation-solution-c" class="slide level2 smaller">
+<h2>Practice: LS Estimation — Solution (c)</h2>
+<div style="font-size: 0.84em;">
+<p>The normal equations <span class="math inline">\(\mathbf{X}^T\mathbf{X}\,\mathbf{b} = \mathbf{X}^T\mathbf{Y}\)</span> give three equations:</p>
+<p><span class="math display">\[\begin{array}{rcl} 3b_0 + 10b_1 + 2b_2 &amp;=&amp; 24 \\ 10b_0 + 38b_1 + 5b_2 &amp;=&amp; 72 \\ 2b_0 + 5b_1 + 2b_2 &amp;=&amp; 19 \end{array}\]</span></p>
+</div>
+<div class="fragment">
+<div style="font-size: 0.84em;">
+<p><strong>Eliminate <span class="math inline">\(b_0\)</span>:</strong> subtract row 3 from row 1:</p>
+<p><span class="math display">\[(3-2)b_0 + (10-5)b_1 + (2-2)b_2 = 24 - 19 \implies b_0 + 5b_1 = 5 \implies b_0 = 5 - 5b_1\]</span></p>
+</div>
+</div>
+<div class="fragment">
+<div style="font-size: 0.84em;">
+<p><strong>Substitute <span class="math inline">\(b_0 = 5 - 5b_1\)</span> into rows 1 and 2</strong> and simplify to get two equations in <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span>:</p>
+<p><span class="math display">\[-5b_1 + 2b_2 = 9 \qquad -12b_1 + 5b_2 = 22\]</span></p>
+<p>Solving: <span class="math inline">\(b_1 = -1\)</span>, <span class="math inline">\(\quad b_2 = 2\)</span>, <span class="math inline">\(\quad b_0 = 10\)</span>.</p>
+</div>
+</div>
+<div class="fragment">
+<div style="font-size: 0.84em;">
+<p><strong>Interpretation:</strong> Each additional °C is associated with <strong>1 fewer cup sold</strong>, holding day type fixed. Weekends sell <strong>2 more cups</strong> on average than weekdays at the same temperature.</p>
 </div>
 </div>
 </section>
@@ -441,19 +673,52 @@ F-statistic: 73.39 on 2 and 3 DF,  p-value: 0.002835</code></pre>
 </section>
 <section id="reading-the-output" class="slide level2 smaller">
 <h2>Reading the Output</h2>
-<div style="font-size: 0.82em;">
-<p>From <code>summary(fit)</code>:</p>
-<ul>
-<li><strong>Coefficients table:</strong> <code>Estimate</code> column gives <span class="math inline">\(\mathbf{b}\)</span>; each row is one <span class="math inline">\(b_j\)</span></li>
-<li><strong>Std. Error:</strong> <span class="math inline">\(SE(b_j) = \sqrt{\hat\sigma^2 [(\mathbf{X}^T\mathbf{X})^{-1}]_{jj}}\)</span></li>
-<li><strong>Residual standard error:</strong> <span class="math inline">\(\hat\sigma = \sqrt{MSE}\)</span>, where <span class="math inline">\(MSE = SSE/(n-p)\)</span></li>
-<li><strong>Multiple R-squared:</strong> <span class="math inline">\(R^2 = SSR/SSTO = 1 - SSE/SSTO\)</span></li>
-</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = cost ~ miles + city)
+
+Residuals:
+      1       2       3       4       5       6 
+ 0.2339 -0.6532 -0.1129  1.0000 -0.1210 -0.3468 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept) -0.73387    2.07037  -0.354  0.74644   
+miles        0.66935    0.08105   8.259  0.00372 **
+city         1.80645    1.05327   1.715  0.18484   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.7369 on 3 degrees of freedom
+Multiple R-squared:   0.98, Adjusted R-squared:  0.9666 
+F-statistic: 73.39 on 2 and 3 DF,  p-value: 0.002835</code></pre>
 </div>
-<div class="fragment">
-<div style="font-size: 0.82em;">
-<p><strong>Key difference from SLR:</strong> degrees of freedom for error are now <span class="math inline">\(n - p\)</span> (we estimated <span class="math inline">\(p\)</span> parameters <span class="math inline">\(\beta_0, \beta_1, \ldots, \beta_{p-1}\)</span>). In SLR, <span class="math inline">\(p = 2\)</span> so df was <span class="math inline">\(n - 2\)</span>.</p>
 </div>
+<div class="fragment absolute" data-fragment-index="1" style="border:3px solid #E8A838; border-radius:4px; background:rgba(232,168,56,0.2);top: 322px; left: 120px; width: 88px; height: 92px; ">
+
+</div>
+<div class="fragment absolute" data-fragment-index="1" style="font-size:0.58em; color:#7D5A00; font-weight:bold; border-left:3px solid #E8A838; padding-left:8px; line-height:1.5;top: 302px; left: 595px; ">
+<p><strong>Estimates</strong> <span class="math inline">\(\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\)</span></p>
+</div>
+<div class="fragment absolute" data-fragment-index="2" style="border:3px solid #5BA4CF; border-radius:4px; background:rgba(91,164,207,0.2);top: 322px; left: 210px; width: 95px; height: 92px; ">
+
+</div>
+<div class="fragment absolute" data-fragment-index="2" style="font-size:0.58em; color:#1A5276; font-weight:bold; border-left:3px solid #5BA4CF; padding-left:8px; line-height:1.5;top: 356px; left: 595px; ">
+<p><strong>Std. Errors</strong> <span class="math inline">\(SE(b_j) = \sqrt{\hat\sigma^2[(\mathbf{X}^T\mathbf{X})^{-1}]_{jj}}\)</span></p>
+</div>
+<div class="fragment absolute" data-fragment-index="3" style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);top: 467px; left: 0px; width: 570px; height: 26px; ">
+
+</div>
+<div class="fragment absolute" data-fragment-index="3" style="font-size:0.58em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.5;top: 450px; left: 595px; ">
+<p><span class="math inline">\(\hat\sigma = \sqrt{MSE}\)</span>; df <span class="math inline">\(= n - p = 3\)</span></p>
+</div>
+<div class="fragment absolute" data-fragment-index="4" style="border:3px solid #C0392B; border-radius:4px; background:rgba(192,57,43,0.2);top: 495px; left: 0px; width: 570px; height: 23px; ">
+
+</div>
+<div class="fragment absolute" data-fragment-index="4" style="font-size:0.58em; color:#922B21; font-weight:bold; border-left:3px solid #C0392B; padding-left:8px;top: 483px; left: 595px; ">
+<p><span class="math inline">\(R^2 = 1 - SSE/SSTO\)</span></p>
 </div>
 </section>
 <section id="practice-interpreting-r-output" class="slide level2 smaller">
@@ -474,7 +739,7 @@ city           1.800      0.950    1.89    0.156</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_f8aeaaef" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_6befa726" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -496,14 +761,17 @@ city           1.800      0.950    1.89    0.156</code></pre>
 </section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
+<div style="font-size: 0.65em;">
 <ul>
-<li class="fragment"><strong>Matrix form:</strong> <span class="math inline">\(\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}\)</span>; design matrix <span class="math inline">\(\mathbf{X}\)</span> has a leading column of 1s for the intercept; <span class="math inline">\(\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}\)</span> is the projection of <span class="math inline">\(\mathbf{Y}\)</span> onto the column space of <span class="math inline">\(\mathbf{X}\)</span></li>
-<li class="fragment"><strong>LS criterion:</strong> minimize <span class="math inline">\(Q = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2\)</span></li>
-<li class="fragment"><strong>Normal equations:</strong> setting <span class="math inline">\(\partial Q / \partial \boldsymbol{\beta} = \mathbf{0}\)</span> gives <span class="math inline">\(\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{X}^T\mathbf{Y}\)</span></li>
-<li class="fragment"><strong>LS estimate:</strong> <span class="math inline">\(\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\)</span> when <span class="math inline">\(\mathbf{X}\)</span> is full column rank; <span class="math inline">\(\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}\)</span>, <span class="math inline">\(\mathbf{e} = \mathbf{Y} - \hat{\mathbf{Y}}\)</span></li>
-<li class="fragment"><strong>Properties:</strong> <span class="math inline">\(E(\mathbf{b}) = \boldsymbol{\beta}\)</span> (unbiased); <span class="math inline">\(\text{Cov}(\mathbf{b}) = \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\)</span>; BLUE by Gauss-Markov; <span class="math inline">\(\mathbf{b} \sim N(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})\)</span> under normality</li>
-<li class="fragment"><strong>In R:</strong> <code>lm(y ~ x1 + x2)</code> fits the model; <code>summary()</code> reports estimates, SEs, <span class="math inline">\(\hat\sigma\)</span>, and <span class="math inline">\(R^2\)</span> with <span class="math inline">\(n - p\)</span> error df</li>
+<li class="fragment"><strong>Matrix operations:</strong> transpose <span class="math inline">\(\mathbf{A}^T\)</span> swaps rows and columns; <span class="math inline">\(\|\mathbf{v}\|^2 = \mathbf{v}^T\mathbf{v}\)</span>; inverse <span class="math inline">\(\mathbf{A}^{-1}\)</span> satisfies <span class="math inline">\(\mathbf{A}^{-1}\mathbf{A} = \mathbf{I}\)</span> and exists only when <span class="math inline">\(\mathbf{A}\)</span> is square and full rank</li>
+<li class="fragment"><strong>Why <span class="math inline">\(\mathbf{X}^T\)</span>:</strong> <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> is <span class="math inline">\(p \times p\)</span> (square, invertible when columns are linearly independent); <span class="math inline">\(\mathbf{X}^T\mathbf{Y}\)</span> is <span class="math inline">\(p \times 1\)</span> — same shape as <span class="math inline">\(\boldsymbol{\beta}\)</span></li>
+<li class="fragment"><strong>Matrix form:</strong> <span class="math inline">\(\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}\)</span>; design matrix <span class="math inline">\(\mathbf{X}\)</span> has a leading column of 1s for the intercept</li>
+<li class="fragment"><strong>RSS in matrix form:</strong> <span class="math inline">\(\text{RSS} = (\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})\)</span>; minimizing gives the normal equations <span class="math inline">\(\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{X}^T\mathbf{Y}\)</span></li>
+<li class="fragment"><strong>LS estimate:</strong> multiply both sides by <span class="math inline">\((\mathbf{X}^T\mathbf{X})^{-1}\)</span> to get <span class="math inline">\(\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\)</span>; fitted values <span class="math inline">\(\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}\)</span>, residuals <span class="math inline">\(\mathbf{e} = \mathbf{Y} - \hat{\mathbf{Y}}\)</span></li>
+<li class="fragment"><strong>Properties:</strong> <span class="math inline">\(E(\mathbf{b}) = \boldsymbol{\beta}\)</span> (unbiased); <span class="math inline">\(\text{Cov}(\mathbf{b}) = \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\)</span>; BLUE by Gauss-Markov</li>
+<li class="fragment"><strong>In R:</strong> <code>lm(y ~ x1 + x2)</code>; <code>summary()</code> gives <span class="math inline">\(\mathbf{b}\)</span>, <span class="math inline">\(SE(b_j)\)</span>, <span class="math inline">\(\hat\sigma = \sqrt{MSE}\)</span> with df <span class="math inline">\(= n-p\)</span>, and <span class="math inline">\(R^2\)</span></li>
 </ul>
+</div>
 </section>
 <section id="questions" class="slide level2" data-background-color="#003660">
 <h2>Questions?</h2>

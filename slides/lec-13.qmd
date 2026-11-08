@@ -1,5 +1,5 @@
 ---
-title: "Lecture 13: Multiple Regression II"
+title: "Lecture 13: Multiple Regression"
 subtitle: "PSTAT 126: Linear Regression"
 author: "Annie Adams"
 institute: "UC Santa Barbara"
@@ -22,11 +22,12 @@ By the end of today you will be able to:
 
 ::: {style="font-size: 0.80em;"}
 
-- Express the multiple regression model in matrix form $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$ and identify the role of the design matrix
-- Derive the least squares estimate $\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$ from the normal equations
-- State the properties of $\mathbf{b}$: unbiasedness, covariance matrix, and the Gauss-Markov theorem
-- Fit a multiple regression model in R and correctly read `lm()` output
-- Interpret estimated coefficients, residual standard error, and $R^2$ in context
+- Perform basic matrix operations — transpose, multiplication, and inverse — and explain when an inverse exists
+- Explain why $\mathbf{X}^T\mathbf{X}$ must be square and invertible to solve for $\mathbf{b}$
+- Express the multiple regression model in matrix form $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$ and identify the design matrix
+- Derive the LS estimate $\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$ by expanding RSS and solving the normal equations
+- Compute $\mathbf{X}^T\mathbf{X}$ and $\mathbf{X}^T\mathbf{Y}$ by hand and solve for $\mathbf{b}$
+- Read `lm()` output in R and interpret estimates, standard errors, $\hat\sigma$, and $R^2$
 
 :::
 
@@ -48,7 +49,189 @@ By the end of today you will be able to:
 
 ---
 
-## The Matrix Form {.smaller}
+## Vectors and Matrices
+
+::: {style="font-size: 0.82em;"}
+
+A **matrix** is a rectangular array of numbers. We write $\mathbf{A}_{m \times n}$ to indicate $m$ rows and $n$ columns:
+
+$$\mathbf{A}_{m \times n} = \begin{pmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\ a_{21} & a_{22} & \cdots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m1} & a_{m2} & \cdots & a_{mn} \end{pmatrix}$$
+
+:::
+
+::: {.incremental}
+::: {style="font-size: 0.82em;"}
+- A **column vector** is an $n \times 1$ matrix: $\mathbf{v} = (v_1, v_2, \ldots, v_n)^T$
+- A **scalar** is a $1 \times 1$ matrix — just a single number
+- **Notation:** bold uppercase $\mathbf{A}$ for matrices, bold lowercase $\mathbf{v}$ for column vectors, unbolded for scalars
+:::
+:::
+
+---
+
+## The Transpose
+
+::: {style="font-size: 0.82em;"}
+
+The **transpose** $\mathbf{A}^T$ of a matrix $\mathbf{A}$ swaps its rows and columns: entry $(i,j)$ of $\mathbf{A}$ becomes entry $(j,i)$ of $\mathbf{A}^T$.
+
+$$\mathbf{A} = \begin{pmatrix} 1 & 2 \\ 3 & 4 \\ 5 & 6 \end{pmatrix}_{3\times 2} \implies \mathbf{A}^T = \begin{pmatrix} 1 & 3 & 5 \\ 2 & 4 & 6 \end{pmatrix}_{2\times 3}$$
+
+Transposing **swaps the dimensions**: an $m \times n$ matrix becomes $n \times m$.
+
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.82em;"}
+
+For a **column vector**, the transpose turns it into a row vector (and vice versa):
+
+$$\mathbf{v} = \begin{pmatrix} v_1 \\ v_2 \\ v_3 \end{pmatrix}_{3\times 1} \implies \mathbf{v}^T = \begin{pmatrix} v_1 & v_2 & v_3 \end{pmatrix}_{1\times 3}$$
+
+This is why we write column vectors as $(v_1, v_2, \ldots, v_n)^T$ — the ${}^T$ signals it is a column, not a row.
+
+:::
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.82em;"}
+
+**Squared length of a vector:** multiplying a row vector by its column vector gives a scalar — the sum of squared entries:
+
+$$\|\mathbf{v}\|^2 = \mathbf{v}^T\mathbf{v} = \begin{pmatrix} v_1 & v_2 & v_3 \end{pmatrix}\begin{pmatrix} v_1 \\ v_2 \\ v_3 \end{pmatrix} = v_1^2 + v_2^2 + v_3^2$$
+
+We will use this to write $\text{RSS} = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2 = (\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})$.
+
+:::
+:::
+
+---
+
+## Matrix Multiplication
+
+::: {style="font-size: 0.82em;"}
+
+**Matrix multiplication:** $\mathbf{A}_{m \times k}\,\mathbf{B}_{k \times n} = \mathbf{C}_{m \times n}$, where $C_{ij} = \displaystyle\sum_{\ell=1}^k A_{i\ell}\,B_{\ell j}$.
+
+The **inner dimensions must match** — only $(m \times k)(k \times n)$ is defined, and the result is $m \times n$.
+
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.82em;"}
+
+**Example:**
+$$\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} \begin{pmatrix} 5 \\ 6 \end{pmatrix} = \begin{pmatrix} 1\cdot5 + 2\cdot6 \\ 3\cdot5 + 4\cdot6 \end{pmatrix} = \begin{pmatrix} 17 \\ 39 \end{pmatrix}$$
+
+$(2\times 2)(2\times 1) = 2\times 1$ — inner dimensions both 2, result is $2\times 1$.
+
+:::
+:::
+
+---
+
+## The Matrix Inverse
+
+::: {style="font-size: 0.85em;"}
+
+Just as the number $5$ has an inverse $5^{-1} = \frac{1}{5}$ satisfying $5^{-1} \cdot 5 = 1$, a square matrix $\mathbf{A}$ has an inverse $\mathbf{A}^{-1}$ satisfying:
+
+$$\mathbf{A}^{-1}\mathbf{A} = \mathbf{A}\mathbf{A}^{-1} = \mathbf{I}_p$$
+
+where $\mathbf{I}_p$ is the **identity matrix** — 1s on the diagonal, 0s elsewhere (the matrix equivalent of the number 1):
+
+$$\mathbf{I}_3 = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix}$$
+
+:::
+
+---
+
+## The Matrix Inverse: Example
+
+::: {style="font-size: 0.60em;"}
+
+For a 2×2 matrix $\mathbf{A} = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$, the recipe is: **swap the diagonal, negate the off-diagonal, divide by $ad - bc$**:
+
+$$\mathbf{A}^{-1} = \frac{1}{ad-bc}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}$$
+
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.60em;"}
+
+Let $\mathbf{A} = \begin{pmatrix} 3 & 1 \\ 2 & 4 \end{pmatrix}$. Then $ad - bc = 3(4) - 1(2) = 10$, so
+
+$$\mathbf{A}^{-1} = \frac{1}{10}\begin{pmatrix} 4 & -1 \\ -2 & 3 \end{pmatrix}$$
+
+:::
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.60em;"}
+
+**Verify** $\mathbf{A}^{-1}\mathbf{A} = \mathbf{I}_2$:
+
+$$\frac{1}{10}\begin{pmatrix} 4 & -1 \\ -2 & 3 \end{pmatrix}\begin{pmatrix} 3 & 1 \\ 2 & 4 \end{pmatrix} = \frac{1}{10}\begin{pmatrix} 10 & 0 \\ 0 & 10 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \mathbf{I}_2 \checkmark$$
+
+:::
+:::
+
+---
+
+## When Does the Inverse Exist?
+
+::: {style="font-size: 0.85em;"}
+
+The inverse $\mathbf{A}^{-1}$ exists if and only if $\mathbf{A}$ is **square** and **full rank** (no column is a linear combination of the others).
+
+:::
+
+::: {.incremental}
+::: {style="font-size: 0.85em;"}
+
+- **Full rank** $\Leftrightarrow$ determinant $\neq 0$ $\Leftrightarrow$ columns are linearly independent
+- In regression, $\mathbf{X}^T\mathbf{X}$ is not always invertible; it fails when predictors are **perfectly collinear** (e.g., one column of $\mathbf{X}$ is a multiple of another)
+
+:::
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.82em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660;"}
+**Example of a singular matrix:**
+$\mathbf{A} = \begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}$ — row 2 is twice row 1, determinant $= 1\cdot4 - 2\cdot2 = 0$. No inverse exists.
+:::
+:::
+
+---
+
+## Why $\mathbf{X}^T$ in Regression?
+
+::: {style="font-size: 0.75em;"}
+
+The design matrix $\mathbf{X}$ has shape $n \times p$ — $n$ observations, $p$ parameters. We can't invert it directly (it isn't square). The transpose is what makes estimation possible.
+
+:::
+
+::: {.incremental}
+::: {style="font-size: 0.75em;"}
+
+- $\mathbf{X}^T$ has shape $p \times n$
+- $\mathbf{X}^T\mathbf{X}$ is $(p \times n)(n \times p) = p \times p$ — **square, and invertible** when $\mathbf{X}$ has full column rank (i.e., its columns are linearly independent)
+- $\mathbf{X}^T\mathbf{Y}$ is $(p \times n)(n \times 1) = p \times 1$ — **same shape as $\boldsymbol{\beta}$**
+
+:::
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.75em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660;"}
+These two quantities — $\mathbf{X}^T\mathbf{X}$ and $\mathbf{X}^T\mathbf{Y}$ — appear directly in the normal equations that give us the LS estimate. The transpose is what makes the dimensions work out.
+:::
+:::
+
+---
+
+## The Matrix Form
+::: {style="font-size: 0.58em;"} 
 
 Define vectors and a matrix:
 
@@ -61,29 +244,11 @@ The general linear regression model becomes:
 
 $$\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$$
 
-The first column of $\mathbf{X}$ is all 1s — this corresponds to the intercept $\beta_0$.
+The first column of $\mathbf{X}$ is all 1s, which corresponds to the intercept $\beta_0$.
 :::
-
+:::
 ---
 
-## Why the Matrix Form Matters
-
-::: {style="font-size: 0.88em;"}
-
-The compact notation $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$ is not just shorthand — it unlocks powerful tools:
-
-:::
-
-::: {.incremental}
-::: {style="font-size: 0.85em;"}
-- **Estimation:** One formula $\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$ works for any number of predictors
-- **Geometry:** $\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}$ is the projection of $\mathbf{Y}$ onto the column space of $\mathbf{X}$
-- **Inference:** Standard errors and test statistics have clean matrix expressions
-- **Generality:** The same framework handles SLR, polynomial, interaction, and mixed models
-:::
-:::
-
----
 
 ## Least Squares Estimation {background-color="#003660"}
 
@@ -93,7 +258,7 @@ The compact notation $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\e
 
 We estimate $\boldsymbol{\beta}$ by minimizing the **sum of squared residuals**:
 
-$$Q = \sum_{i=1}^n \left(Y_i - \beta_0 - \beta_1 X_{i1} - \cdots - \beta_{p-1} X_{i,p-1}\right)^2 = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2$$
+$$\text{RSS} = \sum_{i=1}^n \left(Y_i - \beta_0 - \beta_1 X_{i1} - \cdots - \beta_{p-1} X_{i,p-1}\right)^2 = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2$$
 
 ::: {.fragment}
 This is the same principle as SLR — minimize the total squared vertical distance between the observed $Y_i$ and the fitted surface.
@@ -103,56 +268,195 @@ In SLR we had $p = 2$ (intercept + one slope). Now $p$ can be anything.
 
 ---
 
-## Deriving the Normal Equations
+## Deriving the Normal Equations {.smaller}
 
-Take the derivative of $Q = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2$ with respect to $\boldsymbol{\beta}$ and set it to zero:
+::: {style="font-size: 0.85em;"}
 
-$$\frac{\partial Q}{\partial \boldsymbol{\beta}} = -2\mathbf{X}^T(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}) = \mathbf{0}$$
+We want to minimize $\text{RSS} = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2$ with respect to $\boldsymbol{\beta}$. Work through each step:
+
+**Step 1.** The squared length of a vector $\mathbf{v}$ is $\|\mathbf{v}\|^2 = \mathbf{v}^T\mathbf{v}$. Use this to rewrite RSS as a matrix expression.
+
+<br><br><br><br>
+
+**Step 2.** Expand the product from Step 1.
+
+:::
+
+---
+
+## Deriving the Normal Equations (cont.) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+
+From Step 2: $\text{RSS} = \mathbf{Y}^T\mathbf{Y} - 2\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{Y} + \boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}$
+
+**Step 3.** Take $\partial\,\text{RSS}/\partial\boldsymbol{\beta}$ and set it equal to $\mathbf{0}$.
+
+<br><br><br><br>
+
+**Step 4.** Rearrange to isolate $\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}$ on the left.
+
+:::
+
+---
+
+## Deriving the Normal Equations — Solution
+
+::: {style="font-size: 0.85em;"}
+
+**Step 1.** Write RSS using $\|\mathbf{v}\|^2 = \mathbf{v}^T\mathbf{v}$ with $\mathbf{v} = \mathbf{Y} - \mathbf{X}\boldsymbol{\beta}$:
+
+$$\text{RSS} = (\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})$$
+
+:::
 
 ::: {.fragment}
-This gives the **normal equations**:
+::: {style="font-size: 0.85em;"}
 
-$$\mathbf{X}^T \mathbf{X} \boldsymbol{\beta} = \mathbf{X}^T \mathbf{Y}$$
+**Step 2.** Expand:
+
+$$\text{RSS} = \mathbf{Y}^T\mathbf{Y} - 2\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{Y} + \boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}$$
+
+:::
+:::
+
+---
+
+## Deriving the Normal Equations — Solution (cont.)
+
+::: {style="font-size: 0.85em;"}
+
+**Step 3.** Differentiate and set to zero:
+
+$$\frac{\partial\,\text{RSS}}{\partial\boldsymbol{\beta}} = -2\mathbf{X}^T\mathbf{Y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{0}$$
+
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.85em;"}
+
+**Step 4.** Rearrange — the **normal equations**:
+
+$$\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{X}^T\mathbf{Y}$$
 
 These are $p$ equations in $p$ unknowns $(\beta_0, \beta_1, \ldots, \beta_{p-1})$.
+
+:::
 :::
 
 ---
 
 ## The LS Estimate
 
-If $\mathbf{X}$ is **full column rank** (no predictor is a perfect linear combination of others), then $\mathbf{X}^T\mathbf{X}$ is invertible and the unique solution is:
+::: {style="font-size: 0.65em;"}
+From the normal equations: $\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{X}^T\mathbf{Y}$
+
+If $\mathbf{X}$ is **full column rank**, $\mathbf{X}^T\mathbf{X}$ is invertible. Multiply both sides on the left by $(\mathbf{X}^T\mathbf{X})^{-1}$:
+
+$$(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$$
+
+$$\mathbf{I}_p\,\boldsymbol{\beta} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$$
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.65em;"}
+So the **LS estimate** is:
 
 $$\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$$
 
-::: {.fragment}
-::: {style="font-size: 0.82em;"}
-- $\mathbf{b} = (b_0, b_1, \ldots, b_{p-1})^T$ are the LS estimates of $(\beta_0, \beta_1, \ldots, \beta_{p-1})$
-- The **fitted values** are $\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}$
-- The **residuals** are $\mathbf{e} = \mathbf{Y} - \hat{\mathbf{Y}} = \mathbf{Y} - \mathbf{X}\mathbf{b}$
+where $\mathbf{b} = (b_0, b_1, \ldots, b_{p-1})^T$ estimates $(\beta_0, \beta_1, \ldots, \beta_{p-1})$.
+
+**Note on notation:** $b_0, b_1, \ldots$ are the same as $\hat{\beta}_0, \hat{\beta}_1, \ldots$ from SLR — both are least squares estimates. We switch to $\mathbf{b}$ here because it is more compact in matrix form.
 :::
 :::
 
 ::: {.fragment}
-::: {style="font-size: 0.78em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660;"}
-**When is $\mathbf{X}$ NOT full column rank?** Perfect multicollinearity: e.g., one predictor is a linear combination of others, or you accidentally include all $k$ dummy variables for a $k$-level factor instead of $k-1$.
+::: {style="font-size: 0.65em;"}
+- **Fitted values:** $\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}$
+- **Residuals:** $\mathbf{e} = \mathbf{Y} - \hat{\mathbf{Y}} = \mathbf{Y} - \mathbf{X}\mathbf{b}$
 :::
 :::
 
 ---
 
-## Connecting Back to SLR
+## Connecting Back to SLR {.smaller}
 
-In simple linear regression ($p = 2$, predictors: just $X$):
+::: {style="font-size: 0.85em;"}
 
-$$\mathbf{X} = \begin{pmatrix} 1 & X_1 \\ \vdots & \vdots \\ 1 & X_n \end{pmatrix}, \qquad \mathbf{X}^T\mathbf{X} = \begin{pmatrix} n & \sum X_i \\ \sum X_i & \sum X_i^2 \end{pmatrix}, \qquad \mathbf{X}^T\mathbf{Y} = \begin{pmatrix} \sum Y_i \\ \sum X_i Y_i \end{pmatrix}$$
+For SLR we have one predictor $X$ and an intercept, so $p = 2$. Let's verify the matrix formula $\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$ recovers the formulas we already know.
+
+**Step 1.** Write out $\mathbf{X}$, $\mathbf{Y}$, and $\boldsymbol{\beta}$ for SLR.
+
+<br><br><br><br>
+
+**Step 2.** Compute $\mathbf{X}^T\mathbf{X}$.
+
+:::
+
+---
+
+## Connecting Back to SLR (cont.) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+
+From Step 2: $\mathbf{X}^T\mathbf{X} = \begin{pmatrix} n & \sum X_i \\ \sum X_i & \sum X_i^2 \end{pmatrix}$
+
+**Step 3.** Compute $\mathbf{X}^T\mathbf{Y}$.
+
+<br><br><br><br>
+
+**Step 4.** Solve the normal equations $\mathbf{X}^T\mathbf{X}\,\mathbf{b} = \mathbf{X}^T\mathbf{Y}$ for $b_0$ and $b_1$.
+
+:::
+
+---
+
+## Connecting Back to SLR — Solution {.smaller}
+
+::: {style="font-size: 0.85em;"}
+
+**Step 1.** For SLR, $\mathbf{X}$ has a column of 1s (intercept) and a column of $X$ values:
+
+$$\mathbf{X} = \begin{pmatrix} 1 & X_1 \\ 1 & X_2 \\ \vdots & \vdots \\ 1 & X_n \end{pmatrix}_{n \times 2}, \qquad \mathbf{Y} = \begin{pmatrix} Y_1 \\ \vdots \\ Y_n \end{pmatrix}_{n \times 1}, \qquad \boldsymbol{\beta} = \begin{pmatrix} \beta_0 \\ \beta_1 \end{pmatrix}_{2 \times 1}$$
+
+:::
 
 ::: {.fragment}
-Solving $(\mathbf{X}^T\mathbf{X})\mathbf{b} = \mathbf{X}^T\mathbf{Y}$ recovers exactly the SLR formulas:
+::: {style="font-size: 0.85em;"}
+
+**Step 2.** Multiply $\mathbf{X}^T$ ($2 \times n$) by $\mathbf{X}$ ($n \times 2$) — result is $2 \times 2$:
+
+$$\mathbf{X}^T\mathbf{X} = \begin{pmatrix} \sum 1 & \sum X_i \\ \sum X_i & \sum X_i^2 \end{pmatrix} = \begin{pmatrix} n & \sum X_i \\ \sum X_i & \sum X_i^2 \end{pmatrix}$$
+
+:::
+:::
+
+---
+
+## Connecting Back to SLR — Solution (cont.) {.smaller}
+
+::: {style="font-size: 0.85em;"}
+
+**Step 3.** Multiply $\mathbf{X}^T$ ($2 \times n$) by $\mathbf{Y}$ ($n \times 1$) — result is $2 \times 1$:
+
+$$\mathbf{X}^T\mathbf{Y} = \begin{pmatrix} \sum Y_i \\ \sum X_i Y_i \end{pmatrix}$$
+
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.85em;"}
+
+**Step 4.** The normal equations $\mathbf{X}^T\mathbf{X}\,\mathbf{b} = \mathbf{X}^T\mathbf{Y}$ are two equations in $b_0$ and $b_1$:
+
+$$\begin{pmatrix} n & \sum X_i \\ \sum X_i & \sum X_i^2 \end{pmatrix} \begin{pmatrix} b_0 \\ b_1 \end{pmatrix} = \begin{pmatrix} \sum Y_i \\ \sum X_i Y_i \end{pmatrix}$$
+
+Solving these recovers exactly the SLR formulas:
 
 $$b_1 = \frac{S_{xy}}{S_{xx}}, \qquad b_0 = \bar{Y} - b_1\bar{X}$$
 
 The matrix formula is a **generalization** of what you already know.
+
+:::
 :::
 
 ---
@@ -184,66 +488,105 @@ The diagonal entries of $\sigma^2 (\mathbf{X}^T\mathbf{X})^{-1}$ give $\text{Var
 
 ## Practice: LS Estimation by Hand {.smaller}
 
-::: {style="font-size: 0.80em;"}
+::: {style="font-size: 0.82em;"}
 
-A study records miles driven per day ($X$) and fuel cost per day in dollars ($Y$) for $n = 3$ days, and also includes a dummy variable $D$ for city driving (1 = city, 0 = highway):
+A café records daily high temperature in °C ($X$), whether it is a weekend ($D$: 1 = weekend, 0 = weekday), and cups of hot coffee sold ($Y$) for $n = 3$ days. The model is $Y_i = \beta_0 + \beta_1 X_i + \beta_2 D_i + \epsilon_i$.
 
-| $i$ | $X_i$ | $D_i$ | $Y_i$ |
-|:---:|:-----:|:------:|:-----:|
-| 1 | 10 | 1 | 8 |
-| 2 | 20 | 0 | 12 |
-| 3 | 15 | 1 | 11 |
-
-The model is $Y_i = \beta_0 + \beta_1 X_i + \beta_2 D_i + \epsilon_i$.
+| $i$ | $X_i$ (temp °C) | $D_i$ | $Y_i$ (cups sold) |
+|:---:|:---------------:|:-----:|:-----------------:|
+| 1 | 2 | 1 | 10 |
+| 2 | 5 | 0 | 5 |
+| 3 | 3 | 1 | 9 |
 
 **(a)** Write out the design matrix $\mathbf{X}$, the response vector $\mathbf{Y}$, and $\boldsymbol{\beta}$.
 
-<br>
+<br><br><br>
 
 **(b)** Compute $\mathbf{X}^T\mathbf{X}$ and $\mathbf{X}^T\mathbf{Y}$.
 
-<br>
+:::
 
-**(c)** What would $b_2$ measure in this context?
+---
+
+## Practice: LS Estimation by Hand (cont.) {.smaller}
+
+::: {style="font-size: 0.82em;"}
+
+| $i$ | $X_i$ (temp °C) | $D_i$ | $Y_i$ (cups sold) |
+|:---:|:---------------:|:-----:|:-----------------:|
+| 1 | 2 | 1 | 10 |
+| 2 | 5 | 0 | 5 |
+| 3 | 3 | 1 | 9 |
+
+The model is $Y_i = \beta_0 + \beta_1 X_i + \beta_2 D_i + \epsilon_i$.
+
+**(c)** Solve the normal equations $\mathbf{X}^T\mathbf{X}\,\mathbf{b} = \mathbf{X}^T\mathbf{Y}$ for $b_0$, $b_1$, and $b_2$. Interpret $b_1$ and $b_2$ in context.
 
 :::
 
-```{r}
-#| echo: false
-#| eval: true
-countdown::countdown(
-  minutes = 6,
-  play_sound = TRUE,
-  color_border              = "#FEBC11",
-  color_text                = "#003660",
-  color_running_background  = "#003660",
-  color_running_text        = "#FFFFFF",
-  color_finished_background = "#FEBC11",
-  color_finished_text       = "#003660",
-  font_size = "2em"
-)
-```
 
 ---
 
 ## Practice: LS Estimation — Solution {.smaller}
 
-::: {style="font-size: 0.78em;"}
+::: {style="font-size: 0.82em;"}
 
 **(a)**
 
-$$\mathbf{X} = \begin{pmatrix} 1 & 10 & 1 \\ 1 & 20 & 0 \\ 1 & 15 & 1 \end{pmatrix}, \qquad \mathbf{Y} = \begin{pmatrix} 8 \\ 12 \\ 11 \end{pmatrix}, \qquad \boldsymbol{\beta} = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{pmatrix}$$
+$$\mathbf{X} = \begin{pmatrix} 1 & 2 & 1 \\ 1 & 5 & 0 \\ 1 & 3 & 1 \end{pmatrix}, \qquad \mathbf{Y} = \begin{pmatrix} 10 \\ 5 \\ 9 \end{pmatrix}, \qquad \boldsymbol{\beta} = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{pmatrix}$$
+
+:::
 
 ::: {.fragment}
+::: {style="font-size: 0.82em;"}
+
 **(b)**
 
-$$\mathbf{X}^T\mathbf{X} = \begin{pmatrix} 3 & 45 & 2 \\ 45 & 725 & 25 \\ 2 & 25 & 2 \end{pmatrix}, \qquad \mathbf{X}^T\mathbf{Y} = \begin{pmatrix} 31 \\ 475 \\ 19 \end{pmatrix}$$
+$$\mathbf{X}^T\mathbf{X} = \begin{pmatrix} 3 & 10 & 2 \\ 10 & 38 & 5 \\ 2 & 5 & 2 \end{pmatrix}, \qquad \mathbf{X}^T\mathbf{Y} = \begin{pmatrix} 24 \\ 72 \\ 19 \end{pmatrix}$$
+
+:::
+:::
+
+---
+
+## Practice: LS Estimation — Solution (c) {.smaller}
+
+::: {style="font-size: 0.84em;"}
+
+The normal equations $\mathbf{X}^T\mathbf{X}\,\mathbf{b} = \mathbf{X}^T\mathbf{Y}$ give three equations:
+
+$$\begin{array}{rcl} 3b_0 + 10b_1 + 2b_2 &=& 24 \\ 10b_0 + 38b_1 + 5b_2 &=& 72 \\ 2b_0 + 5b_1 + 2b_2 &=& 19 \end{array}$$
+
 :::
 
 ::: {.fragment}
-**(c)** $b_2$ estimates the **average difference in daily fuel cost between city and highway driving**, holding miles driven fixed. A positive $b_2$ means city driving costs more per day than highway driving for the same number of miles.
+::: {style="font-size: 0.84em;"}
+
+**Eliminate $b_0$:** subtract row 3 from row 1:
+
+$$(3-2)b_0 + (10-5)b_1 + (2-2)b_2 = 24 - 19 \implies b_0 + 5b_1 = 5 \implies b_0 = 5 - 5b_1$$
+
+:::
 :::
 
+::: {.fragment}
+::: {style="font-size: 0.84em;"}
+
+**Substitute $b_0 = 5 - 5b_1$ into rows 1 and 2** and simplify to get two equations in $b_1$ and $b_2$:
+
+$$-5b_1 + 2b_2 = 9 \qquad -12b_1 + 5b_2 = 22$$
+
+Solving: $b_1 = -1$, $\quad b_2 = 2$, $\quad b_0 = 10$.
+
+:::
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.84em;"}
+
+**Interpretation:** Each additional °C is associated with **1 fewer cup sold**, holding day type fixed. Weekends sell **2 more cups** on average than weekdays at the same temperature.
+
+:::
 :::
 
 ---
@@ -272,21 +615,40 @@ summary(fit)
 
 ## Reading the Output {.smaller}
 
-::: {style="font-size: 0.82em;"}
+```{r}
+#| echo: false
+#| eval: true
+miles <- c(10, 20, 15, 25, 18, 30)
+city  <- c(1, 0, 1, 0, 1, 0)
+cost  <- c(8, 12, 11, 17, 13, 19)
+fit2  <- lm(cost ~ miles + city)
+summary(fit2)
+```
 
-From `summary(fit)`:
-
-- **Coefficients table:** `Estimate` column gives $\mathbf{b}$; each row is one $b_j$
-- **Std. Error:** $SE(b_j) = \sqrt{\hat\sigma^2 [(\mathbf{X}^T\mathbf{X})^{-1}]_{jj}}$
-- **Residual standard error:** $\hat\sigma = \sqrt{MSE}$, where $MSE = SSE/(n-p)$
-- **Multiple R-squared:** $R^2 = SSR/SSTO = 1 - SSE/SSTO$
-
+::: {.fragment .absolute top="322px" left="120px" width="88px" height="92px" fragment-index=1 style="border:3px solid #E8A838; border-radius:4px; background:rgba(232,168,56,0.2);"}
+:::
+::: {.fragment .absolute top="302px" left="595px" fragment-index=1 style="font-size:0.58em; color:#7D5A00; font-weight:bold; border-left:3px solid #E8A838; padding-left:8px; line-height:1.5;"}
+**Estimates**
+$\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$
 :::
 
-::: {.fragment}
-::: {style="font-size: 0.82em;"}
-**Key difference from SLR:** degrees of freedom for error are now $n - p$ (we estimated $p$ parameters $\beta_0, \beta_1, \ldots, \beta_{p-1}$). In SLR, $p = 2$ so df was $n - 2$.
+::: {.fragment .absolute top="322px" left="210px" width="95px" height="92px" fragment-index=2 style="border:3px solid #5BA4CF; border-radius:4px; background:rgba(91,164,207,0.2);"}
 :::
+::: {.fragment .absolute top="356px" left="595px" fragment-index=2 style="font-size:0.58em; color:#1A5276; font-weight:bold; border-left:3px solid #5BA4CF; padding-left:8px; line-height:1.5;"}
+**Std. Errors**
+$SE(b_j) = \sqrt{\hat\sigma^2[(\mathbf{X}^T\mathbf{X})^{-1}]_{jj}}$
+:::
+
+::: {.fragment .absolute top="467px" left="0px" width="570px" height="26px" fragment-index=3 style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);"}
+:::
+::: {.fragment .absolute top="450px" left="595px" fragment-index=3 style="font-size:0.58em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.5;"}
+$\hat\sigma = \sqrt{MSE}$; df $= n - p = 3$
+:::
+
+::: {.fragment .absolute top="495px" left="0px" width="570px" height="23px" fragment-index=4 style="border:3px solid #C0392B; border-radius:4px; background:rgba(192,57,43,0.2);"}
+:::
+::: {.fragment .absolute top="483px" left="595px" fragment-index=4 style="font-size:0.58em; color:#922B21; font-weight:bold; border-left:3px solid #C0392B; padding-left:8px;"}
+$R^2 = 1 - SSE/SSTO$
 :::
 
 ---
@@ -360,16 +722,18 @@ $$\widehat{\text{Cost}} = 2.00 + 0.55(20) + 1.80(1) = 2.00 + 11.00 + 1.80 = \mat
 ---
 
 ## Summary
+::: {style="font-size: 0.65em;"}
 
 ::: {.incremental}
-- **Matrix form:** $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$; design matrix $\mathbf{X}$ has a leading column of 1s for the intercept; $\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}$ is the projection of $\mathbf{Y}$ onto the column space of $\mathbf{X}$
-- **LS criterion:** minimize $Q = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2$
-- **Normal equations:** setting $\partial Q / \partial \boldsymbol{\beta} = \mathbf{0}$ gives $\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{X}^T\mathbf{Y}$
-- **LS estimate:** $\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$ when $\mathbf{X}$ is full column rank; $\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}$, $\mathbf{e} = \mathbf{Y} - \hat{\mathbf{Y}}$
-- **Properties:** $E(\mathbf{b}) = \boldsymbol{\beta}$ (unbiased); $\text{Cov}(\mathbf{b}) = \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}$; BLUE by Gauss-Markov; $\mathbf{b} \sim N(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})$ under normality
-- **In R:** `lm(y ~ x1 + x2)` fits the model; `summary()` reports estimates, SEs, $\hat\sigma$, and $R^2$ with $n - p$ error df
+- **Matrix operations:** transpose $\mathbf{A}^T$ swaps rows and columns; $\|\mathbf{v}\|^2 = \mathbf{v}^T\mathbf{v}$; inverse $\mathbf{A}^{-1}$ satisfies $\mathbf{A}^{-1}\mathbf{A} = \mathbf{I}$ and exists only when $\mathbf{A}$ is square and full rank
+- **Why $\mathbf{X}^T$:** $\mathbf{X}^T\mathbf{X}$ is $p \times p$ (square, invertible when columns are linearly independent); $\mathbf{X}^T\mathbf{Y}$ is $p \times 1$ — same shape as $\boldsymbol{\beta}$
+- **Matrix form:** $\mathbf{Y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$; design matrix $\mathbf{X}$ has a leading column of 1s for the intercept
+- **RSS in matrix form:** $\text{RSS} = (\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})$; minimizing gives the normal equations $\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{X}^T\mathbf{Y}$
+- **LS estimate:** multiply both sides by $(\mathbf{X}^T\mathbf{X})^{-1}$ to get $\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$; fitted values $\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}$, residuals $\mathbf{e} = \mathbf{Y} - \hat{\mathbf{Y}}$
+- **Properties:** $E(\mathbf{b}) = \boldsymbol{\beta}$ (unbiased); $\text{Cov}(\mathbf{b}) = \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}$; BLUE by Gauss-Markov
+- **In R:** `lm(y ~ x1 + x2)`; `summary()` gives $\mathbf{b}$, $SE(b_j)$, $\hat\sigma = \sqrt{MSE}$ with df $= n-p$, and $R^2$
 :::
-
+:::
 ---
 
 ## Questions? {background-color="#003660"}
