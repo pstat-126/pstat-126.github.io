@@ -4767,5 +4767,12 @@
     "title": "Lecture 13: Multiple Regression",
     "section": "The Transpose",
     "text": "The Transpose\n\nSquared length of a vector: multiplying a row vector by its column vector gives a scalar — the sum of squared entries:\n\\[\\|\\mathbf{v}\\|^2 = \\mathbf{v}^T\\mathbf{v} = \\begin{pmatrix} v_1 & v_2 & v_3 \\end{pmatrix}\\begin{pmatrix} v_1 \\\\ v_2 \\\\ v_3 \\end{pmatrix} = v_1^2 + v_2^2 + v_3^2\\]\nWe will use this to write \\(\\text{RSS} = \\|\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta}\\|^2 = (\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta})^T(\\mathbf{Y} - \\mathbf{X}\\boldsymbol{\\beta})\\)."
+  },
+  {
+    "objectID": "slides/lec-13.html#course-reminders",
+    "href": "slides/lec-13.html#course-reminders",
+    "title": "Lecture 13: Multiple Regression",
+    "section": "Course Reminders",
+    "text": "Course Reminders\n\nNo class Wednesday (Veteran’s Day)\nQuiz 3 next Monday (11/16)"
   }
 ]

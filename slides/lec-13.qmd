@@ -16,6 +16,10 @@ format:
       data-background-color: "#003660"
 ---
 
+## Course Reminders 
+- No class Wednesday (Veteran's Day)
+- Quiz 3 next Monday (11/16)
+
 ## Learning Objectives
 
 By the end of today you will be able to:
