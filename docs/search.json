@@ -4529,7 +4529,7 @@
     "href": "slides/lec-13.html#when-does-the-inverse-exist",
     "title": "Lecture 13: Multiple Regression",
     "section": "When Does the Inverse Exist?",
-    "text": "When Does the Inverse Exist?\n\nThe inverse \\(\\mathbf{A}^{-1}\\) exists if and only if \\(\\mathbf{A}\\) is square and full rank (no column is a linear combination of the others).\n\n\n\nFull rank \\(\\Leftrightarrow\\) determinant \\(\\neq 0\\) \\(\\Leftrightarrow\\) columns are linearly independent\nIn regression, \\(\\mathbf{X}^T\\mathbf{X}\\) is not always invertible; it fails when predictors are perfectly collinear (e.g., one column of \\(\\mathbf{X}\\) is a multiple of another)\n\n\n\n\nExample of a singular matrix: \\(\\mathbf{A} = \\begin{pmatrix} 1 & 2 \\\\ 2 & 4 \\end{pmatrix}\\) — row 2 is twice row 1, determinant \\(= 1\\cdot4 - 2\\cdot2 = 0\\). No inverse exists."
+    "text": "When Does the Inverse Exist?\n\nThe inverse \\(\\mathbf{A}^{-1}\\) exists if and only if \\(\\mathbf{A}\\) is square and full rank (no column is a linear combination of the others).\n\n\n\nFull rank \\(\\Leftrightarrow\\) determinant \\(\\neq 0\\) \\(\\Leftrightarrow\\) columns are linearly independent\nIn regression, \\(\\mathbf{X}^T\\mathbf{X}\\) is not always invertible; it fails when predictors are perfectly collinear (e.g., one column of \\(\\mathbf{X}\\) is a multiple of another)\n\n\n\n\nExample of a singular matrix: \\(\\mathbf{A} = \\begin{pmatrix} 1 & 2 \\\\ 2 & 4 \\end{pmatrix}\\) — column 2 is twice column 1, determinant \\(= 1\\cdot4 - 2\\cdot2 = 0\\). No inverse exists."
   },
   {
     "objectID": "slides/lec-13.html#the-matrix-inverse-example",

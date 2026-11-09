@@ -201,7 +201,7 @@ The inverse $\mathbf{A}^{-1}$ exists if and only if $\mathbf{A}$ is **square** a
 ::: {.fragment}
 ::: {style="font-size: 0.82em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660;"}
 **Example of a singular matrix:**
-$\mathbf{A} = \begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}$ — row 2 is twice row 1, determinant $= 1\cdot4 - 2\cdot2 = 0$. No inverse exists.
+$\mathbf{A} = \begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}$ — column 2 is twice column 1, determinant $= 1\cdot4 - 2\cdot2 = 0$. No inverse exists.
 :::
 :::
 
