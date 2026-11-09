@@ -43,6 +43,12 @@ By the end of today you will be able to:
 
 :::
 
+::: {.fragment}
+::: {style="font-size: 0.78em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.5em;"}
+**Why matrices?** In SLR we took two partial derivatives and solved two equations. With $p$ parameters that approach becomes unwieldy fast (10 predictors means 11 equations to juggle simultaneously). Matrix notation lets us write one derivative and one formula $\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$ that works for any $p$. The math is the same, but now we can scale to any size. 
+:::
+:::
+
 ---
 
 ## The Matrix Form {background-color="#003660"}
@@ -63,7 +69,6 @@ $$\mathbf{A}_{m \times n} = \begin{pmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\
 ::: {style="font-size: 0.82em;"}
 - A **column vector** is an $n \times 1$ matrix: $\mathbf{v} = (v_1, v_2, \ldots, v_n)^T$
 - A **scalar** is a $1 \times 1$ matrix — just a single number
-- **Notation:** bold uppercase $\mathbf{A}$ for matrices, bold lowercase $\mathbf{v}$ for column vectors, unbolded for scalars
 :::
 :::
 
@@ -71,7 +76,7 @@ $$\mathbf{A}_{m \times n} = \begin{pmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\
 
 ## The Transpose
 
-::: {style="font-size: 0.82em;"}
+::: {style="font-size: 0.72em;"}
 
 The **transpose** $\mathbf{A}^T$ of a matrix $\mathbf{A}$ swaps its rows and columns: entry $(i,j)$ of $\mathbf{A}$ becomes entry $(j,i)$ of $\mathbf{A}^T$.
 
@@ -82,18 +87,16 @@ Transposing **swaps the dimensions**: an $m \times n$ matrix becomes $n \times m
 :::
 
 ::: {.fragment}
-::: {style="font-size: 0.82em;"}
+::: {style="font-size: 0.72em;"}
 
 For a **column vector**, the transpose turns it into a row vector (and vice versa):
 
 $$\mathbf{v} = \begin{pmatrix} v_1 \\ v_2 \\ v_3 \end{pmatrix}_{3\times 1} \implies \mathbf{v}^T = \begin{pmatrix} v_1 & v_2 & v_3 \end{pmatrix}_{1\times 3}$$
-
-This is why we write column vectors as $(v_1, v_2, \ldots, v_n)^T$ — the ${}^T$ signals it is a column, not a row.
-
 :::
 :::
 
-::: {.fragment}
+
+## The Transpose
 ::: {style="font-size: 0.82em;"}
 
 **Squared length of a vector:** multiplying a row vector by its column vector gives a scalar — the sum of squared entries:
@@ -102,7 +105,7 @@ $$\|\mathbf{v}\|^2 = \mathbf{v}^T\mathbf{v} = \begin{pmatrix} v_1 & v_2 & v_3 \e
 
 We will use this to write $\text{RSS} = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2 = (\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})$.
 
-:::
+
 :::
 
 ---
@@ -111,7 +114,7 @@ We will use this to write $\text{RSS} = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\be
 
 ::: {style="font-size: 0.82em;"}
 
-**Matrix multiplication:** $\mathbf{A}_{m \times k}\,\mathbf{B}_{k \times n} = \mathbf{C}_{m \times n}$, where $C_{ij} = \displaystyle\sum_{\ell=1}^k A_{i\ell}\,B_{\ell j}$.
+**Matrix multiplication:** $\mathbf{A}_{m \times k}\,\mathbf{B}_{k \times n} = \mathbf{C}_{m \times n}$.
 
 The **inner dimensions must match** — only $(m \times k)(k \times n)$ is defined, and the result is $m \times n$.
 
@@ -261,7 +264,7 @@ We estimate $\boldsymbol{\beta}$ by minimizing the **sum of squared residuals**:
 $$\text{RSS} = \sum_{i=1}^n \left(Y_i - \beta_0 - \beta_1 X_{i1} - \cdots - \beta_{p-1} X_{i,p-1}\right)^2 = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2$$
 
 ::: {.fragment}
-This is the same principle as SLR — minimize the total squared vertical distance between the observed $Y_i$ and the fitted surface.
+This is the same principle as SLR. we want to minimize the total squared vertical distance between the observed $Y_i$ and the fitted surface.
 
 In SLR we had $p = 2$ (intercept + one slope). Now $p$ can be anything.
 :::
@@ -348,7 +351,7 @@ These are $p$ equations in $p$ unknowns $(\beta_0, \beta_1, \ldots, \beta_{p-1})
 
 ## The LS Estimate
 
-::: {style="font-size: 0.65em;"}
+::: {style="font-size: 0.55em;"}
 From the normal equations: $\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{X}^T\mathbf{Y}$
 
 If $\mathbf{X}$ is **full column rank**, $\mathbf{X}^T\mathbf{X}$ is invertible. Multiply both sides on the left by $(\mathbf{X}^T\mathbf{X})^{-1}$:
@@ -359,7 +362,7 @@ $$\mathbf{I}_p\,\boldsymbol{\beta} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\m
 :::
 
 ::: {.fragment}
-::: {style="font-size: 0.65em;"}
+::: {style="font-size: 0.55em;"}
 So the **LS estimate** is:
 
 $$\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$$
@@ -371,7 +374,7 @@ where $\mathbf{b} = (b_0, b_1, \ldots, b_{p-1})^T$ estimates $(\beta_0, \beta_1,
 :::
 
 ::: {.fragment}
-::: {style="font-size: 0.65em;"}
+::: {style="font-size: 0.55em;"}
 - **Fitted values:** $\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}$
 - **Residuals:** $\mathbf{e} = \mathbf{Y} - \hat{\mathbf{Y}} = \mathbf{Y} - \mathbf{X}\mathbf{b}$
 :::
@@ -746,3 +749,79 @@ Office Hours: Tuesday 10 – 11 AM on [Zoom](https://ucsb.zoom.us/j/81194403106?
 
 [Course Website](https://pstat-126.github.io/)
 :::
+
+---
+
+## Appendix {background-color="#003660"}
+
+---
+
+## Appendix: Matrix Derivatives
+
+::: {style="font-size: 0.60em;"}
+
+When we minimize RSS we differentiate with respect to a **vector** $\boldsymbol{\beta}$, not a scalar. The gradient $\frac{\partial f}{\partial \boldsymbol{\beta}}$ is itself a vector — entry $j$ is $\frac{\partial f}{\partial \beta_j}$.
+
+Two rules cover everything needed for the LS derivation:
+
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.60em; background-color: #f5f5f5; padding: 0.3em 0.7em; border-left: 4px solid #003660; margin-top: 0.3em;"}
+
+**Rule 1 — Linear form:** For a fixed vector $\mathbf{a}$,
+$$\frac{\partial}{\partial \boldsymbol{\beta}}\left(\mathbf{a}^T \boldsymbol{\beta}\right) = \mathbf{a}$$
+
+*Analogy:* just like $\frac{d}{dx}(ax) = a$ in scalar calculus.
+
+:::
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.60em; background-color: #f5f5f5; padding: 0.3em 0.7em; border-left: 4px solid #003660; margin-top: 0.3em;"}
+
+**Rule 2 — Quadratic form:** For a fixed **symmetric** matrix $\mathbf{A}$,
+$$\frac{\partial}{\partial \boldsymbol{\beta}}\left(\boldsymbol{\beta}^T \mathbf{A} \boldsymbol{\beta}\right) = 2\mathbf{A}\boldsymbol{\beta}$$
+
+*Analogy:* just like $\frac{d}{dx}(ax^2) = 2ax$ in scalar calculus.
+
+:::
+:::
+
+---
+
+## Appendix: Applying the Rules to RSS
+
+::: {style="font-size: 0.52em;"}
+
+Recall the expanded RSS:
+$$\text{RSS} = \underbrace{\mathbf{Y}^T\mathbf{Y}}_{\text{no } \boldsymbol{\beta}} - \underbrace{2\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{Y}}_{\text{linear in }\boldsymbol{\beta}} + \underbrace{\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}}_{\text{quadratic in }\boldsymbol{\beta}}$$
+
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.52em;"}
+
+Differentiate term by term:
+
+| Term | Form | Rule | Result |
+|------|------|------|--------|
+| $\mathbf{Y}^T\mathbf{Y}$ | constant | — | $\mathbf{0}$ |
+| $-2\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{Y}$ | $\mathbf{a}^T\boldsymbol{\beta}$ with $\mathbf{a} = \mathbf{X}^T\mathbf{Y}$ | Rule 1 | $-2\mathbf{X}^T\mathbf{Y}$ |
+| $\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}$ | $\boldsymbol{\beta}^T\mathbf{A}\boldsymbol{\beta}$ with $\mathbf{A} = \mathbf{X}^T\mathbf{X}$ | Rule 2 | $2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}$ |
+
+Note: $\mathbf{X}^T\mathbf{X}$ is always symmetric, so Rule 2 applies directly.
+
+:::
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.52em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;"}
+
+Summing the three terms and setting equal to $\mathbf{0}$:
+$$\frac{\partial\,\text{RSS}}{\partial\boldsymbol{\beta}} = -2\mathbf{X}^T\mathbf{Y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{0} \implies \mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{X}^T\mathbf{Y}$$
+
+:::
+:::
+
+

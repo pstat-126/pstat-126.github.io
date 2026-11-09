@@ -243,6 +243,11 @@ Annie Adams
 <li><strong>Multiple Regression in R</strong> — fitting, reading output, interpreting results</li>
 </ol>
 </div>
+<div class="fragment">
+<div style="font-size: 0.78em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.5em;">
+<p><strong>Why matrices?</strong> In SLR we took two partial derivatives and solved two equations. With <span class="math inline">\(p\)</span> parameters that approach becomes unwieldy fast (10 predictors means 11 equations to juggle simultaneously). Matrix notation lets us write one derivative and one formula <span class="math inline">\(\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\)</span> that works for any <span class="math inline">\(p\)</span>. The math is the same, but now we can scale to any size.</p>
+</div>
+</div>
 </section>
 <section id="the-matrix-form" class="slide level2" data-background-color="#003660">
 <h2>The Matrix Form</h2>
@@ -257,36 +262,35 @@ Annie Adams
 <ul>
 <li class="fragment">A <strong>column vector</strong> is an <span class="math inline">\(n \times 1\)</span> matrix: <span class="math inline">\(\mathbf{v} = (v_1, v_2, \ldots, v_n)^T\)</span></li>
 <li class="fragment">A <strong>scalar</strong> is a <span class="math inline">\(1 \times 1\)</span> matrix — just a single number</li>
-<li class="fragment"><strong>Notation:</strong> bold uppercase <span class="math inline">\(\mathbf{A}\)</span> for matrices, bold lowercase <span class="math inline">\(\mathbf{v}\)</span> for column vectors, unbolded for scalars</li>
 </ul>
 </div>
 </section>
 <section id="the-transpose" class="slide level2">
 <h2>The Transpose</h2>
-<div style="font-size: 0.82em;">
+<div style="font-size: 0.72em;">
 <p>The <strong>transpose</strong> <span class="math inline">\(\mathbf{A}^T\)</span> of a matrix <span class="math inline">\(\mathbf{A}\)</span> swaps its rows and columns: entry <span class="math inline">\((i,j)\)</span> of <span class="math inline">\(\mathbf{A}\)</span> becomes entry <span class="math inline">\((j,i)\)</span> of <span class="math inline">\(\mathbf{A}^T\)</span>.</p>
 <p><span class="math display">\[\mathbf{A} = \begin{pmatrix} 1 &amp; 2 \\ 3 &amp; 4 \\ 5 &amp; 6 \end{pmatrix}_{3\times 2} \implies \mathbf{A}^T = \begin{pmatrix} 1 &amp; 3 &amp; 5 \\ 2 &amp; 4 &amp; 6 \end{pmatrix}_{2\times 3}\]</span></p>
 <p>Transposing <strong>swaps the dimensions</strong>: an <span class="math inline">\(m \times n\)</span> matrix becomes <span class="math inline">\(n \times m\)</span>.</p>
 </div>
 <div class="fragment">
-<div style="font-size: 0.82em;">
+<div style="font-size: 0.72em;">
 <p>For a <strong>column vector</strong>, the transpose turns it into a row vector (and vice versa):</p>
 <p><span class="math display">\[\mathbf{v} = \begin{pmatrix} v_1 \\ v_2 \\ v_3 \end{pmatrix}_{3\times 1} \implies \mathbf{v}^T = \begin{pmatrix} v_1 &amp; v_2 &amp; v_3 \end{pmatrix}_{1\times 3}\]</span></p>
-<p>This is why we write column vectors as <span class="math inline">\((v_1, v_2, \ldots, v_n)^T\)</span> — the <span class="math inline">\({}^T\)</span> signals it is a column, not a row.</p>
 </div>
 </div>
-<div class="fragment">
+</section>
+<section id="the-transpose-1" class="slide level2">
+<h2>The Transpose</h2>
 <div style="font-size: 0.82em;">
 <p><strong>Squared length of a vector:</strong> multiplying a row vector by its column vector gives a scalar — the sum of squared entries:</p>
 <p><span class="math display">\[\|\mathbf{v}\|^2 = \mathbf{v}^T\mathbf{v} = \begin{pmatrix} v_1 &amp; v_2 &amp; v_3 \end{pmatrix}\begin{pmatrix} v_1 \\ v_2 \\ v_3 \end{pmatrix} = v_1^2 + v_2^2 + v_3^2\]</span></p>
 <p>We will use this to write <span class="math inline">\(\text{RSS} = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2 = (\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})^T(\mathbf{Y} - \mathbf{X}\boldsymbol{\beta})\)</span>.</p>
 </div>
-</div>
 </section>
 <section id="matrix-multiplication" class="slide level2">
 <h2>Matrix Multiplication</h2>
 <div style="font-size: 0.82em;">
-<p><strong>Matrix multiplication:</strong> <span class="math inline">\(\mathbf{A}_{m \times k}\,\mathbf{B}_{k \times n} = \mathbf{C}_{m \times n}\)</span>, where <span class="math inline">\(C_{ij} = \displaystyle\sum_{\ell=1}^k A_{i\ell}\,B_{\ell j}\)</span>.</p>
+<p><strong>Matrix multiplication:</strong> <span class="math inline">\(\mathbf{A}_{m \times k}\,\mathbf{B}_{k \times n} = \mathbf{C}_{m \times n}\)</span>.</p>
 <p>The <strong>inner dimensions must match</strong> — only <span class="math inline">\((m \times k)(k \times n)\)</span> is defined, and the result is <span class="math inline">\(m \times n\)</span>.</p>
 </div>
 <div class="fragment">
@@ -380,7 +384,7 @@ Annie Adams
 <p>We estimate <span class="math inline">\(\boldsymbol{\beta}\)</span> by minimizing the <strong>sum of squared residuals</strong>:</p>
 <p><span class="math display">\[\text{RSS} = \sum_{i=1}^n \left(Y_i - \beta_0 - \beta_1 X_{i1} - \cdots - \beta_{p-1} X_{i,p-1}\right)^2 = \|\mathbf{Y} - \mathbf{X}\boldsymbol{\beta}\|^2\]</span></p>
 <div class="fragment">
-<p>This is the same principle as SLR — minimize the total squared vertical distance between the observed <span class="math inline">\(Y_i\)</span> and the fitted surface.</p>
+<p>This is the same principle as SLR. we want to minimize the total squared vertical distance between the observed <span class="math inline">\(Y_i\)</span> and the fitted surface.</p>
 <p>In SLR we had <span class="math inline">\(p = 2\)</span> (intercept + one slope). Now <span class="math inline">\(p\)</span> can be anything.</p>
 </div>
 </section>
@@ -431,14 +435,14 @@ Annie Adams
 </section>
 <section id="the-ls-estimate" class="slide level2">
 <h2>The LS Estimate</h2>
-<div style="font-size: 0.65em;">
+<div style="font-size: 0.55em;">
 <p>From the normal equations: <span class="math inline">\(\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{X}^T\mathbf{Y}\)</span></p>
 <p>If <span class="math inline">\(\mathbf{X}\)</span> is <strong>full column rank</strong>, <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> is invertible. Multiply both sides on the left by <span class="math inline">\((\mathbf{X}^T\mathbf{X})^{-1}\)</span>:</p>
 <p><span class="math display">\[(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\]</span></p>
 <p><span class="math display">\[\mathbf{I}_p\,\boldsymbol{\beta} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\]</span></p>
 </div>
 <div class="fragment">
-<div style="font-size: 0.65em;">
+<div style="font-size: 0.55em;">
 <p>So the <strong>LS estimate</strong> is:</p>
 <p><span class="math display">\[\mathbf{b} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\]</span></p>
 <p>where <span class="math inline">\(\mathbf{b} = (b_0, b_1, \ldots, b_{p-1})^T\)</span> estimates <span class="math inline">\((\beta_0, \beta_1, \ldots, \beta_{p-1})\)</span>.</p>
@@ -446,7 +450,7 @@ Annie Adams
 </div>
 </div>
 <div class="fragment">
-<div style="font-size: 0.65em;">
+<div style="font-size: 0.55em;">
 <ul>
 <li><strong>Fitted values:</strong> <span class="math inline">\(\hat{\mathbf{Y}} = \mathbf{X}\mathbf{b}\)</span></li>
 <li><strong>Residuals:</strong> <span class="math inline">\(\mathbf{e} = \mathbf{Y} - \hat{\mathbf{Y}} = \mathbf{Y} - \mathbf{X}\mathbf{b}\)</span></li>
@@ -739,7 +743,7 @@ city           1.800      0.950    1.89    0.156</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_6befa726" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_90cc8c3b" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -779,6 +783,81 @@ city           1.800      0.950    1.89    0.156</code></pre>
 <p><strong>Annie Adams</strong> <a href="mailto:aradams@ucsb.edu">aradams@ucsb.edu</a></p>
 <p>Office Hours: Tuesday 10 – 11 AM on <a href="https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1">Zoom</a></p>
 <p><a href="https://pstat-126.github.io/">Course Website</a></p>
+</div>
+</section>
+<section id="appendix" class="slide level2" data-background-color="#003660">
+<h2>Appendix</h2>
+</section>
+<section id="appendix-matrix-derivatives" class="slide level2">
+<h2>Appendix: Matrix Derivatives</h2>
+<div style="font-size: 0.60em;">
+<p>When we minimize RSS we differentiate with respect to a <strong>vector</strong> <span class="math inline">\(\boldsymbol{\beta}\)</span>, not a scalar. The gradient <span class="math inline">\(\frac{\partial f}{\partial \boldsymbol{\beta}}\)</span> is itself a vector — entry <span class="math inline">\(j\)</span> is <span class="math inline">\(\frac{\partial f}{\partial \beta_j}\)</span>.</p>
+<p>Two rules cover everything needed for the LS derivation:</p>
+</div>
+<div class="fragment">
+<div style="font-size: 0.60em; background-color: #f5f5f5; padding: 0.3em 0.7em; border-left: 4px solid #003660; margin-top: 0.3em;">
+<p><strong>Rule 1 — Linear form:</strong> For a fixed vector <span class="math inline">\(\mathbf{a}\)</span>, <span class="math display">\[\frac{\partial}{\partial \boldsymbol{\beta}}\left(\mathbf{a}^T \boldsymbol{\beta}\right) = \mathbf{a}\]</span></p>
+<p><em>Analogy:</em> just like <span class="math inline">\(\frac{d}{dx}(ax) = a\)</span> in scalar calculus.</p>
+</div>
+</div>
+<div class="fragment">
+<div style="font-size: 0.60em; background-color: #f5f5f5; padding: 0.3em 0.7em; border-left: 4px solid #003660; margin-top: 0.3em;">
+<p><strong>Rule 2 — Quadratic form:</strong> For a fixed <strong>symmetric</strong> matrix <span class="math inline">\(\mathbf{A}\)</span>, <span class="math display">\[\frac{\partial}{\partial \boldsymbol{\beta}}\left(\boldsymbol{\beta}^T \mathbf{A} \boldsymbol{\beta}\right) = 2\mathbf{A}\boldsymbol{\beta}\]</span></p>
+<p><em>Analogy:</em> just like <span class="math inline">\(\frac{d}{dx}(ax^2) = 2ax\)</span> in scalar calculus.</p>
+</div>
+</div>
+</section>
+<section id="appendix-applying-the-rules-to-rss" class="slide level2">
+<h2>Appendix: Applying the Rules to RSS</h2>
+<div style="font-size: 0.52em;">
+<p>Recall the expanded RSS: <span class="math display">\[\text{RSS} = \underbrace{\mathbf{Y}^T\mathbf{Y}}_{\text{no } \boldsymbol{\beta}} - \underbrace{2\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{Y}}_{\text{linear in }\boldsymbol{\beta}} + \underbrace{\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}}_{\text{quadratic in }\boldsymbol{\beta}}\]</span></p>
+</div>
+<div class="fragment">
+<div style="font-size: 0.52em;">
+<p>Differentiate term by term:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>Form</th>
+<th>Rule</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\mathbf{Y}^T\mathbf{Y}\)</span></td>
+<td>constant</td>
+<td>—</td>
+<td><span class="math inline">\(\mathbf{0}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(-2\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{Y}\)</span></td>
+<td><span class="math inline">\(\mathbf{a}^T\boldsymbol{\beta}\)</span> with <span class="math inline">\(\mathbf{a} = \mathbf{X}^T\mathbf{Y}\)</span></td>
+<td>Rule 1</td>
+<td><span class="math inline">\(-2\mathbf{X}^T\mathbf{Y}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\boldsymbol{\beta}^T\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}\)</span></td>
+<td><span class="math inline">\(\boldsymbol{\beta}^T\mathbf{A}\boldsymbol{\beta}\)</span> with <span class="math inline">\(\mathbf{A} = \mathbf{X}^T\mathbf{X}\)</span></td>
+<td>Rule 2</td>
+<td><span class="math inline">\(2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Note: <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> is always symmetric, so Rule 2 applies directly.</p>
+</div>
+</div>
+<div class="fragment">
+<div style="font-size: 0.52em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;">
+<p>Summing the three terms and setting equal to <span class="math inline">\(\mathbf{0}\)</span>: <span class="math display">\[\frac{\partial\,\text{RSS}}{\partial\boldsymbol{\beta}} = -2\mathbf{X}^T\mathbf{Y} + 2\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{0} \implies \mathbf{X}^T\mathbf{X}\boldsymbol{\beta} = \mathbf{X}^T\mathbf{Y}\]</span></p>
+</div>
 </div>
 
 
