@@ -1,0 +1,267 @@
+---
+title: "Lab 5: Simple and Multiple Linear Regression with Categorical Predictors"
+subtitle: "PSTAT 126"
+---
+
+::: callout-note
+Download the `.Rmd` file below, open it in RStudio, and work through the exercises inside.
+:::
+
+<a href="lab5.Rmd" class="btn btn-primary" download="lab5.Rmd">Download lab5.Rmd</a>
+
+## Learning goals
+
+In this lab we use the `hbr_maples` dataset from the `lterdatasampler` package to practice simple and multiple linear regression.
+
+## Setup
+
+```{r setup, message=FALSE, warning=FALSE, eval=FALSE}
+library(lterdatasampler)
+library(ggplot2)
+```
+
+---
+
+## 1. Data overview
+
+The `hbr_maples` dataset contains measurements of sugar maple (*Acer saccharum*) seedlings collected at Hubbard Brook Experimental Forest in New Hampshire during 2003 and 2004. The site is part of the Long Term Ecological Research (LTER) network.
+
+The data come from a classic acid-rain study. Decades of acid rain have depleted calcium from northeastern forest soils, harming sugar maple regeneration. Researchers added calcium to one watershed (W1) and left a second watershed as an untreated reference to study the effect on seedling health.
+
+We focus on three variables:
+
+- `stem_dry_mass`: seedling stem dry mass in grams
+- `corrected_leaf_area`: total leaf area in cm²
+- `watershed`: which watershed the seedling was sampled in. The two levels are `"Reference"` (untreated control) and `"W1"` (calcium-treated).
+
+```{r load-data, eval=FALSE}
+maples <- na.omit(hbr_maples[, c("stem_dry_mass", "corrected_leaf_area", "watershed")])
+head(maples)
+```
+
+```{r explore-data, eval=FALSE}
+summary(maples)
+table(maples$watershed)
+```
+
+---
+
+## 2. Simple linear regression
+
+We begin by examining the relationship between leaf area and stem dry mass.
+
+Seedlings with more leaf area can photosynthesize more, so we expect larger leaf area to be associated with greater stem mass. The proposed model is
+
+$$
+\text{stem\_dry\_mass}_i = \beta_0 + \beta_1 \cdot \text{corrected\_leaf\_area}_i + \varepsilon_i,
+\quad \varepsilon_i \overset{\text{iid}}{\sim} N(0,\sigma^2).
+$$
+
+```{r scatter-slr, fig.height=4, eval=FALSE}
+ggplot(maples, aes(x = corrected_leaf_area, y = stem_dry_mass)) +
+  geom_point(alpha = 0.6) +
+  labs(
+    title = "Sugar Maple Seedling: Stem Mass vs Leaf Area",
+    x = expression("Corrected Leaf Area" ~ (cm^2)),
+    y = "Stem Dry Mass (g)"
+  ) +
+  theme_minimal()
+```
+
+> **Question 1.** Does the relationship look approximately linear?
+>
+> *Answer:*
+
+```{r fit-slr, eval=FALSE}
+slr <- lm(stem_dry_mass ~ corrected_leaf_area, data = maples)
+summary(slr)
+```
+
+> **Question 2.** What is the interpretation of $\hat{\beta}_0$? Is this estimate scientifically meaningful?
+>
+> *Answer:*
+
+> **Question 3.** What is the interpretation of $\hat{\beta}_1$? Complete this sentence: "A one-cm² increase in leaf area is associated with a _______ gram change in expected stem dry mass, on average."
+>
+> *Answer:*
+
+```{r slr-line, fig.height=4, eval=FALSE}
+ggplot(maples, aes(x = corrected_leaf_area, y = stem_dry_mass)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE, color = "steelblue", linewidth = 1) +
+  labs(
+    title = "Simple Linear Regression: stem_dry_mass ~ corrected_leaf_area",
+    x = expression("Corrected Leaf Area" ~ (cm^2)),
+    y = "Stem Dry Mass (g)"
+  ) +
+  theme_minimal()
+```
+
+---
+
+## 3. Exploring the categorical predictor
+
+Before extending the model, we examine whether stem dry mass differs between the reference and calcium-treated watersheds.
+
+```{r scatter-by-watershed, fig.height=4, eval=FALSE}
+ggplot(maples, aes(x = corrected_leaf_area, y = stem_dry_mass, color = watershed)) +
+  geom_point(alpha = 0.6) +
+  labs(
+    title = "Stem Mass vs Leaf Area, Colored by Watershed",
+    x = expression("Corrected Leaf Area" ~ (cm^2)),
+    y = "Stem Dry Mass (g)",
+    color = "Watershed"
+  ) +
+  theme_minimal()
+```
+
+> **Question 4.** Based on the scatter plot, does it appear that seedlings in the W1 (calcium-treated) watershed tend to be larger than seedlings in the Reference watershed for the same leaf area?
+>
+> *Answer:*
+
+### Why categorical predictors need special treatment
+
+Regression models require numeric inputs. The variable `watershed` takes string values `"Reference"` and `"W1"`. We cannot substitute a string into the linear equation. If we assigned numbers arbitrarily (say, Reference $= 1$, W1 $= 2$), those numbers would carry no inherent meaning.
+
+The standard solution is to create **dummy variables**: binary (0/1) indicators, one for each category level except one.
+
+---
+
+## 4. Creating a dummy variable
+
+For a categorical variable with $k$ levels, we create $k - 1$ dummy variables. One level is designated the **reference category**. When all dummies equal 0, the observation belongs to the reference group.
+
+Here $k = 2$, so we need $k - 1 = 1$ dummy variable. We choose `"Reference"` as the reference category and define:
+
+$$
+D_{W1} = \begin{cases} 1 & \text{if the seedling is from the W1 watershed} \\ 0 & \text{if the seedling is from the Reference watershed} \end{cases}
+$$
+
+```{r create-dummy, eval=FALSE}
+# TODO: Use ifelse() to create the dummy variable trt_W1.
+# It should equal 1 for W1 seedlings and 0 for Reference seedlings.
+maples$trt_W1 <- ifelse(maples$watershed == ___, ___, ___)
+head(maples)
+```
+
+```{r verify-dummy, eval=FALSE}
+# TODO: Cross-tabulate watershed against trt_W1 to confirm the encoding.
+table(maples$___, maples$___)
+```
+
+> **Question 5.** For a seedling from the Reference watershed, what is the value of `trt_W1`?
+>
+> *Answer:*
+
+> **Question 6.** Why do we only need one dummy variable to represent two watershed groups? In general, if a categorical variable has $k$ levels, how many dummy variables do we need?
+>
+> *Answer:*
+
+---
+
+## 5. Multiple linear regression with a dummy variable
+
+The multiple linear regression model is
+
+$$
+\text{stem\_dry\_mass}_i
+  = \beta_0
+  + \beta_1 \cdot \text{corrected\_leaf\_area}_i
+  + \beta_2 \cdot D_{W1,i}
+  + \varepsilon_i,
+\quad \varepsilon_i \overset{\text{iid}}{\sim} N(0,\sigma^2).
+$$
+
+```{r fit-mlr, eval=FALSE}
+# TODO: Fit a multiple linear regression model with stem_dry_mass as the
+# response and corrected_leaf_area and trt_W1 as predictors.
+mlr <- lm(___ ~ ___ + ___, data = maples)
+summary(mlr)
+```
+
+### What the model equation looks like for each group
+
+Substituting the dummy values for each group shows that this model fits a **separate intercept** for each watershed while **sharing one slope** for leaf area.
+
+**Reference watershed** ($D_{W1} = 0$):
+$$
+E[\text{stem\_dry\_mass}] = \beta_0 + \beta_1 \cdot \text{corrected\_leaf\_area}.
+$$
+
+**W1 watershed** ($D_{W1} = 1$):
+$$
+E[\text{stem\_dry\_mass}] = (\beta_0 + \beta_2) + \beta_1 \cdot \text{corrected\_leaf\_area}.
+$$
+
+### Interpreting each coefficient
+
+> **Question 7.** What is the interpretation of $\hat{\beta}_0$? Be specific about which watershed and which leaf area value this applies to.
+>
+> *Answer:*
+
+> **Question 8.** What is the interpretation of $\hat{\beta}_1$? Complete this sentence: "Holding watershed constant, a one-cm² increase in leaf area is associated with a _______ gram change in expected stem dry mass, on average."
+>
+> *Answer:*
+
+> **Question 9.** What is the interpretation of $\hat{\beta}_2$? Complete this sentence: "Compared to a Reference watershed seedling with the same leaf area, a W1 watershed seedling is expected to have a stem dry mass that is _______ grams _______ (higher/lower), on average."
+>
+> *Answer:*
+
+> **Question 10.** Is the sign of $\hat{\beta}_2$ consistent with what you would expect from the calcium addition experiment? Explain briefly.
+>
+> *Answer:*
+
+---
+
+## 6. Using `factor()` as a shortcut
+
+Instead of creating the dummy by hand, R automatically creates it when a variable is a `factor`.
+
+```{r fit-factor, eval=FALSE}
+# TODO: Fit the same model using factor(watershed) in place of trt_W1.
+mlr_factor <- lm(stem_dry_mass ~ corrected_leaf_area + ___, data = maples)
+summary(mlr_factor)
+```
+
+Compare the coefficient estimates from `mlr` and `mlr_factor`. They should be identical.
+
+> **Question 11.** Which level of `watershed` did R choose as the reference category when using `factor(watershed)`? How can you tell from the output?
+>
+> *Answer:*
+
+---
+
+## 7. Visualizing the fitted model
+
+A model with one continuous and one categorical predictor produces **parallel regression lines** — one for each watershed.
+
+```{r plot-parallel-lines, fig.height=4, eval=FALSE}
+# TODO: Extract fitted values from your mlr model (complete Section 5 first).
+maples$fitted_mlr <- fitted(___)
+
+ggplot(maples, aes(x = corrected_leaf_area, y = stem_dry_mass, color = watershed)) +
+  geom_point(alpha = 0.5) +
+  geom_line(aes(y = fitted_mlr), linewidth = 1) +
+  labs(
+    title = "Multiple Linear Regression: Parallel Lines by Watershed",
+    x = expression("Corrected Leaf Area" ~ (cm^2)),
+    y = "Stem Dry Mass (g)",
+    color = "Watershed"
+  ) +
+  theme_minimal()
+```
+
+> **Question 12.** Why are the two regression lines parallel? What feature of the model equation produces this result?
+>
+> *Answer:*
+
+---
+
+## Submission Instructions
+
+Before submitting, knit your completed lab to PDF:
+
+1.  At the top of the file, confirm the output format includes `pdf_document` in the YAML header.
+2.  Click the **Knit** button in RStudio (or use Ctrl/Cmd + Shift + K).
+3.  Review the PDF to confirm all plots, computed values, and written answers appear correctly.
+4.  Upload the PDF to **Gradescope** under the Lab 5 assignment.

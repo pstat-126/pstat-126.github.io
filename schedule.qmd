@@ -146,6 +146,26 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td colspan="3"></td>
       <td><a class="badge-optional" href="https://docs.google.com/document/d/1i98S-nAKDZVmXBWezBcUOK0pKUZmLzxD_Lv62Qbxr_s/edit?usp=sharing">Late Pass Q #2 (optional)</em></a></td>
     </tr>
+        <tr class="week-row"><td colspan="5">Week 7 — Multiple Linear Regression</td></tr>
+    <tr>
+      <td class="date-cell">Mon, Nov 9</td>
+      <td class="topic-cell">Least Squares Estimator for MLR
+      <span class="sub-topic">Matrix operations, Deriving the LS Estimator</span></td>
+      <td><a class="badge-slide" href="slides/lec-13.html">Slides</a></td>
+      <td><a class="badge-lab" href="labs/lab-05.html">Lab 3</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="date-cell">Wed, Nov 11</td>
+      <td class="topic-cell"> No Class - Veteran's Day
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="due-row">
+      <td class="date-cell">Sat, Nov 14</td>
+      <td colspan="3"></td>
+      <td><a class="badge-optional" href="hw/hw-03.html">Homework 3</a></td>
+    </tr>
 
   <!--
     <tr class="week-row"><td colspan="5">Week 4 — Correlation, R² &amp; Diagnostics</td></tr>

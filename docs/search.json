@@ -529,7 +529,7 @@
     "href": "schedule.html",
     "title": "Course Schedule",
     "section": "",
-    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n  \n    \n      Date\n      Topic\n      Materials\n      Lab\n      Due\n    \n  \n  \n\n    Week 1 — Introduction & Simple Linear Regression\n    \n      Mon, Sep 28\n      Welcome to PSTAT 126!\n        Course Information & Overview\n        The Simple Linear Regression Model\n        Linear Regression Intro\n      SlidesSlides\n      \n      \n    \n    \n      Wed, Sep 30\n      Least Squares Estimation\n        Deriving OLS estimators\n      Slides\n      \n      \n    \n    \n      Sat, Oct 3\n      \n      Late Pass Q (optional)\n    \n\n   \n    Week 2 — Properties of OLS\n    \n      Mon, Oct 5\n      Properties of OLS Estimators\n      Slides\n      Lab 1\n      \n    \n    \n      Wed, Oct 7\n      Residuals and Estimating Error Variance\n      Slides\n      \n      \n\n\n    Week 3 — Inference in Regression\n    \n      Mon, Oct 12\n      Inference in Regression\n        Maximum Likelihood Estimation\n      Slides\n      Lab 2\n      \n    \n    \n      Wed, Oct 14\n      Inference in Regression\n        Hypothesis tests and confidence intervals for OLS estimates\n      Slides\n      \n    \n       \n      Sat, Oct 17\n      \n      Homework 1\n    \n    Week 4 — Inference in Regression + Model Diagnostics  \n      Mon, Oct 19\n      Prediction Intervals + Model Fit\n        PI for a new observation vs. CI for mean response; SST, SSR, SSE\n      Slides\n      Lab 3\n      \n    \n    \n      Wed, Oct 19\n      Model Diagnostics Overview\n         \n      Slides\n      \n      \n    \n\n    Week 5 — Transformations \n    \n      Mon, Oct 26\n       Formal Model Diagnostic Tests and Transformations\n        F Test for Lack of Fit, Box Cox\n      Slides\n      Lab 4\n      \n    \n    \n      Wed, Oct 28\n       Midterm Review\n      Slides\n      \n      \n    \n    \n      Sat, Oct 31\n      \n      Homework 2\n    \n\n    Week 6 — Midterm & Multiple Linear Regression\n    \n      Mon, Nov 28\n       Midterm!\n      No Lab Today. Office Hours Instead\n\n      \n      \n    \n    \n      Wed, Nov 4\n      Multiple Linear Regression\n      Intro to MLR, Dummy Variables\n      Slides\n      \n      \n    \n    \n      Sat, Nov 7\n      \n      Late Pass Q #2 (optional)",
+    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n  \n    \n      Date\n      Topic\n      Materials\n      Lab\n      Due\n    \n  \n  \n\n    Week 1 — Introduction & Simple Linear Regression\n    \n      Mon, Sep 28\n      Welcome to PSTAT 126!\n        Course Information & Overview\n        The Simple Linear Regression Model\n        Linear Regression Intro\n      SlidesSlides\n      \n      \n    \n    \n      Wed, Sep 30\n      Least Squares Estimation\n        Deriving OLS estimators\n      Slides\n      \n      \n    \n    \n      Sat, Oct 3\n      \n      Late Pass Q (optional)\n    \n\n   \n    Week 2 — Properties of OLS\n    \n      Mon, Oct 5\n      Properties of OLS Estimators\n      Slides\n      Lab 1\n      \n    \n    \n      Wed, Oct 7\n      Residuals and Estimating Error Variance\n      Slides\n      \n      \n\n\n    Week 3 — Inference in Regression\n    \n      Mon, Oct 12\n      Inference in Regression\n        Maximum Likelihood Estimation\n      Slides\n      Lab 2\n      \n    \n    \n      Wed, Oct 14\n      Inference in Regression\n        Hypothesis tests and confidence intervals for OLS estimates\n      Slides\n      \n    \n       \n      Sat, Oct 17\n      \n      Homework 1\n    \n    Week 4 — Inference in Regression + Model Diagnostics  \n      Mon, Oct 19\n      Prediction Intervals + Model Fit\n        PI for a new observation vs. CI for mean response; SST, SSR, SSE\n      Slides\n      Lab 3\n      \n    \n    \n      Wed, Oct 19\n      Model Diagnostics Overview\n         \n      Slides\n      \n      \n    \n\n    Week 5 — Transformations \n    \n      Mon, Oct 26\n       Formal Model Diagnostic Tests and Transformations\n        F Test for Lack of Fit, Box Cox\n      Slides\n      Lab 4\n      \n    \n    \n      Wed, Oct 28\n       Midterm Review\n      Slides\n      \n      \n    \n    \n      Sat, Oct 31\n      \n      Homework 2\n    \n\n    Week 6 — Midterm & Multiple Linear Regression\n    \n      Mon, Nov 28\n       Midterm!\n      No Lab Today. Office Hours Instead\n\n      \n      \n    \n    \n      Wed, Nov 4\n      Multiple Linear Regression\n      Intro to MLR, Dummy Variables\n      Slides\n      \n      \n    \n    \n      Sat, Nov 7\n      \n      Late Pass Q #2 (optional)\n    \n        Week 7 — Multiple Linear Regression\n    \n      Mon, Nov 9\n      Least Squares Estimator for MLR\n      Matrix operations, Deriving the LS Estimator\n      Slides\n      Lab 3\n      \n    \n    \n      Wed, Nov 11\n       No Class - Veteran's Day\n      \n      \n    \n    \n      Sat, Nov 14\n      \n      Homework 3",
     "crumbs": [
       "Syllabus",
       "Lecture Materials"
@@ -942,7 +942,7 @@
     "href": "labs.html",
     "title": "Labs",
     "section": "",
-    "text": "Lab\nDate\nTopic\n\n\n\n\nLab 1\nMon, Oct 5\nGetting started with R Markdown\n\n\nLab 2\nMon, Oct 12\nSimple Linear Regression in R",
+    "text": "Lab\nDate\nTopic\n\n\n\n\nLab 1\nMon, Oct 5\nGetting started with R Markdown\n\n\nLab 2\nMon, Oct 12\nSimple Linear Regression in R\n\n\nLab 3\nMon, Oct 19\nInference in Simple Linear Regression\n\n\nLab 4\nMon, Oct 26\nPrediction, ANOVA, and Model Diagnostics\n\n\nLab 5\nMon, Nov 9\nSimple and Multiple Linear Regression with Categorical Predictors",
     "crumbs": [
       "Syllabus",
       "Labs",
@@ -4600,5 +4600,137 @@
     "title": "Lecture 13: Multiple Regression",
     "section": "Practice: LS Estimation — Solution (c)",
     "text": "Practice: LS Estimation — Solution (c)\n\nThe normal equations \\(\\mathbf{X}^T\\mathbf{X}\\,\\mathbf{b} = \\mathbf{X}^T\\mathbf{Y}\\) give three equations:\n\\[\\begin{array}{rcl} 3b_0 + 10b_1 + 2b_2 &=& 24 \\\\ 10b_0 + 38b_1 + 5b_2 &=& 72 \\\\ 2b_0 + 5b_1 + 2b_2 &=& 19 \\end{array}\\]\n\n\n\nEliminate \\(b_0\\): subtract row 3 from row 1:\n\\[(3-2)b_0 + (10-5)b_1 + (2-2)b_2 = 24 - 19 \\implies b_0 + 5b_1 = 5 \\implies b_0 = 5 - 5b_1\\]\n\n\n\n\nSubstitute \\(b_0 = 5 - 5b_1\\) into rows 1 and 2 and simplify to get two equations in \\(b_1\\) and \\(b_2\\):\n\\[-5b_1 + 2b_2 = 9 \\qquad -12b_1 + 5b_2 = 22\\]\nSolving: \\(b_1 = -1\\), \\(\\quad b_2 = 2\\), \\(\\quad b_0 = 10\\).\n\n\n\n\nInterpretation: Each additional °C is associated with 1 fewer cup sold, holding day type fixed. Weekends sell 2 more cups on average than weekdays at the same temperature."
+  },
+  {
+    "objectID": "labs/lab-05.html",
+    "href": "labs/lab-05.html",
+    "title": "Lab 5: Simple and Multiple Linear Regression with Categorical Predictors",
+    "section": "",
+    "text": "Note\n\n\n\nDownload the .Rmd file below, open it in RStudio, and work through the exercises inside.\nDownload lab5.Rmd",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 5"
+    ]
+  },
+  {
+    "objectID": "labs/lab-05.html#learning-goals",
+    "href": "labs/lab-05.html#learning-goals",
+    "title": "Lab 5: Simple and Multiple Linear Regression with Categorical Predictors",
+    "section": "Learning goals",
+    "text": "Learning goals\nIn this lab we use the hbr_maples dataset from the lterdatasampler package to practice simple and multiple linear regression.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 5"
+    ]
+  },
+  {
+    "objectID": "labs/lab-05.html#setup",
+    "href": "labs/lab-05.html#setup",
+    "title": "Lab 5: Simple and Multiple Linear Regression with Categorical Predictors",
+    "section": "Setup",
+    "text": "Setup\n\nlibrary(lterdatasampler)\nlibrary(ggplot2)",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 5"
+    ]
+  },
+  {
+    "objectID": "labs/lab-05.html#data-overview",
+    "href": "labs/lab-05.html#data-overview",
+    "title": "Lab 5: Simple and Multiple Linear Regression with Categorical Predictors",
+    "section": "1. Data overview",
+    "text": "1. Data overview\nThe hbr_maples dataset contains measurements of sugar maple (Acer saccharum) seedlings collected at Hubbard Brook Experimental Forest in New Hampshire during 2003 and 2004. The site is part of the Long Term Ecological Research (LTER) network.\nThe data come from a classic acid-rain study. Decades of acid rain have depleted calcium from northeastern forest soils, harming sugar maple regeneration. Researchers added calcium to one watershed (W1) and left a second watershed as an untreated reference to study the effect on seedling health.\nWe focus on three variables:\n\nstem_dry_mass: seedling stem dry mass in grams\ncorrected_leaf_area: total leaf area in cm²\nwatershed: which watershed the seedling was sampled in. The two levels are \"Reference\" (untreated control) and \"W1\" (calcium-treated).\n\n\nmaples &lt;- na.omit(hbr_maples[, c(\"stem_dry_mass\", \"corrected_leaf_area\", \"watershed\")])\nhead(maples)\n\n\nsummary(maples)\ntable(maples$watershed)",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 5"
+    ]
+  },
+  {
+    "objectID": "labs/lab-05.html#simple-linear-regression",
+    "href": "labs/lab-05.html#simple-linear-regression",
+    "title": "Lab 5: Simple and Multiple Linear Regression with Categorical Predictors",
+    "section": "2. Simple linear regression",
+    "text": "2. Simple linear regression\nWe begin by examining the relationship between leaf area and stem dry mass.\nSeedlings with more leaf area can photosynthesize more, so we expect larger leaf area to be associated with greater stem mass. The proposed model is\n\\[\n\\text{stem\\_dry\\_mass}_i = \\beta_0 + \\beta_1 \\cdot \\text{corrected\\_leaf\\_area}_i + \\varepsilon_i,\n\\quad \\varepsilon_i \\overset{\\text{iid}}{\\sim} N(0,\\sigma^2).\n\\]\n\nggplot(maples, aes(x = corrected_leaf_area, y = stem_dry_mass)) +\n  geom_point(alpha = 0.6) +\n  labs(\n    title = \"Sugar Maple Seedling: Stem Mass vs Leaf Area\",\n    x = expression(\"Corrected Leaf Area\" ~ (cm^2)),\n    y = \"Stem Dry Mass (g)\"\n  ) +\n  theme_minimal()\n\n\nQuestion 1. Does the relationship look approximately linear?\nAnswer:\n\n\nslr &lt;- lm(stem_dry_mass ~ corrected_leaf_area, data = maples)\nsummary(slr)\n\n\nQuestion 2. What is the interpretation of \\(\\hat{\\beta}_0\\)? Is this estimate scientifically meaningful?\nAnswer:\n\n\nQuestion 3. What is the interpretation of \\(\\hat{\\beta}_1\\)? Complete this sentence: “A one-cm² increase in leaf area is associated with a _______ gram change in expected stem dry mass, on average.”\nAnswer:\n\n\nggplot(maples, aes(x = corrected_leaf_area, y = stem_dry_mass)) +\n  geom_point(alpha = 0.6) +\n  geom_smooth(method = \"lm\", se = FALSE, color = \"steelblue\", linewidth = 1) +\n  labs(\n    title = \"Simple Linear Regression: stem_dry_mass ~ corrected_leaf_area\",\n    x = expression(\"Corrected Leaf Area\" ~ (cm^2)),\n    y = \"Stem Dry Mass (g)\"\n  ) +\n  theme_minimal()",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 5"
+    ]
+  },
+  {
+    "objectID": "labs/lab-05.html#exploring-the-categorical-predictor",
+    "href": "labs/lab-05.html#exploring-the-categorical-predictor",
+    "title": "Lab 5: Simple and Multiple Linear Regression with Categorical Predictors",
+    "section": "3. Exploring the categorical predictor",
+    "text": "3. Exploring the categorical predictor\nBefore extending the model, we examine whether stem dry mass differs between the reference and calcium-treated watersheds.\n\nggplot(maples, aes(x = corrected_leaf_area, y = stem_dry_mass, color = watershed)) +\n  geom_point(alpha = 0.6) +\n  labs(\n    title = \"Stem Mass vs Leaf Area, Colored by Watershed\",\n    x = expression(\"Corrected Leaf Area\" ~ (cm^2)),\n    y = \"Stem Dry Mass (g)\",\n    color = \"Watershed\"\n  ) +\n  theme_minimal()\n\n\nQuestion 4. Based on the scatter plot, does it appear that seedlings in the W1 (calcium-treated) watershed tend to be larger than seedlings in the Reference watershed for the same leaf area?\nAnswer:\n\n\nWhy categorical predictors need special treatment\nRegression models require numeric inputs. The variable watershed takes string values \"Reference\" and \"W1\". We cannot substitute a string into the linear equation. If we assigned numbers arbitrarily (say, Reference \\(= 1\\), W1 \\(= 2\\)), those numbers would carry no inherent meaning.\nThe standard solution is to create dummy variables: binary (0/1) indicators, one for each category level except one.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 5"
+    ]
+  },
+  {
+    "objectID": "labs/lab-05.html#creating-a-dummy-variable",
+    "href": "labs/lab-05.html#creating-a-dummy-variable",
+    "title": "Lab 5: Simple and Multiple Linear Regression with Categorical Predictors",
+    "section": "4. Creating a dummy variable",
+    "text": "4. Creating a dummy variable\nFor a categorical variable with \\(k\\) levels, we create \\(k - 1\\) dummy variables. One level is designated the reference category. When all dummies equal 0, the observation belongs to the reference group.\nHere \\(k = 2\\), so we need \\(k - 1 = 1\\) dummy variable. We choose \"Reference\" as the reference category and define:\n\\[\nD_{W1} = \\begin{cases} 1 & \\text{if the seedling is from the W1 watershed} \\\\ 0 & \\text{if the seedling is from the Reference watershed} \\end{cases}\n\\]\n\n# TODO: Use ifelse() to create the dummy variable trt_W1.\n# It should equal 1 for W1 seedlings and 0 for Reference seedlings.\nmaples$trt_W1 &lt;- ifelse(maples$watershed == ___, ___, ___)\nhead(maples)\n\n\n# TODO: Cross-tabulate watershed against trt_W1 to confirm the encoding.\ntable(maples$___, maples$___)\n\n\nQuestion 5. For a seedling from the Reference watershed, what is the value of trt_W1?\nAnswer:\n\n\nQuestion 6. Why do we only need one dummy variable to represent two watershed groups? In general, if a categorical variable has \\(k\\) levels, how many dummy variables do we need?\nAnswer:",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 5"
+    ]
+  },
+  {
+    "objectID": "labs/lab-05.html#multiple-linear-regression-with-a-dummy-variable",
+    "href": "labs/lab-05.html#multiple-linear-regression-with-a-dummy-variable",
+    "title": "Lab 5: Simple and Multiple Linear Regression with Categorical Predictors",
+    "section": "5. Multiple linear regression with a dummy variable",
+    "text": "5. Multiple linear regression with a dummy variable\nThe multiple linear regression model is\n\\[\n\\text{stem\\_dry\\_mass}_i\n  = \\beta_0\n  + \\beta_1 \\cdot \\text{corrected\\_leaf\\_area}_i\n  + \\beta_2 \\cdot D_{W1,i}\n  + \\varepsilon_i,\n\\quad \\varepsilon_i \\overset{\\text{iid}}{\\sim} N(0,\\sigma^2).\n\\]\n\n# TODO: Fit a multiple linear regression model with stem_dry_mass as the\n# response and corrected_leaf_area and trt_W1 as predictors.\nmlr &lt;- lm(___ ~ ___ + ___, data = maples)\nsummary(mlr)\n\n\nWhat the model equation looks like for each group\nSubstituting the dummy values for each group shows that this model fits a separate intercept for each watershed while sharing one slope for leaf area.\nReference watershed (\\(D_{W1} = 0\\)): \\[\nE[\\text{stem\\_dry\\_mass}] = \\beta_0 + \\beta_1 \\cdot \\text{corrected\\_leaf\\_area}.\n\\]\nW1 watershed (\\(D_{W1} = 1\\)): \\[\nE[\\text{stem\\_dry\\_mass}] = (\\beta_0 + \\beta_2) + \\beta_1 \\cdot \\text{corrected\\_leaf\\_area}.\n\\]\n\n\nInterpreting each coefficient\n\nQuestion 7. What is the interpretation of \\(\\hat{\\beta}_0\\)? Be specific about which watershed and which leaf area value this applies to.\nAnswer:\n\n\nQuestion 8. What is the interpretation of \\(\\hat{\\beta}_1\\)? Complete this sentence: “Holding watershed constant, a one-cm² increase in leaf area is associated with a _______ gram change in expected stem dry mass, on average.”\nAnswer:\n\n\nQuestion 9. What is the interpretation of \\(\\hat{\\beta}_2\\)? Complete this sentence: “Compared to a Reference watershed seedling with the same leaf area, a W1 watershed seedling is expected to have a stem dry mass that is _______ grams _______ (higher/lower), on average.”\nAnswer:\n\n\nQuestion 10. Is the sign of \\(\\hat{\\beta}_2\\) consistent with what you would expect from the calcium addition experiment? Explain briefly.\nAnswer:",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 5"
+    ]
+  },
+  {
+    "objectID": "labs/lab-05.html#using-factor-as-a-shortcut",
+    "href": "labs/lab-05.html#using-factor-as-a-shortcut",
+    "title": "Lab 5: Simple and Multiple Linear Regression with Categorical Predictors",
+    "section": "6. Using factor() as a shortcut",
+    "text": "6. Using factor() as a shortcut\nInstead of creating the dummy by hand, R automatically creates it when a variable is a factor.\n\n# TODO: Fit the same model using factor(watershed) in place of trt_W1.\nmlr_factor &lt;- lm(stem_dry_mass ~ corrected_leaf_area + ___, data = maples)\nsummary(mlr_factor)\n\nCompare the coefficient estimates from mlr and mlr_factor. They should be identical.\n\nQuestion 11. Which level of watershed did R choose as the reference category when using factor(watershed)? How can you tell from the output?\nAnswer:",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 5"
+    ]
+  },
+  {
+    "objectID": "labs/lab-05.html#visualizing-the-fitted-model",
+    "href": "labs/lab-05.html#visualizing-the-fitted-model",
+    "title": "Lab 5: Simple and Multiple Linear Regression with Categorical Predictors",
+    "section": "7. Visualizing the fitted model",
+    "text": "7. Visualizing the fitted model\nA model with one continuous and one categorical predictor produces parallel regression lines — one for each watershed.\n\n# TODO: Extract fitted values from your mlr model (complete Section 5 first).\nmaples$fitted_mlr &lt;- fitted(___)\n\nggplot(maples, aes(x = corrected_leaf_area, y = stem_dry_mass, color = watershed)) +\n  geom_point(alpha = 0.5) +\n  geom_line(aes(y = fitted_mlr), linewidth = 1) +\n  labs(\n    title = \"Multiple Linear Regression: Parallel Lines by Watershed\",\n    x = expression(\"Corrected Leaf Area\" ~ (cm^2)),\n    y = \"Stem Dry Mass (g)\",\n    color = \"Watershed\"\n  ) +\n  theme_minimal()\n\n\nQuestion 12. Why are the two regression lines parallel? What feature of the model equation produces this result?\nAnswer:",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 5"
+    ]
+  },
+  {
+    "objectID": "labs/lab-05.html#submission-instructions",
+    "href": "labs/lab-05.html#submission-instructions",
+    "title": "Lab 5: Simple and Multiple Linear Regression with Categorical Predictors",
+    "section": "Submission Instructions",
+    "text": "Submission Instructions\nBefore submitting, knit your completed lab to PDF:\n\nAt the top of the file, confirm the output format includes pdf_document in the YAML header.\nClick the Knit button in RStudio (or use Ctrl/Cmd + Shift + K).\nReview the PDF to confirm all plots, computed values, and written answers appear correctly.\nUpload the PDF to Gradescope under the Lab 5 assignment.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 5"
+    ]
   }
 ]

@@ -28,6 +28,24 @@ toc: false
       <td>Simple Linear Regression in R</td>
     </tr>
 
+    <tr>
+      <td><a href="labs/lab-03.html"><span class="badge-lab">Lab 3</span></a></td>
+      <td class="date-cell">Mon, Oct 19</td>
+      <td>Inference in Simple Linear Regression</td>
+    </tr>
+
+    <tr>
+      <td><a href="labs/lab-04.html"><span class="badge-lab">Lab 4</span></a></td>
+      <td class="date-cell">Mon, Oct 26</td>
+      <td>Prediction, ANOVA, and Model Diagnostics</td>
+    </tr>
+
+    <tr>
+      <td><a href="labs/lab-05.html"><span class="badge-lab">Lab 5</span></a></td>
+      <td class="date-cell">Mon, Nov 9</td>
+      <td>Simple and Multiple Linear Regression with Categorical Predictors</td>
+    </tr>
+
   </tbody>
 </table>
 </div>
