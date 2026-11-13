@@ -1,0 +1,575 @@
+---
+title: "Lecture 14: Multiple Regression — Analysis of Variance"
+subtitle: "PSTAT 126: Linear Regression"
+author: "Annie Adams"
+institute: "UC Santa Barbara"
+date: "11/17/2026"
+format:
+  revealjs:
+    theme: [default, ../styles.scss]
+    slide-number: true
+    preview-links: auto
+    footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
+    logo: ""
+    chalkboard: true
+    title-slide-attributes:
+      data-background-color: "#003660"
+---
+
+
+## Learning Objectives
+
+By the end of today you will be able to:
+
+::: {style="font-size: 0.80em;"}
+
+- Decompose total variation into regression and error components: $\text{SSTO} = \text{SSR} + \text{SSE}$
+- State the degrees of freedom for each sum of squares and explain why SSE has $n - p$ degrees of freedom
+- Construct and interpret an ANOVA table for multiple regression
+- Perform and interpret the overall $F$-test for regression significance
+- Compute and interpret $R^2$ and adjusted $R^2$
+- Use `anova()` and `summary()` in R to obtain the ANOVA table
+
+:::
+
+---
+
+
+## ANOVA Decomposition {background-color="#003660"}
+
+---
+
+## Review: ANOVA in SLR
+
+::: {style="font-size: 0.63em;"}
+
+In SLR, total variation in $Y$ splits cleanly into two parts:
+
+$$\underbrace{\sum_{i=1}^n (Y_i - \bar{Y})^2}_{\text{SSTO}} = \underbrace{\sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2}_{\text{SSR}} + \underbrace{\sum_{i=1}^n (Y_i - \hat{Y}_i)^2}_{\text{SSE}}$$
+
+| Source | df | SS | MS | $F^*$ |
+|:------:|:--:|:--:|:--:|:-----:|
+| Regression | $1$ | SSR | MSR | MSR/MSE |
+| Error | $n - 2$ | SSE | MSE | |
+| Total | $n - 1$ | SSTO | | |
+
+::: {.fragment}
+Everything generalizes to multiple regression. The **sums of squares are identical in definition**. Only the **degrees of freedom change**.
+:::
+
+:::
+
+---
+
+## ANOVA Decomposition in Multiple Regression
+
+::: {style="font-size: 0.60em;"}
+
+Total variation in $Y$ always splits as: $\quad \text{SSTO} = \text{SSR} + \text{SSE}$
+
+::: {.fragment}
+**SSTO** *(Total Sum of Squares)* — total variability in $Y$ around $\bar{Y}$; computed from data alone, independent of the model
+
+$$\text{SSTO} = \textstyle\sum_{i=1}^n (Y_i - \bar{Y})^2$$
+:::
+
+::: {.fragment}
+**SSR** *(Regression Sum of Squares)* — variation the fitted model explains; how far each $\hat{Y}_i$ moves away from $\bar{Y}$
+
+$$\text{SSR} = \textstyle\sum_{i=1}^n (\hat{Y}_i - \bar{Y})^2$$
+:::
+
+::: {.fragment}
+**SSE** *(Error Sum of Squares)* — leftover variation the model cannot explain; sum of squared residuals
+
+$$\text{SSE} = \textstyle\sum_{i=1}^n (Y_i - \hat{Y}_i)^2 = \mathbf{e}^T\mathbf{e}$$
+:::
+
+:::
+
+---
+
+## Degrees of Freedom
+
+::: {style="font-size: 0.75em;"}
+
+| Source | df | Intuition |
+|:------:|:--:|:----------|
+| Regression | $p - 1$ | One df per predictor ($p - 1$ slopes to estimate) |
+| Error | $n - p$ | $n$ observations $-$ $p$ parameters estimated ($\beta_0, \beta_1, \ldots, \beta_{p-1}$) |
+| Total | $n - 1$ | $n$ observations $-$ 1 (the grand mean $\bar{Y}$) |
+
+::: {.fragment}
+::: {style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;"}
+**Key change from SLR:** In SLR, $p = 2$ (intercept + one slope), so $\text{df}(\text{SSE}) = n - 2$. In multiple regression, **each additional predictor costs one degree of freedom from the error**.
+:::
+:::
+
+:::
+
+---
+
+## Practice: Degrees of Freedom {.smaller}
+
+::: {style="font-size: 0.78em;"}
+
+A researcher has $n = 30$ observations on salary ($Y$). They fit two models:
+
+- **Model 1 (SLR):** $Y_i = \beta_0 + \beta_1 X_{i1} + \epsilon_i$ — years of experience only
+- **Model 2 (MLR):** $Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i3} + \epsilon_i$ — experience, education level, and job sector
+
+Fill in the ANOVA table degrees of freedom for each model:
+
+| Source | Model 1 df | Model 2 df |
+|:------:|:----------:|:----------:|
+| Regression | | |
+| Error | | |
+| Total | | |
+
+:::
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 1,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em"
+)
+```
+
+---
+
+## Practice: Degrees of Freedom — Solution {.smaller}
+
+::: {style="font-size: 0.78em;"}
+
+| Source | Model 1 df | Model 2 df |
+|:------:|:----------:|:----------:|
+| Regression | $1$ | $3$ |
+| Error | $28$ | $26$ |
+| Total | $29$ | $29$ |
+
+Adding 2 predictors reduced error df from 28 to 26 — each predictor costs one df from error, regardless of whether it helps.
+
+:::
+
+---
+
+## Why Error df Matters {.smaller}
+
+::: {style="font-size: 0.78em;"}
+
+Going back to the salary example: Model 1 has 28 error df, Model 2 has 26.
+
+MSE $= \text{SSE}/(n-p)$ uses error df as its denominator. Fewer df means $\sigma^2$ is estimated from less information. That uncertainty effects everything that depends on it: standard errors, $t$-tests, and confidence intervals.
+
+Concretely, $t$-critical values get **larger** as error df decreases:
+
+| Error df | $t_{0.025}$ | What it means |
+|:--------:|:-----------:|:--------------|
+| 28 (Model 1) | 2.048 | narrower CIs, easier to reject $H_0$ |
+| 26 (Model 2) | 2.056 | slightly wider |
+| 10 | 2.228 | noticeably wider |
+| 5 | 2.571 | much wider (cost of small $n$ or large $p$) |
+
+
+
+:::
+
+---
+
+## The ANOVA Table for Multiple Regression
+
+::: {style="font-size: 0.57em;"}
+
+| Source | df | SS | MS | $F^*$ |
+|:------:|:--:|:--:|:--:|:-----:|
+| Regression | $p - 1$ | SSR | $\text{MSR} = \dfrac{\text{SSR}}{p-1}$ | $\dfrac{\text{MSR}}{\text{MSE}}$ |
+| Error | $n - p$ | SSE | $\text{MSE} = \dfrac{\text{SSE}}{n-p}$ | |
+| Total | $n - 1$ | SSTO | | |
+
+::: {.fragment}
+Two key quantities from the table:
+
+- $\text{MSE} = \dfrac{\text{SSE}}{n - p}$ — unbiased estimator of $\sigma^2$ (same role as in SLR, but now divided by $n-p$)
+- $F^* = \dfrac{\text{MSR}}{\text{MSE}}$ — test statistic for overall regression significance
+:::
+
+:::
+
+---
+
+## Estimating $\sigma^2$
+
+::: {style="font-size: 0.80em;"}
+
+**Result:** Under the model assumptions, $E(\text{MSE}) = \sigma^2$.
+
+So $\text{MSE} = \dfrac{\text{SSE}}{n - p}$ is an unbiased estimator of $\sigma^2$, and:
+
+$$\hat{\sigma} = \sqrt{\text{MSE}}$$
+
+is the **residual standard error**. This is the typical distance between an observed $Y_i$ and the fitted regression surface.
+
+::: {.fragment}
+::: {style="font-size: 0.88em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.5em;"}
+**In R's `summary()` output**, this appears as *"Residual standard error: X on Y degrees of freedom"* — where X $= \hat\sigma$ and Y $= n - p$.
+:::
+:::
+
+
+:::
+
+---
+
+## The F-Test for Overall Significance {background-color="#003660"}
+
+---
+
+## The F-Statistic
+
+::: {style="font-size: 0.55em;"}
+
+The overall F-test asks: **does this collection of predictors explain any variation in $Y$ at all?**
+
+$$H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \qquad H_a: \text{at least one } \beta_j \neq 0$$
+
+Under $H_0$, the model reduces to $\hat{Y}_i = \bar{Y}$ — no predictors matter. The test statistic is:
+
+$$F^* = \frac{\text{MSR}}{\text{MSE}} = \frac{\text{SSR}/(p-1)}{\text{SSE}/(n-p)}$$
+
+::: {.fragment}
+**Under $H_0$:** No predictor explains $Y$, so MSR and MSE both estimate $\sigma^2$ — the ratio $F^* \approx 1$. More precisely:
+
+$$F^* \sim F(p-1,\; n-p) \qquad \text{when } H_0 \text{ is true}$$
+:::
+
+::: {.fragment}
+**When $H_0$ is false:** At least one predictor creates real signal — the $\hat{Y}_i$ spread out meaningfully, pushing SSR (and MSR) up. MSE stays the same size (it only captures noise), so $F^* \gg 1$. Large $F^*$ is evidence against $H_0$.
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;"}
+**SLR vs. MLR F-test:** In SLR ($p = 2$), $H_0: \beta_1 = 0$ tests a single slope. In MLR, $H_0$ constrains **all** $p - 1$ slopes simultaneously. It is a **joint** test: rejecting it only tells you *some* predictor matters, not which one. 
+:::
+:::
+
+:::
+
+---
+
+## Decision Rule and Connection to SLR
+
+::: {style="font-size: 0.78em;"}
+
+**Decision rule at significance level $\alpha$:**
+
+$$\text{Reject } H_0 \text{ if } F^* > F(1 - \alpha;\; p - 1,\; n - p)$$
+
+The critical value $F(1-\alpha;\, p-1,\, n-p)$ is from an $F$-table or `qf(1-alpha, p-1, n-p)` in R.
+
+::: {.fragment}
+::: {style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.5em;"}
+**Connection to SLR:** In SLR ($p = 2$), the F-test has $\text{df}(1,\, n-2)$ and $F^* = (t^*)^2$ exactly — squaring the $t$-statistic for $H_0: \beta_1 = 0$ gives the $F$-statistic. This is a special case of the same test.
+:::
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.88em;"}
+**Note:** Rejecting $H_0$ tells us *at least one* $\beta_j$ matters, but **not which ones**. That requires the individual inference tools we'll cover next lecture.
+:::
+:::
+
+:::
+
+---
+
+## $R^2$ and Adjusted $R^2$ {background-color="#003660"}
+
+---
+
+## $R^2$ in Multiple Regression
+
+::: {style="font-size: 0.75em;"}
+
+The **coefficient of determination** measures the proportion of total variation in $Y$ explained by the model:
+
+$$R^2 = \frac{\text{SSR}}{\text{SSTO}} = 1 - \frac{\text{SSE}}{\text{SSTO}}$$
+
+::: {.fragment}
+- $R^2 \in [0, 1]$ — same as in SLR
+- $R^2 = 0$: predictors explain nothing ($\hat{Y}_i = \bar{Y}$ for all $i$)
+- $R^2 = 1$: perfect fit, all residuals are zero
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.4em;"}
+**Warning:** $R^2$ **never decreases** when you add a predictor, even a completely irrelevant one. This makes $R^2$ an unreliable tool for comparing models with different numbers of predictors.
+:::
+:::
+
+:::
+
+---
+
+## Why $R^2$ Always Increases
+
+::: {style="font-size: 0.75em;"}
+
+Adding a predictor gives the model more flexibility. Even a random noise predictor with no true relationship to $Y$ will slightly reduce SSE by chance, increasing $R^2$.
+
+::: {.fragment}
+**A thought experiment:**
+
+Suppose you add 50 random noise predictors to a model — each completely unrelated to $Y$. What happens to $R^2$?
+:::
+
+::: {.fragment}
+$R^2$ increases each time and can approach 1 even though the model is worthless. This is **overfitting**: the model memorizes random variation in the sample rather than capturing the true signal.
+:::
+
+::: {.fragment}
+We need a measure that **penalizes** for adding predictors that don't truly help.
+:::
+
+:::
+
+---
+
+## Adjusted $R^2$
+
+::: {style="font-size: 0.65em;"}
+
+The **adjusted $R^2$** accounts for model size by using mean squares instead of raw sums of squares:
+
+$$R^2_{\text{adj}} = 1 - \frac{\text{MSE}}{\text{MSTO}} = 1 - \frac{\text{SSE}/(n-p)}{\text{SSTO}/(n-1)}$$
+
+::: {.fragment}
+Equivalently: $R^2_{\text{adj}} = 1 - (1 - R^2)\dfrac{n-1}{n-p}$
+:::
+
+::: {.fragment}
+| Property | $R^2$ | $R^2_{\text{adj}}$ |
+|:---------|:-----:|:------------------:|
+| Range | $[0, 1]$ | Can be negative |
+| Adding a useless predictor | Always increases | Decreases (MSE increases) |
+| Best use | Describing a fixed model | Comparing models with **different** $p$ |
+:::
+
+
+
+:::
+
+---
+
+## ANOVA in R {background-color="#003660"}
+
+---
+
+## ANOVA Table in R
+
+::: {style="font-size: 0.75em;"}
+
+We model daily worker output ($Y$, units) using hours worked ($X_1$) and years of experience ($X_2$), $n = 30$.
+
+:::
+
+```{r}
+#| echo: true
+#| eval: true
+set.seed(42)
+n       <- 30
+hours   <- round(runif(n, 1, 8), 1)
+exp_yr  <- round(runif(n, 0, 10))
+units   <- 10 + 4 * hours + 2 * exp_yr + rnorm(n, 0, 4)
+
+fit <- lm(units ~ hours + exp_yr)
+anova(fit)
+```
+
+---
+
+## Reading the ANOVA Output {.smaller}
+
+```{r}
+#| echo: false
+#| eval: true
+set.seed(42)
+n       <- 30
+hours   <- round(runif(n, 1, 8), 1)
+exp_yr  <- round(runif(n, 0, 10))
+units   <- 10 + 4 * hours + 2 * exp_yr + rnorm(n, 0, 4)
+fit     <- lm(units ~ hours + exp_yr)
+anova(fit)
+```
+
+::: {.fragment .absolute top="188px" left="0px" width="560px" height="48px" fragment-index=1 style="border:3px solid #E8A838; border-radius:4px; background:rgba(232,168,56,0.2);"}
+:::
+::: {.fragment .absolute top="176px" left="590px" fragment-index=1 style="font-size:0.56em; color:#7D5A00; font-weight:bold; border-left:3px solid #E8A838; padding-left:8px; line-height:1.6;"}
+**Sequential SSR**
+Sum Sq for each predictor added in order; rows sum to full model SSR
+:::
+
+::: {.fragment .absolute top="236px" left="0px" width="560px" height="26px" fragment-index=2 style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);"}
+:::
+::: {.fragment .absolute top="234px" left="590px" fragment-index=2 style="font-size:0.56em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.6;"}
+**SSE**; df $= n - p = 27$
+Mean Sq $= \text{MSE} = \hat\sigma^2$
+:::
+
+::: {.fragment .absolute top="162px" left="108px" width="32px" height="100px" fragment-index=3 style="border:3px solid #5BA4CF; border-radius:4px; background:rgba(91,164,207,0.2);"}
+:::
+::: {.fragment .absolute top="270px" left="590px" fragment-index=3 style="font-size:0.56em; color:#1A5276; font-weight:bold; border-left:3px solid #5BA4CF; padding-left:8px; line-height:1.6;"}
+**Df:** 1 per predictor
+Residuals $= n - p = 27$
+:::
+
+---
+
+## $R^2$, Adjusted $R^2$, and $\hat\sigma$ from `summary()` {.smaller}
+
+```{r}
+#| echo: false
+#| eval: true
+summary(fit)
+```
+
+::: {.fragment .absolute top="466px" left="0px" width="560px" height="26px" fragment-index=1 style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);"}
+:::
+::: {.fragment .absolute top="448px" left="590px" fragment-index=1 style="font-size:0.56em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.6;"}
+$\hat\sigma = \sqrt{\text{MSE}}$; df $= n - p = 27$
+:::
+
+::: {.fragment .absolute top="494px" left="0px" width="560px" height="23px" fragment-index=2 style="border:3px solid #C0392B; border-radius:4px; background:rgba(192,57,43,0.2);"}
+:::
+::: {.fragment .absolute top="482px" left="590px" fragment-index=2 style="font-size:0.56em; color:#922B21; font-weight:bold; border-left:3px solid #C0392B; padding-left:8px; line-height:1.6;"}
+$R^2 = \text{SSR}/\text{SSTO}$
+:::
+
+::: {.fragment .absolute top="518px" left="0px" width="560px" height="23px" fragment-index=3 style="border:3px solid #E8A838; border-radius:4px; background:rgba(232,168,56,0.2);"}
+:::
+::: {.fragment .absolute top="514px" left="590px" fragment-index=3 style="font-size:0.56em; color:#7D5A00; font-weight:bold; border-left:3px solid #E8A838; padding-left:8px; line-height:1.6;"}
+$R^2_{\text{adj}} = 1 - \text{MSE}/\text{MSTO}$
+:::
+
+::: {.fragment .absolute top="543px" left="0px" width="560px" height="23px" fragment-index=4 style="border:3px solid #5BA4CF; border-radius:4px; background:rgba(91,164,207,0.2);"}
+:::
+::: {.fragment .absolute top="547px" left="590px" fragment-index=4 style="font-size:0.56em; color:#1A5276; font-weight:bold; border-left:3px solid #5BA4CF; padding-left:8px; line-height:1.6;"}
+$F^* = \text{MSR}/\text{MSE}$; df $(p-1,\, n-p)$; overall test
+:::
+
+---
+
+## Practice: ANOVA for Multiple Regression {.smaller}
+
+::: {style="font-size: 0.72em;"}
+
+A study models exam score ($Y$, out of 100) using hours studied ($X_1$) and prior GPA ($X_2$), $n = 25$ students, $p = 3$.
+
+::: {style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-bottom: 0.5em;"}
+$\text{SSTO} = 2400, \quad \text{SSE} = 480, \quad F(0.95;\; 2,\; 22) = 3.44$
+:::
+
+**(a)** Compute SSR and $R^2$. Interpret $R^2$ in context.
+
+<br>
+
+**(b)** Complete the ANOVA table (df, SS, MS, $F^*$).
+
+<br>
+
+**(c)** Test $H_0: \beta_1 = \beta_2 = 0$ at $\alpha = 0.05$. State your conclusion in context.
+
+<br>
+
+**(d)** Compute MSE. What does it estimate, and what are its units?
+
+:::
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 6,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em"
+)
+```
+
+---
+
+## Practice: Solution {.smaller}
+
+::: {style="font-size: 0.72em;"}
+
+**(a)**
+
+$$\text{SSR} = \text{SSTO} - \text{SSE} = 2400 - 480 = 1920$$
+
+$$R^2 = \frac{\text{SSR}}{\text{SSTO}} = \frac{1920}{2400} = 0.80$$
+
+Hours studied and prior GPA together explain **80%** of the variability in exam scores.
+
+::: {.fragment}
+**(b)** With $n = 25$, $p = 3$: $\text{df}(\text{SSR}) = p - 1 = 2$, $\text{df}(\text{SSE}) = n - p = 22$, $\text{df}(\text{SSTO}) = n - 1 = 24$.
+
+| Source | df | SS | MS | $F^*$ |
+|:------:|:--:|:--:|:--:|:-----:|
+| Regression | 2 | 1920 | 960 | **44.0** |
+| Error | 22 | 480 | 21.82 | |
+| Total | 24 | 2400 | | |
+:::
+
+::: {.fragment}
+**(c)** Since $F^* = 44.0 > F(0.95;\; 2,\; 22) = 3.44$, we **reject $H_0$** at $\alpha = 0.05$. There is sufficient evidence that at least one of hours studied or prior GPA is a significant predictor of exam score.
+:::
+
+::: {.fragment}
+**(d)** $\text{MSE} = 480/22 \approx 21.82$ — an unbiased estimate of $\sigma^2$, the variance of the errors. Units are (points$^2$), so $\hat\sigma = \sqrt{21.82} \approx 4.67$ points.
+:::
+
+:::
+
+---
+
+## Summary
+
+::: {style="font-size: 0.72em;"}
+
+::: {.incremental}
+- **ANOVA decomposition:** $\text{SSTO} = \text{SSR} + \text{SSE}$; the definitions of SSR, SSE, and SSTO are identical to SLR — only the degrees of freedom change
+- **Degrees of freedom:** $\text{df}(\text{SSR}) = p - 1$; $\text{df}(\text{SSE}) = n - p$; $\text{df}(\text{SSTO}) = n - 1$; each predictor costs one df from the error
+- **MSE** $= \text{SSE}/(n-p)$ is an unbiased estimator of $\sigma^2$; $\hat\sigma = \sqrt{\text{MSE}}$ is the residual standard error
+- **F-test:** $H_0: \beta_1 = \cdots = \beta_{p-1} = 0$; $F^* = \text{MSR}/\text{MSE} \sim F(p-1, n-p)$ under $H_0$; reject when $F^*$ exceeds the upper-$\alpha$ quantile
+- **$R^2$** $= \text{SSR}/\text{SSTO}$: proportion of variation explained; always increases when predictors are added — cannot be used to compare models of different sizes
+- **Adjusted $R^2$** $= 1 - \text{MSE}/\text{MSTO}$: penalizes for adding predictors; increases only if the new predictor reduces MSE
+- **In R:** `anova(fit)` gives sequential SS for each predictor plus SSE; `summary(fit)` gives $\hat\sigma$, $R^2$, $R^2_{\text{adj}}$, and the overall $F$-test
+:::
+
+:::
+
+---
+
+## Questions? {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em;"}
+**Annie Adams**
+[aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+Office Hours: Tuesday 10 – 11 AM on [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1)
+
+[Course Website](https://pstat-126.github.io/)
+:::
