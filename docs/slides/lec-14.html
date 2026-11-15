@@ -6,7 +6,7 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-f3c7c545dc2e91a45c874a71090d670a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Annie Adams">
@@ -329,7 +329,7 @@ Annie Adams
 <tr class="odd">
 <td style="text-align: center;">Total</td>
 <td style="text-align: center;"><span class="math inline">\(n - 1\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(n\)</span> observations <span class="math inline">\(-\)</span> 1 (the grand mean <span class="math inline">\(\bar{Y}\)</span>)</td>
+<td style="text-align: left;"><span class="math inline">\(n\)</span> observations</td>
 </tr>
 </tbody>
 </table>
@@ -378,7 +378,7 @@ Annie Adams
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_cb34b25e" minutes="1" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_d1a9a185" minutes="1" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -512,12 +512,7 @@ Annie Adams
 <p><strong>Result:</strong> Under the model assumptions, <span class="math inline">\(E(\text{MSE}) = \sigma^2\)</span>.</p>
 <p>So <span class="math inline">\(\text{MSE} = \dfrac{\text{SSE}}{n - p}\)</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span>, and:</p>
 <p><span class="math display">\[\hat{\sigma} = \sqrt{\text{MSE}}\]</span></p>
-<p>is the <strong>residual standard error</strong>. This is the typical distance between an observed <span class="math inline">\(Y_i\)</span> and the fitted regression surface.</p>
-<div class="fragment">
-<div style="font-size: 0.88em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.5em;">
-<p><strong>In R’s <code>summary()</code> output</strong>, this appears as <em>“Residual standard error: X on Y degrees of freedom”</em> — where X <span class="math inline">\(= \hat\sigma\)</span> and Y <span class="math inline">\(= n - p\)</span>.</p>
-</div>
-</div>
+<p>is the <strong>residual standard error</strong>. This is the typical distance between an observed <span class="math inline">\(Y_i\)</span> and the fitted regression.</p>
 </div>
 </section>
 <section id="the-f-test-for-overall-significance" class="slide level2" data-background-color="#003660">
@@ -527,15 +522,14 @@ Annie Adams
 <h2>The F-Statistic</h2>
 <div style="font-size: 0.55em;">
 <p>The overall F-test asks: <strong>does this collection of predictors explain any variation in <span class="math inline">\(Y\)</span> at all?</strong></p>
-<p><span class="math display">\[H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \qquad H_a: \text{at least one } \beta_j \neq 0\]</span></p>
-<p>Under <span class="math inline">\(H_0\)</span>, the model reduces to <span class="math inline">\(\hat{Y}_i = \bar{Y}\)</span> — no predictors matter. The test statistic is:</p>
+<p><span class="math display">\[H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \qquad H_a: \text{at least one } \beta_j \neq 0\]</span> The test statistic is:</p>
 <p><span class="math display">\[F^* = \frac{\text{MSR}}{\text{MSE}} = \frac{\text{SSR}/(p-1)}{\text{SSE}/(n-p)}\]</span></p>
 <div class="fragment">
 <p><strong>Under <span class="math inline">\(H_0\)</span>:</strong> No predictor explains <span class="math inline">\(Y\)</span>, so MSR and MSE both estimate <span class="math inline">\(\sigma^2\)</span> — the ratio <span class="math inline">\(F^* \approx 1\)</span>. More precisely:</p>
 <p><span class="math display">\[F^* \sim F(p-1,\; n-p) \qquad \text{when } H_0 \text{ is true}\]</span></p>
 </div>
 <div class="fragment">
-<p><strong>When <span class="math inline">\(H_0\)</span> is false:</strong> At least one predictor creates real signal — the <span class="math inline">\(\hat{Y}_i\)</span> spread out meaningfully, pushing SSR (and MSR) up. MSE stays the same size (it only captures noise), so <span class="math inline">\(F^* \gg 1\)</span>. Large <span class="math inline">\(F^*\)</span> is evidence against <span class="math inline">\(H_0\)</span>.</p>
+<p><strong>When <span class="math inline">\(H_0\)</span> is false:</strong> At least one predictor creates real signal, so the <span class="math inline">\(\hat{Y}_i\)</span> spread out meaningfully, pushing SSR (and MSR) up. MSE stays the same size (it only captures noise), so <span class="math inline">\(F^* &gt; 1\)</span>. Large <span class="math inline">\(F^*\)</span> is evidence against <span class="math inline">\(H_0\)</span>.</p>
 </div>
 <div class="fragment">
 <div style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;">
@@ -550,11 +544,6 @@ Annie Adams
 <p><strong>Decision rule at significance level <span class="math inline">\(\alpha\)</span>:</strong></p>
 <p><span class="math display">\[\text{Reject } H_0 \text{ if } F^* &gt; F(1 - \alpha;\; p - 1,\; n - p)\]</span></p>
 <p>The critical value <span class="math inline">\(F(1-\alpha;\, p-1,\, n-p)\)</span> is from an <span class="math inline">\(F\)</span>-table or <code>qf(1-alpha, p-1, n-p)</code> in R.</p>
-<div class="fragment">
-<div style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.5em;">
-<p><strong>Connection to SLR:</strong> In SLR (<span class="math inline">\(p = 2\)</span>), the F-test has <span class="math inline">\(\text{df}(1,\, n-2)\)</span> and <span class="math inline">\(F^* = (t^*)^2\)</span> exactly — squaring the <span class="math inline">\(t\)</span>-statistic for <span class="math inline">\(H_0: \beta_1 = 0\)</span> gives the <span class="math inline">\(F\)</span>-statistic. This is a special case of the same test.</p>
-</div>
-</div>
 <div class="fragment">
 <div style="font-size: 0.88em;">
 <p><strong>Note:</strong> Rejecting <span class="math inline">\(H_0\)</span> tells us <em>at least one</em> <span class="math inline">\(\beta_j\)</span> matters, but <strong>not which ones</strong>. That requires the individual inference tools we’ll cover next lecture.</p>
@@ -578,25 +567,9 @@ Annie Adams
 </ul>
 </div>
 <div class="fragment">
-<div style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.4em;">
-<p><strong>Warning:</strong> <span class="math inline">\(R^2\)</span> <strong>never decreases</strong> when you add a predictor, even a completely irrelevant one. This makes <span class="math inline">\(R^2\)</span> an unreliable tool for comparing models with different numbers of predictors.</p>
+<div style="font-size: 0.80em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.4em;">
+<p><span class="math inline">\(R^2\)</span> <strong>never decreases</strong> when you add a predictor, even a completely irrelevant one. This makes <span class="math inline">\(R^2\)</span> an unreliable tool for comparing models with different numbers of predictors. We need a measure that <strong>penalizes</strong> for adding predictors that don’t truly help.</p>
 </div>
-</div>
-</div>
-</section>
-<section id="why-r2-always-increases" class="slide level2">
-<h2>Why <span class="math inline">\(R^2\)</span> Always Increases</h2>
-<div style="font-size: 0.75em;">
-<p>Adding a predictor gives the model more flexibility. Even a random noise predictor with no true relationship to <span class="math inline">\(Y\)</span> will slightly reduce SSE by chance, increasing <span class="math inline">\(R^2\)</span>.</p>
-<div class="fragment">
-<p><strong>A thought experiment:</strong></p>
-<p>Suppose you add 50 random noise predictors to a model — each completely unrelated to <span class="math inline">\(Y\)</span>. What happens to <span class="math inline">\(R^2\)</span>?</p>
-</div>
-<div class="fragment">
-<p><span class="math inline">\(R^2\)</span> increases each time and can approach 1 even though the model is worthless. This is <strong>overfitting</strong>: the model memorizes random variation in the sample rather than capturing the true signal.</p>
-</div>
-<div class="fragment">
-<p>We need a measure that <strong>penalizes</strong> for adding predictors that don’t truly help.</p>
 </div>
 </div>
 </section>
@@ -688,19 +661,19 @@ Residuals 27  485.89   18.00
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<div class="fragment absolute" data-fragment-index="1" style="border:3px solid #E8A838; border-radius:4px; background:rgba(232,168,56,0.2);top: 188px; left: 0px; width: 560px; height: 48px; ">
+<div class="fragment absolute" data-fragment-index="1" style="border:3px solid #E8A838; border-radius:4px; background:rgba(232,168,56,0.2);top: 188px; left: 125px; width: 75px; height: 83px; ">
 
 </div>
 <div class="fragment absolute" data-fragment-index="1" style="font-size:0.56em; color:#7D5A00; font-weight:bold; border-left:3px solid #E8A838; padding-left:8px; line-height:1.6;top: 176px; left: 590px; ">
 <p><strong>Sequential SSR</strong> Sum Sq for each predictor added in order; rows sum to full model SSR</p>
 </div>
-<div class="fragment absolute" data-fragment-index="2" style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);top: 236px; left: 0px; width: 560px; height: 26px; ">
+<div class="fragment absolute" data-fragment-index="2" style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);top: 270px; left: 125px; width: 75px; height: 20px; ">
 
 </div>
 <div class="fragment absolute" data-fragment-index="2" style="font-size:0.56em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.6;top: 234px; left: 590px; ">
 <p><strong>SSE</strong>; df <span class="math inline">\(= n - p = 27\)</span> Mean Sq <span class="math inline">\(= \text{MSE} = \hat\sigma^2\)</span></p>
 </div>
-<div class="fragment absolute" data-fragment-index="3" style="border:3px solid #5BA4CF; border-radius:4px; background:rgba(91,164,207,0.2);top: 162px; left: 108px; width: 32px; height: 100px; ">
+<div class="fragment absolute" data-fragment-index="3" style="border:3px solid #5BA4CF; border-radius:4px; background:rgba(91,164,207,0.2);top: 188px; left: 92px; width: 28px; height: 105px; ">
 
 </div>
 <div class="fragment absolute" data-fragment-index="3" style="font-size:0.56em; color:#1A5276; font-weight:bold; border-left:3px solid #5BA4CF; padding-left:8px; line-height:1.6;top: 270px; left: 590px; ">
@@ -732,25 +705,25 @@ Multiple R-squared:  0.8874,    Adjusted R-squared:  0.8791
 F-statistic: 106.4 on 2 and 27 DF,  p-value: 1.567e-13</code></pre>
 </div>
 </div>
-<div class="fragment absolute" data-fragment-index="1" style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);top: 466px; left: 0px; width: 560px; height: 26px; ">
+<div class="fragment absolute" data-fragment-index="1" style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);top: 560px; left: 0px; width: 560px; height: 17px; ">
 
 </div>
 <div class="fragment absolute" data-fragment-index="1" style="font-size:0.56em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.6;top: 448px; left: 590px; ">
 <p><span class="math inline">\(\hat\sigma = \sqrt{\text{MSE}}\)</span>; df <span class="math inline">\(= n - p = 27\)</span></p>
 </div>
-<div class="fragment absolute" data-fragment-index="2" style="border:3px solid #C0392B; border-radius:4px; background:rgba(192,57,43,0.2);top: 494px; left: 0px; width: 560px; height: 23px; ">
+<div class="fragment absolute" data-fragment-index="2" style="border:3px solid #C0392B; border-radius:4px; background:rgba(192,57,43,0.2);top: 579px; left: 0px; width: 270px; height: 17px; ">
 
 </div>
 <div class="fragment absolute" data-fragment-index="2" style="font-size:0.56em; color:#922B21; font-weight:bold; border-left:3px solid #C0392B; padding-left:8px; line-height:1.6;top: 482px; left: 590px; ">
 <p><span class="math inline">\(R^2 = \text{SSR}/\text{SSTO}\)</span></p>
 </div>
-<div class="fragment absolute" data-fragment-index="3" style="border:3px solid #E8A838; border-radius:4px; background:rgba(232,168,56,0.2);top: 518px; left: 0px; width: 560px; height: 23px; ">
+<div class="fragment absolute" data-fragment-index="3" style="border:3px solid #E8A838; border-radius:4px; background:rgba(232,168,56,0.2);top: 579px; left: 272px; width: 288px; height: 17px; ">
 
 </div>
 <div class="fragment absolute" data-fragment-index="3" style="font-size:0.56em; color:#7D5A00; font-weight:bold; border-left:3px solid #E8A838; padding-left:8px; line-height:1.6;top: 514px; left: 590px; ">
 <p><span class="math inline">\(R^2_{\text{adj}} = 1 - \text{MSE}/\text{MSTO}\)</span></p>
 </div>
-<div class="fragment absolute" data-fragment-index="4" style="border:3px solid #5BA4CF; border-radius:4px; background:rgba(91,164,207,0.2);top: 543px; left: 0px; width: 560px; height: 23px; ">
+<div class="fragment absolute" data-fragment-index="4" style="border:3px solid #5BA4CF; border-radius:4px; background:rgba(91,164,207,0.2);top: 598px; left: 0px; width: 560px; height: 23px; ">
 
 </div>
 <div class="fragment absolute" data-fragment-index="4" style="font-size:0.56em; color:#1A5276; font-weight:bold; border-left:3px solid #5BA4CF; padding-left:8px; line-height:1.6;top: 547px; left: 590px; ">
@@ -774,7 +747,7 @@ F-statistic: 106.4 on 2 and 27 DF,  p-value: 1.567e-13</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_61baf4ca" minutes="6" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_b7d9fb7c" minutes="6" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>

@@ -4822,7 +4822,7 @@
     "href": "slides/lec-14.html#degrees-of-freedom",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "Degrees of Freedom",
-    "text": "Degrees of Freedom\n\n\n\n\n\n\n\n\n\nSource\ndf\nIntuition\n\n\n\n\nRegression\n\\(p - 1\\)\nOne df per predictor (\\(p - 1\\) slopes to estimate)\n\n\nError\n\\(n - p\\)\n\\(n\\) observations \\(-\\) \\(p\\) parameters estimated (\\(\\beta_0, \\beta_1, \\ldots, \\beta_{p-1}\\))\n\n\nTotal\n\\(n - 1\\)\n\\(n\\) observations \\(-\\) 1 (the grand mean \\(\\bar{Y}\\))\n\n\n\n\n\nKey change from SLR: In SLR, \\(p = 2\\) (intercept + one slope), so \\(\\text{df}(\\text{SSE}) = n - 2\\). In multiple regression, each additional predictor costs one degree of freedom from the error."
+    "text": "Degrees of Freedom\n\n\n\n\n\n\n\n\n\nSource\ndf\nIntuition\n\n\n\n\nRegression\n\\(p - 1\\)\nOne df per predictor (\\(p - 1\\) slopes to estimate)\n\n\nError\n\\(n - p\\)\n\\(n\\) observations \\(-\\) \\(p\\) parameters estimated (\\(\\beta_0, \\beta_1, \\ldots, \\beta_{p-1}\\))\n\n\nTotal\n\\(n - 1\\)\n\\(n\\) observations\n\n\n\n\n\nKey change from SLR: In SLR, \\(p = 2\\) (intercept + one slope), so \\(\\text{df}(\\text{SSE}) = n - 2\\). In multiple regression, each additional predictor costs one degree of freedom from the error."
   },
   {
     "objectID": "slides/lec-14.html#the-anova-table-for-multiple-regression",
@@ -4836,7 +4836,7 @@
     "href": "slides/lec-14.html#estimating-sigma2",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "Estimating \\(\\sigma^2\\)",
-    "text": "Estimating \\(\\sigma^2\\)\n\nResult: Under the model assumptions, \\(E(\\text{MSE}) = \\sigma^2\\).\nSo \\(\\text{MSE} = \\dfrac{\\text{SSE}}{n - p}\\) is an unbiased estimator of \\(\\sigma^2\\), and:\n\\[\\hat{\\sigma} = \\sqrt{\\text{MSE}}\\]\nis the residual standard error. This is the typical distance between an observed \\(Y_i\\) and the fitted regression surface.\n\n\nIn R’s summary() output, this appears as “Residual standard error: X on Y degrees of freedom” — where X \\(= \\hat\\sigma\\) and Y \\(= n - p\\)."
+    "text": "Estimating \\(\\sigma^2\\)\n\nResult: Under the model assumptions, \\(E(\\text{MSE}) = \\sigma^2\\).\nSo \\(\\text{MSE} = \\dfrac{\\text{SSE}}{n - p}\\) is an unbiased estimator of \\(\\sigma^2\\), and:\n\\[\\hat{\\sigma} = \\sqrt{\\text{MSE}}\\]\nis the residual standard error. This is the typical distance between an observed \\(Y_i\\) and the fitted regression."
   },
   {
     "objectID": "slides/lec-14.html#the-f-test-for-overall-significance",
@@ -4857,14 +4857,14 @@
     "href": "slides/lec-14.html#the-f-statistic",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "The F-Statistic",
-    "text": "The F-Statistic\n\nThe overall F-test asks: does this collection of predictors explain any variation in \\(Y\\) at all?\n\\[H_0: \\beta_1 = \\cdots = \\beta_{p-1} = 0 \\qquad H_a: \\text{at least one } \\beta_j \\neq 0\\]\nUnder \\(H_0\\), the model reduces to \\(\\hat{Y}_i = \\bar{Y}\\) — no predictors matter. The test statistic is:\n\\[F^* = \\frac{\\text{MSR}}{\\text{MSE}} = \\frac{\\text{SSR}/(p-1)}{\\text{SSE}/(n-p)}\\]\n\nUnder \\(H_0\\): No predictor explains \\(Y\\), so MSR and MSE both estimate \\(\\sigma^2\\) — the ratio \\(F^* \\approx 1\\). More precisely:\n\\[F^* \\sim F(p-1,\\; n-p) \\qquad \\text{when } H_0 \\text{ is true}\\]\n\n\nWhen \\(H_0\\) is false: At least one predictor creates real signal — the \\(\\hat{Y}_i\\) spread out meaningfully, pushing SSR (and MSR) up. MSE stays the same size (it only captures noise), so \\(F^* \\gg 1\\). Large \\(F^*\\) is evidence against \\(H_0\\).\n\n\n\nSLR vs. MLR F-test: In SLR (\\(p = 2\\)), \\(H_0: \\beta_1 = 0\\) tests a single slope. In MLR, \\(H_0\\) constrains all \\(p - 1\\) slopes simultaneously. It is a joint test: rejecting it only tells you some predictor matters, not which one."
+    "text": "The F-Statistic\n\nThe overall F-test asks: does this collection of predictors explain any variation in \\(Y\\) at all?\n\\[H_0: \\beta_1 = \\cdots = \\beta_{p-1} = 0 \\qquad H_a: \\text{at least one } \\beta_j \\neq 0\\] The test statistic is:\n\\[F^* = \\frac{\\text{MSR}}{\\text{MSE}} = \\frac{\\text{SSR}/(p-1)}{\\text{SSE}/(n-p)}\\]\n\nUnder \\(H_0\\): No predictor explains \\(Y\\), so MSR and MSE both estimate \\(\\sigma^2\\) — the ratio \\(F^* \\approx 1\\). More precisely:\n\\[F^* \\sim F(p-1,\\; n-p) \\qquad \\text{when } H_0 \\text{ is true}\\]\n\n\nWhen \\(H_0\\) is false: At least one predictor creates real signal, so the \\(\\hat{Y}_i\\) spread out meaningfully, pushing SSR (and MSR) up. MSE stays the same size (it only captures noise), so \\(F^* &gt; 1\\). Large \\(F^*\\) is evidence against \\(H_0\\).\n\n\n\nSLR vs. MLR F-test: In SLR (\\(p = 2\\)), \\(H_0: \\beta_1 = 0\\) tests a single slope. In MLR, \\(H_0\\) constrains all \\(p - 1\\) slopes simultaneously. It is a joint test: rejecting it only tells you some predictor matters, not which one."
   },
   {
     "objectID": "slides/lec-14.html#decision-rule-and-connection-to-slr",
     "href": "slides/lec-14.html#decision-rule-and-connection-to-slr",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "Decision Rule and Connection to SLR",
-    "text": "Decision Rule and Connection to SLR\n\nDecision rule at significance level \\(\\alpha\\):\n\\[\\text{Reject } H_0 \\text{ if } F^* &gt; F(1 - \\alpha;\\; p - 1,\\; n - p)\\]\nThe critical value \\(F(1-\\alpha;\\, p-1,\\, n-p)\\) is from an \\(F\\)-table or qf(1-alpha, p-1, n-p) in R.\n\n\nConnection to SLR: In SLR (\\(p = 2\\)), the F-test has \\(\\text{df}(1,\\, n-2)\\) and \\(F^* = (t^*)^2\\) exactly — squaring the \\(t\\)-statistic for \\(H_0: \\beta_1 = 0\\) gives the \\(F\\)-statistic. This is a special case of the same test.\n\n\n\n\nNote: Rejecting \\(H_0\\) tells us at least one \\(\\beta_j\\) matters, but not which ones. That requires the individual inference tools we’ll cover next lecture."
+    "text": "Decision Rule and Connection to SLR\n\nDecision rule at significance level \\(\\alpha\\):\n\\[\\text{Reject } H_0 \\text{ if } F^* &gt; F(1 - \\alpha;\\; p - 1,\\; n - p)\\]\nThe critical value \\(F(1-\\alpha;\\, p-1,\\, n-p)\\) is from an \\(F\\)-table or qf(1-alpha, p-1, n-p) in R.\n\n\nNote: Rejecting \\(H_0\\) tells us at least one \\(\\beta_j\\) matters, but not which ones. That requires the individual inference tools we’ll cover next lecture."
   },
   {
     "objectID": "slides/lec-14.html#r2-and-adjusted-r2",
@@ -4878,7 +4878,7 @@
     "href": "slides/lec-14.html#r2-in-multiple-regression",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "\\(R^2\\) in Multiple Regression",
-    "text": "\\(R^2\\) in Multiple Regression\n\nThe coefficient of determination measures the proportion of total variation in \\(Y\\) explained by the model:\n\\[R^2 = \\frac{\\text{SSR}}{\\text{SSTO}} = 1 - \\frac{\\text{SSE}}{\\text{SSTO}}\\]\n\n\n\\(R^2 \\in [0, 1]\\) — same as in SLR\n\\(R^2 = 0\\): predictors explain nothing (\\(\\hat{Y}_i = \\bar{Y}\\) for all \\(i\\))\n\\(R^2 = 1\\): perfect fit, all residuals are zero\n\n\n\n\nWarning: \\(R^2\\) never decreases when you add a predictor, even a completely irrelevant one. This makes \\(R^2\\) an unreliable tool for comparing models with different numbers of predictors."
+    "text": "\\(R^2\\) in Multiple Regression\n\nThe coefficient of determination measures the proportion of total variation in \\(Y\\) explained by the model:\n\\[R^2 = \\frac{\\text{SSR}}{\\text{SSTO}} = 1 - \\frac{\\text{SSE}}{\\text{SSTO}}\\]\n\n\n\\(R^2 \\in [0, 1]\\) — same as in SLR\n\\(R^2 = 0\\): predictors explain nothing (\\(\\hat{Y}_i = \\bar{Y}\\) for all \\(i\\))\n\\(R^2 = 1\\): perfect fit, all residuals are zero\n\n\n\n\n\\(R^2\\) never decreases when you add a predictor, even a completely irrelevant one. This makes \\(R^2\\) an unreliable tool for comparing models with different numbers of predictors. We need a measure that penalizes for adding predictors that don’t truly help."
   },
   {
     "objectID": "slides/lec-14.html#why-r2-always-increases",
