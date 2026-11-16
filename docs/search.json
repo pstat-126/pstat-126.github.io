@@ -3848,7 +3848,7 @@
     "href": "slides/lec-14.html#degrees-of-freedom",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "Degrees of Freedom",
-    "text": "Degrees of Freedom\n\n\n\n\n\n\n\n\n\nSource\ndf\nIntuition\n\n\n\n\nRegression\n\\(p - 1\\)\nOne df per predictor (\\(p - 1\\) slopes to estimate)\n\n\nError\n\\(n - p\\)\n\\(n\\) observations \\(-\\) \\(p\\) parameters estimated (\\(\\beta_0, \\beta_1, \\ldots, \\beta_{p-1}\\))\n\n\nTotal\n\\(n - 1\\)\n\\(n\\) observations\n\n\n\n\n\nKey change from SLR: In SLR, \\(p = 2\\) (intercept + one slope), so \\(\\text{df}(\\text{SSE}) = n - 2\\). In multiple regression, each additional predictor costs one degree of freedom from the error."
+    "text": "Degrees of Freedom\n\n\n\n\n\n\n\n\n\nSource\ndf\nIntuition\n\n\n\n\nRegression\n\\(p - 1\\)\n\\(p\\) parameters estimated - 1 for the intercept\n\n\nError\n\\(n - p\\)\n\\(n\\) observations \\(-\\) \\(p\\) parameters estimated (\\(\\beta_0, \\beta_1, \\ldots, \\beta_{p-1}\\))\n\n\nTotal\n\\(n - 1\\)\n\\(n\\) observations\n\n\n\n\n\nKey change from SLR: In SLR, \\(p = 2\\) (intercept + one slope), so \\(\\text{df}(\\text{SSE}) = n - 2\\). In multiple regression, each additional predictor costs one degree of freedom from the error."
   },
   {
     "objectID": "slides/lec-14.html#practice-degrees-of-freedom",
@@ -3883,7 +3883,7 @@
     "href": "slides/lec-14.html#estimating-sigma2",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "Estimating \\(\\sigma^2\\)",
-    "text": "Estimating \\(\\sigma^2\\)\n\nResult: Under the model assumptions, \\(E(\\text{MSE}) = \\sigma^2\\).\nSo \\(\\text{MSE} = \\dfrac{\\text{SSE}}{n - p}\\) is an unbiased estimator of \\(\\sigma^2\\), and:\n\\[\\hat{\\sigma} = \\sqrt{\\text{MSE}}\\]\nis the residual standard error. This is the typical distance between an observed \\(Y_i\\) and the fitted regression."
+    "text": "Estimating \\(\\sigma^2\\)\n\nResult: Under the model assumptions, \\(E(\\text{MSE}) = \\sigma^2\\).\nSo \\(\\text{MSE} = \\text{SSE}/(n - p)\\) is an unbiased estimator of \\(\\sigma^2\\), and:\n\\[\\hat{\\sigma} = \\text{MSE}^{1/2} = \\left(\\frac{\\text{SSE}}{n - p}\\right)^{1/2}\\]\nis the residual standard error. This is the typical distance between an observed \\(Y_i\\) and the fitted regression."
   },
   {
     "objectID": "slides/lec-14.html#the-f-test-for-overall-significance",
@@ -3897,14 +3897,14 @@
     "href": "slides/lec-14.html#the-f-statistic",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "The F-Statistic",
-    "text": "The F-Statistic\n\nThe overall F-test asks: does this collection of predictors explain any variation in \\(Y\\) at all?\n\\[H_0: \\beta_1 = \\cdots = \\beta_{p-1} = 0 \\qquad H_a: \\text{at least one } \\beta_j \\neq 0\\] The test statistic is:\n\\[F^* = \\frac{\\text{MSR}}{\\text{MSE}} = \\frac{\\text{SSR}/(p-1)}{\\text{SSE}/(n-p)}\\]\n\nUnder \\(H_0\\): No predictor explains \\(Y\\), so MSR and MSE both estimate \\(\\sigma^2\\) — the ratio \\(F^* \\approx 1\\). More precisely:\n\\[F^* \\sim F(p-1,\\; n-p) \\qquad \\text{when } H_0 \\text{ is true}\\]\n\n\nWhen \\(H_0\\) is false: At least one predictor creates real signal, so the \\(\\hat{Y}_i\\) spread out meaningfully, pushing SSR (and MSR) up. MSE stays the same size (it only captures noise), so \\(F^* &gt; 1\\). Large \\(F^*\\) is evidence against \\(H_0\\).\n\n\n\nSLR vs. MLR F-test: In SLR (\\(p = 2\\)), \\(H_0: \\beta_1 = 0\\) tests a single slope. In MLR, \\(H_0\\) constrains all \\(p - 1\\) slopes simultaneously. It is a joint test: rejecting it only tells you some predictor matters, not which one."
+    "text": "The F-Statistic\n\nThe overall F-test asks: does this collection of predictors explain any variation in \\(Y\\) at all?\n\\[H_0: \\beta_1 = \\cdots = \\beta_{p-1} = 0 \\qquad H_a: \\text{at least one } \\beta_j \\neq 0\\] The test statistic is:\n\\[F^* = \\frac{\\text{MSR}}{\\text{MSE}} = \\frac{\\text{SSR}/(p-1)}{\\text{SSE}/(n-p)}\\]\n\nUnder \\(H_0\\): The true slopes \\(\\beta_j = 0\\), but the estimated slopes \\(\\hat{\\beta}_j \\neq 0\\) — OLS always fits them and they pick up noise. So \\(\\text{SSR} = \\sum(\\hat{Y}_i - \\bar{Y})^2\\) is nonzero, but only reflects random variation. MSE estimates \\(\\sigma^2\\) from residuals; MSR estimates \\(\\sigma^2\\) from that noisy spread in \\(\\hat{Y}_i\\). Both converge to \\(\\sigma^2\\), so \\(F^* \\approx 1\\).\n\n\nWhen \\(H_0\\) is false: At least one predictor creates real signal, so the \\(\\hat{Y}_i\\) spread out meaningfully, pushing SSR (and MSR) up. MSE stays the same size (it only captures noise), so \\(F^* &gt; 1\\). Large \\(F^*\\) is evidence against \\(H_0\\).\n\n\n\nSLR vs. MLR F-test: In SLR (\\(p = 2\\)), \\(H_0: \\beta_1 = 0\\) tests a single slope. In MLR, \\(H_0\\) constrains all \\(p - 1\\) slopes simultaneously. It is a joint test: rejecting it only tells you some predictor matters, not which predictors."
   },
   {
     "objectID": "slides/lec-14.html#decision-rule-and-connection-to-slr",
     "href": "slides/lec-14.html#decision-rule-and-connection-to-slr",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "Decision Rule and Connection to SLR",
-    "text": "Decision Rule and Connection to SLR\n\nDecision rule at significance level \\(\\alpha\\):\n\\[\\text{Reject } H_0 \\text{ if } F^* &gt; F(1 - \\alpha;\\; p - 1,\\; n - p)\\]\nThe critical value \\(F(1-\\alpha;\\, p-1,\\, n-p)\\) is from an \\(F\\)-table or qf(1-alpha, p-1, n-p) in R.\n\n\nNote: Rejecting \\(H_0\\) tells us at least one \\(\\beta_j\\) matters, but not which ones. That requires the individual inference tools we’ll cover next lecture."
+    "text": "Decision Rule and Connection to SLR\n\nDecision rule at significance level \\(\\alpha\\):\n\\[\\text{Reject } H_0 \\text{ if } F^* &gt; F(1 - \\alpha;\\; p - 1,\\; n - p)\\]\nThe critical value \\(F(1-\\alpha;\\, p-1,\\, n-p)\\) is from an \\(F\\)-table or qf(1-alpha, p-1, n-p) in R.\n\n\nNote: Rejecting \\(H_0\\) tells us at least one \\(\\beta_j\\) matters, but not which ones."
   },
   {
     "objectID": "slides/lec-14.html#r2-and-adjusted-r2",
@@ -3946,35 +3946,35 @@
     "href": "slides/lec-14.html#reading-the-anova-output",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "Reading the ANOVA Output",
-    "text": "Reading the ANOVA Output\n\n\nAnalysis of Variance Table\n\nResponse: units\n          Df  Sum Sq Mean Sq F value    Pr(&gt;F)    \nhours      1 2875.26 2875.26 159.771 7.488e-13 ***\nexp_yr     1  954.68  954.68  53.049 7.804e-08 ***\nResiduals 27  485.89   18.00                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\n\n\nSequential SSR Sum Sq for each predictor added in order; rows sum to full model SSR\n\n\n\n\n\nSSE; df \\(= n - p = 27\\) Mean Sq \\(= \\text{MSE} = \\hat\\sigma^2\\)\n\n\n\n\n\nDf: 1 per predictor Residuals \\(= n - p = 27\\)"
+    "text": "Reading the ANOVA Output\n\n\nAnalysis of Variance Table\n\nResponse: units\n          Df  Sum Sq Mean Sq F value    Pr(&gt;F)    \nhours      1 2875.26 2875.26 159.771 7.488e-13 ***\nexp_yr     1  954.68  954.68  53.049 7.804e-08 ***\nResiduals 27  485.89   18.00                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\n\n\nSSR added by each predictor in the order listed; rows sum to total SSR\n\n\n\n\n\nSSE; df \\(= n - p = 27\\)\n\n\n\n\n\nDf column: 1 df per predictor; residuals df \\(= n - p = 27\\)"
   },
   {
     "objectID": "slides/lec-14.html#r2-adjusted-r2-and-hatsigma-from-summary",
     "href": "slides/lec-14.html#r2-adjusted-r2-and-hatsigma-from-summary",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "\\(R^2\\), Adjusted \\(R^2\\), and \\(\\hat\\sigma\\) from summary()",
-    "text": "\\(R^2\\), Adjusted \\(R^2\\), and \\(\\hat\\sigma\\) from summary()\n\n\n\nCall:\nlm(formula = units ~ hours + exp_yr)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-11.308  -1.845   0.731   2.114   7.898 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)   8.0191     2.3982   3.344  0.00244 ** \nhours         4.4335     0.3900  11.369 8.45e-12 ***\nexp_yr        1.8465     0.2535   7.283 7.80e-08 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 4.242 on 27 degrees of freedom\nMultiple R-squared:  0.8874,    Adjusted R-squared:  0.8791 \nF-statistic: 106.4 on 2 and 27 DF,  p-value: 1.567e-13\n\n\n\n\n\n\n\\(\\hat\\sigma = \\sqrt{\\text{MSE}}\\); df \\(= n - p = 27\\)\n\n\n\n\n\n\\(R^2 = \\text{SSR}/\\text{SSTO}\\)\n\n\n\n\n\n\\(R^2_{\\text{adj}} = 1 - \\text{MSE}/\\text{MSTO}\\)\n\n\n\n\n\n\\(F^* = \\text{MSR}/\\text{MSE}\\); df \\((p-1,\\, n-p)\\); overall test"
+    "text": "\\(R^2\\), Adjusted \\(R^2\\), and \\(\\hat\\sigma\\) from summary()\n\n\n\nCall:\nlm(formula = units ~ hours + exp_yr)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-11.308  -1.845   0.731   2.114   7.898 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)   8.0191     2.3982   3.344  0.00244 ** \nhours         4.4335     0.3900  11.369 8.45e-12 ***\nexp_yr        1.8465     0.2535   7.283 7.80e-08 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 4.242 on 27 degrees of freedom\nMultiple R-squared:  0.8874,    Adjusted R-squared:  0.8791 \nF-statistic: 106.4 on 2 and 27 DF,  p-value: 1.567e-13\n\n\n\n\n\n\n\\(\\hat\\sigma = \\text{MSE}^{1/2}\\) :Typical distance between observed and fitted \\(Y\\)\n\n\n\n\n\n\\(R^2 = \\text{SSR}/\\text{SSTO}\\) — proportion of variation in \\(Y\\) explained; always increases when predictors are added\n\n\n\n\n\n\\(R^2_{\\text{adj}} = 1 - \\text{MSE}/\\text{MSTO}\\) — penalizes for extra predictors; increases only if the new predictor reduces MSE\n\n\n\n\n\nOverall F-test: \\(F^* = \\text{MSR}/\\text{MSE}\\); df \\((p-1,\\, n-p)\\); tests if any predictor has a linear relationship with \\(Y\\)"
   },
   {
     "objectID": "slides/lec-14.html#practice-anova-for-multiple-regression",
     "href": "slides/lec-14.html#practice-anova-for-multiple-regression",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "Practice: ANOVA for Multiple Regression",
-    "text": "Practice: ANOVA for Multiple Regression\n\nA study models exam score (\\(Y\\), out of 100) using hours studied (\\(X_1\\)) and prior GPA (\\(X_2\\)), \\(n = 25\\) students, \\(p = 3\\).\n\n\\(\\text{SSTO} = 2400, \\quad \\text{SSE} = 480, \\quad F(0.95;\\; 2,\\; 22) = 3.44\\)\n\n(a) Compute SSR and \\(R^2\\). Interpret \\(R^2\\) in context.\n\n(b) Complete the ANOVA table (df, SS, MS, \\(F^*\\)).\n\n(c) Test \\(H_0: \\beta_1 = \\beta_2 = 0\\) at \\(\\alpha = 0.05\\). State your conclusion in context.\n\n(d) Compute MSE. What does it estimate, and what are its units?"
+    "text": "Practice: ANOVA for Multiple Regression\n\nA study models exam score (\\(Y\\), out of 100) using hours studied (\\(X_1\\)) and prior GPA (\\(X_2\\)), \\(n = 25\\) students, \\(p = 3\\).\n\n\\(\\text{SSTO} = 2400, \\quad \\text{SSE} = 480, \\quad F(0.95;\\; 2,\\; 22) = 3.44\\)\n\n(a) Compute SSR and \\(R^2\\). Given that adjusted \\(R^2 = 0.782\\), is \\(R^2\\) larger than adjusted \\(R^2\\)? Is this what you would expect?\n\n(b) Complete the ANOVA table (df, SS, MS, \\(F^*\\)).\n\n(c) Test \\(H_0: \\beta_1 = \\beta_2 = 0\\) at \\(\\alpha = 0.05\\). State your conclusion in context."
   },
   {
     "objectID": "slides/lec-14.html#practice-solution",
     "href": "slides/lec-14.html#practice-solution",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "Practice: Solution",
-    "text": "Practice: Solution\n\n(a)\n\\[\\text{SSR} = \\text{SSTO} - \\text{SSE} = 2400 - 480 = 1920\\]\n\\[R^2 = \\frac{\\text{SSR}}{\\text{SSTO}} = \\frac{1920}{2400} = 0.80\\]\nHours studied and prior GPA together explain 80% of the variability in exam scores.\n\n(b) With \\(n = 25\\), \\(p = 3\\): \\(\\text{df}(\\text{SSR}) = p - 1 = 2\\), \\(\\text{df}(\\text{SSE}) = n - p = 22\\), \\(\\text{df}(\\text{SSTO}) = n - 1 = 24\\).\n\n\n\nSource\ndf\nSS\nMS\n\\(F^*\\)\n\n\n\n\nRegression\n2\n1920\n960\n44.0\n\n\nError\n22\n480\n21.82\n\n\n\nTotal\n24\n2400\n\n\n\n\n\n\n\n(c) Since \\(F^* = 44.0 &gt; F(0.95;\\; 2,\\; 22) = 3.44\\), we reject \\(H_0\\) at \\(\\alpha = 0.05\\). There is sufficient evidence that at least one of hours studied or prior GPA is a significant predictor of exam score.\n\n\n(d) \\(\\text{MSE} = 480/22 \\approx 21.82\\) — an unbiased estimate of \\(\\sigma^2\\), the variance of the errors. Units are (points\\(^2\\)), so \\(\\hat\\sigma = \\sqrt{21.82} \\approx 4.67\\) points."
+    "text": "Practice: Solution\n\n(a)\n\\[\\text{SSR} = \\text{SSTO} - \\text{SSE} = 2400 - 480 = 1920\\]\n\\[R^2 = \\frac{\\text{SSR}}{\\text{SSTO}} = \\frac{1920}{2400} = 0.80\\]\nHours studied and prior GPA together explain 80% of the variability in exam scores.\nYes — \\(R^2 = 0.80 &gt; R^2_{\\text{adj}} = 0.782\\) always, since adjusted \\(R^2\\) penalizes for each parameter estimated.\n\n(b) With \\(n = 25\\), \\(p = 3\\): \\(\\text{df}(\\text{SSR}) = p - 1 = 2\\), \\(\\text{df}(\\text{SSE}) = n - p = 22\\), \\(\\text{df}(\\text{SSTO}) = n - 1 = 24\\).\n\n\n\nSource\ndf\nSS\nMS\n\\(F^*\\)\n\n\n\n\nRegression\n2\n1920\n960\n44.0\n\n\nError\n22\n480\n21.82\n\n\n\nTotal\n24\n2400\n\n\n\n\n\n\n\n(c) Since \\(F^* = 44.0 &gt; F(0.95;\\; 2,\\; 22) = 3.44\\), we reject \\(H_0\\) at \\(\\alpha = 0.05\\). There is sufficient evidence that at least one of hours studied or prior GPA is a significant predictor of exam score."
   },
   {
     "objectID": "slides/lec-14.html#summary",
     "href": "slides/lec-14.html#summary",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "Summary",
-    "text": "Summary\n\n\nANOVA decomposition: \\(\\text{SSTO} = \\text{SSR} + \\text{SSE}\\); the definitions of SSR, SSE, and SSTO are identical to SLR. Only the degrees of freedom change\nDegrees of freedom: \\(\\text{df}(\\text{SSR}) = p - 1\\); \\(\\text{df}(\\text{SSE}) = n - p\\); \\(\\text{df}(\\text{SSTO}) = n - 1\\); each predictor costs one df from the error\nMSE \\(= \\text{SSE}/(n-p)\\) is an unbiased estimator of \\(\\sigma^2\\); \\(\\hat\\sigma = \\sqrt{\\text{MSE}}\\) is the residual standard error\nF-test: \\(H_0: \\beta_1 = \\cdots = \\beta_{p-1} = 0\\); \\(F^* = \\text{MSR}/\\text{MSE} \\sim F(p-1, n-p)\\) under \\(H_0\\); reject when \\(F^*\\) exceeds the upper-\\(\\alpha\\) quantile\n\\(R^2\\) \\(= \\text{SSR}/\\text{SSTO}\\): proportion of variation explained; always increases when predictors are added\nAdjusted \\(R^2\\) \\(= 1 - \\text{MSE}/\\text{MSTO}\\): penalizes for adding predictors; increases only if the new predictor reduces MSE"
+    "text": "Summary\n\n\nANOVA decomposition: \\(\\text{SSTO} = \\text{SSR} + \\text{SSE}\\); the definitions of SSR, SSE, and SSTO are identical to SLR. Only the degrees of freedom change\nDegrees of freedom: \\(\\text{df}(\\text{SSR}) = p - 1\\); \\(\\text{df}(\\text{SSE}) = n - p\\); \\(\\text{df}(\\text{SSTO}) = n - 1\\); each predictor costs one df from the error\nMSE \\(= \\text{SSE}/(n-p)\\) is an unbiased estimator of \\(\\sigma^2\\); \\(\\hat\\sigma = \\sqrt{\\text{MSE}}\\) is the residual standard error\nF-test: tests whether at least one predictor has a linear relationship with \\(Y\\) (\\(H_0: \\beta_1 = \\cdots = \\beta_{p-1} = 0\\)); \\(F^* = \\text{MSR}/\\text{MSE} \\sim F(p-1, n-p)\\) under \\(H_0\\); reject when \\(F^* &gt; F(1-\\alpha;\\, p-1,\\, n-p)\\)\n\\(R^2\\) \\(= \\text{SSR}/\\text{SSTO}\\): proportion of variation explained; always increases when predictors are added\nAdjusted \\(R^2\\) \\(= 1 - \\text{MSE}/\\text{MSTO}\\): penalizes for adding predictors; increases only if the new predictor reduces MSE"
   },
   {
     "objectID": "slides/lec-14.html#questions",
@@ -3982,5 +3982,12 @@
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "Questions?",
     "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
+  },
+  {
+    "objectID": "slides/lec-14.html#quiz-3",
+    "href": "slides/lec-14.html#quiz-3",
+    "title": "Lecture 14: Multiple Regression — Analysis of Variance",
+    "section": "Quiz 3",
+    "text": "Quiz 3\n\nPlease put away all materials and take out a pencil and your calculator.\nGood luck!"
   }
 ]

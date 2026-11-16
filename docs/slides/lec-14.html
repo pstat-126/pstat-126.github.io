@@ -319,7 +319,7 @@ Annie Adams
 <tr class="odd">
 <td style="text-align: center;">Regression</td>
 <td style="text-align: center;"><span class="math inline">\(p - 1\)</span></td>
-<td style="text-align: left;">One df per predictor (<span class="math inline">\(p - 1\)</span> slopes to estimate)</td>
+<td style="text-align: left;"><span class="math inline">\(p\)</span> parameters estimated - 1 for the intercept</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">Error</td>
@@ -378,7 +378,7 @@ Annie Adams
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_7825e621" minutes="1" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_9935dc0a" minutes="2" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -510,8 +510,8 @@ Annie Adams
 <h2>Estimating <span class="math inline">\(\sigma^2\)</span></h2>
 <div style="font-size: 0.80em;">
 <p><strong>Result:</strong> Under the model assumptions, <span class="math inline">\(E(\text{MSE}) = \sigma^2\)</span>.</p>
-<p>So <span class="math inline">\(\text{MSE} = \dfrac{\text{SSE}}{n - p}\)</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span>, and:</p>
-<p><span class="math display">\[\hat{\sigma} = \sqrt{\text{MSE}}\]</span></p>
+<p>So <span class="math inline">\(\text{MSE} = \text{SSE}/(n - p)\)</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span>, and:</p>
+<p><span class="math display">\[\hat{\sigma} = \text{MSE}^{1/2} = \left(\frac{\text{SSE}}{n - p}\right)^{1/2}\]</span></p>
 <p>is the <strong>residual standard error</strong>. This is the typical distance between an observed <span class="math inline">\(Y_i\)</span> and the fitted regression.</p>
 </div>
 </section>
@@ -525,15 +525,14 @@ Annie Adams
 <p><span class="math display">\[H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \qquad H_a: \text{at least one } \beta_j \neq 0\]</span> The test statistic is:</p>
 <p><span class="math display">\[F^* = \frac{\text{MSR}}{\text{MSE}} = \frac{\text{SSR}/(p-1)}{\text{SSE}/(n-p)}\]</span></p>
 <div class="fragment">
-<p><strong>Under <span class="math inline">\(H_0\)</span>:</strong> No predictor explains <span class="math inline">\(Y\)</span>, so MSR and MSE both estimate <span class="math inline">\(\sigma^2\)</span> — the ratio <span class="math inline">\(F^* \approx 1\)</span>. More precisely:</p>
-<p><span class="math display">\[F^* \sim F(p-1,\; n-p) \qquad \text{when } H_0 \text{ is true}\]</span></p>
+<p><strong>Under <span class="math inline">\(H_0\)</span>:</strong> The true slopes <span class="math inline">\(\beta_j = 0\)</span>, but the estimated slopes <span class="math inline">\(\hat{\beta}_j \neq 0\)</span> — OLS always fits them and they pick up noise. So <span class="math inline">\(\text{SSR} = \sum(\hat{Y}_i - \bar{Y})^2\)</span> is nonzero, but only reflects random variation. MSE estimates <span class="math inline">\(\sigma^2\)</span> from residuals; MSR estimates <span class="math inline">\(\sigma^2\)</span> from that noisy spread in <span class="math inline">\(\hat{Y}_i\)</span>. Both converge to <span class="math inline">\(\sigma^2\)</span>, so <span class="math inline">\(F^* \approx 1\)</span>.</p>
 </div>
 <div class="fragment">
 <p><strong>When <span class="math inline">\(H_0\)</span> is false:</strong> At least one predictor creates real signal, so the <span class="math inline">\(\hat{Y}_i\)</span> spread out meaningfully, pushing SSR (and MSR) up. MSE stays the same size (it only captures noise), so <span class="math inline">\(F^* &gt; 1\)</span>. Large <span class="math inline">\(F^*\)</span> is evidence against <span class="math inline">\(H_0\)</span>.</p>
 </div>
 <div class="fragment">
 <div style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;">
-<p><strong>SLR vs.&nbsp;MLR F-test:</strong> In SLR (<span class="math inline">\(p = 2\)</span>), <span class="math inline">\(H_0: \beta_1 = 0\)</span> tests a single slope. In MLR, <span class="math inline">\(H_0\)</span> constrains <strong>all</strong> <span class="math inline">\(p - 1\)</span> slopes simultaneously. It is a <strong>joint</strong> test: rejecting it only tells you <em>some</em> predictor matters, not which one.</p>
+<p><strong>SLR vs.&nbsp;MLR F-test:</strong> In SLR (<span class="math inline">\(p = 2\)</span>), <span class="math inline">\(H_0: \beta_1 = 0\)</span> tests a single slope. In MLR, <span class="math inline">\(H_0\)</span> constrains <strong>all</strong> <span class="math inline">\(p - 1\)</span> slopes simultaneously. It is a <strong>joint</strong> test: rejecting it only tells you <em>some</em> predictor matters, not <strong>which</strong> predictors.</p>
 </div>
 </div>
 </div>
@@ -546,7 +545,7 @@ Annie Adams
 <p>The critical value <span class="math inline">\(F(1-\alpha;\, p-1,\, n-p)\)</span> is from an <span class="math inline">\(F\)</span>-table or <code>qf(1-alpha, p-1, n-p)</code> in R.</p>
 <div class="fragment">
 <div style="font-size: 0.88em;">
-<p><strong>Note:</strong> Rejecting <span class="math inline">\(H_0\)</span> tells us <em>at least one</em> <span class="math inline">\(\beta_j\)</span> matters, but <strong>not which ones</strong>. That requires the individual inference tools we’ll cover next lecture.</p>
+<p><strong>Note:</strong> Rejecting <span class="math inline">\(H_0\)</span> tells us <em>at least one</em> <span class="math inline">\(\beta_j\)</span> matters, but <strong>not which ones</strong>.</p>
 </div>
 </div>
 </div>
@@ -665,19 +664,19 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 
 </div>
 <div class="fragment absolute" data-fragment-index="1" style="font-size:0.56em; color:#7D5A00; font-weight:bold; border-left:3px solid #E8A838; padding-left:8px; line-height:1.6;top: 176px; left: 590px; ">
-<p><strong>Sequential SSR</strong> Sum Sq for each predictor added in order; rows sum to full model SSR</p>
+<p>SSR added by each predictor in the order listed; rows sum to total SSR</p>
 </div>
 <div class="fragment absolute" data-fragment-index="2" style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);top: 270px; left: 125px; width: 75px; height: 20px; ">
 
 </div>
 <div class="fragment absolute" data-fragment-index="2" style="font-size:0.56em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.6;top: 234px; left: 590px; ">
-<p><strong>SSE</strong>; df <span class="math inline">\(= n - p = 27\)</span> Mean Sq <span class="math inline">\(= \text{MSE} = \hat\sigma^2\)</span></p>
+<p><strong>SSE</strong>; df <span class="math inline">\(= n - p = 27\)</span></p>
 </div>
 <div class="fragment absolute" data-fragment-index="3" style="border:3px solid #5BA4CF; border-radius:4px; background:rgba(91,164,207,0.2);top: 188px; left: 92px; width: 28px; height: 105px; ">
 
 </div>
 <div class="fragment absolute" data-fragment-index="3" style="font-size:0.56em; color:#1A5276; font-weight:bold; border-left:3px solid #5BA4CF; padding-left:8px; line-height:1.6;top: 270px; left: 590px; ">
-<p><strong>Df:</strong> 1 per predictor Residuals <span class="math inline">\(= n - p = 27\)</span></p>
+<p><strong>Df column:</strong> 1 df per predictor; residuals df <span class="math inline">\(= n - p = 27\)</span></p>
 </div>
 </section>
 <section id="r2-adjusted-r2-and-hatsigma-from-summary" class="slide level2 smaller">
@@ -709,25 +708,25 @@ F-statistic: 106.4 on 2 and 27 DF,  p-value: 1.567e-13</code></pre>
 
 </div>
 <div class="fragment absolute" data-fragment-index="1" style="font-size:0.56em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.6;top: 448px; left: 590px; ">
-<p><span class="math inline">\(\hat\sigma = \sqrt{\text{MSE}}\)</span>; df <span class="math inline">\(= n - p = 27\)</span></p>
+<p><span class="math inline">\(\hat\sigma = \text{MSE}^{1/2}\)</span> :Typical distance between observed and fitted <span class="math inline">\(Y\)</span></p>
 </div>
 <div class="fragment absolute" data-fragment-index="2" style="border:3px solid #C0392B; border-radius:4px; background:rgba(192,57,43,0.2);top: 579px; left: 0px; width: 270px; height: 17px; ">
 
 </div>
 <div class="fragment absolute" data-fragment-index="2" style="font-size:0.56em; color:#922B21; font-weight:bold; border-left:3px solid #C0392B; padding-left:8px; line-height:1.6;top: 482px; left: 590px; ">
-<p><span class="math inline">\(R^2 = \text{SSR}/\text{SSTO}\)</span></p>
+<p><strong><span class="math inline">\(R^2 = \text{SSR}/\text{SSTO}\)</span></strong> — proportion of variation in <span class="math inline">\(Y\)</span> explained; always increases when predictors are added</p>
 </div>
 <div class="fragment absolute" data-fragment-index="3" style="border:3px solid #E8A838; border-radius:4px; background:rgba(232,168,56,0.2);top: 579px; left: 272px; width: 288px; height: 17px; ">
 
 </div>
-<div class="fragment absolute" data-fragment-index="3" style="font-size:0.56em; color:#7D5A00; font-weight:bold; border-left:3px solid #E8A838; padding-left:8px; line-height:1.6;top: 514px; left: 590px; ">
-<p><span class="math inline">\(R^2_{\text{adj}} = 1 - \text{MSE}/\text{MSTO}\)</span></p>
+<div class="fragment absolute" data-fragment-index="3" style="font-size:0.56em; color:#7D5A00; font-weight:bold; border-left:3px solid #E8A838; padding-left:8px; line-height:1.6;top: 530px; left: 590px; ">
+<p><strong><span class="math inline">\(R^2_{\text{adj}} = 1 - \text{MSE}/\text{MSTO}\)</span></strong> — penalizes for extra predictors; increases only if the new predictor reduces MSE</p>
 </div>
 <div class="fragment absolute" data-fragment-index="4" style="border:3px solid #5BA4CF; border-radius:4px; background:rgba(91,164,207,0.2);top: 598px; left: 0px; width: 560px; height: 23px; ">
 
 </div>
-<div class="fragment absolute" data-fragment-index="4" style="font-size:0.56em; color:#1A5276; font-weight:bold; border-left:3px solid #5BA4CF; padding-left:8px; line-height:1.6;top: 547px; left: 590px; ">
-<p><span class="math inline">\(F^* = \text{MSR}/\text{MSE}\)</span>; df <span class="math inline">\((p-1,\, n-p)\)</span>; overall test</p>
+<div class="fragment absolute" data-fragment-index="4" style="font-size:0.56em; color:#1A5276; font-weight:bold; border-left:3px solid #5BA4CF; padding-left:8px; line-height:1.0;top: 575px; left: 590px; ">
+<p><strong>Overall F-test:</strong> <span class="math inline">\(F^* = \text{MSR}/\text{MSE}\)</span>; df <span class="math inline">\((p-1,\, n-p)\)</span>; tests if any predictor has a linear relationship with <span class="math inline">\(Y\)</span></p>
 </div>
 </section>
 <section id="practice-anova-for-multiple-regression" class="slide level2 smaller">
@@ -737,17 +736,15 @@ F-statistic: 106.4 on 2 and 27 DF,  p-value: 1.567e-13</code></pre>
 <div style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-bottom: 0.5em;">
 <p><span class="math inline">\(\text{SSTO} = 2400, \quad \text{SSE} = 480, \quad F(0.95;\; 2,\; 22) = 3.44\)</span></p>
 </div>
-<p><strong>(a)</strong> Compute SSR and <span class="math inline">\(R^2\)</span>. Interpret <span class="math inline">\(R^2\)</span> in context.</p>
-<p><br></p>
+<p><strong>(a)</strong> Compute SSR and <span class="math inline">\(R^2\)</span>. Given that adjusted <span class="math inline">\(R^2 = 0.782\)</span>, is <span class="math inline">\(R^2\)</span> larger than adjusted <span class="math inline">\(R^2\)</span>? Is this what you would expect?</p>
+<p><br><br></p>
 <p><strong>(b)</strong> Complete the ANOVA table (df, SS, MS, <span class="math inline">\(F^*\)</span>).</p>
-<p><br></p>
+<p><br><br></p>
 <p><strong>(c)</strong> Test <span class="math inline">\(H_0: \beta_1 = \beta_2 = 0\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>. State your conclusion in context.</p>
-<p><br></p>
-<p><strong>(d)</strong> Compute MSE. What does it estimate, and what are its units?</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_7daeeb4f" minutes="6" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_0ef0fb38" minutes="6" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -758,6 +755,7 @@ F-statistic: 106.4 on 2 and 27 DF,  p-value: 1.567e-13</code></pre>
 <p><span class="math display">\[\text{SSR} = \text{SSTO} - \text{SSE} = 2400 - 480 = 1920\]</span></p>
 <p><span class="math display">\[R^2 = \frac{\text{SSR}}{\text{SSTO}} = \frac{1920}{2400} = 0.80\]</span></p>
 <p>Hours studied and prior GPA together explain <strong>80%</strong> of the variability in exam scores.</p>
+<p>Yes — <span class="math inline">\(R^2 = 0.80 &gt; R^2_{\text{adj}} = 0.782\)</span> always, since adjusted <span class="math inline">\(R^2\)</span> penalizes for each parameter estimated.</p>
 <div class="fragment">
 <p><strong>(b)</strong> With <span class="math inline">\(n = 25\)</span>, <span class="math inline">\(p = 3\)</span>: <span class="math inline">\(\text{df}(\text{SSR}) = p - 1 = 2\)</span>, <span class="math inline">\(\text{df}(\text{SSE}) = n - p = 22\)</span>, <span class="math inline">\(\text{df}(\text{SSTO}) = n - 1 = 24\)</span>.</p>
 <table class="caption-top">
@@ -798,22 +796,26 @@ F-statistic: 106.4 on 2 and 27 DF,  p-value: 1.567e-13</code></pre>
 <div class="fragment">
 <p><strong>(c)</strong> Since <span class="math inline">\(F^* = 44.0 &gt; F(0.95;\; 2,\; 22) = 3.44\)</span>, we <strong>reject <span class="math inline">\(H_0\)</span></strong> at <span class="math inline">\(\alpha = 0.05\)</span>. There is sufficient evidence that at least one of hours studied or prior GPA is a significant predictor of exam score.</p>
 </div>
-<div class="fragment">
-<p><strong>(d)</strong> <span class="math inline">\(\text{MSE} = 480/22 \approx 21.82\)</span> — an unbiased estimate of <span class="math inline">\(\sigma^2\)</span>, the variance of the errors. Units are (points<span class="math inline">\(^2\)</span>), so <span class="math inline">\(\hat\sigma = \sqrt{21.82} \approx 4.67\)</span> points.</p>
-</div>
 </div>
 </section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
-<div style="font-size: 0.72em;">
+<div style="font-size: 0.66em;">
 <ul>
 <li class="fragment"><strong>ANOVA decomposition:</strong> <span class="math inline">\(\text{SSTO} = \text{SSR} + \text{SSE}\)</span>; the definitions of SSR, SSE, and SSTO are identical to SLR. Only the degrees of freedom change</li>
 <li class="fragment"><strong>Degrees of freedom:</strong> <span class="math inline">\(\text{df}(\text{SSR}) = p - 1\)</span>; <span class="math inline">\(\text{df}(\text{SSE}) = n - p\)</span>; <span class="math inline">\(\text{df}(\text{SSTO}) = n - 1\)</span>; each predictor costs one df from the error</li>
 <li class="fragment"><strong>MSE</strong> <span class="math inline">\(= \text{SSE}/(n-p)\)</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span>; <span class="math inline">\(\hat\sigma = \sqrt{\text{MSE}}\)</span> is the residual standard error</li>
-<li class="fragment"><strong>F-test:</strong> <span class="math inline">\(H_0: \beta_1 = \cdots = \beta_{p-1} = 0\)</span>; <span class="math inline">\(F^* = \text{MSR}/\text{MSE} \sim F(p-1, n-p)\)</span> under <span class="math inline">\(H_0\)</span>; reject when <span class="math inline">\(F^*\)</span> exceeds the upper-<span class="math inline">\(\alpha\)</span> quantile</li>
+<li class="fragment"><strong>F-test:</strong> tests whether at least one predictor has a linear relationship with <span class="math inline">\(Y\)</span> (<span class="math inline">\(H_0: \beta_1 = \cdots = \beta_{p-1} = 0\)</span>); <span class="math inline">\(F^* = \text{MSR}/\text{MSE} \sim F(p-1, n-p)\)</span> under <span class="math inline">\(H_0\)</span>; reject when <span class="math inline">\(F^* &gt; F(1-\alpha;\, p-1,\, n-p)\)</span></li>
 <li class="fragment"><strong><span class="math inline">\(R^2\)</span></strong> <span class="math inline">\(= \text{SSR}/\text{SSTO}\)</span>: proportion of variation explained; always increases when predictors are added</li>
 <li class="fragment"><strong>Adjusted <span class="math inline">\(R^2\)</span></strong> <span class="math inline">\(= 1 - \text{MSE}/\text{MSTO}\)</span>: penalizes for adding predictors; increases only if the new predictor reduces MSE</li>
 </ul>
+</div>
+</section>
+<section id="quiz-3" class="slide level2" data-background-color="#003660">
+<h2>Quiz 3</h2>
+<div style="text-align: center; margin-top: 2em; font-size: 1.2em;">
+<p>Please put away all materials and take out a pencil and your calculator.</p>
+<p>Good luck!</p>
 </div>
 </section>
 <section id="questions" class="slide level2" data-background-color="#003660">
