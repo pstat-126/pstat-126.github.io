@@ -517,13 +517,12 @@ Hours studied and prior GPA together explain **80%** of the variability in exam 
 ::: {style="font-size: 0.72em;"}
 
 ::: {.incremental}
-- **ANOVA decomposition:** $\text{SSTO} = \text{SSR} + \text{SSE}$; the definitions of SSR, SSE, and SSTO are identical to SLR — only the degrees of freedom change
+- **ANOVA decomposition:** $\text{SSTO} = \text{SSR} + \text{SSE}$; the definitions of SSR, SSE, and SSTO are identical to SLR. Only the degrees of freedom change
 - **Degrees of freedom:** $\text{df}(\text{SSR}) = p - 1$; $\text{df}(\text{SSE}) = n - p$; $\text{df}(\text{SSTO}) = n - 1$; each predictor costs one df from the error
 - **MSE** $= \text{SSE}/(n-p)$ is an unbiased estimator of $\sigma^2$; $\hat\sigma = \sqrt{\text{MSE}}$ is the residual standard error
 - **F-test:** $H_0: \beta_1 = \cdots = \beta_{p-1} = 0$; $F^* = \text{MSR}/\text{MSE} \sim F(p-1, n-p)$ under $H_0$; reject when $F^*$ exceeds the upper-$\alpha$ quantile
-- **$R^2$** $= \text{SSR}/\text{SSTO}$: proportion of variation explained; always increases when predictors are added — cannot be used to compare models of different sizes
+- **$R^2$** $= \text{SSR}/\text{SSTO}$: proportion of variation explained; always increases when predictors are added 
 - **Adjusted $R^2$** $= 1 - \text{MSE}/\text{MSTO}$: penalizes for adding predictors; increases only if the new predictor reduces MSE
-- **In R:** `anova(fit)` gives sequential SS for each predictor plus SSE; `summary(fit)` gives $\hat\sigma$, $R^2$, $R^2_{\text{adj}}$, and the overall $F$-test
 :::
 
 :::

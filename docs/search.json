@@ -529,7 +529,7 @@
     "href": "schedule.html",
     "title": "Course Schedule",
     "section": "",
-    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n  \n    \n      Date\n      Topic\n      Materials\n      Lab\n      Due\n    \n  \n  \n\n    Week 1 — Introduction & Simple Linear Regression\n    \n      Mon, Sep 28\n      Welcome to PSTAT 126!\n        Course Information & Overview\n        The Simple Linear Regression Model\n        Linear Regression Intro\n      SlidesSlides\n      \n      \n    \n    \n      Wed, Sep 30\n      Least Squares Estimation\n        Deriving OLS estimators\n      Slides\n      \n      \n    \n    \n      Sat, Oct 3\n      \n      Late Pass Q (optional)\n    \n\n   \n    Week 2 — Properties of OLS\n    \n      Mon, Oct 5\n      Properties of OLS Estimators\n      Slides\n      Lab 1\n      \n    \n    \n      Wed, Oct 7\n      Residuals and Estimating Error Variance\n      Slides\n      \n      \n\n\n    Week 3 — Inference in Regression\n    \n      Mon, Oct 12\n      Inference in Regression\n        Maximum Likelihood Estimation\n      Slides\n      Lab 2\n      \n    \n    \n      Wed, Oct 14\n      Inference in Regression\n        Hypothesis tests and confidence intervals for OLS estimates\n      Slides\n      \n    \n       \n      Sat, Oct 17\n      \n      Homework 1\n    \n    Week 4 — Inference in Regression + Model Diagnostics  \n      Mon, Oct 19\n      Prediction Intervals + Model Fit\n        PI for a new observation vs. CI for mean response; SST, SSR, SSE\n      Slides\n      Lab 3\n      \n    \n    \n      Wed, Oct 19\n      Model Diagnostics Overview\n         \n      Slides\n      \n      \n    \n\n    Week 5 — Transformations \n    \n      Mon, Oct 26\n       Formal Model Diagnostic Tests and Transformations\n        F Test for Lack of Fit, Box Cox\n      Slides\n      Lab 4\n      \n    \n    \n      Wed, Oct 28\n       Midterm Review\n      Slides\n      \n      \n    \n    \n      Sat, Oct 31\n      \n      Homework 2\n    \n\n    Week 6 — Midterm & Multiple Linear Regression\n    \n      Mon, Nov 28\n       Midterm!\n      No Lab Today. Office Hours Instead\n\n      \n      \n    \n    \n      Wed, Nov 4\n      Multiple Linear Regression\n      Intro to MLR, Dummy Variables\n      Slides\n      \n      \n    \n    \n      Sat, Nov 7\n      \n      Late Pass Q #2 (optional)\n    \n        Week 7 — Multiple Linear Regression\n    \n      Mon, Nov 9\n      Least Squares Estimator for MLR\n      Matrix operations, Deriving the LS Estimator\n      Slides\n      Lab 5\n      \n    \n    \n      Wed, Nov 11\n       No Class - Veteran's Day\n      \n      \n    \n    \n      Sat, Nov 14\n      \n      Homework 3",
+    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n  \n    \n      Date\n      Topic\n      Materials\n      Lab\n      Due\n    \n  \n  \n\n    Week 1 — Introduction & Simple Linear Regression\n    \n      Mon, Sep 28\n      Welcome to PSTAT 126!\n        Course Information & Overview\n        The Simple Linear Regression Model\n        Linear Regression Intro\n      SlidesSlides\n      \n      \n    \n    \n      Wed, Sep 30\n      Least Squares Estimation\n        Deriving OLS estimators\n      Slides\n      \n      \n    \n    \n      Sat, Oct 3\n      \n      Late Pass Q (optional)\n    \n\n   \n    Week 2 — Properties of OLS\n    \n      Mon, Oct 5\n      Properties of OLS Estimators\n      Slides\n      Lab 1\n      \n    \n    \n      Wed, Oct 7\n      Residuals and Estimating Error Variance\n      Slides\n      \n      \n\n\n    Week 3 — Inference in Regression\n    \n      Mon, Oct 12\n      Inference in Regression\n        Maximum Likelihood Estimation\n      Slides\n      Lab 2\n      \n    \n    \n      Wed, Oct 14\n      Inference in Regression\n        Hypothesis tests and confidence intervals for OLS estimates\n      Slides\n      \n    \n       \n      Sat, Oct 17\n      \n      Homework 1\n    \n    Week 4 — Inference in Regression + Model Diagnostics  \n      Mon, Oct 19\n      Prediction Intervals + Model Fit\n        PI for a new observation vs. CI for mean response; SST, SSR, SSE\n      Slides\n      Lab 3\n      \n    \n    \n      Wed, Oct 19\n      Model Diagnostics Overview\n         \n      Slides\n      \n      \n    \n\n    Week 5 — Transformations \n    \n      Mon, Oct 26\n       Formal Model Diagnostic Tests and Transformations\n        F Test for Lack of Fit, Box Cox\n      Slides\n      Lab 4\n      \n    \n    \n      Wed, Oct 28\n       Midterm Review\n      Slides\n      \n      \n    \n    \n      Sat, Oct 31\n      \n      Homework 2\n    \n\n    Week 6 — Midterm & Multiple Linear Regression\n    \n      Mon, Nov 28\n       Midterm!\n      No Lab Today. Office Hours Instead\n\n      \n      \n    \n    \n      Wed, Nov 4\n      Multiple Linear Regression\n      Intro to MLR, Dummy Variables\n      Slides\n      \n      \n    \n    \n      Sat, Nov 7\n      \n      Late Pass Q #2 (optional)\n    \n        Week 7 — Multiple Linear Regression\n    \n      Mon, Nov 9\n      Least Squares Estimator for MLR\n      Matrix operations, Deriving the LS Estimator\n      Slides\n      Lab 5\n      \n    \n    \n      Wed, Nov 11\n       No Class - Veteran's Day\n      \n      \n    \n    \n      Sat, Nov 14\n      \n      Homework 3\n    \n\n    Week 8 — Multiple Linear Regression via Matrices\n    \n      Mon, Nov 16\n      Analysis of Variance for Multiple Linear Regression\n        Degrees of freedom for MLR, Adjusted R^2\n        Slides\n      \n      Lab 6",
     "crumbs": [
       "Syllabus",
       "Lecture Materials"
@@ -942,7 +942,7 @@
     "href": "labs.html",
     "title": "Labs",
     "section": "",
-    "text": "Lab\nDate\nTopic\n\n\n\n\nLab 1\nMon, Oct 5\nGetting started with R Markdown\n\n\nLab 2\nMon, Oct 12\nSimple Linear Regression in R\n\n\nLab 3\nMon, Oct 19\nInference in Simple Linear Regression\n\n\nLab 4\nMon, Oct 26\nPrediction, ANOVA, and Model Diagnostics\n\n\nLab 5\nMon, Nov 9\nSimple and Multiple Linear Regression with Categorical Predictors",
+    "text": "Lab\nDate\nTopic\n\n\n\n\nLab 1\nMon, Oct 5\nGetting started with R Markdown\n\n\nLab 2\nMon, Oct 12\nSimple Linear Regression in R\n\n\nLab 3\nMon, Oct 19\nInference in Simple Linear Regression\n\n\nLab 4\nMon, Oct 26\nPrediction, ANOVA, and Model Diagnostics\n\n\nLab 5\nMon, Nov 9\nSimple and Multiple Linear Regression with Categorical Predictors\n\n\nLab 6\nMon, Nov 16\nMatrices and Multiple Linear Regression",
     "crumbs": [
       "Syllabus",
       "Labs",
@@ -4941,7 +4941,7 @@
     "href": "slides/lec-14.html#summary",
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "Summary",
-    "text": "Summary\n\n\nANOVA decomposition: \\(\\text{SSTO} = \\text{SSR} + \\text{SSE}\\); the definitions of SSR, SSE, and SSTO are identical to SLR — only the degrees of freedom change\nDegrees of freedom: \\(\\text{df}(\\text{SSR}) = p - 1\\); \\(\\text{df}(\\text{SSE}) = n - p\\); \\(\\text{df}(\\text{SSTO}) = n - 1\\); each predictor costs one df from the error\nMSE \\(= \\text{SSE}/(n-p)\\) is an unbiased estimator of \\(\\sigma^2\\); \\(\\hat\\sigma = \\sqrt{\\text{MSE}}\\) is the residual standard error\nF-test: \\(H_0: \\beta_1 = \\cdots = \\beta_{p-1} = 0\\); \\(F^* = \\text{MSR}/\\text{MSE} \\sim F(p-1, n-p)\\) under \\(H_0\\); reject when \\(F^*\\) exceeds the upper-\\(\\alpha\\) quantile\n\\(R^2\\) \\(= \\text{SSR}/\\text{SSTO}\\): proportion of variation explained; always increases when predictors are added — cannot be used to compare models of different sizes\nAdjusted \\(R^2\\) \\(= 1 - \\text{MSE}/\\text{MSTO}\\): penalizes for adding predictors; increases only if the new predictor reduces MSE\nIn R: anova(fit) gives sequential SS for each predictor plus SSE; summary(fit) gives \\(\\hat\\sigma\\), \\(R^2\\), \\(R^2_{\\text{adj}}\\), and the overall \\(F\\)-test"
+    "text": "Summary\n\n\nANOVA decomposition: \\(\\text{SSTO} = \\text{SSR} + \\text{SSE}\\); the definitions of SSR, SSE, and SSTO are identical to SLR. Only the degrees of freedom change\nDegrees of freedom: \\(\\text{df}(\\text{SSR}) = p - 1\\); \\(\\text{df}(\\text{SSE}) = n - p\\); \\(\\text{df}(\\text{SSTO}) = n - 1\\); each predictor costs one df from the error\nMSE \\(= \\text{SSE}/(n-p)\\) is an unbiased estimator of \\(\\sigma^2\\); \\(\\hat\\sigma = \\sqrt{\\text{MSE}}\\) is the residual standard error\nF-test: \\(H_0: \\beta_1 = \\cdots = \\beta_{p-1} = 0\\); \\(F^* = \\text{MSR}/\\text{MSE} \\sim F(p-1, n-p)\\) under \\(H_0\\); reject when \\(F^*\\) exceeds the upper-\\(\\alpha\\) quantile\n\\(R^2\\) \\(= \\text{SSR}/\\text{SSTO}\\): proportion of variation explained; always increases when predictors are added\nAdjusted \\(R^2\\) \\(= 1 - \\text{MSE}/\\text{MSTO}\\): penalizes for adding predictors; increases only if the new predictor reduces MSE"
   },
   {
     "objectID": "slides/lec-14.html#questions",
@@ -4977,5 +4977,161 @@
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "Why MSR \\(\\approx\\) MSE Under \\(H_0\\)",
     "text": "Why MSR \\(\\approx\\) MSE Under \\(H_0\\)\n\nMSE always estimates \\(\\sigma^2\\) — it measures the variance of observations around the fitted surface, which is always noise regardless of \\(H_0\\).\n\nMSR is different: it measures how much the fitted values \\(\\hat{Y}_i\\) spread around \\(\\bar{Y}\\). It can be shown that:\n\\[E(\\text{MSR}) = \\sigma^2 + \\frac{\\sum_{j=1}^{p-1} \\beta_j^2 \\cdot (\\text{something positive})}{p-1}\\]\nWhen all \\(\\beta_j = 0\\) (i.e., \\(H_0\\) is true), the extra term vanishes and \\(E(\\text{MSR}) = \\sigma^2\\) — same as MSE.\n\n\nIntuition: Suppose you regress \\(Y\\) on a completely random \\(X\\) with no true relationship to \\(Y\\). The fitted line will have a nonzero slope just by chance. MSR captures that accidental fit — but on average it explains no more variation than MSE, since it is fitting pure noise. The ratio \\(F^* = \\text{MSR}/\\text{MSE}\\) should be near 1.\nWhen a predictor truly matters, the extra term inflates MSR above \\(\\sigma^2\\) and \\(F^*\\) grows large."
+  },
+  {
+    "objectID": "labs/lab-06.html",
+    "href": "labs/lab-06.html",
+    "title": "Lab 6: Matrices and Multiple Linear Regression",
+    "section": "",
+    "text": "Note\n\n\n\nDownload the .Rmd file below, open it in RStudio, and work through the exercises inside.\nDownload lab6.Rmd",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 6"
+    ]
+  },
+  {
+    "objectID": "labs/lab-06.html#learning-goals",
+    "href": "labs/lab-06.html#learning-goals",
+    "title": "Lab 6: Matrices and Multiple Linear Regression",
+    "section": "Learning goals",
+    "text": "Learning goals\nIn this lab we use the mtcars dataset to connect matrix algebra to multiple linear regression. By the end of the lab you will be able to:\n\nPerform core matrix operations in R (construction, multiplication, transpose, inverse).\nDerive and compute OLS regression coefficients by hand using the formula \\(\\hat{\\boldsymbol{\\beta}} = (X^TX)^{-1}X^T\\mathbf{y}\\).\nVerify manual results against lm().\nUse matrix operations to compute fitted values, residuals, and \\(R^2\\).\nIntroduce the hat matrix and leverage values.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 6"
+    ]
+  },
+  {
+    "objectID": "labs/lab-06.html#creating-and-indexing-matrices",
+    "href": "labs/lab-06.html#creating-and-indexing-matrices",
+    "title": "Lab 6: Matrices and Multiple Linear Regression",
+    "section": "1.1 Creating and indexing matrices",
+    "text": "1.1 Creating and indexing matrices\nThe matrix() function arranges a vector of values into rows and columns. By default R fills by column; setting byrow = TRUE fills by row, which is usually more readable when you are typing in the values directly.\n\nA &lt;- matrix(c(1, 2, 3,\n              1, 4, 5,\n              1, 6, 7,\n              1, 8, 9),\n            nrow = 4, ncol = 3, byrow = TRUE)\n\nA          # print the matrix\ndim(A)     # (rows, columns)\nA[2, 3]   # element in row 2, column 3\n\nNotice that the first column of \\(A\\) is all 1s. This pattern will come up again when we build the design matrix for regression. The column of 1s accounts for the intercept.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 6"
+    ]
+  },
+  {
+    "objectID": "labs/lab-06.html#matrix-multiplication",
+    "href": "labs/lab-06.html#matrix-multiplication",
+    "title": "Lab 6: Matrices and Multiple Linear Regression",
+    "section": "1.2 Matrix multiplication",
+    "text": "1.2 Matrix multiplication\nFor the product \\(AB\\) to be defined, the number of columns in \\(A\\) must equal the number of rows in \\(B\\). The result has as many rows as \\(A\\) and as many columns as \\(B\\).\nSuppose \\[\nB =\n\\begin{pmatrix}\n2 & 3 \\\\\n5 & 7 \\\\\n6 & 1\n\\end{pmatrix}.\n\\]\nSince \\(A\\) is \\(4\\times 3\\) and \\(B\\) is \\(3\\times 2\\), the product \\(AB\\) is \\(4\\times 2\\).\nCreate the matrix \\(B\\) as defined above, then compute the matrix product \\(AB\\) using the correct R operator for matrix multiplication. Print both \\(B\\) and the result of \\(AB\\).\n\n# TO DO: define matrix B using matrix(), then compute A %*% B\n\nKey distinction: %*% is matrix multiplication. The ordinary * operator multiplies element by element, which is a completely different operation.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 6"
+    ]
+  },
+  {
+    "objectID": "labs/lab-06.html#transpose-and-inverse",
+    "href": "labs/lab-06.html#transpose-and-inverse",
+    "title": "Lab 6: Matrices and Multiple Linear Regression",
+    "section": "1.3 Transpose and inverse",
+    "text": "1.3 Transpose and inverse\nThe transpose of a matrix flips rows and columns. If \\(A\\) is \\(n \\times m\\), then \\(A^T\\) is \\(m \\times n\\).\nA useful identity: \\((AB)^T = B^T A^T\\). Note that the order reverses. We can verify this numerically:\nVerify the transpose identity \\((AB)^T = B^T A^T\\) numerically. Compute both sides and print them to confirm they are equal. Use t() for the transpose.\n\nt(A)   # transpose of A\n\n# TO DO: compute left_side = t(A %*% B) and right_side = t(B) %*% t(A), then print both\n\nThe inverse of a square matrix \\(M\\) is the matrix \\(M^{-1}\\) such that \\(MM^{-1} = I\\), where \\(I\\) is the identity matrix. In R, solve(M) computes \\(M^{-1}\\). Not every square matrix has an inverse. A matrix is invertible only if it has full rank.\n\nM &lt;- matrix(c(1, 1,\n              1, 0),\n            nrow = 2, byrow = TRUE)\n\nM_inv &lt;- solve(M)\nM_inv\n\nM %*% M_inv   # should be the 2x2 identity matrix\n\nThese three operations (matrix multiplication, transpose, and inverse) are all we need to derive the OLS estimator.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 6"
+    ]
+  },
+  {
+    "objectID": "labs/lab-06.html#the-model",
+    "href": "labs/lab-06.html#the-model",
+    "title": "Lab 6: Matrices and Multiple Linear Regression",
+    "section": "2.1 The model",
+    "text": "2.1 The model\nA multiple linear regression model with \\(p\\) predictors and \\(n\\) observations can be written as \\[\\mathbf{y} = X\\boldsymbol{\\beta} + \\boldsymbol{\\varepsilon},\\] where each piece has a specific role:\n\n\n\n\n\n\n\n\nSymbol\nDimension\nMeaning\n\n\n\n\n\\(\\mathbf{y}\\)\n\\(n \\times 1\\)\nobserved responses\n\n\n\\(X\\)\n\\(n \\times (p+1)\\)\ndesign matrix (first column all 1s)\n\n\n\\(\\boldsymbol{\\beta}\\)\n\\((p+1) \\times 1\\)\nunknown coefficients \\((\\beta_0, \\beta_1, \\ldots, \\beta_p)^T\\)\n\n\n\\(\\boldsymbol{\\varepsilon}\\)\n\\(n \\times 1\\)\nunobserved errors\n\n\n\nThe goal is to estimate \\(\\boldsymbol{\\beta}\\). Ordinary least squares (OLS) finds the \\(\\boldsymbol{\\beta}\\) that minimizes the total squared error \\(\\|\\mathbf{y} - X\\boldsymbol{\\beta}\\|^2\\). Taking the derivative and setting it to zero yields the normal equations, whose solution is: \\[\\hat{\\boldsymbol{\\beta}} = (X^TX)^{-1}X^T\\mathbf{y}.\\]\nThis is the formula we will compute step by step.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 6"
+    ]
+  },
+  {
+    "objectID": "labs/lab-06.html#the-dataset",
+    "href": "labs/lab-06.html#the-dataset",
+    "title": "Lab 6: Matrices and Multiple Linear Regression",
+    "section": "2.2 The dataset",
+    "text": "2.2 The dataset\nWe will use the built-in mtcars dataset, which contains performance and design measurements for 32 cars from a 1974 Motor Trend magazine. Our goal is to model fuel efficiency (mpg, miles per gallon) as a function of two predictors:\n\nhp — engine horsepower\nwt — vehicle weight (in thousands of pounds)\n\n\ndata(mtcars)\nhead(mtcars[, c(\"mpg\", \"hp\", \"wt\")])\n\nQuestion 1: Before fitting any model, do you expect the relationship between mpg and hp to be positive or negative? What about mpg and wt? Briefly explain the physical reasoning behind each.\n\nYour answer here.\n\nIt is always a good idea to visualize your data before fitting a model. With a single predictor we could use a simple scatterplot, but here we have two predictors and a response, so we want to see all three pairwise relationships at once. The pairs() function produces a scatterplot matrix. Each panel shows one variable plotted against another, giving us a quick overview of every relationship in the data.\n\npairs(mtcars[, c(\"mpg\", \"hp\", \"wt\")],\n      main = \"Pairwise scatterplots: mpg, hp, wt\",\n      pch  = 16,\n      col  = \"steelblue\")\n\nQuestion 2: Do the scatterplots confirm your expectations from Question 1? Note any patterns or unusual observations you see.\n\nYour answer here.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 6"
+    ]
+  },
+  {
+    "objectID": "labs/lab-06.html#building-the-design-matrix",
+    "href": "labs/lab-06.html#building-the-design-matrix",
+    "title": "Lab 6: Matrices and Multiple Linear Regression",
+    "section": "2.3 Building the design matrix",
+    "text": "2.3 Building the design matrix\nThe design matrix \\(X\\) has a column of 1s in the first position (representing the intercept \\(\\beta_0\\)), followed by one column for each predictor. We use cbind() to assemble it.\nBuild the design matrix X using cbind(). The first column should be all 1s (named intercept), followed by columns for hp and wt from mtcars. Also extract y &lt;- mtcars$mpg. Print the first few rows of X and its dimensions.\n\nn &lt;- nrow(mtcars)\n\n# TO DO: use cbind() to build X with columns: intercept (all 1s), hp, wt\n# Then set y &lt;- mtcars$mpg\n# Print head(X) and dim(X)\n\nQuestion 3: What are the dimensions of \\(X\\)? What does each row of \\(X\\) correspond to in terms of the data?\n\nYour answer here.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 6"
+    ]
+  },
+  {
+    "objectID": "labs/lab-06.html#computing-hatboldsymbolbeta-step-by-step",
+    "href": "labs/lab-06.html#computing-hatboldsymbolbeta-step-by-step",
+    "title": "Lab 6: Matrices and Multiple Linear Regression",
+    "section": "2.4 Computing \\(\\hat{\\boldsymbol{\\beta}}\\) step by step",
+    "text": "2.4 Computing \\(\\hat{\\boldsymbol{\\beta}}\\) step by step\nWe now compute the OLS estimate \\(\\hat{\\boldsymbol{\\beta}} = (X^TX)^{-1}X^T\\mathbf{y}\\) using the matrix operations from Part 1.\nIt helps to break the formula into pieces:\n\nCompute \\(X^TX\\) — a \\((p+1)\\times(p+1)\\) matrix summarizing how the predictors relate to each other.\nInvert it to get \\((X^TX)^{-1}\\).\nCompute \\(X^T\\mathbf{y}\\) — a \\((p+1)\\times 1\\) vector summarizing how each predictor relates to the response.\nMultiply to get \\(\\hat{\\boldsymbol{\\beta}}\\).\n\nCompute \\(\\hat{\\boldsymbol{\\beta}}\\) step by step following the four steps above. Store your results as XtX, XtX_inv, Xty, and beta_hat. Print beta_hat at the end.\n\n# Step 1: compute XtX = t(X) %*% X\n\n# Step 2: invert XtX using solve()\n\n# Step 3: compute Xty = t(X) %*% y\n\n# Step 4: multiply to get beta_hat, then print it\n\nQuestion 4: Write out the fitted regression equation in the form \\(\\hat{y} = \\hat{\\beta}_0 + \\hat{\\beta}_1 \\cdot \\text{hp} + \\hat{\\beta}_2 \\cdot \\text{wt}\\), filling in the numerical values you computed above.\n\nYour answer here.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 6"
+    ]
+  },
+  {
+    "objectID": "labs/lab-06.html#verifying-with-lm",
+    "href": "labs/lab-06.html#verifying-with-lm",
+    "title": "Lab 6: Matrices and Multiple Linear Regression",
+    "section": "2.5 Verifying with lm()",
+    "text": "2.5 Verifying with lm()\nlm() uses the same OLS formula internally, so our manually computed coefficients should match exactly.\n\nfit &lt;- lm(mpg ~ hp + wt, data = mtcars)\ncoef(fit)\n\nQuestion 5: Do the coefficients match? &gt; Your answer here.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 6"
+    ]
+  },
+  {
+    "objectID": "labs/lab-06.html#fitted-values-and-residuals",
+    "href": "labs/lab-06.html#fitted-values-and-residuals",
+    "title": "Lab 6: Matrices and Multiple Linear Regression",
+    "section": "2.6 Fitted values and residuals",
+    "text": "2.6 Fitted values and residuals\nOnce we have \\(\\hat{\\boldsymbol{\\beta}}\\), we can compute:\n\nFitted values: the model’s prediction for each observation, \\(\\hat{\\mathbf{y}} = X\\hat{\\boldsymbol{\\beta}}\\).\nResiduals: the difference between the observed and fitted values, \\(\\mathbf{e} = \\mathbf{y} - \\hat{\\mathbf{y}}\\).\n\nCompute the fitted values y_hat and residuals using matrix operations. Then display the first few rows in a data frame showing the observed value, fitted value (rounded to 2 decimal places), and residual (rounded to 2 decimal places).\n\n# TO DO: compute y_hat = X %*% beta_hat\n# compute residuals = y - y_hat\n\n\n\n\n# print head() of a data frame with columns: observed, fitted (rounded), residual (rounded)\nhead(data.frame(\n  observed  = y,\n  fitted    = round(y_hat, 2),\n  residual  = round(residuals, 2)\n))\n\nA residual plot is a standard diagnostic tool. If the model is appropriate, residuals should appear as random scatter around zero with no obvious pattern.\n\nplot(y_hat, residuals,\n     xlab = \"Fitted values\",\n     ylab = \"Residuals\",\n     main = \"Residuals vs. fitted values\",\n     pch  = 16,\n     col  = \"steelblue\")\nabline(h = 0, lty = 2, col = \"gray50\")\n\nQuestion 6: What does a large positive residual mean for a specific car in this dataset? What about a large negative residual? Do you notice any pattern in the residual plot that might concern you?\n\nYour answer here.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 6"
+    ]
+  },
+  {
+    "objectID": "labs/lab-06.html#interpreting-the-coefficients",
+    "href": "labs/lab-06.html#interpreting-the-coefficients",
+    "title": "Lab 6: Matrices and Multiple Linear Regression",
+    "section": "2.7 Interpreting the coefficients",
+    "text": "2.7 Interpreting the coefficients\nEach coefficient \\(\\hat{\\beta}_j\\) represents the expected change in the response for a one-unit increase in predictor \\(j\\), holding all other predictors constant.\n\nround(beta_hat, 4)\n\nQuestion 7: Interpret the intercept \\(\\hat{\\beta}_0\\). What does it represent numerically? Is this a physically meaningful value for this dataset — why or why not?\n\nYour answer here.\n\nQuestion 8: Interpret the coefficient on hp. Be specific about direction, magnitude, and units (hp is in horsepower, mpg is in miles per gallon). Make sure to mention what is being held constant.\n\nYour answer here.\n\nQuestion 9: Interpret the coefficient on wt. Be specific about direction, magnitude, and units (wt is in thousands of pounds, mpg is in miles per gallon). Make sure to mention what is being held constant.\n\nYour answer here.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 6"
+    ]
+  },
+  {
+    "objectID": "labs/lab-06.html#submission-instructions",
+    "href": "labs/lab-06.html#submission-instructions",
+    "title": "Lab 6: Matrices and Multiple Linear Regression",
+    "section": "Submission Instructions",
+    "text": "Submission Instructions\nBefore submitting, knit your completed lab to PDF:\n\nAt the top of the file, confirm the output format includes pdf_document in the YAML header.\nClick the Knit button in RStudio (or use Ctrl/Cmd + Shift + K).\nReview the PDF to confirm all plots, computed values, and written answers appear correctly.\nUpload the PDF to Gradescope under the Lab 6 assignment.",
+    "crumbs": [
+      "Syllabus",
+      "Labs",
+      "Lab 6"
+    ]
   }
 ]

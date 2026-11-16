@@ -378,7 +378,7 @@ Annie Adams
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_d1a9a185" minutes="1" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_745cf8a2" minutes="1" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -747,7 +747,7 @@ F-statistic: 106.4 on 2 and 27 DF,  p-value: 1.567e-13</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_b7d9fb7c" minutes="6" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_1ea52f0c" minutes="6" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -807,13 +807,12 @@ F-statistic: 106.4 on 2 and 27 DF,  p-value: 1.567e-13</code></pre>
 <h2>Summary</h2>
 <div style="font-size: 0.72em;">
 <ul>
-<li class="fragment"><strong>ANOVA decomposition:</strong> <span class="math inline">\(\text{SSTO} = \text{SSR} + \text{SSE}\)</span>; the definitions of SSR, SSE, and SSTO are identical to SLR — only the degrees of freedom change</li>
+<li class="fragment"><strong>ANOVA decomposition:</strong> <span class="math inline">\(\text{SSTO} = \text{SSR} + \text{SSE}\)</span>; the definitions of SSR, SSE, and SSTO are identical to SLR. Only the degrees of freedom change</li>
 <li class="fragment"><strong>Degrees of freedom:</strong> <span class="math inline">\(\text{df}(\text{SSR}) = p - 1\)</span>; <span class="math inline">\(\text{df}(\text{SSE}) = n - p\)</span>; <span class="math inline">\(\text{df}(\text{SSTO}) = n - 1\)</span>; each predictor costs one df from the error</li>
 <li class="fragment"><strong>MSE</strong> <span class="math inline">\(= \text{SSE}/(n-p)\)</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span>; <span class="math inline">\(\hat\sigma = \sqrt{\text{MSE}}\)</span> is the residual standard error</li>
 <li class="fragment"><strong>F-test:</strong> <span class="math inline">\(H_0: \beta_1 = \cdots = \beta_{p-1} = 0\)</span>; <span class="math inline">\(F^* = \text{MSR}/\text{MSE} \sim F(p-1, n-p)\)</span> under <span class="math inline">\(H_0\)</span>; reject when <span class="math inline">\(F^*\)</span> exceeds the upper-<span class="math inline">\(\alpha\)</span> quantile</li>
-<li class="fragment"><strong><span class="math inline">\(R^2\)</span></strong> <span class="math inline">\(= \text{SSR}/\text{SSTO}\)</span>: proportion of variation explained; always increases when predictors are added — cannot be used to compare models of different sizes</li>
+<li class="fragment"><strong><span class="math inline">\(R^2\)</span></strong> <span class="math inline">\(= \text{SSR}/\text{SSTO}\)</span>: proportion of variation explained; always increases when predictors are added</li>
 <li class="fragment"><strong>Adjusted <span class="math inline">\(R^2\)</span></strong> <span class="math inline">\(= 1 - \text{MSE}/\text{MSTO}\)</span>: penalizes for adding predictors; increases only if the new predictor reduces MSE</li>
-<li class="fragment"><strong>In R:</strong> <code>anova(fit)</code> gives sequential SS for each predictor plus SSE; <code>summary(fit)</code> gives <span class="math inline">\(\hat\sigma\)</span>, <span class="math inline">\(R^2\)</span>, <span class="math inline">\(R^2_{\text{adj}}\)</span>, and the overall <span class="math inline">\(F\)</span>-test</li>
 </ul>
 </div>
 </section>

@@ -167,6 +167,17 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td><a class="badge-optional" href="hw/hw-03.html">Homework 3</a></td>
     </tr>
 
+    <tr class="week-row"><td colspan="5">Week 8 — Multiple Linear Regression via Matrices</td></tr>
+    <tr>
+      <td class="date-cell">Mon, Nov 16</td>
+      <td class="topic-cell">Analysis of Variance for Multiple Linear Regression
+        <span class="sub-topic">Degrees of freedom for MLR, Adjusted R^2</span></td>
+        <td><a class="badge-slide" href="slides/lec-14.html">Slides</a></td>
+      <td></td>
+      <td><a class="badge-lab" href="labs/lab-06.html">Lab 6</a></td>
+      <td></td>
+    </tr>
+
   <!--
     <tr class="week-row"><td colspan="5">Week 4 — Correlation, R² &amp; Diagnostics</td></tr>
     <tr>
