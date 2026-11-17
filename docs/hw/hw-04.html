@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Your Name">
+<meta name="dcterms.date" content="2026-11-17">
 
-<title>Homework 4 – PSTAT 126</title>
+<title>Homework Assignment 4 – PSTAT 126</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +27,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -74,6 +111,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -127,7 +193,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../assignments.html">Assignments</a></li><li class="breadcrumb-item"><a href="../hw/hw-04.html">HW 4</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Homework Assignment 4</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -176,13 +242,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
  <span class="menu-text">Assignments</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../assignments.html" class="sidebar-item-text sidebar-link">
@@ -205,12 +271,6 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../hw/hw-03.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">HW 3</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../hw/hw-04.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">HW 4</span></a>
   </div>
 </li>
       </ul>
@@ -302,16 +362,28 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../assignments.html">Assignments</a></li><li class="breadcrumb-item"><a href="../hw/hw-04.html">HW 4</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Homework 4</h1>
+<h1 class="title">Homework Assignment 4</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Your Name </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 17, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -321,19 +393,184 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<p><a href="../downloads/hw-04.Rmd" class="btn btn-primary" download="hw-04.Rmd">Download hw-04.Rmd</a></p>
+<p><strong>Instructions:</strong> Download the <code>.Rmd</code> template using the button above. Complete all answers in the <code>.Rmd</code> file and knit it to a PDF to submit on Gradescope by 11/27/2026 at 11:59 PM. When uploading to Gradescope, you must assign pages to each question. <strong>Not assigning pages to the rubric items will deduct 5 points from your overall score.</strong> For problems that involve a lot of math (e.g., derivations or proofs), you may handwrite your solution, take a photo, and insert the image instead. To insert an image, add a code chunk with the following line and replace <code>"filename.jpg"</code> with your image’s filename, updating the file path if your image is not saved in the same folder as your <code>.Rmd</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"filename.jpg"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout-title-container flex-fill">
-Note
+<p><strong>Data note:</strong> Question 2 uses <code>patient_satisfaction.txt</code>. Download the file <a href="https://drive.google.com/file/d/18LcQUgxMERLbe8uJYG6uZIvoXf17maXR/view?usp=drive_link">here</a> and save it in the same folder as this <code>.Rmd</code> before knitting. Question 3 provides all required R output directly in the problem.</p>
+<hr>
+<p><strong>1.</strong> (3 pt each) Set up the design matrix <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\boldsymbol{\beta}\)</span> vector for each of the following regression models (assume <span class="math inline">\(i = 1, 2, 3, 4\)</span>):</p>
+<p><strong>(a)</strong> <span class="math display">\[Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i1} X_{i2} + \epsilon_i\]</span></p>
+<p><em>Answer:</em></p>
+<p><strong>(b)</strong> <span class="math display">\[\log Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \epsilon_i\]</span></p>
+<p><em>Answer:</em></p>
+<p><strong>(c)</strong> <span class="math display">\[Y_i = \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i1}^2 + \epsilon_i\]</span></p>
+<p><em>Answer:</em></p>
+<p><strong>(d)</strong> <span class="math display">\[\sqrt{Y_i} = \beta_0 + \beta_1 X_{i1} + \beta_2 \log_{10} X_{i2} + \epsilon_i\]</span></p>
+<p><em>Answer:</em></p>
+<hr>
+<p><strong>2.</strong> (3 pt each) A hospital administrator wished to study the relation between patient satisfaction and patient’s age (in years), severity of illness (an index), and anxiety level (an index). The administrator randomly selected 46 patients and collected the data (<code>patient_satisfaction.txt</code>). Larger values of patient satisfaction, illness, and anxiety are, respectively, associated with more satisfaction, increased severity of illness, and more anxiety.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>patient <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"data/patient_satisfaction.txt"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p><strong>(a)</strong> Prepare a pairs plot for all variables. Do these plots reveal any noteworthy features?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="callout-body-container callout-body">
-<p>This homework has not been released yet. Check back closer to the due date.</p>
+<p><em>Answer:</em></p>
+<p><strong>(b)</strong> Fit a regression model with all three predictor variables to the data and state the estimated regression function. Interpret each estimated parameter.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p><em>Answer:</em></p>
+<p><strong>(c)</strong> Construct diagnostic plots and comment on your findings.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p><em>Answer:</em></p>
+<p><strong>(d)</strong> Report <span class="math inline">\(R^2\)</span> and comment.</p>
+<p><em>Answer:</em></p>
+<p><strong>(e)</strong> Assuming the fitted model is appropriate, state estimates of all <span class="math inline">\(\beta\)</span> parameters with 95% confidence intervals.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(f)</strong> Obtain an estimate of the mean satisfaction with 90% confidence interval when age = 35, severity of illness = 45, and anxiety level = 2.2.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(g)</strong> Obtain a 90% prediction interval for a new patient’s satisfaction when age = 35, severity of illness = 45, and anxiety level = 2.2.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(h)</strong> The hospital administrator wishes to determine the best subset of predictor variables for predicting patient satisfaction. Indicate which subset of predictor variables you would recommend as best for predicting patient satisfaction according to the stepwise procedure using AIC.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<p><strong>(i)</strong> Does the stepwise procedure in (h) identify the same best subset by exhaustive search? Does this always happen?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Your code here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Answer:</em></p>
+<hr>
+<p><strong>3.</strong> (3 pt each) A simple analysis using R of the commercial properties data is shown below. The dataset contains information on rental rates and building characteristics for 81 commercial properties, with variables: <code>rental</code> (rental rate per sq ft per year), <code>age</code> (age in years), <code>expenses</code> (operating expenses and taxes), <code>vacancy</code> (vacancy rate), and <code>footage</code> (total square footage). The pairs plot is shown in Figure 1 and the diagnostic plots for <code>fit1</code> are shown in Figure 2.</p>
+<pre><code>&gt; a &lt;- read.table("property.txt")
+&gt; pairs(a, labels = c("rental", "age", "expenses", "vacancy", "footage"))
+
+&gt; rental   &lt;- a[, 1]
+&gt; age      &lt;- a[, 2]
+&gt; expenses &lt;- a[, 3]
+&gt; vacancy  &lt;- a[, 4]
+&gt; footage  &lt;- a[, 5]
+
+&gt; fit &lt;- lm(rental ~ age + expenses + vacancy + footage)
+&gt; summary(fit)
+Call:
+lm(formula = rental ~ age + expenses + vacancy + footage)
+
+Residuals:
+    Min      1Q  Median      3Q     Max
+-3.1872 -0.5911 -0.0910  0.5579  2.9441
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) 1.220e+01  5.780e-01  21.110  &lt; 2e-16 ***
+age        -1.420e-01  2.134e-02  -6.655 3.89e-09 ***
+expenses    2.820e-01  6.317e-02   4.464 2.75e-05 ***
+vacancy     6.193e-01  1.087e+00   0.570    0.570
+footage     7.924e-06  1.385e-06   5.722 1.98e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.137 on 76 degrees of freedom
+Multiple R-squared:  0.5847,    Adjusted R-squared:  0.5629
+F-statistic: 26.76 on 4 and 76 DF,  p-value: 7.272e-14
+
+&gt; (fit1 &lt;- step(lm(rental ~ 1), scope = formula(fit), direction = "forward"))
+Start:  AIC=88.81
+rental ~ 1
+
+          Df Sum of Sq    RSS    AIC
++ footage  1    67.775 168.78 63.467
++ expenses 1    40.503 196.05 75.599
++ age      1    14.819 221.74 85.571
+&lt;none&gt;                 236.56 88.811
++ vacancy  1     1.047 235.51 90.452
+
+Step:  AIC=63.47
+rental ~ footage
+
+          Df Sum of Sq    RSS    AIC
++ age      1    42.275 126.51 42.114
++ expenses 1     9.291 159.49 60.881
+&lt;none&gt;                 168.78 63.467
++ vacancy  1     0.130 168.65 65.405
+
+Step:  AIC=42.11
+rental ~ footage + age
+
+          Df Sum of Sq    RSS    AIC
++ expenses 1   27.8575  98.65 23.968
+&lt;none&gt;                 126.51 42.114
++ vacancy  1    2.5183 123.99 42.486
+
+Step:  AIC=23.97
+rental ~ footage + age + expenses
+
+          Df Sum of Sq    RSS    AIC
+&lt;none&gt;                  98.650 23.968
++ vacancy  1    0.41975  98.231 25.622
+
+Call:
+lm(formula = rental ~ footage + age + expenses)
+
+Coefficients:
+(Intercept)     footage         age    expenses
+  1.237e+01   8.178e-06  -1.442e-01   2.672e-01
+
+&gt; summary(fit1)
+Call:
+lm(formula = rental ~ footage + age + expenses)
+
+Residuals:
+    Min      1Q  Median      3Q     Max
+-3.0620 -0.6437 -0.1013  0.5672  2.9583
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) 1.237e+01  4.928e-01  25.100  &lt; 2e-16 ***
+footage     8.178e-06  1.305e-06   6.265 1.97e-08 ***
+age        -1.442e-01  2.092e-02  -6.891 1.33e-09 ***
+expenses    2.672e-01  5.729e-02   4.663 1.29e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.132 on 77 degrees of freedom
+Multiple R-squared:  0.583,     Adjusted R-squared:  0.5667
+F-statistic: 35.88 on 3 and 77 DF,  p-value: 1.295e-14
+
+&gt; plot(fitted(fit1), residuals(fit1), xlab = "Fitted Response", ylab = "Residuals")
+&gt; abline(h = 0)
+&gt; title("Residuals vs fitted")
+&gt; qqnorm(residuals(fit1), ylab = "Residuals", main = "")
+&gt; qqline(residuals(fit1))
+&gt; title("QQ-plot of residuals")</code></pre>
+<p><strong>(a)</strong> Provide comment on the preliminary plots.</p>
+<p><em>Answer:</em></p>
+<p><strong>(b)</strong> For the saved R object <code>fit</code>, write down the model that is being fitted, including assumptions.</p>
+<p><em>Answer:</em></p>
+<p><strong>(c)</strong> Explain the purpose of the statement:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(fit1 <span class="ot">&lt;-</span> <span class="fu">step</span>(<span class="fu">lm</span>(rental <span class="sc">~</span> <span class="dv">1</span>), <span class="at">scope =</span> <span class="fu">formula</span>(fit), <span class="at">direction =</span> <span class="st">"forward"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Provide details about the criterion and the option <code>direction</code>. Discuss the outcome of each step and the final model.</p>
+<p><em>Answer:</em></p>
+<p><strong>(d)</strong> Suppose the final model <code>fit1</code> is adequate. State your conclusions.</p>
+<p><em>Answer:</em></p>
+<p><strong>(e)</strong> Comment on the residual plots. Are you satisfied with the model <code>fit1</code>, and explain why.</p>
+<p><em>Answer:</em></p>
 
 
 
