@@ -2514,7 +2514,7 @@
     "href": "schedule.html",
     "title": "Course Schedule",
     "section": "",
-    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n  \n    \n      Date\n      Topic\n      Materials\n      Lab\n      Due\n    \n  \n  \n\n    Week 1 — Introduction & Simple Linear Regression\n    \n      Mon, Sep 28\n      Welcome to PSTAT 126!\n        Course Information & Overview\n        The Simple Linear Regression Model\n        Linear Regression Intro\n      SlidesSlides\n      \n      \n    \n    \n      Wed, Sep 30\n      Least Squares Estimation\n        Deriving OLS estimators\n      Slides\n      \n      \n    \n    \n      Sat, Oct 3\n      \n      Late Pass Q (optional)\n    \n\n   \n    Week 2 — Properties of OLS\n    \n      Mon, Oct 5\n      Properties of OLS Estimators\n      Slides\n      Lab 1\n      \n    \n    \n      Wed, Oct 7\n      Residuals and Estimating Error Variance\n      Slides\n      \n      \n\n\n    Week 3 — Inference in Regression\n    \n      Mon, Oct 12\n      Inference in Regression\n        Maximum Likelihood Estimation\n      Slides\n      Lab 2\n      \n    \n    \n      Wed, Oct 14\n      Inference in Regression\n        Hypothesis tests and confidence intervals for OLS estimates\n      Slides\n      \n    \n       \n      Sat, Oct 17\n      \n      Homework 1\n    \n    Week 4 — Inference in Regression + Model Diagnostics  \n      Mon, Oct 19\n      Prediction Intervals + Model Fit\n        PI for a new observation vs. CI for mean response; SST, SSR, SSE\n      Slides\n      Lab 3\n      \n    \n    \n      Wed, Oct 19\n      Model Diagnostics Overview\n         \n      Slides\n      \n      \n    \n\n    Week 5 — Transformations \n    \n      Mon, Oct 26\n       Formal Model Diagnostic Tests and Transformations\n        F Test for Lack of Fit, Box Cox\n      Slides\n      Lab 4\n      \n    \n    \n      Wed, Oct 28\n       Midterm Review\n      Slides\n      \n      \n    \n    \n      Sat, Oct 31\n      \n      Homework 2\n    \n\n    Week 6 — Midterm & Multiple Linear Regression\n    \n      Mon, Nov 28\n       Midterm!\n      No Lab Today. Office Hours Instead\n\n      \n      \n    \n    \n      Wed, Nov 4\n      Multiple Linear Regression\n      Intro to MLR, Dummy Variables\n      Slides\n      \n      \n    \n    \n      Sat, Nov 7\n      \n      Late Pass Q #2 (optional)\n    \n        Week 7 — Multiple Linear Regression\n    \n      Mon, Nov 9\n      Least Squares Estimator for MLR\n      Matrix operations, Deriving the LS Estimator\n      Slides\n      Lab 5\n      \n    \n    \n      Wed, Nov 11\n       No Class - Veteran's Day\n      \n      \n    \n    \n      Sat, Nov 14\n      \n      Homework 3\n    \n\n    Week 8 — Multiple Linear Regression via Matrices\n    \n      Mon, Nov 16\n      Analysis of Variance for Multiple Linear Regression\n        Degrees of freedom for MLR, Adjusted R^2\n        Slides\n      \n      Lab 6",
+    "text": "Note\n\n\n\nThis schedule will be updated as the quarter progresses. Topics, readings, and due dates may be adjusted.\n\n\n\n\n  \n    \n      Date\n      Topic\n      Materials\n      Lab\n      Due\n    \n  \n  \n\n    Week 1 — Introduction & Simple Linear Regression\n    \n      Mon, Sep 28\n      Welcome to PSTAT 126!\n        Course Information & Overview\n        The Simple Linear Regression Model\n        Linear Regression Intro\n      SlidesSlides\n      \n      \n    \n    \n      Wed, Sep 30\n      Least Squares Estimation\n        Deriving OLS estimators\n      Slides\n      \n      \n    \n    \n      Sat, Oct 3\n      \n      Late Pass Q (optional)\n    \n\n   \n    Week 2 — Properties of OLS\n    \n      Mon, Oct 5\n      Properties of OLS Estimators\n      Slides\n      Lab 1\n      \n    \n    \n      Wed, Oct 7\n      Residuals and Estimating Error Variance\n      Slides\n      \n      \n\n\n    Week 3 — Inference in Regression\n    \n      Mon, Oct 12\n      Inference in Regression\n        Maximum Likelihood Estimation\n      Slides\n      Lab 2\n      \n    \n    \n      Wed, Oct 14\n      Inference in Regression\n        Hypothesis tests and confidence intervals for OLS estimates\n      Slides\n      \n    \n       \n      Sat, Oct 17\n      \n      Homework 1\n    \n    Week 4 — Inference in Regression + Model Diagnostics  \n      Mon, Oct 19\n      Prediction Intervals + Model Fit\n        PI for a new observation vs. CI for mean response; SST, SSR, SSE\n      Slides\n      Lab 3\n      \n    \n    \n      Wed, Oct 19\n      Model Diagnostics Overview\n         \n      Slides\n      \n      \n    \n\n    Week 5 — Transformations \n    \n      Mon, Oct 26\n       Formal Model Diagnostic Tests and Transformations\n        F Test for Lack of Fit, Box Cox\n      Slides\n      Lab 4\n      \n    \n    \n      Wed, Oct 28\n       Midterm Review\n      Slides\n      \n      \n    \n    \n      Sat, Oct 31\n      \n      Homework 2\n    \n\n    Week 6 — Midterm & Multiple Linear Regression\n    \n      Mon, Nov 28\n       Midterm!\n      No Lab Today. Office Hours Instead\n\n      \n      \n    \n    \n      Wed, Nov 4\n      Multiple Linear Regression\n      Intro to MLR, Dummy Variables\n      Slides\n      \n      \n    \n    \n      Sat, Nov 7\n      \n      Late Pass Q #2 (optional)\n    \n        Week 7 — Multiple Linear Regression\n    \n      Mon, Nov 9\n      Least Squares Estimator for MLR\n      Matrix operations, Deriving the LS Estimator\n      Slides\n      Lab 5\n      \n    \n    \n      Wed, Nov 11\n       No Class - Veteran's Day\n      \n      \n    \n    \n      Sat, Nov 14\n      \n      Homework 3\n    \n\n    Week 8 — Multiple Linear Regression via Matrices\n    \n      Mon, Nov 16\n      Analysis of Variance for Multiple Linear Regression\n        Degrees of freedom for MLR, Adjusted R^2\n        Slides\n      \n      Lab 6\n      \n    \n    \n      Wed, Nov 19\n      Inference, Prediction, and Diagnostics in MLR\n        t-tests for coefficients, CI vs PI, residual plots\n        Slides",
     "crumbs": [
       "Syllabus",
       "Lecture Materials"
@@ -3989,5 +3989,292 @@
     "title": "Lecture 14: Multiple Regression — Analysis of Variance",
     "section": "Quiz 3",
     "text": "Quiz 3\n\nPlease put away all materials and take out a pencil and your calculator.\nGood luck!"
+  },
+  {
+    "objectID": "slides/lec-15.html#learning-objectives",
+    "href": "slides/lec-15.html#learning-objectives",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\nBy the end of today you will be able to:\n\n\nExplain why \\((b_k - \\beta_k)/SE(b_k) \\sim t(n-p)\\) and how this licenses inference on \\(\\beta_k\\)\nConduct and interpret \\(t\\)-tests and confidence intervals for individual \\(\\beta_k\\), including the “holding all other predictors constant” framing\nDistinguish a confidence interval for \\(E(Y_h)\\) from a prediction interval for a new \\(Y_h^*\\), interpret each in context, and compute both in R\nCheck all four regression assumptions using residual plots and describe what a violation looks like"
+  },
+  {
+    "objectID": "slides/lec-15.html#todays-roadmap",
+    "href": "slides/lec-15.html#todays-roadmap",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Today’s Roadmap",
+    "text": "Today’s Roadmap\n\n\nInference about Regression Parameters — \\(t\\)-tests and CIs for individual \\(\\beta_k\\)\nEstimation and Prediction — CI for \\(E(Y_h)\\) vs. PI for a new \\(Y_h\\)\nModel Diagnostics — residual plots\n\n\n\nRunning example: We model fuel efficiency (\\(Y\\), mpg) for \\(n = 32\\) cars using horsepower (\\(X_1\\)) and weight (\\(X_2\\), 1000 lbs) from the built-in mtcars dataset."
+  },
+  {
+    "objectID": "slides/lec-15.html#running-example-the-data",
+    "href": "slides/lec-15.html#running-example-the-data",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Running Example: The Data",
+    "text": "Running Example: The Data\n\nhead(mtcars[, c(\"mpg\", \"hp\", \"wt\")])\n\n                   mpg  hp    wt\nMazda RX4         21.0 110 2.620\nMazda RX4 Wag     21.0 110 2.875\nDatsun 710        22.8  93 2.320\nHornet 4 Drive    21.4 110 3.215\nHornet Sportabout 18.7 175 3.440\nValiant           18.1 105 3.460\n\nfit1 &lt;- lm(mpg ~ hp + wt, data = mtcars)\n\n\nThe model: \\(Y_i = \\beta_0 + \\beta_1 X_{i1} + \\beta_2 X_{i2} + \\epsilon_i\\), where \\(\\epsilon_i \\overset{\\text{iid}}{\\sim} N(0,\\sigma^2)\\)."
+  },
+  {
+    "objectID": "slides/lec-15.html#inference-about-regression-parameters",
+    "href": "slides/lec-15.html#inference-about-regression-parameters",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Inference about Regression Parameters",
+    "text": "Inference about Regression Parameters"
+  },
+  {
+    "objectID": "slides/lec-15.html#sampling-distribution-of-mathbfb",
+    "href": "slides/lec-15.html#sampling-distribution-of-mathbfb",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Sampling Distribution of \\(\\mathbf{b}\\)",
+    "text": "Sampling Distribution of \\(\\mathbf{b}\\)\n\nWhen \\(\\epsilon_i \\overset{\\text{iid}}{\\sim} N(0, \\sigma^2)\\), the OLS estimator \\(\\mathbf{b} = (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\mathbf{Y}\\) has an exact multivariate normal distribution:\n\\[\\mathbf{b} \\sim N\\!\\left(\\boldsymbol{\\beta},\\; \\sigma^2(\\mathbf{X}^T\\mathbf{X})^{-1}\\right)\\]\n\nLooking at a single coefficient, \\(b_k\\) is normally distributed with:\n\\[E(b_k) = \\beta_k \\qquad \\text{Var}(b_k) = \\sigma^2 c_{kk}\\]\nwhere \\(c_{kk}\\) is the \\(k\\)-th diagonal element of \\((\\mathbf{X}^T\\mathbf{X})^{-1}\\).\n\n\n\nSo \\(b_k\\) is an unbiased estimator of \\(\\beta_k\\), and its precision depends on both \\(\\sigma^2\\) and the geometry of the predictor matrix through \\(c_{kk}\\)."
+  },
+  {
+    "objectID": "slides/lec-15.html#confidence-intervals-for-beta_k",
+    "href": "slides/lec-15.html#confidence-intervals-for-beta_k",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Confidence Intervals for \\(\\beta_k\\)",
+    "text": "Confidence Intervals for \\(\\beta_k\\)\n\nLet \\(SE(b_k)\\) denote the standard error of \\(b_k\\).\\(SE(b_k)\\) is the estimated standard deviation of the sampling distribution of \\(b_k\\).\nA \\(100(1-\\alpha)\\%\\) confidence interval for \\(\\beta_k\\) is:\n\\[b_k \\pm t\\!\\left(1 - \\tfrac{\\alpha}{2};\\; n - p\\right) \\cdot SE(b_k)\\]\n\nInterpretation: We are \\(100(1-\\alpha)\\%\\) confident that the true average change in \\(Y\\) for a one-unit increase in \\(X_k\\), holding all other predictors in the model constant, lies in this interval.\n\n\n\nPartial effect: \\(\\beta_k\\) is the expected change in \\(Y\\) per unit increase in \\(X_k\\) holding all other predictors constant. The CI is for this partial effect in the fitted model — not for a simple regression of \\(Y\\) on \\(X_k\\) alone."
+  },
+  {
+    "objectID": "slides/lec-15.html#hypothesis-test-for-beta_k",
+    "href": "slides/lec-15.html#hypothesis-test-for-beta_k",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Hypothesis Test for \\(\\beta_k\\)",
+    "text": "Hypothesis Test for \\(\\beta_k\\)\n\nTo test whether \\(X_k\\) has a linear relationship with \\(Y\\), given the other predictors:\n\\[H_0: \\beta_k = 0 \\qquad H_a: \\beta_k \\neq 0\\]\nTest statistic:\n\\[t^* = \\frac{b_k}{SE(b_k)}\\]\n\nDecision rule: Reject \\(H_0\\) at level \\(\\alpha\\) if \\(|t^*| &gt; t(1 - \\alpha/2;\\; n - p)\\).\n\n\n\n\n\n\n\n\nWarning\n\n\nThe \\(t\\)-test for \\(\\beta_k\\) is a partial test. A predictor that is not significant in the full model may be significant in a simple regression of \\(Y\\) on \\(X_k\\) alone, and vice versa, due to correlations among predictors."
+  },
+  {
+    "objectID": "slides/lec-15.html#inference-in-r-summary",
+    "href": "slides/lec-15.html#inference-in-r-summary",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Inference in R: summary()",
+    "text": "Inference in R: summary()\n\nsummary(fit1)\n\n\nCall:\nlm(formula = mpg ~ hp + wt, data = mtcars)\n\nResiduals:\n   Min     1Q Median     3Q    Max \n-3.941 -1.600 -0.182  1.050  5.854 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 37.22727    1.59879  23.285  &lt; 2e-16 ***\nhp          -0.03177    0.00903  -3.519  0.00145 ** \nwt          -3.87783    0.63273  -6.129 1.12e-06 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 2.593 on 29 degrees of freedom\nMultiple R-squared:  0.8268,    Adjusted R-squared:  0.8148 \nF-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12"
+  },
+  {
+    "objectID": "slides/lec-15.html#reading-the-summary-output",
+    "href": "slides/lec-15.html#reading-the-summary-output",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Reading the summary() Output",
+    "text": "Reading the summary() Output\n\n\n\nCall:\nlm(formula = mpg ~ hp + wt, data = mtcars)\n\nResiduals:\n   Min     1Q Median     3Q    Max \n-3.941 -1.600 -0.182  1.050  5.854 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 37.22727    1.59879  23.285  &lt; 2e-16 ***\nhp          -0.03177    0.00903  -3.519  0.00145 ** \nwt          -3.87783    0.63273  -6.129 1.12e-06 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 2.593 on 29 degrees of freedom\nMultiple R-squared:  0.8268,    Adjusted R-squared:  0.8148 \nF-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12\n\n\n\n\n\n\n\\(SE(b_0) = 1.599\\): estimated std. dev. of \\(b_0\\)\n\n\n\n\n\n\\(SE(b_1) = 0.009\\): estimated std. dev. of \\(b_1\\)\n\n\n\n\n\n\\(SE(b_2) = 0.633\\): estimated std. dev. of \\(b_2\\)\n\n\n\n\n\nt value = \\(b_k / SE(b_k)\\): test statistic for \\(H_0: \\beta_k = 0\\)\n\n\n\n\n\nResidual std error \\(= \\hat{\\sigma} = \\sqrt{\\text{MSE}}\\); df \\(= n - p = 29\\)"
+  },
+  {
+    "objectID": "slides/lec-15.html#confidence-intervals-in-r-confint",
+    "href": "slides/lec-15.html#confidence-intervals-in-r-confint",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Confidence Intervals in R: confint()",
+    "text": "Confidence Intervals in R: confint()\n\n\n\n\ncoef(fit1)\n\n(Intercept)          hp          wt \n37.22727012 -0.03177295 -3.87783074 \n\n\n\n\nconfint(fit1, level = 0.95)\n\n                  2.5 %      97.5 %\n(Intercept) 33.95738245 40.49715778\nhp          -0.05024078 -0.01330512\nwt          -5.17191604 -2.58374544\n\n\n\n\nInterpreting \\(b_k\\):\n\n\\(b_1 = -0.032\\): the estimated average change in fuel efficiency for each 1 hp increase is \\(-0.032\\) mpg, holding all other predictors in the model constant.\n\\(b_2 = -3.878\\): the estimated average change in fuel efficiency for each 1,000 lb increase in weight is \\(-3.878\\) mpg, holding all other predictors in the model constant.\n\n\n\nInterpreting the 95% CIs:\n\nWe are 95% confident that the true average change in mpg for each 1 hp increase is between \\(-0.050\\) and \\(-0.013\\) mpg, holding all other predictors in the model constant.\nWe are 95% confident that the true average change in mpg for each 1,000 lb increase in weight is between \\(-5.172\\) and \\(-2.584\\) mpg, holding all other predictors in the model constant.\nBoth CIs exclude zero, so both predictors are significant at \\(\\alpha = 0.05\\)."
+  },
+  {
+    "objectID": "slides/lec-15.html#practice-inference-on-parameters",
+    "href": "slides/lec-15.html#practice-inference-on-parameters",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Practice: Inference on Parameters",
+    "text": "Practice: Inference on Parameters\n\nWe model fuel efficiency (mpg) for \\(n = 32\\) cars using horsepower (\\(X_1\\)) and weight (\\(X_2\\), 1000 lbs) from mtcars.\n\n\n\nCall:\nlm(formula = mpg ~ hp + wt, data = mtcars)\n\nResiduals:\n   Min     1Q Median     3Q    Max \n-3.941 -1.600 -0.182  1.050  5.854 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) 37.22727    1.59879  23.285  &lt; 2e-16 ***\nhp          -0.03177    0.00903  -3.519  0.00145 ** \nwt          -3.87783    0.63273  -6.129 1.12e-06 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 2.593 on 29 degrees of freedom\nMultiple R-squared:  0.8268,    Adjusted R-squared:  0.8148 \nF-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12\n\n\n(a) Using the output above, compute \\(t^*\\) for \\(H_0: \\beta_1 = 0\\). What distribution does it follow under \\(H_0\\)?\n(b) The critical value is \\(t(0.975;\\; 29) = 2.045\\). State your conclusion in context.\n(c) Would you reach a different conclusion for \\(H_0: \\beta_2 = 0\\)? Why or why not?"
+  },
+  {
+    "objectID": "slides/lec-15.html#practice-solution",
+    "href": "slides/lec-15.html#practice-solution",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Practice: Solution",
+    "text": "Practice: Solution\n\n(a) \\(t^* = b_1 / SE(b_1) = -0.032 / 0.009 = -3.52\\). Under \\(H_0\\), \\(t^* \\sim t(n - p) = t(29)\\).\n\n(b) Since \\(|t^*| = 3.52 &gt; t(0.975;\\; 29) = 2.045\\), we reject \\(H_0\\) at \\(\\alpha = 0.05\\). There is strong evidence that horsepower is a significant predictor of fuel efficiency, holding weight constant.\n\n\n(c) Same conclusion (reject), but stronger evidence. For \\(X_2\\): \\(t^* = -3.878 / 0.633 = -6.13\\). Since \\(|t^*| = 6.13 &gt; 2.045\\), we reject \\(H_0: \\beta_2 = 0\\) at \\(\\alpha = 0.05\\). Both predictors are significant, with weight carrying a stronger signal."
+  },
+  {
+    "objectID": "slides/lec-15.html#estimation-of-mean-response-and-prediction",
+    "href": "slides/lec-15.html#estimation-of-mean-response-and-prediction",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Estimation of Mean Response and Prediction",
+    "text": "Estimation of Mean Response and Prediction"
+  },
+  {
+    "objectID": "slides/lec-15.html#two-inferential-goals",
+    "href": "slides/lec-15.html#two-inferential-goals",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Two Inferential Goals",
+    "text": "Two Inferential Goals\n\nFor a new predictor vector \\(\\mathbf{X}_h = (1,\\, X_{h,1},\\, \\ldots,\\, X_{h,p-1})^T\\), the point estimate is the same for both goals:\n\\[\\hat{Y}_h = b_0 + b_1 X_{h,1} + \\cdots + b_{p-1} X_{h,p-1} = \\mathbf{X}_h^T \\mathbf{b}\\]\n\n\n\n\n\n\n\n\n\nGoal\nWe are estimating\nInterval type\n\n\n\n\nMean mpg across all cars with \\(\\mathbf{X}_h\\)\n\\(E(Y_h) = \\mathbf{X}_h^T\\boldsymbol{\\beta}\\)\nConfidence interval\n\n\nMpg for one new car with \\(\\mathbf{X}_h\\)\nIndividual \\(Y_h^*\\)\nPrediction interval\n\n\n\n\nThe point estimate \\(\\hat{Y}_h\\) is the same. The intervals differ in width because they quantify different uncertainty."
+  },
+  {
+    "objectID": "slides/lec-15.html#confidence-interval-for-ey_h",
+    "href": "slides/lec-15.html#confidence-interval-for-ey_h",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Confidence Interval for \\(E(Y_h)\\)",
+    "text": "Confidence Interval for \\(E(Y_h)\\)\n\nLet \\(SE(\\hat{Y}_h)\\) denote the estimated standard error of \\(\\hat{Y}_h\\), computed from the fitted model.\n\nSampling distribution:\n\\[\\frac{\\hat{Y}_h - E(Y_h)}{SE(\\hat{Y}_h)} \\sim t(n - p)\\]\n\n\nA \\(100(1-\\alpha)\\%\\) CI for \\(E(Y_h)\\):\n\\[\\hat{Y}_h \\pm t\\!\\left(1 - \\tfrac{\\alpha}{2};\\; n - p\\right) \\cdot SE(\\hat{Y}_h)\\]"
+  },
+  {
+    "objectID": "slides/lec-15.html#prediction-interval-for-a-new-y_h",
+    "href": "slides/lec-15.html#prediction-interval-for-a-new-y_h",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Prediction Interval for a New \\(Y_h\\)",
+    "text": "Prediction Interval for a New \\(Y_h\\)\n\nFor a single new observation \\(Y_h^*\\), there are two sources of uncertainty:\n\nUncertainty in estimating the regression mean: \\(SE(\\hat{Y}_h)\\)\nThe new observation’s own random error: \\(\\hat{\\sigma}\\)\n\n\nCombined: \\(SE^2(\\text{pred}) = \\text{MSE} + SE^2(\\hat{Y}_h)\\)\n\n\nA \\(100(1-\\alpha)\\%\\) PI for \\(Y_h^*\\):\n\\[\\hat{Y}_h \\pm t\\!\\left(1 - \\tfrac{\\alpha}{2};\\; n - p\\right) \\cdot SE(\\text{pred})\\]\n\n\n\nThe PI is always wider than the CI because \\(SE(\\text{pred}) &gt; SE(\\hat{Y}_h)\\)."
+  },
+  {
+    "objectID": "slides/lec-15.html#ci-vs.-pi-comparison",
+    "href": "slides/lec-15.html#ci-vs.-pi-comparison",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "CI vs. PI: Comparison",
+    "text": "CI vs. PI: Comparison\n\n\n\n\n\n\n\n\n\n\nCI for \\(E(Y_h)\\)\nPI for new \\(Y_h^*\\)\n\n\n\n\nEstimates\nMean of \\(Y\\) at \\(\\mathbf{X}_h\\)\nIndividual future \\(Y\\)\n\n\nVariance\n\\(\\text{MSE}\\cdot\\mathbf{X}_h^T(\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}_h\\)\n\\(\\text{MSE}\\!\\left(1 + \\mathbf{X}_h^T(\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}_h\\right)\\)\n\n\nNarrower when?\n\\(n \\to \\infty\\) (shrinks to point)\nBounded below by \\(\\approx 2 \\cdot 1.96\\hat\\sigma\\)\n\n\nR argument\ninterval = \"confidence\"\ninterval = \"prediction\"\n\n\n\n\n\nEven with infinite data you cannot perfectly predict a single new observation — there is always irreducible randomness \\(\\sigma^2\\). The CI for \\(E(Y_h)\\) shrinks; the PI does not."
+  },
+  {
+    "objectID": "slides/lec-15.html#ci-and-pi-in-r-predict",
+    "href": "slides/lec-15.html#ci-and-pi-in-r-predict",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "CI and PI in R: predict()",
+    "text": "CI and PI in R: predict()\nSuppose we want results for a car with \\(X_{1h} = 150\\) hp and \\(X_{2h} = 3.2\\) thousand lbs.\n\nnew_car &lt;- data.frame(hp = 150, wt = 3.2)\n\npredict(fit1, newdata = new_car, interval = \"confidence\")\n\n       fit      lwr      upr\n1 20.05227 19.11141 20.99313\n\npredict(fit1, newdata = new_car, interval = \"prediction\")\n\n       fit      lwr      upr\n1 20.05227 14.66535 25.43919"
+  },
+  {
+    "objectID": "slides/lec-15.html#interpreting-ci-and-pi",
+    "href": "slides/lec-15.html#interpreting-ci-and-pi",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Interpreting CI and PI",
+    "text": "Interpreting CI and PI\n\nBoth intervals are centered at \\(\\hat{Y}_h = 20.05\\) mpg:\n\n95% CI for \\(E(Y_h)\\): \\((19.11,\\; 20.99)\\) mpg\nWe are 95% confident that the mean fuel efficiency across all cars with 150 hp and 3,200 lbs is between 19.11 and 20.99 mpg.\nWidth: 1.88 mpg\n\n\n95% PI for a new \\(Y_h^*\\): \\((14.67,\\; 25.44)\\) mpg\nWe are 95% confident that one specific new car with 150 hp and 3,200 lbs will have fuel efficiency between 14.67 and 25.44 mpg.\nWidth: 10.77 mpg — about five times wider.\n\n\n\nThe PI’s extra width comes entirely from \\(\\text{MSE} = 2.593^2 \\approx 6.72\\), the irreducible variability in individual mpg around the mean."
+  },
+  {
+    "objectID": "slides/lec-15.html#practice-ci-vs.-pi",
+    "href": "slides/lec-15.html#practice-ci-vs.-pi",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Practice: CI vs. PI",
+    "text": "Practice: CI vs. PI\n\nA researcher models crop yield (\\(Y\\), bu/acre) on rainfall (\\(X_1\\), in.) and fertilizer (\\(X_2\\), lbs/acre), \\(n = 30\\), \\(p = 3\\). For \\(X_{1h} = 12\\) and \\(X_{2h} = 100\\):\n\n\\(\\hat{Y}_h = 95.3\\), \\(\\quad s(\\hat{Y}_h) = 2.1\\), \\(\\quad \\text{MSE} = 25\\), \\(\\quad t(0.975;\\; 27) = 2.052\\)\n\n(a) Construct a 95% CI for mean yield in all fields with these conditions.\n\n(b) Compute \\(SE(\\text{pred})\\) and construct a 95% PI for a single new field.\n\n(c) Why is the PI wider than the CI even though they have the same center?"
+  },
+  {
+    "objectID": "slides/lec-15.html#practice-solution-1",
+    "href": "slides/lec-15.html#practice-solution-1",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Practice: Solution",
+    "text": "Practice: Solution\n\n(a) 95% CI for \\(E(Y_h)\\):\n\\[\\hat{Y}_h \\pm t(0.975;\\,27) \\cdot SE(\\hat{Y}_h) = 95.3 \\pm 2.052 \\times 2.1 = 95.3 \\pm 4.31 = (91.0,\\; 99.6) \\text{ bu/acre}\\]\n\n(b) \\(SE^2(\\text{pred}) = \\text{MSE} + SE^2(\\hat{Y}_h) = 25 + 2.1^2 = 25 + 4.41 = 29.41\\), so \\(SE(\\text{pred}) = \\sqrt{29.41} = 5.42\\).\n\\[95.3 \\pm 2.052 \\times 5.42 = 95.3 \\pm 11.12 = (84.2,\\; 106.4) \\text{ bu/acre}\\]\n\n\n(c) The PI accounts for two sources of uncertainty: (1) estimating the mean response (shared with CI), and (2) the random error of the new individual observation — \\(\\sigma^2\\) never disappears, no matter how much data we collect. The CI captures only the estimation component, which shrinks to zero as \\(n \\to \\infty\\)."
+  },
+  {
+    "objectID": "slides/lec-15.html#model-diagnostics",
+    "href": "slides/lec-15.html#model-diagnostics",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Model Diagnostics",
+    "text": "Model Diagnostics"
+  },
+  {
+    "objectID": "slides/lec-15.html#the-four-assumptions",
+    "href": "slides/lec-15.html#the-four-assumptions",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "The Four Assumptions",
+    "text": "The Four Assumptions\n\nThe model \\(Y_i = \\beta_0 + \\beta_1 X_{i1} + \\cdots + \\beta_{p-1}X_{i,p-1} + \\epsilon_i\\) requires:\n\n1. Linearity — \\(E(Y_i)\\) is a linear function of the predictors. The mean response lives on the regression hyperplane.\n\n\n2. Independence — Responses \\(Y_1, \\ldots, Y_n\\) are independent. Most relevant when data has a time or spatial order.\n\n\n3. Equal Variance (Homoscedasticity) — \\(\\text{Var}(\\epsilon_i) = \\sigma^2\\) for all \\(i\\). Residual spread should not change with fitted values or predictor levels.\n\n\n4. Normality — \\(\\epsilon_i \\overset{\\text{iid}}{\\sim} N(0, \\sigma^2)\\). Required for exact inference; less critical with large \\(n\\) by CLT."
+  },
+  {
+    "objectID": "slides/lec-15.html#residual-plot-toolkit",
+    "href": "slides/lec-15.html#residual-plot-toolkit",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Residual Plot Toolkit",
+    "text": "Residual Plot Toolkit\n\n\n\n\n\n\n\n\n\nPlot\nAssumption checked\nSignal of violation\n\n\n\n\nResiduals vs. each \\(X_k\\)\nLinearity (1)\nSystematic curve or pattern\n\n\nResiduals vs. time/case order\nIndependence (2)\nTrend, runs, or cycles\n\n\nResiduals vs. fitted \\(\\hat{Y}\\)\nEqual variance (3)\nFan shape; changing spread\n\n\nNormal QQ-plot\nNormality (4)\nPoints off the diagonal\n\n\n\n\n\nA good residual plot shows residuals scattered randomly around zero with no pattern. Any systematic structure signals a violated assumption."
+  },
+  {
+    "objectID": "slides/lec-15.html#residual-plots-in-r",
+    "href": "slides/lec-15.html#residual-plots-in-r",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Residual Plots in R",
+    "text": "Residual Plots in R\n\npar(mfrow = c(2, 2), mar = c(4, 4, 2, 1))\nplot(mtcars$hp, residuals(fit1), xlab = \"Horsepower\",\n     ylab = \"Residuals\", main = \"Residuals vs X1 (hp)\"); abline(h = 0, lty = 2)\nplot(mtcars$wt, residuals(fit1), xlab = \"Weight (1000 lbs)\",\n     ylab = \"Residuals\", main = \"Residuals vs X2 (wt)\"); abline(h = 0, lty = 2)\nplot(fitted(fit1), residuals(fit1), xlab = \"Fitted\",\n     ylab = \"Residuals\", main = \"Residuals vs Fitted\"); abline(h = 0, lty = 2)\nqqnorm(residuals(fit1), main = \"QQ-plot\"); qqline(residuals(fit1))"
+  },
+  {
+    "objectID": "slides/lec-15.html#reading-the-residual-plots",
+    "href": "slides/lec-15.html#reading-the-residual-plots",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Reading the Residual Plots",
+    "text": "Reading the Residual Plots\n\n\nResiduals vs \\(X_1\\) (hp): Points scatter around zero without a systematic curve — linearity looks satisfied for horsepower.\nResiduals vs \\(X_2\\) (wt): No obvious trend or pattern — linearity satisfied for weight as well.\nResiduals vs Fitted: Spread is roughly constant across the fitted range — equal variance appears satisfied (no fanning).\nQQ-plot: Points track the diagonal closely — normality is plausible.\n\n\n\nThe first-order model assumptions appear satisfied — inferential results (\\(t\\)-tests, CIs, prediction intervals) are reliable for these data."
+  },
+  {
+    "objectID": "slides/lec-15.html#leverage-and-influential-points",
+    "href": "slides/lec-15.html#leverage-and-influential-points",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Leverage and Influential Points",
+    "text": "Leverage and Influential Points"
+  },
+  {
+    "objectID": "slides/lec-15.html#leverage-the-hat-matrix",
+    "href": "slides/lec-15.html#leverage-the-hat-matrix",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Leverage: The Hat Matrix",
+    "text": "Leverage: The Hat Matrix\n\nThe hat matrix \\(\\mathbf{H} = \\mathbf{X}(\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}^T\\) maps responses to fitted values: \\(\\hat{\\mathbf{Y}} = \\mathbf{H}\\mathbf{Y}\\).\n\nLeverage: The diagonal entry \\(h_{ii} = \\mathbf{X}_i^T (\\mathbf{X}^T\\mathbf{X})^{-1}\\mathbf{X}_i\\) measures how unusual observation \\(i\\)’s predictor values are relative to the cloud of \\(\\mathbf{X}\\).\n\nDepends only on \\(\\mathbf{X}\\), not on \\(Y_i\\)\nLarge \\(h_{ii}\\) \\(\\Rightarrow\\) observation \\(i\\) is far from the center of predictor space\n\\(\\sum_{i=1}^n h_{ii} = p\\); average leverage is \\(p/n\\)\n\n\n\n\nRule of thumb: Flag \\(h_{ii} &gt; 2p/n\\) as a potentially high-leverage observation. These can disproportionately influence the fitted regression even if their residual is small."
+  },
+  {
+    "objectID": "slides/lec-15.html#cooks-distance-measuring-influence",
+    "href": "slides/lec-15.html#cooks-distance-measuring-influence",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Cook’s Distance: Measuring Influence",
+    "text": "Cook’s Distance: Measuring Influence\n\nAn observation is influential if removing it substantially changes the estimated regression coefficients. Leverage alone does not make an observation influential — it also needs a large residual to pull the fit away from where the other points would place it.\n\nCook’s distance quantifies influence by combining leverage and residual size.\n\n\nCook’s \\(D_i\\) measures how much all fitted values change when observation \\(i\\) is deleted:\n\\[D_i = \\frac{\\|\\hat{\\mathbf{Y}} - \\hat{\\mathbf{Y}}_{(i)}\\|^2}{p\\,\\hat{\\sigma}^2}\\]\nwhere \\(\\hat{\\mathbf{Y}}_{(i)}\\) are the fitted values from the model with observation \\(i\\) removed.\n\n\nInterpretation:\n\n\\(D_i\\) is large when observation \\(i\\) has both high leverage and a large residual\nRule of thumb: Flag \\(D_i &gt; 4/n\\) as potentially influential\n\n\n\n\nLeverage vs. influence: High leverage \\(\\neq\\) high influence. An outlier in predictor space that falls on the regression surface has high \\(h_{ii}\\) but small \\(D_i\\). Influence requires both unusual predictors and an unexpected response."
+  },
+  {
+    "objectID": "slides/lec-15.html#leverage-and-cooks-distance-in-r",
+    "href": "slides/lec-15.html#leverage-and-cooks-distance-in-r",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Leverage and Cook’s Distance in R",
+    "text": "Leverage and Cook’s Distance in R\n\nh  &lt;- hatvalues(fit1)\ncd &lt;- cooks.distance(fit1)\n\nplot(h, cd, xlab = \"Leverage\", ylab = \"Cook's Distance\",\n     main = \"Leverage vs Cook's Distance\", pch = 16, col = \"#003660\")\nabline(v = 2 * 3 / 32, lty = 2, col = \"#FEBC11\")   # 2p/n threshold\nabline(h = 4 / 32,     lty = 2, col = \"#C0392B\")    # 4/n threshold\ntext(h, cd, labels = rownames(mtcars), cex = 0.5, pos = 4)\nlegend(\"topright\", lty = 2, col = c(\"#FEBC11\",\"#C0392B\"),\n       legend = c(\"2p/n (leverage)\", \"4/n (Cook's)\"), cex = 0.7)"
+  },
+  {
+    "objectID": "slides/lec-15.html#identifying-problematic-observations",
+    "href": "slides/lec-15.html#identifying-problematic-observations",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Identifying Problematic Observations",
+    "text": "Identifying Problematic Observations\n\n\nthreshold_h  &lt;- 2 * 3 / 32   # 2p/n\nthreshold_cd &lt;- 4 / 32        # 4/n\n\nflagged &lt;- which(h &gt; threshold_h | cd &gt; threshold_cd)\ndata.frame(obs      = names(flagged),\n           leverage = round(h[flagged],  3),\n           cooks_d  = round(cd[flagged], 3))\n\n                                    obs leverage cooks_d\nLincoln Continental Lincoln Continental    0.209   0.018\nChrysler Imperial     Chrysler Imperial    0.186   0.424\nFiat 128                       Fiat 128    0.080   0.157\nToyota Corolla           Toyota Corolla    0.100   0.208\nFord Pantera L           Ford Pantera L    0.204   0.009\nMaserati Bora             Maserati Bora    0.394   0.272\n\n\n\nNext steps for flagged observations: - Verify data entry — are the values recorded correctly? - Examine the residual — is this a true outlier in \\(Y\\)? - Refit without the observation and check whether conclusions change substantially - If influential: report results both with and without the observation"
+  },
+  {
+    "objectID": "slides/lec-15.html#practice-diagnosing-assumption-violations",
+    "href": "slides/lec-15.html#practice-diagnosing-assumption-violations",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Practice: Diagnosing Assumption Violations",
+    "text": "Practice: Diagnosing Assumption Violations\n\nConsider these residual plot descriptions for a fitted multiple regression model:\nPlot A: Residuals vs. \\(X_1\\) — a clear U-shaped curve\nPlot B: Residuals vs. fitted values — a funnel shape, widening to the right\nPlot C: Normal QQ-plot — points closely follow the diagonal line\nFor each of the four regression assumptions, state whether it appears satisfied or violated, and identify which plot provides the evidence."
+  },
+  {
+    "objectID": "slides/lec-15.html#practice-solution-2",
+    "href": "slides/lec-15.html#practice-solution-2",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Practice: Solution",
+    "text": "Practice: Solution\n\n(a) High leverage (\\(h_{ii} &gt; 0.188\\)): Lincoln Continental (0.209), Maserati Bora (0.394). High Cook’s \\(D\\) (\\(D_i &gt; 0.125\\)): Chrysler Imperial (0.424), Maserati Bora (0.272), Toyota Corolla (0.208).\n\n(b) The Lincoln Continental has an unusual predictor combination (high hp and wt) but its mpg falls close to the regression surface — its predictor values pull the fit but its response is not surprising given those predictors. High leverage does not mean the observation is distorting the model.\n\n\n(c) The Toyota Corolla has unremarkable hp and wt values, but its mpg is much higher than the model predicts — a large residual. Cook’s distance is driven by the combination of leverage and residual size. A large residual alone is enough to produce high Cook’s \\(D\\) even with modest leverage."
+  },
+  {
+    "objectID": "slides/lec-15.html#summary",
+    "href": "slides/lec-15.html#summary",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Summary",
+    "text": "Summary\n\n\nSampling distribution: \\((b_k - \\beta_k)/SE(b_k) \\sim t(n-p)\\); degrees of freedom are \\(n-p\\) because we estimate \\(p\\) parameters\nInference on \\(\\beta_k\\): CI is \\(b_k \\pm t(1-\\alpha/2;\\, n-p)\\cdot SE(b_k)\\); test rejects \\(H_0: \\beta_k = 0\\) when \\(|t^*| &gt; t(1-\\alpha/2;\\, n-p)\\); each test is partial — holds all other predictors constant\nCI for \\(E(Y_h)\\): \\(\\hat{Y}_h \\pm t \\cdot SE(\\hat{Y}_h)\\) — estimates the mean response at \\(\\mathbf{X}_h\\); narrows to zero as \\(n \\to \\infty\\); use interval = \"confidence\" in predict()\nPI for new \\(Y_h^*\\): \\(\\hat{Y}_h \\pm t \\cdot SE(\\text{pred})\\) where \\(SE^2(\\text{pred}) = \\text{MSE} + SE^2(\\hat{Y}_h)\\) — always wider than CI; bounded below by irreducible \\(\\sigma^2\\); use interval = \"prediction\"\nDiagnostics: residuals vs. each \\(X_k\\) (linearity), vs. fitted (equal variance), QQ-plot (normality); independence requires a time/order plot"
+  },
+  {
+    "objectID": "slides/lec-15.html#questions",
+    "href": "slides/lec-15.html#questions",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Questions?",
+    "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
+  },
+  {
+    "objectID": "slides/lec-15.html#from-normal-to-t-estimating-sigma2",
+    "href": "slides/lec-15.html#from-normal-to-t-estimating-sigma2",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "From Normal to \\(t\\): Estimating \\(\\sigma^2\\)",
+    "text": "From Normal to \\(t\\): Estimating \\(\\sigma^2\\)\n\nWe know \\(b_k \\sim N(\\beta_k, \\sigma^2 c_{kk})\\), but \\(\\sigma^2\\) is unknown. We replace it with \\(\\text{MSE} = \\text{SSE}/(n-p)\\).\n\nStandard error of \\(b_k\\):\n\\[s(b_k) = \\sqrt{\\text{MSE} \\cdot c_{kk}}\\]\nThis is the square root of the \\(k\\)-th diagonal of \\(\\text{MSE}(\\mathbf{X}^T\\mathbf{X})^{-1}\\) — what summary() shows in the Std. Error column.\n\n\nPlugging in \\(\\text{MSE}\\) for \\(\\sigma^2\\) introduces extra uncertainty, which inflates the normal to a \\(t\\):\n\\[\\frac{b_k - \\beta_k}{s(b_k)} \\sim t(n - p), \\quad k = 0, 1, \\ldots, p - 1\\]\nThe degrees of freedom \\(n - p\\) come from MSE — each of the \\(p\\) estimated parameters costs one df."
+  },
+  {
+    "objectID": "slides/lec-15.html#why-we-can-do-inference-on-beta_k",
+    "href": "slides/lec-15.html#why-we-can-do-inference-on-beta_k",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Why We Can Do Inference on \\(\\beta_k\\)",
+    "text": "Why We Can Do Inference on \\(\\beta_k\\)\n\nUnder our model assumptions (\\(\\epsilon_i \\overset{\\text{iid}}{\\sim} N(0,\\sigma^2)\\)), each OLS estimate \\(b_k\\) is normally distributed and unbiased for \\(\\beta_k\\). Replacing the unknown \\(\\sigma^2\\) with \\(\\text{MSE}\\) gives a standard error \\(SE(b_k)\\), and the standardized estimate follows a \\(t\\)-distribution:\n\\[\\frac{b_k - \\beta_k}{SE(b_k)} \\sim t(n - p)\\]\n\n\nThis is exactly the same logic as SLR. The only difference is the degrees of freedom are \\(n - p\\) instead of \\(n - 2\\), because we now estimate \\(p\\) parameters. This result is what licenses \\(t\\)-tests and confidence intervals for each \\(\\beta_k\\)."
+  },
+  {
+    "objectID": "slides/lec-15.html#diagnostics-in-slr-vs.-mlr",
+    "href": "slides/lec-15.html#diagnostics-in-slr-vs.-mlr",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Diagnostics in SLR vs. MLR",
+    "text": "Diagnostics in SLR vs. MLR\n\nIn SLR, influential points are usually visible — an extreme \\(X\\) value with an unusual \\(Y\\) stands out on a scatterplot.\n\nIn MLR, it’s harder:\n\nA point can have perfectly average values for each predictor individually, but an unusual combination across predictors\nExample: a car with average hp and average wt, but high mpg — nothing extreme in a single plot, but it still pulls the fit\nResidual plots check whether model assumptions hold — they don’t tell us which observations are driving the fitted coefficients\n\n\n\n\nWe need tools that go beyond residual plots: one to measure how unusual an observation is in predictor space, and one to measure how much it changes the fit."
+  },
+  {
+    "objectID": "slides/lec-15.html#from-residual-plots-to-influence-measures",
+    "href": "slides/lec-15.html#from-residual-plots-to-influence-measures",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "From Residual Plots to Influence Measures",
+    "text": "From Residual Plots to Influence Measures\n\nResidual plots answer: do the model assumptions hold?\nThey do not answer: which observations are most responsible for the estimated coefficients?\n\nTwo complementary questions about individual observations:\n\n\n\n\n\n\n\n\nQuestion\nMeasure\nWhat it captures\n\n\n\n\nIs this observation unusual in predictor space?\nLeverage \\(h_{ii}\\)\nDistance from the center of \\(X\\)-space\n\n\nDoes removing this observation change the fit?\nCook’s distance \\(D_i\\)\nCombined effect of leverage + residual size\n\n\n\n\n\n\nHigh leverage alone is not a problem — a high-leverage point that falls on the regression surface does not distort the fit. Influence requires both unusual predictors and an unexpected response."
+  },
+  {
+    "objectID": "slides/lec-15.html#leverage",
+    "href": "slides/lec-15.html#leverage",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Leverage",
+    "text": "Leverage\n\nLeverage \\(h_{ii}\\) measures how far observation \\(i\\)’s predictor values are from the center of predictor space.\n\nKey properties:\n\nDepends only on \\(X\\), not on \\(Y_i\\)\nLarge \\(h_{ii}\\) \\(\\Rightarrow\\) observation \\(i\\) is far from the center of predictor space\nAverage leverage is \\(p/n\\)\n\n\n\n\nRule of thumb: Flag \\(h_{ii} &gt; 2p/n\\) as a potentially high-leverage observation. These can disproportionately influence the fitted regression even if their residual is small."
+  },
+  {
+    "objectID": "slides/lec-15.html#practice-leverage-and-influence",
+    "href": "slides/lec-15.html#practice-leverage-and-influence",
+    "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
+    "section": "Practice: Leverage and Influence",
+    "text": "Practice: Leverage and Influence\n\nUsing the mtcars model (\\(n = 32\\), \\(p = 3\\)), the plot and table below show leverage and Cook’s distance for flagged observations.\n\n\n\n\n\n\n\n\n\n\n\n\nCar\nLeverage\nCook’s \\(D\\)\n\n\n\n\nLincoln Continental\n0.209\n0.018\n\n\nChrysler Imperial\n0.186\n0.424\n\n\nMaserati Bora\n0.394\n0.272\n\n\nToyota Corolla\n0.100\n0.208\n\n\n\n(a) Which observations exceed the leverage threshold (\\(2p/n = 0.188\\))? Which exceed the Cook’s distance threshold (\\(4/n = 0.125\\))?\n(b) The Lincoln Continental has high leverage but low Cook’s distance. What does this tell us?\n(c) The Toyota Corolla has low leverage but high Cook’s distance. How is that possible?"
   }
 ]

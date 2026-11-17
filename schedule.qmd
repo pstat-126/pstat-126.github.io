@@ -177,6 +177,15 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td><a class="badge-lab" href="labs/lab-06.html">Lab 6</a></td>
       <td></td>
     </tr>
+    <tr>
+      <td class="date-cell">Wed, Nov 19</td>
+      <td class="topic-cell">Inference, Prediction, and Diagnostics in MLR
+        <span class="sub-topic">t-tests for coefficients, CI vs PI, residual plots</span></td>
+        <td><a class="badge-slide" href="slides/">Slides</a></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
 
   <!--
     <tr class="week-row"><td colspan="5">Week 4 — Correlation, R² &amp; Diagnostics</td></tr>

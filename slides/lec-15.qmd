@@ -1,0 +1,646 @@
+---
+title: "Lecture 15: Inference, Prediction, and Diagnostics in MLR"
+subtitle: "PSTAT 126: Linear Regression"
+author: "Annie Adams"
+institute: "UC Santa Barbara"
+date: "11/19/2026"
+format:
+  revealjs:
+    theme: [default, ../styles.scss]
+    slide-number: true
+    preview-links: auto
+    footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
+    logo: ""
+    chalkboard: true
+    title-slide-attributes:
+      data-background-color: "#003660"
+---
+
+```{r}
+#| echo: false
+#| eval: true
+fit1 <- lm(mpg ~ hp + wt, data = mtcars)
+```
+
+## Learning Objectives
+
+By the end of today you will be able to:
+
+::: {style="font-size: 0.80em;"}
+
+- Explain why $(b_k - \beta_k)/SE(b_k) \sim t(n-p)$ and how this licenses inference on $\beta_k$
+- Conduct and interpret $t$-tests and confidence intervals for individual $\beta_k$, including the "holding all other predictors constant" framing
+- Distinguish a confidence interval for $E(Y_h)$ from a prediction interval for a new $Y_h^*$, interpret each in context, and compute both in R
+- Check all four regression assumptions using residual plots and describe what a violation looks like
+
+:::
+
+---
+
+## Today's Roadmap
+
+::: {style="font-size: 0.85em;"}
+
+::: {.incremental}
+
+1. **Inference about Regression Parameters** — $t$-tests and CIs for individual $\beta_k$
+2. **Estimation and Prediction** — CI for $E(Y_h)$ vs. PI for a new $Y_h$
+3. **Model Diagnostics** — residual plots
+
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.5em;"}
+**Running example:** We model **fuel efficiency** ($Y$, mpg) for $n = 32$ cars using **horsepower** ($X_1$) and **weight** ($X_2$, 1000 lbs) from the built-in `mtcars` dataset.
+:::
+:::
+
+:::
+
+---
+
+## Running Example: The Data {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+head(mtcars[, c("mpg", "hp", "wt")])
+
+fit1 <- lm(mpg ~ hp + wt, data = mtcars)
+```
+
+::: {style="font-size: 0.72em;"}
+
+The model: $Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \epsilon_i$, where $\epsilon_i \overset{\text{iid}}{\sim} N(0,\sigma^2)$.
+
+:::
+
+---
+
+## Inference about Regression Parameters {background-color="#003660"}
+
+---
+
+## Why We Can Do Inference on $\beta_k$ {.smaller}
+
+::: {style="font-size: 0.78em;"}
+
+Under our model assumptions ($\epsilon_i \overset{\text{iid}}{\sim} N(0,\sigma^2)$), each OLS estimate $b_k$ is normally distributed and unbiased for $\beta_k$. Replacing the unknown $\sigma^2$ with $\text{MSE}$ gives a standard error $SE(b_k)$, and the standardized estimate follows a $t$-distribution:
+
+$$\frac{b_k - \beta_k}{SE(b_k)} \sim t(n - p)$$
+
+::: {.fragment}
+::: {style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;"}
+This is exactly the same logic as SLR. The only difference is the degrees of freedom are $n - p$ instead of $n - 2$, because we now estimate $p$ parameters. This result is what licenses $t$-tests and confidence intervals for each $\beta_k$.
+:::
+:::
+
+:::
+
+---
+
+## Confidence Intervals for $\beta_k$ {.smaller}
+
+::: {style="font-size: 0.78em;"}
+
+Let $SE(b_k)$ denote the **standard error** of $b_k$.$SE(b_k)$ is the estimated standard deviation of the sampling distribution of $b_k$.
+
+A $100(1-\alpha)\%$ confidence interval for $\beta_k$ is:
+
+$$b_k \pm t\!\left(1 - \tfrac{\alpha}{2};\; n - p\right) \cdot SE(b_k)$$
+
+::: {.fragment}
+**Interpretation:** We are $100(1-\alpha)\%$ confident that the true average change in $Y$ for a one-unit increase in $X_k$, holding all other predictors in the model constant, lies in this interval.
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.4em;"}
+**Partial effect:** $\beta_k$ is the expected change in $Y$ per unit increase in $X_k$ **holding all other predictors constant**. The CI is for this partial effect in the fitted model — not for a simple regression of $Y$ on $X_k$ alone.
+:::
+:::
+
+:::
+
+---
+
+## Hypothesis Test for $\beta_k$ {.smaller}
+
+::: {style="font-size: 0.75em;"}
+
+To test whether $X_k$ has a linear relationship with $Y$, **given the other predictors**:
+
+$$H_0: \beta_k = 0 \qquad H_a: \beta_k \neq 0$$
+
+**Test statistic:**
+
+$$t^* = \frac{b_k}{SE(b_k)}$$
+
+::: {.fragment}
+**Decision rule:** Reject $H_0$ at level $\alpha$ if $|t^*| > t(1 - \alpha/2;\; n - p)$.
+
+:::
+
+::: {.fragment}
+::: {.callout-note}
+## Warning
+The $t$-test for $\beta_k$ is a **partial** test. A predictor that is not significant in the full model may be significant in a simple regression of $Y$ on $X_k$ alone, and vice versa, due to correlations among predictors.
+:::
+:::
+
+:::
+
+---
+
+## Inference in R: `summary()` {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+summary(fit1)
+```
+
+---
+
+## Reading the `summary()` Output {.smaller}
+
+```{r}
+#| echo: false
+#| eval: true
+summary(fit1)
+```
+
+::: {.fragment .absolute top="355px" left="215px" width="90px" height="18px" fragment-index=1 style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);"}
+:::
+::: {.fragment .absolute top="230px" left="590px" fragment-index=1 style="font-size:0.56em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.6;"}
+$SE(b_0) = 1.599$: estimated std. dev. of $b_0$
+:::
+
+::: {.fragment .absolute top="374px" left="215px" width="90px" height="18px" fragment-index=2 style="border:3px solid #2E86AB; border-radius:4px; background:rgba(46,134,171,0.2);"}
+:::
+::: {.fragment .absolute top="260px" left="590px" fragment-index=2 style="font-size:0.56em; color:#1A5276; font-weight:bold; border-left:3px solid #2E86AB; padding-left:8px; line-height:1.6;"}
+$SE(b_1) = 0.009$: estimated std. dev. of $b_1$
+:::
+
+::: {.fragment .absolute top="394px" left="215px" width="90px" height="18px" fragment-index=3 style="border:3px solid #E8A838; border-radius:4px; background:rgba(232,168,56,0.2);"}
+:::
+::: {.fragment .absolute top="290px" left="590px" fragment-index=3 style="font-size:0.56em; color:#7D5A00; font-weight:bold; border-left:3px solid #E8A838; padding-left:8px; line-height:1.6;"}
+$SE(b_2) = 0.633$: estimated std. dev. of $b_2$
+:::
+
+::: {.fragment .absolute top="355px" left="310px" width="66px" height="58px" fragment-index=4 style="border:3px solid #C0392B; border-radius:4px; background:rgba(192,57,43,0.2);"}
+:::
+::: {.fragment .absolute top="340px" left="590px" fragment-index=4 style="font-size:0.56em; color:#922B21; font-weight:bold; border-left:3px solid #C0392B; padding-left:8px; line-height:1.6;"}
+**t value** = $b_k / SE(b_k)$: test statistic for $H_0: \beta_k = 0$
+:::
+
+::: {.fragment .absolute top="475px" left="0px" width="560px" height="17px" fragment-index=5 style="border:3px solid #5BA4CF; border-radius:4px; background:rgba(91,164,207,0.2);"}
+:::
+::: {.fragment .absolute top="400px" left="590px" fragment-index=5 style="font-size:0.56em; color:#1A5276; font-weight:bold; border-left:3px solid #5BA4CF; padding-left:8px; line-height:1.6;"}
+Residual std error $= \hat{\sigma} = \sqrt{\text{MSE}}$; df $= n - p = 29$
+:::
+
+---
+
+## Confidence Intervals in R: `confint()` {.smaller}
+
+::: {style="font-size: 0.78em;"}
+
+:::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| echo: true
+#| eval: true
+coef(fit1)
+```
+:::
+::: {.column width="50%"}
+```{r}
+#| echo: true
+#| eval: true
+confint(fit1, level = 0.95)
+```
+:::
+::::
+
+::: {.fragment}
+**Interpreting $b_k$:**
+
+- $b_1 = -0.032$: the estimated average change in fuel efficiency for each 1 hp increase is $-0.032$ mpg, holding all other predictors in the model constant.
+
+- $b_2 = -3.878$: the estimated average change in fuel efficiency for each 1,000 lb increase in weight is $-3.878$ mpg, holding all other predictors in the model constant.
+:::
+
+::: {.fragment}
+**Interpreting the 95% CIs:**
+
+- We are 95% confident that the true average change in mpg for each 1 hp increase is between $-0.050$ and $-0.013$ mpg, holding all other predictors in the model constant.
+
+- We are 95% confident that the true average change in mpg for each 1,000 lb increase in weight is between $-5.172$ and $-2.584$ mpg, holding all other predictors in the model constant.
+
+- Both CIs exclude zero, so both predictors are significant at $\alpha = 0.05$.
+:::
+
+:::
+
+---
+
+## Practice: Inference on Parameters {.smaller}
+
+::: {style="font-size: 0.68em;"}
+
+We model **fuel efficiency** (mpg) for $n = 32$ cars using **horsepower** ($X_1$) and **weight** ($X_2$, 1000 lbs) from `mtcars`.
+
+```{r}
+#| echo: false
+#| eval: true
+summary(fit1)
+```
+
+**(a)** Using the output above, compute $t^*$ for $H_0: \beta_1 = 0$. What distribution does it follow under $H_0$?
+
+**(b)** The critical value is $t(0.975;\; 29) = 2.045$. State your conclusion in context.
+
+**(c)** Would you reach a different conclusion for $H_0: \beta_2 = 0$? Why or why not?
+
+:::
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 5,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em"
+)
+```
+
+---
+
+## Practice: Solution {.smaller}
+
+::: {style="font-size: 0.72em;"}
+
+**(a)** $t^* = b_1 / SE(b_1) = -0.032 / 0.009 = -3.52$. Under $H_0$, $t^* \sim t(n - p) = t(29)$.
+
+::: {.fragment}
+**(b)** Since $|t^*| = 3.52 > t(0.975;\; 29) = 2.045$, we **reject $H_0$** at $\alpha = 0.05$. There is strong evidence that horsepower is a significant predictor of fuel efficiency, holding weight constant.
+:::
+
+::: {.fragment}
+**(c)** Same conclusion (reject), but stronger evidence. For $X_2$: $t^* = -3.878 / 0.633 = -6.13$. Since $|t^*| = 6.13 > 2.045$, we reject $H_0: \beta_2 = 0$ at $\alpha = 0.05$. Both predictors are significant, with weight carrying a stronger signal.
+:::
+
+:::
+
+---
+
+## Estimation of Mean Response and Prediction {background-color="#003660"}
+
+---
+
+## Two Inferential Goals {.smaller}
+
+::: {style="font-size: 0.78em;"}
+
+For a new predictor vector $\mathbf{X}_h = (1,\, X_{h,1},\, \ldots,\, X_{h,p-1})^T$, the point estimate is the same for both goals:
+
+$$\hat{Y}_h = b_0 + b_1 X_{h,1} + \cdots + b_{p-1} X_{h,p-1} = \mathbf{X}_h^T \mathbf{b}$$
+
+::: {.fragment}
+| Goal | We are estimating | Interval type |
+|:-----|:----------------:|:-------------:|
+| Mean mpg across **all** cars with $\mathbf{X}_h$ | $E(Y_h) = \mathbf{X}_h^T\boldsymbol{\beta}$ | Confidence interval |
+| Mpg for **one new** car with $\mathbf{X}_h$ | Individual $Y_h^*$ | Prediction interval |
+
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;"}
+The point estimate $\hat{Y}_h$ is the same. The intervals differ in width because they quantify different uncertainty.
+:::
+:::
+
+:::
+
+---
+
+## Confidence Interval for $E(Y_h)$ {.smaller}
+
+::: {style="font-size: 0.75em;"}
+
+Let $SE(\hat{Y}_h)$ denote the estimated standard error of $\hat{Y}_h$, computed from the fitted model.
+
+::: {.fragment}
+**Sampling distribution:**
+
+$$\frac{\hat{Y}_h - E(Y_h)}{SE(\hat{Y}_h)} \sim t(n - p)$$
+:::
+
+::: {.fragment}
+**A $100(1-\alpha)\%$ CI for $E(Y_h)$:**
+
+$$\hat{Y}_h \pm t\!\left(1 - \tfrac{\alpha}{2};\; n - p\right) \cdot SE(\hat{Y}_h)$$
+:::
+
+:::
+
+---
+
+## Prediction Interval for a New $Y_h$ {.smaller}
+
+::: {style="font-size: 0.75em;"}
+
+For a **single new observation** $Y_h^*$, there are two sources of uncertainty:
+
+1. Uncertainty in estimating the regression mean: $SE(\hat{Y}_h)$
+2. The new observation's own random error: $\hat{\sigma}$
+
+::: {.fragment}
+Combined: $SE^2(\text{pred}) = \text{MSE} + SE^2(\hat{Y}_h)$
+:::
+
+::: {.fragment}
+**A $100(1-\alpha)\%$ PI for $Y_h^*$:**
+
+$$\hat{Y}_h \pm t\!\left(1 - \tfrac{\alpha}{2};\; n - p\right) \cdot SE(\text{pred})$$
+:::
+
+::: {.fragment}
+::: {style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.3em;"}
+The PI is **always wider** than the CI because $SE(\text{pred}) > SE(\hat{Y}_h)$.
+:::
+:::
+
+:::
+
+---
+
+## CI vs. PI: Comparison {.smaller}
+
+::: {style="font-size: 0.72em;"}
+
+| | CI for $E(Y_h)$ | PI for new $Y_h^*$ |
+|:--|:-:|:-:|
+| **Estimates** | Mean of $Y$ at $\mathbf{X}_h$ | Individual future $Y$ |
+| **Variance** | $\text{MSE}\cdot\mathbf{X}_h^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}_h$ | $\text{MSE}\!\left(1 + \mathbf{X}_h^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}_h\right)$ |
+| **Narrower when?** | $n \to \infty$ (shrinks to point) | Bounded below by $\approx 2 \cdot 1.96\hat\sigma$ |
+| **R argument** | `interval = "confidence"` | `interval = "prediction"` |
+
+::: {.fragment}
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;"}
+Even with infinite data you cannot perfectly predict a **single** new observation — there is always irreducible randomness $\sigma^2$. The CI for $E(Y_h)$ shrinks; the PI does not.
+:::
+:::
+
+:::
+
+---
+
+## CI and PI in R: `predict()` {.smaller}
+
+Suppose we want results for a car with $X_{1h} = 150$ hp and $X_{2h} = 3.2$ thousand lbs.
+
+```{r}
+#| echo: true
+#| eval: true
+new_car <- data.frame(hp = 150, wt = 3.2)
+
+predict(fit1, newdata = new_car, interval = "confidence")
+predict(fit1, newdata = new_car, interval = "prediction")
+```
+
+---
+
+## Interpreting CI and PI {.smaller}
+
+::: {style="font-size: 0.78em;"}
+
+Both intervals are centered at $\hat{Y}_h = 20.05$ mpg:
+
+::: {.fragment}
+**95% CI for $E(Y_h)$:** $(19.11,\; 20.99)$ mpg
+
+We are 95% confident that the **mean** fuel efficiency across all cars with 150 hp and 3,200 lbs is between 19.11 and 20.99 mpg.
+
+Width: 1.88 mpg
+:::
+
+::: {.fragment}
+**95% PI for a new $Y_h^*$:** $(14.67,\; 25.44)$ mpg
+
+We are 95% confident that **one specific new car** with 150 hp and 3,200 lbs will have fuel efficiency between 14.67 and 25.44 mpg.
+
+Width: 10.77 mpg — about five times wider.
+:::
+
+::: {.fragment}
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;"}
+The PI's extra width comes entirely from $\text{MSE} = 2.593^2 \approx 6.72$, the irreducible variability in individual mpg around the mean.
+:::
+:::
+
+:::
+
+---
+
+## Practice: CI vs. PI {.smaller}
+
+::: {style="font-size: 0.72em;"}
+
+A researcher models crop yield ($Y$, bu/acre) on rainfall ($X_1$, in.) and fertilizer ($X_2$, lbs/acre), $n = 30$, $p = 3$. For $X_{1h} = 12$ and $X_{2h} = 100$:
+
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-bottom: 0.5em;"}
+$\hat{Y}_h = 95.3$, $\quad s(\hat{Y}_h) = 2.1$, $\quad \text{MSE} = 25$, $\quad t(0.975;\; 27) = 2.052$
+:::
+
+**(a)** Construct a 95% CI for mean yield in all fields with these conditions.
+
+<br>
+
+**(b)** Compute $SE(\text{pred})$ and construct a 95% PI for a single new field.
+
+<br>
+
+**(c)** Why is the PI wider than the CI even though they have the same center?
+
+:::
+
+```{r}
+#| echo: false
+#| eval: true
+countdown::countdown(
+  minutes = 5,
+  play_sound = TRUE,
+  color_border              = "#FEBC11",
+  color_text                = "#003660",
+  color_running_background  = "#003660",
+  color_running_text        = "#FFFFFF",
+  color_finished_background = "#FEBC11",
+  color_finished_text       = "#003660",
+  font_size = "2em"
+)
+```
+
+---
+
+## Practice: Solution {.smaller}
+
+::: {style="font-size: 0.72em;"}
+
+**(a)** 95% CI for $E(Y_h)$:
+
+$$\hat{Y}_h \pm t(0.975;\,27) \cdot SE(\hat{Y}_h) = 95.3 \pm 2.052 \times 2.1 = 95.3 \pm 4.31 = (91.0,\; 99.6) \text{ bu/acre}$$
+
+::: {.fragment}
+**(b)** $SE^2(\text{pred}) = \text{MSE} + SE^2(\hat{Y}_h) = 25 + 2.1^2 = 25 + 4.41 = 29.41$, so $SE(\text{pred}) = \sqrt{29.41} = 5.42$.
+
+$$95.3 \pm 2.052 \times 5.42 = 95.3 \pm 11.12 = (84.2,\; 106.4) \text{ bu/acre}$$
+:::
+
+::: {.fragment}
+**(c)** The PI accounts for two sources of uncertainty: (1) estimating the mean response (shared with CI), and (2) the random error of the **new** individual observation — $\sigma^2$ never disappears, no matter how much data we collect. The CI captures only the estimation component, which shrinks to zero as $n \to \infty$.
+:::
+
+:::
+
+---
+
+## Model Diagnostics {background-color="#003660"}
+
+---
+
+## The Four Assumptions {.smaller}
+
+::: {style="font-size: 0.75em;"}
+
+The model $Y_i = \beta_0 + \beta_1 X_{i1} + \cdots + \beta_{p-1}X_{i,p-1} + \epsilon_i$ requires:
+
+::: {.fragment}
+**1. Linearity** — $E(Y_i)$ is a linear function of the predictors.
+The mean response lives on the regression hyperplane.
+:::
+
+::: {.fragment}
+**2. Independence** — Responses $Y_1, \ldots, Y_n$ are independent.
+Most relevant when data has a time or spatial order.
+:::
+
+::: {.fragment}
+**3. Equal Variance (Homoscedasticity)** — $\text{Var}(\epsilon_i) = \sigma^2$ for all $i$.
+Residual spread should not change with fitted values or predictor levels.
+:::
+
+::: {.fragment}
+**4. Normality** — $\epsilon_i \overset{\text{iid}}{\sim} N(0, \sigma^2)$.
+Required for exact inference; less critical with large $n$ by CLT.
+:::
+
+
+
+:::
+
+---
+
+## Residual Plot Toolkit {.smaller}
+
+::: {style="font-size: 0.75em;"}
+
+| Plot | Assumption checked | Signal of violation |
+|:-----|:------------------:|:--------------------|
+| Residuals vs. each $X_k$ | Linearity (1) | Systematic curve or pattern |
+| Residuals vs. time/case order | Independence (2) | Trend, runs, or cycles |
+| Residuals vs. fitted $\hat{Y}$ | Equal variance (3) | Fan shape; changing spread |
+| Normal QQ-plot | Normality (4) | Points off the diagonal |
+
+::: {.fragment}
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.4em;"}
+A good residual plot shows residuals scattered **randomly around zero with no pattern**. Any systematic structure signals a violated assumption.
+:::
+:::
+
+:::
+
+---
+
+## Residual Plots in R {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-height: 4.5
+par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
+plot(mtcars$hp, residuals(fit1), xlab = "Horsepower",
+     ylab = "Residuals", main = "Residuals vs X1 (hp)"); abline(h = 0, lty = 2)
+plot(mtcars$wt, residuals(fit1), xlab = "Weight (1000 lbs)",
+     ylab = "Residuals", main = "Residuals vs X2 (wt)"); abline(h = 0, lty = 2)
+plot(fitted(fit1), residuals(fit1), xlab = "Fitted",
+     ylab = "Residuals", main = "Residuals vs Fitted"); abline(h = 0, lty = 2)
+qqnorm(residuals(fit1), main = "QQ-plot"); qqline(residuals(fit1))
+```
+
+---
+
+## Reading the Residual Plots {.smaller}
+
+::: {style="font-size: 0.75em;"}
+
+::: {.incremental}
+
+- **Residuals vs $X_1$ (hp):** Points scatter around zero without a systematic curve — **linearity looks satisfied** for horsepower.
+
+- **Residuals vs $X_2$ (wt):** No obvious trend or pattern — **linearity satisfied** for weight as well.
+
+- **Residuals vs Fitted:** Spread is roughly constant across the fitted range — **equal variance appears satisfied** (no fanning).
+
+- **QQ-plot:** Points track the diagonal closely — **normality is plausible**.
+
+:::
+
+::: {.fragment}
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #58A867; margin-top: 0.3em;"}
+The first-order model assumptions appear satisfied — inferential results ($t$-tests, CIs, prediction intervals) are reliable for these data.
+:::
+:::
+
+:::
+
+---
+
+
+---
+
+## Summary
+
+::: {style="font-size: 0.63em;"}
+
+::: {.incremental}
+
+- **Sampling distribution:** $(b_k - \beta_k)/SE(b_k) \sim t(n-p)$; degrees of freedom are $n-p$ because we estimate $p$ parameters
+
+- **Inference on $\beta_k$:** CI is $b_k \pm t(1-\alpha/2;\, n-p)\cdot SE(b_k)$; test rejects $H_0: \beta_k = 0$ when $|t^*| > t(1-\alpha/2;\, n-p)$; each test is **partial** — holds all other predictors constant
+
+- **CI for $E(Y_h)$:** $\hat{Y}_h \pm t \cdot SE(\hat{Y}_h)$ — estimates the mean response at $\mathbf{X}_h$; narrows to zero as $n \to \infty$; use `interval = "confidence"` in `predict()`
+
+- **PI for new $Y_h^*$:** $\hat{Y}_h \pm t \cdot SE(\text{pred})$ where $SE^2(\text{pred}) = \text{MSE} + SE^2(\hat{Y}_h)$ — always wider than CI; bounded below by irreducible $\sigma^2$; use `interval = "prediction"`
+
+- **Diagnostics:** residuals vs. each $X_k$ (linearity), vs. fitted (equal variance), QQ-plot (normality); independence requires a time/order plot
+
+:::
+
+:::
+
+---
+
+## Questions? {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em;"}
+**Annie Adams**
+[aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+Office Hours: Tuesday 10 – 11 AM on [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1)
+
+[Course Website](https://pstat-126.github.io/)
+:::
