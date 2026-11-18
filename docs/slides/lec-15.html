@@ -220,6 +220,112 @@ Annie Adams
 
   <p class="date">2026-11-19</p>
 </section>
+<section id="quiz-3-review" class="slide level2" data-background-color="#003660">
+<h2>Quiz 3 Review</h2>
+</section>
+<section id="q1-general-linear-models" class="slide level2 smaller">
+<h2>Q1: General Linear Models</h2>
+<p>For each model below, state whether it is a <strong>general linear model</strong> and justify your answer.</p>
+<p><strong>(a)</strong> <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \beta_2 X_i^2 + \varepsilon_i\)</span></p>
+<div class="fragment">
+<p><strong>Yes</strong>, this is a general linear model. The parameters <span class="math inline">\(\beta_0, \beta_1, \beta_2\)</span> each enter the model <strong>linearly</strong>. Being nonlinear in <span class="math inline">\(X\)</span> does not prevent a model from being a general linear model.</p>
+</div>
+<p><strong>(b)</strong> <span class="math inline">\(Y_i = \beta_0 e^{\beta_1 X_i} + \varepsilon_i\)</span></p>
+<div class="fragment">
+<p><strong>No</strong>, this is not a general linear model. The parameter <span class="math inline">\(\beta_1\)</span> appears in the exponent, so the model is <strong>nonlinear in the parameters</strong>.</p>
+</div>
+</section>
+<section id="q2-dummy-variables-and-model-equation" class="slide level2 smaller">
+<h2>Q2: Dummy Variables and Model Equation</h2>
+<div style="font-size: 0.65em;">
+<p>A career counselor models starting salary (<span class="math inline">\(Y\)</span>, in $1,000s) using years of experience (<span class="math inline">\(X_1\)</span>) and education level (High School, Bachelor’s, or Graduate), with <strong>High School as the baseline</strong>.</p>
+<p><strong>(a)</strong> How many dummy variables are needed? Define each.</p>
+<div class="fragment">
+<p><strong>2 dummy variables</strong> (number of categories <span class="math inline">\(- 1 = 3 - 1 = 2\)</span>):</p>
+<p><span class="math inline">\(D_1 = 1\)</span> if Bachelor’s degree, 0 otherwise <span class="math inline">\(\qquad\)</span> <span class="math inline">\(D_2 = 1\)</span> if Graduate degree, 0 otherwise</p>
+</div>
+<p><strong>(b)</strong> Write the full model equation, labeling every term.</p>
+<div class="fragment">
+<p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 D_{i1} + \beta_3 D_{i2} + \varepsilon_i\]</span></p>
+<p>where <span class="math inline">\(\beta_0\)</span> = expected salary for a High School graduate with 0 years of experience; <span class="math inline">\(\beta_1\)</span> = expected change in salary per additional year of experience (education held fixed); <span class="math inline">\(\beta_2\)</span> = expected salary difference between Bachelor’s and High School graduates (experience held fixed); <span class="math inline">\(\beta_3\)</span> = expected salary difference between Graduate and High School degree holders (experience held fixed).</p>
+</div>
+<p><strong>(c)</strong> Write <span class="math inline">\(E(Y)\)</span> for a Graduate degree holder with 5 years of experience.</p>
+<div class="fragment">
+<p>Substitute <span class="math inline">\(X_1 = 5\)</span>, <span class="math inline">\(D_1 = 0\)</span>, <span class="math inline">\(D_2 = 1\)</span>: <span class="math display">\[E(Y) = \beta_0 + 5\beta_1 + \beta_3\]</span></p>
+</div>
+</div>
+</section>
+<section id="q3-design-matrix" class="slide level2 smaller">
+<h2>Q3: Design Matrix</h2>
+<div style="font-size: 0.75em;">
+<p>For <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \beta_2 D_i + \varepsilon_i\)</span>, write the design matrix <strong>X</strong>, parameter vector <span class="math inline">\(\boldsymbol{\beta}\)</span>, and response vector <strong>Y</strong> using the five observations below.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(i\)</span></th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">4</th>
+<th style="text-align: center;">5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(X_i\)</span></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(D_i\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(Y_i\)</span></td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">18</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>Each row of <strong>X</strong> is <span class="math inline">\((1, X_i, D_i)\)</span>; <span class="math inline">\(\boldsymbol{\beta}\)</span> lists the three parameters; <strong>Y</strong> stacks the responses:</p>
+<p><span class="math display">\[\mathbf{X} = \begin{pmatrix} 1 &amp; 2 &amp; 0 \\ 1 &amp; 5 &amp; 1 \\ 1 &amp; 3 &amp; 0 \\ 1 &amp; 7 &amp; 1 \\ 1 &amp; 4 &amp; 0 \end{pmatrix} \qquad \boldsymbol{\beta} = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{pmatrix} \qquad \mathbf{Y} = \begin{pmatrix} 10 \\ 24 \\ 14 \\ 32 \\ 18 \end{pmatrix}\]</span></p>
+</div>
+</div>
+</section>
+<section id="q46-electricity-cost-model" class="slide level2 smaller">
+<h2>Q4–6: Electricity Cost Model</h2>
+<div style="font-size: 0.72em;">
+<p>A researcher models monthly electricity cost (<span class="math inline">\(Y\)</span>, in dollars) using apartment size (<span class="math inline">\(X\)</span>, in hundreds of sq ft) and heating type (<span class="math inline">\(D\)</span>: 1 = electric, 0 = gas), <span class="math inline">\(n = 24\)</span>.</p>
+<p>Given: <span class="math inline">\(b_0 = 25\)</span>, <span class="math inline">\(b_1 = 12\)</span>, <span class="math inline">\(b_2 = 55\)</span>.</p>
+<p><strong>Q4:</strong> Write the fitted equation and interpret <span class="math inline">\(b_1 = 12\)</span> and <span class="math inline">\(b_2 = 55\)</span> in context.</p>
+<div class="fragment">
+<p><span class="math display">\[\hat{Y} = 25 + 12X + 55D\]</span></p>
+<ul>
+<li><span class="math inline">\(b_1 = 12\)</span>: Holding heating type constant, each additional 100 sq ft is associated with an average increase of <strong>$12</strong> in monthly electricity cost.</li>
+<li><span class="math inline">\(b_2 = 55\)</span>: Holding apartment size constant, electric-heat apartments cost on average <strong>$55 more</strong> per month than comparable gas-heat apartments.</li>
+</ul>
+</div>
+<p><strong>Q5:</strong> Write the fitted equation for (a) electric-heat and (b) gas-heat apartments only.</p>
+<div class="fragment">
+<p><strong>(a)</strong> <span class="math inline">\(D = 1\)</span>: <span class="math inline">\(\hat{Y} = 80 + 12X\)</span> <span class="math inline">\(\qquad\)</span> <strong>(b)</strong> <span class="math inline">\(D = 0\)</span>: <span class="math inline">\(\hat{Y} = 25 + 12X\)</span></p>
+</div>
+<p><strong>Q6:</strong> Predict monthly electricity cost for a 700 sq ft apartment (<span class="math inline">\(X = 7\)</span>) with (a) electric heat and (b) gas heat.</p>
+<div class="fragment">
+<p><strong>(a)</strong> <span class="math inline">\(\hat{Y} = 25 + 12(7) + 55(1) = \$164\)</span> <span class="math inline">\(\qquad\)</span> <strong>(b)</strong> <span class="math inline">\(\hat{Y} = 25 + 12(7) + 55(0) = \$109\)</span></p>
+</div>
+</div>
+</section>
 <section id="learning-objectives" class="slide level2">
 <h2>Learning Objectives</h2>
 <p>By the end of today you will be able to:</p>
@@ -230,21 +336,6 @@ Annie Adams
 <li>Distinguish a confidence interval for <span class="math inline">\(E(Y_h)\)</span> from a prediction interval for a new <span class="math inline">\(Y_h^*\)</span>, interpret each in context, and compute both in R</li>
 <li>Check all four regression assumptions using residual plots and describe what a violation looks like</li>
 </ul>
-</div>
-</section>
-<section id="todays-roadmap" class="slide level2">
-<h2>Today’s Roadmap</h2>
-<div style="font-size: 0.85em;">
-<ol type="1">
-<li class="fragment"><strong>Inference about Regression Parameters</strong> — <span class="math inline">\(t\)</span>-tests and CIs for individual <span class="math inline">\(\beta_k\)</span></li>
-<li class="fragment"><strong>Estimation and Prediction</strong> — CI for <span class="math inline">\(E(Y_h)\)</span> vs.&nbsp;PI for a new <span class="math inline">\(Y_h\)</span></li>
-<li class="fragment"><strong>Model Diagnostics</strong> — residual plots</li>
-</ol>
-<div class="fragment">
-<div style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.5em;">
-<p><strong>Running example:</strong> We model <strong>fuel efficiency</strong> (<span class="math inline">\(Y\)</span>, mpg) for <span class="math inline">\(n = 32\)</span> cars using <strong>horsepower</strong> (<span class="math inline">\(X_1\)</span>) and <strong>weight</strong> (<span class="math inline">\(X_2\)</span>, 1000 lbs) from the built-in <code>mtcars</code> dataset.</p>
-</div>
-</div>
 </div>
 </section>
 <section id="running-example-the-data" class="slide level2 smaller">
@@ -324,33 +415,6 @@ Valiant           18.1 105 3.460</code></pre>
 </div>
 </div>
 </section>
-<section id="inference-in-r-summary" class="slide level2 smaller">
-<h2>Inference in R: <code>summary()</code></h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="fu">summary</span>(fit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = mpg ~ hp + wt, data = mtcars)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--3.941 -1.600 -0.182  1.050  5.854 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 37.22727    1.59879  23.285  &lt; 2e-16 ***
-hp          -0.03177    0.00903  -3.519  0.00145 ** 
-wt          -3.87783    0.63273  -6.129 1.12e-06 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 2.593 on 29 degrees of freedom
-Multiple R-squared:  0.8268,    Adjusted R-squared:  0.8148 
-F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
-</div>
-</div>
-</section>
 <section id="reading-the-summary-output" class="slide level2 smaller">
 <h2>Reading the <code>summary()</code> Output</h2>
 <div class="cell">
@@ -413,7 +477,7 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="fu">coef</span>(fit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">coef</span>(fit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)          hp          wt 
 37.22727012 -0.03177295 -3.87783074 </code></pre>
@@ -421,7 +485,7 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="fu">confint</span>(fit1, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="fu">confint</span>(fit1, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  2.5 %      97.5 %
 (Intercept) 33.95738245 40.49715778
@@ -449,7 +513,7 @@ wt          -5.17191604 -2.58374544</code></pre>
 </section>
 <section id="practice-inference-on-parameters" class="slide level2 smaller">
 <h2>Practice: Inference on Parameters</h2>
-<div style="font-size: 0.68em;">
+<div style="font-size: 0.75em;">
 <p>We model <strong>fuel efficiency</strong> (mpg) for <span class="math inline">\(n = 32\)</span> cars using <strong>horsepower</strong> (<span class="math inline">\(X_1\)</span>) and <strong>weight</strong> (<span class="math inline">\(X_2\)</span>, 1000 lbs) from <code>mtcars</code>.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -480,13 +544,13 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_dd17bd3f" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_f881ec51" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
 <section id="practice-solution" class="slide level2 smaller">
 <h2>Practice: Solution</h2>
-<div style="font-size: 0.72em;">
+<div style="font-size: 0.82em;">
 <p><strong>(a)</strong> <span class="math inline">\(t^* = b_1 / SE(b_1) = -0.032 / 0.009 = -3.52\)</span>. Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(t^* \sim t(n - p) = t(29)\)</span>.</p>
 <div class="fragment">
 <p><strong>(b)</strong> Since <span class="math inline">\(|t^*| = 3.52 &gt; t(0.975;\; 29) = 2.045\)</span>, we <strong>reject <span class="math inline">\(H_0\)</span></strong> at <span class="math inline">\(\alpha = 0.05\)</span>. There is strong evidence that horsepower is a significant predictor of fuel efficiency, holding weight constant.</p>
@@ -573,64 +637,18 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 </div>
 </div>
 </section>
-<section id="ci-vs.-pi-comparison" class="slide level2 smaller">
-<h2>CI vs.&nbsp;PI: Comparison</h2>
-<div style="font-size: 0.72em;">
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: center;">CI for <span class="math inline">\(E(Y_h)\)</span></th>
-<th style="text-align: center;">PI for new <span class="math inline">\(Y_h^*\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><strong>Estimates</strong></td>
-<td style="text-align: center;">Mean of <span class="math inline">\(Y\)</span> at <span class="math inline">\(\mathbf{X}_h\)</span></td>
-<td style="text-align: center;">Individual future <span class="math inline">\(Y\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>Variance</strong></td>
-<td style="text-align: center;"><span class="math inline">\(\text{MSE}\cdot\mathbf{X}_h^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}_h\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(\text{MSE}\!\left(1 + \mathbf{X}_h^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}_h\right)\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>Narrower when?</strong></td>
-<td style="text-align: center;"><span class="math inline">\(n \to \infty\)</span> (shrinks to point)</td>
-<td style="text-align: center;">Bounded below by <span class="math inline">\(\approx 2 \cdot 1.96\hat\sigma\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>R argument</strong></td>
-<td style="text-align: center;"><code>interval = "confidence"</code></td>
-<td style="text-align: center;"><code>interval = "prediction"</code></td>
-</tr>
-</tbody>
-</table>
-<div class="fragment">
-<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;">
-<p>Even with infinite data you cannot perfectly predict a <strong>single</strong> new observation — there is always irreducible randomness <span class="math inline">\(\sigma^2\)</span>. The CI for <span class="math inline">\(E(Y_h)\)</span> shrinks; the PI does not.</p>
-</div>
-</div>
-</div>
-</section>
 <section id="ci-and-pi-in-r-predict" class="slide level2 smaller">
 <h2>CI and PI in R: <code>predict()</code></h2>
 <p>Suppose we want results for a car with <span class="math inline">\(X_{1h} = 150\)</span> hp and <span class="math inline">\(X_{2h} = 3.2\)</span> thousand lbs.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a>new_car <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">hp =</span> <span class="dv">150</span>, <span class="at">wt =</span> <span class="fl">3.2</span>)</span>
-<span id="cb12-2"><a aria-label="2"></a></span>
-<span id="cb12-3"><a aria-label="3"></a><span class="fu">predict</span>(fit1, <span class="at">newdata =</span> new_car, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a>new_car <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">hp =</span> <span class="dv">150</span>, <span class="at">wt =</span> <span class="fl">3.2</span>)</span>
+<span id="cb10-2"><a aria-label="2"></a></span>
+<span id="cb10-3"><a aria-label="3"></a><span class="fu">predict</span>(fit1, <span class="at">newdata =</span> new_car, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 20.05227 19.11141 20.99313</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a><span class="fu">predict</span>(fit1, <span class="at">newdata =</span> new_car, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a><span class="fu">predict</span>(fit1, <span class="at">newdata =</span> new_car, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 20.05227 14.66535 25.43919</code></pre>
@@ -673,7 +691,7 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_16fb4cdb" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_837a4261" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -696,7 +714,7 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 </section>
 <section id="the-four-assumptions" class="slide level2 smaller">
 <h2>The Four Assumptions</h2>
-<div style="font-size: 0.75em;">
+<div style="font-size: 0.95em;">
 <p>The model <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_{i1} + \cdots + \beta_{p-1}X_{i,p-1} + \epsilon_i\)</span> requires:</p>
 <div class="fragment">
 <p><strong>1. Linearity</strong> — <span class="math inline">\(E(Y_i)\)</span> is a linear function of the predictors. The mean response lives on the regression hyperplane.</p>
@@ -761,17 +779,17 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 <section id="residual-plots-in-r" class="slide level2 smaller">
 <h2>Residual Plots in R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb16-2"><a aria-label="2"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, <span class="fu">residuals</span>(fit1), <span class="at">xlab =</span> <span class="st">"Horsepower"</span>,</span>
-<span id="cb16-3"><a aria-label="3"></a>     <span class="at">ylab =</span> <span class="st">"Residuals"</span>, <span class="at">main =</span> <span class="st">"Residuals vs X1 (hp)"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb16-4"><a aria-label="4"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, <span class="fu">residuals</span>(fit1), <span class="at">xlab =</span> <span class="st">"Weight (1000 lbs)"</span>,</span>
-<span id="cb16-5"><a aria-label="5"></a>     <span class="at">ylab =</span> <span class="st">"Residuals"</span>, <span class="at">main =</span> <span class="st">"Residuals vs X2 (wt)"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb16-6"><a aria-label="6"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit1), <span class="fu">residuals</span>(fit1), <span class="at">xlab =</span> <span class="st">"Fitted"</span>,</span>
-<span id="cb16-7"><a aria-label="7"></a>     <span class="at">ylab =</span> <span class="st">"Residuals"</span>, <span class="at">main =</span> <span class="st">"Residuals vs Fitted"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb16-8"><a aria-label="8"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fit1), <span class="at">main =</span> <span class="st">"QQ-plot"</span>); <span class="fu">qqline</span>(<span class="fu">residuals</span>(fit1))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb14-2"><a aria-label="2"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, <span class="fu">residuals</span>(fit1), <span class="at">xlab =</span> <span class="st">"Horsepower"</span>,</span>
+<span id="cb14-3"><a aria-label="3"></a>     <span class="at">ylab =</span> <span class="st">"Residuals"</span>, <span class="at">main =</span> <span class="st">"Residuals vs X1 (hp)"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb14-4"><a aria-label="4"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, <span class="fu">residuals</span>(fit1), <span class="at">xlab =</span> <span class="st">"Weight (1000 lbs)"</span>,</span>
+<span id="cb14-5"><a aria-label="5"></a>     <span class="at">ylab =</span> <span class="st">"Residuals"</span>, <span class="at">main =</span> <span class="st">"Residuals vs X2 (wt)"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb14-6"><a aria-label="6"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit1), <span class="fu">residuals</span>(fit1), <span class="at">xlab =</span> <span class="st">"Fitted"</span>,</span>
+<span id="cb14-7"><a aria-label="7"></a>     <span class="at">ylab =</span> <span class="st">"Residuals"</span>, <span class="at">main =</span> <span class="st">"Residuals vs Fitted"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb14-8"><a aria-label="8"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fit1), <span class="at">main =</span> <span class="st">"QQ-plot"</span>); <span class="fu">qqline</span>(<span class="fu">residuals</span>(fit1))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="lec-15_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+<img data-src="lec-15_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
 <section id="reading-the-residual-plots" class="slide level2 smaller">
 <h2>Reading the Residual Plots</h2>
 <div style="font-size: 0.75em;">

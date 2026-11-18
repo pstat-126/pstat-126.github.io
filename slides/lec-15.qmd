@@ -22,6 +22,116 @@ format:
 fit1 <- lm(mpg ~ hp + wt, data = mtcars)
 ```
 
+## Quiz 3 Review {background-color="#003660"}
+
+---
+
+## Q1: General Linear Models {.smaller}
+
+For each model below, state whether it is a **general linear model** and justify your answer.
+
+**(a)** $Y_i = \beta_0 + \beta_1 X_i + \beta_2 X_i^2 + \varepsilon_i$
+
+::: {.fragment}
+**Yes**, this is a general linear model. The parameters $\beta_0, \beta_1, \beta_2$ each enter the model **linearly**. Being nonlinear in $X$ does not prevent a model from being a general linear model.
+:::
+
+**(b)** $Y_i = \beta_0 e^{\beta_1 X_i} + \varepsilon_i$
+
+::: {.fragment}
+**No**, this is not a general linear model. The parameter $\beta_1$ appears in the exponent, so the model is **nonlinear in the parameters**.
+:::
+
+---
+
+## Q2: Dummy Variables and Model Equation {.smaller}
+
+::: {style="font-size: 0.65em;"}
+
+A career counselor models starting salary ($Y$, in \$1,000s) using years of experience ($X_1$) and education level (High School, Bachelor's, or Graduate), with **High School as the baseline**.
+
+**(a)** How many dummy variables are needed? Define each.
+
+::: {.fragment}
+**2 dummy variables** (number of categories $- 1 = 3 - 1 = 2$):
+
+$D_1 = 1$ if Bachelor's degree, 0 otherwise $\qquad$ $D_2 = 1$ if Graduate degree, 0 otherwise
+:::
+
+**(b)** Write the full model equation, labeling every term.
+
+::: {.fragment}
+$$Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 D_{i1} + \beta_3 D_{i2} + \varepsilon_i$$
+
+where $\beta_0$ = expected salary for a High School graduate with 0 years of experience; $\beta_1$ = expected change in salary per additional year of experience (education held fixed); $\beta_2$ = expected salary difference between Bachelor's and High School graduates (experience held fixed); $\beta_3$ = expected salary difference between Graduate and High School degree holders (experience held fixed).
+:::
+
+**(c)** Write $E(Y)$ for a Graduate degree holder with 5 years of experience.
+
+::: {.fragment}
+Substitute $X_1 = 5$, $D_1 = 0$, $D_2 = 1$:
+$$E(Y) = \beta_0 + 5\beta_1 + \beta_3$$
+:::
+
+:::
+
+---
+
+## Q3: Design Matrix {.smaller}
+
+::: {style="font-size: 0.75em;"}
+
+For $Y_i = \beta_0 + \beta_1 X_i + \beta_2 D_i + \varepsilon_i$, write the design matrix **X**, parameter vector $\boldsymbol{\beta}$, and response vector **Y** using the five observations below.
+
+| $i$ | 1 | 2 | 3 | 4 | 5 |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| $X_i$ | 2 | 5 | 3 | 7 | 4 |
+| $D_i$ | 0 | 1 | 0 | 1 | 0 |
+| $Y_i$ | 10 | 24 | 14 | 32 | 18 |
+
+::: {.fragment}
+Each row of **X** is $(1, X_i, D_i)$; $\boldsymbol{\beta}$ lists the three parameters; **Y** stacks the responses:
+
+$$\mathbf{X} = \begin{pmatrix} 1 & 2 & 0 \\ 1 & 5 & 1 \\ 1 & 3 & 0 \\ 1 & 7 & 1 \\ 1 & 4 & 0 \end{pmatrix} \qquad \boldsymbol{\beta} = \begin{pmatrix} \beta_0 \\ \beta_1 \\ \beta_2 \end{pmatrix} \qquad \mathbf{Y} = \begin{pmatrix} 10 \\ 24 \\ 14 \\ 32 \\ 18 \end{pmatrix}$$
+:::
+
+:::
+
+---
+
+## Q4–6: Electricity Cost Model {.smaller}
+
+::: {style="font-size: 0.72em;"}
+
+A researcher models monthly electricity cost ($Y$, in dollars) using apartment size ($X$, in hundreds of sq ft) and heating type ($D$: 1 = electric, 0 = gas), $n = 24$.
+
+Given: $b_0 = 25$, $b_1 = 12$, $b_2 = 55$.
+
+**Q4:** Write the fitted equation and interpret $b_1 = 12$ and $b_2 = 55$ in context.
+
+::: {.fragment}
+$$\hat{Y} = 25 + 12X + 55D$$
+
+- $b_1 = 12$: Holding heating type constant, each additional 100 sq ft is associated with an average increase of **\$12** in monthly electricity cost.
+- $b_2 = 55$: Holding apartment size constant, electric-heat apartments cost on average **\$55 more** per month than comparable gas-heat apartments.
+:::
+
+**Q5:** Write the fitted equation for (a) electric-heat and (b) gas-heat apartments only.
+
+::: {.fragment}
+**(a)** $D = 1$: $\hat{Y} = 80 + 12X$ $\qquad$ **(b)** $D = 0$: $\hat{Y} = 25 + 12X$
+:::
+
+**Q6:** Predict monthly electricity cost for a 700 sq ft apartment ($X = 7$) with (a) electric heat and (b) gas heat.
+
+::: {.fragment}
+**(a)** $\hat{Y} = 25 + 12(7) + 55(1) = \$164$ $\qquad$ **(b)** $\hat{Y} = 25 + 12(7) + 55(0) = \$109$
+:::
+
+:::
+
+---
+
 ## Learning Objectives
 
 By the end of today you will be able to:
@@ -35,27 +145,6 @@ By the end of today you will be able to:
 
 :::
 
----
-
-## Today's Roadmap
-
-::: {style="font-size: 0.85em;"}
-
-::: {.incremental}
-
-1. **Inference about Regression Parameters** — $t$-tests and CIs for individual $\beta_k$
-2. **Estimation and Prediction** — CI for $E(Y_h)$ vs. PI for a new $Y_h$
-3. **Model Diagnostics** — residual plots
-
-:::
-
-::: {.fragment}
-::: {style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.5em;"}
-**Running example:** We model **fuel efficiency** ($Y$, mpg) for $n = 32$ cars using **horsepower** ($X_1$) and **weight** ($X_2$, 1000 lbs) from the built-in `mtcars` dataset.
-:::
-:::
-
-:::
 
 ---
 
@@ -151,15 +240,7 @@ The $t$-test for $\beta_k$ is a **partial** test. A predictor that is not signif
 
 ---
 
-## Inference in R: `summary()` {.smaller}
 
-```{r}
-#| echo: true
-#| eval: true
-summary(fit1)
-```
-
----
 
 ## Reading the `summary()` Output {.smaller}
 
@@ -246,7 +327,7 @@ confint(fit1, level = 0.95)
 
 ## Practice: Inference on Parameters {.smaller}
 
-::: {style="font-size: 0.68em;"}
+::: {style="font-size: 0.75em;"}
 
 We model **fuel efficiency** (mpg) for $n = 32$ cars using **horsepower** ($X_1$) and **weight** ($X_2$, 1000 lbs) from `mtcars`.
 
@@ -284,7 +365,7 @@ countdown::countdown(
 
 ## Practice: Solution {.smaller}
 
-::: {style="font-size: 0.72em;"}
+::: {style="font-size: 0.82em;"}
 
 **(a)** $t^* = b_1 / SE(b_1) = -0.032 / 0.009 = -3.52$. Under $H_0$, $t^* \sim t(n - p) = t(29)$.
 
@@ -378,26 +459,6 @@ The PI is **always wider** than the CI because $SE(\text{pred}) > SE(\hat{Y}_h)$
 
 ---
 
-## CI vs. PI: Comparison {.smaller}
-
-::: {style="font-size: 0.72em;"}
-
-| | CI for $E(Y_h)$ | PI for new $Y_h^*$ |
-|:--|:-:|:-:|
-| **Estimates** | Mean of $Y$ at $\mathbf{X}_h$ | Individual future $Y$ |
-| **Variance** | $\text{MSE}\cdot\mathbf{X}_h^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}_h$ | $\text{MSE}\!\left(1 + \mathbf{X}_h^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}_h\right)$ |
-| **Narrower when?** | $n \to \infty$ (shrinks to point) | Bounded below by $\approx 2 \cdot 1.96\hat\sigma$ |
-| **R argument** | `interval = "confidence"` | `interval = "prediction"` |
-
-::: {.fragment}
-::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;"}
-Even with infinite data you cannot perfectly predict a **single** new observation — there is always irreducible randomness $\sigma^2$. The CI for $E(Y_h)$ shrinks; the PI does not.
-:::
-:::
-
-:::
-
----
 
 ## CI and PI in R: `predict()` {.smaller}
 
@@ -514,7 +575,7 @@ $$95.3 \pm 2.052 \times 5.42 = 95.3 \pm 11.12 = (84.2,\; 106.4) \text{ bu/acre}$
 
 ## The Four Assumptions {.smaller}
 
-::: {style="font-size: 0.75em;"}
+::: {style="font-size: 0.95em;"}
 
 The model $Y_i = \beta_0 + \beta_1 X_{i1} + \cdots + \beta_{p-1}X_{i,p-1} + \epsilon_i$ requires:
 
