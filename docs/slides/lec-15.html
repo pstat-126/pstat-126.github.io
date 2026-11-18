@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Annie Adams">
-  <meta name="dcterms.date" content="2026-11-19">
+  <meta name="dcterms.date" content="2026-11-18">
   <title>PSTAT 126 – Lecture 15: Inference, Prediction, and Diagnostics in MLR</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -218,7 +218,15 @@ Annie Adams
     </div>
 </div>
 
-  <p class="date">2026-11-19</p>
+  <p class="date">2026-11-18</p>
+</section>
+<section id="course-reminders" class="slide level2">
+<h2>Course Reminders</h2>
+<ul>
+<li>HW 4 due next Saturday 11/28</li>
+<li>Asynchronous Lecture next Wednesday (11/25)</li>
+<li>Quiz 4 Monday 11/30</li>
+</ul>
 </section>
 <section id="quiz-3-review" class="slide level2" data-background-color="#003660">
 <h2>Quiz 3 Review</h2>
@@ -244,10 +252,9 @@ Annie Adams
 <p><strong>2 dummy variables</strong> (number of categories <span class="math inline">\(- 1 = 3 - 1 = 2\)</span>):</p>
 <p><span class="math inline">\(D_1 = 1\)</span> if Bachelor’s degree, 0 otherwise <span class="math inline">\(\qquad\)</span> <span class="math inline">\(D_2 = 1\)</span> if Graduate degree, 0 otherwise</p>
 </div>
-<p><strong>(b)</strong> Write the full model equation, labeling every term.</p>
+<p><strong>(b)</strong> Write the full model equation.</p>
 <div class="fragment">
 <p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 D_{i1} + \beta_3 D_{i2} + \varepsilon_i\]</span></p>
-<p>where <span class="math inline">\(\beta_0\)</span> = expected salary for a High School graduate with 0 years of experience; <span class="math inline">\(\beta_1\)</span> = expected change in salary per additional year of experience (education held fixed); <span class="math inline">\(\beta_2\)</span> = expected salary difference between Bachelor’s and High School graduates (experience held fixed); <span class="math inline">\(\beta_3\)</span> = expected salary difference between Graduate and High School degree holders (experience held fixed).</p>
 </div>
 <p><strong>(c)</strong> Write <span class="math inline">\(E(Y)\)</span> for a Graduate degree holder with 5 years of experience.</p>
 <div class="fragment">
@@ -331,30 +338,11 @@ Annie Adams
 <p>By the end of today you will be able to:</p>
 <div style="font-size: 0.80em;">
 <ul>
-<li>Explain why <span class="math inline">\((b_k - \beta_k)/SE(b_k) \sim t(n-p)\)</span> and how this licenses inference on <span class="math inline">\(\beta_k\)</span></li>
-<li>Conduct and interpret <span class="math inline">\(t\)</span>-tests and confidence intervals for individual <span class="math inline">\(\beta_k\)</span>, including the “holding all other predictors constant” framing</li>
+<li>Explain why <span class="math inline">\((b_k - \beta_k)/SE(b_k) \sim t_{n-p}\)</span> and how this licenses inference on <span class="math inline">\(\beta_k\)</span></li>
+<li>Conduct and interpret <span class="math inline">\(t\)</span>-tests and confidence intervals for individual <span class="math inline">\(\beta_k\)</span></li>
 <li>Distinguish a confidence interval for <span class="math inline">\(E(Y_h)\)</span> from a prediction interval for a new <span class="math inline">\(Y_h^*\)</span>, interpret each in context, and compute both in R</li>
-<li>Check all four regression assumptions using residual plots and describe what a violation looks like</li>
+<li>Check all four regression assumptions using residual plots and describe what a violation looks like for Multiple Linear Regression</li>
 </ul>
-</div>
-</section>
-<section id="running-example-the-data" class="slide level2 smaller">
-<h2>Running Example: The Data</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">head</span>(mtcars[, <span class="fu">c</span>(<span class="st">"mpg"</span>, <span class="st">"hp"</span>, <span class="st">"wt"</span>)])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                   mpg  hp    wt
-Mazda RX4         21.0 110 2.620
-Mazda RX4 Wag     21.0 110 2.875
-Datsun 710        22.8  93 2.320
-Hornet 4 Drive    21.4 110 3.215
-Hornet Sportabout 18.7 175 3.440
-Valiant           18.1 105 3.460</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> wt, <span class="at">data =</span> mtcars)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div style="font-size: 0.72em;">
-<p>The model: <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \epsilon_i\)</span>, where <span class="math inline">\(\epsilon_i \overset{\text{iid}}{\sim} N(0,\sigma^2)\)</span>.</p>
 </div>
 </section>
 <section id="inference-about-regression-parameters" class="slide level2" data-background-color="#003660">
@@ -363,8 +351,11 @@ Valiant           18.1 105 3.460</code></pre>
 <section id="why-we-can-do-inference-on-beta_k" class="slide level2 smaller">
 <h2>Why We Can Do Inference on <span class="math inline">\(\beta_k\)</span></h2>
 <div style="font-size: 0.78em;">
-<p>Under our model assumptions (<span class="math inline">\(\epsilon_i \overset{\text{iid}}{\sim} N(0,\sigma^2)\)</span>), each OLS estimate <span class="math inline">\(b_k\)</span> is normally distributed and unbiased for <span class="math inline">\(\beta_k\)</span>. Replacing the unknown <span class="math inline">\(\sigma^2\)</span> with <span class="math inline">\(\text{MSE}\)</span> gives a standard error <span class="math inline">\(SE(b_k)\)</span>, and the standardized estimate follows a <span class="math inline">\(t\)</span>-distribution:</p>
-<p><span class="math display">\[\frac{b_k - \beta_k}{SE(b_k)} \sim t(n - p)\]</span></p>
+<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-bottom: 0.5em;">
+<p><span class="math display">\[SE(b_k) = \sqrt{\text{MSE} \cdot \left[(\mathbf{X}^T\mathbf{X})^{-1}\right]_{kk}}\]</span> where <span class="math inline">\(\left[(\mathbf{X}^T\mathbf{X})^{-1}\right]_{kk}\)</span> is the <span class="math inline">\(k\)</span>-th diagonal element of <span class="math inline">\((\mathbf{X}^T\mathbf{X})^{-1}\)</span>.</p>
+</div>
+<p>Under our model assumptions (<span class="math inline">\(\epsilon_i \overset{\text{iid}}{\sim} N(0,\sigma^2)\)</span>), each OLS estimate <span class="math inline">\(b_k\)</span> is normally distributed and unbiased for <span class="math inline">\(\beta_k\)</span>. Replacing the unknown <span class="math inline">\(\sigma^2\)</span> with <span class="math inline">\(\text{MSE}\)</span> gives <span class="math inline">\(SE(b_k)\)</span>, and the standardized estimate follows a <span class="math inline">\(t\)</span>-distribution:</p>
+<p><span class="math display">\[\frac{b_k - \beta_k}{SE(b_k)} \sim t_{n-p}\]</span></p>
 <div class="fragment">
 <div style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;">
 <p>This is exactly the same logic as SLR. The only difference is the degrees of freedom are <span class="math inline">\(n - p\)</span> instead of <span class="math inline">\(n - 2\)</span>, because we now estimate <span class="math inline">\(p\)</span> parameters. This result is what licenses <span class="math inline">\(t\)</span>-tests and confidence intervals for each <span class="math inline">\(\beta_k\)</span>.</p>
@@ -375,9 +366,8 @@ Valiant           18.1 105 3.460</code></pre>
 <section id="confidence-intervals-for-beta_k" class="slide level2 smaller">
 <h2>Confidence Intervals for <span class="math inline">\(\beta_k\)</span></h2>
 <div style="font-size: 0.78em;">
-<p>Let <span class="math inline">\(SE(b_k)\)</span> denote the <strong>standard error</strong> of <span class="math inline">\(b_k\)</span>.<span class="math inline">\(SE(b_k)\)</span> is the estimated standard deviation of the sampling distribution of <span class="math inline">\(b_k\)</span>.</p>
 <p>A <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval for <span class="math inline">\(\beta_k\)</span> is:</p>
-<p><span class="math display">\[b_k \pm t\!\left(1 - \tfrac{\alpha}{2};\; n - p\right) \cdot SE(b_k)\]</span></p>
+<p><span class="math display">\[b_k \pm t_{1-\alpha/2,\, n-p} \cdot SE(b_k)\]</span></p>
 <div class="fragment">
 <p><strong>Interpretation:</strong> We are <span class="math inline">\(100(1-\alpha)\%\)</span> confident that the true average change in <span class="math inline">\(Y\)</span> for a one-unit increase in <span class="math inline">\(X_k\)</span>, holding all other predictors in the model constant, lies in this interval.</p>
 </div>
@@ -388,7 +378,7 @@ Valiant           18.1 105 3.460</code></pre>
 </div>
 </div>
 </section>
-<section id="hypothesis-test-for-beta_k" class="slide level2 smaller">
+<section id="hypothesis-test-for-beta_k" class="slide level2">
 <h2>Hypothesis Test for <span class="math inline">\(\beta_k\)</span></h2>
 <div style="font-size: 0.75em;">
 <p>To test whether <span class="math inline">\(X_k\)</span> has a linear relationship with <span class="math inline">\(Y\)</span>, <strong>given the other predictors</strong>:</p>
@@ -396,7 +386,7 @@ Valiant           18.1 105 3.460</code></pre>
 <p><strong>Test statistic:</strong></p>
 <p><span class="math display">\[t^* = \frac{b_k}{SE(b_k)}\]</span></p>
 <div class="fragment">
-<p><strong>Decision rule:</strong> Reject <span class="math inline">\(H_0\)</span> at level <span class="math inline">\(\alpha\)</span> if <span class="math inline">\(|t^*| &gt; t(1 - \alpha/2;\; n - p)\)</span>.</p>
+<p><strong>Decision rule:</strong> Reject <span class="math inline">\(H_0\)</span> at level <span class="math inline">\(\alpha\)</span> if <span class="math inline">\(|t^*| &gt; t_{1-\alpha/2,\, n-p}\)</span>.</p>
 </div>
 <div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
@@ -477,7 +467,7 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">coef</span>(fit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="fu">coef</span>(fit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)          hp          wt 
 37.22727012 -0.03177295 -3.87783074 </code></pre>
@@ -485,7 +475,7 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="fu">confint</span>(fit1, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="fu">confint</span>(fit1, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  2.5 %      97.5 %
 (Intercept) 33.95738245 40.49715778
@@ -538,25 +528,25 @@ Multiple R-squared:  0.8268,    Adjusted R-squared:  0.8148
 F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 </div>
 </div>
-<p><strong>(a)</strong> Using the output above, compute <span class="math inline">\(t^*\)</span> for <span class="math inline">\(H_0: \beta_1 = 0\)</span>. What distribution does it follow under <span class="math inline">\(H_0\)</span>?</p>
-<p><strong>(b)</strong> The critical value is <span class="math inline">\(t(0.975;\; 29) = 2.045\)</span>. State your conclusion in context.</p>
+<p><strong>(a)</strong> Using the output above, identify <span class="math inline">\(t^*\)</span> for <span class="math inline">\(H_0: \beta_1 = 0\)</span>. What distribution does it follow under <span class="math inline">\(H_0\)</span>?</p>
+<p><strong>(b)</strong> The critical value is <span class="math inline">\(t_{0.975,\, 29} = 2.045\)</span>. State your conclusion in context.</p>
 <p><strong>(c)</strong> Would you reach a different conclusion for <span class="math inline">\(H_0: \beta_2 = 0\)</span>? Why or why not?</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_f881ec51" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_bf7a0c70" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
-<section id="practice-solution" class="slide level2 smaller">
+<section id="practice-solution" class="slide level2">
 <h2>Practice: Solution</h2>
-<div style="font-size: 0.82em;">
-<p><strong>(a)</strong> <span class="math inline">\(t^* = b_1 / SE(b_1) = -0.032 / 0.009 = -3.52\)</span>. Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(t^* \sim t(n - p) = t(29)\)</span>.</p>
+<div style="font-size: 0.72em;">
+<p><strong>(a)</strong> From the output, <span class="math inline">\(t^* = -3.52\)</span>. Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(t^* \sim t_{n-p} = t_{29}\)</span>.</p>
 <div class="fragment">
-<p><strong>(b)</strong> Since <span class="math inline">\(|t^*| = 3.52 &gt; t(0.975;\; 29) = 2.045\)</span>, we <strong>reject <span class="math inline">\(H_0\)</span></strong> at <span class="math inline">\(\alpha = 0.05\)</span>. There is strong evidence that horsepower is a significant predictor of fuel efficiency, holding weight constant.</p>
+<p><strong>(b)</strong> Since <span class="math inline">\(|t^*| = 3.52 &gt; t_{0.975,\, 29} = 2.045\)</span>, we <strong>reject <span class="math inline">\(H_0\)</span></strong> at <span class="math inline">\(\alpha = 0.05\)</span>. There is strong evidence that horsepower is a significant predictor of fuel efficiency, holding weight constant.</p>
 </div>
 <div class="fragment">
-<p><strong>(c)</strong> Same conclusion (reject), but stronger evidence. For <span class="math inline">\(X_2\)</span>: <span class="math inline">\(t^* = -3.878 / 0.633 = -6.13\)</span>. Since <span class="math inline">\(|t^*| = 6.13 &gt; 2.045\)</span>, we reject <span class="math inline">\(H_0: \beta_2 = 0\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>. Both predictors are significant, with weight carrying a stronger signal.</p>
+<p><strong>(c)</strong> Same conclusion (reject), but stronger evidence. For <span class="math inline">\(X_2\)</span>, the output gives <span class="math inline">\(t^* = -6.13\)</span>. Since <span class="math inline">\(|t^*| = 6.13 &gt; 2.045\)</span>, we reject <span class="math inline">\(H_0: \beta_2 = 0\)</span> at <span class="math inline">\(\alpha = 0.05\)</span>. Both predictors are significant, with weight carrying a stronger signal.</p>
 </div>
 </div>
 </section>
@@ -595,9 +585,6 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 </tr>
 </tbody>
 </table>
-<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;">
-<p>The point estimate <span class="math inline">\(\hat{Y}_h\)</span> is the same. The intervals differ in width because they quantify different uncertainty.</p>
-</div>
 </div>
 </div>
 </section>
@@ -607,15 +594,15 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 <p>Let <span class="math inline">\(SE(\hat{Y}_h)\)</span> denote the estimated standard error of <span class="math inline">\(\hat{Y}_h\)</span>, computed from the fitted model.</p>
 <div class="fragment">
 <p><strong>Sampling distribution:</strong></p>
-<p><span class="math display">\[\frac{\hat{Y}_h - E(Y_h)}{SE(\hat{Y}_h)} \sim t(n - p)\]</span></p>
+<p><span class="math display">\[\frac{\hat{Y}_h - E(Y_h)}{SE(\hat{Y}_h)} \sim t_{n-p}\]</span></p>
 </div>
 <div class="fragment">
 <p><strong>A <span class="math inline">\(100(1-\alpha)\%\)</span> CI for <span class="math inline">\(E(Y_h)\)</span>:</strong></p>
-<p><span class="math display">\[\hat{Y}_h \pm t\!\left(1 - \tfrac{\alpha}{2};\; n - p\right) \cdot SE(\hat{Y}_h)\]</span></p>
+<p><span class="math display">\[\hat{Y}_h \pm t_{1-\alpha/2,\, n-p} \cdot SE(\hat{Y}_h)\]</span></p>
 </div>
 </div>
 </section>
-<section id="prediction-interval-for-a-new-y_h" class="slide level2 smaller">
+<section id="prediction-interval-for-a-new-y_h" class="slide level2">
 <h2>Prediction Interval for a New <span class="math inline">\(Y_h\)</span></h2>
 <div style="font-size: 0.75em;">
 <p>For a <strong>single new observation</strong> <span class="math inline">\(Y_h^*\)</span>, there are two sources of uncertainty:</p>
@@ -624,16 +611,23 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 <li>The new observation’s own random error: <span class="math inline">\(\hat{\sigma}\)</span></li>
 </ol>
 <div class="fragment">
-<p>Combined: <span class="math inline">\(SE^2(\text{pred}) = \text{MSE} + SE^2(\hat{Y}_h)\)</span></p>
+<p>Combined:</p>
+<p><span class="math display">\[SE^2(\text{pred}) = \text{MSE} + SE^2(\hat{Y}_h)\]</span></p>
 </div>
 <div class="fragment">
+<div style="font-size: 0.70em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;">
+<p><strong>vs.&nbsp;SLR:</strong> The formula is structurally identical, but in SLR <span class="math inline">\(\text{MSE} = SSE/(n-2)\)</span> because only <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are estimated. In MLR, <span class="math inline">\(p\)</span> parameters are estimated so <span class="math inline">\(\text{MSE} = SSE/(n-p)\)</span> — the extra predictors consume more degrees of freedom.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="prediction-interval-for-a-new-y_h-1" class="slide level2">
+<h2>Prediction Interval for a New <span class="math inline">\(Y_h\)</span></h2>
 <p><strong>A <span class="math inline">\(100(1-\alpha)\%\)</span> PI for <span class="math inline">\(Y_h^*\)</span>:</strong></p>
-<p><span class="math display">\[\hat{Y}_h \pm t\!\left(1 - \tfrac{\alpha}{2};\; n - p\right) \cdot SE(\text{pred})\]</span></p>
-</div>
+<p><span class="math display">\[\hat{Y}_h \pm t_{1-\alpha/2,\, n-p} \cdot SE(\text{pred})\]</span></p>
 <div class="fragment">
-<div style="font-size: 0.90em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.3em;">
+<div style="font-size: 0.70em; background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.3em;">
 <p>The PI is <strong>always wider</strong> than the CI because <span class="math inline">\(SE(\text{pred}) &gt; SE(\hat{Y}_h)\)</span>.</p>
-</div>
 </div>
 </div>
 </section>
@@ -641,23 +635,35 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 <h2>CI and PI in R: <code>predict()</code></h2>
 <p>Suppose we want results for a car with <span class="math inline">\(X_{1h} = 150\)</span> hp and <span class="math inline">\(X_{2h} = 3.2\)</span> thousand lbs.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a>new_car <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">hp =</span> <span class="dv">150</span>, <span class="at">wt =</span> <span class="fl">3.2</span>)</span>
-<span id="cb10-2"><a aria-label="2"></a></span>
-<span id="cb10-3"><a aria-label="3"></a><span class="fu">predict</span>(fit1, <span class="at">newdata =</span> new_car, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>new_car <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">hp =</span> <span class="dv">150</span>, <span class="at">wt =</span> <span class="fl">3.2</span>)</span>
+<span id="cb7-2"><a aria-label="2"></a></span>
+<span id="cb7-3"><a aria-label="3"></a><span class="fu">predict</span>(fit1, <span class="at">newdata =</span> new_car, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 20.05227 19.11141 20.99313</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a><span class="fu">predict</span>(fit1, <span class="at">newdata =</span> new_car, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="fu">predict</span>(fit1, <span class="at">newdata =</span> new_car, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 20.05227 14.66535 25.43919</code></pre>
 </div>
 </div>
+<div class="absolute" style="border:3px solid #2E86AB; border-radius:4px; background:rgba(46,134,171,0.2);top: 300px; left: 105px; width: 168px; height: 18px; ">
+
+</div>
+<div class="absolute" style="font-size:0.60em; color:#1A5276; font-weight:bold; border-left:3px solid #2E86AB; padding-left:8px; line-height:1.6;top: 290px; left: 295px; ">
+<p>CI width: 1.88 mpg</p>
+</div>
+<div class="absolute" style="border:3px solid #FEBC11; border-radius:4px; background:rgba(254,188,17,0.2);top: 380px; left: 105px; width: 168px; height: 18px; ">
+
+</div>
+<div class="absolute" style="font-size:0.52em; color:#7D5A00; font-weight:bold; border-left:3px solid #FEBC11; padding-left:8px; line-height:1.6;top: 358px; left: 295px; ">
+<p>PI width: 10.77 mpg</p>
+</div>
 </section>
-<section id="interpreting-ci-and-pi" class="slide level2 smaller">
+<section id="interpreting-ci-and-pi" class="slide level2">
 <h2>Interpreting CI and PI</h2>
-<div style="font-size: 0.78em;">
+<div style="font-size: 0.68em;">
 <p>Both intervals are centered at <span class="math inline">\(\hat{Y}_h = 20.05\)</span> mpg:</p>
 <div class="fragment">
 <p><strong>95% CI for <span class="math inline">\(E(Y_h)\)</span>:</strong> <span class="math inline">\((19.11,\; 20.99)\)</span> mpg</p>
@@ -669,11 +675,6 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 <p>We are 95% confident that <strong>one specific new car</strong> with 150 hp and 3,200 lbs will have fuel efficiency between 14.67 and 25.44 mpg.</p>
 <p>Width: 10.77 mpg — about five times wider.</p>
 </div>
-<div class="fragment">
-<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;">
-<p>The PI’s extra width comes entirely from <span class="math inline">\(\text{MSE} = 2.593^2 \approx 6.72\)</span>, the irreducible variability in individual mpg around the mean.</p>
-</div>
-</div>
 </div>
 </section>
 <section id="practice-ci-vs.-pi" class="slide level2 smaller">
@@ -681,31 +682,29 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 <div style="font-size: 0.72em;">
 <p>A researcher models crop yield (<span class="math inline">\(Y\)</span>, bu/acre) on rainfall (<span class="math inline">\(X_1\)</span>, in.) and fertilizer (<span class="math inline">\(X_2\)</span>, lbs/acre), <span class="math inline">\(n = 30\)</span>, <span class="math inline">\(p = 3\)</span>. For <span class="math inline">\(X_{1h} = 12\)</span> and <span class="math inline">\(X_{2h} = 100\)</span>:</p>
 <div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-bottom: 0.5em;">
-<p><span class="math inline">\(\hat{Y}_h = 95.3\)</span>, <span class="math inline">\(\quad s(\hat{Y}_h) = 2.1\)</span>, <span class="math inline">\(\quad \text{MSE} = 25\)</span>, <span class="math inline">\(\quad t(0.975;\; 27) = 2.052\)</span></p>
+<p><span class="math inline">\(\hat{Y}_h = 95.3\)</span>, <span class="math inline">\(\quad SE(\hat{Y}_h) = 2.1\)</span>, <span class="math inline">\(\quad \text{MSE} = 25\)</span>, <span class="math inline">\(\quad t_{0.975,\, 27} = 2.052\)</span></p>
 </div>
-<p><strong>(a)</strong> Construct a 95% CI for mean yield in all fields with these conditions.</p>
-<p><br></p>
-<p><strong>(b)</strong> Compute <span class="math inline">\(SE(\text{pred})\)</span> and construct a 95% PI for a single new field.</p>
-<p><br></p>
-<p><strong>(c)</strong> Why is the PI wider than the CI even though they have the same center?</p>
+<p><strong>(a)</strong> Construct a 95% CI for mean yield in all fields with these conditions. Interpret it in context.</p>
+<p><br> <br> <br></p>
+<p><strong>(b)</strong> Compute <span class="math inline">\(SE(\text{pred})\)</span> and construct a 95% PI for a single new field. Interpret it in context.</p>
+<p><br> <br></p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_837a4261" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_5c8c955c" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
-<section id="practice-solution-1" class="slide level2 smaller">
+<section id="practice-solution-1" class="slide level2">
 <h2>Practice: Solution</h2>
 <div style="font-size: 0.72em;">
 <p><strong>(a)</strong> 95% CI for <span class="math inline">\(E(Y_h)\)</span>:</p>
-<p><span class="math display">\[\hat{Y}_h \pm t(0.975;\,27) \cdot SE(\hat{Y}_h) = 95.3 \pm 2.052 \times 2.1 = 95.3 \pm 4.31 = (91.0,\; 99.6) \text{ bu/acre}\]</span></p>
+<p><span class="math display">\[\hat{Y}_h \pm t_{0.975,\, 27} \cdot SE(\hat{Y}_h) = 95.3 \pm 2.052 \times 2.1 = 95.3 \pm 4.31 = (91.0,\; 99.6) \text{ bu/acre}\]</span></p>
+<p>We are 95% confident that the <strong>mean</strong> crop yield across all fields with 12 in. of rainfall and 100 lbs/acre of fertilizer is between 91.0 and 99.6 bu/acre.</p>
 <div class="fragment">
-<p><strong>(b)</strong> <span class="math inline">\(SE^2(\text{pred}) = \text{MSE} + SE^2(\hat{Y}_h) = 25 + 2.1^2 = 25 + 4.41 = 29.41\)</span>, so <span class="math inline">\(SE(\text{pred}) = \sqrt{29.41} = 5.42\)</span>.</p>
+<p><strong>(b)</strong> <span class="math inline">\(SE^2(\text{pred}) = \text{MSE} + SE^2(\hat{Y}_h) = 25 + 2.1^2 = 29.41\)</span>, so <span class="math inline">\(SE(\text{pred}) = \sqrt{29.41} = 5.42\)</span>.</p>
 <p><span class="math display">\[95.3 \pm 2.052 \times 5.42 = 95.3 \pm 11.12 = (84.2,\; 106.4) \text{ bu/acre}\]</span></p>
-</div>
-<div class="fragment">
-<p><strong>(c)</strong> The PI accounts for two sources of uncertainty: (1) estimating the mean response (shared with CI), and (2) the random error of the <strong>new</strong> individual observation — <span class="math inline">\(\sigma^2\)</span> never disappears, no matter how much data we collect. The CI captures only the estimation component, which shrinks to zero as <span class="math inline">\(n \to \infty\)</span>.</p>
+<p>We are 95% confident that <strong>a single new field</strong> with these conditions will yield between 84.2 and 106.4 bu/acre.</p>
 </div>
 </div>
 </section>
@@ -732,7 +731,7 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 </section>
 <section id="residual-plot-toolkit" class="slide level2 smaller">
 <h2>Residual Plot Toolkit</h2>
-<div style="font-size: 0.75em;">
+<div style="font-size: 0.65em;">
 <table class="caption-top">
 <colgroup>
 <col style="width: 12%">
@@ -774,47 +773,76 @@ F-statistic: 69.21 on 2 and 29 DF,  p-value: 9.109e-12</code></pre>
 <p>A good residual plot shows residuals scattered <strong>randomly around zero with no pattern</strong>. Any systematic structure signals a violated assumption.</p>
 </div>
 </div>
+<div class="fragment">
+<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;">
+<p><strong>MLR vs.&nbsp;SLR:</strong> In SLR there is one residuals vs.&nbsp;<span class="math inline">\(X\)</span> plot. In MLR you need a separate residuals vs.&nbsp;<span class="math inline">\(X_k\)</span> plot for <strong>each predictor</strong>, plus residuals vs.&nbsp;fitted <span class="math inline">\(\hat{Y}\)</span>. This lets you identify <strong>which specific predictor</strong> (if any) has a non-linear relationship with <span class="math inline">\(Y\)</span>. One predictor may look fine while another shows a clear curve.</p>
+</div>
+</div>
 </div>
 </section>
-<section id="residual-plots-in-r" class="slide level2 smaller">
-<h2>Residual Plots in R</h2>
+<section id="residual-plots-in-r-for-mlr" class="slide level2 smaller">
+<h2>Residual Plots in R for MLR</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb14-2"><a aria-label="2"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, <span class="fu">residuals</span>(fit1), <span class="at">xlab =</span> <span class="st">"Horsepower"</span>,</span>
-<span id="cb14-3"><a aria-label="3"></a>     <span class="at">ylab =</span> <span class="st">"Residuals"</span>, <span class="at">main =</span> <span class="st">"Residuals vs X1 (hp)"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb14-4"><a aria-label="4"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, <span class="fu">residuals</span>(fit1), <span class="at">xlab =</span> <span class="st">"Weight (1000 lbs)"</span>,</span>
-<span id="cb14-5"><a aria-label="5"></a>     <span class="at">ylab =</span> <span class="st">"Residuals"</span>, <span class="at">main =</span> <span class="st">"Residuals vs X2 (wt)"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb14-6"><a aria-label="6"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit1), <span class="fu">residuals</span>(fit1), <span class="at">xlab =</span> <span class="st">"Fitted"</span>,</span>
-<span id="cb14-7"><a aria-label="7"></a>     <span class="at">ylab =</span> <span class="st">"Residuals"</span>, <span class="at">main =</span> <span class="st">"Residuals vs Fitted"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb14-8"><a aria-label="8"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fit1), <span class="at">main =</span> <span class="st">"QQ-plot"</span>); <span class="fu">qqline</span>(<span class="fu">residuals</span>(fit1))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb11-2"><a aria-label="2"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>hp, <span class="fu">residuals</span>(fit1), <span class="at">xlab =</span> <span class="st">"Horsepower"</span>,</span>
+<span id="cb11-3"><a aria-label="3"></a>     <span class="at">ylab =</span> <span class="st">"Residuals"</span>, <span class="at">main =</span> <span class="st">"Residuals vs X1 (hp)"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb11-4"><a aria-label="4"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>wt, <span class="fu">residuals</span>(fit1), <span class="at">xlab =</span> <span class="st">"Weight (1000 lbs)"</span>,</span>
+<span id="cb11-5"><a aria-label="5"></a>     <span class="at">ylab =</span> <span class="st">"Residuals"</span>, <span class="at">main =</span> <span class="st">"Residuals vs X2 (wt)"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb11-6"><a aria-label="6"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit1), <span class="fu">residuals</span>(fit1), <span class="at">xlab =</span> <span class="st">"Fitted"</span>,</span>
+<span id="cb11-7"><a aria-label="7"></a>     <span class="at">ylab =</span> <span class="st">"Residuals"</span>, <span class="at">main =</span> <span class="st">"Residuals vs Fitted"</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb11-8"><a aria-label="8"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fit1), <span class="at">main =</span> <span class="st">"QQ-plot"</span>); <span class="fu">qqline</span>(<span class="fu">residuals</span>(fit1))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="lec-15_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
-<section id="reading-the-residual-plots" class="slide level2 smaller">
+<img data-src="lec-15_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
+<section id="reading-the-residual-plots" class="slide level2">
 <h2>Reading the Residual Plots</h2>
 <div style="font-size: 0.75em;">
 <ul>
-<li class="fragment"><p><strong>Residuals vs <span class="math inline">\(X_1\)</span> (hp):</strong> Points scatter around zero without a systematic curve — <strong>linearity looks satisfied</strong> for horsepower.</p></li>
-<li class="fragment"><p><strong>Residuals vs <span class="math inline">\(X_2\)</span> (wt):</strong> No obvious trend or pattern — <strong>linearity satisfied</strong> for weight as well.</p></li>
-<li class="fragment"><p><strong>Residuals vs Fitted:</strong> Spread is roughly constant across the fitted range — <strong>equal variance appears satisfied</strong> (no fanning).</p></li>
-<li class="fragment"><p><strong>QQ-plot:</strong> Points track the diagonal closely — <strong>normality is plausible</strong>.</p></li>
+<li class="fragment"><p><strong>Residuals vs <span class="math inline">\(X_1\)</span> (hp):</strong> Points scatter around zero without a systematic curve. <strong>Linearity looks satisfied</strong> for horsepower.</p></li>
+<li class="fragment"><p><strong>Residuals vs <span class="math inline">\(X_2\)</span> (wt):</strong> No obvious trend or pattern. <strong>Linearity satisfied</strong> for weight as well.</p></li>
+<li class="fragment"><p><strong>Residuals vs Fitted:</strong> Spread is roughly constant across the fitted range. <strong>Equal variance appears satisfied</strong> (no fanning).</p></li>
+<li class="fragment"><p><strong>QQ-plot:</strong> Points track the diagonal closely. <strong>Normality is plausible</strong>.</p></li>
 </ul>
 <div class="fragment">
 <div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #58A867; margin-top: 0.3em;">
-<p>The first-order model assumptions appear satisfied — inferential results (<span class="math inline">\(t\)</span>-tests, CIs, prediction intervals) are reliable for these data.</p>
+<p>The model assumptions appear satisfied! Inferential results (<span class="math inline">\(t\)</span>-tests, CIs, prediction intervals) are reliable for these data.</p>
 </div>
 </div>
 </div>
 </section>
-<section class="slide level2">
-
+<section id="transformations-in-mlr" class="slide level2 smaller">
+<h2>Transformations in MLR</h2>
+<div style="font-size: 0.78em;">
+<p>What if residuals vs.&nbsp;<span class="math inline">\(X_1\)</span> show a curve, but residuals vs.&nbsp;<span class="math inline">\(X_2\)</span> look fine?</p>
+<div class="fragment">
+<p><strong>Transform only the offending predictor.</strong> You can include <span class="math inline">\(\log(X_1)\)</span> alongside the untransformed <span class="math inline">\(X_2\)</span>:</p>
+<p><span class="math display">\[Y_i = \beta_0 + \beta_1 \log(X_{i1}) + \beta_2 X_{i2} + \epsilon_i\]</span></p>
+<p>Each predictor gets the form it need. There is no requirement that all predictors be transformed the same way.</p>
+</div>
+<div class="fragment">
+<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.4em;">
+<p><strong>Workflow:</strong></p>
+<ol type="1">
+<li>Fit the model and make residual plots for each <span class="math inline">\(X_k\)</span></li>
+<li>Identify which predictor(s) show curvature</li>
+<li>Transform only those predictors (log, sqrt, <span class="math inline">\(X^2\)</span>, …)</li>
+<li>Refit and re-check.</li>
+</ol>
+</div>
+</div>
+<div class="fragment">
+<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;">
+<p>This is exactly why MLR residual plots are checked <strong>per predictor</strong>. They let you apply surgical fixes rather than transforming everything.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
 <div style="font-size: 0.63em;">
 <ul>
-<li class="fragment"><p><strong>Sampling distribution:</strong> <span class="math inline">\((b_k - \beta_k)/SE(b_k) \sim t(n-p)\)</span>; degrees of freedom are <span class="math inline">\(n-p\)</span> because we estimate <span class="math inline">\(p\)</span> parameters</p></li>
-<li class="fragment"><p><strong>Inference on <span class="math inline">\(\beta_k\)</span>:</strong> CI is <span class="math inline">\(b_k \pm t(1-\alpha/2;\, n-p)\cdot SE(b_k)\)</span>; test rejects <span class="math inline">\(H_0: \beta_k = 0\)</span> when <span class="math inline">\(|t^*| &gt; t(1-\alpha/2;\, n-p)\)</span>; each test is <strong>partial</strong> — holds all other predictors constant</p></li>
+<li class="fragment"><p><strong>Sampling distribution:</strong> <span class="math inline">\((b_k - \beta_k)/SE(b_k) \sim t_{n-p}\)</span>; degrees of freedom are <span class="math inline">\(n-p\)</span> because we estimate <span class="math inline">\(p\)</span> parameters</p></li>
+<li class="fragment"><p><strong>Inference on <span class="math inline">\(\beta_k\)</span>:</strong> CI is <span class="math inline">\(b_k \pm t_{1-\alpha/2,\, n-p}\cdot SE(b_k)\)</span>; test rejects <span class="math inline">\(H_0: \beta_k = 0\)</span> when <span class="math inline">\(|t^*| &gt; t_{1-\alpha/2,\, n-p}\)</span>; each test is <strong>partial</strong> — holds all other predictors constant</p></li>
 <li class="fragment"><p><strong>CI for <span class="math inline">\(E(Y_h)\)</span>:</strong> <span class="math inline">\(\hat{Y}_h \pm t \cdot SE(\hat{Y}_h)\)</span> — estimates the mean response at <span class="math inline">\(\mathbf{X}_h\)</span>; narrows to zero as <span class="math inline">\(n \to \infty\)</span>; use <code>interval = "confidence"</code> in <code>predict()</code></p></li>
 <li class="fragment"><p><strong>PI for new <span class="math inline">\(Y_h^*\)</span>:</strong> <span class="math inline">\(\hat{Y}_h \pm t \cdot SE(\text{pred})\)</span> where <span class="math inline">\(SE^2(\text{pred}) = \text{MSE} + SE^2(\hat{Y}_h)\)</span> — always wider than CI; bounded below by irreducible <span class="math inline">\(\sigma^2\)</span>; use <code>interval = "prediction"</code></p></li>
 <li class="fragment"><p><strong>Diagnostics:</strong> residuals vs.&nbsp;each <span class="math inline">\(X_k\)</span> (linearity), vs.&nbsp;fitted (equal variance), QQ-plot (normality); independence requires a time/order plot</p></li>

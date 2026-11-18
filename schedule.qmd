@@ -178,13 +178,35 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
       <td></td>
     </tr>
     <tr>
-      <td class="date-cell">Wed, Nov 19</td>
+      <td class="date-cell">Wed, Nov 18</td>
       <td class="topic-cell">Inference, Prediction, and Diagnostics in MLR
         <span class="sub-topic">t-tests for coefficients, CI vs PI, residual plots</span></td>
-        <td><a class="badge-slide" href="slides/">Slides</a></td>
+        <td><a class="badge-slide" href="slides/lec-15.html">Slides</a></td>
       <td></td>
       <td></td>
       <td></td>
+    </tr>
+
+    </tr>
+        <tr class="week-row"><td colspan="5">Week 9 — Variable Selection</td></tr>
+    <tr>
+      <td class="date-cell">Mon, Nov 23</td>
+      <td class="topic-cell">Variable Selection
+      <span class="sub-topic"></span></td>
+      <td><a class="badge-slide" href="slides/">Slides</a></td>
+      <td><a class="badge-lab" href="">Lab 7</a></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="date-cell">Wed, Nov 11</td>
+      <td class="topic-cell"> Asynchronous Lecture
+      <td></td>
+      <td></td>
+    </tr>
+    <tr class="due-row">
+      <td class="date-cell">Sat, Nov 14</td>
+      <td colspan="3"></td>
+      <td><a class="badge-optional" href="hw/hw-04.html">Homework 4</a></td>
     </tr>
 
   <!--
