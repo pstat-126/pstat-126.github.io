@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 7: Multiple Linear Regression — A Complete Case Study – PSTAT 126</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c451ecae6b3fd3fd51d90e743501ab34.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">PSTAT 126</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../course-syllabus.html" aria-current="page"> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> 
+<span class="menu-text">Lecture Materials</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../assignments.html"> 
+<span class="menu-text">Assignments</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../labs.html"> 
+<span class="menu-text">Labs</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.gradescope.com" target="_blank"> 
+<span class="menu-text">Gradescope</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Lab 7: Multiple Linear Regression — A Complete Case Study</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Course Information</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../course-syllabus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Syllabus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../class-calendar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Class Calendar</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../office-hours.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Office Hours</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../schedule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lecture Materials</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Assignments</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../assignments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">All Assignments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hw/hw-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HW 1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hw/hw-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HW 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hw/hw-03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HW 3</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../hw/hw-04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">HW 4</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Labs</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">All Labs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/lab-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab 1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/lab-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab 2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/lab-03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab 3</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/lab-04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab 4</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/lab-05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab 5</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../labs/lab-06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab 6</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Exams</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exams/midterm-formula-sheet.pdf" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Midterm</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exams/final.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Final</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link active" data-scroll-target="#learning-goals">Learning goals</a></li>
+  <li><a href="#the-data" id="toc-the-data" class="nav-link" data-scroll-target="#the-data">The Data</a></li>
+  <li><a href="#part-1-exploratory-data-analysis" id="toc-part-1-exploratory-data-analysis" class="nav-link" data-scroll-target="#part-1-exploratory-data-analysis">Part 1: Exploratory Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#summary-statistics" id="toc-summary-statistics" class="nav-link" data-scroll-target="#summary-statistics">1.1 Summary statistics</a></li>
+  <li><a href="#pairwise-scatterplot-matrix" id="toc-pairwise-scatterplot-matrix" class="nav-link" data-scroll-target="#pairwise-scatterplot-matrix">1.2 Pairwise scatterplot matrix</a></li>
+  </ul></li>
+  <li><a href="#part-2-fitting-the-multiple-regression-model" id="toc-part-2-fitting-the-multiple-regression-model" class="nav-link" data-scroll-target="#part-2-fitting-the-multiple-regression-model">Part 2: Fitting the Multiple Regression Model</a>
+  <ul class="collapse">
+  <li><a href="#fitting-with-lm" id="toc-fitting-with-lm" class="nav-link" data-scroll-target="#fitting-with-lm">2.1 Fitting with <code>lm()</code></a></li>
+  <li><a href="#writing-the-fitted-equation" id="toc-writing-the-fitted-equation" class="nav-link" data-scroll-target="#writing-the-fitted-equation">2.2 Writing the fitted equation</a></li>
+  <li><a href="#interpreting-the-coefficients" id="toc-interpreting-the-coefficients" class="nav-link" data-scroll-target="#interpreting-the-coefficients">2.3 Interpreting the coefficients</a></li>
+  </ul></li>
+  <li><a href="#part-3-anova-table-and-model-fit" id="toc-part-3-anova-table-and-model-fit" class="nav-link" data-scroll-target="#part-3-anova-table-and-model-fit">Part 3: ANOVA Table and Model Fit</a>
+  <ul class="collapse">
+  <li><a href="#extracting-the-anova-table" id="toc-extracting-the-anova-table" class="nav-link" data-scroll-target="#extracting-the-anova-table">3.1 Extracting the ANOVA table</a></li>
+  <li><a href="#the-overall-f-test" id="toc-the-overall-f-test" class="nav-link" data-scroll-target="#the-overall-f-test">3.2 The overall <span class="math inline">\(F\)</span>-test</a></li>
+  <li><a href="#r2-and-adjusted-r2" id="toc-r2-and-adjusted-r2" class="nav-link" data-scroll-target="#r2-and-adjusted-r2">3.3 <span class="math inline">\(R^2\)</span> and adjusted <span class="math inline">\(R^2\)</span></a></li>
+  </ul></li>
+  <li><a href="#part-4-inference-on-individual-coefficients" id="toc-part-4-inference-on-individual-coefficients" class="nav-link" data-scroll-target="#part-4-inference-on-individual-coefficients">Part 4: Inference on Individual Coefficients</a>
+  <ul class="collapse">
+  <li><a href="#t-tests-from-summary" id="toc-t-tests-from-summary" class="nav-link" data-scroll-target="#t-tests-from-summary">4.1 <span class="math inline">\(t\)</span>-tests from <code>summary()</code></a></li>
+  <li><a href="#confidence-intervals-for-individual-coefficients" id="toc-confidence-intervals-for-individual-coefficients" class="nav-link" data-scroll-target="#confidence-intervals-for-individual-coefficients">4.2 Confidence intervals for individual coefficients</a></li>
+  </ul></li>
+  <li><a href="#part-5-estimation-and-prediction" id="toc-part-5-estimation-and-prediction" class="nav-link" data-scroll-target="#part-5-estimation-and-prediction">Part 5: Estimation and Prediction</a>
+  <ul class="collapse">
+  <li><a href="#a-new-observation" id="toc-a-new-observation" class="nav-link" data-scroll-target="#a-new-observation">5.1 A new observation</a></li>
+  <li><a href="#point-prediction" id="toc-point-prediction" class="nav-link" data-scroll-target="#point-prediction">5.2 Point prediction</a></li>
+  <li><a href="#confidence-interval-for-the-mean-response" id="toc-confidence-interval-for-the-mean-response" class="nav-link" data-scroll-target="#confidence-interval-for-the-mean-response">5.3 Confidence interval for the mean response</a></li>
+  <li><a href="#prediction-interval-for-a-new-observation" id="toc-prediction-interval-for-a-new-observation" class="nav-link" data-scroll-target="#prediction-interval-for-a-new-observation">5.4 Prediction interval for a new observation</a></li>
+  </ul></li>
+  <li><a href="#part-6-residual-diagnostics" id="toc-part-6-residual-diagnostics" class="nav-link" data-scroll-target="#part-6-residual-diagnostics">Part 6: Residual Diagnostics</a>
+  <ul class="collapse">
+  <li><a href="#residual-plots" id="toc-residual-plots" class="nav-link" data-scroll-target="#residual-plots">6.1 Residual plots</a></li>
+  <li><a href="#diagnosing-each-assumption" id="toc-diagnosing-each-assumption" class="nav-link" data-scroll-target="#diagnosing-each-assumption">6.2 Diagnosing each assumption</a></li>
+  </ul></li>
+  <li><a href="#part-7-applying-a-transformation" id="toc-part-7-applying-a-transformation" class="nav-link" data-scroll-target="#part-7-applying-a-transformation">Part 7: Applying a Transformation</a>
+  <ul class="collapse">
+  <li><a href="#fitting-the-log-transformed-model" id="toc-fitting-the-log-transformed-model" class="nav-link" data-scroll-target="#fitting-the-log-transformed-model">7.1 Fitting the log-transformed model</a></li>
+  <li><a href="#residual-diagnostics-for-the-log-model" id="toc-residual-diagnostics-for-the-log-model" class="nav-link" data-scroll-target="#residual-diagnostics-for-the-log-model">7.2 Residual diagnostics for the log model</a></li>
+  <li><a href="#comparing-the-two-models" id="toc-comparing-the-two-models" class="nav-link" data-scroll-target="#comparing-the-two-models">7.3 Comparing the two models</a></li>
+  <li><a href="#interpreting-coefficients-on-the-log-scale" id="toc-interpreting-coefficients-on-the-log-scale" class="nav-link" data-scroll-target="#interpreting-coefficients-on-the-log-scale">7.4 Interpreting coefficients on the log scale</a></li>
+  <li><a href="#submission-instructions" id="toc-submission-instructions" class="nav-link" data-scroll-target="#submission-instructions">Submission Instructions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 7: Multiple Linear Regression — A Complete Case Study</h1>
+<p class="subtitle lead">PSTAT 126 — Mon, Nov 23</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Download the <code>.Rmd</code> file below, open it in RStudio, and work through the exercises inside.</p>
+</div>
+</div>
+<p><a href="lab7.Rmd" class="btn btn-primary" download="lab7.Rmd">Download lab7.Rmd</a></p>
+<section id="learning-goals" class="level2">
+<h2 class="anchored" data-anchor-id="learning-goals">Learning goals</h2>
+<p>In this lab we conduct a complete multiple linear regression analysis of air quality data. By the end of the lab you will be able to:</p>
+<ol type="1">
+<li>Perform exploratory data analysis on a multivariate dataset.</li>
+<li>Fit a multiple linear regression model in R and read the full <code>summary()</code> output.</li>
+<li>Interpret each regression coefficient as a <strong>partial effect</strong>.</li>
+<li>Build the ANOVA table, perform the overall <span class="math inline">\(F\)</span>-test, and compute <span class="math inline">\(R^2\)</span> and adjusted <span class="math inline">\(R^2\)</span>.</li>
+<li>Conduct <span class="math inline">\(t\)</span>-tests and construct confidence intervals for individual coefficients.</li>
+<li>Distinguish a <strong>confidence interval for the mean response</strong> from a <strong>prediction interval for a new observation</strong>, and compute both using <code>predict()</code>.</li>
+<li>Check all four regression assumptions with residual plots and identify any violations.</li>
+<li>Apply a response transformation and evaluate whether it improves the model.</li>
+</ol>
+<hr>
+</section>
+<section id="the-data" class="level1">
+<h1>The Data</h1>
+<p>The built-in R dataset <code>airquality</code> contains 153 daily air quality measurements collected in New York from May through September 1973. We will model <strong>ozone concentration</strong> as a function of three meteorological variables.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Units</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>Ozone</code></td>
+<td style="text-align: left;">Mean ozone concentration</td>
+<td style="text-align: left;">Parts per billion (ppb)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Temp</code></td>
+<td style="text-align: left;">Maximum daily temperature</td>
+<td style="text-align: left;">Degrees Fahrenheit (°F)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Wind</code></td>
+<td style="text-align: left;">Average wind speed</td>
+<td style="text-align: left;">Miles per hour (mph)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Solar.R</code></td>
+<td style="text-align: left;">Solar radiation</td>
+<td style="text-align: left;">Langleys (lang)</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(airquality)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>aq <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(airquality[, <span class="fu">c</span>(<span class="st">"Ozone"</span>, <span class="st">"Temp"</span>, <span class="st">"Wind"</span>, <span class="st">"Solar.R"</span>)])</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(aq)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Calling <code>na.omit()</code> removes rows with any missing values. The cleaned dataset has 111 complete observations.</p>
+<hr>
+</section>
+<section id="part-1-exploratory-data-analysis" class="level1">
+<h1>Part 1: Exploratory Data Analysis</h1>
+<p>Before fitting any model it is essential to understand the data: how many observations, the range of each variable, and the pairwise relationships among all variables.</p>
+<section id="summary-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="summary-statistics">1.1 Summary statistics</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aq)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Question 1.</strong> For the response variable <code>Ozone</code>, report the minimum, mean, and maximum values. Does the large gap between the mean and maximum suggest anything about the distribution of ozone readings?</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+</section>
+<section id="pairwise-scatterplot-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="pairwise-scatterplot-matrix">1.2 Pairwise scatterplot matrix</h2>
+<p>The <code>pairs()</code> function shows all pairwise relationships at once. Each panel plots one variable against another.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(aq,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"Pairwise scatterplots: Ozone, Temp, Wind, Solar.R"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">pch  =</span> <span class="dv">16</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">col  =</span> <span class="st">"steelblue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Question 2.</strong> Describe the direction (positive or negative) of each relationship between <code>Ozone</code> and the three predictors. Do the directions make physical sense? Briefly explain the reasoning for each.</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>Question 3.</strong> Do any of the predictor–response scatterplots show a <strong>nonlinear</strong> pattern? Which one(s), and what shape do you see?</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="part-2-fitting-the-multiple-regression-model" class="level1">
+<h1>Part 2: Fitting the Multiple Regression Model</h1>
+<section id="fitting-with-lm" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-with-lm">2.1 Fitting with <code>lm()</code></h2>
+<p>We model ozone as a linear function of temperature, wind, and solar radiation:</p>
+<p><span class="math display">\[\text{Ozone}_i = \beta_0 + \beta_1 \cdot \text{Temp}_i + \beta_2 \cdot \text{Wind}_i + \beta_3 \cdot \text{Solar.R}_i + \varepsilon_i, \quad \varepsilon_i \overset{\text{iid}}{\sim} N(0, \sigma^2).\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Ozone <span class="sc">~</span> Temp <span class="sc">+</span> Wind <span class="sc">+</span> Solar.R, <span class="at">data =</span> aq)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="writing-the-fitted-equation" class="level2">
+<h2 class="anchored" data-anchor-id="writing-the-fitted-equation">2.2 Writing the fitted equation</h2>
+<p><strong>Question 4.</strong> Using the <code>Estimate</code> column from <code>summary(fit)</code>, write the fitted regression equation in the form:</p>
+<p><span class="math display">\[\widehat{\text{Ozone}} = \hat{\beta}_0 + \hat{\beta}_1 \cdot \text{Temp} + \hat{\beta}_2 \cdot \text{Wind} + \hat{\beta}_3 \cdot \text{Solar.R}\]</span></p>
+<p>Fill in the numerical values. Round to three decimal places.</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+</section>
+<section id="interpreting-the-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-the-coefficients">2.3 Interpreting the coefficients</h2>
+<p>Each coefficient <span class="math inline">\(\hat{\beta}_k\)</span> represents the <strong>partial effect</strong> of predictor <span class="math inline">\(X_k\)</span>: the expected change in ozone for a one-unit increase in <span class="math inline">\(X_k\)</span>, <strong>holding all other predictors constant</strong>.</p>
+<p><strong>Question 5.</strong> Interpret <span class="math inline">\(\hat{\beta}_1\)</span> (the coefficient on <code>Temp</code>). Be specific about direction, magnitude, and units. Make sure to mention what is being held constant.</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>Question 6.</strong> Interpret <span class="math inline">\(\hat{\beta}_2\)</span> (the coefficient on <code>Wind</code>). Follow the same format as Question 5.</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>Question 7.</strong> Interpret <span class="math inline">\(\hat{\beta}_3\)</span> (the coefficient on <code>Solar.R</code>). Follow the same format.</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>Question 8.</strong> The intercept <span class="math inline">\(\hat{\beta}_0\)</span> represents the expected ozone level when <code>Temp = 0</code>, <code>Wind = 0</code>, and <code>Solar.R = 0</code>. Is this a physically meaningful value for this dataset? Why or why not?</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="part-3-anova-table-and-model-fit" class="level1">
+<h1>Part 3: ANOVA Table and Model Fit</h1>
+<section id="extracting-the-anova-table" class="level2">
+<h2 class="anchored" data-anchor-id="extracting-the-anova-table">3.1 Extracting the ANOVA table</h2>
+<p>The <code>anova()</code> function in R returns the sequential sum of squares for each predictor, along with the residual sum of squares.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>To obtain the full ANOVA table in the standard form (Regression | Error | Total), we can compute the quantities manually from <code>summary(fit)</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>n  <span class="ot">&lt;-</span> <span class="fu">nrow</span>(aq)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>p  <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">coef</span>(fit))      <span class="co"># number of estimated parameters (intercept + 3 slopes)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>SSE  <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(fit)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>SSTO <span class="ot">&lt;-</span> <span class="fu">sum</span>((aq<span class="sc">$</span>Ozone <span class="sc">-</span> <span class="fu">mean</span>(aq<span class="sc">$</span>Ozone))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>SSR  <span class="ot">&lt;-</span> SSTO <span class="sc">-</span> SSE</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>MSR  <span class="ot">&lt;-</span> SSR  <span class="sc">/</span> (p <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>MSE  <span class="ot">&lt;-</span> SSE  <span class="sc">/</span> (n <span class="sc">-</span> p)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>Fstar <span class="ot">&lt;-</span> MSR <span class="sc">/</span> MSE</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"SSR  ="</span>, <span class="fu">round</span>(SSR,  <span class="dv">2</span>), <span class="st">" df ="</span>, p <span class="sc">-</span> <span class="dv">1</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"SSE  ="</span>, <span class="fu">round</span>(SSE,  <span class="dv">2</span>), <span class="st">" df ="</span>, n <span class="sc">-</span> p,  <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"SSTO ="</span>, <span class="fu">round</span>(SSTO, <span class="dv">2</span>), <span class="st">" df ="</span>, n <span class="sc">-</span> <span class="dv">1</span>,  <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"MSR  ="</span>, <span class="fu">round</span>(MSR,  <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"MSE  ="</span>, <span class="fu">round</span>(MSE,  <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"F*   ="</span>, <span class="fu">round</span>(Fstar, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Question 9.</strong> Fill in the ANOVA table below using the values computed above.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Source</th>
+<th style="text-align: center;">df</th>
+<th style="text-align: center;">SS</th>
+<th style="text-align: center;">MS</th>
+<th style="text-align: center;"><span class="math inline">\(F^*\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Regression</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Error</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Total</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+</section>
+<section id="the-overall-f-test" class="level2">
+<h2 class="anchored" data-anchor-id="the-overall-f-test">3.2 The overall <span class="math inline">\(F\)</span>-test</h2>
+<p>The overall <span class="math inline">\(F\)</span>-test asks whether <strong>any</strong> of the three predictors has a linear relationship with ozone:</p>
+<p><span class="math display">\[H_0: \beta_1 = \beta_2 = \beta_3 = 0 \qquad H_a: \text{at least one } \beta_k \neq 0\]</span></p>
+<p>The critical value at <span class="math inline">\(\alpha = 0.05\)</span> can be computed in R:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="at">df1 =</span> p <span class="sc">-</span> <span class="dv">1</span>, <span class="at">df2 =</span> n <span class="sc">-</span> p)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Question 10.</strong> Compare your <span class="math inline">\(F^*\)</span> to the critical value. What is your conclusion? State it in the context of the ozone study.</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+</section>
+<section id="r2-and-adjusted-r2" class="level2">
+<h2 class="anchored" data-anchor-id="r2-and-adjusted-r2">3.3 <span class="math inline">\(R^2\)</span> and adjusted <span class="math inline">\(R^2\)</span></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>R2     <span class="ot">&lt;-</span> SSR <span class="sc">/</span> SSTO</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>R2_adj <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (SSE <span class="sc">/</span> (n <span class="sc">-</span> p)) <span class="sc">/</span> (SSTO <span class="sc">/</span> (n <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"R^2        ="</span>, <span class="fu">round</span>(R2,     <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"R^2_adj    ="</span>, <span class="fu">round</span>(R2_adj, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Verify that these match the values in <code>summary(fit)</code>.</p>
+<p><strong>Question 11.</strong> Interpret <span class="math inline">\(R^2\)</span> in context. What does it tell you about the three predictors’ ability to explain ozone variability?</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>Question 12.</strong> Is adjusted <span class="math inline">\(R^2\)</span> larger or smaller than <span class="math inline">\(R^2\)</span>? Explain why adjusted <span class="math inline">\(R^2\)</span> is always <span class="math inline">\(\leq R^2\)</span>, and when you would prefer adjusted <span class="math inline">\(R^2\)</span> over <span class="math inline">\(R^2\)</span> for model comparison.</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="part-4-inference-on-individual-coefficients" class="level1">
+<h1>Part 4: Inference on Individual Coefficients</h1>
+<section id="t-tests-from-summary" class="level2">
+<h2 class="anchored" data-anchor-id="t-tests-from-summary">4.1 <span class="math inline">\(t\)</span>-tests from <code>summary()</code></h2>
+<p>The <code>summary()</code> output includes a <span class="math inline">\(t\)</span> statistic and <span class="math inline">\(p\)</span>-value for each coefficient:</p>
+<p><span class="math display">\[t^* = \frac{b_k}{SE(b_k)} \sim t_{n-p} \quad \text{under } H_0: \beta_k = 0\]</span></p>
+<p><strong>Question 13.</strong> For each of the three predictors, report the <span class="math inline">\(t\)</span> statistic and <span class="math inline">\(p\)</span>-value from <code>summary(fit)</code>. At <span class="math inline">\(\alpha = 0.05\)</span>, which predictors are statistically significant?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Predictor</th>
+<th style="text-align: center;"><span class="math inline">\(t^*\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(p\)</span>-value</th>
+<th style="text-align: center;">Significant at <span class="math inline">\(\alpha = 0.05\)</span>?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>Temp</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Wind</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Solar.R</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>Question 14.</strong> The <span class="math inline">\(t\)</span>-test for each <span class="math inline">\(\beta_k\)</span> is a <strong>partial</strong> test — it tests the significance of <span class="math inline">\(X_k\)</span> while holding all other predictors constant. Explain in one or two sentences why a predictor could be significant in this multiple regression model but not in a simple linear regression of ozone on that predictor alone.</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+</section>
+<section id="confidence-intervals-for-individual-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-intervals-for-individual-coefficients">4.2 Confidence intervals for individual coefficients</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Question 15.</strong> Interpret the 95% confidence interval for <span class="math inline">\(\beta_1\)</span> (the coefficient on <code>Temp</code>). Write a complete sentence that communicates what the interval means in context, including what is held constant.</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>Question 16.</strong> Does the 95% CI for <code>Solar.R</code> include zero? What does this tell you about the statistical significance of solar radiation as a predictor of ozone, holding temperature and wind constant?</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="part-5-estimation-and-prediction" class="level1">
+<h1>Part 5: Estimation and Prediction</h1>
+<section id="a-new-observation" class="level2">
+<h2 class="anchored" data-anchor-id="a-new-observation">5.1 A new observation</h2>
+<p>Suppose we want to make inference for a day with the following conditions:</p>
+<ul>
+<li>Temperature: 80°F</li>
+<li>Wind speed: 10 mph</li>
+<li>Solar radiation: 200 lang</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>new_day <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Temp =</span> <span class="dv">80</span>, <span class="at">Wind =</span> <span class="dv">10</span>, <span class="at">Solar.R =</span> <span class="dv">200</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="point-prediction" class="level2">
+<h2 class="anchored" data-anchor-id="point-prediction">5.2 Point prediction</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit, <span class="at">newdata =</span> new_day)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Question 17.</strong> Report the point prediction. What does this value represent?</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+</section>
+<section id="confidence-interval-for-the-mean-response" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-interval-for-the-mean-response">5.3 Confidence interval for the mean response</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit, <span class="at">newdata =</span> new_day, <span class="at">interval =</span> <span class="st">"confidence"</span>, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Question 18.</strong> Write a sentence interpreting this confidence interval in context. What population does it describe?</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+</section>
+<section id="prediction-interval-for-a-new-observation" class="level2">
+<h2 class="anchored" data-anchor-id="prediction-interval-for-a-new-observation">5.4 Prediction interval for a new observation</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit, <span class="at">newdata =</span> new_day, <span class="at">interval =</span> <span class="st">"prediction"</span>, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Question 19.</strong> Write a sentence interpreting this prediction interval in context. How does it differ from the confidence interval above in terms of what it is describing?</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>Question 20.</strong> The prediction interval is wider than the confidence interval. Explain why, using the formula <span class="math inline">\(SE^2(\text{pred}) = \text{MSE} + SE^2(\hat{Y}_h)\)</span>. Which term accounts for the extra width?</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="part-6-residual-diagnostics" class="level1">
+<h1>Part 6: Residual Diagnostics</h1>
+<p>We now check whether the four regression assumptions hold.</p>
+<section id="residual-plots" class="level2">
+<h2 class="anchored" data-anchor-id="residual-plots">6.1 Residual plots</h2>
+<p>For multiple regression, we create a separate residuals vs.&nbsp;<span class="math inline">\(X_k\)</span> plot for <strong>each predictor</strong>, plus a residuals vs.&nbsp;fitted plot and a QQ-plot.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">2.5</span>, <span class="dv">1</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aq<span class="sc">$</span>Temp,    <span class="fu">residuals</span>(fit),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Temp (°F)"</span>,      <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Residuals vs Temp"</span>,    <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"gray50"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aq<span class="sc">$</span>Wind,    <span class="fu">residuals</span>(fit),</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Wind (mph)"</span>,     <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Residuals vs Wind"</span>,    <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"gray50"</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aq<span class="sc">$</span>Solar.R, <span class="fu">residuals</span>(fit),</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Solar.R (lang)"</span>, <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Residuals vs Solar.R"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"gray50"</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit), <span class="fu">residuals</span>(fit),</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Fitted values"</span>,  <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Residuals vs Fitted"</span>,  <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>)</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"gray50"</span>)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fit), <span class="at">main =</span> <span class="st">"Normal QQ-Plot"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(fit), <span class="at">col =</span> <span class="st">"firebrick"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="diagnosing-each-assumption" class="level2">
+<h2 class="anchored" data-anchor-id="diagnosing-each-assumption">6.2 Diagnosing each assumption</h2>
+<p><strong>Question 21.</strong> For each plot below, state: <strong>(i)</strong> which assumption it checks, <strong>(ii)</strong> what an ideal plot looks like, and <strong>(iii)</strong> what you observe in your actual plot.</p>
+<p><strong>(a) Residuals vs.&nbsp;<code>Temp</code></strong></p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>(b) Residuals vs.&nbsp;<code>Wind</code></strong></p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>(c) Residuals vs.&nbsp;<code>Solar.R</code></strong></p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>(d) Residuals vs.&nbsp;Fitted</strong></p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>(e) Normal QQ-Plot</strong></p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>Question 22.</strong> Based on your diagnostic plots, which of the four assumptions — linearity, independence, equal variance, normality — appear to be violated? Describe the visual evidence for any violations you identify.</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="part-7-applying-a-transformation" class="level1">
+<h1>Part 7: Applying a Transformation</h1>
+<p>The residual plots from Part 6 often reveal problems for the raw ozone model. Because ozone concentrations are bounded below by zero and tend to be right-skewed, a <strong>log transformation</strong> of the response is a natural remedy.</p>
+<section id="fitting-the-log-transformed-model" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-the-log-transformed-model">7.1 Fitting the log-transformed model</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fit_log <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(Ozone) <span class="sc">~</span> Temp <span class="sc">+</span> Wind <span class="sc">+</span> Solar.R, <span class="at">data =</span> aq)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_log)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="residual-diagnostics-for-the-log-model" class="level2">
+<h2 class="anchored" data-anchor-id="residual-diagnostics-for-the-log-model">7.2 Residual diagnostics for the log model</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">2.5</span>, <span class="dv">1</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aq<span class="sc">$</span>Temp,    <span class="fu">residuals</span>(fit_log),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Temp (°F)"</span>,      <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Residuals vs Temp"</span>,    <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"darkorange"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"gray50"</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aq<span class="sc">$</span>Wind,    <span class="fu">residuals</span>(fit_log),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Wind (mph)"</span>,     <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Residuals vs Wind"</span>,    <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"darkorange"</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"gray50"</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(aq<span class="sc">$</span>Solar.R, <span class="fu">residuals</span>(fit_log),</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Solar.R (lang)"</span>, <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Residuals vs Solar.R"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"darkorange"</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"gray50"</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(fit_log), <span class="fu">residuals</span>(fit_log),</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Fitted values"</span>,  <span class="at">ylab =</span> <span class="st">"Residuals"</span>,</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Residuals vs Fitted"</span>,  <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"darkorange"</span>)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"gray50"</span>)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fit_log), <span class="at">main =</span> <span class="st">"Normal QQ-Plot"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">"darkorange"</span>)</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(fit_log), <span class="at">col =</span> <span class="st">"firebrick"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="comparing-the-two-models" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-the-two-models">7.3 Comparing the two models</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R^2 for original model</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)<span class="sc">$</span>r.squared</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># R^2 for log model</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_log)<span class="sc">$</span>r.squared</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjusted R^2 for both</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)<span class="sc">$</span>adj.r.squared</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_log)<span class="sc">$</span>adj.r.squared</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Question 23.</strong> Compare the residual plots from the original model (Part 6) to those from the log-transformed model. Did the log transformation improve the linearity, equal variance, or normality assumptions? Describe what changed.</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>Question 24.</strong> The <span class="math inline">\(R^2\)</span> values are not directly comparable between the two models because they have <strong>different response variables</strong> (<code>Ozone</code> vs.&nbsp;<code>log(Ozone)</code>). Explain in one sentence why comparing <span class="math inline">\(R^2\)</span> across models with different responses is problematic.</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+</section>
+<section id="interpreting-coefficients-on-the-log-scale" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-coefficients-on-the-log-scale">7.4 Interpreting coefficients on the log scale</h2>
+<p>When the response is <span class="math inline">\(\log(\text{Ozone})\)</span>, the fitted equation is:</p>
+<p><span class="math display">\[\widehat{\log(\text{Ozone})} = b_0 + b_1 \cdot \text{Temp} + b_2 \cdot \text{Wind} + b_3 \cdot \text{Solar.R}\]</span></p>
+<p>A one-unit increase in <span class="math inline">\(\text{Temp}\)</span> is associated with a <span class="math inline">\(b_1\)</span>-unit increase in <span class="math inline">\(\log(\text{Ozone})\)</span>, which corresponds to a <strong>multiplicative</strong> change of <span class="math inline">\(e^{b_1}\)</span> in ozone on the original scale.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(fit_log))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Question 25.</strong> Using the output of <code>exp(coef(fit_log))</code>, interpret the exponentiated coefficient for <code>Temp</code>. Complete this sentence: “Holding wind speed and solar radiation constant, each 1°F increase in temperature is associated with ozone levels being multiplied by a factor of _____, on average.”</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<p><strong>Question 26.</strong> Based on the full analysis — EDA, model fitting, ANOVA, inference, and diagnostics — write a 3–4 sentence summary of your findings. Address: which predictors are significant, the direction and magnitude of their effects, and whether the log transformation was necessary.</p>
+<blockquote class="blockquote">
+<p><em>Your answer here.</em></p>
+</blockquote>
+<hr>
+</section>
+<section id="submission-instructions" class="level2">
+<h2 class="anchored" data-anchor-id="submission-instructions">Submission Instructions</h2>
+<p>Before submitting, knit your completed lab to PDF:</p>
+<ol type="1">
+<li>At the top of the file, confirm the output format includes <code>pdf_document</code> in the YAML header.</li>
+<li>Click the <strong>Knit</strong> button in RStudio (or use Ctrl/Cmd + Shift + K).</li>
+<li>Review the PDF to confirm all plots, computed values, and written answers appear correctly.</li>
+<li>Upload the PDF to <strong>Gradescope</strong> under the Lab 7 assignment.</li>
+</ol>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026, PSTAT 126 — University of California, Santa Barbara</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

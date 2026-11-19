@@ -227,6 +227,8 @@ F-statistic: 35.88 on 3 and 77 DF,  p-value: 1.295e-14
 > title("QQ-plot of residuals")
 ```
 
+> **Note:** Figure 1 (pairs plot) and Figure 2 (diagnostic plots) referenced above are displayed on the [course website homework page](https://pstat-126.github.io/hw/hw-04.html).
+
 **(a)** Provide comment on the preliminary plots.
 
 *Answer:*

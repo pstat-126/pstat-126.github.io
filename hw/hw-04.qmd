@@ -231,6 +231,14 @@ F-statistic: 35.88 on 3 and 77 DF,  p-value: 1.295e-14
 > title("QQ-plot of residuals")
 ```
 
+```{r fig1, echo=FALSE, out.width="90%", fig.cap="**Figure 1:** Pairs plot of commercial properties data."}
+knitr::include_graphics("data/figure1.png")
+```
+
+```{r fig2, echo=FALSE, out.width="90%", fig.cap="**Figure 2:** Residuals vs. fitted and QQ-plot for `fit1`."}
+knitr::include_graphics("data/figure2.png")
+```
+
 **(a)** Provide comment on the preliminary plots.
 
 *Answer:*
