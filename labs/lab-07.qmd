@@ -1,0 +1,279 @@
+---
+title: "Lab 7: Multiple Linear Regression — A Complete Case Study"
+subtitle: "PSTAT 126 — Mon, Nov 23"
+---
+
+::: callout-note
+Download the `.Rmd` file below, open it in RStudio, and work through the exercises inside.
+:::
+
+<a href="lab7.Rmd" class="btn btn-primary" download="lab7.Rmd">Download lab7.Rmd</a>
+
+## Learning goals
+
+By the end of this lab you will be able to:
+
+1. Perform exploratory data analysis on a multivariate dataset.
+2. Fit a multiple linear regression model and interpret each coefficient as a **partial effect**.
+3. Check regression assumptions with residual plots and identify violations.
+4. Apply a log response transformation and verify it resolves those violations.
+5. Build the ANOVA table, perform the overall $F$-test, and compute $R^2$ on the validated model.
+6. Conduct $t$-tests and construct confidence intervals on the validated model.
+7. Compute and interpret confidence and prediction intervals, with back-transformation to the original scale.
+
+---
+
+# The Data
+
+The built-in R dataset `airquality` contains 153 daily air quality measurements collected in New York from May through September 1973. We will model **ozone concentration** as a function of three meteorological variables.
+
+| Variable | Description | Units |
+|:---------|:-----------|:------|
+| `Ozone` | Mean ozone concentration | Parts per billion (ppb) |
+| `Temp` | Maximum daily temperature | Degrees Fahrenheit (°F) |
+| `Wind` | Average wind speed | Miles per hour (mph) |
+| `Solar.R` | Solar radiation | Langleys (lang) |
+
+```{r load-data, eval=FALSE}
+data(airquality)
+aq <- na.omit(airquality[, c("Ozone", "Temp", "Wind", "Solar.R")])
+head(aq)
+```
+
+Calling `na.omit()` removes rows with any missing values. The cleaned dataset has 111 complete observations.
+
+---
+
+# Part 1: Exploratory Data Analysis
+
+```{r pairs-plot, eval=FALSE}
+pairs(aq,
+      main = "Pairwise scatterplots: Ozone, Temp, Wind, Solar.R",
+      pch  = 16,
+      col  = "steelblue")
+```
+
+**Question 1.** Describe the direction (positive or negative) of each relationship between `Ozone` and the three predictors. Do any of the predictor–response relationships appear nonlinear? Explain briefly.
+
+> *Your answer here.*
+
+---
+
+# Part 2: Fitting the Multiple Regression Model
+
+```{r fit-model, eval=FALSE}
+fit <- lm(Ozone ~ Temp + Wind + Solar.R, data = aq)
+summary(fit)
+```
+
+**Question 2.** Using the `Estimate` column from `summary(fit)`, write the fitted regression equation:
+
+$$\widehat{\text{Ozone}} = \hat{\beta}_0 + \hat{\beta}_1 \cdot \text{Temp} + \hat{\beta}_2 \cdot \text{Wind} + \hat{\beta}_3 \cdot \text{Solar.R}$$
+
+Fill in the numerical values. Round to three decimal places.
+
+> *Your answer here.*
+
+**Question 3.** Interpret each of the three slope coefficients. For each, state the direction, magnitude, units, and what is held constant.
+
+> *Your answer here.*
+
+---
+
+# Part 3: Residual Diagnostics
+
+Before drawing any conclusions from the model, we check whether the regression assumptions hold.
+
+```{r residual-plots, fig.height=6, eval=FALSE}
+par(mfrow = c(2, 3), mar = c(4, 4, 2.5, 1))
+
+plot(aq$Temp,    residuals(fit),
+     xlab = "Temp (°F)",      ylab = "Residuals",
+     main = "Residuals vs Temp",    pch = 16, col = "steelblue")
+abline(h = 0, lty = 2, col = "gray50")
+
+plot(aq$Wind,    residuals(fit),
+     xlab = "Wind (mph)",     ylab = "Residuals",
+     main = "Residuals vs Wind",    pch = 16, col = "steelblue")
+abline(h = 0, lty = 2, col = "gray50")
+
+plot(aq$Solar.R, residuals(fit),
+     xlab = "Solar.R (lang)", ylab = "Residuals",
+     main = "Residuals vs Solar.R", pch = 16, col = "steelblue")
+abline(h = 0, lty = 2, col = "gray50")
+
+plot(fitted(fit), residuals(fit),
+     xlab = "Fitted values",  ylab = "Residuals",
+     main = "Residuals vs Fitted",  pch = 16, col = "steelblue")
+abline(h = 0, lty = 2, col = "gray50")
+
+qqnorm(residuals(fit), main = "Normal QQ-Plot", pch = 16, col = "steelblue")
+qqline(residuals(fit), col = "firebrick", lwd = 2)
+```
+
+**Question 4.** For each plot, state **(i)** which assumption it checks and **(ii)** whether you see evidence of a violation. Then summarize which of the four assumptions — linearity, independence, equal variance, normality — appear to be violated and what the visual evidence is.
+
+> **(a) Residuals vs. Temp:**
+>
+> **(b) Residuals vs. Wind:**
+>
+> **(c) Residuals vs. Solar.R:**
+>
+> **(d) Residuals vs. Fitted:**
+>
+> **(e) Normal QQ-Plot:**
+>
+> **Summary:**
+
+---
+
+# Part 4: Applying a Log Transformation
+
+The diagnostic plots reveal violations of equal variance and normality. Because ozone concentrations are bounded below by zero and tend to be right-skewed, a **log transformation** of the response is a natural remedy.
+
+::: callout-important
+**TODO:** Fill in the code below to fit the log-transformed model. The response should be `log(Ozone)` and the predictors are the same three variables as before. Then call `summary()` on the result.
+:::
+
+```{r log-model, eval=FALSE}
+# Fit a linear model with log(Ozone) as the response
+fit_log <- lm(___ ~ ___ + ___ + ___, data = ___)
+
+summary(___)
+```
+
+```{r log-residuals, fig.height=6, eval=FALSE}
+par(mfrow = c(2, 3), mar = c(4, 4, 2.5, 1))
+
+plot(aq$Temp,    residuals(fit_log),
+     xlab = "Temp (°F)",      ylab = "Residuals",
+     main = "Residuals vs Temp",    pch = 16, col = "darkorange")
+abline(h = 0, lty = 2, col = "gray50")
+
+plot(aq$Wind,    residuals(fit_log),
+     xlab = "Wind (mph)",     ylab = "Residuals",
+     main = "Residuals vs Wind",    pch = 16, col = "darkorange")
+abline(h = 0, lty = 2, col = "gray50")
+
+plot(aq$Solar.R, residuals(fit_log),
+     xlab = "Solar.R (lang)", ylab = "Residuals",
+     main = "Residuals vs Solar.R", pch = 16, col = "darkorange")
+abline(h = 0, lty = 2, col = "gray50")
+
+plot(fitted(fit_log), residuals(fit_log),
+     xlab = "Fitted values",  ylab = "Residuals",
+     main = "Residuals vs Fitted",  pch = 16, col = "darkorange")
+abline(h = 0, lty = 2, col = "gray50")
+
+qqnorm(residuals(fit_log), main = "Normal QQ-Plot", pch = 16, col = "darkorange")
+qqline(residuals(fit_log), col = "firebrick", lwd = 2)
+```
+
+**Question 5.** Compare the residual plots from the original model (Part 3) to those from the log-transformed model. Did the log transformation improve the violated assumptions? Describe what changed.
+
+> *Your answer here.*
+
+---
+
+# Part 5: ANOVA Table and Model Fit
+
+Having verified that the log model satisfies the regression assumptions, we now conduct formal inference using `fit_log`.
+
+```{r anova-table, eval=FALSE}
+anova(fit_log)
+```
+
+The `anova()` output gives one row per predictor plus a Residuals row. It does not directly report the overall model $F^*$. To compute it manually:
+
+1. **SSR**: sum the `Sum Sq` values across the three predictor rows (Temp, Wind, Solar.R).
+2. **MSR**: divide SSR by the regression degrees of freedom, $p - 1 = 3$.
+3. **MSE**: read the `Mean Sq` value from the Residuals row.
+4. **$F^*$**: compute MSR / MSE.
+
+$$F^* = \frac{\text{MSR}}{\text{MSE}} = \frac{\text{SSR} / (p-1)}{\text{MSE}}$$
+
+```{r f-calc, eval=FALSE}
+aov_out <- anova(fit_log)
+SSR   <- sum(aov_out$`Sum Sq`[1:3])   # sum predictor rows
+MSE   <- aov_out$`Mean Sq`[4]         # residuals row
+MSR   <- SSR / 3
+Fstar <- MSR / MSE
+Fstar
+```
+
+
+**Question 6.** Using the $F^*$ computed above and the critical value $F_{0.95}(3, 107) \approx 2.69$, state your conclusion from the overall $F$-test at $\alpha = 0.05$. The hypotheses are $H_0: \beta_1 = \beta_2 = \beta_3 = 0$ vs. $H_a:$ at least one $\beta_k \neq 0$.
+
+> *Your answer here.*
+
+**Question 7.** Report $R^2$ from `summary(fit_log)` and interpret it in context. Then explain in one sentence why this $R^2$ cannot be directly compared to the $R^2$ from `fit`.
+
+> *Your answer here.*
+
+---
+
+# Part 6: Inference on Individual Coefficients
+
+```{r confint, eval=FALSE}
+confint(fit_log, level = 0.95)
+```
+
+**Question 8.** Interpret the 95% confidence interval for $\beta_1$ (`Temp`) in the log model. Does the 95% CI for `Solar.R` include zero, and what does that tell you?
+
+> *Your answer here.*
+
+```{r log-coefs, eval=FALSE}
+exp(coef(fit_log))
+```
+
+**Question 9.** Using `exp(coef(fit_log))`, complete this sentence: "Holding wind speed and solar radiation constant, each 1°F increase in temperature is associated with ozone levels being multiplied by a factor of _____, on average." Briefly explain where that number comes from.
+
+> *Your answer here.*
+
+---
+
+# Part 7: Estimation and Prediction
+
+Since `fit_log` models $\log(\text{Ozone})$, `predict()` returns values on the **log scale**. We apply `exp()` to back-transform to the original ppb scale.
+
+::: callout-important
+**TODO:** Fill in the code below to produce three outputs for the new observation:
+
+1. A back-transformed point prediction (just `exp(predict(...))`).
+2. A back-transformed 95% **confidence** interval (add `interval = "confidence"`).
+3. A back-transformed 95% **prediction** interval (add `interval = "prediction"`).
+
+Remember: `predict()` returns values on the log scale, so wrap each call in `exp()`.
+:::
+
+```{r predict-new, eval=FALSE}
+new_day <- data.frame(Temp = 80, Wind = 10, Solar.R = 200)
+
+# Point prediction (back-transformed)
+exp(predict(___, newdata = ___))
+
+# 95% confidence interval (back-transformed)
+exp(predict(___, newdata = ___, interval = ___, level = 0.95))
+
+# 95% prediction interval (back-transformed)
+exp(predict(___, newdata = ___, interval = ___, level = 0.95))
+```
+
+**Question 10.** Report the back-transformed point prediction. What does this value represent?
+
+> *Your answer here.*
+
+**Question 11.** Interpret the back-transformed confidence interval and prediction interval in context. How do they differ in what they describe, and why is the prediction interval wider?
+
+> *Your answer here.*
+
+---
+
+## Submission Instructions
+
+Before submitting, knit your completed lab to PDF:
+
+1.  At the top of the file, confirm the output format includes `pdf_document` in the YAML header.
+2.  Click the **Knit** button in RStudio (or use Ctrl/Cmd + Shift + K).
+3.  Review the PDF to confirm all plots, computed values, and written answers appear correctly.
+4.  Upload the PDF to **Gradescope** under the Lab 7 assignment.
