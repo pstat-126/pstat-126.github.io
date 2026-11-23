@@ -110,7 +110,7 @@ Using `mtcars`, two models are fit:
 - **Restricted model** $R$: `mpg ~ wt` — $SSE(R) = 278.32$, $df_R = 30$
 - **Full model** $F$: `mpg ~ wt + hp + qsec` — $SSE(F) = 186.06$, $df_F = 28$
 
-**(a)** What is the extra sum of squares? What does it represent?
+**(a)** What is the extra sum of squares? 
 
 **(b)** Compute the F statistic $F^*$.
 
@@ -142,7 +142,6 @@ countdown::countdown(
 
 **(a)** Extra SS $= SSE(R) - SSE(F) = 278.32 - 186.06 = 92.26$
 
-This is the additional variation in `mpg` explained by `hp` and `qsec`, given `wt` is already in the model.
 
 ::: {.fragment}
 **(b)**
@@ -199,24 +198,6 @@ $$SSTO = SSR(X_1) + SSR(X_2 \mid X_1) + SSR(X_3 \mid X_1, X_2) + SSE(X_1, X_2, X
 
 ---
 
-## Sequential Sum of Squares (Type I) — ANOVA Table
-
-::: {style="font-size: 0.60em;"}
-
-| Source | SS | df | MS | F |
-|:-------|:---|:--:|:---|:--|
-| Regression | $SSR(X_1, X_2, X_3)$ | $p-1 = 3$ | $MSR(X_1,X_2,X_3)$ | $MSR(X_1,X_2,X_3)/MSE$ |
-| $X_1$ | $SSR(X_1)$ | 1 | $MSR(X_1)$ | $MSR(X_1)/MSE$ |
-| $X_2 \mid X_1$ | $SSR(X_2 \mid X_1)$ | 1 | $MSR(X_2 \mid X_1)$ | $MSR(X_2 \mid X_1)/MSE$ |
-| $X_3 \mid X_1, X_2$ | $SSR(X_3 \mid X_1, X_2)$ | 1 | $MSR(X_3 \mid X_1, X_2)$ | $MSR(X_3 \mid X_1, X_2)/MSE$ |
-| Error | $SSE(X_1, X_2, X_3)$ | $n-p = n-4$ | $MSE$ | |
-| Total | $SSTO$ | $n-1$ | | |
-
-
-
-:::
-
----
 
 ## Partial Sum of Squares (Type III) — Motivation
 
@@ -277,7 +258,6 @@ Key properties:
 
 - **Order does not matter**. Each SS is conditioned on *all* other predictors
 - These SS do **not** add up to $SSR(X_1, X_2, X_3)$ (unlike Type I SS)
-- Each partial SS and F-test is equivalent to the corresponding $t$-test in `summary()`
 :::
 
 

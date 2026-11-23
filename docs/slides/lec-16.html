@@ -281,13 +281,13 @@ Annie Adams
 <li><strong>Restricted model</strong> <span class="math inline">\(R\)</span>: <code>mpg ~ wt</code> — <span class="math inline">\(SSE(R) = 278.32\)</span>, <span class="math inline">\(df_R = 30\)</span></li>
 <li><strong>Full model</strong> <span class="math inline">\(F\)</span>: <code>mpg ~ wt + hp + qsec</code> — <span class="math inline">\(SSE(F) = 186.06\)</span>, <span class="math inline">\(df_F = 28\)</span></li>
 </ul>
-<p><strong>(a)</strong> What is the extra sum of squares? What does it represent?</p>
+<p><strong>(a)</strong> What is the extra sum of squares?</p>
 <p><strong>(b)</strong> Compute the F statistic <span class="math inline">\(F^*\)</span>.</p>
 <p><strong>(c)</strong> The critical value is <span class="math inline">\(F(0.95;\, 2,\, 28) = 3.34\)</span>. What do you conclude at <span class="math inline">\(\alpha = 0.05\)</span>?</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_f0c5d597" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_c6837ffa" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -295,7 +295,6 @@ Annie Adams
 <h2>Practice: Solution</h2>
 <div style="font-size: 0.75em;">
 <p><strong>(a)</strong> Extra SS <span class="math inline">\(= SSE(R) - SSE(F) = 278.32 - 186.06 = 92.26\)</span></p>
-<p>This is the additional variation in <code>mpg</code> explained by <code>hp</code> and <code>qsec</code>, given <code>wt</code> is already in the model.</p>
 <div class="fragment">
 <p><strong>(b)</strong></p>
 <p><span class="math display">\[F^* = \frac{(278.32 - 186.06)\,/\,(30 - 28)}{186.06\,/\,28} = \frac{92.26\,/\,2}{186.06\,/\,28} = \frac{46.13}{6.645} = 6.94\]</span></p>
@@ -328,73 +327,6 @@ Annie Adams
 <li><span class="math inline">\(SSR(X_3 \mid X_1, X_2)\)</span>: extra SS due to adding <span class="math inline">\(X_3\)</span> to the model that already includes <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span></li>
 </ul>
 </div>
-</div>
-</section>
-<section id="sequential-sum-of-squares-type-i-anova-table" class="slide level2">
-<h2>Sequential Sum of Squares (Type I) — ANOVA Table</h2>
-<div style="font-size: 0.60em;">
-<table class="caption-top">
-<colgroup>
-<col style="width: 34%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 13%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Source</th>
-<th style="text-align: left;">SS</th>
-<th style="text-align: center;">df</th>
-<th style="text-align: left;">MS</th>
-<th style="text-align: left;">F</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Regression</td>
-<td style="text-align: left;"><span class="math inline">\(SSR(X_1, X_2, X_3)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(p-1 = 3\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(MSR(X_1,X_2,X_3)\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(MSR(X_1,X_2,X_3)/MSE\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><span class="math inline">\(X_1\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(SSR(X_1)\)</span></td>
-<td style="text-align: center;">1</td>
-<td style="text-align: left;"><span class="math inline">\(MSR(X_1)\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(MSR(X_1)/MSE\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(X_2 \mid X_1\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(SSR(X_2 \mid X_1)\)</span></td>
-<td style="text-align: center;">1</td>
-<td style="text-align: left;"><span class="math inline">\(MSR(X_2 \mid X_1)\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(MSR(X_2 \mid X_1)/MSE\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><span class="math inline">\(X_3 \mid X_1, X_2\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(SSR(X_3 \mid X_1, X_2)\)</span></td>
-<td style="text-align: center;">1</td>
-<td style="text-align: left;"><span class="math inline">\(MSR(X_3 \mid X_1, X_2)\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(MSR(X_3 \mid X_1, X_2)/MSE\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Error</td>
-<td style="text-align: left;"><span class="math inline">\(SSE(X_1, X_2, X_3)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(n-p = n-4\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(MSE\)</span></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Total</td>
-<td style="text-align: left;"><span class="math inline">\(SSTO\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(n-1\)</span></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-</tbody>
-</table>
 </div>
 </section>
 <section id="partial-sum-of-squares-type-iii-motivation" class="slide level2">
@@ -480,7 +412,6 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <ul>
 <li><strong>Order does not matter</strong>. Each SS is conditioned on <em>all</em> other predictors</li>
 <li>These SS do <strong>not</strong> add up to <span class="math inline">\(SSR(X_1, X_2, X_3)\)</span> (unlike Type I SS)</li>
-<li>Each partial SS and F-test is equivalent to the corresponding <span class="math inline">\(t\)</span>-test in <code>summary()</code></li>
 </ul>
 </div>
 </div>
@@ -593,7 +524,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_07b1c3b5" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_7c798ef1" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -917,7 +848,7 @@ mpg ~ wt + qsec + am
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_b843aa9f" minutes="2" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_bf7840b4" minutes="2" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>

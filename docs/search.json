@@ -4750,7 +4750,7 @@
     "href": "slides/lec-16.html#practice-solution",
     "title": "Lecture 16: Variable Selection",
     "section": "Practice: Solution",
-    "text": "Practice: Solution\n\n(a) Extra SS \\(= SSE(R) - SSE(F) = 278.32 - 186.06 = 92.26\\)\nThis is the additional variation in mpg explained by hp and qsec, given wt is already in the model.\n\n(b)\n\\[F^* = \\frac{(278.32 - 186.06)\\,/\\,(30 - 28)}{186.06\\,/\\,28} = \\frac{92.26\\,/\\,2}{186.06\\,/\\,28} = \\frac{46.13}{6.645} = 6.94\\]\n\n\n(c) Since \\(F^* = 6.94 &gt; 3.34 = F(0.95;\\, 2,\\, 28)\\), we reject \\(H_0\\) at the \\(\\alpha = 0.05\\) significance level. There is significant evidence that hp and qsec together contribute to the model, given wt is already included."
+    "text": "Practice: Solution\n\n(a) Extra SS \\(= SSE(R) - SSE(F) = 278.32 - 186.06 = 92.26\\)\n\n(b)\n\\[F^* = \\frac{(278.32 - 186.06)\\,/\\,(30 - 28)}{186.06\\,/\\,28} = \\frac{92.26\\,/\\,2}{186.06\\,/\\,28} = \\frac{46.13}{6.645} = 6.94\\]\n\n\n(c) Since \\(F^* = 6.94 &gt; 3.34 = F(0.95;\\, 2,\\, 28)\\), we reject \\(H_0\\) at the \\(\\alpha = 0.05\\) significance level. There is significant evidence that hp and qsec together contribute to the model, given wt is already included."
   },
   {
     "objectID": "slides/lec-16.html#variable-selection",
@@ -4967,7 +4967,7 @@
     "href": "slides/lec-16.html#partial-sum-of-squares-type-iii-table-properties",
     "title": "Lecture 16: Variable Selection",
     "section": "Partial Sum of Squares (Type III) — Table & Properties",
-    "text": "Partial Sum of Squares (Type III) — Table & Properties\n\n\n\n\n\n\n\n\n\nSource\nSS\n\\(H_0\\) tested\n\n\n\n\n\\(X_1\\)\n\\(SSR(X_1 \\mid X_2, X_3)\\)\n\\(\\beta_1 = 0\\) given \\(X_2, X_3\\) in model\n\n\n\\(X_2\\)\n\\(SSR(X_2 \\mid X_1, X_3)\\)\n\\(\\beta_2 = 0\\) given \\(X_1, X_3\\) in model\n\n\n\\(X_3\\)\n\\(SSR(X_3 \\mid X_1, X_2)\\)\n\\(\\beta_3 = 0\\) given \\(X_1, X_2\\) in model\n\n\n\n\nKey properties:\n\nOrder does not matter. Each SS is conditioned on all other predictors\nThese SS do not add up to \\(SSR(X_1, X_2, X_3)\\) (unlike Type I SS)\nEach partial SS and F-test is equivalent to the corresponding \\(t\\)-test in summary()"
+    "text": "Partial Sum of Squares (Type III) — Table & Properties\n\n\n\n\n\n\n\n\n\nSource\nSS\n\\(H_0\\) tested\n\n\n\n\n\\(X_1\\)\n\\(SSR(X_1 \\mid X_2, X_3)\\)\n\\(\\beta_1 = 0\\) given \\(X_2, X_3\\) in model\n\n\n\\(X_2\\)\n\\(SSR(X_2 \\mid X_1, X_3)\\)\n\\(\\beta_2 = 0\\) given \\(X_1, X_3\\) in model\n\n\n\\(X_3\\)\n\\(SSR(X_3 \\mid X_1, X_2)\\)\n\\(\\beta_3 = 0\\) given \\(X_1, X_2\\) in model\n\n\n\n\nKey properties:\n\nOrder does not matter. Each SS is conditioned on all other predictors\nThese SS do not add up to \\(SSR(X_1, X_2, X_3)\\) (unlike Type I SS)"
   },
   {
     "objectID": "slides/lec-16.html#recall-sums-of-squares",
@@ -5037,7 +5037,7 @@
     "href": "slides/lec-16.html#practice-extra-ss-f-test",
     "title": "Lecture 16: Variable Selection",
     "section": "Practice: Extra SS F Test",
-    "text": "Practice: Extra SS F Test\n\nUsing mtcars, two models are fit:\n\nRestricted model \\(R\\): mpg ~ wt — \\(SSE(R) = 278.32\\), \\(df_R = 30\\)\nFull model \\(F\\): mpg ~ wt + hp + qsec — \\(SSE(F) = 186.06\\), \\(df_F = 28\\)\n\n(a) What is the extra sum of squares? What does it represent?\n(b) Compute the F statistic \\(F^*\\).\n(c) The critical value is \\(F(0.95;\\, 2,\\, 28) = 3.34\\). What do you conclude at \\(\\alpha = 0.05\\)?"
+    "text": "Practice: Extra SS F Test\n\nUsing mtcars, two models are fit:\n\nRestricted model \\(R\\): mpg ~ wt — \\(SSE(R) = 278.32\\), \\(df_R = 30\\)\nFull model \\(F\\): mpg ~ wt + hp + qsec — \\(SSE(F) = 186.06\\), \\(df_F = 28\\)\n\n(a) What is the extra sum of squares?\n(b) Compute the F statistic \\(F^*\\).\n(c) The critical value is \\(F(0.95;\\, 2,\\, 28) = 3.34\\). What do you conclude at \\(\\alpha = 0.05\\)?"
   },
   {
     "objectID": "slides/lec-15.html",
