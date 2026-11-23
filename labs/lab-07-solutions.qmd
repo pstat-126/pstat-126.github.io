@@ -1,0 +1,199 @@
+---
+title: "Lab 7 Solutions: Multiple Linear Regression — A Complete Case Study"
+subtitle: "PSTAT 126 — Mon, Nov 23"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+---
+
+# The Data
+
+```{r load-data}
+data(airquality)
+aq <- na.omit(airquality[, c("Ozone", "Temp", "Wind", "Solar.R")])
+head(aq)
+```
+
+---
+
+# Part 1: Exploratory Data Analysis
+
+```{r pairs-plot}
+pairs(aq,
+      main = "Pairwise scatterplots: Ozone, Temp, Wind, Solar.R",
+      pch  = 16,
+      col  = "steelblue")
+```
+
+**Question 1.** Describe the direction (positive or negative) of each relationship between `Ozone` and the three predictors. Do any of the predictor–response relationships appear nonlinear? Explain briefly.
+
+> - **Ozone vs. Temp:** Positive. higher temperatures accompany higher ozone. 
+> - **Ozone vs. Wind:** Negative. higher winds accompany lower ozone
+> - **Ozone vs. Solar.R:** Positive. more solar radiation accompanies higher ozone. 
+>
+> The Ozone–Temp relationship shows clear curvature (concave-up), suggesting the relationship is not purely linear. The Ozone–Wind plot also shows some curvature and increasing spread at low wind speeds. These patterns suggest a log transformation of Ozone may improve the model.
+
+---
+
+# Part 2: Fitting the Multiple Regression Model
+
+```{r fit-model}
+fit <- lm(Ozone ~ Temp + Wind + Solar.R, data = aq)
+summary(fit)
+```
+
+**Question 2.** Using the `Estimate` column from `summary(fit)`, write the fitted regression equation.
+
+> $$\widehat{\text{Ozone}} = -64.342 + 1.652 \cdot \text{Temp} - 3.334 \cdot \text{Wind} + 0.060 \cdot \text{Solar.R}$$
+
+**Question 3.** Interpret each of the three slope coefficients.
+
+> - **Temp ($\hat{\beta}_1 = 1.652$):** Holding wind speed and solar radiation constant, each additional 1°F increase in temperature is associated with an expected increase of **1.652 ppb** in mean ozone.
+> - **Wind ($\hat{\beta}_2 = -3.334$):** Holding temperature and solar radiation constant, each additional 1 mph increase in wind speed is associated with an expected **decrease of 3.334 ppb** in mean ozone.
+> - **Solar.R ($\hat{\beta}_3 = 0.060$):** Holding temperature and wind speed constant, each additional 1 Langley of solar radiation is associated with an expected increase of **0.060 ppb** in mean ozone.
+
+---
+
+# Part 3: Residual Diagnostics
+
+```{r residual-plots, fig.height=6}
+par(mfrow = c(2, 3), mar = c(4, 4, 2.5, 1))
+
+plot(aq$Temp,    residuals(fit),
+     xlab = "Temp (°F)",      ylab = "Residuals",
+     main = "Residuals vs Temp",    pch = 16, col = "steelblue")
+abline(h = 0, lty = 2, col = "gray50")
+
+plot(aq$Wind,    residuals(fit),
+     xlab = "Wind (mph)",     ylab = "Residuals",
+     main = "Residuals vs Wind",    pch = 16, col = "steelblue")
+abline(h = 0, lty = 2, col = "gray50")
+
+plot(aq$Solar.R, residuals(fit),
+     xlab = "Solar.R (lang)", ylab = "Residuals",
+     main = "Residuals vs Solar.R", pch = 16, col = "steelblue")
+abline(h = 0, lty = 2, col = "gray50")
+
+plot(fitted(fit), residuals(fit),
+     xlab = "Fitted values",  ylab = "Residuals",
+     main = "Residuals vs Fitted",  pch = 16, col = "steelblue")
+abline(h = 0, lty = 2, col = "gray50")
+
+qqnorm(residuals(fit), main = "Normal QQ-Plot", pch = 16, col = "steelblue")
+qqline(residuals(fit), col = "firebrick", lwd = 2)
+```
+
+**Question 4.** For each plot, state **(i)** which assumption it checks and **(ii)** whether you see evidence of a violation. Then summarize which assumptions appear to be violated.
+
+> **(a) Residuals vs. Temp:** Checks linearity for Temp. There is a slight U-shaped curve. Residuals are negative at low and high temperatures and positive in the middle. This suggests mild nonlinearity.
+>
+> **(b) Residuals vs. Wind:** Checks linearity for Wind and equal variance. The spread of residuals is visibly larger at low wind speeds and narrows at high wind speeds. This clear fan shape indicates **heteroscedasticity**.
+>
+> **(c) Residuals vs. Solar.R:** Checks linearity for Solar.R. Points scatter roughly randomly around 0 with no strong pattern. This assumption appears reasonably satisfied.
+>
+> **(d) Residuals vs. Fitted:** Checks linearity and equal variance simultaneously. The fan shape is prominent here. Spread increases with fitted values, showing **heteroscedasticity**.
+>
+> **(e) Normal QQ-Plot:** Checks normality. The upper tail deviates well above the reference line, indicating **right-skewed residuals** with a heavier-than-normal upper tail.
+>
+> **Summary:** Two assumptions are clearly violated: **equal variance** (fan-shaped residuals) and **normality** (right-skewed residuals). Both are consistent with ozone being a right-skewed, positive-valued variable.
+
+---
+
+# Part 4: Applying a Log Transformation
+
+```{r log-model}
+fit_log <- lm(log(Ozone) ~ Temp + Wind + Solar.R, data = aq)
+summary(fit_log)
+```
+
+```{r log-residuals, fig.height=6}
+par(mfrow = c(2, 3), mar = c(4, 4, 2.5, 1))
+
+plot(aq$Temp,    residuals(fit_log),
+     xlab = "Temp (°F)",      ylab = "Residuals",
+     main = "Residuals vs Temp",    pch = 16, col = "darkorange")
+abline(h = 0, lty = 2, col = "gray50")
+
+plot(aq$Wind,    residuals(fit_log),
+     xlab = "Wind (mph)",     ylab = "Residuals",
+     main = "Residuals vs Wind",    pch = 16, col = "darkorange")
+abline(h = 0, lty = 2, col = "gray50")
+
+plot(aq$Solar.R, residuals(fit_log),
+     xlab = "Solar.R (lang)", ylab = "Residuals",
+     main = "Residuals vs Solar.R", pch = 16, col = "darkorange")
+abline(h = 0, lty = 2, col = "gray50")
+
+plot(fitted(fit_log), residuals(fit_log),
+     xlab = "Fitted values",  ylab = "Residuals",
+     main = "Residuals vs Fitted",  pch = 16, col = "darkorange")
+abline(h = 0, lty = 2, col = "gray50")
+
+qqnorm(residuals(fit_log), main = "Normal QQ-Plot", pch = 16, col = "darkorange")
+qqline(residuals(fit_log), col = "firebrick", lwd = 2)
+```
+
+**Question 5.** Compare the residual plots from the original model (Part 3) to those from the log-transformed model. Did the log transformation improve the violated assumptions?
+
+
+---
+
+# Part 5: ANOVA Table and Model Fit
+
+```{r anova-table}
+anova(fit_log)
+```
+
+**Question 6.** Using the `anova()` output and the critical value $F_{0.95}(3, 107) \approx 2.69$, state your conclusion from the overall $F$-test at $\alpha = 0.05$.
+
+> The `anova()` output shows $F^* \approx 70.74$ for the model (computed as MSR / MSE from the predictor and residual rows). Since $70.74 \gg 2.69$, we **reject $H_0$** and conclude that at least one of temperature, wind speed, and solar radiation has a statistically significant linear relationship with log ozone concentration.
+
+**Question 7.** Report $R^2$ from `summary(fit_log)` and interpret it. Then explain why it cannot be directly compared to the $R^2$ from `fit`.
+
+> $R^2 \approx 0.664$: about **66.4%** of the total variation in log(Ozone) is explained by the three predictors. This cannot be compared to the $R^2 \approx 0.606$ from `fit` because $R^2$ measures the proportion of variance explained in the **response variable** — when the response changes from `Ozone` to `log(Ozone)`, SSTO is computed on a different scale, so the two values are measuring explanatory power for different quantities.
+
+---
+
+# Part 6: Inference on Individual Coefficients
+
+```{r confint}
+confint(fit_log, level = 0.95)
+```
+
+**Question 8.** Interpret the 95% CI for $\beta_1$ (`Temp`). Does the 95% CI for `Solar.R` include zero, and what does that tell you?
+
+> We are 95% confident that the true partial effect of temperature on log(Ozone) — holding wind and solar radiation constant — lies between approximately **0.033 and 0.056** log-ppb per °F, corresponding to a 3.4%–5.8% multiplicative increase in ozone per degree. The 95% CI for `Solar.R` runs from approximately 0.00027 to 0.00263 and **does not include zero**, confirming that solar radiation has a statistically significant positive effect on ozone even after controlling for the other predictors.
+
+```{r log-coefs}
+exp(coef(fit_log))
+```
+
+**Question 9.** Using `exp(coef(fit_log))`, complete the sentence about the exponentiated Temp coefficient.
+
+> "Holding wind speed and solar radiation constant, each 1°F increase in temperature is associated with ozone levels being multiplied by a factor of approximately **1.046** (i.e., a ~4.6% increase), on average." This comes from exponentiating the log-scale coefficient: $e^{0.0448} \approx 1.046$.
+
+---
+
+# Part 7: Estimation and Prediction
+
+```{r predict-new}
+new_day <- data.frame(Temp = 80, Wind = 10, Solar.R = 200)
+
+exp(predict(fit_log, newdata = new_day))
+
+exp(predict(fit_log, newdata = new_day, interval = "confidence", level = 0.95))
+
+exp(predict(fit_log, newdata = new_day, interval = "prediction",  level = 0.95))
+```
+
+**Question 10.** Report the back-transformed point prediction. What does this value represent?
+
+> The model predicts $\widehat{\log(\text{Ozone})} \approx 3.43$, which back-transforms to $e^{3.43} \approx$ **30.9 ppb**. This is the model's best estimate of the mean ozone concentration on days with temperature 80°F, wind speed 10 mph, and solar radiation 200 Langleys.
+
+**Question 11.** Interpret the back-transformed confidence interval and prediction interval in context. How do they differ, and why is the prediction interval wider?
+
+> The 95% **confidence interval** (approximately **26–37 ppb**) describes where the *mean* ozone concentration lies across all days with these conditions — it captures uncertainty in estimating the population mean. The 95% **prediction interval** (approximately **11–90 ppb**) describes where the ozone concentration on a *single new day* with these conditions will fall — it must also account for the natural day-to-day variability around the mean, which is why it is substantially wider.
+
