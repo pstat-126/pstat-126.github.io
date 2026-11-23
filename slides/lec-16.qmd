@@ -44,7 +44,7 @@ By the end of today you will be able to:
 
 - Explain the extra sum of squares principle and distinguish sequential (Type I) from partial (Type III) SS
 - State why SSE and $R^2$ alone are insufficient model selection criteria
-- Compute and interpret AIC, BIC, and Mallow's $C_p$ as selection criteria
+- Compute and interpret AIC and BIC as selection criteria
 - Apply backward and forward selection and explain when each is appropriate
 
 :::
@@ -82,7 +82,11 @@ $$\underbrace{SSR(F) - SSR(R)}_{\text{extra SS}} = SSE(R) - SSE(F)$$
 
 ::: {style="font-size: 0.80em;"}
 
-To test whether the added predictors contribute significantly, use the **F statistic**:
+To test whether the added predictors contribute significantly, we test:
+
+$$H_0: \text{all coefficients added in } F \text{ are zero} \quad \text{vs.} \quad H_a: \text{at least one} \neq 0$$
+
+Use the **F statistic**:
 
 $$F^* = \frac{(SSE(R) - SSE(F))\,/\,(df_R - df_F)}{SSE(F)\,/\,df_F} \overset{H_0}{\sim} F_{df_R - df_F,\; df_F}$$
 
@@ -118,7 +122,7 @@ Using `mtcars`, two models are fit:
 #| echo: false
 #| eval: true
 countdown::countdown(
-  minutes = 5,
+  minutes = 4,
   play_sound = TRUE,
   color_border              = "#FEBC11",
   color_text                = "#003660",
@@ -156,7 +160,7 @@ $$F^* = \frac{(278.32 - 186.06)\,/\,(30 - 28)}{186.06\,/\,28} = \frac{92.26\,/\,
 
 ## Sequential Sum of Squares (Type I) — Setup
 
-::: {style="font-size: 0.78em;"}
+::: {style="font-size: 0.63em;"}
 
 Consider the full model $Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i3} + \varepsilon_i$. We introduce sequential SS by fitting three **nested models**:
 
@@ -184,7 +188,6 @@ Fitting the full model (Model 3), SSTO decomposes as:
 $$SSTO = SSR(X_1) + SSR(X_2 \mid X_1) + SSR(X_3 \mid X_1, X_2) + SSE(X_1, X_2, X_3)$$
 
 ::: {.fragment}
-Each term has a clear interpretation:
 
 - $SSR(X_1)$: SS explained by $X_1$ alone
 - $SSR(X_2 \mid X_1)$: extra SS due to adding $X_2$ to the model that already includes $X_1$
@@ -202,18 +205,14 @@ Each term has a clear interpretation:
 
 | Source | SS | df | MS | F |
 |:-------|:---|:--:|:---|:--|
-| Regression | $SSR(X_1, X_2, X_3)$ | 3 | $MSR(X_1,X_2,X_3)$ | $MSR(X_1,X_2,X_3)/MSE$ |
+| Regression | $SSR(X_1, X_2, X_3)$ | $p-1 = 3$ | $MSR(X_1,X_2,X_3)$ | $MSR(X_1,X_2,X_3)/MSE$ |
 | $X_1$ | $SSR(X_1)$ | 1 | $MSR(X_1)$ | $MSR(X_1)/MSE$ |
 | $X_2 \mid X_1$ | $SSR(X_2 \mid X_1)$ | 1 | $MSR(X_2 \mid X_1)$ | $MSR(X_2 \mid X_1)/MSE$ |
 | $X_3 \mid X_1, X_2$ | $SSR(X_3 \mid X_1, X_2)$ | 1 | $MSR(X_3 \mid X_1, X_2)$ | $MSR(X_3 \mid X_1, X_2)/MSE$ |
-| Error | $SSE(X_1, X_2, X_3)$ | $n-4$ | $MSE$ | |
+| Error | $SSE(X_1, X_2, X_3)$ | $n-p = n-4$ | $MSE$ | |
 | Total | $SSTO$ | $n-1$ | | |
 
-::: {.fragment}
-::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.4em;"}
-Type I SS **depends on the order** in which variables are entered into the model. In R, `anova()` gives Type I SS.
-:::
-:::
+
 
 :::
 
@@ -221,58 +220,51 @@ Type I SS **depends on the order** in which variables are entered into the model
 
 ## Partial Sum of Squares (Type III) — Motivation
 
-::: {style="font-size: 0.78em;"}
+::: {style="font-size: 0.58em;"}
 
-For the full model $Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i3} + \varepsilon_i$, to test $H_0: \beta_1 = 0$ we compare:
-
-- **Full model** $F$: includes $X_1, X_2, X_3$
-- **Restricted model** $R$: drops $X_1$, includes only $X_2, X_3$
-
-The extra SS is $SSR(X_1 \mid X_2, X_3) = SSE(R) - SSE(F)$ — the SS explained by $X_1$ **given $X_2$ and $X_3$ are already in the model**.
+**Type I (sequential):** each predictor's SS is conditioned on only the predictors entered *before* it in the model formula — **order matters!**.
 
 ::: {.fragment}
-Similarly:
+**Type III (partial):** each predictor's SS is conditioned on *all other* predictors simultaneously.**order never matters!**
 
-- To test $H_0: \beta_2 = 0$, compare full model to model with $X_1, X_3$ only $\rightarrow$ gives $SSR(X_2 \mid X_1, X_3)$
-- To test $H_0: \beta_3 = 0$, compare full model to model with $X_1, X_2$ only $\rightarrow$ gives $SSR(X_3 \mid X_1, X_2)$
+$$SSR(X_k \mid \text{all other } X\text{'s})$$
 :::
 
 ::: {.fragment}
-One can calculate these by fitting multiple reduced models. **The partial (Type III) sum of squares computes them simultaneously.**
+For the full model with $X_1, X_2, X_3$, the partial SS for each predictor answers:
+
+> *"How much does $X_k$ contribute, given that every other predictor is already in the model?"*
+
+- $SSR(X_1 \mid X_2, X_3)$: drop $X_1$ from the full model $\rightarrow$ $H_0: \beta_1 = 0$
+- $SSR(X_2 \mid X_1, X_3)$: drop $X_2$ from the full model $\rightarrow$ $H_0: \beta_2 = 0$
+- $SSR(X_3 \mid X_1, X_2)$: drop $X_3$ from the full model $\rightarrow$ $H_0: \beta_3 = 0$
 :::
 
 :::
 
 ---
 
-## Partial Sum of Squares (Type III) — via `anova()` {.smaller}
+## Partial Sum of Squares (Type III) — in R
 
 ::: {style="font-size: 0.75em;"}
 
-We can verify any partial SS by explicitly comparing the full and reduced models. To test $H_0: \beta_{hp} = 0$:
+Use `car::Anova()` with `type = "III"` to compute partial SS for all predictors simultaneously:
 
 :::
 
 ```{r}
 #| echo: true
 #| eval: true
-fit_no_hp <- lm(mpg ~ wt + qsec, data = mtcars)   # restricted model
-anova(fit_no_hp, fit3)                              # extra SS = SSR(hp | wt, qsec)
+#| message: false
+library(car)
+Anova(fit3, type = "III")
 ```
-
-::: {style="font-size: 0.72em;"}
-::: {.fragment}
-::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.3em;"}
-The `Sum of Sq` here is $SSR(\texttt{hp} \mid \texttt{wt}, \texttt{qsec})$ — identical to the `hp` row in `Anova(fit3, type="III")`. The F-test and p-value also match the `hp` row in `summary(fit3)`.
-:::
-:::
-:::
 
 ---
 
 ## Partial Sum of Squares (Type III) — Table & Properties
 
-::: {style="font-size: 0.78em;"}
+::: {style="font-size: 0.68em;"}
 
 | Source | SS | $H_0$ tested |
 |:-------|:---|:-------------|
@@ -283,16 +275,11 @@ The `Sum of Sq` here is $SSR(\texttt{hp} \mid \texttt{wt}, \texttt{qsec})$ — i
 ::: {.fragment}
 Key properties:
 
-- **Order does not matter** — each SS is always conditioned on *all* other predictors, regardless of how they appear in `lm()`
-- These SS do **not** add up to $SSR(X_1, X_2, X_3)$ — unlike Type I SS
+- **Order does not matter**. Each SS is conditioned on *all* other predictors
+- These SS do **not** add up to $SSR(X_1, X_2, X_3)$ (unlike Type I SS)
 - Each partial SS and F-test is equivalent to the corresponding $t$-test in `summary()`
 :::
 
-::: {.fragment}
-::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;"}
-When the question is "does $X_k$ belong in the model, given everything else is already included?" — always use **partial (Type III) SS**.
-:::
-:::
 
 :::
 
@@ -325,7 +312,7 @@ Anova(fit3, type = "III")
 ::: {.fragment .absolute top="368px" left="5px" width="455px" height="18px" fragment-index=1 style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);"}
 :::
 ::: {.fragment .absolute top="500px" left="5px" fragment-index=1 style="font-size:0.50em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.5;"}
-Row 1: Baseline model (`mpg ~ hp`). No extra SS — nothing added yet.
+Row 1: Baseline model (`mpg ~ hp`). No extra SS.
 :::
 
 <!-- anova() row 2: adding wt -->
@@ -367,29 +354,29 @@ Intercept: $SSR(\beta_0 \mid \texttt{hp}, \texttt{wt}, \texttt{qsec})$ — rarel
 ::: {.fragment .absolute top="406px" left="535px" width="455px" height="18px" fragment-index=7 style="border:3px solid #2E86AB; border-radius:4px; background:rgba(46,134,171,0.2);"}
 :::
 ::: {.fragment .absolute top="570px" left="535px" fragment-index=7 style="font-size:0.50em; color:#1A5276; font-weight:bold; border-left:3px solid #2E86AB; padding-left:8px; line-height:1.5;"}
-`qsec`: $SSR(\texttt{qsec} \mid \texttt{hp}, \texttt{wt}) = 8.99$ — matches the sequential SS since it was added last.
+`qsec`: $SSR(\texttt{qsec} \mid \texttt{hp}, \texttt{wt}) = 8.99$ — equal to its sequential SS because `qsec` was entered last, so both types condition on the same two predictors.
 :::
 
 <!-- Anova() Residuals row -->
 ::: {.fragment .absolute top="426px" left="535px" width="455px" height="18px" fragment-index=8 style="border:3px solid #C0392B; border-radius:4px; background:rgba(192,57,43,0.2);"}
 :::
-::: {.fragment .absolute top="600px" left="535px" fragment-index=8 style="font-size:0.50em; color:#922B21; font-weight:bold; border-left:3px solid #C0392B; padding-left:8px; line-height:1.5;"}
+::: {.fragment .absolute top="605px" left="535px" fragment-index=8 style="font-size:0.50em; color:#922B21; font-weight:bold; border-left:3px solid #C0392B; padding-left:8px; line-height:1.5;"}
 Residuals: $SSE = 186.06$, $df = 28 = n - p$ — denominator for all F tests.
 :::
 
 ---
 
-## Practice: Sequential vs. Partial SS {.smaller}
+## Practice: Sequential vs. Partial SS
 
 ::: {style="font-size: 0.75em;"}
 
 Using `fit3 <- lm(mpg ~ hp + wt + qsec, data = mtcars)`:
 
-**(a)** The sequential SS for `wt` is 252.6 (from `anova(fit1, fit2, fit3)`). The partial SS for `wt` is 183.1 (from `Anova(fit3, type="III")`). Why is the sequential SS larger?
+**(a)** The sequential SS for `wt` is 252.6 (from `anova(fit1, fit2, fit3)`). The partial SS for `wt` is 183.1 (from `Anova(fit3, type="III")`). Write out the SS notation for each (e.g. $SSR(\texttt{wt} \mid \ldots)$). Then explain why the sequential SS is larger.
 
 **(b)** For testing $H_0: \beta_{wt} = 0$ given `hp` and `qsec` are in the model, should you use sequential or partial SS? Why?
 
-**(c)** True or false: changing the order of predictors in `lm(mpg ~ wt + hp + qsec)` changes the Type III $p$-values.
+**(c)** True or false: changing the order of predictors in `lm(mpg ~ wt + hp + qsec)` changes the Type III SS.
 
 :::
 
@@ -415,14 +402,45 @@ countdown::countdown(
 
 ::: {style="font-size: 0.75em;"}
 
-**(a)** The sequential SS for `wt` conditions only on `hp` being in the model. It measures the extra contribution of `wt` after just `hp`. The partial SS conditions on **both** `hp` and `qsec`, leaving less variation for `wt` to explain.
+**(a)** Sequential: $SSR(\texttt{wt} \mid \texttt{hp})$ — conditions only on `hp`. 
+
+Partial: $SSR(\texttt{wt} \mid \texttt{hp}, \texttt{qsec})$ — conditions on both `hp` and `qsec`.
+
+ The sequential SS is larger because it measures the extra contribution of `wt` after just `hp`. The partial SS conditions on **both** `hp` and `qsec`, leaving less variation for `wt` to explain.
 
 ::: {.fragment}
-**(b)** Use **partial (Type III) SS**. The null hypothesis $H_0: \beta_{wt} = 0$ tests whether `wt` contributes given `hp` and `qsec` are both in the model — exactly what partial SS measures.
+**(b)** Use **partial (Type III) SS**. The null hypothesis $H_0: \beta_{wt} = 0$ tests whether `wt` contributes given `hp` and `qsec` are both in the model. This is exactly what partial SS measures.
 :::
 
 ::: {.fragment}
-**(c)** **False.** Type III SS are adjusted for all other predictors regardless of the order they appear in the formula. Reordering predictors in `lm()` does not change partial SS or $p$-values.
+**(c)** **False.** Type III SS are adjusted for all other predictors regardless of the order they appear in the formula. Reordering predictors in `lm()` does not change partial SS.
+:::
+
+:::
+
+---
+
+## Using SS to Make Model Decisions
+
+::: {style="font-size: 0.60em;"}
+
+**Extra SS F-test — does this group of predictors jointly improve the model?**
+
+- Directly compare two nested models with `anova(fitR, fitF)`
+- $F^* = \frac{(SSE(R) - SSE(F))\,/\,(df_R - df_F)}{SSE(F)\,/\,df_F}$; compare to $F(1-\alpha;\, df_R - df_F,\, df_F)$
+- If $F^*$ is large $\rightarrow$ the predictors added in $F$ jointly improve the model
+- Use when you want to test *multiple* predictors simultaneously (e.g. does adding `hp` and `qsec` help beyond `wt`?)
+
+
+::: {.fragment}
+**Partial SS (Type III) — should I keep this predictor?**
+
+- Tests one predictor at a time: $H_0: \beta_k = 0$ given all others are in the model
+- Compare $F^*$ to $F(1-\alpha;\, 1,\, n-p)$
+- If $F^*$ is large $\rightarrow$ keep the predictor; it contributes beyond what the others already explain
+- Use when deciding whether an individual predictor belongs in a model that already contains all other predictors
+
+
 :::
 
 :::
@@ -433,50 +451,30 @@ countdown::countdown(
 
 ---
 
-## Why Variable Selection?
+## Why Do We Need Variable Selection?
 
-::: {style="font-size: 0.82em;"}
+::: {style="font-size: 0.57em;"}
 
-::: {.incremental}
+**Partial and sequential SS are hypothesis tests, not selection tools**
 
-- In practice, many candidate predictors are measured but not all contribute meaningfully
-- Smaller models produce more precise inference and are easier to interpret
-- With $p - 1$ candidate predictors, there are $2^{p-1}$ possible models — we need a systematic approach
-
-:::
+- They tell you whether a predictor is significant given what's already in the model
+- They don't search over models or balance fit against complexity
+- With many predictors, running individual tests on every possible combination is not an effective strategy
 
 ::: {.fragment}
-::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.4em;"}
-**Occam's razor:** the model that fits observations sufficiently well in the least complex way should be preferred. We need criteria that balance **goodness of fit** against **model complexity**.
-:::
-:::
+**SSE and $R^2$ alone are also insufficient**
 
-:::
-
----
-
-## Why Not SSE or $R^2$? {.smaller}
-
-::: {style="font-size: 0.78em;"}
-
-Both **SSE** and $R^2$ are flawed as sole selection criteria:
-
-::: {.fragment}
-- **SSE** always decreases when predictors are added → always selects the largest model
+- **SSE** always decreases when predictors are added → always favors the largest model
 - $R^2$ always increases when predictors are added → same problem
+- **Adjusted $R^2$** penalizes for extra parameters but has no formal probabilistic interpretation
+
 :::
 
 ::: {.fragment}
-**Adjusted $R^2$** penalizes for extra parameters:
+**What we need:** A systematic approach that balances goodness of fit against model complexity with formal statistical justification
 
-$$R^2_{\text{adj}} = 1 - \frac{SSE/(n-p)}{SSTO/(n-1)}$$
-
-It can decrease when an unhelpful predictor is added, but has no direct probabilistic interpretation.
-:::
-
-::: {.fragment}
-::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;"}
-We need criteria with formal statistical justification. **AIC**, **BIC**, and **Mallow's $C_p$** can give us this.
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.3em;"}
+With $p - 1$ candidate predictors there are $2^{p-1}$ possible models. **AIC** and **BIC** give us principled criteria for choosing among them.
 :::
 :::
 
@@ -508,14 +506,14 @@ Both take the form: **goodness-of-fit term + complexity penalty**. Adding a usel
 ::: {style="font-size: 0.68em;"}
 
 ::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11;"}
-**AIC** *(Akaike Information Criterion)* — based on information theory; estimates out-of-sample prediction error; penalizes each parameter by 2.
+**AIC** *(Akaike Information Criterion)* estimates out-of-sample prediction error and penalizes each parameter by 2.
 
 $$\text{AIC} = n \log\!\left(\frac{SSE}{n}\right) + 2p$$
 :::
 
 ::: {.fragment}
 ::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;"}
-**BIC** *(Bayesian Information Criterion)* — derived from a Bayesian perspective; heavier penalty than AIC when $n > 7$, favoring smaller models.
+**BIC** *(Bayesian Information Criterion)* implements a heavier penalty than AIC when $n > 7$, favoring smaller models.
 
 $$\text{BIC} = n \log\!\left(\frac{SSE}{n}\right) + \log(n) \cdot p$$
 :::
@@ -535,32 +533,6 @@ $$\text{BIC} = n \log\!\left(\frac{SSE}{n}\right) + \log(n) \cdot p$$
 
 ---
 
-## Mallow's $C_p$ {.smaller}
-
-::: {style="font-size: 0.78em;"}
-
-An unbiased estimate of normalized total mean squared prediction error:
-
-$$C_p = \frac{SSE}{\hat{\sigma}^2} + 2p - n$$
-
-where $\hat{\sigma}^2 = MSE$ is estimated from the **full model** (all candidate predictors).
-
-::: {.fragment}
-When the model is unbiased, $E(C_p) \approx p$.
-
-::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;"}
-**How to use $C_p$:**
-
-1. Plot $C_p$ vs. $p$ along with the line $C_p = p$
-2. Points near the line → adequate fit, low bias
-3. Points far above the line → model is underfitting
-4. Among models near the line, prefer smaller $p$
-:::
-:::
-
-:::
-
----
 
 ## Stepwise Procedures 
 
@@ -569,7 +541,7 @@ When the model is unbiased, $E(C_p) \approx p$.
 With $p - 1$ candidate predictors, there are $2^{p-1}$ possible models. For large $p$, we can use stepwise methods to select predictors for our model. **Stepwise methods** are greedy approximations that search the model space one predictor at a time.
 
 ::: {.fragment}
-All stepwise methods use AIC as the decision criterion at each step (or BIC if `k = log(n)`). There are three strategies:
+All stepwise methods use AIC as the decision criterion at each step (or BIC if `k = log(n)`). 
 
 | Method | Starting point | Move at each step |
 |:-------|:--------------|:------------------|
@@ -577,11 +549,6 @@ All stepwise methods use AIC as the decision criterion at each step (or BIC if `
 | Forward addition | Intercept only | Add the predictor that most lowers AIC |
 :::
 
-::: {.fragment}
-::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #C0392B; margin-top: 0.4em;"}
-Stepwise procedures are **greedy**. They make the locally best move at each step and are not guaranteed to find the globally best model.
-:::
-:::
 
 :::
 
@@ -591,7 +558,12 @@ Stepwise procedures are **greedy**. They make the locally best move at each step
 
 ::: {style="font-size: 0.82em;"}
 
-**Start with the full model. At each step, remove the predictor whose removal most lowers AIC. Stop when removing anything would increase AIC.**
+Start with the full model.
+
+ At each step:
+
+- Remove the predictor whose removal most lowers AIC 
+- Stop when removing anything would increase AIC
 
 
 ::: {.fragment}
@@ -613,13 +585,39 @@ In R:
 (fit_back <- step(fit_cand, direction = "backward"))
 ```
 
+<!-- Step 1: highlight - hp row (removed) -->
+::: {.fragment .absolute top="270px" left="8px" width="400px" height="16px" fragment-index=1 style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);"}
+:::
+::: {.fragment .absolute top="270px" left="500px" fragment-index=1 style="font-size:0.50em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.5;"}
+**Remove `hp`** — lowest AIC (61.307) among all removal options, and below `<none>` (61.515).
+:::
+
+<!-- Step 1: highlight <none> baseline -->
+::: {.fragment .absolute top="290px" left="8px" width="400px" height="16px" fragment-index=2 style="border:3px solid #003660; border-radius:4px; background:rgba(0,54,96,0.1);"}
+:::
+::: {.fragment .absolute top="300px" left="500px" fragment-index=2 style="font-size:0.50em; color:#003660; font-weight:bold; border-left:3px solid #003660; padding-left:8px; line-height:1.5;"}
+**`<none>`** — AIC of the current model. Remove a predictor only if its AIC falls below this.
+:::
+
+<!-- Step 2: highlight <none> → stop -->
+::: {.fragment .absolute top="470px" left="8px" width="400px" height="16px" fragment-index=3 style="border:3px solid #C0392B; border-radius:4px; background:rgba(192,57,43,0.15);"}
+:::
+::: {.fragment .absolute top="470px" left="500px" fragment-index=3 style="font-size:0.50em; color:#922B21; font-weight:bold; border-left:3px solid #C0392B; padding-left:8px; line-height:1.5;"}
+**Stop** — all removal options now have AIC above `<none>` (61.307). Final model: `mpg ~ wt + qsec + am`.
+:::
+
 ---
 
 ## Forward Addition
 
 ::: {style="font-size: 0.82em;"}
 
-**Start with the intercept-only model. At each step, add the predictor whose addition most lowers AIC. Stop when adding anything would increase AIC.**
+Start with the intercept-only model.
+
+ At each step: 
+ 
+ - Add the predictor whose addition most lowers AIC
+ - Stop when adding anything would increase AIC
 
 ::: {.fragment}
 In R:
@@ -641,9 +639,11 @@ The `scope` argument tells `step()` the largest model it is allowed to consider.
 (fit_fwd <- step(fit0, scope = formula(fit_cand), direction = "forward"))
 ```
 
+
+
 ---
 
-## Practice: Stepwise Selection {.smaller}
+## Practice: Stepwise Selection 
 
 ::: {style="font-size: 0.65em;"}
 
@@ -682,7 +682,7 @@ mpg ~ wt + qsec + am
 #| echo: false
 #| eval: true
 countdown::countdown(
-  minutes = 5,
+  minutes = 2,
   play_sound = TRUE,
   color_border              = "#FEBC11",
   color_text                = "#003660",
@@ -696,7 +696,7 @@ countdown::countdown(
 
 ---
 
-## Practice: Solution {.smaller}
+## Practice: Solution 
 
 ::: {style="font-size: 0.75em;"}
 
@@ -716,7 +716,25 @@ countdown::countdown(
 
 ## Summary
 
+::: {style="font-size: 0.63em;"}
 
+::: {.incremental}
+
+- **Extra SS F-test:** compares a restricted model $R$ to a full model $F$; $F^* = \frac{(SSE(R)-SSE(F))/(df_R-df_F)}{SSE(F)/df_F}$; tests whether the added predictors jointly contribute
+
+- **Sequential SS (Type I):** each predictor's SS is conditioned on predictors entered before it so order matters; computed with `anova()`
+
+- **Partial SS (Type III):** each predictor's SS is conditioned on all other predictors simultaneously so order never matters; computed with `Anova(..., type="III")`; 
+
+- **Why variable selection?** SSE and $R^2$ always improve with more predictors; partial/sequential SS are hypothesis tests, not search tools; we need criteria that balance fit against complexity
+
+- **AIC and BIC:** both penalize model complexity — $\text{AIC} = n\log(SSE/n) + 2p$, $\text{BIC} = n\log(SSE/n) + \log(n)\cdot p$; BIC penalizes more heavily and favors smaller models; lower is better
+
+- **Stepwise selection:** backward starts from the full model and removes; forward starts from intercept-only and adds; at each step, compare candidate AIC values to `<none>` (current model) and stop when no change helps
+
+:::
+
+:::
 
 ---
 

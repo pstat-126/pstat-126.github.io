@@ -235,7 +235,7 @@ Annie Adams
 <ul>
 <li>Explain the extra sum of squares principle and distinguish sequential (Type I) from partial (Type III) SS</li>
 <li>State why SSE and <span class="math inline">\(R^2\)</span> alone are insufficient model selection criteria</li>
-<li>Compute and interpret AIC, BIC, and Mallow’s <span class="math inline">\(C_p\)</span> as selection criteria</li>
+<li>Compute and interpret AIC and BIC as selection criteria</li>
 <li>Apply backward and forward selection and explain when each is appropriate</li>
 </ul>
 </div>
@@ -263,7 +263,9 @@ Annie Adams
 <section id="the-extra-sum-of-squares-f-test" class="slide level2">
 <h2>The Extra Sum of Squares — F Test</h2>
 <div style="font-size: 0.80em;">
-<p>To test whether the added predictors contribute significantly, use the <strong>F statistic</strong>:</p>
+<p>To test whether the added predictors contribute significantly, we test:</p>
+<p><span class="math display">\[H_0: \text{all coefficients added in } F \text{ are zero} \quad \text{vs.} \quad H_a: \text{at least one} \neq 0\]</span></p>
+<p>Use the <strong>F statistic</strong>:</p>
 <p><span class="math display">\[F^* = \frac{(SSE(R) - SSE(F))\,/\,(df_R - df_F)}{SSE(F)\,/\,df_F} \overset{H_0}{\sim} F_{df_R - df_F,\; df_F}\]</span></p>
 <p>where <span class="math inline">\(df_F\)</span> and <span class="math inline">\(df_R\)</span> are degrees of freedom associated with <span class="math inline">\(SSE(F)\)</span> and <span class="math inline">\(SSE(R)\)</span>.</p>
 <div class="fragment">
@@ -285,7 +287,7 @@ Annie Adams
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_d34e6563" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_f0c5d597" minutes="4" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -305,7 +307,7 @@ Annie Adams
 </section>
 <section id="sequential-sum-of-squares-type-i-setup" class="slide level2">
 <h2>Sequential Sum of Squares (Type I) — Setup</h2>
-<div style="font-size: 0.78em;">
+<div style="font-size: 0.63em;">
 <p>Consider the full model <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i3} + \varepsilon_i\)</span>. We introduce sequential SS by fitting three <strong>nested models</strong>:</p>
 <p><span class="math display">\[\text{Model 1: } Y_i = \beta_0 + \beta_1 X_{i1} + \varepsilon_i\]</span> <span class="math display">\[\text{Model 2: } Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \varepsilon_i\]</span> <span class="math display">\[\text{Model 3: } Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i3} + \varepsilon_i\]</span></p>
 <div class="fragment">
@@ -320,7 +322,6 @@ Annie Adams
 <p>Fitting the full model (Model 3), SSTO decomposes as:</p>
 <p><span class="math display">\[SSTO = SSR(X_1) + SSR(X_2 \mid X_1) + SSR(X_3 \mid X_1, X_2) + SSE(X_1, X_2, X_3)\]</span></p>
 <div class="fragment">
-<p>Each term has a clear interpretation:</p>
 <ul>
 <li><span class="math inline">\(SSR(X_1)\)</span>: SS explained by <span class="math inline">\(X_1\)</span> alone</li>
 <li><span class="math inline">\(SSR(X_2 \mid X_1)\)</span>: extra SS due to adding <span class="math inline">\(X_2\)</span> to the model that already includes <span class="math inline">\(X_1\)</span></li>
@@ -353,7 +354,7 @@ Annie Adams
 <tr class="odd">
 <td style="text-align: left;">Regression</td>
 <td style="text-align: left;"><span class="math inline">\(SSR(X_1, X_2, X_3)\)</span></td>
-<td style="text-align: center;">3</td>
+<td style="text-align: center;"><span class="math inline">\(p-1 = 3\)</span></td>
 <td style="text-align: left;"><span class="math inline">\(MSR(X_1,X_2,X_3)\)</span></td>
 <td style="text-align: left;"><span class="math inline">\(MSR(X_1,X_2,X_3)/MSE\)</span></td>
 </tr>
@@ -381,7 +382,7 @@ Annie Adams
 <tr class="odd">
 <td style="text-align: left;">Error</td>
 <td style="text-align: left;"><span class="math inline">\(SSE(X_1, X_2, X_3)\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(n-4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n-p = n-4\)</span></td>
 <td style="text-align: left;"><span class="math inline">\(MSE\)</span></td>
 <td style="text-align: left;"></td>
 </tr>
@@ -394,63 +395,55 @@ Annie Adams
 </tr>
 </tbody>
 </table>
-<div class="fragment">
-<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.4em;">
-<p>Type I SS <strong>depends on the order</strong> in which variables are entered into the model. In R, <code>anova()</code> gives Type I SS.</p>
-</div>
-</div>
 </div>
 </section>
 <section id="partial-sum-of-squares-type-iii-motivation" class="slide level2">
 <h2>Partial Sum of Squares (Type III) — Motivation</h2>
-<div style="font-size: 0.78em;">
-<p>For the full model <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \beta_3 X_{i3} + \varepsilon_i\)</span>, to test <span class="math inline">\(H_0: \beta_1 = 0\)</span> we compare:</p>
-<ul>
-<li><strong>Full model</strong> <span class="math inline">\(F\)</span>: includes <span class="math inline">\(X_1, X_2, X_3\)</span></li>
-<li><strong>Restricted model</strong> <span class="math inline">\(R\)</span>: drops <span class="math inline">\(X_1\)</span>, includes only <span class="math inline">\(X_2, X_3\)</span></li>
-</ul>
-<p>The extra SS is <span class="math inline">\(SSR(X_1 \mid X_2, X_3) = SSE(R) - SSE(F)\)</span> — the SS explained by <span class="math inline">\(X_1\)</span> <strong>given <span class="math inline">\(X_2\)</span> and <span class="math inline">\(X_3\)</span> are already in the model</strong>.</p>
+<div style="font-size: 0.58em;">
+<p><strong>Type I (sequential):</strong> each predictor’s SS is conditioned on only the predictors entered <em>before</em> it in the model formula — <strong>order matters!</strong>.</p>
 <div class="fragment">
-<p>Similarly:</p>
-<ul>
-<li>To test <span class="math inline">\(H_0: \beta_2 = 0\)</span>, compare full model to model with <span class="math inline">\(X_1, X_3\)</span> only <span class="math inline">\(\rightarrow\)</span> gives <span class="math inline">\(SSR(X_2 \mid X_1, X_3)\)</span></li>
-<li>To test <span class="math inline">\(H_0: \beta_3 = 0\)</span>, compare full model to model with <span class="math inline">\(X_1, X_2\)</span> only <span class="math inline">\(\rightarrow\)</span> gives <span class="math inline">\(SSR(X_3 \mid X_1, X_2)\)</span></li>
-</ul>
+<p><strong>Type III (partial):</strong> each predictor’s SS is conditioned on <em>all other</em> predictors simultaneously.<strong>order never matters!</strong></p>
+<p><span class="math display">\[SSR(X_k \mid \text{all other } X\text{'s})\]</span></p>
 </div>
 <div class="fragment">
-<p>One can calculate these by fitting multiple reduced models. <strong>The partial (Type III) sum of squares computes them simultaneously.</strong></p>
+<p>For the full model with <span class="math inline">\(X_1, X_2, X_3\)</span>, the partial SS for each predictor answers:</p>
+<blockquote>
+<p><em>“How much does <span class="math inline">\(X_k\)</span> contribute, given that every other predictor is already in the model?”</em></p>
+</blockquote>
+<ul>
+<li><span class="math inline">\(SSR(X_1 \mid X_2, X_3)\)</span>: drop <span class="math inline">\(X_1\)</span> from the full model <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(H_0: \beta_1 = 0\)</span></li>
+<li><span class="math inline">\(SSR(X_2 \mid X_1, X_3)\)</span>: drop <span class="math inline">\(X_2\)</span> from the full model <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(H_0: \beta_2 = 0\)</span></li>
+<li><span class="math inline">\(SSR(X_3 \mid X_1, X_2)\)</span>: drop <span class="math inline">\(X_3\)</span> from the full model <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(H_0: \beta_3 = 0\)</span></li>
+</ul>
 </div>
 </div>
 </section>
-<section id="partial-sum-of-squares-type-iii-via-anova" class="slide level2 smaller">
-<h2>Partial Sum of Squares (Type III) — via <code>anova()</code></h2>
+<section id="partial-sum-of-squares-type-iii-in-r" class="slide level2">
+<h2>Partial Sum of Squares (Type III) — in R</h2>
 <div style="font-size: 0.75em;">
-<p>We can verify any partial SS by explicitly comparing the full and reduced models. To test <span class="math inline">\(H_0: \beta_{hp} = 0\)</span>:</p>
+<p>Use <code>car::Anova()</code> with <code>type = "III"</code> to compute partial SS for all predictors simultaneously:</p>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>fit_no_hp <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> qsec, <span class="at">data =</span> mtcars)   <span class="co"># restricted model</span></span>
-<span id="cb1-2"><a aria-label="2"></a><span class="fu">anova</span>(fit_no_hp, fit3)                              <span class="co"># extra SS = SSR(hp | wt, qsec)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">library</span>(car)</span>
+<span id="cb1-2"><a aria-label="2"></a><span class="fu">Anova</span>(fit3, <span class="at">type =</span> <span class="st">"III"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Variance Table
+<pre><code>Anova Table (Type III tests)
 
-Model 1: mpg ~ wt + qsec
-Model 2: mpg ~ hp + wt + qsec
-  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
-1     29 195.46                           
-2     28 186.06  1    9.4043 1.4153 0.2442</code></pre>
-</div>
-</div>
-<div style="font-size: 0.72em;">
-<div class="fragment">
-<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.3em;">
-<p>The <code>Sum of Sq</code> here is <span class="math inline">\(SSR(\texttt{hp} \mid \texttt{wt}, \texttt{qsec})\)</span> — identical to the <code>hp</code> row in <code>Anova(fit3, type="III")</code>. The F-test and p-value also match the <code>hp</code> row in <code>summary(fit3)</code>.</p>
-</div>
+Response: mpg
+             Sum Sq Df F value    Pr(&gt;F)    
+(Intercept)  71.454  1 10.7531  0.002785 ** 
+hp            9.404  1  1.4153  0.244176    
+wt          222.834  1 33.5343 3.217e-06 ***
+qsec          8.988  1  1.3527  0.254628    
+Residuals   186.059 28                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </section>
 <section id="partial-sum-of-squares-type-iii-table-properties" class="slide level2">
 <h2>Partial Sum of Squares (Type III) — Table &amp; Properties</h2>
-<div style="font-size: 0.78em;">
+<div style="font-size: 0.68em;">
 <table class="caption-top">
 <colgroup>
 <col style="width: 30%">
@@ -485,15 +478,10 @@ Model 2: mpg ~ hp + wt + qsec
 <div class="fragment">
 <p>Key properties:</p>
 <ul>
-<li><strong>Order does not matter</strong> — each SS is always conditioned on <em>all</em> other predictors, regardless of how they appear in <code>lm()</code></li>
-<li>These SS do <strong>not</strong> add up to <span class="math inline">\(SSR(X_1, X_2, X_3)\)</span> — unlike Type I SS</li>
+<li><strong>Order does not matter</strong>. Each SS is conditioned on <em>all</em> other predictors</li>
+<li>These SS do <strong>not</strong> add up to <span class="math inline">\(SSR(X_1, X_2, X_3)\)</span> (unlike Type I SS)</li>
 <li>Each partial SS and F-test is equivalent to the corresponding <span class="math inline">\(t\)</span>-test in <code>summary()</code></li>
 </ul>
-</div>
-<div class="fragment">
-<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;">
-<p>When the question is “does <span class="math inline">\(X_k\)</span> belong in the model, given everything else is already included?” — always use <strong>partial (Type III) SS</strong>.</p>
-</div>
 </div>
 </div>
 </section>
@@ -543,7 +531,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 
 </div>
 <div class="fragment absolute" data-fragment-index="1" style="font-size:0.50em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.5;top: 500px; left: 5px; ">
-<p>Row 1: Baseline model (<code>mpg ~ hp</code>). No extra SS — nothing added yet.</p>
+<p>Row 1: Baseline model (<code>mpg ~ hp</code>). No extra SS.</p>
 </div>
 <!-- anova() row 2: adding wt -->
 <div class="fragment absolute" data-fragment-index="2" style="border:3px solid #E8A838; border-radius:4px; background:rgba(232,168,56,0.2);top: 386px; left: 5px; width: 455px; height: 18px; ">
@@ -585,78 +573,89 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 
 </div>
 <div class="fragment absolute" data-fragment-index="7" style="font-size:0.50em; color:#1A5276; font-weight:bold; border-left:3px solid #2E86AB; padding-left:8px; line-height:1.5;top: 570px; left: 535px; ">
-<p><code>qsec</code>: <span class="math inline">\(SSR(\texttt{qsec} \mid \texttt{hp}, \texttt{wt}) = 8.99\)</span> — matches the sequential SS since it was added last.</p>
+<p><code>qsec</code>: <span class="math inline">\(SSR(\texttt{qsec} \mid \texttt{hp}, \texttt{wt}) = 8.99\)</span> — equal to its sequential SS because <code>qsec</code> was entered last, so both types condition on the same two predictors.</p>
 </div>
 <!-- Anova() Residuals row -->
 <div class="fragment absolute" data-fragment-index="8" style="border:3px solid #C0392B; border-radius:4px; background:rgba(192,57,43,0.2);top: 426px; left: 535px; width: 455px; height: 18px; ">
 
 </div>
-<div class="fragment absolute" data-fragment-index="8" style="font-size:0.50em; color:#922B21; font-weight:bold; border-left:3px solid #C0392B; padding-left:8px; line-height:1.5;top: 600px; left: 535px; ">
+<div class="fragment absolute" data-fragment-index="8" style="font-size:0.50em; color:#922B21; font-weight:bold; border-left:3px solid #C0392B; padding-left:8px; line-height:1.5;top: 605px; left: 535px; ">
 <p>Residuals: <span class="math inline">\(SSE = 186.06\)</span>, <span class="math inline">\(df = 28 = n - p\)</span> — denominator for all F tests.</p>
 </div>
 </section>
-<section id="practice-sequential-vs.-partial-ss" class="slide level2 smaller">
+<section id="practice-sequential-vs.-partial-ss" class="slide level2">
 <h2>Practice: Sequential vs.&nbsp;Partial SS</h2>
 <div style="font-size: 0.75em;">
 <p>Using <code>fit3 &lt;- lm(mpg ~ hp + wt + qsec, data = mtcars)</code>:</p>
-<p><strong>(a)</strong> The sequential SS for <code>wt</code> is 252.6 (from <code>anova(fit1, fit2, fit3)</code>). The partial SS for <code>wt</code> is 183.1 (from <code>Anova(fit3, type="III")</code>). Why is the sequential SS larger?</p>
+<p><strong>(a)</strong> The sequential SS for <code>wt</code> is 252.6 (from <code>anova(fit1, fit2, fit3)</code>). The partial SS for <code>wt</code> is 183.1 (from <code>Anova(fit3, type="III")</code>). Write out the SS notation for each (e.g.&nbsp;<span class="math inline">\(SSR(\texttt{wt} \mid \ldots)\)</span>). Then explain why the sequential SS is larger.</p>
 <p><strong>(b)</strong> For testing <span class="math inline">\(H_0: \beta_{wt} = 0\)</span> given <code>hp</code> and <code>qsec</code> are in the model, should you use sequential or partial SS? Why?</p>
-<p><strong>(c)</strong> True or false: changing the order of predictors in <code>lm(mpg ~ wt + hp + qsec)</code> changes the Type III <span class="math inline">\(p\)</span>-values.</p>
+<p><strong>(c)</strong> True or false: changing the order of predictors in <code>lm(mpg ~ wt + hp + qsec)</code> changes the Type III SS.</p>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_dd1973a6" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_07b1c3b5" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
 <section id="practice-solution-1" class="slide level2">
 <h2>Practice: Solution</h2>
 <div style="font-size: 0.75em;">
-<p><strong>(a)</strong> The sequential SS for <code>wt</code> conditions only on <code>hp</code> being in the model. It measures the extra contribution of <code>wt</code> after just <code>hp</code>. The partial SS conditions on <strong>both</strong> <code>hp</code> and <code>qsec</code>, leaving less variation for <code>wt</code> to explain.</p>
+<p><strong>(a)</strong> Sequential: <span class="math inline">\(SSR(\texttt{wt} \mid \texttt{hp})\)</span> — conditions only on <code>hp</code>.</p>
+<p>Partial: <span class="math inline">\(SSR(\texttt{wt} \mid \texttt{hp}, \texttt{qsec})\)</span> — conditions on both <code>hp</code> and <code>qsec</code>.</p>
+<p>The sequential SS is larger because it measures the extra contribution of <code>wt</code> after just <code>hp</code>. The partial SS conditions on <strong>both</strong> <code>hp</code> and <code>qsec</code>, leaving less variation for <code>wt</code> to explain.</p>
 <div class="fragment">
-<p><strong>(b)</strong> Use <strong>partial (Type III) SS</strong>. The null hypothesis <span class="math inline">\(H_0: \beta_{wt} = 0\)</span> tests whether <code>wt</code> contributes given <code>hp</code> and <code>qsec</code> are both in the model — exactly what partial SS measures.</p>
+<p><strong>(b)</strong> Use <strong>partial (Type III) SS</strong>. The null hypothesis <span class="math inline">\(H_0: \beta_{wt} = 0\)</span> tests whether <code>wt</code> contributes given <code>hp</code> and <code>qsec</code> are both in the model. This is exactly what partial SS measures.</p>
 </div>
 <div class="fragment">
-<p><strong>(c)</strong> <strong>False.</strong> Type III SS are adjusted for all other predictors regardless of the order they appear in the formula. Reordering predictors in <code>lm()</code> does not change partial SS or <span class="math inline">\(p\)</span>-values.</p>
+<p><strong>(c)</strong> <strong>False.</strong> Type III SS are adjusted for all other predictors regardless of the order they appear in the formula. Reordering predictors in <code>lm()</code> does not change partial SS.</p>
+</div>
+</div>
+</section>
+<section id="using-ss-to-make-model-decisions" class="slide level2">
+<h2>Using SS to Make Model Decisions</h2>
+<div style="font-size: 0.60em;">
+<p><strong>Extra SS F-test — does this group of predictors jointly improve the model?</strong></p>
+<ul>
+<li>Directly compare two nested models with <code>anova(fitR, fitF)</code></li>
+<li><span class="math inline">\(F^* = \frac{(SSE(R) - SSE(F))\,/\,(df_R - df_F)}{SSE(F)\,/\,df_F}\)</span>; compare to <span class="math inline">\(F(1-\alpha;\, df_R - df_F,\, df_F)\)</span></li>
+<li>If <span class="math inline">\(F^*\)</span> is large <span class="math inline">\(\rightarrow\)</span> the predictors added in <span class="math inline">\(F\)</span> jointly improve the model</li>
+<li>Use when you want to test <em>multiple</em> predictors simultaneously (e.g.&nbsp;does adding <code>hp</code> and <code>qsec</code> help beyond <code>wt</code>?)</li>
+</ul>
+<div class="fragment">
+<p><strong>Partial SS (Type III) — should I keep this predictor?</strong></p>
+<ul>
+<li>Tests one predictor at a time: <span class="math inline">\(H_0: \beta_k = 0\)</span> given all others are in the model</li>
+<li>Compare <span class="math inline">\(F^*\)</span> to <span class="math inline">\(F(1-\alpha;\, 1,\, n-p)\)</span></li>
+<li>If <span class="math inline">\(F^*\)</span> is large <span class="math inline">\(\rightarrow\)</span> keep the predictor; it contributes beyond what the others already explain</li>
+<li>Use when deciding whether an individual predictor belongs in a model that already contains all other predictors</li>
+</ul>
 </div>
 </div>
 </section>
 <section id="variable-selection" class="slide level2" data-background-color="#003660">
 <h2>Variable Selection</h2>
 </section>
-<section id="why-variable-selection" class="slide level2">
-<h2>Why Variable Selection?</h2>
-<div style="font-size: 0.82em;">
+<section id="why-do-we-need-variable-selection" class="slide level2">
+<h2>Why Do We Need Variable Selection?</h2>
+<div style="font-size: 0.57em;">
+<p><strong>Partial and sequential SS are hypothesis tests, not selection tools</strong></p>
 <ul>
-<li class="fragment">In practice, many candidate predictors are measured but not all contribute meaningfully</li>
-<li class="fragment">Smaller models produce more precise inference and are easier to interpret</li>
-<li class="fragment">With <span class="math inline">\(p - 1\)</span> candidate predictors, there are <span class="math inline">\(2^{p-1}\)</span> possible models — we need a systematic approach</li>
+<li>They tell you whether a predictor is significant given what’s already in the model</li>
+<li>They don’t search over models or balance fit against complexity</li>
+<li>With many predictors, running individual tests on every possible combination is not an effective strategy</li>
 </ul>
 <div class="fragment">
-<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.4em;">
-<p><strong>Occam’s razor:</strong> the model that fits observations sufficiently well in the least complex way should be preferred. We need criteria that balance <strong>goodness of fit</strong> against <strong>model complexity</strong>.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="why-not-sse-or-r2" class="slide level2 smaller">
-<h2>Why Not SSE or <span class="math inline">\(R^2\)</span>?</h2>
-<div style="font-size: 0.78em;">
-<p>Both <strong>SSE</strong> and <span class="math inline">\(R^2\)</span> are flawed as sole selection criteria:</p>
-<div class="fragment">
+<p><strong>SSE and <span class="math inline">\(R^2\)</span> alone are also insufficient</strong></p>
 <ul>
-<li><strong>SSE</strong> always decreases when predictors are added → always selects the largest model</li>
+<li><strong>SSE</strong> always decreases when predictors are added → always favors the largest model</li>
 <li><span class="math inline">\(R^2\)</span> always increases when predictors are added → same problem</li>
+<li><strong>Adjusted <span class="math inline">\(R^2\)</span></strong> penalizes for extra parameters but has no formal probabilistic interpretation</li>
 </ul>
 </div>
 <div class="fragment">
-<p><strong>Adjusted <span class="math inline">\(R^2\)</span></strong> penalizes for extra parameters:</p>
-<p><span class="math display">\[R^2_{\text{adj}} = 1 - \frac{SSE/(n-p)}{SSTO/(n-1)}\]</span></p>
-<p>It can decrease when an unhelpful predictor is added, but has no direct probabilistic interpretation.</p>
-</div>
-<div class="fragment">
-<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;">
-<p>We need criteria with formal statistical justification. <strong>AIC</strong>, <strong>BIC</strong>, and <strong>Mallow’s <span class="math inline">\(C_p\)</span></strong> can give us this.</p>
+<p><strong>What we need:</strong> A systematic approach that balances goodness of fit against model complexity with formal statistical justification</p>
+<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.3em;">
+<p>With <span class="math inline">\(p - 1\)</span> candidate predictors there are <span class="math inline">\(2^{p-1}\)</span> possible models. <strong>AIC</strong> and <strong>BIC</strong> give us principled criteria for choosing among them.</p>
 </div>
 </div>
 </div>
@@ -680,12 +679,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2>AIC and BIC — Formulas</h2>
 <div style="font-size: 0.68em;">
 <div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11;">
-<p><strong>AIC</strong> <em>(Akaike Information Criterion)</em> — based on information theory; estimates out-of-sample prediction error; penalizes each parameter by 2.</p>
+<p><strong>AIC</strong> <em>(Akaike Information Criterion)</em> estimates out-of-sample prediction error and penalizes each parameter by 2.</p>
 <p><span class="math display">\[\text{AIC} = n \log\!\left(\frac{SSE}{n}\right) + 2p\]</span></p>
 </div>
 <div class="fragment">
 <div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;">
-<p><strong>BIC</strong> <em>(Bayesian Information Criterion)</em> — derived from a Bayesian perspective; heavier penalty than AIC when <span class="math inline">\(n &gt; 7\)</span>, favoring smaller models.</p>
+<p><strong>BIC</strong> <em>(Bayesian Information Criterion)</em> implements a heavier penalty than AIC when <span class="math inline">\(n &gt; 7\)</span>, favoring smaller models.</p>
 <p><span class="math display">\[\text{BIC} = n \log\!\left(\frac{SSE}{n}\right) + \log(n) \cdot p\]</span></p>
 </div>
 </div>
@@ -715,32 +714,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </section>
-<section id="mallows-c_p" class="slide level2 smaller">
-<h2>Mallow’s <span class="math inline">\(C_p\)</span></h2>
-<div style="font-size: 0.78em;">
-<p>An unbiased estimate of normalized total mean squared prediction error:</p>
-<p><span class="math display">\[C_p = \frac{SSE}{\hat{\sigma}^2} + 2p - n\]</span></p>
-<p>where <span class="math inline">\(\hat{\sigma}^2 = MSE\)</span> is estimated from the <strong>full model</strong> (all candidate predictors).</p>
-<div class="fragment">
-<p>When the model is unbiased, <span class="math inline">\(E(C_p) \approx p\)</span>.</p>
-<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.4em;">
-<p><strong>How to use <span class="math inline">\(C_p\)</span>:</strong></p>
-<ol type="1">
-<li>Plot <span class="math inline">\(C_p\)</span> vs.&nbsp;<span class="math inline">\(p\)</span> along with the line <span class="math inline">\(C_p = p\)</span></li>
-<li>Points near the line → adequate fit, low bias</li>
-<li>Points far above the line → model is underfitting</li>
-<li>Among models near the line, prefer smaller <span class="math inline">\(p\)</span></li>
-</ol>
-</div>
-</div>
-</div>
-</section>
 <section id="stepwise-procedures" class="slide level2">
 <h2>Stepwise Procedures</h2>
 <div style="font-size: 0.63em;">
 <p>With <span class="math inline">\(p - 1\)</span> candidate predictors, there are <span class="math inline">\(2^{p-1}\)</span> possible models. For large <span class="math inline">\(p\)</span>, we can use stepwise methods to select predictors for our model. <strong>Stepwise methods</strong> are greedy approximations that search the model space one predictor at a time.</p>
 <div class="fragment">
-<p>All stepwise methods use AIC as the decision criterion at each step (or BIC if <code>k = log(n)</code>). There are three strategies:</p>
+<p>All stepwise methods use AIC as the decision criterion at each step (or BIC if <code>k = log(n)</code>).</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 19%">
@@ -768,17 +747,17 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </tbody>
 </table>
 </div>
-<div class="fragment">
-<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #C0392B; margin-top: 0.4em;">
-<p>Stepwise procedures are <strong>greedy</strong>. They make the locally best move at each step and are not guaranteed to find the globally best model.</p>
-</div>
-</div>
 </div>
 </section>
 <section id="backward-elimination" class="slide level2">
 <h2>Backward Elimination</h2>
 <div style="font-size: 0.82em;">
-<p><strong>Start with the full model. At each step, remove the predictor whose removal most lowers AIC. Stop when removing anything would increase AIC.</strong></p>
+<p>Start with the full model.</p>
+<p>At each step:</p>
+<ul>
+<li>Remove the predictor whose removal most lowers AIC</li>
+<li>Stop when removing anything would increase AIC</li>
+</ul>
 <div class="fragment">
 <p>In R:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>(fit_back <span class="ot">&lt;-</span> <span class="fu">step</span>(full_model, <span class="at">direction =</span> <span class="st">"backward"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -819,11 +798,37 @@ Coefficients:
       9.618       -3.917        1.226        2.936  </code></pre>
 </div>
 </div>
+<!-- Step 1: highlight - hp row (removed) -->
+<div class="fragment absolute" data-fragment-index="1" style="border:3px solid #58A867; border-radius:4px; background:rgba(88,168,103,0.2);top: 270px; left: 8px; width: 400px; height: 16px; ">
+
+</div>
+<div class="fragment absolute" data-fragment-index="1" style="font-size:0.50em; color:#256B38; font-weight:bold; border-left:3px solid #58A867; padding-left:8px; line-height:1.5;top: 270px; left: 500px; ">
+<p><strong>Remove <code>hp</code></strong> — lowest AIC (61.307) among all removal options, and below <code>&lt;none&gt;</code> (61.515).</p>
+</div>
+<!-- Step 1: highlight <none> baseline -->
+<div class="fragment absolute" data-fragment-index="2" style="border:3px solid #003660; border-radius:4px; background:rgba(0,54,96,0.1);top: 290px; left: 8px; width: 400px; height: 16px; ">
+
+</div>
+<div class="fragment absolute" data-fragment-index="2" style="font-size:0.50em; color:#003660; font-weight:bold; border-left:3px solid #003660; padding-left:8px; line-height:1.5;top: 300px; left: 500px; ">
+<p><strong><code>&lt;none&gt;</code></strong> — AIC of the current model. Remove a predictor only if its AIC falls below this.</p>
+</div>
+<!-- Step 2: highlight <none> → stop -->
+<div class="fragment absolute" data-fragment-index="3" style="border:3px solid #C0392B; border-radius:4px; background:rgba(192,57,43,0.15);top: 470px; left: 8px; width: 400px; height: 16px; ">
+
+</div>
+<div class="fragment absolute" data-fragment-index="3" style="font-size:0.50em; color:#922B21; font-weight:bold; border-left:3px solid #C0392B; padding-left:8px; line-height:1.5;top: 470px; left: 500px; ">
+<p><strong>Stop</strong> — all removal options now have AIC above <code>&lt;none&gt;</code> (61.307). Final model: <code>mpg ~ wt + qsec + am</code>.</p>
+</div>
 </section>
 <section id="forward-addition" class="slide level2">
 <h2>Forward Addition</h2>
 <div style="font-size: 0.82em;">
-<p><strong>Start with the intercept-only model. At each step, add the predictor whose addition most lowers AIC. Stop when adding anything would increase AIC.</strong></p>
+<p>Start with the intercept-only model.</p>
+<p>At each step:</p>
+<ul>
+<li>Add the predictor whose addition most lowers AIC</li>
+<li>Stop when adding anything would increase AIC</li>
+</ul>
 <div class="fragment">
 <p>In R:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>(fit_fwd <span class="ot">&lt;-</span> <span class="fu">step</span>(<span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> mtcars), <span class="at">scope =</span> <span class="fu">formula</span>(full_model), <span class="at">direction =</span> <span class="st">"forward"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -884,7 +889,7 @@ Coefficients:
 </div>
 </div>
 </section>
-<section id="practice-stepwise-selection" class="slide level2 smaller">
+<section id="practice-stepwise-selection" class="slide level2">
 <h2>Practice: Stepwise Selection</h2>
 <div style="font-size: 0.65em;">
 <p>Backward stepwise AIC was run on <code>mpg ~ hp + wt + qsec + am</code>. Here is the output:</p>
@@ -912,11 +917,11 @@ mpg ~ wt + qsec + am
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_fc9c71bd" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_b843aa9f" minutes="2" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
-<section id="practice-solution-2" class="slide level2 smaller">
+<section id="practice-solution-2" class="slide level2">
 <h2>Practice: Solution</h2>
 <div style="font-size: 0.75em;">
 <p><strong>(a)</strong> <code>hp</code> is removed — it has the lowest AIC (61.307) among all removal options, and that AIC is lower than keeping the current model (<code>&lt;none&gt;</code> = 61.515). Removing <code>hp</code> improves the model.</p>
@@ -930,6 +935,16 @@ mpg ~ wt + qsec + am
 </section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
+<div style="font-size: 0.63em;">
+<ul>
+<li class="fragment"><p><strong>Extra SS F-test:</strong> compares a restricted model <span class="math inline">\(R\)</span> to a full model <span class="math inline">\(F\)</span>; <span class="math inline">\(F^* = \frac{(SSE(R)-SSE(F))/(df_R-df_F)}{SSE(F)/df_F}\)</span>; tests whether the added predictors jointly contribute</p></li>
+<li class="fragment"><p><strong>Sequential SS (Type I):</strong> each predictor’s SS is conditioned on predictors entered before it so order matters; computed with <code>anova()</code></p></li>
+<li class="fragment"><p><strong>Partial SS (Type III):</strong> each predictor’s SS is conditioned on all other predictors simultaneously so order never matters; computed with <code>Anova(..., type="III")</code>;</p></li>
+<li class="fragment"><p><strong>Why variable selection?</strong> SSE and <span class="math inline">\(R^2\)</span> always improve with more predictors; partial/sequential SS are hypothesis tests, not search tools; we need criteria that balance fit against complexity</p></li>
+<li class="fragment"><p><strong>AIC and BIC:</strong> both penalize model complexity — <span class="math inline">\(\text{AIC} = n\log(SSE/n) + 2p\)</span>, <span class="math inline">\(\text{BIC} = n\log(SSE/n) + \log(n)\cdot p\)</span>; BIC penalizes more heavily and favors smaller models; lower is better</p></li>
+<li class="fragment"><p><strong>Stepwise selection:</strong> backward starts from the full model and removes; forward starts from intercept-only and adds; at each step, compare candidate AIC values to <code>&lt;none&gt;</code> (current model) and stop when no change helps</p></li>
+</ul>
+</div>
 </section>
 <section id="questions" class="slide level2" data-background-color="#003660">
 <h2>Questions?</h2>
