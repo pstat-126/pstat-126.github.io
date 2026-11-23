@@ -248,7 +248,7 @@ Annie Adams
 <div style="font-size: 0.65em;">
 <p>When more terms are added to a regression model, <strong>SSR always increases</strong> and <strong>SSE always decreases</strong> while SSTO remains unchanged.</p>
 <div class="fragment">
-<p>The amount of increase (reduction) in SSR (SSE) is the <strong>extra sum of squares</strong>. It measures the contribution of the added terms to the regression model, given other terms are already in the model.</p>
+<p>The extra sum of squares is the amount by which SSE drops (equivalently, the amount by which SSR rises) when a predictor is added to the model.</p>
 </div>
 <div class="fragment">
 <p>Comparing a <strong>full model</strong> <span class="math inline">\(F\)</span> to a <strong>restricted model</strong> <span class="math inline">\(R\)</span> (where <span class="math inline">\(R\)</span> is nested in <span class="math inline">\(F\)</span>):</p>
@@ -269,14 +269,9 @@ Annie Adams
 <div class="fragment">
 <p>Reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(F^* &gt; F(1 - \alpha;\; df_R - df_F,\; df_F)\)</span>.</p>
 </div>
-<div class="fragment">
-<div style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.5em;">
-<p>The <span class="math inline">\(t\)</span>-tests in <code>summary()</code> are special cases: for a single predictor, <span class="math inline">\(F^* = (t^*)^2\)</span>.</p>
-</div>
-</div>
 </div>
 </section>
-<section id="practice-extra-ss-f-test" class="slide level2 smaller">
+<section id="practice-extra-ss-f-test" class="slide level2">
 <h2>Practice: Extra SS F Test</h2>
 <div style="font-size: 0.75em;">
 <p>Using <code>mtcars</code>, two models are fit:</p>
@@ -290,21 +285,21 @@ Annie Adams
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_0d0b6643" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_d34e6563" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
-<section id="practice-solution" class="slide level2 smaller">
+<section id="practice-solution" class="slide level2">
 <h2>Practice: Solution</h2>
 <div style="font-size: 0.75em;">
 <p><strong>(a)</strong> Extra SS <span class="math inline">\(= SSE(R) - SSE(F) = 278.32 - 186.06 = 92.26\)</span></p>
-<p>This is <span class="math inline">\(SSR(\texttt{hp}, \texttt{qsec} \mid \texttt{wt})\)</span> — the additional variation in <code>mpg</code> explained by <code>hp</code> and <code>qsec</code>, given <code>wt</code> is already in the model.</p>
+<p>This is the additional variation in <code>mpg</code> explained by <code>hp</code> and <code>qsec</code>, given <code>wt</code> is already in the model.</p>
 <div class="fragment">
 <p><strong>(b)</strong></p>
 <p><span class="math display">\[F^* = \frac{(278.32 - 186.06)\,/\,(30 - 28)}{186.06\,/\,28} = \frac{92.26\,/\,2}{186.06\,/\,28} = \frac{46.13}{6.645} = 6.94\]</span></p>
 </div>
 <div class="fragment">
-<p><strong>(c)</strong> Since <span class="math inline">\(F^* = 6.94 &gt; 3.34 = F(0.95;\, 2,\, 28)\)</span>, we reject <span class="math inline">\(H_0\)</span>. There is significant evidence that <code>hp</code> and <code>qsec</code> together contribute to the model, given <code>wt</code> is already included (<span class="math inline">\(p = 0.004\)</span>).</p>
+<p><strong>(c)</strong> Since <span class="math inline">\(F^* = 6.94 &gt; 3.34 = F(0.95;\, 2,\, 28)\)</span>, we reject <span class="math inline">\(H_0\)</span> at the <span class="math inline">\(\alpha = 0.05\)</span> significance level. There is significant evidence that <code>hp</code> and <code>qsec</code> together contribute to the model, given <code>wt</code> is already included.</p>
 </div>
 </div>
 </section>
@@ -610,7 +605,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_648d9181" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_dd1973a6" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>
@@ -917,7 +912,7 @@ mpg ~ wt + qsec + am
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<countdown-timer class="countdown" id="timer_4ec1eba6" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
+<countdown-timer class="countdown" id="timer_fc9c71bd" minutes="5" seconds="0" update-every="1" play-sound="true" tabindex="0" style="right:0;bottom:0;--countdown-font-size:2em;--countdown-color-border:#FEBC11;--countdown-color-text:#003660;--countdown-color-running-background:#003660;--countdown-color-running-text:#FFFFFF;--countdown-color-finished-background:#FEBC11;--countdown-color-finished-text:#003660;"></countdown-timer>
 </div>
 </div>
 </section>

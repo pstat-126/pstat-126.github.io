@@ -4750,7 +4750,7 @@
     "href": "slides/lec-16.html#practice-solution",
     "title": "Lecture 16: Variable Selection",
     "section": "Practice: Solution",
-    "text": "Practice: Solution\n\n(a) Extra SS \\(= SSE(R) - SSE(F) = 278.32 - 186.06 = 92.26\\)\nThis is \\(SSR(\\texttt{hp}, \\texttt{qsec} \\mid \\texttt{wt})\\) — the additional variation in mpg explained by hp and qsec, given wt is already in the model.\n\n(b)\n\\[F^* = \\frac{(278.32 - 186.06)\\,/\\,(30 - 28)}{186.06\\,/\\,28} = \\frac{92.26\\,/\\,2}{186.06\\,/\\,28} = \\frac{46.13}{6.645} = 6.94\\]\n\n\n(c) Since \\(F^* = 6.94 &gt; 3.34 = F(0.95;\\, 2,\\, 28)\\), we reject \\(H_0\\). There is significant evidence that hp and qsec together contribute to the model, given wt is already included (\\(p = 0.004\\))."
+    "text": "Practice: Solution\n\n(a) Extra SS \\(= SSE(R) - SSE(F) = 278.32 - 186.06 = 92.26\\)\nThis is the additional variation in mpg explained by hp and qsec, given wt is already in the model.\n\n(b)\n\\[F^* = \\frac{(278.32 - 186.06)\\,/\\,(30 - 28)}{186.06\\,/\\,28} = \\frac{92.26\\,/\\,2}{186.06\\,/\\,28} = \\frac{46.13}{6.645} = 6.94\\]\n\n\n(c) Since \\(F^* = 6.94 &gt; 3.34 = F(0.95;\\, 2,\\, 28)\\), we reject \\(H_0\\) at the \\(\\alpha = 0.05\\) significance level. There is significant evidence that hp and qsec together contribute to the model, given wt is already included."
   },
   {
     "objectID": "slides/lec-16.html#variable-selection",
@@ -4911,14 +4911,14 @@
     "href": "slides/lec-16.html#the-extra-sum-of-squares-definition",
     "title": "Lecture 16: Variable Selection",
     "section": "The Extra Sum of Squares — Definition",
-    "text": "The Extra Sum of Squares — Definition\n\nWhen more terms are added to a regression model, SSR always increases and SSE always decreases while SSTO remains unchanged.\n\nThe amount of increase (reduction) in SSR (SSE) is the extra sum of squares. It measures the contribution of the added terms to the regression model, given other terms are already in the model.\n\n\nComparing a full model \\(F\\) to a restricted model \\(R\\) (where \\(R\\) is nested in \\(F\\)):\n\n\\(SSE(R)\\) is always larger than \\(SSE(F)\\)\nBecause SSTO is fixed, the extra SS can be written either way:\n\n\\[\\underbrace{SSR(F) - SSR(R)}_{\\text{extra SS}} = SSE(R) - SSE(F)\\]"
+    "text": "The Extra Sum of Squares — Definition\n\nWhen more terms are added to a regression model, SSR always increases and SSE always decreases while SSTO remains unchanged.\n\nThe extra sum of squares is the amount by which SSE drops (equivalently, the amount by which SSR rises) when a predictor is added to the model.\n\n\nComparing a full model \\(F\\) to a restricted model \\(R\\) (where \\(R\\) is nested in \\(F\\)):\n\n\\(SSE(R)\\) is always larger than \\(SSE(F)\\)\nBecause SSTO is fixed, the extra SS can be written either way:\n\n\\[\\underbrace{SSR(F) - SSR(R)}_{\\text{extra SS}} = SSE(R) - SSE(F)\\]"
   },
   {
     "objectID": "slides/lec-16.html#the-extra-sum-of-squares-f-test",
     "href": "slides/lec-16.html#the-extra-sum-of-squares-f-test",
     "title": "Lecture 16: Variable Selection",
     "section": "The Extra Sum of Squares — F Test",
-    "text": "The Extra Sum of Squares — F Test\n\nTo test whether the added predictors contribute significantly, use the F statistic:\n\\[F^* = \\frac{(SSE(R) - SSE(F))\\,/\\,(df_R - df_F)}{SSE(F)\\,/\\,df_F} \\overset{H_0}{\\sim} F_{df_R - df_F,\\; df_F}\\]\nwhere \\(df_F\\) and \\(df_R\\) are degrees of freedom associated with \\(SSE(F)\\) and \\(SSE(R)\\).\n\nReject \\(H_0\\) if \\(F^* &gt; F(1 - \\alpha;\\; df_R - df_F,\\; df_F)\\).\n\n\n\nThe \\(t\\)-tests in summary() are special cases: for a single predictor, \\(F^* = (t^*)^2\\)."
+    "text": "The Extra Sum of Squares — F Test\n\nTo test whether the added predictors contribute significantly, use the F statistic:\n\\[F^* = \\frac{(SSE(R) - SSE(F))\\,/\\,(df_R - df_F)}{SSE(F)\\,/\\,df_F} \\overset{H_0}{\\sim} F_{df_R - df_F,\\; df_F}\\]\nwhere \\(df_F\\) and \\(df_R\\) are degrees of freedom associated with \\(SSE(F)\\) and \\(SSE(R)\\).\n\nReject \\(H_0\\) if \\(F^* &gt; F(1 - \\alpha;\\; df_R - df_F,\\; df_F)\\)."
   },
   {
     "objectID": "slides/lec-16.html#sequential-sum-of-squares-type-i",
