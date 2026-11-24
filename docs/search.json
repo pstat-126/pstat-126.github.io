@@ -4037,7 +4037,7 @@
     "href": "slides/lec-15.html#hypothesis-test-for-beta_k",
     "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
     "section": "Hypothesis Test for \\(\\beta_k\\)",
-    "text": "Hypothesis Test for \\(\\beta_k\\)\n\nTo test whether \\(X_k\\) has a linear relationship with \\(Y\\), given the other predictors:\n\\[H_0: \\beta_k = 0 \\qquad H_a: \\beta_k \\neq 0\\]\nTest statistic:\n\\[t^* = \\frac{b_k}{SE(b_k)}\\]\n\nDecision rule: Reject \\(H_0\\) at level \\(\\alpha\\) if \\(|t^*| &gt; t_{1-\\alpha/2,\\, n-p}\\).\n\n\n\n\n\n\n\n\nNoteWarning\n\n\n\nThe \\(t\\)-test for \\(\\beta_k\\) is a partial test. A predictor that is not significant in the full model may be significant in a simple regression of \\(Y\\) on \\(X_k\\) alone, and vice versa, due to correlations among predictors."
+    "text": "Hypothesis Test for \\(\\beta_k\\)\n\nTo test whether \\(X_k\\) has a linear relationship with \\(Y\\), given the other predictors:\n\\[H_0: \\beta_k = 0 \\qquad H_a: \\beta_k \\neq 0\\]\nTest statistic:\n\\[t^* = \\frac{b_k}{SE(b_k)}\\]\n\nDecision rule: Reject \\(H_0\\) at level \\(\\alpha\\) if \\(|t^*| &gt; t_{1-\\alpha/2,\\, n-p}\\).\n\n\n\n\n\n\n\n\nWarning\n\n\nThe \\(t\\)-test for \\(\\beta_k\\) is a partial test. A predictor that is not significant in the full model may be significant in a simple regression of \\(Y\\) on \\(X_k\\) alone, and vice versa, due to correlations among predictors."
   },
   {
     "objectID": "slides/lec-15.html#inference-in-r-summary",
@@ -4058,7 +4058,7 @@
     "href": "slides/lec-15.html#confidence-intervals-in-r-confint",
     "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
     "section": "Confidence Intervals in R: confint()",
-    "text": "Confidence Intervals in R: confint()\n\n\n\n\ncoef(fit1)\n\n(Intercept)          hp          wt \n37.22727012 -0.03177295 -3.87783074 \n\n\n\n\nconfint(fit1, level = 0.95)\n\n                  2.5 %      97.5 %\n(Intercept) 33.95738245 40.49715778\nhp          -0.05024078 -0.01330512\nwt          -5.17191604 -2.58374544\n\n\n\n\n\nInterpreting \\(b_k\\):\n\n\\(b_1 = -0.032\\): the estimated average change in fuel efficiency for each 1 hp increase is \\(-0.032\\) mpg, holding all other predictors in the model constant.\n\\(b_2 = -3.878\\): the estimated average change in fuel efficiency for each 1,000 lb increase in weight is \\(-3.878\\) mpg, holding all other predictors in the model constant.\n\n\n\nInterpreting the 95% CIs:\n\nWe are 95% confident that the true average change in mpg for each 1 hp increase is between \\(-0.050\\) and \\(-0.013\\) mpg, holding all other predictors in the model constant.\nWe are 95% confident that the true average change in mpg for each 1,000 lb increase in weight is between \\(-5.172\\) and \\(-2.584\\) mpg, holding all other predictors in the model constant.\nBoth CIs exclude zero, so both predictors are significant at \\(\\alpha = 0.05\\)."
+    "text": "Confidence Intervals in R: confint()\n\n\n\n\ncoef(fit1)\n\n(Intercept)          hp          wt \n37.22727012 -0.03177295 -3.87783074 \n\n\n\n\nconfint(fit1, level = 0.95)\n\n                  2.5 %      97.5 %\n(Intercept) 33.95738245 40.49715778\nhp          -0.05024078 -0.01330512\nwt          -5.17191604 -2.58374544\n\n\n\n\nInterpreting \\(b_k\\):\n\n\\(b_1 = -0.032\\): the estimated average change in fuel efficiency for each 1 hp increase is \\(-0.032\\) mpg, holding all other predictors in the model constant.\n\\(b_2 = -3.878\\): the estimated average change in fuel efficiency for each 1,000 lb increase in weight is \\(-3.878\\) mpg, holding all other predictors in the model constant.\n\n\n\nInterpreting the 95% CIs:\n\nWe are 95% confident that the true average change in mpg for each 1 hp increase is between \\(-0.050\\) and \\(-0.013\\) mpg, holding all other predictors in the model constant.\nWe are 95% confident that the true average change in mpg for each 1,000 lb increase in weight is between \\(-5.172\\) and \\(-2.584\\) mpg, holding all other predictors in the model constant.\nBoth CIs exclude zero, so both predictors are significant at \\(\\alpha = 0.05\\)."
   },
   {
     "objectID": "slides/lec-15.html#practice-inference-on-parameters",
@@ -4170,7 +4170,7 @@
     "href": "slides/lec-15.html#reading-the-residual-plots",
     "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
     "section": "Reading the Residual Plots",
-    "text": "Reading the Residual Plots\n\n\n\nResiduals vs \\(X_1\\) (hp): Points scatter around zero without a systematic curve. Linearity looks satisfied for horsepower.\nResiduals vs \\(X_2\\) (wt): No obvious trend or pattern. Linearity satisfied for weight as well.\nResiduals vs Fitted: Spread is roughly constant across the fitted range. Equal variance appears satisfied (no fanning).\nQQ-plot: Points track the diagonal closely. Normality is plausible.\n\n\n\n\nThe model assumptions appear satisfied! Inferential results (\\(t\\)-tests, CIs, prediction intervals) are reliable for these data."
+    "text": "Reading the Residual Plots\n\n\nResiduals vs \\(X_1\\) (hp): Points scatter around zero without a systematic curve. Linearity looks satisfied for horsepower.\nResiduals vs \\(X_2\\) (wt): No obvious trend or pattern. Linearity satisfied for weight as well.\nResiduals vs Fitted: Spread is roughly constant across the fitted range. Equal variance appears satisfied (no fanning).\nQQ-plot: Points track the diagonal closely. Normality is plausible.\n\n\n\nThe model assumptions appear satisfied! Inferential results (\\(t\\)-tests, CIs, prediction intervals) are reliable for these data."
   },
   {
     "objectID": "slides/lec-15.html#leverage-and-influential-points",
@@ -4226,7 +4226,7 @@
     "href": "slides/lec-15.html#summary",
     "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
     "section": "Summary",
-    "text": "Summary\n\n\n\nSampling distribution: \\((b_k - \\beta_k)/SE(b_k) \\sim t_{n-p}\\); degrees of freedom are \\(n-p\\) because we estimate \\(p\\) parameters\nInference on \\(\\beta_k\\): CI is \\(b_k \\pm t_{1-\\alpha/2,\\, n-p}\\cdot SE(b_k)\\); test rejects \\(H_0: \\beta_k = 0\\) when \\(|t^*| &gt; t_{1-\\alpha/2,\\, n-p}\\); each test is partial — holds all other predictors constant\nCI for \\(E(Y_h)\\): \\(\\hat{Y}_h \\pm t \\cdot SE(\\hat{Y}_h)\\) — estimates the mean response at \\(\\mathbf{X}_h\\); narrows to zero as \\(n \\to \\infty\\); use interval = \"confidence\" in predict()\nPI for new \\(Y_h^*\\): \\(\\hat{Y}_h \\pm t \\cdot SE(\\text{pred})\\) where \\(SE^2(\\text{pred}) = \\text{MSE} + SE^2(\\hat{Y}_h)\\) — always wider than CI; bounded below by irreducible \\(\\sigma^2\\); use interval = \"prediction\"\nDiagnostics: residuals vs. each \\(X_k\\) (linearity), vs. fitted (equal variance), QQ-plot (normality); independence requires a time/order plot"
+    "text": "Summary\n\n\nSampling distribution: \\((b_k - \\beta_k)/SE(b_k) \\sim t_{n-p}\\); degrees of freedom are \\(n-p\\) because we estimate \\(p\\) parameters\nInference on \\(\\beta_k\\): CI is \\(b_k \\pm t_{1-\\alpha/2,\\, n-p}\\cdot SE(b_k)\\); test rejects \\(H_0: \\beta_k = 0\\) when \\(|t^*| &gt; t_{1-\\alpha/2,\\, n-p}\\); each test is partial — holds all other predictors constant\nCI for \\(E(Y_h)\\): \\(\\hat{Y}_h \\pm t \\cdot SE(\\hat{Y}_h)\\) — estimates the mean response at \\(\\mathbf{X}_h\\); narrows to zero as \\(n \\to \\infty\\); use interval = \"confidence\" in predict()\nPI for new \\(Y_h^*\\): \\(\\hat{Y}_h \\pm t \\cdot SE(\\text{pred})\\) where \\(SE^2(\\text{pred}) = \\text{MSE} + SE^2(\\hat{Y}_h)\\) — always wider than CI; bounded below by irreducible \\(\\sigma^2\\); use interval = \"prediction\"\nDiagnostics: residuals vs. each \\(X_k\\) (linearity), vs. fitted (equal variance), QQ-plot (normality); independence requires a time/order plot"
   },
   {
     "objectID": "slides/lec-15.html#questions",
@@ -4349,8 +4349,8 @@
     "objectID": "slides/lec-15.html#course-reminders",
     "href": "slides/lec-15.html#course-reminders",
     "title": "Lecture 15: Inference, Prediction, and Diagnostics in MLR",
-    "section": "",
-    "text": "HW 4 due next Saturday 11/28\nAsynchronous Lecture next Wednesday (11/25)\nQuiz 4 Monday 11/30"
+    "section": "Course Reminders",
+    "text": "Course Reminders\n\nHW 4 due next Saturday 11/28\nAsynchronous Lecture next Wednesday (11/25)\nQuiz 4 Monday 11/30"
   },
   {
     "objectID": "labs/lab-07.html",
