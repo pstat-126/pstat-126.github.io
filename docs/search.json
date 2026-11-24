@@ -5080,5 +5080,180 @@
     "title": "Lecture 16: Variable Selection",
     "section": "Summary: Variable Selection",
     "text": "Summary: Variable Selection\n\nWhy not SSE or \\(R^2\\)? — both always improve as predictors are added, so they always favor the largest model.\n\nAIC and BIC — balance fit against complexity (lower is better):\n\\[\\text{AIC} = n\\log\\!\\left(\\tfrac{SSE}{n}\\right) + 2p \\qquad \\text{BIC} = n\\log\\!\\left(\\tfrac{SSE}{n}\\right) + \\log(n)\\cdot p\\]\nBIC penalizes more heavily → tends to select smaller models than AIC.\n\n\nStepwise selection — greedy search over model space using AIC at each step:\n\n\n\n\n\n\n\n\n\nMethod\nStart\nEach step\nStop when\n\n\n\n\nBackward\nFull model\nRemove predictor with lowest AIC\nNo removal beats &lt;none&gt;\n\n\nForward\nIntercept only\nAdd predictor with lowest AIC\nNo addition beats &lt;none&gt;\n\n\n\n&lt;none&gt; = AIC of the current model — the baseline to beat at each step."
+  },
+  {
+    "objectID": "slides/lec-17.html#course-reminders",
+    "href": "slides/lec-17.html#course-reminders",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Course Reminders",
+    "text": "Course Reminders\n\n\nThis is an asynchronous lecture — work through it at your own pace and follow along in R\nHW 4 due Saturday 11/28\nQuiz 4 Monday 11/30"
+  },
+  {
+    "objectID": "slides/lec-17.html#learning-objectives",
+    "href": "slides/lec-17.html#learning-objectives",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\nBy the end of this lecture you will be able to:\n\n\nExplain why training error is an overly optimistic measure of model performance\nDescribe the train/test split and implement it in R\nExplain how \\(k\\)-fold cross-validation works and compute CV MSE by hand and in R\nUse cross-validation to compare candidate models and connect it to AIC/BIC from Lecture 16"
+  },
+  {
+    "objectID": "slides/lec-17.html#why-not-just-use-r2",
+    "href": "slides/lec-17.html#why-not-just-use-r2",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Why Not Just Use \\(R^2\\)?",
+    "text": "Why Not Just Use \\(R^2\\)?"
+  },
+  {
+    "objectID": "slides/lec-17.html#the-overfitting-problem",
+    "href": "slides/lec-17.html#the-overfitting-problem",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "The Overfitting Problem",
+    "text": "The Overfitting Problem\n\nRecall from Lecture 16: \\(R^2\\) and SSE always improve when we add predictors. They always favor the most complex model.\n\nConsider fitting polynomial models of increasing degree to mtcars:\n\nDegree 1: a straight line\nDegree 5: a wiggly curve\nDegree 8: an even wigglier curve through the data\n\nEach higher-degree model has lower training SSE and higher \\(R^2\\). Does that mean it is better?\n\n\n\nNo. A model that memorizes the training data performs poorly on new, unseen data. This is called overfitting."
+  },
+  {
+    "objectID": "slides/lec-17.html#visualizing-overfitting",
+    "href": "slides/lec-17.html#visualizing-overfitting",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Visualizing Overfitting",
+    "text": "Visualizing Overfitting\n\n\n\nThe line misses the curvature in the data. It underfits by forcing a shape that is too rigid to capture the true relationship.\n\nThe curve threads through nearly every point in the training data. It overfits because on new unseen observations it would produce wildly inaccurate predictions wherever the curve swings far from the data."
+  },
+  {
+    "objectID": "slides/lec-17.html#training-error-vs.-test-error",
+    "href": "slides/lec-17.html#training-error-vs.-test-error",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Training Error vs. Test Error",
+    "text": "Training Error vs. Test Error\n\nTraining error (MSE on the data used to fit the model) always decreases as model complexity increases.\n\nTest error (MSE on new data the model has never seen) has a U-shape:\n\nToo simple \\(\\rightarrow\\) high error from missing real structure (underfitting)\nToo complex \\(\\rightarrow\\) high error from chasing noise (overfitting)\nJust right \\(\\rightarrow\\) the sweet spot we are looking for\n\n\n\n\nKey insight: Training MSE is an overly optimistic estimate of how well the model performs on new data. We need a way to estimate test error from our existing data."
+  },
+  {
+    "objectID": "slides/lec-17.html#the-traintest-split",
+    "href": "slides/lec-17.html#the-traintest-split",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "The Train/Test Split",
+    "text": "The Train/Test Split"
+  },
+  {
+    "objectID": "slides/lec-17.html#the-idea",
+    "href": "slides/lec-17.html#the-idea",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "The Idea",
+    "text": "The Idea\n\nSolution: Hold out a random subset of observations before fitting. Train on the rest, then evaluate on the held-out data.\n\n\n\n\nSet\nPurpose\nTypical size\n\n\n\n\nTraining set\nFit the model\n70–80% of \\(n\\)\n\n\nTest set\nEstimate generalization error\n20–30% of \\(n\\)\n\n\n\n\n\nTest MSE:\n\\[\\text{Test MSE} = \\frac{1}{n_{\\text{test}}} \\sum_{i \\in \\text{test}} (Y_i - \\hat{Y}_i)^2\\]\nwhere \\(\\hat{Y}_i\\) comes from the model fit on the training set only."
+  },
+  {
+    "objectID": "slides/lec-17.html#traintest-split-in-r",
+    "href": "slides/lec-17.html#traintest-split-in-r",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Train/Test Split in R",
+    "text": "Train/Test Split in R\n\nset.seed(126)\ntrain_idx  &lt;- sample(1:n, size = floor(0.75 * n))\ntrain_data &lt;- mtcars[train_idx, ]\ntest_data  &lt;- mtcars[-train_idx, ]\n\nfit_train  &lt;- lm(mpg ~ wt + qsec + am, data = train_data)\ntest_preds &lt;- predict(fit_train, newdata = test_data)\n\ntest_mse &lt;- mean((test_data$mpg - test_preds)^2)\nround(test_mse, 3)\n\n[1] 8.363"
+  },
+  {
+    "objectID": "slides/lec-17.html#limitation-of-a-single-split",
+    "href": "slides/lec-17.html#limitation-of-a-single-split",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Limitation of a Single Split",
+    "text": "Limitation of a Single Split\n\nThe test MSE depends heavily on which observations happened to end up in the test set.\n\n\nseeds &lt;- c(1, 42, 99, 200, 500)\nmses  &lt;- sapply(seeds, function(s) {\n  set.seed(s)\n  idx &lt;- sample(1:n, size = floor(0.75 * n))\n  fit &lt;- lm(mpg ~ wt + qsec + am, data = mtcars[idx, ])\n  mean((mtcars[-idx, \"mpg\"] - predict(fit, mtcars[-idx, ]))^2)\n})\nround(mses, 2)\n\n[1]  8.66 10.66  7.75  5.09 10.07\n\n\n\n\n\nThe estimates vary widely across splits. A single train/test split gives a high-variance estimate of test error. We need something more stable.\n\n\n\n\n\n\n\n\nThese 5 values are the test MSE from each of 5 different random 75/25 splits. Same model, same data, just different observations in the test set each time."
+  },
+  {
+    "objectID": "slides/lec-17.html#k-fold-cross-validation",
+    "href": "slides/lec-17.html#k-fold-cross-validation",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "\\(k\\)-Fold Cross-Validation",
+    "text": "\\(k\\)-Fold Cross-Validation"
+  },
+  {
+    "objectID": "slides/lec-17.html#the-idea-1",
+    "href": "slides/lec-17.html#the-idea-1",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "The Idea",
+    "text": "The Idea\n\nInstead of one split, partition all \\(n\\) observations into \\(k\\) equal-sized folds.\n\nAlgorithm: For \\(j = 1, 2, \\ldots, k\\):\n\nHold out fold \\(j\\) as the validation set\nFit the model on the remaining \\(k - 1\\) folds\nCompute MSE on the held-out fold \\(j\\): \\(\\;\\text{MSE}_j = \\frac{1}{|j|}\\displaystyle\\sum_{i \\in \\text{fold }j}(Y_i - \\hat{Y}_i)^2\\)\n\n\n\nAverage across all folds:\n\\[\\text{CV}_{(k)} = \\frac{1}{k}\\sum_{j=1}^{k} \\text{MSE}_j\\]\n\n\n\nEvery observation is used for both training and validation exactly once. The result is a much more stable estimate of test error."
+  },
+  {
+    "objectID": "slides/lec-17.html#choosing-k",
+    "href": "slides/lec-17.html#choosing-k",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Choosing \\(k\\)",
+    "text": "Choosing \\(k\\)\n\n\n\n\n\\(k\\)\nName\nBias\nVariance\nCost\n\n\n\n\n\\(n\\)\nLOOCV\nLow\nHigh\nExpensive (\\(n\\) model fits)\n\n\n5 or 10\n\\(k\\)-fold\nModerate\nLow\nCheap (5 or 10 fits)\n\n\n\n\n\nRule of thumb: \\(k = 5\\) or \\(k = 10\\) is the standard choice. They give a good bias–variance tradeoff and are computationally inexpensive.\n\n\n\nLOOCV (leave-one-out CV): each fold is a single observation. The model trains on \\(n - 1\\) observations and evaluates on the one left out. Unbiased but high-variance, and slow for large \\(n\\)."
+  },
+  {
+    "objectID": "slides/lec-17.html#fold-cv-in-r-manual-implementation",
+    "href": "slides/lec-17.html#fold-cv-in-r-manual-implementation",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "10-Fold CV in R — Manual Implementation",
+    "text": "10-Fold CV in R — Manual Implementation\n\nset.seed(126)\nk     &lt;- 10\nfolds &lt;- sample(rep(1:k, length.out = n))\n\ncv_mse &lt;- numeric(k)\nfor (j in 1:k) {\n  train_j &lt;- mtcars[folds != j, ]\n  val_j   &lt;- mtcars[folds == j, ]\n  fit_j   &lt;- lm(mpg ~ wt + qsec + am, data = train_j)\n  cv_mse[j] &lt;- mean((val_j$mpg - predict(fit_j, val_j))^2)\n}\n\nround(cv_mse, 2)         # MSE for each fold\n\n [1]  9.84  4.97  4.53 13.59 10.96  1.48  0.39 10.83  5.01  6.14\n\nround(mean(cv_mse), 3)   # CV(10) estimate\n\n[1] 6.773"
+  },
+  {
+    "objectID": "slides/lec-17.html#cross-validation-for-model-selection",
+    "href": "slides/lec-17.html#cross-validation-for-model-selection",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Cross-Validation for Model Selection",
+    "text": "Cross-Validation for Model Selection"
+  },
+  {
+    "objectID": "slides/lec-17.html#comparing-candidate-models",
+    "href": "slides/lec-17.html#comparing-candidate-models",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Comparing Candidate Models",
+    "text": "Comparing Candidate Models\n\nCV gives a principled way to compare models: the model with the lowest CV MSE is preferred because it has the best estimated out-of-sample predictive accuracy.\n\nLet’s compare three models from Lecture 16:\n\n\n\nModel\nFormula\n\n\n\n\n\\(M_1\\)\nmpg ~ wt\n\n\n\\(M_2\\)\nmpg ~ wt + hp\n\n\n\\(M_3\\) (backward selected)\nmpg ~ wt + qsec + am\n\n\n\n\n\nWe will write a small helper function and compute 10-fold CV MSE for each model."
+  },
+  {
+    "objectID": "slides/lec-17.html#cv-mse-comparison-code",
+    "href": "slides/lec-17.html#cv-mse-comparison-code",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "CV MSE Comparison — Code",
+    "text": "CV MSE Comparison — Code\n\nset.seed(126)\nfolds &lt;- sample(rep(1:10, length.out = n))\n\ncv_for &lt;- function(formula, data, folds) {\n  mse_j &lt;- numeric(max(folds))\n  for (j in seq_along(mse_j)) {\n    fit   &lt;- lm(formula, data = data[folds != j, ])\n    val   &lt;- data[folds == j, ]\n    mse_j[j] &lt;- mean((val$mpg - predict(fit, val))^2)\n  }\n  mean(mse_j)\n}\n\nresults &lt;- data.frame(\n  Model  = c(\"wt\", \"wt + hp\", \"wt + qsec + am\"),\n  CV_MSE = round(c(\n    cv_for(mpg ~ wt,             mtcars, folds),\n    cv_for(mpg ~ wt + hp,        mtcars, folds),\n    cv_for(mpg ~ wt + qsec + am, mtcars, folds)\n  ), 3)\n)\nresults\n\n           Model CV_MSE\n1             wt  9.705\n2        wt + hp  7.209\n3 wt + qsec + am  6.773"
+  },
+  {
+    "objectID": "slides/lec-17.html#interpreting-the-results",
+    "href": "slides/lec-17.html#interpreting-the-results",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Interpreting the Results",
+    "text": "Interpreting the Results\n\n\n\n           Model CV_MSE\n1             wt  9.705\n2        wt + hp  7.209\n3 wt + qsec + am  6.773\n\n\n\n\nmpg ~ wt has the highest CV MSE .wt alone leaves a lot of variation unexplained\nmpg ~ wt + qsec + am (the backward-selected model from Lec 16) has the lowest CV MSE. It generalizes best to new data\n\n\n\n\nCross-validation and AIC/BIC agree here: the model chosen by backward stepwise in Lecture 16 also wins under CV. When both methods point to the same model, it builds confidence in that choice."
+  },
+  {
+    "objectID": "slides/lec-17.html#practice-cross-validation",
+    "href": "slides/lec-17.html#practice-cross-validation",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Practice: Cross-Validation",
+    "text": "Practice: Cross-Validation\n\nTry this yourself in R using the mtcars dataset.\n(a) Set set.seed(42) and perform a 75/25 train/test split. Fit mpg ~ wt + qsec + am on the training set and report the test MSE.\n(b) Set set.seed(42) and compute 10-fold CV MSE for mpg ~ wt + qsec + am. How does it compare to the single-split test MSE from (a)?\n(c) Now compute 10-fold CV MSE for mpg ~ wt + hp + qsec + am using the same folds. Does adding hp help or hurt?"
+  },
+  {
+    "objectID": "slides/lec-17.html#practice-solution",
+    "href": "slides/lec-17.html#practice-solution",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Practice: Solution",
+    "text": "Practice: Solution\n\n(a) Train/test split:\n\nset.seed(42)\nidx   &lt;- sample(1:32, size = 24)\nfit_a &lt;- lm(mpg ~ wt + qsec + am, data = mtcars[idx, ])\nround(mean((mtcars[-idx, \"mpg\"] - predict(fit_a, mtcars[-idx, ]))^2), 3)\n\n[1] 10.658\n\n\n\n(b) 10-fold CV — more stable than the single split:\n\nset.seed(42)\nfolds_b &lt;- sample(rep(1:10, length.out = 32))\nround(cv_for(mpg ~ wt + qsec + am, mtcars, folds_b), 3)\n\n[1] 7.085\n\n\n\n\n(c) Adding hp:\n\nround(cv_for(mpg ~ wt + hp + qsec + am, mtcars, folds_b), 3)\n\n[1] 6.943\n\n\nAdding hp slightly increases CV MSE. It does not improve generalization, which confirms the backward selection result from Lecture 16."
+  },
+  {
+    "objectID": "slides/lec-17.html#cv-vs.-aicbic",
+    "href": "slides/lec-17.html#cv-vs.-aicbic",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "CV vs. AIC/BIC",
+    "text": "CV vs. AIC/BIC\n\nBoth CV and AIC/BIC estimate out-of-sample predictive accuracy. How do they differ?\n\n\n\n\n\n\n\n\n\n\nAIC / BIC\n\\(k\\)-Fold CV\n\n\n\n\nMeasures\nPenalized log-likelihood\nDirect estimate of test MSE\n\n\nRequires\nDistributional assumptions (\\(\\epsilon \\sim N\\))\nOnly predictions\n\n\nSpeed\nFast — one fit per model\nSlower — \\(k\\) fits per model\n\n\nResult\nDimensionless score (lower = better)\nMSE units (interpretable)\n\n\n\n\n\n\nFor standard regression, AIC and 10-fold CV tend to select the same model. When they disagree, CV is often preferred for predictive tasks because it makes no distributional assumptions and reports error in the original units of \\(Y\\)."
+  },
+  {
+    "objectID": "slides/lec-17.html#summary",
+    "href": "slides/lec-17.html#summary",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Summary",
+    "text": "Summary\n\n\nOverfitting: Training MSE always decreases as models grow more complex; it is an overly optimistic measure of generalization. A high-degree polynomial fits the training data well but fails on new data\nTrain/test split: Randomly hold out 20–30% of observations before fitting; compute test MSE on the held-out set; valid but high-variance — the estimate changes with the random split\n\\(k\\)-fold CV: Partition data into \\(k\\) folds; for each fold, train on the remaining \\(k-1\\) folds and evaluate on the held-out fold; average the \\(k\\) MSEs to obtain \\(\\text{CV}_{(k)}\\); \\(k = 5\\) or \\(k = 10\\) is the standard choice\nLOOCV: Special case \\(k = n\\); unbiased but high-variance and expensive\nModel selection via CV: Compare CV MSE across candidate models; the model with the lowest CV MSE is preferred for out-of-sample prediction\nCV vs. AIC/BIC: Both estimate test error; AIC/BIC are fast and model-based; CV is slower but assumption-free and reports error in interpretable MSE units; both methods typically agree for standard regression"
+  },
+  {
+    "objectID": "slides/lec-17.html#questions",
+    "href": "slides/lec-17.html#questions",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "Questions?",
+    "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
+  },
+  {
+    "objectID": "slides/lec-17.html#a-new-goal-from-inference-to-prediction",
+    "href": "slides/lec-17.html#a-new-goal-from-inference-to-prediction",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "A New Goal: From Inference to Prediction",
+    "text": "A New Goal: From Inference to Prediction\n\nMost of this course has focused on inference — understanding the relationship between predictors and the response:\n\nIs \\(\\beta_k\\) significantly different from zero?\nWhat is a confidence interval for the mean response at \\(\\mathbf{X}_h\\)?\nWhich predictors belong in the model?\n\n\nToday we shift focus to prediction — how well does our model perform on data it has never seen?\n\nRather than asking “is this predictor significant?” we ask “does adding this predictor make our predictions better?”\nRather than measuring fit on the data used to build the model, we estimate performance on new observations\n\n\n\n\nThese two goals can lead to different model choices. A predictor can be statistically significant yet not meaningfully improve out-of-sample prediction — and vice versa."
+  },
+  {
+    "objectID": "slides/lec-17.html#from-inference-to-prediction",
+    "href": "slides/lec-17.html#from-inference-to-prediction",
+    "title": "Lecture 17: Cross-Validation",
+    "section": "From Inference to Prediction",
+    "text": "From Inference to Prediction\n\nMost of this course has focused on inference — understanding the relationship between predictors and the response:\n\nIs \\(\\beta_k\\) significantly different from zero?\nWhat is a confidence interval for the mean response at \\(\\mathbf{X}_h\\)?\nWhich predictors belong in the model?\n\n\nToday we shift focus to prediction — how well does our model perform on data it has never seen?\n\nRather than asking “is this predictor significant?” we ask “does adding this predictor make our predictions better?”\nRather than measuring fit on the data used to build the model, we estimate performance on new observations\n\n\n\n\nThese two goals can lead to different model choices. A predictor can be statistically significant yet not meaningfully improve out-of-sample prediction — and vice versa."
   }
 ]
