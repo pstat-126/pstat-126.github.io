@@ -199,7 +199,9 @@ This schedule will be updated as the quarter progresses. Topics, readings, and d
     </tr>
     <tr>
       <td class="date-cell">Wed, Nov 25</td>
-      <td class="topic-cell"> Asynchronous Lecture
+      <td class="topic-cell"> Cross Validation (Asynchronous Lecture)
+      <td><a class="badge-slide" href="slides/lec-17.qmd">Slides</a></td>
+
       <td></td>
       <td></td>
     </tr>
