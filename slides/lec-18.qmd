@@ -1,0 +1,968 @@
+---
+title: "Lecture 18: Multiple Regression — Surgical Unit Case Study"
+subtitle: "PSTAT 126: Linear Regression"
+author: "Annie Adams"
+institute: "UC Santa Barbara"
+date: "12/02/2026"
+format:
+  revealjs:
+    theme: [default, ../styles.scss]
+    slide-number: true
+    preview-links: auto
+    footer: "PSTAT 126 — Fall 2026 · UC Santa Barbara"
+    logo: ""
+    chalkboard: true
+    title-slide-attributes:
+      data-background-color: "#003660"
+---
+
+```{r}
+#| echo: false
+#| eval: true
+library(MASS)
+library(leaps)
+library(glmnet)
+```
+
+## Course Reminders
+
+::: {style="font-size: 0.90em;"}
+- Check Canvas for up to date grades
+
+:::
+
+---
+
+## Learning Objectives
+
+By the end of this lecture you will be able to:
+
+::: {style="font-size: 0.80em;"}
+
+- Use Box-Cox to identify an appropriate transformation for a right-skewed response
+- Conduct exploratory analysis before model fitting
+- Apply backward elimination, AIC/BIC stepwise selection, exhaustive search, cross-validation, and LASSO for variable selection
+- Compare and interpret models chosen by different methods
+- Encode a multi-level categorical variable as a factor and interpret the final model
+
+:::
+
+---
+
+## Cross-Validation Review {background-color="#003660"}
+
+---
+
+## Why Cross-Validation?
+
+::: {style="font-size: 0.72em;"}
+
+Training error (RSS, $R^2$, AIC) is measured on the **same data** used to fit the model — it rewards overfitting.
+
+::: {.fragment}
+**Cross-validation** estimates how well the model predicts **new, unseen observations** by repeatedly holding out part of the data.
+:::
+
+::: {.fragment}
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;"}
+Adding a predictor always reduces training RSS. CV MSE can **increase** when you add a useless predictor — that is the signal we want for model selection.
+:::
+:::
+
+:::
+
+---
+
+## $k$-Fold Cross-Validation
+
+::: {style="font-size: 0.70em;"}
+
+**Procedure:**
+
+::: {.incremental}
+1. Randomly partition the $n$ observations into $k$ equal folds
+2. For each fold $j = 1, \ldots, k$: fit the model on the other $k - 1$ folds, then predict the held-out fold
+3. Compute fold $j$'s mean squared error: $\;\text{MSE}_j = \dfrac{1}{|j|}\displaystyle\sum_{i \in \text{fold } j}(Y_i - \hat{Y}_i)^2$
+4. Average across all folds: $\;\text{CV}_{(k)} = \dfrac{1}{k}\displaystyle\sum_{j=1}^k \text{MSE}_j$
+:::
+
+::: {.fragment}
+Choose the model with the **lowest** $\text{CV}_{(k)}$.  $k = 10$ is the standard choice — good bias-variance trade-off.
+:::
+
+:::
+
+---
+
+## LASSO: Penalized Regression {background-color="#003660"}
+
+---
+
+## The Limits of Subset Selection
+
+::: {style="font-size: 0.72em;"}
+
+Stepwise and exhaustive methods pick a **discrete subset** of predictors — each variable is either fully in or completely out.
+
+::: {.fragment}
+**Practical problems:**
+
+- With $p$ predictors, exhaustive search evaluates $2^p$ models — infeasible for large $p$
+- Stepwise procedures are **unstable**: small changes to the data can flip which variables are selected
+- Discarding a coefficient entirely ignores the possibility that a predictor is *mildly* informative
+:::
+
+::: {.fragment}
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.3em;"}
+**LASSO** offers a continuous alternative: it shrinks all coefficients toward zero and sets unimportant ones to **exactly zero**, combining estimation and selection in a single step.
+:::
+:::
+
+:::
+
+---
+
+## The LASSO Objective
+
+::: {style="font-size: 0.72em;"}
+
+OLS minimizes RSS alone:
+
+$$\min_{\boldsymbol{\beta}} \sum_{i=1}^n \left(y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij}\right)^2$$
+
+**LASSO** adds an $\ell_1$ penalty on the coefficient magnitudes:
+
+$$\min_{\boldsymbol{\beta}} \underbrace{\sum_{i=1}^n \!\left(y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij}\right)^2}_{\text{residual sum of squares}} + \;\lambda \underbrace{\sum_{j=1}^p |\beta_j|}_{\ell_1 \text{ penalty}}$$
+
+::: {.fragment}
+- $\lambda \geq 0$ is a **tuning parameter** controlling the amount of shrinkage
+- $\lambda = 0$: LASSO reduces to OLS
+- $\lambda \to \infty$: all slope estimates shrink to zero
+:::
+
+:::
+
+---
+
+## Why LASSO Produces Sparse Solutions
+
+::: columns
+::: {.column width="52%"}
+
+::: {style="font-size: 0.65em;"}
+The $\ell_1$ constraint region is a **diamond** with corners on the coordinate axes.
+
+The OLS solution (center of the red ellipses) lies off-axis, so the smallest ellipse that touches the diamond typically hits a **corner** — where one or more $\beta_j = 0$.
+
+This is why LASSO performs **automatic variable selection**, unlike Ridge regression whose $\ell_2$ ball has no corners.
+:::
+
+:::
+
+::: {.column width="48%"}
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-height: 4.2
+par(mar = c(3, 3, 1.5, 1), pty = "s")
+theta <- seq(0, 2 * pi, length.out = 500)
+plot(c(-1.6, 1.6), c(-1.6, 1.6), type = "n", asp = 1,
+     xlab = expression(beta[1]), ylab = expression(beta[2]),
+     main = "LASSO constraint region")
+polygon(c(1, 0, -1, 0), c(0, 1, 0, -1),
+        col = "#003660", border = NA, density = 25, angle = 45)
+lines(c(1, 0, -1, 0, 1), c(0, 1, 0, -1, 0),
+      col = "#003660", lwd = 2)
+for (r in c(0.45, 0.80, 1.15, 1.50)) {
+  lines(r * cos(theta) + 0.85, r * sin(theta) * 0.55 - 0.25,
+        col = "#C0392B", lty = 1)
+}
+points(0, 1, pch = 19, col = "#FEBC11", cex = 2)
+legend("topright",
+       legend = c("LASSO region", "OLS contours", "LASSO solution"),
+       col    = c("#003660", "#C0392B", "#FEBC11"),
+       lty    = c(1, 1, NA), pch = c(NA, NA, 19),
+       bty    = "n", cex = 0.68)
+```
+
+:::
+:::
+
+---
+
+## Choosing $\lambda$ via Cross-Validation
+
+::: {style="font-size: 0.72em;"}
+
+$\lambda$ is not estimated from the data like $\boldsymbol{\beta}$ — it is chosen by **cross-validation**.
+
+**`cv.glmnet()` procedure:**
+
+::: {.incremental}
+1. Fit LASSO across a grid of $\lambda$ values
+2. For each $\lambda$, compute 10-fold CV MSE
+3. Report two useful choices:
+   - $\lambda_{\min}$: the $\lambda$ with the **lowest** average CV MSE (best prediction)
+   - $\lambda_{\text{1se}}$: the **largest** $\lambda$ within 1 SE of $\lambda_{\min}$ (sparser, more conservative)
+:::
+
+::: {.fragment}
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #58A867; margin-top: 0.3em;"}
+$\lambda_{\min}$ minimizes prediction error. $\lambda_{\text{1se}}$ applies the parsimony principle — choose the simplest model that is nearly as good.
+:::
+:::
+
+:::
+
+---
+
+## The Research Question {background-color="#003660"}
+
+---
+
+## Surgical Unit Data
+
+::: {style="font-size: 0.72em;"}
+
+A hospital surgical unit studied **survival after liver surgery**. Data were collected on a random sample of **108 patients**.
+
+**Response:** Survival time in days (right-skewed — typical for survival data)
+
+**Predictors:**
+
+| Variable | Description |
+|:---------|:------------|
+| `bloodclot` ($X_1$) | Blood clotting score |
+| `progindex` ($X_2$) | Prognostic index |
+| `enzyme` ($X_3$) | Enzyme function test score |
+| `liver` ($X_4$) | Liver function test score |
+| `age` ($X_5$) | Age in years |
+| `gender` ($X_6$) | Gender (0 = male, 1 = female) |
+| `alc_mod` ($X_7$) | Moderate alcohol use (indicator) |
+| `alc_sev` ($X_8$) | Severe alcohol use (indicator) |
+
+:::
+
+---
+
+## Create the Dataset
+
+```{r}
+#| echo: true
+#| eval: true
+set.seed(126)
+n <- 108
+
+bloodclot <- round(runif(n, 2, 14))
+progindex <- round(runif(n, 20, 95))
+enzyme    <- round(runif(n, 15, 85))
+liver     <- round(runif(n,  1,  6), 1)
+age       <- round(runif(n, 25, 70))
+gender    <- rbinom(n, 1, 0.40)
+alc       <- sample(0:2, n, replace = TRUE, prob = c(0.40, 0.35, 0.25))
+alc_mod   <- as.integer(alc == 1)
+alc_sev   <- as.integer(alc == 2)
+
+log_surv <- 4.0 + 0.09*bloodclot + 0.013*progindex + 0.016*enzyme +
+            0.0005*liver - 0.003*age - 0.08*gender +
+            0.06*alc_mod + 0.40*alc_sev + rnorm(n, 0, 0.22)
+survival <- round(exp(log_surv))
+
+surgical <- data.frame(survival, bloodclot, progindex, enzyme,
+                        liver, age, gender, alc_mod, alc_sev)
+head(surgical, 4)
+```
+
+---
+
+## Step 1: Can We Model Survival Directly? {background-color="#003660"}
+
+---
+
+## Initial Fit — Original Scale
+
+```{r}
+#| echo: true
+#| eval: true
+fit_raw <- lm(survival ~ bloodclot + progindex + enzyme +
+                liver + age + gender + alc_mod + alc_sev,
+              data = surgical)
+```
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-height: 3.8
+par(mfrow = c(1, 2), mar = c(4, 4, 2, 1))
+plot(fitted(fit_raw), residuals(fit_raw),
+     xlab = "Fitted values", ylab = "Residuals",
+     main = "Residuals vs Fitted", pch = 19, col = "#003660", cex = 0.7)
+abline(h = 0, lty = 2, col = "gray50")
+qqnorm(residuals(fit_raw), main = "Normal Q-Q",
+       pch = 19, col = "#003660", cex = 0.7, ylab = "Residuals")
+qqline(residuals(fit_raw))
+```
+
+::: {style="font-size: 0.65em;"}
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #C0392B; margin-top: 0.3em;"}
+Clear funnel pattern and heavy tail — equal variance and normality are violated. We need to **transform the response**.
+:::
+:::
+
+---
+
+## Box-Cox: Finding the Right Transformation
+
+::: {style="font-size: 0.70em;"}
+
+Box-Cox searches for the power $\lambda$ such that $Y^{(\lambda)}$ satisfies regression assumptions:
+
+$$Y^{(\lambda)} = \begin{cases} (Y^\lambda - 1)/\lambda & \lambda \neq 0 \\ \log Y & \lambda = 0 \end{cases}$$
+
+:::
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-height: 3.5
+boxcox(fit_raw, lambda = seq(-0.5, 0.5, by = 1/20))
+```
+
+::: {style="font-size: 0.68em;"}
+::: {.fragment}
+The 95% CI for $\lambda$ contains **0** — a **log transformation** is appropriate.
+:::
+:::
+
+---
+
+## Step 2: Exploratory Analysis {background-color="#003660"}
+
+---
+
+## Log-Transform the Response
+
+```{r}
+#| echo: true
+#| eval: true
+surgical$log_surv <- log(surgical$survival)
+```
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-height: 3.2
+par(mfrow = c(1, 2), mar = c(4, 4, 2, 1))
+hist(surgical$survival, main = "Raw survival (days)",
+     xlab = "Survival", col = "#003660", border = "white", breaks = 20)
+hist(surgical$log_surv, main = "Log survival",
+     xlab = "log(Survival)", col = "#FEBC11", border = "white", breaks = 20)
+```
+
+::: {style="font-size: 0.68em;"}
+::: {.fragment}
+The log-transformed distribution is approximately symmetric. We will use `log_surv` as our response for all subsequent modeling.
+:::
+:::
+
+---
+
+## Scatter Matrix — Continuous Predictors
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-height: 4.5
+pairs(surgical[, c("log_surv","bloodclot","progindex","enzyme","liver","age")],
+      labels = c("LnSurv","Bloodclot","Progindex","Enzyme","Liver","Age"),
+      cex = 0.5, pch = 19, col = "#003660")
+```
+
+::: {style="font-size: 0.65em;"}
+`log_surv` shows the clearest positive linear relationships with `bloodclot`, `progindex`, and `enzyme`. The relationships with `liver` and `age` are weaker.
+:::
+
+---
+
+## Boxplots — Categorical Predictors
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-height: 3.8
+par(mfrow = c(1, 2), mar = c(4, 4, 2, 1))
+boxplot(log_surv ~ gender, data = surgical,
+        names = c("Male", "Female"), ylab = "log(Survival)",
+        main = "By Gender", col = c("#003660","#FEBC11"))
+alc_f <- factor(surgical$alc_mod + 2*surgical$alc_sev,
+                levels = 0:2, labels = c("None","Moderate","Severe"))
+boxplot(surgical$log_surv ~ alc_f, ylab = "log(Survival)",
+        main = "By Alcohol Use",
+        col = c("#f5f5f5","#FEBC11","#C0392B"))
+```
+
+::: {style="font-size: 0.65em;"}
+Severe alcohol use is associated with noticeably **higher** log survival time. Gender differences are small.
+:::
+
+---
+
+## Step 3: Fit the Full Model {background-color="#003660"}
+
+---
+
+## Full Model
+
+```{r}
+#| echo: true
+#| eval: true
+fit_full <- lm(log_surv ~ bloodclot + progindex + enzyme +
+                 liver + age + gender + alc_mod + alc_sev,
+               data = surgical)
+summary(fit_full)
+```
+
+---
+
+## Interpreting the Full Model
+
+::: {style="font-size: 0.68em;"}
+
+```{r}
+#| echo: false
+#| eval: true
+round(coef(summary(fit_full)), 4)
+```
+
+::: {.fragment}
+**Clearly significant:** `bloodclot`, `progindex`, `enzyme`, `alc_sev`
+
+**Not significant at $\alpha = 0.05$:** `liver`, `age`, `gender`, `alc_mod`
+:::
+
+::: {.fragment}
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #FEBC11; margin-top: 0.3em;"}
+With 8 predictors, the model is complex. Can we find a **simpler model** that fits just as well? This is the goal of variable selection.
+:::
+:::
+
+:::
+
+---
+
+## Step 4: Variable Selection {background-color="#003660"}
+
+---
+
+## Strategy
+
+::: {style="font-size: 0.72em;"}
+
+We will apply **five approaches** and compare their results:
+
+::: {.incremental}
+1. **Backward elimination** using F tests (`drop1`)
+2. **Stepwise backward selection** using AIC and BIC (`step`)
+3. **Exhaustive search** using AIC (`leaps`)
+4. **Cross-validation** on best subsets
+5. **LASSO** penalized regression (`glmnet`)
+:::
+
+::: {.fragment}
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;"}
+No single method is universally best. When multiple methods agree, we have stronger evidence for a model choice.
+:::
+:::
+
+:::
+
+---
+
+## Approach 1: Backward Elimination with F Tests
+
+::: {style="font-size: 0.68em;"}
+`drop1(fit, test = "F")` shows what happens if we drop each predictor **one at a time** from the current model. We drop the predictor with the **largest p-value** and repeat.
+:::
+
+```{r}
+#| echo: true
+#| eval: true
+drop1(fit_full, test = "F")
+```
+
+::: {style="font-size: 0.65em;"}
+::: {.fragment}
+`liver` has the largest p-value — drop it and refit.
+:::
+:::
+
+---
+
+## Backward Elimination — Continuing
+
+```{r}
+#| echo: true
+#| eval: true
+fit_b2 <- update(fit_full, . ~ . - liver)
+drop1(fit_b2, test = "F")
+```
+
+::: {.fragment}
+```{r}
+#| echo: true
+#| eval: true
+fit_b3 <- update(fit_b2, . ~ . - gender)
+drop1(fit_b3, test = "F")
+```
+:::
+
+---
+
+## Backward Elimination — Final Step
+
+```{r}
+#| echo: true
+#| eval: true
+fit_b4 <- update(fit_b3, . ~ . - alc_mod)
+drop1(fit_b4, test = "F")
+```
+
+::: {style="font-size: 0.65em;"}
+::: {.fragment}
+All remaining predictors are significant. **Backward elimination final model:**
+
+$$\texttt{log\_surv} \sim \texttt{bloodclot} + \texttt{progindex} + \texttt{enzyme} + \texttt{age} + \texttt{alc\_sev}$$
+:::
+:::
+
+---
+
+## Approach 2: Stepwise via AIC and BIC
+
+::: {style="font-size: 0.72em;"}
+
+`step()` automates the stepwise procedure. Use $k = 2$ for AIC, $k = \log n$ for BIC.
+
+:::
+
+```{r}
+#| echo: true
+#| eval: true
+fit_aic <- step(fit_full, direction = "backward", trace = 0)
+formula(fit_aic)
+```
+
+::: {.fragment}
+```{r}
+#| echo: true
+#| eval: true
+fit_bic <- step(fit_full, direction = "backward",
+                k = log(nrow(surgical)), trace = 0)
+formula(fit_bic)
+```
+:::
+
+::: {.fragment style="font-size: 0.68em;"}
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;"}
+BIC ($k = \log n \approx 4.68$) applies a heavier penalty than AIC ($k = 2$) and tends to select **fewer variables**.
+:::
+:::
+
+---
+
+## Approach 3: Exhaustive Search
+
+::: {style="font-size: 0.70em;"}
+
+`regsubsets()` from the `leaps` package evaluates all $2^8 = 256$ possible subsets and returns the **best model** (lowest RSS) for each subset size.
+
+:::
+
+```{r}
+#| echo: true
+#| eval: true
+X <- with(surgical, cbind(bloodclot, progindex, enzyme,
+                           liver, age, gender, alc_mod, alc_sev))
+colnames(X) <- c("bloodclot","progindex","enzyme",
+                  "liver","age","gender","alc_mod","alc_sev")
+y <- surgical$log_surv
+
+rs      <- regsubsets(X, y, method = "exhaustive")
+rs_sum  <- summary(rs)
+rs_sum$which
+```
+
+---
+
+## AIC Across All Subset Sizes
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-height: 3.8
+n_obs   <- nrow(surgical)
+aic_all <- n_obs * log(rs_sum$rss / n_obs) + 2 * (2:9)
+
+plot(2:9, aic_all, xlab = "p (number of parameters)", ylab = "AIC",
+     pch = 19, col = "#003660", cex = 1.2, type = "b")
+points(which.min(aic_all) + 1, min(aic_all),
+       pch = 8, col = "#C0392B", cex = 2)
+```
+
+::: {style="font-size: 0.65em;"}
+The red star marks the best subset size by AIC. Diminishing returns in AIC improvement beyond this point confirm a parsimonious model is appropriate.
+:::
+
+---
+
+## Approach 4: Cross-Validation on Best Subsets
+
+```{r}
+#| echo: true
+#| eval: true
+set.seed(126)
+fold   <- sample(cut(seq(n), breaks = 10, labels = FALSE))
+pse_cv <- matrix(NA, n, 8)
+
+for (i in 1:8) {
+  vars_i <- which(rs_sum$which[i, -1])
+  for (j in 1:10) {
+    tmp  <- lm(y ~ X[, vars_i], subset = (fold != j))
+    pred <- as.vector(X[fold == j, vars_i, drop = FALSE] %*%
+                        coef(tmp)[-1]) + coef(tmp)[1]
+    pse_cv[fold == j, i] <- (y[fold == j] - pred)^2
+  }
+}
+
+cv_means <- colMeans(pse_cv, na.rm = TRUE)
+round(cv_means, 4)
+```
+
+---
+
+## CV Prediction Error Plot
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-height: 4.0
+plot(2:9, cv_means, type = "b", pch = 19, col = "#003660", cex = 1.2,
+     xlab = "Number of parameters",
+     ylab = "CV estimate of prediction error")
+points(which.min(cv_means) + 1, min(cv_means),
+       pch = 8, col = "#C0392B", cex = 2)
+```
+
+::: {style="font-size: 0.65em;"}
+::: {.fragment}
+CV corroborates the AIC results — a model with ~4–5 parameters gives the lowest estimated prediction error.
+:::
+:::
+
+---
+
+## Approach 5: LASSO
+
+::: {style="font-size: 0.72em;"}
+
+LASSO adds a penalty on the $\ell_1$ norm of the coefficients, shrinking some to exactly zero:
+
+$$\min_{\boldsymbol\beta} \sum_{i=1}^n \!\left(y_i - \beta_0 - \textstyle\sum_j \beta_j x_{ij}\right)^2 + \lambda \sum_{j=1}^p |\beta_j|$$
+
+Larger $\lambda$ $\rightarrow$ more shrinkage $\rightarrow$ fewer non-zero coefficients.
+
+:::
+
+```{r}
+#| echo: true
+#| eval: true
+fit_lasso    <- glmnet(X, y, alpha = 1, lambda.min = 0, nlambda = 101)
+fit_lasso_cv <- cv.glmnet(X, y, alpha = 1, lambda.min = 0, nlambda = 101)
+```
+
+---
+
+## LASSO Coefficient Path
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-height: 4.2
+plot(fit_lasso, xvar = "lambda", xlim = c(-8, 0), label = TRUE)
+abline(v = log(fit_lasso_cv$lambda.min), col = "#C0392B", lty = 2, lwd = 2)
+legend("topleft", legend = colnames(X), lty = 1, cex = 0.5,
+       col = 1:8, bty = "n")
+```
+
+::: {style="font-size: 0.65em;"}
+The red dashed line is the CV-optimal $\lambda$. Variables whose paths hit zero to the right of this line are excluded from the LASSO model.
+:::
+
+---
+
+## LASSO Cross-Validation
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-height: 4.0
+plot(fit_lasso_cv)
+```
+
+::: {style="font-size: 0.65em;"}
+::: {.fragment}
+Left dashed line: $\lambda_{\min}$ (lowest CV error). Right dashed line: $\lambda_{\text{1se}}$ (simplest model within 1 SE of best). The number at the top is non-zero coefficient count.
+:::
+:::
+
+---
+
+## LASSO Coefficients
+
+```{r}
+#| echo: true
+#| eval: true
+lasso_min <- coef(fit_lasso_cv, s = "lambda.min")
+lasso_1se <- coef(fit_lasso_cv, s = "lambda.1se")
+
+data.frame(
+  OLS   = round(c(coef(fit_full)), 4),
+  LASSO_min = round(as.vector(lasso_min), 4),
+  LASSO_1se = round(as.vector(lasso_1se), 4),
+  row.names = rownames(lasso_min)
+)
+```
+
+::: {style="font-size: 0.65em;"}
+::: {.fragment}
+LASSO shrinks small OLS coefficients toward zero. At $\lambda_{\text{1se}}$, coefficients for weaker predictors may be exactly zero — automatic variable selection.
+:::
+:::
+
+---
+
+## Step 5: Comparing Methods {background-color="#003660"}
+
+---
+
+## Summary of All Methods
+
+::: {style="font-size: 0.65em;"}
+
+| Method | Variables retained |
+|:-------|:------------------|
+| Backward F test | bloodclot, progindex, enzyme, age, alc_sev |
+| AIC backward | see `formula(fit_aic)` |
+| BIC backward | see `formula(fit_bic)` — fewest variables |
+| Exhaustive (AIC) | 4–5 variable model |
+| Cross-validation | Consistent with 4–5 variables |
+| LASSO ($\lambda_{\min}$) | Most variables, shrunken |
+| LASSO ($\lambda_{\text{1se}}$) | Aggressive shrinkage |
+
+::: {.fragment}
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #58A867; margin-top: 0.4em;"}
+**Consensus:** `bloodclot`, `progindex`, `enzyme`, and `alc_sev` appear in every parsimonious model. These four predictors are robustly important for predicting log survival time.
+:::
+:::
+
+:::
+
+---
+
+## Step 6: Final Model and Diagnostics {background-color="#003660"}
+
+---
+
+## Treating Alcohol Use as a Factor
+
+::: {style="font-size: 0.72em;"}
+
+Instead of two separate dummies `alc_mod` and `alc_sev`, encode alcohol use as a **single factor** with three levels. R will create the dummies automatically, using "None" as the reference category.
+
+:::
+
+```{r}
+#| echo: true
+#| eval: true
+surgical$alcohol <- factor(surgical$alc_mod + 2*surgical$alc_sev,
+                            levels = 0:2,
+                            labels = c("None","Moderate","Severe"))
+table(surgical$alcohol)
+```
+
+::: {.fragment}
+```{r}
+#| echo: true
+#| eval: true
+fit_final <- lm(log_surv ~ bloodclot + progindex + enzyme + alcohol,
+                data = surgical)
+round(coef(summary(fit_final)), 4)
+```
+:::
+
+---
+
+## Interpreting the Final Model
+
+::: {style="font-size: 0.68em;"}
+
+```{r}
+#| echo: false
+#| eval: true
+cf <- round(coef(fit_final), 4)
+```
+
+Working on the **log scale**, a one-unit increase in a predictor multiplies the **median survival time** by $e^{\hat\beta}$:
+
+::: {.fragment}
+- Each additional point in blood clotting score multiplies median survival by $e^{`r cf["bloodclot"]`} = `r round(exp(cf["bloodclot"]), 3)`$
+
+- Each additional point in enzyme score multiplies median survival by $e^{`r cf["enzyme"]`} = `r round(exp(cf["enzyme"]), 3)`$
+:::
+
+::: {.fragment}
+- Patients with **severe** alcohol use have median survival $e^{`r cf["alcoholSevere"]`} = `r round(exp(cf["alcoholSevere"]), 2)`\times$ higher than non-drinkers, **after adjusting** for clinical markers
+
+- **Moderate** alcohol use shows little difference from non-drinkers (`r cf["alcoholModerate"]`)
+:::
+
+::: {.fragment}
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;"}
+The positive severe-alcohol effect is a real pattern in the original surgical data — not necessarily a causal claim. Confounding (e.g., age or type of liver disease) may explain it.
+:::
+:::
+
+:::
+
+---
+
+## Final Model — Residual Diagnostics
+
+```{r}
+#| echo: true
+#| eval: true
+#| fig-height: 4.0
+par(mfrow = c(1, 2), mar = c(4, 4, 2, 1))
+plot(fitted(fit_final), residuals(fit_final),
+     xlab = "Fitted values", ylab = "Residuals",
+     main = "Residuals vs Fitted",
+     pch = 19, col = "#003660", cex = 0.7)
+abline(h = 0, lty = 2, col = "gray50")
+qqnorm(residuals(fit_final), main = "Normal Q-Q",
+       pch = 19, col = "#003660", cex = 0.7, ylab = "Residuals")
+qqline(residuals(fit_final))
+```
+
+::: {style="font-size: 0.65em;"}
+::: {.fragment}
+Residuals are approximately randomly scattered around zero with roughly constant spread. The Q-Q plot is close to the diagonal. The log transformation resolved the original assumption violations.
+:::
+:::
+
+---
+
+## Practice
+
+::: {style="font-size: 0.72em;"}
+
+Using the `surgical` dataset from this lecture:
+
+**(a)** Run **forward selection** using AIC, starting from the intercept-only model. Does it arrive at the same model as backward AIC?
+
+```r
+step(lm(log_surv ~ 1, data = surgical),
+     scope = list(upper = formula(fit_full)),
+     direction = "forward", trace = 0)
+```
+
+**(b)** A classmate ran a stepwise selection procedure on `fit_full` and shared the **first step** of their output. Is this **forward or backward selection**? Explain using **two features** of the output.
+
+```
+Start:  AIC = -246.12
+log_surv ~ bloodclot + progindex + enzyme + liver + age + gender + alc_mod + alc_sev
+
+           Df  Sum of Sq    RSS      AIC
+- liver     1    0.00105  4.326  -247.98
+- gender    1    0.03481  4.360  -247.03
+- alc_mod   1    0.03997  4.365  -246.90
+<none>                    4.325  -246.12
+- age       1    0.09804  4.423  -245.26
+- alc_sev   1    0.42820  4.754  -237.81
+```
+
+**(c)** Exponentiate the coefficient on `alcoholSevere` from `fit_final`. Write one sentence interpreting this value in terms of the **original** survival time (days).
+
+:::
+
+---
+
+## Practice: Solutions
+
+::: {style="font-size: 0.63em;"}
+
+**(a)** Forward selection:
+
+```{r}
+#| echo: true
+#| eval: true
+fit_fwd <- step(lm(log_surv ~ 1, data = surgical),
+                scope = list(upper = formula(fit_full)),
+                direction = "forward", trace = 0)
+formula(fit_fwd)
+```
+
+::: {.fragment}
+**(b)** This is **backward selection**. Two clues from the output:
+
+1. **The starting model contains all 8 predictors** — backward selection begins at the full model and removes predictors one at a time. Forward selection would start from `log_surv ~ 1` (intercept only).
+
+2. **Every candidate row is prefixed with `−`** — each option represents *removing* a predictor. Forward selection would show `+` rows, since it considers *adding* one predictor at a time.
+
+::: {style="background-color: #f5f5f5; padding: 0.4em 1em; border-left: 4px solid #003660; margin-top: 0.3em;"}
+The first variable to drop is `liver` (lowest AIC after removal: −247.98 vs. current −246.12).
+:::
+:::
+
+::: {.fragment}
+**(c)** `exp(coef(fit_final)["alcoholSevere"])` $\approx$ `r round(exp(coef(fit_final)["alcoholSevere"]), 2)`: patients with severe alcohol use have a median survival roughly **`r round(exp(coef(fit_final)["alcoholSevere"]), 2)`× longer** (in days) than non-drinkers with the same clinical test scores.
+:::
+
+:::
+
+---
+
+## Summary
+
+::: {style="font-size: 0.63em;"}
+
+::: {.incremental}
+
+- **Transform first:** Residual plots on the raw survival scale showed non-normality and non-constant variance. Box-Cox confirmed $\lambda \approx 0$, so we modeled **log(survival)**
+
+- **Explore before modeling:** The scatter matrix and boxplots revealed which predictors seemed most strongly related to log survival before any formal selection
+
+- **Full model as starting point:** Fit all 8 predictors to understand the full picture, then apply variable selection to reduce complexity
+
+- **Multiple selection methods — consistent conclusion:** Backward F, AIC/BIC stepwise, exhaustive search (AIC), 10-fold CV, and LASSO all pointed to `bloodclot`, `progindex`, `enzyme`, and `alc_sev` as the core predictors
+
+- **Encode factors properly:** Using `factor()` for alcohol use produces cleaner code and allows a proper group-level F-test
+
+- **Diagnose the final model:** Always verify residual assumptions hold for the **chosen** model — not just the full model — after all transformations are applied
+
+:::
+
+:::
+
+---
+
+## Questions? {background-color="#003660"}
+
+::: {style="text-align: center; margin-top: 2em;"}
+**Annie Adams**
+[aradams@ucsb.edu](mailto:aradams@ucsb.edu)
+
+Office Hours: Tuesday 10 – 11 AM on [Zoom](https://ucsb.zoom.us/j/81194403106?pwd=sQo3HO4iaAnzcY0apRmIyAdC1KbVfT.1)
+
+[Course Website](https://pstat-126.github.io/)
+:::

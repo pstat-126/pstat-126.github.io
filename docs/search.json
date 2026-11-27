@@ -5255,5 +5255,341 @@
     "title": "Lecture 17: Cross-Validation",
     "section": "From Inference to Prediction",
     "text": "From Inference to Prediction\n\nMost of this course has focused on inference — understanding the relationship between predictors and the response:\n\nIs \\(\\beta_k\\) significantly different from zero?\nWhat is a confidence interval for the mean response at \\(\\mathbf{X}_h\\)?\nWhich predictors belong in the model?\n\n\nToday we shift focus to prediction — how well does our model perform on data it has never seen?\n\nRather than asking “is this predictor significant?” we ask “does adding this predictor make our predictions better?”\nRather than measuring fit on the data used to build the model, we estimate performance on new observations\n\n\n\n\nThese two goals can lead to different model choices. A predictor can be statistically significant yet not meaningfully improve out-of-sample prediction — and vice versa."
+  },
+  {
+    "objectID": "slides/lec-18.html#course-reminders",
+    "href": "slides/lec-18.html#course-reminders",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Course Reminders",
+    "text": "Course Reminders\n\n\nCheck Canvas for up to date grades"
+  },
+  {
+    "objectID": "slides/lec-18.html#learning-objectives",
+    "href": "slides/lec-18.html#learning-objectives",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\nBy the end of this lecture you will be able to:\n\n\nUse Box-Cox to identify an appropriate transformation for a right-skewed response\nConduct exploratory analysis before model fitting\nApply backward elimination, AIC/BIC stepwise selection, exhaustive search, cross-validation, and LASSO for variable selection\nCompare and interpret models chosen by different methods\nEncode a multi-level categorical variable as a factor and interpret the final model"
+  },
+  {
+    "objectID": "slides/lec-18.html#the-research-question",
+    "href": "slides/lec-18.html#the-research-question",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "The Research Question",
+    "text": "The Research Question"
+  },
+  {
+    "objectID": "slides/lec-18.html#surgical-unit-data",
+    "href": "slides/lec-18.html#surgical-unit-data",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Surgical Unit Data",
+    "text": "Surgical Unit Data\n\nA hospital surgical unit studied survival after liver surgery. Data were collected on a random sample of 108 patients.\nResponse: Survival time in days (right-skewed — typical for survival data)\nPredictors:\n\n\n\nVariable\nDescription\n\n\n\n\nbloodclot (\\(X_1\\))\nBlood clotting score\n\n\nprogindex (\\(X_2\\))\nPrognostic index\n\n\nenzyme (\\(X_3\\))\nEnzyme function test score\n\n\nliver (\\(X_4\\))\nLiver function test score\n\n\nage (\\(X_5\\))\nAge in years\n\n\ngender (\\(X_6\\))\nGender (0 = male, 1 = female)\n\n\nalc_mod (\\(X_7\\))\nModerate alcohol use (indicator)\n\n\nalc_sev (\\(X_8\\))\nSevere alcohol use (indicator)"
+  },
+  {
+    "objectID": "slides/lec-18.html#create-the-dataset",
+    "href": "slides/lec-18.html#create-the-dataset",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Create the Dataset",
+    "text": "Create the Dataset\n\nset.seed(126)\nn &lt;- 108\n\nbloodclot &lt;- round(runif(n, 2, 14))\nprogindex &lt;- round(runif(n, 20, 95))\nenzyme    &lt;- round(runif(n, 15, 85))\nliver     &lt;- round(runif(n,  1,  6), 1)\nage       &lt;- round(runif(n, 25, 70))\ngender    &lt;- rbinom(n, 1, 0.40)\nalc       &lt;- sample(0:2, n, replace = TRUE, prob = c(0.40, 0.35, 0.25))\nalc_mod   &lt;- as.integer(alc == 1)\nalc_sev   &lt;- as.integer(alc == 2)\n\nlog_surv &lt;- 4.0 + 0.09*bloodclot + 0.013*progindex + 0.016*enzyme +\n            0.0005*liver - 0.003*age - 0.08*gender +\n            0.06*alc_mod + 0.40*alc_sev + rnorm(n, 0, 0.22)\nsurvival &lt;- round(exp(log_surv))\n\nsurgical &lt;- data.frame(survival, bloodclot, progindex, enzyme,\n                        liver, age, gender, alc_mod, alc_sev)\nhead(surgical, 4)\n\n  survival bloodclot progindex enzyme liver age gender alc_mod alc_sev\n1      570        10        47     45   1.1  66      0       1       0\n2      499         7        75     62   1.6  59      0       0       0\n3      496        10        87     20   4.2  69      0       0       0\n4      620        10        31     82   3.4  66      1       1       0"
+  },
+  {
+    "objectID": "slides/lec-18.html#step-1-can-we-model-survival-directly",
+    "href": "slides/lec-18.html#step-1-can-we-model-survival-directly",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Step 1: Can We Model Survival Directly?",
+    "text": "Step 1: Can We Model Survival Directly?"
+  },
+  {
+    "objectID": "slides/lec-18.html#initial-fit-original-scale",
+    "href": "slides/lec-18.html#initial-fit-original-scale",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Initial Fit — Original Scale",
+    "text": "Initial Fit — Original Scale\n\nfit_raw &lt;- lm(survival ~ bloodclot + progindex + enzyme +\n                liver + age + gender + alc_mod + alc_sev,\n              data = surgical)\n\n\n\n\nClear funnel pattern and heavy tail — equal variance and normality are violated. We need to transform the response."
+  },
+  {
+    "objectID": "slides/lec-18.html#box-cox-finding-the-right-transformation",
+    "href": "slides/lec-18.html#box-cox-finding-the-right-transformation",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Box-Cox: Finding the Right Transformation",
+    "text": "Box-Cox: Finding the Right Transformation\n\nBox-Cox searches for the power \\(\\lambda\\) such that \\(Y^{(\\lambda)}\\) satisfies regression assumptions:\n\\[Y^{(\\lambda)} = \\begin{cases} (Y^\\lambda - 1)/\\lambda & \\lambda \\neq 0 \\\\ \\log Y & \\lambda = 0 \\end{cases}\\]\n\n\nboxcox(fit_raw, lambda = seq(-0.5, 0.5, by = 1/20))\n\n\n\n\nThe 95% CI for \\(\\lambda\\) contains 0 — a log transformation is appropriate."
+  },
+  {
+    "objectID": "slides/lec-18.html#step-2-exploratory-analysis",
+    "href": "slides/lec-18.html#step-2-exploratory-analysis",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Step 2: Exploratory Analysis",
+    "text": "Step 2: Exploratory Analysis"
+  },
+  {
+    "objectID": "slides/lec-18.html#log-transform-the-response",
+    "href": "slides/lec-18.html#log-transform-the-response",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Log-Transform the Response",
+    "text": "Log-Transform the Response\n\nsurgical$log_surv &lt;- log(surgical$survival)\n\n\n\n\nThe log-transformed distribution is approximately symmetric. We will use log_surv as our response for all subsequent modeling."
+  },
+  {
+    "objectID": "slides/lec-18.html#scatter-matrix-continuous-predictors",
+    "href": "slides/lec-18.html#scatter-matrix-continuous-predictors",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Scatter Matrix — Continuous Predictors",
+    "text": "Scatter Matrix — Continuous Predictors\n\npairs(surgical[, c(\"log_surv\",\"bloodclot\",\"progindex\",\"enzyme\",\"liver\",\"age\")],\n      labels = c(\"LnSurv\",\"Bloodclot\",\"Progindex\",\"Enzyme\",\"Liver\",\"Age\"),\n      cex = 0.5, pch = 19, col = \"#003660\")\n\n\n\nlog_surv shows the clearest positive linear relationships with bloodclot, progindex, and enzyme. The relationships with liver and age are weaker."
+  },
+  {
+    "objectID": "slides/lec-18.html#boxplots-categorical-predictors",
+    "href": "slides/lec-18.html#boxplots-categorical-predictors",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Boxplots — Categorical Predictors",
+    "text": "Boxplots — Categorical Predictors\n\npar(mfrow = c(1, 2), mar = c(4, 4, 2, 1))\nboxplot(log_surv ~ gender, data = surgical,\n        names = c(\"Male\", \"Female\"), ylab = \"log(Survival)\",\n        main = \"By Gender\", col = c(\"#003660\",\"#FEBC11\"))\nalc_f &lt;- factor(surgical$alc_mod + 2*surgical$alc_sev,\n                levels = 0:2, labels = c(\"None\",\"Moderate\",\"Severe\"))\nboxplot(surgical$log_surv ~ alc_f, ylab = \"log(Survival)\",\n        main = \"By Alcohol Use\",\n        col = c(\"#f5f5f5\",\"#FEBC11\",\"#C0392B\"))\n\n\n\nSevere alcohol use is associated with noticeably higher log survival time. Gender differences are small."
+  },
+  {
+    "objectID": "slides/lec-18.html#step-3-fit-the-full-model",
+    "href": "slides/lec-18.html#step-3-fit-the-full-model",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Step 3: Fit the Full Model",
+    "text": "Step 3: Fit the Full Model"
+  },
+  {
+    "objectID": "slides/lec-18.html#full-model",
+    "href": "slides/lec-18.html#full-model",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Full Model",
+    "text": "Full Model\n\nfit_full &lt;- lm(log_surv ~ bloodclot + progindex + enzyme +\n                 liver + age + gender + alc_mod + alc_sev,\n               data = surgical)\nsummary(fit_full)\n\n\nCall:\nlm(formula = log_surv ~ bloodclot + progindex + enzyme + liver + \n    age + gender + alc_mod + alc_sev, data = surgical)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-0.51149 -0.14471 -0.00367  0.15982  0.75262 \n\nCoefficients:\n             Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)  3.864138   0.159831  24.176  &lt; 2e-16 ***\nbloodclot    0.088593   0.007147  12.395  &lt; 2e-16 ***\nprogindex    0.013382   0.001048  12.766  &lt; 2e-16 ***\nenzyme       0.017926   0.001144  15.671  &lt; 2e-16 ***\nliver        0.020014   0.016464   1.216   0.2270    \nage         -0.002894   0.001739  -1.664   0.0993 .  \ngender      -0.025258   0.048979  -0.516   0.6072    \nalc_mod      0.009202   0.053127   0.173   0.8628    \nalc_sev      0.345764   0.059978   5.765  9.3e-08 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.2386 on 99 degrees of freedom\nMultiple R-squared:  0.8507,    Adjusted R-squared:  0.8386 \nF-statistic:  70.5 on 8 and 99 DF,  p-value: &lt; 2.2e-16"
+  },
+  {
+    "objectID": "slides/lec-18.html#interpreting-the-full-model",
+    "href": "slides/lec-18.html#interpreting-the-full-model",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Interpreting the Full Model",
+    "text": "Interpreting the Full Model\n\n\n\n            Estimate Std. Error t value Pr(&gt;|t|)\n(Intercept)   3.8641     0.1598 24.1764   0.0000\nbloodclot     0.0886     0.0071 12.3952   0.0000\nprogindex     0.0134     0.0010 12.7661   0.0000\nenzyme        0.0179     0.0011 15.6709   0.0000\nliver         0.0200     0.0165  1.2156   0.2270\nage          -0.0029     0.0017 -1.6640   0.0993\ngender       -0.0253     0.0490 -0.5157   0.6072\nalc_mod       0.0092     0.0531  0.1732   0.8628\nalc_sev       0.3458     0.0600  5.7648   0.0000\n\n\n\nClearly significant: bloodclot, progindex, enzyme, alc_sev\nNot significant at \\(\\alpha = 0.05\\): liver, age, gender, alc_mod\n\n\n\nWith 8 predictors, the model is complex. Can we find a simpler model that fits just as well? This is the goal of variable selection."
+  },
+  {
+    "objectID": "slides/lec-18.html#step-4-variable-selection",
+    "href": "slides/lec-18.html#step-4-variable-selection",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Step 4: Variable Selection",
+    "text": "Step 4: Variable Selection"
+  },
+  {
+    "objectID": "slides/lec-18.html#strategy",
+    "href": "slides/lec-18.html#strategy",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Strategy",
+    "text": "Strategy\n\nWe will apply five approaches and compare their results:\n\nBackward elimination using F tests (drop1)\nStepwise backward selection using AIC and BIC (step)\nExhaustive search using AIC (leaps)\nCross-validation on best subsets\nLASSO penalized regression (glmnet)\n\n\n\nNo single method is universally best. When multiple methods agree, we have stronger evidence for a model choice."
+  },
+  {
+    "objectID": "slides/lec-18.html#approach-1-backward-elimination-with-f-tests",
+    "href": "slides/lec-18.html#approach-1-backward-elimination-with-f-tests",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Approach 1: Backward Elimination with F Tests",
+    "text": "Approach 1: Backward Elimination with F Tests\n\ndrop1(fit, test = \"F\") shows what happens if we drop each predictor one at a time from the current model. We drop the predictor with the largest p-value and repeat.\n\n\ndrop1(fit_full, test = \"F\")\n\nSingle term deletions\n\nModel:\nlog_surv ~ bloodclot + progindex + enzyme + liver + age + gender + \n    alc_mod + alc_sev\n          Df Sum of Sq     RSS     AIC  F value  Pr(&gt;F)    \n&lt;none&gt;                  5.6370 -300.90                     \nbloodclot  1    8.7482 14.3851 -201.72 153.6413 &lt; 2e-16 ***\nprogindex  1    9.2795 14.9164 -197.80 162.9726 &lt; 2e-16 ***\nenzyme     1   13.9830 19.6199 -168.20 245.5784 &lt; 2e-16 ***\nliver      1    0.0841  5.7211 -301.30   1.4777 0.22703    \nage        1    0.1577  5.7946 -299.92   2.7690 0.09927 .  \ngender     1    0.0151  5.6521 -302.61   0.2659 0.60723    \nalc_mod    1    0.0017  5.6387 -302.87   0.0300 0.86284    \nalc_sev    1    1.8923  7.5292 -271.64  33.2333 9.3e-08 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\nliver has the largest p-value — drop it and refit."
+  },
+  {
+    "objectID": "slides/lec-18.html#backward-elimination-continuing",
+    "href": "slides/lec-18.html#backward-elimination-continuing",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Backward Elimination — Continuing",
+    "text": "Backward Elimination — Continuing\n\nfit_b2 &lt;- update(fit_full, . ~ . - liver)\ndrop1(fit_b2, test = \"F\")\n\nSingle term deletions\n\nModel:\nlog_surv ~ bloodclot + progindex + enzyme + age + gender + alc_mod + \n    alc_sev\n          Df Sum of Sq     RSS     AIC  F value    Pr(&gt;F)    \n&lt;none&gt;                  5.7211 -301.30                       \nbloodclot  1    8.6971 14.4182 -203.47 152.0179 &lt; 2.2e-16 ***\nprogindex  1    9.2653 14.9863 -199.30 161.9491 &lt; 2.2e-16 ***\nenzyme     1   14.0084 19.7295 -169.60 244.8552 &lt; 2.2e-16 ***\nage        1    0.1833  5.9044 -299.90   3.2033   0.07652 .  \ngender     1    0.0275  5.7486 -302.78   0.4801   0.49000    \nalc_mod    1    0.0050  5.7261 -303.21   0.0870   0.76863    \nalc_sev    1    1.9244  7.6455 -271.99  33.6363 7.804e-08 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\nfit_b3 &lt;- update(fit_b2, . ~ . - gender)\ndrop1(fit_b3, test = \"F\")\n\nSingle term deletions\n\nModel:\nlog_surv ~ bloodclot + progindex + enzyme + age + alc_mod + alc_sev\n          Df Sum of Sq     RSS     AIC  F value    Pr(&gt;F)    \n&lt;none&gt;                  5.7486 -302.78                       \nbloodclot  1    8.7020 14.4506 -205.23 152.8917 &lt; 2.2e-16 ***\nprogindex  1    9.2463 14.9949 -201.24 162.4548 &lt; 2.2e-16 ***\nenzyme     1   13.9818 19.7303 -171.60 245.6543 &lt; 2.2e-16 ***\nage        1    0.1849  5.9335 -301.36   3.2493   0.07444 .  \nalc_mod    1    0.0044  5.7530 -304.70   0.0774   0.78146    \nalc_sev    1    1.9133  7.6619 -273.75  33.6165 7.707e-08 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "slides/lec-18.html#backward-elimination-final-step",
+    "href": "slides/lec-18.html#backward-elimination-final-step",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Backward Elimination — Final Step",
+    "text": "Backward Elimination — Final Step\n\nfit_b4 &lt;- update(fit_b3, . ~ . - alc_mod)\ndrop1(fit_b4, test = \"F\")\n\nSingle term deletions\n\nModel:\nlog_surv ~ bloodclot + progindex + enzyme + age + alc_sev\n          Df Sum of Sq     RSS     AIC  F value    Pr(&gt;F)    \n&lt;none&gt;                  5.7530 -304.70                       \nbloodclot  1    8.6983 14.4513 -207.23 154.2208 &lt; 2.2e-16 ***\nprogindex  1    9.3635 15.1164 -202.37 166.0142 &lt; 2.2e-16 ***\nenzyme     1   13.9836 19.7366 -173.56 247.9292 &lt; 2.2e-16 ***\nage        1    0.1852  5.9382 -303.28   3.2844   0.07289 .  \nalc_sev    1    2.1528  7.9058 -272.37  38.1691 1.342e-08 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\n\nAll remaining predictors are significant. Backward elimination final model:\n\\[\\texttt{log\\_surv} \\sim \\texttt{bloodclot} + \\texttt{progindex} + \\texttt{enzyme} + \\texttt{age} + \\texttt{alc\\_sev}\\]"
+  },
+  {
+    "objectID": "slides/lec-18.html#approach-2-stepwise-via-aic-and-bic",
+    "href": "slides/lec-18.html#approach-2-stepwise-via-aic-and-bic",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Approach 2: Stepwise via AIC and BIC",
+    "text": "Approach 2: Stepwise via AIC and BIC\n\nstep() automates the stepwise procedure. Use \\(k = 2\\) for AIC, \\(k = \\log n\\) for BIC.\n\n\nfit_aic &lt;- step(fit_full, direction = \"backward\", trace = 0)\nformula(fit_aic)\n\nlog_surv ~ bloodclot + progindex + enzyme + age + alc_sev\n\n\n\n\nfit_bic &lt;- step(fit_full, direction = \"backward\",\n                k = log(nrow(surgical)), trace = 0)\nformula(fit_bic)\n\nlog_surv ~ bloodclot + progindex + enzyme + alc_sev\n\n\n\n\n\nBIC (\\(k = \\log n \\approx 4.68\\)) applies a heavier penalty than AIC (\\(k = 2\\)) and tends to select fewer variables."
+  },
+  {
+    "objectID": "slides/lec-18.html#approach-3-exhaustive-search",
+    "href": "slides/lec-18.html#approach-3-exhaustive-search",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Approach 3: Exhaustive Search",
+    "text": "Approach 3: Exhaustive Search\n\nregsubsets() from the leaps package evaluates all \\(2^8 = 256\\) possible subsets and returns the best model (lowest RSS) for each subset size.\n\n\nX &lt;- with(surgical, cbind(bloodclot, progindex, enzyme,\n                           liver, age, gender, alc_mod, alc_sev))\ncolnames(X) &lt;- c(\"bloodclot\",\"progindex\",\"enzyme\",\n                  \"liver\",\"age\",\"gender\",\"alc_mod\",\"alc_sev\")\ny &lt;- surgical$log_surv\n\nrs      &lt;- regsubsets(X, y, method = \"exhaustive\")\nrs_sum  &lt;- summary(rs)\nrs_sum$which\n\n  (Intercept) bloodclot progindex enzyme liver   age gender alc_mod alc_sev\n1        TRUE     FALSE     FALSE   TRUE FALSE FALSE  FALSE   FALSE   FALSE\n2        TRUE     FALSE      TRUE   TRUE FALSE FALSE  FALSE   FALSE   FALSE\n3        TRUE      TRUE      TRUE   TRUE FALSE FALSE  FALSE   FALSE   FALSE\n4        TRUE      TRUE      TRUE   TRUE FALSE FALSE  FALSE   FALSE    TRUE\n5        TRUE      TRUE      TRUE   TRUE FALSE  TRUE  FALSE   FALSE    TRUE\n6        TRUE      TRUE      TRUE   TRUE  TRUE  TRUE  FALSE   FALSE    TRUE\n7        TRUE      TRUE      TRUE   TRUE  TRUE  TRUE   TRUE   FALSE    TRUE\n8        TRUE      TRUE      TRUE   TRUE  TRUE  TRUE   TRUE    TRUE    TRUE"
+  },
+  {
+    "objectID": "slides/lec-18.html#mallows-c_p-plot",
+    "href": "slides/lec-18.html#mallows-c_p-plot",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Mallow’s \\(C_p\\) Plot",
+    "text": "Mallow’s \\(C_p\\) Plot\n\nplot(2:9, rs_sum$cp, xlab = \"p (number of parameters)\",\n     ylab = expression(C[p]), pch = 19, col = \"#003660\", cex = 1.2)\nabline(0, 1, col = \"#C0392B\", lty = 2, lwd = 2)\n\n\n\n\nSeek models where \\(C_p \\approx p\\) (near the reference line) and \\(p\\) is small. Points well above the line suggest important predictors are missing."
+  },
+  {
+    "objectID": "slides/lec-18.html#aic-across-all-subset-sizes",
+    "href": "slides/lec-18.html#aic-across-all-subset-sizes",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "AIC Across All Subset Sizes",
+    "text": "AIC Across All Subset Sizes\n\nn_obs   &lt;- nrow(surgical)\naic_all &lt;- n_obs * log(rs_sum$rss / n_obs) + 2 * (2:9)\n\nplot(2:9, aic_all, xlab = \"p (number of parameters)\", ylab = \"AIC\",\n     pch = 19, col = \"#003660\", cex = 1.2, type = \"b\")\npoints(which.min(aic_all) + 1, min(aic_all),\n       pch = 8, col = \"#C0392B\", cex = 2)\n\n\n\nThe red star marks the best subset size by AIC. Diminishing returns in AIC improvement beyond this point confirm a parsimonious model is appropriate."
+  },
+  {
+    "objectID": "slides/lec-18.html#approach-4-cross-validation-on-best-subsets",
+    "href": "slides/lec-18.html#approach-4-cross-validation-on-best-subsets",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Approach 4: Cross-Validation on Best Subsets",
+    "text": "Approach 4: Cross-Validation on Best Subsets\n\nset.seed(126)\nfold   &lt;- sample(cut(seq(n), breaks = 10, labels = FALSE))\npse_cv &lt;- matrix(NA, n, 8)\n\nfor (i in 1:8) {\n  vars_i &lt;- which(rs_sum$which[i, -1])\n  for (j in 1:10) {\n    tmp  &lt;- lm(y ~ X[, vars_i], subset = (fold != j))\n    pred &lt;- as.vector(X[fold == j, vars_i, drop = FALSE] %*%\n                        coef(tmp)[-1]) + coef(tmp)[1]\n    pse_cv[fold == j, i] &lt;- (y[fold == j] - pred)^2\n  }\n}\n\ncv_means &lt;- colMeans(pse_cv, na.rm = TRUE)\nround(cv_means, 4)\n\n[1] 0.2462 0.1654 0.0812 0.0608 0.0595 0.0597 0.0618 0.0628"
+  },
+  {
+    "objectID": "slides/lec-18.html#cv-prediction-error-plot",
+    "href": "slides/lec-18.html#cv-prediction-error-plot",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "CV Prediction Error Plot",
+    "text": "CV Prediction Error Plot\n\nplot(2:9, cv_means, type = \"b\", pch = 19, col = \"#003660\", cex = 1.2,\n     xlab = \"Number of parameters\",\n     ylab = \"CV estimate of prediction error\")\npoints(which.min(cv_means) + 1, min(cv_means),\n       pch = 8, col = \"#C0392B\", cex = 2)\n\n\n\n\nCV corroborates the AIC results — a model with ~4–5 parameters gives the lowest estimated prediction error."
+  },
+  {
+    "objectID": "slides/lec-18.html#approach-5-lasso",
+    "href": "slides/lec-18.html#approach-5-lasso",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Approach 5: LASSO",
+    "text": "Approach 5: LASSO\n\nLASSO adds a penalty on the \\(\\ell_1\\) norm of the coefficients, shrinking some to exactly zero:\n\\[\\min_{\\boldsymbol\\beta} \\sum_{i=1}^n \\!\\left(y_i - \\beta_0 - \\textstyle\\sum_j \\beta_j x_{ij}\\right)^2 + \\lambda \\sum_{j=1}^p |\\beta_j|\\]\nLarger \\(\\lambda\\) \\(\\rightarrow\\) more shrinkage \\(\\rightarrow\\) fewer non-zero coefficients.\n\n\nfit_lasso    &lt;- glmnet(X, y, alpha = 1, lambda.min = 0, nlambda = 101)\nfit_lasso_cv &lt;- cv.glmnet(X, y, alpha = 1, lambda.min = 0, nlambda = 101)"
+  },
+  {
+    "objectID": "slides/lec-18.html#lasso-coefficient-path",
+    "href": "slides/lec-18.html#lasso-coefficient-path",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "LASSO Coefficient Path",
+    "text": "LASSO Coefficient Path\n\nplot(fit_lasso, xvar = \"lambda\", xlim = c(-8, 0), label = TRUE)\nabline(v = log(fit_lasso_cv$lambda.min), col = \"#C0392B\", lty = 2, lwd = 2)\nlegend(\"topleft\", legend = colnames(X), lty = 1, cex = 0.5,\n       col = 1:8, bty = \"n\")\n\n\n\nThe red dashed line is the CV-optimal \\(\\lambda\\). Variables whose paths hit zero to the right of this line are excluded from the LASSO model."
+  },
+  {
+    "objectID": "slides/lec-18.html#lasso-cross-validation",
+    "href": "slides/lec-18.html#lasso-cross-validation",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "LASSO Cross-Validation",
+    "text": "LASSO Cross-Validation\n\nplot(fit_lasso_cv)\n\n\n\n\nLeft dashed line: \\(\\lambda_{\\min}\\) (lowest CV error). Right dashed line: \\(\\lambda_{\\text{1se}}\\) (simplest model within 1 SE of best). The number at the top is non-zero coefficient count."
+  },
+  {
+    "objectID": "slides/lec-18.html#lasso-coefficients",
+    "href": "slides/lec-18.html#lasso-coefficients",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "LASSO Coefficients",
+    "text": "LASSO Coefficients\n\nlasso_min &lt;- coef(fit_lasso_cv, s = \"lambda.min\")\nlasso_1se &lt;- coef(fit_lasso_cv, s = \"lambda.1se\")\n\ndata.frame(\n  OLS   = round(c(coef(fit_full)), 4),\n  LASSO_min = round(as.vector(lasso_min), 4),\n  LASSO_1se = round(as.vector(lasso_1se), 4),\n  row.names = rownames(lasso_min)\n)\n\n                OLS LASSO_min LASSO_1se\n(Intercept)  3.8641    3.9311    4.1498\nbloodclot    0.0886    0.0850    0.0737\nprogindex    0.0134    0.0130    0.0116\nenzyme       0.0179    0.0175    0.0161\nliver        0.0200    0.0149    0.0000\nage         -0.0029   -0.0024   -0.0006\ngender      -0.0253   -0.0066    0.0000\nalc_mod      0.0092    0.0000    0.0000\nalc_sev      0.3458    0.3235    0.2593\n\n\n\n\nLASSO shrinks small OLS coefficients toward zero. At \\(\\lambda_{\\text{1se}}\\), coefficients for weaker predictors may be exactly zero — automatic variable selection."
+  },
+  {
+    "objectID": "slides/lec-18.html#step-5-comparing-methods",
+    "href": "slides/lec-18.html#step-5-comparing-methods",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Step 5: Comparing Methods",
+    "text": "Step 5: Comparing Methods"
+  },
+  {
+    "objectID": "slides/lec-18.html#summary-of-all-methods",
+    "href": "slides/lec-18.html#summary-of-all-methods",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Summary of All Methods",
+    "text": "Summary of All Methods\n\n\n\n\nMethod\nVariables retained\n\n\n\n\nBackward F test\nbloodclot, progindex, enzyme, age, alc_sev\n\n\nAIC backward\nsee formula(fit_aic)\n\n\nBIC backward\nsee formula(fit_bic) — fewest variables\n\n\nExhaustive (AIC)\n4–5 variable model\n\n\nCross-validation\nConsistent with 4–5 variables\n\n\nLASSO (\\(\\lambda_{\\min}\\))\nMost variables, shrunken\n\n\nLASSO (\\(\\lambda_{\\text{1se}}\\))\nAggressive shrinkage\n\n\n\n\n\nConsensus: bloodclot, progindex, enzyme, and alc_sev appear in every parsimonious model. These four predictors are robustly important for predicting log survival time."
+  },
+  {
+    "objectID": "slides/lec-18.html#step-6-final-model-and-diagnostics",
+    "href": "slides/lec-18.html#step-6-final-model-and-diagnostics",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Step 6: Final Model and Diagnostics",
+    "text": "Step 6: Final Model and Diagnostics"
+  },
+  {
+    "objectID": "slides/lec-18.html#treating-alcohol-use-as-a-factor",
+    "href": "slides/lec-18.html#treating-alcohol-use-as-a-factor",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Treating Alcohol Use as a Factor",
+    "text": "Treating Alcohol Use as a Factor\n\nInstead of two separate dummies alc_mod and alc_sev, encode alcohol use as a single factor with three levels. R will create the dummies automatically, using “None” as the reference category.\n\n\nsurgical$alcohol &lt;- factor(surgical$alc_mod + 2*surgical$alc_sev,\n                            levels = 0:2,\n                            labels = c(\"None\",\"Moderate\",\"Severe\"))\ntable(surgical$alcohol)\n\n\n    None Moderate   Severe \n      48       36       24 \n\n\n\n\nfit_final &lt;- lm(log_surv ~ bloodclot + progindex + enzyme + alcohol,\n                data = surgical)\nround(coef(summary(fit_final)), 4)\n\n                Estimate Std. Error t value Pr(&gt;|t|)\n(Intercept)       3.7893     0.1118 33.8943   0.0000\nbloodclot         0.0866     0.0071 12.2208   0.0000\nprogindex         0.0134     0.0011 12.6341   0.0000\nenzyme            0.0182     0.0011 15.8515   0.0000\nalcoholModerate   0.0152     0.0534  0.2845   0.7766\nalcoholSevere     0.3430     0.0605  5.6680   0.0000"
+  },
+  {
+    "objectID": "slides/lec-18.html#interpreting-the-final-model",
+    "href": "slides/lec-18.html#interpreting-the-final-model",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Interpreting the Final Model",
+    "text": "Interpreting the Final Model\n\nWorking on the log scale, a one-unit increase in a predictor multiplies the median survival time by \\(e^{\\hat\\beta}\\):\n\n\nEach additional point in blood clotting score multiplies median survival by \\(e^{0.0866} = 1.09\\)\nEach additional point in enzyme score multiplies median survival by \\(e^{0.0182} = 1.018\\)\n\n\n\n\nPatients with severe alcohol use have median survival \\(e^{0.343} = 1.41\\times\\) higher than non-drinkers, after adjusting for clinical markers\nModerate alcohol use shows little difference from non-drinkers (0.0152)\n\n\n\n\nThe positive severe-alcohol effect is a real pattern in the original surgical data — not necessarily a causal claim. Confounding (e.g., age or type of liver disease) may explain it."
+  },
+  {
+    "objectID": "slides/lec-18.html#final-model-residual-diagnostics",
+    "href": "slides/lec-18.html#final-model-residual-diagnostics",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Final Model — Residual Diagnostics",
+    "text": "Final Model — Residual Diagnostics\n\npar(mfrow = c(1, 2), mar = c(4, 4, 2, 1))\nplot(fitted(fit_final), residuals(fit_final),\n     xlab = \"Fitted values\", ylab = \"Residuals\",\n     main = \"Residuals vs Fitted\",\n     pch = 19, col = \"#003660\", cex = 0.7)\nabline(h = 0, lty = 2, col = \"gray50\")\nqqnorm(residuals(fit_final), main = \"Normal Q-Q\",\n       pch = 19, col = \"#003660\", cex = 0.7, ylab = \"Residuals\")\nqqline(residuals(fit_final))\n\n\n\n\nResiduals are approximately randomly scattered around zero with roughly constant spread. The Q-Q plot is close to the diagonal. The log transformation resolved the original assumption violations."
+  },
+  {
+    "objectID": "slides/lec-18.html#practice",
+    "href": "slides/lec-18.html#practice",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Practice",
+    "text": "Practice\n\nUsing the surgical dataset from this lecture:\n(a) Run forward selection using AIC, starting from the intercept-only model. Does it arrive at the same model as backward AIC?\nstep(lm(log_surv ~ 1, data = surgical),\n     scope = list(upper = formula(fit_full)),\n     direction = \"forward\", trace = 0)\n(b) A classmate ran a stepwise selection procedure on fit_full and shared the first step of their output. Is this forward or backward selection? Explain using two features of the output.\nStart:  AIC = -246.12\nlog_surv ~ bloodclot + progindex + enzyme + liver + age + gender + alc_mod + alc_sev\n\n           Df  Sum of Sq    RSS      AIC\n- liver     1    0.00105  4.326  -247.98\n- gender    1    0.03481  4.360  -247.03\n- alc_mod   1    0.03997  4.365  -246.90\n&lt;none&gt;                    4.325  -246.12\n- age       1    0.09804  4.423  -245.26\n- alc_sev   1    0.42820  4.754  -237.81\n(c) Exponentiate the coefficient on alcoholSevere from fit_final. Write one sentence interpreting this value in terms of the original survival time (days)."
+  },
+  {
+    "objectID": "slides/lec-18.html#practice-solutions",
+    "href": "slides/lec-18.html#practice-solutions",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Practice: Solutions",
+    "text": "Practice: Solutions\n\n(a) Forward selection:\n\nfit_fwd &lt;- step(lm(log_surv ~ 1, data = surgical),\n                scope = list(upper = formula(fit_full)),\n                direction = \"forward\", trace = 0)\nformula(fit_fwd)\n\nlog_surv ~ enzyme + progindex + bloodclot + alc_sev + age\n\n\n\n(b) This is backward selection. Two clues from the output:\n\nThe starting model contains all 8 predictors — backward selection begins at the full model and removes predictors one at a time. Forward selection would start from log_surv ~ 1 (intercept only).\nEvery candidate row is prefixed with − — each option represents removing a predictor. Forward selection would show + rows, since it considers adding one predictor at a time.\n\n\nThe first variable to drop is liver (lowest AIC after removal: −247.98 vs. current −246.12).\n\n\n\n(c) exp(coef(fit_final)[\"alcoholSevere\"]) \\(\\approx\\) 1.41: patients with severe alcohol use have a median survival roughly 1.41× longer (in days) than non-drinkers with the same clinical test scores."
+  },
+  {
+    "objectID": "slides/lec-18.html#summary",
+    "href": "slides/lec-18.html#summary",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Summary",
+    "text": "Summary\n\n\nTransform first: Residual plots on the raw survival scale showed non-normality and non-constant variance. Box-Cox confirmed \\(\\lambda \\approx 0\\), so we modeled log(survival)\nExplore before modeling: The scatter matrix and boxplots revealed which predictors seemed most strongly related to log survival before any formal selection\nFull model as starting point: Fit all 8 predictors to understand the full picture, then apply variable selection to reduce complexity\nMultiple selection methods — consistent conclusion: Backward F, AIC/BIC stepwise, exhaustive search (AIC), 10-fold CV, and LASSO all pointed to bloodclot, progindex, enzyme, and alc_sev as the core predictors\nEncode factors properly: Using factor() for alcohol use produces cleaner code and allows a proper group-level F-test\nDiagnose the final model: Always verify residual assumptions hold for the chosen model — not just the full model — after all transformations are applied"
+  },
+  {
+    "objectID": "slides/lec-18.html#questions",
+    "href": "slides/lec-18.html#questions",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Questions?",
+    "text": "Questions?\n\nAnnie Adams aradams@ucsb.edu\nOffice Hours: Tuesday 10 – 11 AM on Zoom\nCourse Website"
+  },
+  {
+    "objectID": "slides/lec-18.html#cross-validation-review",
+    "href": "slides/lec-18.html#cross-validation-review",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Cross-Validation Review",
+    "text": "Cross-Validation Review"
+  },
+  {
+    "objectID": "slides/lec-18.html#why-cross-validation",
+    "href": "slides/lec-18.html#why-cross-validation",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Why Cross-Validation?",
+    "text": "Why Cross-Validation?\n\nTraining error (RSS, \\(R^2\\), AIC) is measured on the same data used to fit the model — it rewards overfitting.\n\nCross-validation estimates how well the model predicts new, unseen observations by repeatedly holding out part of the data.\n\n\n\nAdding a predictor always reduces training RSS. CV MSE can increase when you add a useless predictor — that is the signal we want for model selection."
+  },
+  {
+    "objectID": "slides/lec-18.html#k-fold-cross-validation",
+    "href": "slides/lec-18.html#k-fold-cross-validation",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "\\(k\\)-Fold Cross-Validation",
+    "text": "\\(k\\)-Fold Cross-Validation\n\nProcedure:\n\nRandomly partition the \\(n\\) observations into \\(k\\) equal folds\nFor each fold \\(j = 1, \\ldots, k\\): fit the model on the other \\(k - 1\\) folds, then predict the held-out fold\nCompute fold \\(j\\)’s mean squared error: \\(\\;\\text{MSE}_j = \\dfrac{1}{|j|}\\displaystyle\\sum_{i \\in \\text{fold } j}(Y_i - \\hat{Y}_i)^2\\)\nAverage across all folds: \\(\\;\\text{CV}_{(k)} = \\dfrac{1}{k}\\displaystyle\\sum_{j=1}^k \\text{MSE}_j\\)\n\n\nChoose the model with the lowest \\(\\text{CV}_{(k)}\\). \\(k = 10\\) is the standard choice — good bias-variance trade-off."
+  },
+  {
+    "objectID": "slides/lec-18.html#lasso-penalized-regression",
+    "href": "slides/lec-18.html#lasso-penalized-regression",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "LASSO: Penalized Regression",
+    "text": "LASSO: Penalized Regression"
+  },
+  {
+    "objectID": "slides/lec-18.html#the-limits-of-subset-selection",
+    "href": "slides/lec-18.html#the-limits-of-subset-selection",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "The Limits of Subset Selection",
+    "text": "The Limits of Subset Selection\n\nStepwise and exhaustive methods pick a discrete subset of predictors — each variable is either fully in or completely out.\n\nPractical problems:\n\nWith \\(p\\) predictors, exhaustive search evaluates \\(2^p\\) models — infeasible for large \\(p\\)\nStepwise procedures are unstable: small changes to the data can flip which variables are selected\nDiscarding a coefficient entirely ignores the possibility that a predictor is mildly informative\n\n\n\n\nLASSO offers a continuous alternative: it shrinks all coefficients toward zero and sets unimportant ones to exactly zero, combining estimation and selection in a single step."
+  },
+  {
+    "objectID": "slides/lec-18.html#the-lasso-objective",
+    "href": "slides/lec-18.html#the-lasso-objective",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "The LASSO Objective",
+    "text": "The LASSO Objective\n\nOLS minimizes RSS alone:\n\\[\\min_{\\boldsymbol{\\beta}} \\sum_{i=1}^n \\left(y_i - \\beta_0 - \\sum_{j=1}^p \\beta_j x_{ij}\\right)^2\\]\nLASSO adds an \\(\\ell_1\\) penalty on the coefficient magnitudes:\n\\[\\min_{\\boldsymbol{\\beta}} \\underbrace{\\sum_{i=1}^n \\!\\left(y_i - \\beta_0 - \\sum_{j=1}^p \\beta_j x_{ij}\\right)^2}_{\\text{residual sum of squares}} + \\;\\lambda \\underbrace{\\sum_{j=1}^p |\\beta_j|}_{\\ell_1 \\text{ penalty}}\\]\n\n\n\\(\\lambda \\geq 0\\) is a tuning parameter controlling the amount of shrinkage\n\\(\\lambda = 0\\): LASSO reduces to OLS\n\\(\\lambda \\to \\infty\\): all slope estimates shrink to zero"
+  },
+  {
+    "objectID": "slides/lec-18.html#why-lasso-produces-sparse-solutions",
+    "href": "slides/lec-18.html#why-lasso-produces-sparse-solutions",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Why LASSO Produces Sparse Solutions",
+    "text": "Why LASSO Produces Sparse Solutions\n\n\n\nThe \\(\\ell_1\\) constraint region is a diamond with corners on the coordinate axes.\nThe OLS solution (center of the red ellipses) lies off-axis, so the smallest ellipse that touches the diamond typically hits a corner — where one or more \\(\\beta_j = 0\\).\nThis is why LASSO performs automatic variable selection, unlike Ridge regression whose \\(\\ell_2\\) ball has no corners."
+  },
+  {
+    "objectID": "slides/lec-18.html#choosing-lambda-via-cross-validation",
+    "href": "slides/lec-18.html#choosing-lambda-via-cross-validation",
+    "title": "Lecture 18: Multiple Regression — Surgical Unit Case Study",
+    "section": "Choosing \\(\\lambda\\) via Cross-Validation",
+    "text": "Choosing \\(\\lambda\\) via Cross-Validation\n\n\\(\\lambda\\) is not estimated from the data like \\(\\boldsymbol{\\beta}\\) — it is chosen by cross-validation.\ncv.glmnet() procedure:\n\nFit LASSO across a grid of \\(\\lambda\\) values\nFor each \\(\\lambda\\), compute 10-fold CV MSE\nReport two useful choices:\n\n\\(\\lambda_{\\min}\\): the \\(\\lambda\\) with the lowest average CV MSE (best prediction)\n\\(\\lambda_{\\text{1se}}\\): the largest \\(\\lambda\\) within 1 SE of \\(\\lambda_{\\min}\\) (sparser, more conservative)\n\n\n\n\n\\(\\lambda_{\\min}\\) minimizes prediction error. \\(\\lambda_{\\text{1se}}\\) applies the parsimony principle — choose the simplest model that is nearly as good."
   }
 ]
